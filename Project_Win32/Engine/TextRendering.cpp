@@ -7,7 +7,7 @@
 #include <sstream>
 #include <vector>
 #include "Debugging.h"
-
+#include "Utils.h"
 TextRendering * TextRendering::instance = NULL;
 
 bool TextRendering::createProgram()
@@ -177,13 +177,8 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 
 	// Load font as face
 	FT_Face face;
-	std::string path_modif(font_path);
-#ifdef ANDROID
-	if (path_modif.find("../") == 0)
-	{
-		path_modif.replace(0, 3, "/sdcard/");
-	}
-#endif
+	std::string path_modif(Utils::getResourcesFolder() + font_path);
+
 	if (FT_New_Face(ft, path_modif.c_str(), 0, &face))
 	{
 		LOGI("ERROR::FREETYPE: Failed to load font");

@@ -17,4 +17,5 @@ namespace Utils
 		delete[] buf;
 		return std::move(str);
 	}
+	std::string getResourcesFolder();
 }

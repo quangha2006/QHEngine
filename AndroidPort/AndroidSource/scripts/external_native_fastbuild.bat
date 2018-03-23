@@ -8,7 +8,7 @@ set FAST_BUILD_CONFIG=!ROOT_DIR!\AndroidSource\scripts\bff
 set FAST_BUILD_COMPILE=!FAST_BUILD_CONFIG!\Compile
 set FAST_BUILD_GENERATED=!ROOT_DIR!\generated
 set FAST_BUILD_LINK=!FAST_BUILD_CONFIG!\Link
-set FAST_BUILD_TOOL=%ROOT_DIR%\FastBuild\FBuild.exe
+set FAST_BUILD_TOOL=%ROOT_DIR%\..\Tools\FastBuild\FBuild.exe
 set SO_LIB_FILE=native-activity
 
 rem uncomment the line below to see the entire command used on this .bat script

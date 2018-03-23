@@ -20,6 +20,7 @@
 	"$Engine_Sources_Path$/Debugging.cpp"
 	"$Engine_Sources_Path$/FrameBuffer.cpp"
 	"$Engine_Sources_Path$/QHText.cpp"
+	"$Engine_Sources_Path$/Utils.cpp"
 	}
 
 	.ExcludedUnitySources =

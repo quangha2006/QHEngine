@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Model.h"
 #include "Timer.h"
+#include "Utils.h"
 #include <SOIL.h>
 #include <thread>
 #include <Logs.h>
@@ -86,13 +87,8 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	uint64_t time_ms_begin = Timer::getMillisecond();
 	this->camera = camera;
 	this->isEnableAlpha = enableAlpha;
-	string path_modif = path;
-#ifdef ANDROID
-	if (path_modif.find("../") == 0)
-	{
-		path_modif.replace(0, 3, "/sdcard/");
-	}
-#endif
+	string path_modif = Utils::getResourcesFolder() + path;
+
 	LOGI("\nLoad Model: %s\n", path_modif.c_str());
 	if (ShaderManager::getInstance()->GetProgram(useshadername.c_str()) == 0)
 	{

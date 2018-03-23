@@ -1,6 +1,6 @@
 @echo OFF
 set CUR_MPATH=%~dp0
-REM set ANDROID_HOME=Y:\android-sdk-windows
+set ANDROID_HOME=Y:\android-sdk-windows
 :START
 cls
 color A

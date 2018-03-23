@@ -26,7 +26,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	FrameRate::getInstance();
 	//FrameRate::getInstance()->setLimitFPS(60);
 
-	TextRendering::getInstance()->Init("../Resources/fonts/VBAMASH.TTF", width, height);
+	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", width, height);
 	Init();
 
 	text_FPS.setPos(0, 0);

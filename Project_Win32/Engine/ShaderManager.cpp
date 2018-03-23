@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ShaderManager.h"
-
+#include "Utils.h"
 ShaderManager *ShaderManager::instance = NULL;
 
 GLuint ShaderManager::createProgram(const char * vtxSrc, const char * fragSrc)
@@ -47,18 +47,13 @@ GLuint ShaderManager::createProgram(const char * vtxSrc, const char * fragSrc)
 
 GLuint ShaderManager::createShader(GLenum shaderType, const char * src)
 {
-	string path_modif(src);
-#ifdef ANDROID
-	if (path_modif.find("../") == 0)
-	{
-		path_modif.replace(0, 3, "/sdcard/");
-	}
-#endif
-	LOGI("Create shader: %s\n", path_modif.c_str());
-	FILE * pf = fopen(path_modif.c_str(), "rb");
+	string fullPath(Utils::getResourcesFolder() + src);
+
+	LOGI("Create shader: %s\n", fullPath.c_str());
+	FILE * pf = fopen(fullPath.c_str(), "rb");
 	if (pf == NULL)
 	{
-		LOGI("Load %s failed\n", path_modif.c_str());
+		LOGI("Load %s failed\n", fullPath.c_str());
 		return false;
 	}
 	fseek(pf, 0, SEEK_END);

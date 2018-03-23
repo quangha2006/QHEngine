@@ -12,23 +12,23 @@ void Basic::Init()
 	mCamera->Target = glm::vec3(0.0f, 3.0f, 0.2f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
-	ShaderManager::getInstance()->Init("model","../Resources/Shaders/model_loading.vs" ,"../Resources/Shaders/model_loading.fs");
-	//ShaderManager::getInstance()->Init("screenShader", "../Resources/Shaders/framebuffers_screen.vs", "../Resources/Shaders/framebuffers_screen.fs"); // For debug
-	ShaderManager::getInstance()->Init("depthShader", "../Resources/Shaders/DepthShader.vs", "../Resources/Shaders/DepthShader.fs");
-	//ShaderManager::getInstance()->Init("model", "../Resources/Shaders/BasicVS.vs", "../Resources/Shaders/BasicFS.fs");
-	//mNanosuit.Init("../Resources/nanosuit/nanosuit.obj", mCamera, false);
-	m_Streetenvironment.Init("../Resources/Streetenvironment/Street environment_V01.obj", mCamera, false);
-	//mMerce.Init("../Resources/MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
-	mSun.Init("../Resources/sol/sol.obj", mCamera, false, 0.0001f);
+	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
+	//ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_screen.vs", "Shaders/framebuffers_screen.fs"); // For debug
+	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
+	//ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
+	//mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
+	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
+	mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
 	mSun.SetUseLighting(false);
 	mSun.SetCustomColor(glm::vec3(1.0f));
 
-	//mSpider.Init("../Resources/test/model.obj", mCamera, true);
-	mSpider.Init("../Resources/boblampclean/boblampclean.md5mesh", mCamera, true);
-	//saberclass.Init("../Resources/test/untitled.obj", mCamera, false, 3.0f);
-	//mGallacticCruiser.Init("../Resources/GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, false, 0.1f);
+	//mSpider.Init("test/model.obj", mCamera, true);
+	mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
+	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
+	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, false, 0.1f);
 
-	//mMonster_1.Init("../Resources/Monster_1/Monster_1.dae", mCamera, false);
+	//mMonster_1.Init("Monster_1/Monster_1.dae", mCamera, false);
 
 	mframebuffer.Init(2048, 2048);
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
