@@ -9,7 +9,7 @@
 struct TextData {
 	glm::vec4 Position;
 	glm::vec3 Color;
-	GLfloat Alpha;
+	float Alpha;
 };
 
 class QHText
@@ -27,15 +27,19 @@ private:
 public:
 	void setText(std::string newText);
 	void setPos(int pos_x, int pos_y);
+	void setPos(glm::ivec2 newPos);
 	void setColor(glm::vec3 newColor);
-	void setAlpha(GLfloat newAlpha);
-	void setScale(GLfloat newScale);
+	void setAlpha(float newAlpha);
+	void setScale(float newScale);
 	glm::vec3 getColor(glm::vec3 newColor);
-	GLfloat getAlpha(GLfloat newAlpha);
-	GLfloat getScale(GLfloat newScale);
+	float getAlpha(float newAlpha);
+	float getScale(float newScale);
+	glm::ivec2 getEndPos();
+	int getEndPos_x();
+	int getEndPos_y();
 	std::vector<TextData> getTextData();
 	void UpdateId(int newid);
-	QHText(std::string text = "", GLfloat pos_x = 0.0f, GLfloat pos_y = 0.0f, glm::vec3 color = glm::vec3(1.0f), GLfloat scale = 1.0f, GLfloat alpha = 1.0f);
+	QHText(std::string text = "", int pos_x = 0.0f, int pos_y = 0.0f, glm::vec3 color = glm::vec3(1.0f), float scale = 1.0f, float alpha = 1.0f);
 	~QHText();
 };
 

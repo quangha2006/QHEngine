@@ -30,12 +30,17 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	Init();
 
 	text_FPS.setPos(0, 0);
-	text_DrawCall.setPos(100,0);
+	text_FPS.setScale(0.5f);
+	text_FPS.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
+	text_FPS.setText("FPS: 100.0");
+
+	text_DrawCall.setPos(text_FPS.getEndPos());
+	text_DrawCall.setScale(0.5f);
+	text_DrawCall.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
+
 	text_NumTriangle.setPos(265,0);
-	
-	text_FPS.setScale(0.5f);			text_FPS.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
-	text_DrawCall.setScale(0.5f);		text_DrawCall.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
-	text_NumTriangle.setScale(0.5f);	text_NumTriangle.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
+	text_NumTriangle.setScale(0.5f);
+	text_NumTriangle.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
 	return true;
 }
