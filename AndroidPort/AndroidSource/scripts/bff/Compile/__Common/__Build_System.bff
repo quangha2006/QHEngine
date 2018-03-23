@@ -1,0 +1,32 @@
+// Project Independant
+//.Config_Android_H					= "$AndroidFrameworkConfig_Path$/configs/generated"
+//.Static_Libraries_Configs			= "$AndroidFrameworkConfig_Path$/configs/project/Compile/Static_Libraries_Configs"
+.OutputPath							= "$generated_Path$"
+
+
+// NDK related
+.NDKToolchains       				= "$NDK_Root$/toolchains"
+
+.NDK_ToolchainArmType 				= "arm-linux-androideabi"
+.NDK_ToolchainX86Type 				= "i686-linux-android"
+.NDK_GCC_ToolchainARM_Bin 			= "$NDKToolchains$/$NDK_ToolchainArmType$-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin"
+.NDK_GCC_ToolchainX86_Bin 			= "$NDKToolchains$/x86-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin"
+
+
+#if USE_CLANG
+.NDK_CLANG_ToolchainBin				= "$NDKToolchains$/llvm/prebuilt/windows-x86_64/bin"
+.NDK_ToolchainForClang_ARM			= "$NDKToolchains$/$NDK_ToolchainArmType$-$GCC_ToolchainVersion$/prebuilt/windows-x86_64"
+.NDK_ToolchainForClang_x86			= "$NDKToolchains$/x86_64-$GCC_ToolchainVersion$/prebuilt/windows-x86_64"
+#endif
+
+
+Settings
+{
+	#if USE_CLANG
+	.CachePath = '$OutputPath$/.fbuildcache.CLANG/'
+	#endif
+	
+	#if !USE_CLANG
+	.CachePath = '$OutputPath$/.fbuildcache.GCC/'
+	#endif
+}

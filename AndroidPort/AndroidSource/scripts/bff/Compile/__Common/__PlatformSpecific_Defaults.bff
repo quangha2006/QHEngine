@@ -1,0 +1,41 @@
+	.ARM_CommonValues				=
+	[
+		.ARM_Defines 				= ""
+		.ARM_CompilerFlags 			= ""
+		.ARM_SourceFiles 			= {}
+	]
+	
+	.ARM_DebugValues				=
+	[
+		.ARM_Debug_Defines 			= ""
+		.ARM_Debug_CompilerFlags 	= ""
+		.ARM_Debug_SourceFiles 		= {}
+	]
+	
+	.ARM_ReleaseValues				=
+	[
+		.ARM_Release_Defines 		= ""
+		.ARM_Release_CompilerFlags 	= ""
+		.ARM_Release_SourceFiles 	= {}
+	]
+
+	.x86_CommonValues				=
+	[
+		.x86_Defines 				= ""
+		.x86_CompilerFlags			= ""
+		.x86_SourceFiles 			= {}
+	]
+
+	.x86_DebugValues				=
+	[
+		.x86_Debug_Defines 			= ""
+		.x86_Debug_CompilerFlags 	= ""
+		.x86_Debug_SourceFiles 		= {}
+	]
+
+	.x86_ReleaseValues				=
+	[
+		.x86_Release_Defines		= ""
+		.x86_Release_CompilerFlags	= ""
+		.x86_Release_SourceFiles 	= {}
+	]

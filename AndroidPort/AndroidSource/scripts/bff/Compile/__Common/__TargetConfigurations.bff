@@ -1,0 +1,29 @@
+// this file is MAGIC
+
+// add the .bff of each Target
+ForEach( .Target in .AllTargets )
+{
+	.IncludeVar = "../Static_Libraries_Configs/" + .Target + ".bff"
+	#include "$IncludeVar$"
+}
+
+// add each Target to the 'All-Compile-*' Alias
+ForEach( .ConfigIter in .All_Configs )
+{
+	Using( .ConfigIter )
+
+	Alias( 'All-Compile-$PlatformName$-$ConfigName$' )
+	{
+		.LibSufix = "Lib-$PlatformName$-$ConfigName$"
+		
+		.Targets = {}
+		
+		ForEach( .Target in .AllTargets )
+		{
+			.aux = .Target + "-$LibSufix$"
+			^Targets + .aux
+		}
+		
+		//.Targets = .Targets + 'tinythread-$LibSufix$'
+	}
+}

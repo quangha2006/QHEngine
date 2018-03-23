@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\Gameloft\Learnning3D\trunk\Libs_Project\openal\CMakeFiles\1c56b6214924c883884281a5891f8cc5\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{2F8165DD-56C4-3AD3-BD22-F2ACE4D4BC19}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

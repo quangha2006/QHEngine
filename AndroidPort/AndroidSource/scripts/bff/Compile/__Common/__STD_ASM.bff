@@ -1,0 +1,17 @@
+	.PROJECT_LanguageStandard 	= "-x assembler-with-cpp"
+	.StaticLibOutputName     	= 'lib$PROJECT_Name$.a'
+	.Compiler_Suffix			= "C"
+	
+	// from GCC documentation:
+	//file.s
+	//	Assembler code.
+	//file.S
+	//file.sx
+	//	Assembler code that must be preprocessed. 
+	
+	.CompilerInputPattern   	= "*.S"
+	.UnityInputPattern 			= "*.S"
+	.UnityOutputPattern 		= "$PROJECT_Name$_*.S"
+	.UnityOutputPath 			= "$OutputPath$/CompileUnits/$PROJECT_Name$"
+	
+	#include					"./../__Common/__PlatformSpecific_Defaults.bff"

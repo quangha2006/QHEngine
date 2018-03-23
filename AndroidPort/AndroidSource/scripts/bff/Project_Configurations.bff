@@ -1,0 +1,261 @@
+// *************************************************************************************** //
+// if active: clang++.exe, if commented: g++.exe
+#define USE_CLANG
+
+// if active: use Compile Units. if commented: compile each file one-by-one
+#define USE_COMPILE_UNITS
+
+// *************************************************************************************** //
+#include "Main_Paths.bff"
+#include "Compile/__Common/__Build_System.bff"
+
+// *************************************************************************************** //
+// ARM; x86
+// Release; Debug
+.Base_Config =
+[
+	.Defines = ""
+							+ " -D__ANDROID__"
+							+ " -DOS_ANDROID"
+							+ " -DANDROID"
+							+ " -D_ANDROID"
+							+ " -DANDROID_NDK"
+							+ " -DGAME_ANDROID"							
+	.IncludePaths = ""
+							#if USE_CLANG
+							+ " -I$STL_LibPath_Clang$/include"
+							#endif
+							+ " -I$NDK_Root$/sources/android/cpufeatures"
+	.CompileFlags = ""
+							+ " -ffunction-sections"
+							+ " -funwind-tables"
+							+ " -no-canonical-prefixes"
+							+ " -fomit-frame-pointer"
+							+ " -fno-strict-aliasing"
+							+ " -Wno-psabi"
+							+ " -Wno-write-strings"
+							+ " -fsigned-char"
+							+ " -fvisibility=hidden"
+							+ " -pipe"
+							+ " -ftree-vectorize"
+							+ " -fassociative-math"
+							+ " -freciprocal-math"
+							+ " -funroll-loops"
+							+ " -ffast-math"
+							+ " -fexceptions"
+	.CompileFlags_CPP = ""
+	.CompileFlags_C = ""
+	.Precompiled_SearchPaths = ""
+	.LinkerExecutable = ""
+							#if USE_CLANG
+							+ "$NDK_Root$/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe"
+							#endif
+							#if !USE_CLANG
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-g++.exe"
+							#endif
+]
+
+// *************************************************************************************** //
+// ARM
+// Release; Debug
+.ARM_Config =
+[
+	Using(.Base_Config)
+	.PlatformName = "ARM"
+	.Defines + ""
+							#if USE_CLANG
+							+ " -D__ARM_NEON__"
+							#endif
+							+ " -D__ARM_ARCH_7__"
+	.CompileFlags + ""
+							#if USE_CLANG
+							+ " -target armv7-none-linux-androideabi"
+							+ " -mfpu=neon"
+							+ " -mtune=krait"
+							+ " -mstackrealign"
+							+ " -fPIC"
+							+ " -fstack-protector-strong"
+							+ " -g"
+							#endif
+							+ " -marm"
+							+ " -march=armv7-a"
+							+ " -mfloat-abi=softfp"
+	.Librarian = ""
+							#if USE_CLANG
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar.exe"
+							#endif
+							#if !USE_CLANG
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar.exe"
+							#endif
+	.ObjectCopyExecutable = ""
+							#if USE_CLANG
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-objcopy.exe"
+							#endif
+							#if !USE_CLANG
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-objcopy.exe"
+							#endif
+	.StripExecutable = ""
+							#if USE_CLANG
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-strip.exe"
+							#endif
+							#if !USE_CLANG
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-strip.exe"
+							#endif
+]
+
+// *************************************************************************************** //
+// ARM
+// Release
+.ARM_Release_Config =
+[
+	Using(.ARM_Config)
+	.ConfigName = "Release"
+	.Defines + ""
+							+ " -DANDROID_RELEASE"
+							+ " -DNDEBUG"
+							+ " -DNDK_DEBUG=0"
+	.IncludePaths + ""
+							#if USE_CLANG
+							+ " -I$NDK_Root$/sources/android/support/include"
+							#endif
+							+ " -I$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-arm/usr/include"
+	.CompileFlags + ""
+							#if !USE_CLANG
+							+ " -g0"
+							#endif
+							+ " -w"
+							+ " -Ofast"
+	.Precompiled_SearchPaths + ""
+							+ " -L$ExternalLibs_Path$/precompiled/release/armeabi-v7a"
+	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"
+	.Output_StaticLibs = "$OutputPath$/$PlatformName$/$ConfigName$/StaticLibs"
+	.Output_SharedLibs = "$OutputPath$/$PlatformName$/$ConfigName$/SharedLibs"
+]
+
+// *************************************************************************************** //
+// ARM
+// Debug
+.ARM_Debug_Config =
+[
+	Using(.ARM_Config)
+	.ConfigName = "Debug"
+	.Defines + ""
+							+ " -D_DEBUG"
+							+ " -DDEBUG"
+	.IncludePaths + ""
+							#if USE_CLANG
+							+ " -I$NDK_Root$/sources/android/support/include"
+							#endif
+							+ " -I$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-arm/usr/include"
+	.CompileFlags + ""
+							#if USE_CLANG
+							+ " -O0"
+							#endif
+							#if !USE_CLANG
+							+ " -g"
+							#endif
+	.Precompiled_SearchPaths + ""
+							+ " -L$ExternalLibs_Path$/precompiled/debug/armeabi-v7a"
+	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"
+	.Output_StaticLibs = "$OutputPath$/$PlatformName$/$ConfigName$/StaticLibs"
+	.Output_SharedLibs = "$OutputPath$/$PlatformName$/$ConfigName$/SharedLibs"
+]
+
+// *************************************************************************************** //
+// x86
+// Release; Debug
+.x86_Config =
+[
+	Using(.Base_Config)
+	.PlatformName = "x86"
+	.Defines + ""
+							+ " -D__BUILD_x86__"
+							+ " -D__CLANGx86__"
+	.CompileFlags + ""
+							+ " -target i686-none-linux-android"
+							+ " -march=i686"
+							+ " -m32"
+							+ " -msse2"
+							+ " -msse3"
+							+ " -mssse3"
+							+ " -mfpmath=sse"
+							+ " -ffunction-sections"
+							+ " -funwind-tables"
+							+ " -fno-stack-protector"
+							+ " -no-canonical-prefixes"
+							+ " -fomit-frame-pointer"
+							+ " -fno-strict-aliasing"
+							+ " -fsigned-char"
+	.Librarian = ""
+							+ "$NDK_Root$/toolchains/x86-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/i686-linux-android-ar.exe"
+	.ObjectCopyExecutable = ""
+							+ "$NDK_Root$/toolchains/x86-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/i686-linux-android-objcopy.exe"
+	.StripExecutable = ""
+							+ "$NDK_Root$/toolchains/x86-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/i686-linux-android-strip.exe"
+]
+
+// *************************************************************************************** //
+// x86
+// Release
+.x86_Release_Config =
+[
+	Using(.x86_Config)
+	.ConfigName = "Release"
+	.Defines + ""
+							+ " -DANDROID_RELEASE"
+							+ " -DNDEBUG"
+	.IncludePaths + ""
+							+ " -I$NDK_Root$/sources/android/support/include"
+							+ " -I$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-x86/usr/include"
+	.CompileFlags + ""
+							+ " -w"
+							+ " -O3"
+	.Precompiled_SearchPaths + ""
+							+ " -L$ExternalLibs_Path$/precompiled/release/x86"
+	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"
+	.Output_StaticLibs = "$OutputPath$/$PlatformName$/$ConfigName$/StaticLibs"
+	.Output_SharedLibs = "$OutputPath$/$PlatformName$/$ConfigName$/SharedLibs"
+]
+
+// *************************************************************************************** //
+// x86
+// Debug
+.x86_Debug_Config =
+[
+	Using(.x86_Config)
+	.ConfigName = "Debug"
+	.Defines + ""
+							+ " -D_DEBUG"
+							+ " -DDEBUG"
+	.IncludePaths + ""
+							+ " -I$NDK_Root$/sources/android/support/include"
+							+ " -I$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-x86/usr/include"
+	.Precompiled_SearchPaths + ""
+							+ " -L$ExternalLibs_Path$/precompiled/debug/x86"
+	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"
+	.Output_StaticLibs = "$OutputPath$/$PlatformName$/$ConfigName$/StaticLibs"
+	.Output_SharedLibs = "$OutputPath$/$PlatformName$/$ConfigName$/SharedLibs"
+]
+
+// *************************************************************************************** //
+.Release_Configs =
+{
+	.ARM_Release_Config,
+	.x86_Release_Config
+}
+
+// *************************************************************************************** //
+.Debug_Configs =
+{
+	.ARM_Debug_Config,
+	.x86_Debug_Config
+}
+
+// *************************************************************************************** //
+.All_Configs =
+{
+	.ARM_Release_Config,
+	.ARM_Debug_Config,
+	.x86_Release_Config,
+	.x86_Debug_Config
+}

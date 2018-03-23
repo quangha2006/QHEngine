@@ -1,0 +1,333 @@
+# Blender MTL File: 'saber324.blend'
+# Material Count: 30
+
+newmtl Material
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.600000 1.600000 1.600000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd sbfronttexture.jpg
+map_Ka sbfronttexture.jpg
+map_Ke sbfronttexture.jpg
+
+newmtl None
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+
+newmtl None_sbbrown1.jpg
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd sbbrown1.jpg
+
+newmtl None_sbmaintext1
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd sbmaintext1.jpg
+
+newmtl None_sbmaintextdark2.jpg
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd sbmaintextdark2.jpg
+
+newmtl None_sbmaintextdark3.jpg
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd sbmaintextdark3.jpg
+
+newmtl None_sbmaintextdark4.jpg
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd sbmaintextdark4.jpg
+
+newmtl None_sbred2.jpg
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd sbred2.jpg
+
+newmtl sbfire1mat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.600000 1.600000 1.600000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd sbfire1.jpg
+map_Ka sbfire1.jpg
+map_Ke sbfire1.jpg
+
+newmtl sbfire2mat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.600000 1.600000 1.600000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd sbfire2.jpg
+map_Ka sbfire2.jpg
+map_Ke sbfire2.jpg
+
+newmtl sbgreenmat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.600000 1.600000 1.600000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd sbgreen.jpg
+map_Ka sbgreen.jpg
+map_Ke sbgreen.jpg
+
+newmtl sblightbluemat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.600000 1.600000 1.600000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd sbblightblue.jpg
+map_Ka sbblightblue.jpg
+map_Ke sbblightblue.jpg
+
+newmtl sblightyellowmat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.600000 1.600000 1.600000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd sbblightyellow.jpg
+map_Ka sbblightyellow.jpg
+map_Ke sbblightyellow.jpg
+
+newmtl sbmain
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbblack.jpg
+
+newmtl sbmain_NONE
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl sbmain_sbbrown1.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbbrown1.jpg
+
+newmtl sbmain_sbbrown2.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbbrown2.jpg
+
+newmtl sbmain_sblightyellow
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl sbmain_sbmaintext1
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbmaintext1.jpg
+
+newmtl sbmain_sbmaintext2.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbmaintext2.jpg
+
+newmtl sbmain_sbmaintext3.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbmaintext3.jpg
+
+newmtl sbmain_sbmaintextdark1.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbmaintextdark1.jpg
+
+newmtl sbmain_sbmaintextdark2.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbmaintextdark2.jpg
+
+newmtl sbmain_sbmaintextdark3.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbmaintextdark3.jpg
+
+newmtl sbmain_sbmaintextdark4.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbmaintextdark4.jpg
+
+newmtl sbmain_sbred1.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbred1.jpg
+
+newmtl sbmain_sbred2.jpg
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd sbred2.jpg
+
+newmtl sbred1mat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.600000 1.600000 1.600000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd sbred1.jpg
+map_Ka sbred1.jpg
+map_Ke sbred1.jpg
+
+newmtl sbwhitemat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.600000 1.600000 1.600000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd sbwhite.jpg
+map_Ka sbwhite.jpg
+map_Ke sbwhite.jpg
+
+newmtl smfiremat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.600000 1.600000 1.600000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd sbfire.jpg
+map_Ka sbfire.jpg
+map_Ke sbfire.jpg

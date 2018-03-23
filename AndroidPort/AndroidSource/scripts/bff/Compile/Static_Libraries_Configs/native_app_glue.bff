@@ -1,0 +1,60 @@
+{
+	.PROJECT_Name = "native_app_glue"
+	#include "../__Common/__STD_C.bff"
+
+	.PROJECT_SourceFiles =
+	{
+    "$NDK_Root$/sources/android/native_app_glue/android_native_app_glue.c"
+	}
+
+	.ExcludedUnitySources =
+	{
+	}
+
+	.CommonValues =
+	[
+		#if ANDROID_CPP_UNITY
+		.CompilerInputUnity = "$PROJECT_Name$_Unity"
+		.CompilerInputFiles = .ExcludedUnitySources
+		#endif
+
+		#if !ANDROID_CPP_UNITY
+		.CompilerInputFiles = .PROJECT_SourceFiles
+							+ .ExcludedUnitySources
+		#endif
+
+		.PROJECT_Defines = ""
+										+ " -DANDROID"
+										+ " -DGLM_FORCE_DEPTH_ZERO_TO_ONE"
+		.PROJECT_IncludePaths = " -I$NDK_Root$/sources/android/native_app_glue"
+
+		.PROJECT_CompilerFlags = ""
+	]
+
+	.ReleaseValues =
+	[
+		.PROJECT_Release_SourceFiles =
+		{
+		}
+		.PROJECT_Release_Defines = ""
+									+ " -D_SECURE_SCL=0"
+									+ " -D_SECURE_SCL_THROWS=0"
+									+ " -DNDEBUG"
+		.PROJECT_Release_IncludePaths = ""
+		.PROJECT_Release_CompilerFlags = ""
+	]
+
+	.DebugValues =
+	[
+		.PROJECT_Debug_SourceFiles =
+		{
+		}
+		.PROJECT_Debug_Defines = ""
+									+ " -D_DEBUG"
+									+ " -DDEBUG"
+		.PROJECT_Debug_IncludePaths = ""
+		.PROJECT_Debug_CompilerFlags = ""
+	]
+
+	#include "../__Common/__CompileTargets.bff"
+}

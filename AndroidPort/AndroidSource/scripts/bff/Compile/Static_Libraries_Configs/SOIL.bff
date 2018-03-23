@@ -1,0 +1,63 @@
+{
+	.PROJECT_Name = "SOIL"
+	#include "../__Common/__STD_SOIL_CPP.bff"
+
+	.PROJECT_SourceFiles =
+	{
+		"$ExternalLibs_Path$/SOIL/src/SOIL.cpp"
+		"$ExternalLibs_Path$/SOIL/src/image_DXT.cpp"
+		"$ExternalLibs_Path$/SOIL/src/image_helper.cpp"
+		"$ExternalLibs_Path$/SOIL/src/stb_image_aug.cpp"
+	}
+
+	.ExcludedUnitySources =
+	{
+	}
+
+	.CommonValues =
+	[
+
+		.CompilerInputFiles = .PROJECT_SourceFiles
+							+ .ExcludedUnitySources
+
+		.PROJECT_Defines = ""
+									+ " -D_CRT_SECURE_NO_WARNINGS"
+									+ " -D_SCL_SECURE_NO_WARNINGS"
+									+ " -D_WINSOCK_DEPRECATED_NO_WARNINGS"
+									+ " -DPLATFORM_ANDROID"
+		.PROJECT_IncludePaths = ""
+									+ " -I$ExternalLibs_Path$/SOIL/src/"
+									+ " -I$ExternalLibs_Path$/Include"
+		.PROJECT_CompilerFlags = ""
+									+ " -fexceptions"
+									+ " -frtti"
+									+ " -fpermissive"
+	]
+
+	.ReleaseValues =
+	[
+		.PROJECT_Release_SourceFiles =
+		{
+		}
+		.PROJECT_Release_Defines = ""
+									+ " -D_SECURE_SCL=0"
+									+ " -D_SECURE_SCL_THROWS=0"
+									+ " -DNDEBUG"
+		.PROJECT_Release_IncludePaths = ""
+		.PROJECT_Release_CompilerFlags = ""
+	]
+
+	.DebugValues =
+	[
+		.PROJECT_Debug_SourceFiles =
+		{
+		}
+		.PROJECT_Debug_Defines = ""
+									+ " -D_DEBUG"
+									+ " -DDEBUG"
+		.PROJECT_Debug_IncludePaths = ""
+		.PROJECT_Debug_CompilerFlags = ""
+	]
+
+	#include "../__Common/__CompileTargets.bff"
+}

@@ -1,0 +1,28 @@
+#include "../Project_Configurations.bff"
+#include "__Common/__compilers.bff"
+
+.AllTargets = 
+{
+	// main
+	"Android_CPP"
+	"EngineLib"
+	
+	//"native_app_glue"
+	//"Audio_c"
+	// lib
+  	//"openal"
+	//"SOIL"
+	//"zlibstatic"
+	//"freetypelib"
+	//"Assimp"
+	
+	//"openddlparser"
+	//"unzip"
+	//"ConvertUTF"
+	//"clipper"
+	//"irrXML"
+	//"poly2tri"
+	//"freetype_2015"
+}
+
+#include "__Common/__TargetConfigurations.bff"

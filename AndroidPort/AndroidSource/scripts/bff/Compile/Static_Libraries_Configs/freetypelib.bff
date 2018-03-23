@@ -1,0 +1,94 @@
+{
+	.PROJECT_Name = "freetypelib"
+	#include "../__Common/__STD_C.bff"
+
+	.PROJECT_SourceFiles =
+	{
+		"$ExternalLibs_Path$/freetype/src/autofit/autofit.c"
+		"$ExternalLibs_Path$/freetype/src/bdf/bdf.c"
+		"$ExternalLibs_Path$/freetype/src/cff/cff.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftbase.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftbitmap.c"
+		"$ExternalLibs_Path$/freetype/src/cache/ftcache.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftdebug.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftfstype.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftgasp.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftglyph.c"
+		"$ExternalLibs_Path$/freetype/src/gzip/ftgzip.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftinit.c"
+		"$ExternalLibs_Path$/freetype/src/lzw/ftlzw.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftstroke.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftsystem.c"
+		"$ExternalLibs_Path$/freetype/src/smooth/smooth.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftbbox.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftfntfmt.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftmm.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftpfr.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftsynth.c"
+		"$ExternalLibs_Path$/freetype/src/base/fttype1.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftwinfnt.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftlcdfil.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftgxval.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftotval.c"
+		"$ExternalLibs_Path$/freetype/src/base/ftpatent.c"
+		"$ExternalLibs_Path$/freetype/src/pcf/pcf.c"
+		"$ExternalLibs_Path$/freetype/src/pfr/pfr.c"
+		"$ExternalLibs_Path$/freetype/src/psaux/psaux.c"
+		"$ExternalLibs_Path$/freetype/src/pshinter/pshinter.c"
+		"$ExternalLibs_Path$/freetype/src/psnames/psmodule.c"
+		"$ExternalLibs_Path$/freetype/src/raster/raster.c"
+		"$ExternalLibs_Path$/freetype/src/sfnt/sfnt.c"
+		"$ExternalLibs_Path$/freetype/src/truetype/truetype.c"
+		"$ExternalLibs_Path$/freetype/src/type1/type1.c"
+		"$ExternalLibs_Path$/freetype/src/cid/type1cid.c"
+		"$ExternalLibs_Path$/freetype/src/type42/type42.c"
+		"$ExternalLibs_Path$/freetype/src/winfonts/winfnt.c"
+
+	}
+
+	.ExcludedUnitySources =
+	{
+	}
+
+	.CommonValues =
+	[
+		#if ZLIB_2015_UNITY
+		.CompilerInputUnity = "$PROJECT_Name$_Unity"
+		.CompilerInputFiles = .ExcludedUnitySources
+		#endif
+
+		#if !ZLIB_2015_UNITY
+		.CompilerInputFiles = .PROJECT_SourceFiles
+							+ .ExcludedUnitySources
+		#endif
+
+		.PROJECT_Defines = ""
+
+		.PROJECT_IncludePaths = ""
+							+ " -I$ExternalLibs_Path$/freetype/include"
+		.PROJECT_CompilerFlags = ""
+									+ " -ffast-math"
+	]
+
+	.ReleaseValues =
+	[
+		.PROJECT_Release_SourceFiles =
+		{
+		}
+		.PROJECT_Release_Defines = ""
+		.PROJECT_Release_IncludePaths = ""
+		.PROJECT_Release_CompilerFlags = ""
+	]
+
+	.DebugValues =
+	[
+		.PROJECT_Debug_SourceFiles =
+		{
+		}
+		.PROJECT_Debug_Defines = ""
+		.PROJECT_Debug_IncludePaths = ""
+		.PROJECT_Debug_CompilerFlags = ""
+	]
+
+	#include "../__Common/__CompileTargets.bff"
+}

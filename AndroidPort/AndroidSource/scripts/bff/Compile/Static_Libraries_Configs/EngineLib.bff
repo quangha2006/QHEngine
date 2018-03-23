@@ -1,0 +1,87 @@
+{
+	.PROJECT_Name = "EngineLib"
+	#include "../__Common/__STD_CPP.bff"
+
+	.PROJECT_SourceFiles =
+	{
+    "$Engine_Sources_Path$/AppBase.cpp"
+	"$Engine_Sources_Path$/AppContext.cpp"
+	"$Engine_Sources_Path$/Camera.cpp"
+    "$Engine_Sources_Path$/EGLAppContext.cpp"
+	"$Engine_Sources_Path$/FrameRate.cpp"
+    "$Engine_Sources_Path$/MainAndroid.cpp"
+	"$Engine_Sources_Path$/Mesh.cpp"
+	"$Engine_Sources_Path$/Model.cpp"
+	"$Engine_Sources_Path$/Shader.cpp"
+	"$Engine_Sources_Path$/ShaderManager.cpp"
+	"$Engine_Sources_Path$/TextRendering.cpp"
+	"$Engine_Sources_Path$/TGA.cpp"
+	"$Engine_Sources_Path$/Timer.cpp"
+	"$Engine_Sources_Path$/Debugging.cpp"
+	"$Engine_Sources_Path$/FrameBuffer.cpp"
+	"$Engine_Sources_Path$/QHText.cpp"
+	}
+
+	.ExcludedUnitySources =
+	{
+	}
+
+	.CommonValues =
+	[
+		#if AUTOMATION_UNITY
+		.CompilerInputUnity = "$PROJECT_Name$_Unity"
+		.CompilerInputFiles = .ExcludedUnitySources
+		#endif
+
+		#if !AUTOMATION_UNITY
+		.CompilerInputFiles = .PROJECT_SourceFiles
+							+ .ExcludedUnitySources
+		#endif
+
+		.PROJECT_Defines = ""
+									+ " -D_CRT_SECURE_NO_WARNINGS"
+									+ " -D_SCL_SECURE_NO_WARNINGS"
+									+ " -D_WINSOCK_DEPRECATED_NO_WARNINGS"
+									+ " -DOS_ANDROID"
+									+ " -DPLATFORM_ANDROID"
+		.PROJECT_IncludePaths = ""
+									+ " -I$GameRoot$/Include"
+									+ " -I$GameRoot$/External"
+									+ " -I$GameRoot$/External/SOIL/src"
+									+ " -I$GameRoot$/External/openal/include"
+									+ " -I$GameRoot$/External/freetype_2015/include"
+									+ " -I$GameRoot$/External/AssimpLib/include"
+                  					+ " -I$Engine_Sources_Path$"
+
+		.PROJECT_CompilerFlags = ""
+									+ " -fexceptions"
+									+ " -w"
+	]
+
+	.ReleaseValues =
+	[
+		.PROJECT_Release_SourceFiles =
+		{
+		}
+		.PROJECT_Release_Defines = ""
+									+ " -D_SECURE_SCL=0"
+									+ " -D_SECURE_SCL_THROWS=0"
+									+ " -DNDEBUG"
+		.PROJECT_Release_IncludePaths = ""
+		.PROJECT_Release_CompilerFlags = ""
+	]
+
+	.DebugValues =
+	[
+		.PROJECT_Debug_SourceFiles =
+		{
+		}
+		.PROJECT_Debug_Defines = ""
+									+ " -D_DEBUG"
+									+ " -DDEBUG"
+		.PROJECT_Debug_IncludePaths = ""
+		.PROJECT_Debug_CompilerFlags = ""
+	]
+
+	#include "../__Common/__CompileTargets.bff"
+}

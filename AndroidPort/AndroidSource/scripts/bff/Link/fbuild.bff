@@ -1,0 +1,8 @@
+#include "../Project_Configurations.bff"
+
+.ProjectName_ARM = "native-activity"
+.ProjectName_x86 = "native-activity"
+
+#include "Android-SharedLib.bff"
+#include "__Link_Common/__StripDebugSymbols.bff"
+#include "__Link_Common/__GenerateDsym.bff"

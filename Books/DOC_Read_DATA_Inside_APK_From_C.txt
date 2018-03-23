@@ -1,0 +1,122 @@
+          //////////////////////////////////
+           READ DATA IN ASSET FOLDER NATIVE
+          //////////////////////////////////
+          
+* https://github.com/netguy204/gambit-game-lib/blob/dk94/android_fopen.c
+
+* Considerations: According with Android Resources system, you should considerer next points:
+    - Resources files are stored in assets folder.
+    - Assets files are highly compressed in APK.
+    - Resources stored in APK can be modify (open file for write).
+
+
+          
+1. JAVA.
+  - AndroidFramework\java\utils\PackageUtils\MainActivity.java
+    import android.content.res.AssetManager;    // PV: Add.
+    
+    public class MainActivity extends Activity implements SurfaceHolder.Callback
+    {
+      ...
+      private static AssetManager m_AssetManager;   // PV: ADD.
+      
+      @Override
+      public void onCreate(Bundle savedInstanceState) 
+      {
+        System.loadLibrary(SO_LIB_FILE);
+        ...
+        m_AssetManager = getAssets();   // PV: ADD.
+        JNIBridge.NativeSetAssetManger(m_AssetManager);   // PV: ADD.
+        ...
+      }
+    }
+    
+  - AndroidFramework\java\utils\PackageUtils\JNIBridge.java
+    import android.content.res.AssetManager;    // PV: Add.
+    
+    public class JNIBridge
+    {
+      ...
+      public static native void NativeSetAssetManger(AssetManager assetManager);   // PV: ADD.
+      ...
+    }
+    
+2. JNI
+  - AndroidFramework\native\GameUtils\_internal\jni_bridge.h
+    extern "C" 
+    {
+      ...
+      JNIEXPORT void JNICALL JNI_FUNCTION(PackageUtils_JNIBridge_NativeSetAssetManger)(JNIEnv* jenv, jobject obj, jobject assetManager);    // PV: ADD.
+      ...
+    }
+    
+  - AndroidFramework\native\GameUtils\_internal\jni_bridge.cpp
+    // PV: ADD.
+    #include <android/asset_manager.h>
+    #include <android/asset_manager_jni.h>
+
+    AAssetManager* gAssetManager;
+    // PV: END.
+    
+    // PV: ADD.
+    JNIEXPORT void JNICALL 
+    JNI_FUNCTION(PackageUtils_JNIBridge_NativeSetAssetManger)(JNIEnv* jenv, jobject obj, jobject assetManager)
+    {
+      gAssetManager = AAssetManager_fromJava(jenv, assetManager);
+    }
+    
+3. CODE GAME.
+  #include <android/asset_manager.h>
+  #include <android/asset_manager_jni.h>
+
+  extern AAssetManager* gAssetManager;
+
+  static int android_read(void* cookie, char* buf, int size)
+  {
+    return AAsset_read((AAsset*)cookie, buf, size);
+  }
+
+  static int android_write(void* cookie, const char* buf, int size)
+  {
+    return EACCES; // can't provide write access to the apk
+  }
+
+  static fpos_t android_seek(void* cookie, fpos_t offset, int whence)
+  {
+    return AAsset_seek((AAsset*)cookie, offset, whence);
+  }
+
+  static int android_close(void* cookie)
+  {
+    AAsset_close((AAsset*)cookie);
+    return 0;
+  }
+  
+  AAsset* asset = AAssetManager_open(gAssetManager, "main.1133.com.gameloft.android.ANMP.GloftZSHM.obb", 0);    // Read Direct File OBB Inside "asset" Folder.
+  
+  if(!asset)
+  {
+    return;
+  }
+  
+  FILE* pFile = funopen(asset, android_read, android_write, android_seek, android_close);     // Return FILE*. After This Line We Can Use "fread" To Read Data Instead "AAsset_read".
+  
+  ...
+  fread(buffer, 1, m_fileSize, pFile);
+  ...
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

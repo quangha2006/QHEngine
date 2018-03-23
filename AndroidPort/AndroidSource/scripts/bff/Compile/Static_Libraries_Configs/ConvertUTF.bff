@@ -1,0 +1,67 @@
+{
+	.PROJECT_Name = "ConvertUTF"
+	#include "../__Common/__STD_C.bff"
+
+	.PROJECT_SourceFiles =
+	{
+		"$ExternalLibs_Path$/AssimpLib/contrib/ConvertUTF/ConvertUTF.c"
+	}
+
+	.ExcludedUnitySources =
+	{
+	}
+
+	.CommonValues =
+	[
+		#if AUTOMATION_UNITY
+		.CompilerInputUnity = "$PROJECT_Name$_Unity"
+		.CompilerInputFiles = .ExcludedUnitySources
+		#endif
+
+		#if !AUTOMATION_UNITY
+		.CompilerInputFiles = .PROJECT_SourceFiles
+							+ .ExcludedUnitySources
+		#endif
+
+		.PROJECT_Defines = ""
+									+ " -D_CRT_SECURE_NO_WARNINGS"
+									+ " -D_SCL_SECURE_NO_WARNINGS"
+									+ " -D_WINSOCK_DEPRECATED_NO_WARNINGS"
+									+ " -DOS_ANDROID"
+									+ " -DPLATFORM_ANDROID"
+									+ " -DASSIMP_BUILD_NO_C4D_IMPORTER"
+		.PROJECT_IncludePaths = ""
+									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/ConvertUTF"
+
+		.PROJECT_CompilerFlags = ""
+									+ " -fexceptions"
+									+ " -w"
+	]
+
+	.ReleaseValues =
+	[
+		.PROJECT_Release_SourceFiles =
+		{
+		}
+		.PROJECT_Release_Defines = ""
+									+ " -D_SECURE_SCL=0"
+									+ " -D_SECURE_SCL_THROWS=0"
+									+ " -DNDEBUG"
+		.PROJECT_Release_IncludePaths = ""
+		.PROJECT_Release_CompilerFlags = ""
+	]
+
+	.DebugValues =
+	[
+		.PROJECT_Debug_SourceFiles =
+		{
+		}
+		.PROJECT_Debug_Defines = ""
+									+ " -D_DEBUG"
+									+ " -DDEBUG"
+		.PROJECT_Debug_IncludePaths = ""
+		.PROJECT_Debug_CompilerFlags = ""
+	]
+
+	#include "../__Common/__CompileTargets.bff"
+}

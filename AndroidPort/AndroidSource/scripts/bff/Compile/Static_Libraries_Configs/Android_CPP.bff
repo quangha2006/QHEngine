@@ -1,0 +1,71 @@
+{
+	.PROJECT_Name = "Android_CPP"
+	#include "../__Common/__STD_ANDROID_CPP.bff"
+
+	.PROJECT_SourceFiles =
+	{
+		"$jni_Path$/jni_code.cpp"
+		"$Game_Sources_Path$/Basic.cpp"
+	}
+
+	.ExcludedUnitySources =
+	{
+	}
+
+	.CommonValues =
+	[
+		#if ANDROID_CPP_UNITY
+		.CompilerInputUnity = "$PROJECT_Name$_Unity"
+		.CompilerInputFiles = .ExcludedUnitySources
+		#endif
+
+		#if !ANDROID_CPP_UNITY
+		.CompilerInputFiles = .PROJECT_SourceFiles
+							+ .ExcludedUnitySources
+		#endif
+
+		.PROJECT_Defines = ""
+										+ " -DANDROID"
+										+ " -DGLM_FORCE_DEPTH_ZERO_TO_ONE"
+		.PROJECT_IncludePaths = ""
+									+ " -I$Game_Sources_Path$"
+                  					+ " -I$GameRoot$/Include"
+				  					+ " -I$GameRoot$/External"
+									+ " -I$GameRoot$/External/SOIL/src"
+									+ " -I$GameRoot$/External/openal/include"
+									+ " -I$GameRoot$/External/freetype_2015/include"
+									+ " -I$GameRoot$/External/AssimpLib/include"
+                  					+ " -I$Engine_Sources_Path$"
+                  					+ " -I$Engine_Sources_Path$"
+				  					+ " -I$NDK_Root$/sources/android/native_app_glue"
+
+		.PROJECT_CompilerFlags = ""
+	]
+
+	.ReleaseValues =
+	[
+		.PROJECT_Release_SourceFiles =
+		{
+		}
+		.PROJECT_Release_Defines = ""
+									+ " -D_SECURE_SCL=0"
+									+ " -D_SECURE_SCL_THROWS=0"
+									+ " -DNDEBUG"
+		.PROJECT_Release_IncludePaths = ""
+		.PROJECT_Release_CompilerFlags = ""
+	]
+
+	.DebugValues =
+	[
+		.PROJECT_Debug_SourceFiles =
+		{
+		}
+		.PROJECT_Debug_Defines = ""
+									+ " -D_DEBUG"
+									+ " -DDEBUG"
+		.PROJECT_Debug_IncludePaths = ""
+		.PROJECT_Debug_CompilerFlags = ""
+	]
+
+	#include "../__Common/__CompileTargets.bff"
+}

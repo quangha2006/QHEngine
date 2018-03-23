@@ -1,0 +1,9 @@
+	.PROJECT_LanguageStandard 	= "-std=c++11 -x c++"
+	.StaticLibOutputName     	= 'lib$PROJECT_Name$.a'
+    .Compiler_Suffix			= "CPP"
+	.CompilerInputPattern   	= "*.cpp"
+	.UnityInputPattern 			= "*.cpp"
+	.UnityOutputPattern 		= "$PROJECT_Name$_*.cpp"
+	.UnityOutputPath 			= "$OutputPath$/CompileUnits/$PROJECT_Name$"
+	
+	#include						"./../__Common/__PlatformSpecific_Defaults.bff"

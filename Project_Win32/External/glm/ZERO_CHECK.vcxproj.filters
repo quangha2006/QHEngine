@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\Gameloft\Learning3D\OpenGL30-09_09_2013.git\trunk\QHEngine\Engine\External\glm\CMakeFiles\caee752ffcc50b3a197681919a7a83fa\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{4AE64234-71E7-3FB2-BECB-CDE248914C40}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

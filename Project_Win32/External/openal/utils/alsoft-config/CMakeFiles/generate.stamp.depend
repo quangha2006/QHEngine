@@ -1,0 +1,10 @@
+# CMake generation dependency list for this directory.
+E:/Gameloft/Learnning3D/trunk/Libs_Project/openal/utils/alsoft-config/CMakeLists.txt
+F:/Android/android-sdk/cmake/3.6.3155560/share/cmake-3.6/Modules/FindQt4.cmake
+F:/Android/android-sdk/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckCXXSymbolExists.cmake
+F:/Android/android-sdk/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckSymbolExists.cmake
+F:/Android/android-sdk/cmake/3.6.3155560/share/cmake-3.6/Modules/MacroAddFileDependencies.cmake
+F:/Android/android-sdk/cmake/3.6.3155560/share/cmake-3.6/Modules/FindPackageHandleStandardArgs.cmake
+F:/Android/android-sdk/cmake/3.6.3155560/share/cmake-3.6/Modules/FindPackageMessage.cmake
+F:/Android/android-sdk/cmake/3.6.3155560/share/cmake-3.6/Modules/CMakeParseArguments.cmake
+F:/Android/android-sdk/cmake/3.6.3155560/share/cmake-3.6/Modules/CMakePushCheckState.cmake

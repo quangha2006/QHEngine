@@ -1,0 +1,69 @@
+{
+	.PROJECT_Name = "zlibstatic"
+	#include "../__Common/__STD_C.bff"
+
+	.PROJECT_SourceFiles =
+	{
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/adler32.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/compress.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/crc32.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/deflate.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/gzclose.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/gzlib.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/gzread.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/gzwrite.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/infback.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/inffast.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/inflate.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/inftrees.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/trees.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/uncompr.c"
+		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/zutil.c"
+	}
+
+	.ExcludedUnitySources =
+	{
+	}
+
+	.CommonValues =
+	[
+		#if ZLIB_2015_UNITY
+		.CompilerInputUnity = "$PROJECT_Name$_Unity"
+		.CompilerInputFiles = .ExcludedUnitySources
+		#endif
+
+		#if !ZLIB_2015_UNITY
+		.CompilerInputFiles = .PROJECT_SourceFiles
+							+ .ExcludedUnitySources
+		#endif
+
+		.PROJECT_Defines = ""
+									+ " -DVOX_INTERNAL_CODE"
+		.PROJECT_IncludePaths = ""
+									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/zlib"
+		.PROJECT_CompilerFlags = ""
+									+ " -ffast-math"
+	]
+
+	.ReleaseValues =
+	[
+		.PROJECT_Release_SourceFiles =
+		{
+		}
+		.PROJECT_Release_Defines = ""
+		.PROJECT_Release_IncludePaths = ""
+		.PROJECT_Release_CompilerFlags = ""
+	]
+
+	.DebugValues =
+	[
+		.PROJECT_Debug_SourceFiles =
+		{
+		}
+		.PROJECT_Debug_Defines = ""
+		.PROJECT_Debug_IncludePaths = ""
+		.PROJECT_Debug_CompilerFlags = ""
+	]
+
+	#include "../__Common/__CompileTargets.bff"
+}

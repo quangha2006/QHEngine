@@ -1,0 +1,99 @@
+{
+	.PROJECT_Name = "openal"
+	#include "../__Common/__STD_C.bff"
+
+	.PROJECT_SourceFiles =
+	{
+    "$ExternalLibs_Path$/openal/OpenAL32/alAuxEffectSlot.c"
+    "$ExternalLibs_Path$/openal/OpenAL32/alBuffer.c"
+    "$ExternalLibs_Path$/openal/OpenAL32/alEffect.c"
+    "$ExternalLibs_Path$/openal/OpenAL32/alError.c"
+    "$ExternalLibs_Path$/openal/OpenAL32/alExtension.c"
+    "$ExternalLibs_Path$/openal/OpenAL32/alFilter.c"
+    "$ExternalLibs_Path$/openal/OpenAL32/alListener.c"
+    "$ExternalLibs_Path$/openal/OpenAL32/alSource.c"
+    "$ExternalLibs_Path$/openal/OpenAL32/alState.c"
+    "$ExternalLibs_Path$/openal/OpenAL32/alThunk.c"
+    "$ExternalLibs_Path$/openal/Alc/ALc.c"
+    "$ExternalLibs_Path$/openal/Alc/alcConfig.c"
+    "$ExternalLibs_Path$/openal/Alc/alcDedicated.c"
+    "$ExternalLibs_Path$/openal/Alc/alcEcho.c"
+    "$ExternalLibs_Path$/openal/Alc/alcModulator.c"
+    "$ExternalLibs_Path$/openal/Alc/alcReverb.c"
+    "$ExternalLibs_Path$/openal/Alc/alcRing.c"
+    "$ExternalLibs_Path$/openal/Alc/alcThread.c"
+    "$ExternalLibs_Path$/openal/Alc/ALu.c"
+    "$ExternalLibs_Path$/openal/Alc/bs2b.c"
+    "$ExternalLibs_Path$/openal/Alc/helpers.c"
+    "$ExternalLibs_Path$/openal/Alc/hrtf.c"
+    "$ExternalLibs_Path$/openal/Alc/mixer.c"
+    "$ExternalLibs_Path$/openal/Alc/panning.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/alsa.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/android.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/coreaudio.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/dsound.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/loopback.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/mmdevapi.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/null.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/opensl.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/oss.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/portaudio.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/pulseaudio.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/sndio.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/solaris.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/wave.c"
+    "$ExternalLibs_Path$/openal/Alc/backends/winmm.c"
+	}
+
+	.ExcludedUnitySources =
+	{
+	}
+
+	.CommonValues =
+	[
+		#if ANDROID_CPP_UNITY
+		.CompilerInputUnity = "$PROJECT_Name$_Unity"
+		.CompilerInputFiles = .ExcludedUnitySources
+		#endif
+
+		#if !ANDROID_CPP_UNITY
+		.CompilerInputFiles = .PROJECT_SourceFiles
+							+ .ExcludedUnitySources
+		#endif
+
+		.PROJECT_Defines = ""
+										+ " -DANDROID"
+		.PROJECT_IncludePaths = ""
+                    + " -I$ExternalLibs_Path$/openal"
+                    + " -I$ExternalLibs_Path$/openal/include"
+                    + " -I$ExternalLibs_Path$/openal/OpenAL32/Include"
+		.PROJECT_CompilerFlags = ""
+	]
+
+	.ReleaseValues =
+	[
+		.PROJECT_Release_SourceFiles =
+		{
+		}
+		.PROJECT_Release_Defines = ""
+									+ " -D_SECURE_SCL=0"
+									+ " -D_SECURE_SCL_THROWS=0"
+									+ " -DNDEBUG"
+		.PROJECT_Release_IncludePaths = ""
+		.PROJECT_Release_CompilerFlags = ""
+	]
+
+	.DebugValues =
+	[
+		.PROJECT_Debug_SourceFiles =
+		{
+		}
+		.PROJECT_Debug_Defines = ""
+									+ " -D_DEBUG"
+									+ " -DDEBUG"
+		.PROJECT_Debug_IncludePaths = ""
+		.PROJECT_Debug_CompilerFlags = ""
+	]
+
+	#include "../__Common/__CompileTargets.bff"
+}
