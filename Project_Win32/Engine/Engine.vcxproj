@@ -93,11 +93,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\AndroidPort\AndroidSource\app\jni\jni_code.cpp">
+    <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\jni_code.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\AndroidPort\AndroidSource\app\jni\Native_android_surface.cpp">
+    <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\Native_android_surface.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -128,7 +128,7 @@
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\AndroidPort\AndroidSource\app\jni\GameFunctionsToImplement.h">
+    <ClInclude Include="..\..\AndroidPort\AndroidSource\app\jni\GameFunctionsToImplement.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>

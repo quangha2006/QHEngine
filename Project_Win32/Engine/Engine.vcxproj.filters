@@ -42,9 +42,6 @@
     <ClCompile Include="EGLAppContext.cpp">
       <Filter>EGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\AndroidPort\AndroidSource\app\jni\Native_android_surface.cpp">
-      <Filter>Android</Filter>
-    </ClCompile>
     <ClCompile Include="MainAndroid.cpp">
       <Filter>Android</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
     <ClCompile Include="FrameRate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\AndroidPort\AndroidSource\app\jni\jni_code.cpp">
-      <Filter>Android</Filter>
-    </ClCompile>
     <ClCompile Include="Debugging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -86,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\jni_code.cpp">
+      <Filter>Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\Native_android_surface.cpp">
+      <Filter>Android</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +134,6 @@
     <ClInclude Include="FrameRate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\AndroidPort\AndroidSource\app\jni\GameFunctionsToImplement.h">
-      <Filter>Android</Filter>
-    </ClInclude>
     <ClInclude Include="Debugging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -148,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AndroidPort\AndroidSource\app\jni\GameFunctionsToImplement.h">
+      <Filter>Android</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
