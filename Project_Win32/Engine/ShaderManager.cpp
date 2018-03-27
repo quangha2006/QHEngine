@@ -67,9 +67,9 @@ GLuint ShaderManager::createShader(GLenum shaderType, const char * src)
 
 	string final_shaderSrc;
 #ifdef ANDROID
-	final_shaderSrc = "#version 300 es\n";
+	final_shaderSrc = "#version 100\n";	//300 es
 #else
-	final_shaderSrc = "#version 330\n";
+	final_shaderSrc = "#version 100\n";
 #endif
 	final_shaderSrc += string(shaderSrc);
 	GLuint shader = glCreateShader(shaderType);
@@ -93,8 +93,8 @@ GLuint ShaderManager::createShader(GLenum shaderType, const char * src)
 			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
 			if (infoLog) {
 				glGetShaderInfoLog(shader, infoLogLen, NULL, infoLog);
-				LOGI("ERROR!\n");
-				LOGI("Could not compile %s shader:\n%s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
+				LOGE("ERROR!\n");
+				LOGE("Could not compile %s shader:\n%s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
 				free(infoLog);
 			}
 		}

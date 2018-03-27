@@ -72,7 +72,7 @@ goto END
   goto END
 ) else if %DO_JOB%==7 (
 	pushd %CUR_MPATH%\..
-	adb push Resources /sdcard/
+	adb push Resources /sdcard/Android/data/com.android.learnning3D/files/
   popd
   goto END
 )

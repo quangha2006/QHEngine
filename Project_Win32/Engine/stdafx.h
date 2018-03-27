@@ -28,6 +28,7 @@
 #define FALSE 0
 #define PLATFORM "OPENGLES"
 #endif
+
 inline
 GLenum CheckGLError(const char *calling_location)
 {
@@ -72,6 +73,7 @@ GLenum CheckGLError(const char *calling_location)
 	}
 	return err_code;
 }
+
 /**
 TextRendering::Add(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, GLfloat alpha)
 **/

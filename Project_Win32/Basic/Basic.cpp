@@ -12,16 +12,16 @@ void Basic::Init()
 	mCamera->Target = glm::vec3(0.0f, 3.0f, 0.2f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
-	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
+	//ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
 	//ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_screen.vs", "Shaders/framebuffers_screen.fs"); // For debug
-	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
-	//ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
+	//ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
+	ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
 	//mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
+	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
-	mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
-	mSun.SetUseLighting(false);
-	mSun.SetCustomColor(glm::vec3(1.0f));
+	//mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
+	//mSun.SetUseLighting(false);
+	//mSun.SetCustomColor(glm::vec3(1.0f));
 
 	//mSpider.Init("test/model.obj", mCamera, true);
 	mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
