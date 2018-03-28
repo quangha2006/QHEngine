@@ -151,22 +151,22 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\Shaders\DepthShader.fs">
+    <None Include="..\..\Resources\Shaders\DepthShader.fs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\DepthShader.vs">
+    <None Include="..\..\Resources\Shaders\DepthShader.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\framebuffers_screen.fs">
+    <None Include="..\..\Resources\Shaders\framebuffers_screen.fs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\framebuffers_screen.vs">
+    <None Include="..\..\Resources\Shaders\framebuffers_screen.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\model_loading.fs">
+    <None Include="..\..\Resources\Shaders\model_loading.fs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\model_loading.vs">
+    <None Include="..\..\Resources\Shaders\model_loading.vs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
