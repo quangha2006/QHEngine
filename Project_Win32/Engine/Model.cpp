@@ -92,7 +92,7 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	LOGI("\nLoad Model: %s\n", path_modif.c_str());
 	if (ShaderManager::getInstance()->GetProgram(useshadername.c_str()) == 0)
 	{
-		LOGI("ERROR! modelShader is invalid!");
+		LOGE("ERROR! modelShader is invalid!");
 		return;
 	}
 
@@ -658,14 +658,14 @@ void SOIL_loader(string fullpath, unsigned int textureID/*, GLFWwindow* win*/)
 				LOGI("ENDLOAD TGA  Load: %dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
 			}
 			else
-				LOGI("ERROR when load: %s \n", fullpath.c_str());
+				LOGE("ERROR when load: %s \n", fullpath.c_str());
 		}
 		else
 		{
 			uint64_t time_begin = Timer::getMillisecond();
 			if (SOIL_load_OGL_texture(fullpath.c_str(), SOIL_LOAD_RGBA, textureID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS) == 0)
 			{
-				LOGI("ERROR when load: %s \n", fullpath.c_str());
+				LOGE("ERROR when load: %s \n", fullpath.c_str());
 				return;
 			}
 			uint64_t time_end = Timer::getMillisecond();

@@ -68,14 +68,14 @@ bool TextRendering::createProgram()
 	glLinkProgram(program);
 	glGetProgramiv(program, GL_LINK_STATUS, &linked);
 	if (!linked) {
-		LOGI("Could not link program\n");
+		LOGE("Could not link program\n");
 		GLint infoLogLen = 0;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLen);
 		if (infoLogLen) {
 			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
 			if (infoLog) {
 				glGetProgramInfoLog(program, infoLogLen, NULL, infoLog);
-				LOGI("Could not link program:\n%s\n", infoLog);
+				LOGE("Could not link program:\n%s\n", infoLog);
 				free(infoLog);
 			}
 		}
@@ -105,7 +105,7 @@ GLuint TextRendering::createShader(GLenum shaderType, const char * src)
 			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
 			if (infoLog) {
 				glGetShaderInfoLog(shader, infoLogLen, NULL, infoLog);
-				LOGI("Could not compile %s shader:\n%s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
+				LOGE("Could not compile %s shader:\n%s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
 				free(infoLog);
 			}
 		}
@@ -171,7 +171,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	// All functions return a value different than 0 whenever an error occurred
 	if (FT_Init_FreeType(&ft))
 	{
-		LOGI("ERROR::FREETYPE: Could not init FreeType Library\n");
+		LOGE("ERROR::FREETYPE: Could not init FreeType Library\n");
 		return false;
 	}
 
@@ -181,7 +181,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 
 	if (FT_New_Face(ft, path_modif.c_str(), 0, &face))
 	{
-		LOGI("ERROR::FREETYPE: Failed to load font");
+		LOGE("ERROR::FREETYPE: Failed to load font");
 		return false;
 	}
 
@@ -393,7 +393,7 @@ void TextRendering::Draw()
 	{
 		glBufferData(GL_ARRAY_BUFFER, fulltextdata.size() * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
 		m_Maxchar = fulltextdata.size() / 6;
-		LOGI("Increase m_Maxchar: %d", m_Maxchar);
+		LOGW("Increase m_Maxchar: %d", m_Maxchar);
 	}
 	glBufferSubData(GL_ARRAY_BUFFER, 0, fulltextdata.size() * sizeof(TextData), &fulltextdata[0]); // Be sure to use glBufferSubData and not glBufferData
 

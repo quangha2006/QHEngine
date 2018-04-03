@@ -67,7 +67,7 @@ GLenum CheckGLError(const char *calling_location)
 		default:
 			error_enum = "unknown";
 		}
-		LOGI("OpenGL Error @ %s: %s (%i)\n", calling_location, error_enum.c_str(), err_code);
+		LOGE("OpenGL Error @ %s: %s (%i)\n", calling_location, error_enum.c_str(), err_code);
 		//err_code = glGetError();
 	}
 	return err_code;

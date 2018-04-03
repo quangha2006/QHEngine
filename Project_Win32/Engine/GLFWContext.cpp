@@ -31,7 +31,7 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 {
 	if (!glfwInit())
 	{
-		LOGI("Failed to initialize GLFW\n");
+		LOGE("Failed to initialize GLFW\n");
 		return false;
 	}
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -48,7 +48,7 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 	window = glfwCreateWindow(width, height, "Begin App", NULL, NULL); // Open a window and create its OpenGL context
 
 	if (window == NULL) {
-		LOGI("Failed to open GLFW window.");
+		LOGE("Failed to open GLFW window.");
 		glfwTerminate();
 		return false;
 	}
@@ -67,7 +67,7 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 	this->height = height;
 	glewExperimental = true; // Needed in core profile
 	if (glewInit() != GLEW_OK) {
-		LOGI("Failed to initialize GLEW\n");
+		LOGE("Failed to initialize GLEW\n");
 		return false;
 	}
 	// Ensure we can capture the escape key being pressed below

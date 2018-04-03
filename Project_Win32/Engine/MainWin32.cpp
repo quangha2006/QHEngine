@@ -38,7 +38,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	if (!app->initialize(defaultWidth, defaultHeight))
 	{
-		LOGI("FAILED initialize");
+		LOGE("FAILED initialize");
 		_getch();
 		return -1;
 	}
@@ -61,8 +61,20 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	return 0;
 }
 
-void PlatformLog(const char* fmt, ...)
+void PlatformLog(int logType, const char* fmt, ...)
 {
+	static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	switch (logType)
+	{
+	case 1: SetConsoleTextAttribute(hConsole, 10); //green
+		break;
+	case 2: SetConsoleTextAttribute(hConsole, 12); //red
+		break;
+	default:
+		SetConsoleTextAttribute(hConsole, 7); //white
+	}
+	
 	const int length = 10240;
 	char buffer[length];
 	va_list ap;

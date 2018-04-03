@@ -9,7 +9,7 @@ char const * QueryString(EGLDisplay display, EGLint name)
 	char const * eglString = eglQueryString(display, name);
 	if (eglString == NULL)
 	{
-		LOGI("NativeSurface::QueryString: eglQueryString failed.");
+		LOGE("NativeSurface::QueryString: eglQueryString failed.");
 	}
 	return eglString;
 }
@@ -135,17 +135,17 @@ bool EGLAppContext::createWindow(int32_t width, int32_t height)
 	context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
 	if (context == EGL_NO_CONTEXT)
 	{
-		LOGI("ERROR! eglCreateContext Failed\n");
+		LOGE("ERROR! eglCreateContext Failed\n");
 		//return EGL_FALSE;
 	}
 
-	if (window == NULL) LOGI("window == NULL eglCreateWindowSurface");
+	if (window == NULL) LOGE("window == NULL eglCreateWindowSurface");
 	surface = eglCreateWindowSurface(display, config, window, NULL);
 	//surface = eglCreatePbufferSurface(display, config, attribList);
 	if (surface == EGL_NO_SURFACE)
 	{
 		delete[] attribList;
-		LOGI("ERROR! eglCreateWindowSurface Failed\n");
+		LOGE("ERROR! eglCreateWindowSurface Failed\n");
 		//return EGL_FALSE;
 	}
 
@@ -153,13 +153,13 @@ bool EGLAppContext::createWindow(int32_t width, int32_t height)
 	//eglSwapInterval(display, 0);
 	if (!eglMakeCurrent(display, surface, surface, context))
 	{
-		LOGI("ERROR! eglMakeCurrent Failed\n");
+		LOGE("ERROR! eglMakeCurrent Failed\n");
 		//return EGL_FALSE;
 	}
 
 	if (eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE)
 	{
-		LOGI("eglBindAPI FAILED\n");
+		LOGE("eglBindAPI FAILED\n");
 		//return false;
 	}
 

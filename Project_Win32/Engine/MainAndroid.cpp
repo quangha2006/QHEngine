@@ -29,7 +29,7 @@ void Init_MainAndroid(int w, int h)
 
 	if (!app->initialize(w, h))
 	{
-		LOGI("FAILED initialize");
+		LOGE("FAILED initialize");
 	}
 }
 void Resize(int w, int h) 
