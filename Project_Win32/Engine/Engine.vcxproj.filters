@@ -42,9 +42,6 @@
     <ClCompile Include="EGLAppContext.cpp">
       <Filter>EGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\AndroidPort\AndroidSource\app\jni\Native_android_surface.cpp">
-      <Filter>Android</Filter>
-    </ClCompile>
     <ClCompile Include="MainAndroid.cpp">
       <Filter>Android</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
     <ClCompile Include="FrameRate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\AndroidPort\AndroidSource\app\jni\jni_code.cpp">
-      <Filter>Android</Filter>
-    </ClCompile>
     <ClCompile Include="Debugging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -86,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\jni_code.cpp">
+      <Filter>Android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\Native_android_surface.cpp">
+      <Filter>Android</Filter>
     </ClCompile>
     <ClCompile Include="SkyBox.cpp">
       <Filter>Source Files</Filter>
@@ -137,9 +137,6 @@
     <ClInclude Include="FrameRate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\AndroidPort\AndroidSource\app\jni\GameFunctionsToImplement.h">
-      <Filter>Android</Filter>
-    </ClInclude>
     <ClInclude Include="Debugging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -152,27 +149,30 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\AndroidPort\AndroidSource\app\jni\GameFunctionsToImplement.h">
+      <Filter>Android</Filter>
+    </ClInclude>
     <ClInclude Include="SkyBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\Shaders\DepthShader.fs">
+    <None Include="..\..\Resources\Shaders\DepthShader.fs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\DepthShader.vs">
+    <None Include="..\..\Resources\Shaders\DepthShader.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\framebuffers_screen.fs">
+    <None Include="..\..\Resources\Shaders\framebuffers_screen.fs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\framebuffers_screen.vs">
+    <None Include="..\..\Resources\Shaders\framebuffers_screen.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\model_loading.fs">
+    <None Include="..\..\Resources\Shaders\model_loading.fs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Resources\Shaders\model_loading.vs">
+    <None Include="..\..\Resources\Shaders\model_loading.vs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
