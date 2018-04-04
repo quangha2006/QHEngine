@@ -87,6 +87,9 @@
     <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\Native_android_surface.cpp">
       <Filter>Android</Filter>
     </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="..\..\AndroidPort\AndroidSource\app\jni\GameFunctionsToImplement.h">
       <Filter>Android</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

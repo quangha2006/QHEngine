@@ -1,15 +1,14 @@
-#extension GL_EXT_gpu_shader4 : enable
 precision highp float;
-attribute vec3 aPos;
-attribute vec2 aTexCoords;
-attribute vec4 sWeights;
-attribute ivec4 sIDs;
-attribute vec3 aNormal;
-attribute vec3 aTangent;
-attribute vec3 aBitangent;
+in vec3 aPos;
+in vec2 aTexCoords;
+in vec4 sWeights;
+in vec4 sIDs;
+in vec3 aNormal;
+in vec3 aTangent;
+in vec3 aBitangent;
                                                              
-varying vec2 TexCoord0;
-
+out vec2 TexCoord0;
+out float sIDs0;
 const int MAX_BONES = 33;
 
 uniform mat4 lookat;
@@ -20,16 +19,17 @@ void main()
 	TexCoord0    = aTexCoords;
 
 	highp vec4 PosL = vec4(0.0, 0.0, 0.0, 1.0);
-	highp int index = int(sIDs[0]);
+	highp int index = int(sIDs.x);
 	highp mat4 BoneTransform	= gBones[index] * sWeights.x;
-		index = int(sIDs[1]);
+		index = int(sIDs.y);
 		BoneTransform += gBones[index] * sWeights.y;
-		index = int(sIDs[2]);
+		index = int(sIDs.z);
 		BoneTransform += gBones[index] * sWeights.z;
-		index = int(sIDs[3]);
+		index = int(sIDs.w);
 		BoneTransform += gBones[index] * sWeights.w;
 
     PosL    =  BoneTransform * vec4(aPos, 1.0);
 
-    gl_Position  = lookat * PosL;;
+    gl_Position  = lookat * PosL;
+	sIDs0 = sIDs.z;
 }

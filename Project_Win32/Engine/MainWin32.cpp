@@ -4,7 +4,6 @@
 #include "AppBase.h"
 #include "AppContext.h"
 #include "Logs.h"
-#include "stdafx.h"
 #include <conio.h>
 #include <io.h>
 #include <Windows.h>
@@ -39,7 +38,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	if (!app->initialize(defaultWidth, defaultHeight))
 	{
-		LOGI("FAILED initialize");
+		LOGE("FAILED initialize");
 		_getch();
 		return -1;
 	}
@@ -62,20 +61,20 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	return 0;
 }
 
-void PlatformLog(int type, const char* fmt, ...)
+void PlatformLog(int logType, const char* fmt, ...)
 {
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	switch(type)
+	static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	switch (logType)
 	{
-		case 2:
-			SetConsoleTextAttribute(hConsole, 12);
-			break;
-		case 1:
-			SetConsoleTextAttribute(hConsole, 10);
-			break;
-		default:
-			SetConsoleTextAttribute(hConsole, 7);
+	case 1: SetConsoleTextAttribute(hConsole, 10); //green
+		break;
+	case 2: SetConsoleTextAttribute(hConsole, 12); //red
+		break;
+	default:
+		SetConsoleTextAttribute(hConsole, 7); //white
 	}
+	
 	const int length = 10240;
 	char buffer[length];
 	va_list ap;

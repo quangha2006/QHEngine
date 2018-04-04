@@ -1,5 +1,4 @@
 #pragma once
-//#include "stdafx.h"
 #include <iostream>
 #if defined(_WINDOWS)
 #include <Windows.h>
@@ -7,7 +6,7 @@
 #include <android/log.h>
 #endif
 
-extern void PlatformLog(int type,const char* fmt, ...);
+extern void PlatformLog(int logType, const char* fmt, ...);
 
 #if defined(_WINDOWS)
 #define LOGI(...) PlatformLog(0, __VA_ARGS__)

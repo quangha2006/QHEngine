@@ -171,7 +171,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	// All functions return a value different than 0 whenever an error occurred
 	if (FT_Init_FreeType(&ft))
 	{
-		LOGE("ERROR!!! Could not init FreeType Library\n");
+		LOGE("ERROR::FREETYPE: Could not init FreeType Library\n");
 		return false;
 	}
 
@@ -181,7 +181,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 
 	if (FT_New_Face(ft, path_modif.c_str(), 0, &face))
 	{
-		LOGE("ERROR!!! Could not load: %s", path_modif.c_str());
+		LOGE("ERROR::FREETYPE: Failed to load font");
 		return false;
 	}
 
@@ -221,7 +221,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 		// Load character glyph 
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
 		{
-			LOGE("ERROR!!! Failed to load Glyph");
+			LOGI("ERROR::FREETYTPE: Failed to load Glyph");
 			continue;
 		}
 		
@@ -393,7 +393,7 @@ void TextRendering::Draw()
 	{
 		glBufferData(GL_ARRAY_BUFFER, fulltextdata.size() * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
 		m_Maxchar = fulltextdata.size() / 6;
-		LOGI("Increase m_Maxchar: %d", m_Maxchar);
+		LOGW("Increase m_Maxchar: %d", m_Maxchar);
 	}
 	glBufferSubData(GL_ARRAY_BUFFER, 0, fulltextdata.size() * sizeof(TextData), &fulltextdata[0]); // Be sure to use glBufferSubData and not glBufferData
 

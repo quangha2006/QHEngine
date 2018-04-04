@@ -2,7 +2,6 @@
 #include "TGA.h"
 #include <stdlib.h>     /* malloc, free, rand */
 #include "SOIL.h"
-#include "Logs.h"
 namespace TGA
 {
 	GLubyte uTGAcompare[12] = { 0,0, 2,0,0,0,0,0,0,0,0,0 };
@@ -69,13 +68,13 @@ namespace TGA
 		fTGA = fopen(filename, "rb");           // Open File For Reading
 		if (fTGA == NULL)                // If Here Was An Error
 		{
-			LOGE("No such file: %s\n", filename);
+			fprintf(stderr, "No such file\n");
 			return false;
 		}
 		// Attempt To Read The File Header
 		if (fread(&tgaheader, sizeof(TGAHeader), 1, fTGA) == 0)
 		{
-			LOGE("Error while read tga header\n");
+			fprintf(stderr, "Error while read tga header\n");
 			fclose(fTGA);
 			return false;
 		}
@@ -105,7 +104,7 @@ namespace TGA
 		}
 
 		// If It Doesn't Match Either One
-		LOGE("tga file doesn't match Uncompressed or Compressed tga\n");
+		fprintf(stderr, "tga file doesn't match Uncompressed or Compressed tga\n");
 		fclose(fTGA);
 		return false;
 	}
@@ -119,7 +118,7 @@ namespace TGA
 		int header = fread(tga.header, sizeof(tga.header), 1, fTGA);
 		if (header == 0)
 		{
-			LOGE("Error: Load UncompressedTGA\n");
+			fprintf(stderr, "Error: Load UncompressedTGA\n");
 			return false;               // Return False
 		}
 		texture.width = tga.header[1] * 256 + tga.header[0];   // Calculate Height
@@ -131,7 +130,7 @@ namespace TGA
 												 // Make Sure All Information Is Valid
 		if ((texture.width <= 0) || (texture.height <= 0) || ((texture.Bpp != 24) && (texture.Bpp != 32)))
 		{
-			LOGE("Error: Get width, height, bpp\n");
+			fprintf(stderr, "Error: Get width, height, bpp\n");
 			return false;               // Return False
 		}
 		if (texture.Bpp == 24)               // Is It A 24bpp Image?
@@ -145,7 +144,7 @@ namespace TGA
 		texture.imageData = (GLubyte *)malloc(tga.imageSize);
 		if (texture.imageData == NULL)           // Make Sure It Was Allocated Ok
 		{
-			LOGE("Error: Allocat texture->imageData\n");
+			fprintf(stderr, "Error: Allocat texture->imageData\n");
 			return false;               // If Not, Return False
 		}
 		// Attempt To Read All The Image Data
@@ -170,7 +169,7 @@ namespace TGA
 		*/
 		if (fread(texture.imageData, 1, tga.imageSize, fTGA) != tga.imageSize)
 		{
-			LOGE("Error: Read All The Image Data\n");
+			fprintf(stderr, "Error: Read All The Image Data\n");
 			return false;               // If We Cant, Return False
 		}
 
@@ -194,7 +193,7 @@ namespace TGA
 		//fprintf(stderr, "Load Compressed TGA: %s\n", filename);
 		if (fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)					// Attempt to read header
 		{
-			LOGE("Could not read info header");		// Display Error
+			fprintf(stderr, "Could not read info header");		// Display Error
 			if (fTGA != NULL)													// If file is open
 			{
 				fclose(fTGA);													// Close it
@@ -211,7 +210,7 @@ namespace TGA
 
 		if ((texture.width <= 0) || (texture.height <= 0) || ((texture.Bpp != 24) && (texture.Bpp != 32)))	//Make sure all texture info is ok
 		{
-			LOGE("Invalid texture information");	// If it isnt...Display error
+			fprintf(stderr, "Invalid texture information");	// If it isnt...Display error
 			if (fTGA != NULL)													// Check if file is open
 			{
 				fclose(fTGA);													// Ifit is, close it
@@ -230,7 +229,7 @@ namespace TGA
 
 		if (texture.imageData == NULL)											// If it wasnt allocated correctly..
 		{
-			LOGE("Could not allocate memory for image");	// Display Error
+			fprintf(stderr, "Could not allocate memory for image");	// Display Error
 			fclose(fTGA);														// Close file
 			return false;														// Return failed
 		}
@@ -246,7 +245,7 @@ namespace TGA
 
 			if (fread(&chunkheader, sizeof(GLubyte), 1, fTGA) == 0)				// Read in the 1 byte header
 			{
-				LOGE("Could not read RLE header");	// Display Error
+				fprintf(stderr, "Could not read RLE header");	// Display Error
 				if (fTGA != NULL)												// If file is open
 				{
 					fclose(fTGA);												// Close file
@@ -265,7 +264,7 @@ namespace TGA
 				{
 					if (fread(colorbuffer, 1, tga.bytesPerPixel, fTGA) != tga.bytesPerPixel) // Try to read 1 pixel
 					{
-						LOGE("Could not read image data");		// IF we cant, display an error
+						fprintf(stderr, "Could not read image data");		// IF we cant, display an error
 
 						if (fTGA != NULL)													// See if file is open
 						{
@@ -300,7 +299,7 @@ namespace TGA
 
 					if (currentpixel > pixelcount)											// Make sure we havent read too many pixels
 					{
-						LOGE("Too many pixels read");			// if there is too many... Display an error!
+						fprintf(stderr, "Too many pixels read");			// if there is too many... Display an error!
 
 						if (fTGA != NULL)													// If there is a file open
 						{
@@ -326,7 +325,7 @@ namespace TGA
 				chunkheader -= 127;															// Subteact 127 to get rid of the ID bit
 				if (fread(colorbuffer, 1, tga.bytesPerPixel, fTGA) != tga.bytesPerPixel)		// Attempt to read following color values
 				{
-					LOGE("Could not read from file");			// If attempt fails.. Display error (again)
+					fprintf(stderr, "Could not read from file");			// If attempt fails.. Display error (again)
 
 					if (fTGA != NULL)														// If thereis a file open
 					{
@@ -362,7 +361,7 @@ namespace TGA
 
 					if (currentpixel > pixelcount)											// Make sure we havent written too many pixels
 					{
-						LOGE("Too many pixels read");			// if there is too many... Display an error!
+						fprintf(stderr, "Too many pixels read");			// if there is too many... Display an error!
 
 						if (fTGA != NULL)													// If there is a file open
 						{

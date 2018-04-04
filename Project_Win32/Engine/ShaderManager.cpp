@@ -26,14 +26,14 @@ GLuint ShaderManager::createProgram(const char * vtxSrc, const char * fragSrc)
 	glLinkProgram(program);
 	glGetProgramiv(program, GL_LINK_STATUS, &linked);
 	if (!linked) {
-		LOGI("Could not link program\n");
+		LOGE("Could not link program\n");
 		GLint infoLogLen = 0;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLen);
 		if (infoLogLen) {
 			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
 			if (infoLog) {
 				glGetProgramInfoLog(program, infoLogLen, NULL, infoLog);
-				LOGI("Could not link program:\n%s\n", infoLog);
+				LOGE("Could not link program:\n%s\n", infoLog);
 				free(infoLog);
 			}
 		}
@@ -53,7 +53,7 @@ GLuint ShaderManager::createShader(GLenum shaderType, const char * src)
 	FILE * pf = fopen(fullPath.c_str(), "rb");
 	if (pf == NULL)
 	{
-		LOGI("Load %s failed\n", fullPath.c_str());
+		LOGE("Load %s failed\n", fullPath.c_str());
 		return false;
 	}
 	fseek(pf, 0, SEEK_END);

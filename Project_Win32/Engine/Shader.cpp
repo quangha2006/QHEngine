@@ -25,14 +25,14 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 	glLinkProgram(program);
 	glGetProgramiv(program, GL_LINK_STATUS, &linked);
 	if (!linked) {
-		LOGI("Could not link program\n");
+		LOGE("Could not link program\n");
 		GLint infoLogLen = 0;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLen);
 		if (infoLogLen) {
 			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
 			if (infoLog) {
 				glGetProgramInfoLog(program, infoLogLen, NULL, infoLog);
-				LOGI("Could not link program:\n%s\n", infoLog);
+				LOGE("Could not link program:\n%s\n", infoLog);
 				free(infoLog);
 			}
 		}
@@ -60,7 +60,7 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 		FILE * pf = fopen(path_modif.c_str(), "rb");
 		if (pf == NULL)
 		{
-			LOGI("Could not open: %s \n", path_modif.c_str());
+			LOGE("Could not open: %s \n", path_modif.c_str());
 			return false;
 		}
 		fseek(pf, 0, SEEK_END);
@@ -97,8 +97,8 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
 			if (infoLog) {
 				glGetShaderInfoLog(shader, infoLogLen, NULL, infoLog);
-				LOGI("ERROR!\n");
-				LOGI("Could not compile %s shader:\n%s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
+				LOGE("ERROR!\n");
+				LOGE("Could not compile %s shader:\n%s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
 				free(infoLog);
 			}
 		}

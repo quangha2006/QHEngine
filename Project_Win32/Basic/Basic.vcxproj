@@ -171,8 +171,8 @@
     <ClCompile Include="Basic.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Resources\Shaders\BasicFS.fs" />
-    <None Include="..\..\Resources\Shaders\BasicVS.vs" />
+    <None Include="..\Resources\Shaders\BasicFS.fs" />
+    <None Include="..\Resources\Shaders\BasicVS.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
