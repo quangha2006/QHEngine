@@ -24,6 +24,7 @@ uniform bool useAnim;
 void main()
 {
 	highp vec4 PosL = vec4(0.0, 0.0, 0.0, 1.0);
+	vec4 NormalL = vec4(aNormal, 0.0);
 	if (useAnim == true)
 	{
 	int index = int(sIDs[0]);
@@ -36,13 +37,15 @@ void main()
 		BoneTransform += gBones[index] * sWeights[3];
 
 		PosL    = BoneTransform * vec4(aPos, 1.0);
+
+		NormalL = BoneTransform * vec4(aNormal, 0.0);
 	}
 	else
 		PosL    =  vec4(aPos, 1.0);
     gl_Position = lookat * PosL;
 
 	FragPos = vec3(model * vec4(aPos, 1.0));
-	Normal = mat3(model_inverse) * aNormal; 
+	Normal = mat3(model_inverse) * NormalL.xyz; 
     TexCoords = aTexCoords; 
 	FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
 

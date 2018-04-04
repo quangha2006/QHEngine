@@ -67,9 +67,9 @@ GLuint ShaderManager::createShader(GLenum shaderType, const char * src)
 
 	string final_shaderSrc;
 #ifdef ANDROID
-	final_shaderSrc = "#version 100\n";	//300 es
+	final_shaderSrc = "#version 300 es\n";	//300 es
 #else
-	final_shaderSrc = "#version 100\n";
+	final_shaderSrc = "#version 330\n";
 #endif
 	final_shaderSrc += string(shaderSrc);
 	GLuint shader = glCreateShader(shaderType);

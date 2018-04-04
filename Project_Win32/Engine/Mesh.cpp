@@ -123,7 +123,7 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 	ShaderManager::getInstance()->setVec3("material_color_ambient", material.ambient);
 	ShaderManager::getInstance()->setVec3("material_color_diffuse", material.diffuse);
 	ShaderManager::getInstance()->setVec3("material_color_specular", material.specular);
-	if (material.shininess < 0.001f)
+	if (material.shininess < 0.001f || !hasNormals)
 		ShaderManager::getInstance()->setBool("uselighting", false);
 	if (!hasmaterial_texture_diffuse1)
 	{
@@ -148,13 +148,19 @@ void Mesh::DeleteBuffer()
 	glDeleteBuffers(1, &EBO);
 }
 
-Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname)
+void Mesh::SetUseLighting(bool isuse)
+{
+	this->hasNormals = isuse;
+}
+
+Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname, bool hasnormals)
 {
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
 	this->material = meterial;
 	this->meshName = meshname;
+	this->hasNormals = hasnormals;
 	// now that we have all the required data, set the vertex buffers and its attribute pointers.
 	setupMesh();
 }

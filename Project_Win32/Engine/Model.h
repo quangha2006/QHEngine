@@ -54,10 +54,12 @@ private:
 	bool needRotate;
 	bool gammaCorrection;
 	string directory;
+
 public:
 	void Init(string const &path, Camera *camera, bool enableAlpha, float fixedModel = 1.0f);
 	void Draw(glm::mat4 model, glm::mat4 &lookat, glm::vec3 &lamppos);
 	void SetUseLighting(bool UseLighting);
+	void DisableLightingForMesh(int numMesh);
 	void SetCustomColor(glm::vec3 color);
 	void BoneTransform(float TimeInSeconds, vector<glm::mat4> &Transforms);
 	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, glm::mat4 &ParentTransform);

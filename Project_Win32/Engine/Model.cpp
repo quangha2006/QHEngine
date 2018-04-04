@@ -155,6 +155,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 {
 	int WEIGHTS_PER_VERTEX = 4;
 	int boneArraysSize = mesh->mNumVertices * WEIGHTS_PER_VERTEX;
+	bool hasnormals = false;
 	// data to fill
 	vector<Vertex> vertices;
 	vector<GLuint> indices;
@@ -181,6 +182,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
 			vertex.Normal = vector;
+			hasnormals = true;
 		}
 		else
 			vertex.Normal = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -345,7 +347,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 	mesh_material.shininess = shininess;
 	mesh_material.transparent = transparent;
 	
-	return Mesh(vertices, indices, textures, mesh_material, string(mesh->mName.C_Str()));
+	return Mesh(vertices, indices, textures, mesh_material, string(mesh->mName.C_Str()), hasnormals);
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, string typeName)
@@ -426,6 +428,7 @@ void Model::Draw(glm::mat4 model, glm::mat4 &lookat, glm::vec3 &lamppos)
 	}
 	else
 		ShaderManager::getInstance()->setBool("useAnim", false);
+
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
 		ShaderManager::getInstance()->setBool("uselighting", uselighting);
@@ -439,6 +442,11 @@ void Model::Draw(glm::mat4 model, glm::mat4 &lookat, glm::vec3 &lamppos)
 void Model::SetUseLighting(bool UseLighting)
 {
 	this->uselighting = UseLighting;
+}
+void Model::DisableLightingForMesh(int numMesh)
+{
+	if (numMesh >= 0 && numMesh < this->meshes.size())
+		meshes[numMesh].SetUseLighting(false);
 }
 void Model::SetCustomColor(glm::vec3 color)
 {

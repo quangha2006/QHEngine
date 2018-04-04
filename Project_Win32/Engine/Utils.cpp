@@ -11,4 +11,5 @@ namespace Utils
 #endif
 		return std::move(str);
 	}
+
 }

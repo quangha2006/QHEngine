@@ -61,7 +61,7 @@ private:
 	unsigned int VBO, EBO;
 	void setupMesh();
 	string meshName;
-	
+	bool hasNormals;
 public:
 	/*  Mesh Data  */
 	vector<Vertex> vertices;
@@ -73,6 +73,7 @@ public:
 
 	void Draw(bool useCustomColor = false, glm::vec3 customColor = glm::vec3(0.0f,0.0f,0.0f));
 	void DeleteBuffer();
-	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material material, string meshname);
+	void SetUseLighting(bool isuse);
+	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material material, string meshname, bool hasnormals = false);
 	~Mesh();
 };
