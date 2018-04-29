@@ -1,6 +1,6 @@
 #include "SkyBox.h"
 #include <SOIL.h>
-
+#include "Utils.h"
 
 void SkyBox::Init(const char * texturepath)
 {
@@ -36,19 +36,51 @@ void SkyBox::Init(const char * texturepath)
 
 	std::vector<std::string> faces
 	{
-		"right.jpg",
-		"left.jpg",
-		"top.jpg",
-		"bottom.jpg",
-		"front.jpg",
-		"back.jpg"
+		"Right.jpg",
+		"Left.jpg",
+		"Top.jpg",
+		"Bottom.jpg",
+		"Front.jpg",
+		"Back.jpg"
 	};
 
-	cubemapTexture = loadCubemap(faces);
+	cubemapTexture = loadCubemap(texturepath, faces);
+
+
+	glGenBuffers(1, &VBO);
+
+	// load data into vertex buffers
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(float), &skyboxVertices[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 
 }
 
-unsigned int SkyBox::loadCubemap(std::vector<std::string> faces)
+void SkyBox::Draw(Camera *camera)
+{
+	mShader.use();
+	glDepthMask(GL_FALSE);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+
+	mShader.setInt("skybox", 0);
+	mShader.setMat4("view", camera->view);
+	mShader.setMat4("projection", camera->projection);
+
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDepthMask(GL_TRUE);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+unsigned int SkyBox::loadCubemap(const char * texturepath, std::vector<std::string> faces)
 {
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
@@ -57,7 +89,12 @@ unsigned int SkyBox::loadCubemap(std::vector<std::string> faces)
 	int width, height, nrChannels;
 	for (unsigned int i = 0; i < faces.size(); i++)
 	{
-		unsigned char *data = SOIL_load_image(faces[i].c_str(), &width, &height, &nrChannels, 0);
+		std::string fullPath = Utils::getResourcesFolder();
+		fullPath += texturepath;
+		fullPath += '/';
+		fullPath += faces[i];
+
+		unsigned char *data = SOIL_load_image(fullPath.c_str(), &width, &height, &nrChannels, 0);
 		if (data)
 		{
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
@@ -67,7 +104,7 @@ unsigned int SkyBox::loadCubemap(std::vector<std::string> faces)
 		}
 		else
 		{
-			std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+			std::cout << "Cubemap texture failed to load at path: " << fullPath << std::endl;
 			SOIL_free_image_data(data);
 		}
 	}
@@ -82,9 +119,55 @@ unsigned int SkyBox::loadCubemap(std::vector<std::string> faces)
 
 SkyBox::SkyBox()
 {
+	int x = 10;
+	skyboxVertices = new float[108] {
+		// positions          
+		-1.0f * x, 1.0f * x, -1.0f * x,
+		-1.0f * x, -1.0f * x, -1.0f * x,
+		1.0f * x, -1.0f * x, -1.0f * x,
+		1.0f * x, -1.0f * x, -1.0f * x,
+		1.0f * x, 1.0f * x, -1.0f * x,
+		-1.0f * x, 1.0f * x, -1.0f * x,
+
+		-1.0f * x, -1.0f * x, 1.0f * x,
+		-1.0f * x, -1.0f * x, -1.0f * x,
+		-1.0f * x, 1.0f * x, -1.0f * x,
+		-1.0f * x, 1.0f * x, -1.0f * x,
+		-1.0f * x, 1.0f * x, 1.0f * x,
+		-1.0f * x, -1.0f * x, 1.0f * x,
+
+		1.0f * x, -1.0f * x, -1.0f * x,
+		1.0f * x, -1.0f * x, 1.0f * x,
+		1.0f * x, 1.0f * x, 1.0f * x,
+		1.0f * x, 1.0f * x, 1.0f * x,
+		1.0f * x, 1.0f * x, -1.0f * x,
+		1.0f * x, -1.0f * x, -1.0f * x,
+
+		-1.0f, -1.0f, 1.0f,
+		-1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, -1.0f, 1.0f,
+		-1.0f, -1.0f, 1.0f,
+
+		-1.0f, 1.0f, -1.0f,
+		1.0f, 1.0f, -1.0f,
+		1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		-1.0f, 1.0f, 1.0f,
+		-1.0f, 1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f, 1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f, 1.0f,
+		1.0f, -1.0f, 1.0f
+	};
 }
 
 
 SkyBox::~SkyBox()
 {
+	delete[] skyboxVertices;
 }

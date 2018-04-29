@@ -5,12 +5,12 @@
 bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFromString )
 {
 	GLint linked = GL_FALSE;
-	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vtxSrc);
+	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vtxSrc, isFromString);
 	if (!vertexShader)
 	{
 		return false;
 	}
-	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc);
+	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc, isFromString);
 	if (!fragmentShader)
 	{
 		return false;
@@ -46,7 +46,7 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 
 GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromString )
 {
-	LOGI("Create shader: %s\n", src);
+	//LOGI("Create shader: %s\n", src);
 	char * shaderSrc;
 	if (!isFromString)
 	{
@@ -118,8 +118,29 @@ bool Shader::LoadShader(const char * fileVertexShader, const char * fileFragment
 	return true;
 }
 
+void Shader::use()
+{
+	if (program != -1)
+		glUseProgram(program);
+	else
+		LOGE("ERROR! Cannot set UseProgram!");
+}
+
+void Shader::setInt(const std::string & name, int value)
+{
+	glUniform1i(glGetUniformLocation(program, name.c_str()), value);
+}
+
+void Shader::setMat4(const std::string & name, const glm::mat4 & mat)
+{
+	glUniformMatrix4fv(glGetUniformLocation(program, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
 Shader::Shader()
 {
+	program = -1;
+	position_Attribute = -1;
+	color_Attribute = -1;
 }
 
 
