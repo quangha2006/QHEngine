@@ -9,10 +9,10 @@
 
 void Basic::Init()
 {
-	//mCamera->Pos = glm::vec3(2.0f, 3.8f, 10.0f);
-	mCamera->Pos = glm::vec3(0.1f, 0.1f, 0.1f);
-	//mCamera->Target = glm::vec3(0.0f, 3.0f, 0.2f);
-	mCamera->Target = glm::vec3(0.0f, 0.0f, 0.02f);
+	mCamera->Pos = glm::vec3(2.0f, 3.8f, 10.0f);
+	//mCamera->Pos = glm::vec3(0.1f, 0.1f, 0.1f);
+	mCamera->Target = glm::vec3(0.0f, 3.0f, 0.2f);
+	//mCamera->Target = glm::vec3(0.0f, 0.0f, 0.02f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
@@ -20,7 +20,7 @@ void Basic::Init()
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	//ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
 	//mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
-	//m_Streetenvironment.Init("House/model.obj", mCamera, false);
+	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
 	//mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
 	mSun.SetUseLighting(false);
@@ -83,7 +83,7 @@ void Basic::Draw()
 	//ShaderManager::getInstance()->setInt("shadowMap",10);
 	//ShaderManager::getInstance()->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 
-	m_Streetenvironment.Draw(glm::translate(glm::scale(Pos_model_Original,glm::vec3(3.0f)), glm::vec3(0.0f, 0.0f, 0.0f)), lookat, lamppos);
+	m_Streetenvironment.Draw(glm::translate(glm::scale(Pos_model_Original,glm::vec3(1.0f)), glm::vec3(0.0f, 0.0f, 0.0f)), lookat, lamppos);
 
 	mNanosuit.Draw(glm::translate(glm::scale(Pos_model_Original, glm::vec3(0.7f)), glm::vec3(9.0f, 0.0f, 0.0f)), lookat, lamppos);
 	mSun.Draw(glm::scale(glm::translate(Pos_model_Original, lamppos), glm::vec3(0.0001f)), lookat, lamppos);

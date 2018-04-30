@@ -114,6 +114,7 @@ bool Shader::LoadShader(const char * fileVertexShader, const char * fileFragment
 	if (!createProgram(fileVertexShader, fileFragmentShader, isFromString))
 		return false;
 	position_Attribute = glGetAttribLocation(program, "aPos");
+	texCoord_Attribute = glGetAttribLocation(program, "aTexCoords");
 	color_Attribute = glGetAttribLocation(program, "aColor");
 	return true;
 }
@@ -124,6 +125,21 @@ void Shader::use()
 		glUseProgram(program);
 	else
 		LOGE("ERROR! Cannot set UseProgram!");
+}
+
+GLint Shader::getPosAttribute()
+{
+	return position_Attribute;
+}
+
+GLint Shader::getTexCoodAttribute()
+{
+	return texCoord_Attribute;
+}
+
+GLint Shader::getColorAttribute()
+{
+	return color_Attribute;
 }
 
 void Shader::setInt(const std::string & name, int value)

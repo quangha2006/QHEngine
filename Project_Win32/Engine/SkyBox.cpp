@@ -5,34 +5,34 @@
 void SkyBox::Init(const char * texturepath)
 {
 	const char * verShader = {
-	"#version 330 core\n"
-	"layout(location = 0) in vec3 aPos;\n"
-	"out vec3 TexCoords;\n"
+	"#version 100\n"
+	"attribute vec3 aPos;\n"
+	"attribute vec3 aTexCoords;\n"
+	"varying vec3 TexCoords;\n"
 	"\n"
 	"uniform mat4 projection;\n"
 	"uniform mat4 view;\n"
 	"\n"
 	"void main()\n"
 	"{\n"
-	"	TexCoords = aPos;\n"
+	"	TexCoords = aTexCoords;\n"
 	"	gl_Position = projection * view * vec4(aPos, 1.0);\n"
 	"}\n"
 	};
 	const char *fragShader = {
-	"#version 330 core\n"
-	"out vec4 FragColor;\n"
+	"precision highp float;\n"
 	"\n"
-	"in vec3 TexCoords;\n"
+	"varying vec3 TexCoords;\n"
 	"\n"
 	"uniform samplerCube skybox;\n"
 	"\n"
 	"void main()\n"
 	"{\n"
-	"	FragColor = texture(skybox, TexCoords);\n"
+	"	gl_FragColor = texture(skybox, TexCoords);\n"
 	"}\n"
 	};
 
-	mShader.createProgram(verShader, fragShader, true);
+	mShader.LoadShader(verShader, fragShader, true);
 
 	std::vector<std::string> faces
 	{
@@ -51,11 +51,9 @@ void SkyBox::Init(const char * texturepath)
 
 	// load data into vertex buffers
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(float), &skyboxVertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 108 * 2 * sizeof(float), &skyboxVertices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-
 }
 
 void SkyBox::Draw(Camera *camera)
@@ -63,8 +61,17 @@ void SkyBox::Draw(Camera *camera)
 	mShader.use();
 	glDepthMask(GL_FALSE);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	if (mShader.getPosAttribute() >= 0)
+	{
+		glEnableVertexAttribArray(mShader.getPosAttribute());
+		glVertexAttribPointer(mShader.getPosAttribute(), 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	}
+
+	if (mShader.getTexCoodAttribute() >= 0)
+	{
+		glEnableVertexAttribArray(mShader.getTexCoodAttribute());
+		glVertexAttribPointer(mShader.getTexCoodAttribute(), 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	}
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
@@ -119,55 +126,56 @@ unsigned int SkyBox::loadCubemap(const char * texturepath, std::vector<std::stri
 
 SkyBox::SkyBox()
 {
-	int x = 10;
-	skyboxVertices = new float[108] {
+	int x = 40;
+	skyboxVertices = new float[108 * 2] {
 		// positions          
-		-1.0f * x, 1.0f * x, -1.0f * x,
-		-1.0f * x, -1.0f * x, -1.0f * x,
-		1.0f * x, -1.0f * x, -1.0f * x,
-		1.0f * x, -1.0f * x, -1.0f * x,
-		1.0f * x, 1.0f * x, -1.0f * x,
-		-1.0f * x, 1.0f * x, -1.0f * x,
+		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
+		-1.0f * x, -1.0f * x, -1.0f * x,	-1.0f, -1.0f, -1.0f,
+		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
+		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
+		1.0f * x, 1.0f * x, -1.0f * x,		1.0f, 1.0f, -1.0f,
+		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
 
-		-1.0f * x, -1.0f * x, 1.0f * x,
-		-1.0f * x, -1.0f * x, -1.0f * x,
-		-1.0f * x, 1.0f * x, -1.0f * x,
-		-1.0f * x, 1.0f * x, -1.0f * x,
-		-1.0f * x, 1.0f * x, 1.0f * x,
-		-1.0f * x, -1.0f * x, 1.0f * x,
+		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
+		-1.0f * x, -1.0f * x, -1.0f * x,	-1.0f, -1.0f, -1.0f,
+		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
+		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
+		-1.0f * x, 1.0f * x, 1.0f * x,		-1.0f, 1.0f, 1.0f,
+		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
 
-		1.0f * x, -1.0f * x, -1.0f * x,
-		1.0f * x, -1.0f * x, 1.0f * x,
-		1.0f * x, 1.0f * x, 1.0f * x,
-		1.0f * x, 1.0f * x, 1.0f * x,
-		1.0f * x, 1.0f * x, -1.0f * x,
-		1.0f * x, -1.0f * x, -1.0f * x,
+		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
+		1.0f * x, -1.0f * x, 1.0f * x,		1.0f, -1.0f, 1.0f,
+		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
+		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
+		1.0f * x, 1.0f * x, -1.0f * x,		1.0f, 1.0f, -1.0f,
+		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
 
-		-1.0f, -1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, 1.0f,
+		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
+		-1.0f * x, 1.0f * x, 1.0f * x,		-1.0f, 1.0f, 1.0f,
+		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
+		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
+		1.0f * x, -1.0f * x, 1.0f * x,		1.0f, -1.0f, 1.0f,
+		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
 
-		-1.0f, 1.0f, -1.0f,
-		1.0f, 1.0f, -1.0f,
-		1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,
-		-1.0f, 1.0f, -1.0f,
+		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
+		1.0f * x, 1.0f * x, -1.0f * x,		1.0f, 1.0f, -1.0f,
+		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
+		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
+		-1.0f * x, 1.0f * x, 1.0f * x,		-1.0f, 1.0f, 1.0f,
+		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
 
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, -1.0f,
-		1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, 1.0f,
-		1.0f, -1.0f, 1.0f
+		-1.0f * x, -1.0f * x, -1.0f * x,	-1.0f, -1.0f, -1.0f,
+		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
+		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
+		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
+		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
+		1.0f * x, -1.0f * x, 1.0f * x,		1.0f, -1.0f, 1.0f
 	};
 }
 
 
 SkyBox::~SkyBox()
 {
+	glDeleteBuffers(1, &VBO);
 	delete[] skyboxVertices;
 }

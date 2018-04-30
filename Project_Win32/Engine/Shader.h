@@ -8,15 +8,21 @@
 
 class Shader
 {
-public:
+private:
 	GLuint program;
 	GLint position_Attribute;
+	GLint texCoord_Attribute;
 	GLint color_Attribute;
+	GLuint createShader(GLenum shaderType, const char* src, bool isFromString = false);
+
+public:
 
 	bool createProgram(const char* vtxSrc, const char* fragSrc, bool isFromString = false);
-	GLuint createShader(GLenum shaderType, const char* src, bool isFromString = false);
 	bool LoadShader(const char* fileVertexShader, const char* fileFragmentShader, bool isFromString = false);
 	void use();
+	GLint getPosAttribute();
+	GLint getTexCoodAttribute();
+	GLint getColorAttribute();
 	//void setBool(const std::string &name, bool value);
 	void setInt(const std::string &name, int value);
 	//void setFloat(const std::string &name, float value);
