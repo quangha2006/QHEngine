@@ -20,7 +20,7 @@ void Basic::Init()
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	//ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
 	//mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
-	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
 	//mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
 	mSun.SetUseLighting(false);

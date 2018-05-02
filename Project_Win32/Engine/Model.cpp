@@ -81,6 +81,8 @@ Model::~Model()
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].DeleteBuffer();
 
+	for (unsigned int i = 0; i < textures_loaded.size(); i++)
+		glDeleteTextures(1, &textures_loaded[i].id);
 }
 void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fixedModel)
 {

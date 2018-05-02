@@ -7,16 +7,18 @@ void SkyBox::Init(const char * texturepath)
 	const char * verShader = {
 	"#version 100\n"
 	"attribute vec3 aPos;\n"
-	"attribute vec3 aTexCoords;\n"
 	"varying vec3 TexCoords;\n"
 	"\n"
 	"uniform mat4 projection;\n"
 	"uniform mat4 view;\n"
+	"uniform mat4 model;\n"
 	"\n"
 	"void main()\n"
 	"{\n"
-	"	TexCoords = aTexCoords;\n"
-	"	gl_Position = projection * view * vec4(aPos, 1.0);\n"
+	"	TexCoords = aPos;\n"
+	"	vec4 temp = projection * view * model * vec4(aPos, 1.0);\n"
+	"	temp.w = temp.z + 0.01; // add small offset for preventing z-buffer fighting\n"
+	"	gl_Position = temp;//projection * view * model * vec4(aPos, 1.0);\n"
 	"}\n"
 	};
 	const char *fragShader = {
@@ -44,15 +46,18 @@ void SkyBox::Init(const char * texturepath)
 		"Back.jpg"
 	};
 
-	cubemapTexture = loadCubemap(texturepath, faces);
-
+	textureID = loadCubemap(texturepath, faces);
 
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 
-	// load data into vertex buffers
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, 108 * 2 * sizeof(float), &skyboxVertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(GLfloat), &skyboxVertices[0], GL_STATIC_DRAW);
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 24 * sizeof(GLuint), &skyboxIndices[0], GL_STATIC_DRAW);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -61,30 +66,34 @@ void SkyBox::Draw(Camera *camera)
 	mShader.use();
 	glDepthMask(GL_FALSE);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+
 	if (mShader.getPosAttribute() >= 0)
 	{
 		glEnableVertexAttribArray(mShader.getPosAttribute());
-		glVertexAttribPointer(mShader.getPosAttribute(), 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	}
-
-	if (mShader.getTexCoodAttribute() >= 0)
-	{
-		glEnableVertexAttribArray(mShader.getTexCoodAttribute());
-		glVertexAttribPointer(mShader.getTexCoodAttribute(), 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(mShader.getPosAttribute(), 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
 	}
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
 	mShader.setInt("skybox", 0);
 	mShader.setMat4("view", camera->view);
 	mShader.setMat4("projection", camera->projection);
+	mShader.setMat4("model", model);
 
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	//glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, (void*)0);
 	glDepthMask(GL_TRUE);
 
-
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void SkyBox::setScale(float scale)
+{
+	this->scale = scale;
+	this->model = glm::scale(model, glm::vec3(scale));
 }
 
 unsigned int SkyBox::loadCubemap(const char * texturepath, std::vector<std::string> faces)
@@ -126,56 +135,35 @@ unsigned int SkyBox::loadCubemap(const char * texturepath, std::vector<std::stri
 
 SkyBox::SkyBox()
 {
-	int x = 40;
-	skyboxVertices = new float[108 * 2] {
-		// positions          
-		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
-		-1.0f * x, -1.0f * x, -1.0f * x,	-1.0f, -1.0f, -1.0f,
-		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
-		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
-		1.0f * x, 1.0f * x, -1.0f * x,		1.0f, 1.0f, -1.0f,
-		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
-
-		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
-		-1.0f * x, -1.0f * x, -1.0f * x,	-1.0f, -1.0f, -1.0f,
-		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
-		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
-		-1.0f * x, 1.0f * x, 1.0f * x,		-1.0f, 1.0f, 1.0f,
-		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
-
-		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
-		1.0f * x, -1.0f * x, 1.0f * x,		1.0f, -1.0f, 1.0f,
-		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
-		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
-		1.0f * x, 1.0f * x, -1.0f * x,		1.0f, 1.0f, -1.0f,
-		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
-
-		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
-		-1.0f * x, 1.0f * x, 1.0f * x,		-1.0f, 1.0f, 1.0f,
-		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
-		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
-		1.0f * x, -1.0f * x, 1.0f * x,		1.0f, -1.0f, 1.0f,
-		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
-
-		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
-		1.0f * x, 1.0f * x, -1.0f * x,		1.0f, 1.0f, -1.0f,
-		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
-		1.0f * x, 1.0f * x, 1.0f * x,		1.0f, 1.0f, 1.0f,
-		-1.0f * x, 1.0f * x, 1.0f * x,		-1.0f, 1.0f, 1.0f,
-		-1.0f * x, 1.0f * x, -1.0f * x,		-1.0f, 1.0f, -1.0f,
-
-		-1.0f * x, -1.0f * x, -1.0f * x,	-1.0f, -1.0f, -1.0f,
-		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
-		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
-		1.0f * x, -1.0f * x, -1.0f * x,		1.0f, -1.0f, -1.0f,
-		-1.0f * x, -1.0f * x, 1.0f * x,		-1.0f, -1.0f, 1.0f,
-		1.0f * x, -1.0f * x, 1.0f * x,		1.0f, -1.0f, 1.0f
+	skyboxVertices = new GLfloat[24] {
+	-1.0,  1.0,  1.0,
+	-1.0, -1.0,  1.0,
+	 1.0, -1.0,  1.0,
+	 1.0,  1.0,  1.0,
+	-1.0,  1.0, -1.0,
+	-1.0, -1.0, -1.0,
+	 1.0, -1.0, -1.0,
+	 1.0,  1.0, -1.0
 	};
+	skyboxIndices = new GLuint[24] {
+		0, 1, 2, 3,
+		3, 2, 6, 7,
+		7, 6, 5, 4,
+		4, 5, 1, 0,
+		0, 3, 7, 4,
+		1, 2, 6, 5
+	};
+	model = glm::mat4(1.0f);
+	scale = 50.0f;
+	setScale(scale);
 }
 
 
 SkyBox::~SkyBox()
 {
 	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+	glDeleteTextures(1, &textureID);
 	delete[] skyboxVertices;
+	delete[] skyboxIndices;
 }
