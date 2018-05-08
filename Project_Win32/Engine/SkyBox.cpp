@@ -18,10 +18,11 @@ void SkyBox::Init(const char * texturepath)
 	"	TexCoords = aPos;\n"
 	"	vec4 temp = projection * view * model * vec4(aPos, 1.0);\n"
 	"	temp.w = temp.z + 0.01; // add small offset for preventing z-buffer fighting\n"
-	"	gl_Position = temp;//projection * view * model * vec4(aPos, 1.0);\n"
+	"	gl_Position = temp.xyww;//projection * view * model * vec4(aPos, 1.0);\n"
 	"}\n"
 	};
 	const char *fragShader = {
+	"#version 100\n"
 	"precision highp float;\n"
 	"\n"
 	"varying vec3 TexCoords;\n"
@@ -30,7 +31,7 @@ void SkyBox::Init(const char * texturepath)
 	"\n"
 	"void main()\n"
 	"{\n"
-	"	gl_FragColor = texture(skybox, TexCoords);\n"
+	"	gl_FragColor = textureCube(skybox, TexCoords);\n"
 	"}\n"
 	};
 
@@ -49,16 +50,12 @@ void SkyBox::Init(const char * texturepath)
 	textureID = loadCubemap(texturepath, faces);
 
 	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(GLfloat), &skyboxVertices[0], GL_STATIC_DRAW);
-	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 24 * sizeof(GLuint), &skyboxIndices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(GLfloat), &skyboxVertices[0], GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 }
 
 void SkyBox::Draw(Camera *camera)
@@ -66,7 +63,6 @@ void SkyBox::Draw(Camera *camera)
 	mShader.use();
 	glDepthMask(GL_FALSE);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
 	if (mShader.getPosAttribute() >= 0)
 	{
@@ -82,11 +78,10 @@ void SkyBox::Draw(Camera *camera)
 	mShader.setMat4("projection", camera->projection);
 	mShader.setMat4("model", model);
 
-	//glDrawArrays(GL_TRIANGLES, 0, 36);
-	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, (void*)0);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
 	glDepthMask(GL_TRUE);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -135,26 +130,52 @@ unsigned int SkyBox::loadCubemap(const char * texturepath, std::vector<std::stri
 
 SkyBox::SkyBox()
 {
-	skyboxVertices = new GLfloat[24] {
-	-1.0,  1.0,  1.0,
-	-1.0, -1.0,  1.0,
-	 1.0, -1.0,  1.0,
-	 1.0,  1.0,  1.0,
-	-1.0,  1.0, -1.0,
-	-1.0, -1.0, -1.0,
-	 1.0, -1.0, -1.0,
-	 1.0,  1.0, -1.0
-	};
-	skyboxIndices = new GLuint[24] {
-		0, 1, 2, 3,
-		3, 2, 6, 7,
-		7, 6, 5, 4,
-		4, 5, 1, 0,
-		0, 3, 7, 4,
-		1, 2, 6, 5
+	skyboxVertices = new GLfloat[108]{
+		// positions          
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f
 	};
 	model = glm::mat4(1.0f);
-	scale = 50.0f;
+	scale = 100.0f;
 	setScale(scale);
 }
 
@@ -162,8 +183,6 @@ SkyBox::SkyBox()
 SkyBox::~SkyBox()
 {
 	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
 	glDeleteTextures(1, &textureID);
 	delete[] skyboxVertices;
-	delete[] skyboxIndices;
 }

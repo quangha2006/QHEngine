@@ -9,9 +9,7 @@ private:
 	Shader mShader;
 	GLuint textureID;
 	GLfloat *skyboxVertices;
-	GLuint *skyboxIndices;
 	GLuint VBO;
-	GLuint EBO;
 	float scale;
 	glm::mat4 model;
 public:

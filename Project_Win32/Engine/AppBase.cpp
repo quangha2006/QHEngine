@@ -32,7 +32,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	text_FPS.setPos(0, 0);
 	text_FPS.setScale(0.5f);
 	text_FPS.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
-	text_FPS.setText("FPS: 100.0");
+	text_FPS.setText("FPS: 60.0");
 
 	text_DrawCall.setPos(text_FPS.getEndPos());
 	text_DrawCall.setScale(0.5f);

@@ -75,6 +75,7 @@ Model::Model()
 	mTicksPerSecond = 0.0f;
 	m_pScene = NULL;
 	hasAnimation = false;
+	timeStampAnim = -1;
 }
 Model::~Model()
 {
@@ -420,9 +421,6 @@ void Model::Draw(glm::mat4 model, glm::mat4 &lookat, glm::vec3 &lamppos)
 	//animation
 	if (hasAnimation)
 	{
-		vector<glm::mat4> Transforms;
-		float RunningTime = (float)Timer::getMillisecond() / 1000.0f;
-		BoneTransform(RunningTime, Transforms);
 		ShaderManager::getInstance()->setBool("useAnim", true);
 		int m_boneLocation = glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), "gBones");
 		if (m_boneLocation >= 0)
@@ -454,6 +452,19 @@ void Model::SetCustomColor(glm::vec3 color)
 {
 	useCustomColor = true;
 	customColor = color;
+}
+void Model::SetTimeStampAnim(int64_t time)
+{
+	timeStampAnim = (float)(time / 1000.0f);
+}
+void Model::UpdateTransform()
+{
+	float RunningTime = 0.0f;
+	if (timeStampAnim < 0.0f)
+		RunningTime = (float)(Timer::getMillisecond() / 1000.0f);
+	else
+		RunningTime = timeStampAnim;
+	BoneTransform(RunningTime, Transforms);
 }
 void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 {
