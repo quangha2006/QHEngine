@@ -15,6 +15,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 void mouse_pos_callback(GLFWwindow* window, double xpos, double ypos);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void keyboard_button_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 //void processInput(GLFWwindow *window);
 
 std::string current_working_directory()
@@ -49,6 +50,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	glfwSetCursorPosCallback(mContext->GetWindow(), mouse_pos_callback);
 	glfwSetFramebufferSizeCallback(mContext->GetWindow(), framebuffer_size_callback);
 	glfwSetScrollCallback(mContext->GetWindow(), scroll_callback);
+	glfwSetKeyCallback(mContext->GetWindow(), keyboard_button_callback);
 
 	do
 	{
@@ -121,4 +123,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void scroll_callback(GLFWwindow * window, double xoffset, double yoffset)
 {
 	app->ZoomCamera(xoffset, yoffset);
+}
+
+void keyboard_button_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
+{
+	if (key!=256) // 256 = ESC key
+		app->OnGameKeyPressed(key, scancode, action, mods);
 }

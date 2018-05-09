@@ -26,12 +26,12 @@ void Basic::Init()
 	mSun.SetUseLighting(false);
 	mSun.SetCustomColor(glm::vec3(1.0f));
 
-	mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
+	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, false, 0.1f);
 
-	//mMonster_1.Init("Monster_1/Monster_1.dae", mCamera, false);
+	mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
 
 	mframebuffer.Init(2048, 2048);
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -41,11 +41,12 @@ void Basic::Init()
 void Basic::Draw()
 {
 	mSkyBox.Draw(mCamera);
+	
 	mSpider.UpdateTransform();
 
 	glm::mat4 model_lamp_temp;
 	glm::vec3 lampPos = glm::vec3(10.2f, 6.0f, 9.0f);;
-	float timestamp_for_lamp = Timer::getMillisecond()/1000.0f;
+	//float timestamp_for_lamp = Timer::getMillisecond()/1000.0f;
 	model_lamp_temp = glm::rotate(model_lamp_temp, glm::radians(timestamp_for_lamp * 10), glm::vec3(0.0f, 1.0f, 0.0f));
 	model_lamp_temp = glm::translate(model_lamp_temp, lampPos);
 	model_lamp_temp = glm::scale(model_lamp_temp, glm::vec3(0.4f));
@@ -101,9 +102,21 @@ void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 	width = 900;
 	height = 540;
 }
+void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
+{
+	if (key == 262 && action == 1)
+		timestamp_for_lamp += 1;
+	else if (action == 1)
+	{
+		static int time = 0;
+		time += 2;
+		mSpider.SetTimeStampAnim(time);
+	}
+}
 Basic::Basic()
 {
 	Pos_model_Original = glm::translate(Pos_model_Original, glm::vec3(0.0f, 0.0f, 0.0f));
+	timestamp_for_lamp = 0;
 }
 
 Basic::~Basic()

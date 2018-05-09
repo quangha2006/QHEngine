@@ -56,6 +56,9 @@ private:
 	bool gammaCorrection;
 	string directory;
 	float timeStampAnim;
+
+	glm::vec3 scale;
+	glm::vec3 translate;
 public:
 	void Init(string const &path, Camera *camera, bool enableAlpha, float fixedModel = 1.0f);
 	void Draw(glm::mat4 model, glm::mat4 &lookat, glm::vec3 &lamppos);

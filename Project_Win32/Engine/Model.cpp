@@ -76,6 +76,7 @@ Model::Model()
 	m_pScene = NULL;
 	hasAnimation = false;
 	timeStampAnim = -1;
+	scale = glm::vec3(1.0f);
 }
 Model::~Model()
 {
@@ -419,7 +420,7 @@ void Model::Draw(glm::mat4 model, glm::mat4 &lookat, glm::vec3 &lamppos)
 	ShaderManager::getInstance()->setVec3("color_pick", 0.0f, 0.0f, 0.0f);
 
 	//animation
-	if (hasAnimation)
+	if (hasAnimation && Transforms.size() > 0)
 	{
 		ShaderManager::getInstance()->setBool("useAnim", true);
 		int m_boneLocation = glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), "gBones");
@@ -459,6 +460,7 @@ void Model::SetTimeStampAnim(int64_t time)
 }
 void Model::UpdateTransform()
 {
+	if (!hasAnimation) return;
 	float RunningTime = 0.0f;
 	if (timeStampAnim < 0.0f)
 		RunningTime = (float)(Timer::getMillisecond() / 1000.0f);

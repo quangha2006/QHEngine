@@ -14,10 +14,12 @@ private:
 	glm::mat4 Pos_model_Original;
 	FrameBuffer mframebuffer;
 	SkyBox mSkyBox;
+	float timestamp_for_lamp;
 public:
 	void Draw();
 	void Init();
 	void GetRequireScreenSize(int32_t &width, int32_t &height);
+	void OnGameKeyPressed(int key, int scancode, int action, int mods);
 	Basic();
 	~Basic();
 };
