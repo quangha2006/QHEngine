@@ -59,23 +59,33 @@ private:
 
 	glm::vec3 scale;
 	glm::vec3 translate;
-public:
-	void Init(string const &path, Camera *camera, bool enableAlpha, float fixedModel = 1.0f);
-	void Draw(glm::mat4 model, glm::mat4 &lookat, glm::vec3 &lamppos);
-	void SetUseLighting(bool UseLighting);
-	void DisableLightingForMesh(int numMesh);
-	void SetCustomColor(glm::vec3 color);
-	void SetTimeStampAnim(int64_t time);
-	void UpdateTransform();
-	void BoneTransform(float TimeInSeconds, vector<glm::mat4> &Transforms);
-	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, glm::mat4 &ParentTransform);
-	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const string NodeName);
-	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+	glm::vec3 rotate;
+	float angle;
+	glm::mat4 model;
+
 	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
 	uint FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	uint FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
+	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, glm::mat4 &ParentTransform);
+	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const string NodeName);
+	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+	void UpdateModel();
+
+public:
+	void Init(string const &path, Camera *camera, bool enableAlpha, float fixedModel = 1.0f);
+	void Draw(glm::mat4 &lookat, glm::vec3 &lamppos);
+	void SetUseLighting(bool UseLighting);
+	void DisableLightingForMesh(int numMesh);
+	void SetCustomColor(glm::vec3 color);
+	void SetTimeStampAnim(int64_t time);
+	void UpdateTransform(int64_t time = -1.0f);
+	void BoneTransform(float TimeInSeconds, vector<glm::mat4> &Transforms);
+	void SetScale(glm::vec3 scal);
+	void SetTranslate(glm::vec3 trans);
+	void SetRotate(float angle, glm::vec3 rotate);
+
 	Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
 	{
 	}

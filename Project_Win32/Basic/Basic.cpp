@@ -10,9 +10,7 @@
 void Basic::Init()
 {
 	mCamera->Pos = glm::vec3(2.0f, 3.8f, 10.0f);
-	//mCamera->Pos = glm::vec3(0.1f, 0.1f, 0.1f);
 	mCamera->Target = glm::vec3(0.0f, 3.0f, 0.2f);
-	//mCamera->Target = glm::vec3(0.0f, 0.0f, 0.02f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
@@ -32,6 +30,7 @@ void Basic::Init()
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, false, 0.1f);
 
 	mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
+	mMonster_1.SetScale(glm::vec3(0.08f));
 
 	mframebuffer.Init(2048, 2048);
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -43,6 +42,8 @@ void Basic::Draw()
 	mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateTransform();
+	mMonster_1.UpdateTransform();
+	mMonster_1.SetRotate(Timer::getMillisecond() / 10.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	glm::mat4 model_lamp_temp;
 	glm::vec3 lampPos = glm::vec3(10.2f, 6.0f, 9.0f);;
@@ -95,7 +96,7 @@ void Basic::Draw()
 	mGallacticCruiser.Draw(glm::translate(Pos_model_Original, glm::vec3(-10.0f, -3.0f, 0.0f)), lookat, lamppos);
 
 
-	mMonster_1.Draw(glm::translate(Pos_model_Original, glm::vec3(0.0f, 0.0f, 0.0f)), lookat, lamppos);
+	mMonster_1.Draw(lookat, lamppos);
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

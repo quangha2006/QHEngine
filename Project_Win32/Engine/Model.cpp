@@ -77,6 +77,10 @@ Model::Model()
 	hasAnimation = false;
 	timeStampAnim = -1;
 	scale = glm::vec3(1.0f);
+	translate = glm::vec3(0.0f);
+	rotate = glm::vec3(0.0f);
+	angle = 0.0f;
+	UpdateModel();
 }
 Model::~Model()
 {
@@ -386,7 +390,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	return textures;
 }
 
-void Model::Draw(glm::mat4 model, glm::mat4 &lookat, glm::vec3 &lamppos)
+void Model::Draw(glm::mat4 &lookat, glm::vec3 &lamppos)
 {
 	if (!isModelLoaded || !camera) return;
 
@@ -394,18 +398,20 @@ void Model::Draw(glm::mat4 model, glm::mat4 &lookat, glm::vec3 &lamppos)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	//ShaderManager::getInstance()->setUseProgram(useshadername.c_str());
+	glm::mat4 tmp_model = model;
+
 	if (needRotate)
 	{
-		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(270.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		tmp_model = glm::rotate(tmp_model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		tmp_model = glm::rotate(tmp_model, glm::radians(270.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	}
 
-	ShaderManager::getInstance()->setMat4("model", model);
-	glm::mat4 lookat_tmp = lookat * model;
+	ShaderManager::getInstance()->setMat4("model", tmp_model);
+	glm::mat4 lookat_tmp = lookat * tmp_model;
 	
 	ShaderManager::getInstance()->setMat4("lookat", lookat_tmp);
 
-	glm::mat4 model_inverse = glm::inverse(model);
+	glm::mat4 model_inverse = glm::inverse(tmp_model);
 	model_inverse = glm::transpose(model_inverse);
 	ShaderManager::getInstance()->setMat4("model_inverse", model_inverse);
 
@@ -458,14 +464,21 @@ void Model::SetTimeStampAnim(int64_t time)
 {
 	timeStampAnim = (float)(time / 1000.0f);
 }
-void Model::UpdateTransform()
+void Model::UpdateTransform(int64_t time)
 {
 	if (!hasAnimation) return;
+
+	Transforms.clear();
+
 	float RunningTime = 0.0f;
+
 	if (timeStampAnim < 0.0f)
 		RunningTime = (float)(Timer::getMillisecond() / 1000.0f);
 	else
 		RunningTime = timeStampAnim;
+
+	if (time != -1)
+		RunningTime = time;
 	BoneTransform(RunningTime, Transforms);
 }
 void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
@@ -486,6 +499,35 @@ void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 	for (uint i = 0; i < m_NumBones; i++) {
 		Transforms[i] = m_BoneInfo[i].FinalTransformation;
 	}
+}
+void Model::SetScale(glm::vec3 scal)
+{
+	if (this->scale == scal)
+		return;
+
+	this->scale = scal;
+
+	UpdateModel();
+}
+void Model::SetTranslate(glm::vec3 trans)
+{
+	if (this->translate == trans)
+		return;
+
+	this->translate = trans;
+
+	UpdateModel();
+}
+void Model::SetRotate(float angle, glm::vec3 rotate)
+{
+	if (this->angle == angle && this->rotate == rotate)
+		return;
+
+	this->angle = angle;
+
+	this->rotate = rotate;
+
+	UpdateModel();
 }
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {
@@ -568,6 +610,17 @@ void Model::CalcInterpolatedScaling(aiVector3D & Out, float AnimationTime, const
 	const aiVector3D& End = pNodeAnim->mScalingKeys[NextScalingIndex].mValue;
 	aiVector3D Delta = End - Start;
 	Out = Start + Factor * Delta;
+}
+void Model::UpdateModel()
+{
+	this->model = glm::mat4();
+
+	this->model = glm::scale(this->model, this->scale);
+
+	if (this->angle > 0.0f || this->angle < 0.0f)
+		this->model = glm::rotate(this->model, glm::radians(this->angle), this->rotate);
+
+	this->model = glm::translate(this->model, this->translate);
 }
 uint Model::FindScaling(float AnimationTime, const aiNodeAnim * pNodeAnim)
 {
