@@ -18,20 +18,35 @@ void Basic::Init()
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	//ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
 	//mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
+	//mNanosuit.SetScale(glm::vec3(0.7f));
+	//mNanosuit.SetTranslate(glm::vec3(9.0f, 0.0f, 0.0f));
+
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
-	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
-	mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
+
+	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
+	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 0.5f));
+
+	/*mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
 	mSun.SetUseLighting(false);
 	mSun.SetCustomColor(glm::vec3(1.0f));
+	mSun.SetScale(glm::vec3(0.0001f));*/
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
+	//mSpider.SetScale(glm::vec3(0.05f));
+	//mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
+
+
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
+	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, false, 0.1f);
+	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
 	mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
 	mMonster_1.SetScale(glm::vec3(0.08f));
-
+	mMonster_1.SetTranslate(glm::vec3(-40.0f, 0.0f, 0.0f));
+	mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mframebuffer.Init(2048, 2048);
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -43,7 +58,7 @@ void Basic::Draw()
 	
 	mSpider.UpdateTransform();
 	mMonster_1.UpdateTransform();
-	mMonster_1.SetRotate(Timer::getMillisecond() / 10.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	//mMonster_1.SetRotate(Timer::getMillisecond() / 10.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	glm::mat4 model_lamp_temp;
 	glm::vec3 lampPos = glm::vec3(10.2f, 6.0f, 9.0f);;
@@ -72,11 +87,11 @@ void Basic::Draw()
 	ShaderManager::getInstance()->setFloat("near_plane", near_plane);
 	ShaderManager::getInstance()->setFloat("far_plane", far_plane);
 
-	mNanosuit.Draw(glm::translate(glm::scale(Pos_model_Original,glm::vec3(0.7f)), glm::vec3(9.0f, 0.0f, 0.0f)), lookat, lamppos);	
-	mMerce.Draw(glm::translate(glm::rotate(Pos_model_Original, 11.0f, glm::vec3(1.0f, 0.0f, 0.0f)), glm::vec3(0.0f, 1.0f, 2.0f)), lookat, lamppos);
-	mSpider.Draw(glm::rotate(glm::translate(glm::scale(Pos_model_Original, glm::vec3(0.05f)), glm::vec3(0.0f, 1.0f, 0.0f)), glm::radians(timestamp_for_lamp * -1), glm::vec3(0.0f, 1.0f, 0.0f)), lookat, lamppos);
-	saberclass.Draw(glm::translate(Pos_model_Original, glm::vec3(0.0f, 3.0f, -20.0f)), lookat, lamppos);
-	mGallacticCruiser.Draw(glm::translate(Pos_model_Original, glm::vec3(-10.0f, -3.0f, 0.0f)), lookat, lamppos);
+	mNanosuit.Draw(lookat, lamppos);	
+	mMerce.Draw(lookat, lamppos);
+	mSpider.Draw(lookat, lamppos);
+	saberclass.Draw(lookat, lamppos);
+	mGallacticCruiser.Draw(lookat, lamppos);
 	
 	GLuint depthMap = mframebuffer.Disable();
 	
@@ -86,14 +101,17 @@ void Basic::Draw()
 	ShaderManager::getInstance()->setInt("shadowMap",10);
 	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 
-	m_Streetenvironment.Draw(glm::translate(glm::scale(Pos_model_Original,glm::vec3(1.0f)), glm::vec3(0.0f, 0.0f, 0.0f)), lookat, lamppos);
+	m_Streetenvironment.Draw(lookat, lamppos);
 
-	mNanosuit.Draw(glm::translate(glm::scale(Pos_model_Original, glm::vec3(0.7f)), glm::vec3(9.0f, 0.0f, 0.0f)), lookat, lamppos);
-	mSun.Draw(glm::scale(glm::translate(Pos_model_Original, lamppos), glm::vec3(0.0001f)), lookat, lamppos);
-	mMerce.Draw(glm::translate(glm::rotate(Pos_model_Original, 11.0f, glm::vec3(1.0f, 0.0f, 0.0f)), glm::vec3(0.0f, 0.0f, 0.51f)), lookat, lamppos);
-	mSpider.Draw(glm::rotate(glm::translate(glm::scale(Pos_model_Original, glm::vec3(0.05f)), glm::vec3(0.0f, 1.0f, 0.0f)), glm::radians(timestamp_for_lamp * -1), glm::vec3(0.0f, 1.0f, 0.0f)), lookat, lamppos);
-	saberclass.Draw(glm::translate(glm::scale(Pos_model_Original, glm::vec3(5.0f)), glm::vec3(0.0f, 1.0f, 0.0f)), lookat, lamppos);
-	mGallacticCruiser.Draw(glm::translate(Pos_model_Original, glm::vec3(-10.0f, -3.0f, 0.0f)), lookat, lamppos);
+	mNanosuit.Draw(lookat, lamppos);
+
+	mSun.SetTranslate(lampPos);
+	mSun.Draw(lookat, lamppos);
+
+	mMerce.Draw(lookat, lamppos);
+	mSpider.Draw(lookat, lamppos);
+	saberclass.Draw(lookat, lamppos);
+	mGallacticCruiser.Draw(lookat, lamppos);
 
 
 	mMonster_1.Draw(lookat, lamppos);
