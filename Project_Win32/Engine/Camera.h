@@ -20,7 +20,7 @@ public:
 	mat4 projection;
 	mat4 lookat;
 	vec3 ExtractCameraPos(const glm::mat4 & a_modelView);
-
+	void UpdateView();
 	Camera();
 	~Camera();
 };

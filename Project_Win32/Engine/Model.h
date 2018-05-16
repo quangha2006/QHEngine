@@ -85,6 +85,7 @@ public:
 	void SetScale(glm::vec3 scal);
 	void SetTranslate(glm::vec3 trans);
 	void SetRotate(float angle, glm::vec3 rotate);
+	void SetModel(glm::mat4 model = glm::mat4());
 
 	Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
 	{

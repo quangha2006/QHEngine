@@ -14,7 +14,7 @@ void Basic::Init()
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
-	//ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_screen.vs", "Shaders/framebuffers_screen.fs"); // For debug
+	ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_screen.vs", "Shaders/framebuffers_screen.fs"); // For debug
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	//ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
 	//mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
@@ -23,19 +23,20 @@ void Basic::Init()
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 
-	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
+	/*mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 0.5f));
+	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 0.5f));*/
 
-	/*mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
+	mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
 	mSun.SetUseLighting(false);
 	mSun.SetCustomColor(glm::vec3(1.0f));
-	mSun.SetScale(glm::vec3(0.0001f));*/
+	//mSun.SetScale(glm::vec3(0.00001f));
 
-	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
+	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.obj", mCamera, true);
+	mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	//mSpider.SetScale(glm::vec3(0.05f));
-	//mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
+	mSpider.SetScale(glm::vec3(0.05f));
+	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
 
 
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
@@ -43,22 +44,25 @@ void Basic::Init()
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, false, 0.1f);
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
-	mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
-	mMonster_1.SetScale(glm::vec3(0.08f));
-	mMonster_1.SetTranslate(glm::vec3(-40.0f, 0.0f, 0.0f));
-	mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
+	//mMonster_1.SetScale(glm::vec3(0.08f));
+	//mMonster_1.SetTranslate(glm::vec3(-40.0f, 0.0f, 0.0f));
+	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mframebuffer.Init(2048, 2048);
+	mframebuffer.EnableDebug(true);
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	mSkyBox.Init("SkyBox");
 }
 void Basic::Draw()
 {
+	mCamera->UpdateView();
 	mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateTransform();
-	mMonster_1.UpdateTransform();
-	//mMonster_1.SetRotate(Timer::getMillisecond() / 10.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	/*mMonster_1.UpdateTransform();
+	mMonster_1.SetTranslate(glm::vec3(0.5f, 0.0f, 0.0f));
+	mMonster_1.SetRotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));*/
 
 	glm::mat4 model_lamp_temp;
 	glm::vec3 lampPos = glm::vec3(10.2f, 6.0f, 9.0f);;
@@ -105,6 +109,7 @@ void Basic::Draw()
 
 	mNanosuit.Draw(lookat, lamppos);
 
+	mSun.SetModel();
 	mSun.SetTranslate(lampPos);
 	mSun.Draw(lookat, lamppos);
 
@@ -123,9 +128,27 @@ void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 }
 void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
-	if (key == 262 && action == 1)
+	if (action == 0) return;
+	switch (key)
+	{
+	case 322: //num 2
+		mCamera->Target.y -= 0.1;
+		return;
+	case 328: //num 8
+		mCamera->Target.y += 0.1;
+		return;
+	case 324: //num 4
+		mCamera->Target.x -= 0.1;
+		return;
+	case 326: //num 6
+		mCamera->Target.x += 0.1;
+		return;
+	default:
+		break;
+	}
+	if (key == 262 && action != 0)
 		timestamp_for_lamp += 1;
-	else if (action == 1)
+	else if (action == 1 || action == 2)
 	{
 		static int time = 0;
 		time += 2;

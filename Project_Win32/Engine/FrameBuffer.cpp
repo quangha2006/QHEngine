@@ -60,14 +60,21 @@ GLuint FrameBuffer::Disable()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, current_screen_width, current_screen_height);
 	//glDisable(GL_CULL_FACE);
-	//Debugging::getInstance()->DrawTex(texdepthMap);
+	if (isEnableDebug)
+		Debugging::getInstance()->DrawTex(texdepthMap);
 	return texdepthMap;
+}
+
+void FrameBuffer::EnableDebug(bool isEnable)
+{
+	isEnableDebug = isEnable;
 }
 
 FrameBuffer::FrameBuffer()
 {
 	width = 1024;
 	height = 1024;
+	isEnableDebug = false;
 }
 
 

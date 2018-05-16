@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Camera.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 vec3 Camera::Direction()
 {
@@ -54,6 +56,10 @@ vec3 Camera::ExtractCameraPos(const glm::mat4 & a_modelView)
 	float denom = dot(n1, n2n3);
 
 	return top / -denom;
+}
+void Camera::UpdateView()
+{
+	view = glm::lookAt(Pos, Target, up);
 }
 Camera::~Camera()
 {

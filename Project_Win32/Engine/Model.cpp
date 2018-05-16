@@ -80,7 +80,7 @@ Model::Model()
 	translate = glm::vec3(0.0f);
 	rotate = glm::vec3(0.0f);
 	angle = 0.0f;
-	UpdateModel();
+	this->model = glm::mat4();
 }
 Model::~Model()
 {
@@ -178,9 +178,9 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 		glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
 						  // positions
 		const aiVector3D* pPos = &(mesh->mVertices[i]);
-		vector.x = pPos->x;
-		vector.y = pPos->y;
-		vector.z = pPos->z;
+		vector.x = pPos->x * fixedModel;
+		vector.y = pPos->y * fixedModel;
+		vector.z = pPos->z * fixedModel;
 		
 		vertex.Position = vector;
 		// normals
@@ -502,32 +502,27 @@ void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 }
 void Model::SetScale(glm::vec3 scal)
 {
-	if (this->scale == scal)
-		return;
-
 	this->scale = scal;
 
-	UpdateModel();
+	this->model = glm::scale(this->model, scal);
 }
 void Model::SetTranslate(glm::vec3 trans)
 {
-	if (this->translate == trans)
-		return;
-
 	this->translate = trans;
 
-	UpdateModel();
+	this->model = glm::translate(this->model, trans);
 }
 void Model::SetRotate(float angle, glm::vec3 rotate)
 {
-	if (this->angle == angle && this->rotate == rotate)
-		return;
-
 	this->angle = angle;
 
 	this->rotate = rotate;
 
-	UpdateModel();
+	this->model = glm::rotate(this->model, glm::radians(angle), rotate);
+}
+void Model::SetModel(glm::mat4 model)
+{
+	this->model = model;
 }
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {
