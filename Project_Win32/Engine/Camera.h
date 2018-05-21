@@ -18,9 +18,10 @@ public:
 
 	mat4 view;
 	mat4 projection;
-	mat4 lookat;
+	mat4 WorldViewProjectionMatrix;
 	vec3 ExtractCameraPos(const glm::mat4 & a_modelView);
 	void UpdateView();
+	void UpdateWorldViewProjection();
 	Camera();
 	~Camera();
 };

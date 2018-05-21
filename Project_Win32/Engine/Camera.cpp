@@ -61,6 +61,10 @@ void Camera::UpdateView()
 {
 	view = glm::lookAt(Pos, Target, up);
 }
+void Camera::UpdateWorldViewProjection()
+{
+	WorldViewProjectionMatrix = projection * view;
+}
 Camera::~Camera()
 {
 }

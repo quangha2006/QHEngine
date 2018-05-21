@@ -75,7 +75,7 @@ private:
 
 public:
 	void Init(string const &path, Camera *camera, bool enableAlpha, float fixedModel = 1.0f);
-	void Draw(glm::mat4 &lookat, glm::vec3 &lamppos);
+	void Draw(glm::vec3 &lamppos);
 	void SetUseLighting(bool UseLighting);
 	void DisableLightingForMesh(int numMesh);
 	void SetCustomColor(glm::vec3 color);

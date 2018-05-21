@@ -390,7 +390,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	return textures;
 }
 
-void Model::Draw(glm::mat4 &lookat, glm::vec3 &lamppos)
+void Model::Draw(glm::vec3 &lamppos)
 {
 	if (!isModelLoaded || !camera) return;
 
@@ -407,9 +407,9 @@ void Model::Draw(glm::mat4 &lookat, glm::vec3 &lamppos)
 	}
 
 	ShaderManager::getInstance()->setMat4("model", tmp_model);
-	glm::mat4 lookat_tmp = lookat * tmp_model;
+	glm::mat4 lookat_tmp = camera->WorldViewProjectionMatrix * tmp_model;
 	
-	ShaderManager::getInstance()->setMat4("lookat", lookat_tmp);
+	ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", lookat_tmp);
 
 	glm::mat4 model_inverse = glm::inverse(tmp_model);
 	model_inverse = glm::transpose(model_inverse);

@@ -57,6 +57,7 @@ void Basic::Init()
 void Basic::Draw()
 {
 	mCamera->UpdateView();
+	mCamera->UpdateWorldViewProjection();
 	mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateTransform();
@@ -75,7 +76,7 @@ void Basic::Draw()
 	lamppos.x = model_lamp_temp[3].x;
 	lamppos.y = model_lamp_temp[3].y;
 	lamppos.z = model_lamp_temp[3].z;
-	glm::mat4 lookat = (mCamera->projection) * (mCamera->view); // need to * with model in model.draw
+	//glm::mat4 lookat = (mCamera->projection) * (mCamera->view); // need to * with model in model.draw
 	
 	mframebuffer.Enable(mContext->GetWindowWidth(), mContext->GetWindowHeight());
 	
@@ -91,11 +92,11 @@ void Basic::Draw()
 	ShaderManager::getInstance()->setFloat("near_plane", near_plane);
 	ShaderManager::getInstance()->setFloat("far_plane", far_plane);
 
-	mNanosuit.Draw(lookat, lamppos);	
-	mMerce.Draw(lookat, lamppos);
-	mSpider.Draw(lookat, lamppos);
-	saberclass.Draw(lookat, lamppos);
-	mGallacticCruiser.Draw(lookat, lamppos);
+	mNanosuit.Draw(lamppos);	
+	mMerce.Draw(lamppos);
+	mSpider.Draw(lamppos);
+	saberclass.Draw(lamppos);
+	mGallacticCruiser.Draw(lamppos);
 	
 	GLuint depthMap = mframebuffer.Disable();
 	
@@ -105,21 +106,20 @@ void Basic::Draw()
 	ShaderManager::getInstance()->setInt("shadowMap",10);
 	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 
-	m_Streetenvironment.Draw(lookat, lamppos);
+	m_Streetenvironment.Draw(lamppos);
 
-	mNanosuit.Draw(lookat, lamppos);
+	mNanosuit.Draw(lamppos);
 
 	mSun.SetModel();
 	mSun.SetTranslate(lampPos);
-	mSun.Draw(lookat, lamppos);
+	mSun.Draw(lamppos);
 
-	mMerce.Draw(lookat, lamppos);
-	mSpider.Draw(lookat, lamppos);
-	saberclass.Draw(lookat, lamppos);
-	mGallacticCruiser.Draw(lookat, lamppos);
+	mMerce.Draw(lamppos);
+	mSpider.Draw(lamppos);
+	saberclass.Draw(lamppos);
+	mGallacticCruiser.Draw(lamppos);
 
-
-	mMonster_1.Draw(lookat, lamppos);
+	mMonster_1.Draw(lamppos);
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

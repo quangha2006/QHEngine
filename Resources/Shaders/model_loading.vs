@@ -17,7 +17,7 @@ out vec4 id;
 
 uniform mat4 model;
 uniform mat4 model_inverse;
-uniform mat4 lookat;
+uniform mat4 WorldViewProjectionMatrix;
 uniform mat4 lightSpaceMatrix; //shadow
 uniform mat4 gBones[48];
 uniform bool useAnim; 
@@ -42,7 +42,7 @@ void main()
 	}
 	else
 		PosL    =  vec4(aPos, 1.0);
-    gl_Position = lookat * PosL;
+    gl_Position = WorldViewProjectionMatrix * PosL;
 
 	FragPos = vec3(model * vec4(aPos, 1.0));
 	Normal = mat3(model_inverse) * NormalL.xyz; 
