@@ -18,8 +18,8 @@ void main()
 	highp vec4 PosL = vec4(0.0, 0.0, 0.0, 1.0);
 	if (useAnim == true)
 	{
-	int index = int(sIDs[0]);
-	mat4 BoneTransform	= gBones[index] * sWeights[0];
+		int index = int(sIDs[0]);
+		mat4 BoneTransform	= gBones[index] * sWeights[0];
 		index = int(sIDs[1]);
 		BoneTransform += gBones[index] * sWeights[1];
 		index = int(sIDs[2]);
@@ -32,7 +32,7 @@ void main()
 	else
 		PosL   = vec4(aPos, 1.0);
 	
-    gl_Position = lightSpaceMatrix * model * PosL;
+    gl_Position =  lightSpaceMatrix * model * PosL;
 
 	TexCoords = aTexCoords;
 }

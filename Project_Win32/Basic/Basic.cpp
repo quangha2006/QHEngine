@@ -37,7 +37,7 @@ void Basic::Init()
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
 	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
-
+	mSpider.SetAnimPlay(0);
 
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
@@ -82,8 +82,8 @@ void Basic::Draw()
 	
 	glm::mat4 lightProjection, lightView;
 	glm::mat4 lightSpaceMatrix;
-	float near_plane = 0.1f, far_plane = 50.0f;
-	lightProjection = glm::ortho(-12.0f, 15.0f, -4.0f, 14.0f, near_plane, far_plane);
+	float near_plane = 0.1f, far_plane = 40.0f;
+	lightProjection = glm::ortho(-12.0f, 15.0f, -5.0f, 14.0f, near_plane, far_plane);
 	//lightProjection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
 	lightView = glm::lookAt(lamppos, glm::vec3(0.0f), glm::vec3(0.0, 3.0, 0.2));
 	lightSpaceMatrix = lightProjection * lightView;

@@ -81,6 +81,7 @@ Model::Model()
 	rotate = glm::vec3(0.0f);
 	angle = 0.0f;
 	this->model = glm::mat4();
+	animToPlay = 0;
 }
 Model::~Model()
 {
@@ -524,11 +525,15 @@ void Model::SetModel(glm::mat4 model)
 {
 	this->model = model;
 }
+void Model::SetAnimPlay(int anim)
+{
+	animToPlay = anim;
+}
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {
 	string NodeName(pNode->mName.data);
 
-	const aiAnimation* pAnimation = m_pScene->mAnimations[0];
+	const aiAnimation* pAnimation = m_pScene->mAnimations[animToPlay];
 
 	aiMatrix4x4 tmp = pNode->mTransformation;
 

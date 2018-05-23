@@ -123,8 +123,11 @@ void main()
 
 	vec3 specular = light_specular * spec * color_specular.rgb;  
 
-	// Total lighting
+	// Total lighting + shadow
 	vec3 lighting = ambient + (diffuse + specular) * (1.0 - shadow) + color_pick;
+
+	// Total lighting + not shadow
+	//vec3 lighting = ambient + (diffuse + specular) + color_pick;
 
 	if (enableAlpha == true)
 		FragColor = vec4(lighting, color.a);

@@ -44,6 +44,7 @@ private:
 	double mTicksPerSecond;
 	double mDuration;
 	bool hasAnimation;
+	int animToPlay;
 
 	string useshadername;
 	Camera *camera;
@@ -86,6 +87,7 @@ public:
 	void SetTranslate(glm::vec3 trans);
 	void SetRotate(float angle, glm::vec3 rotate);
 	void SetModel(glm::mat4 model = glm::mat4());
+	void SetAnimPlay(int anim);
 
 	Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
 	{
