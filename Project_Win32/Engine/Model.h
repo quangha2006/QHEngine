@@ -41,10 +41,11 @@ private:
 	vector<glm::mat4> Transforms;
 	glm::mat4 m_GlobalInverseTransform;
 	GLint m_NumBones;
-	double mTicksPerSecond;
-	double mDuration;
+	//double mTicksPerSecond;
+	//double mDuration;
 	bool hasAnimation;
 	int animToPlay;
+	int mNumAnimations;
 
 	string useshadername;
 	Camera *camera;

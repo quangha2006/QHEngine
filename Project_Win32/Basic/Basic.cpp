@@ -37,7 +37,7 @@ void Basic::Init()
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
 	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
-	mSpider.SetAnimPlay(0);
+	mSpider.SetAnimPlay(10);
 
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
@@ -128,19 +128,20 @@ void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 }
 void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
+	LOGI("Key: %d", key);
 	if (action == 0) return;
 	switch (key)
 	{
-	case 322: //num 2
+	case 83: //num 2
 		mCamera->Target.y -= 0.1;
 		return;
-	case 328: //num 8
+	case 87: //num 8
 		mCamera->Target.y += 0.1;
 		return;
-	case 324: //num 4
+	case 65: //num 4
 		mCamera->Target.x -= 0.1;
 		return;
-	case 326: //num 6
+	case 68: //num 6
 		mCamera->Target.x += 0.1;
 		return;
 	default:

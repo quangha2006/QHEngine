@@ -72,7 +72,7 @@ Model::Model()
 	useCustomColor = false;
 	customColor = glm::vec3(1.0f);
 	m_NumBones = 0;
-	mTicksPerSecond = 0.0f;
+	//mTicksPerSecond = 0.0f;
 	m_pScene = NULL;
 	hasAnimation = false;
 	timeStampAnim = -1;
@@ -128,8 +128,9 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	if (m_pScene->HasAnimations())
 	{
 		m_GlobalInverseTransform = glm::inverse(AiToGLMMat4(m_pScene->mRootNode->mTransformation));
-		mTicksPerSecond = m_pScene->mAnimations[0]->mTicksPerSecond;
-		mDuration = m_pScene->mAnimations[0]->mDuration;
+		//mTicksPerSecond = m_pScene->mAnimations[0]->mTicksPerSecond;
+		//mDuration = m_pScene->mAnimations[0]->mDuration;
+		mNumAnimations = m_pScene->mNumAnimations;
 	}
 	// process ASSIMP's root node recursively
 	processNode(m_pScene->mRootNode, m_pScene, fixedModel);
@@ -490,6 +491,9 @@ void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 	Identity[2][0] = 0.0f; Identity[2][1] = 0.0f; Identity[2][2] = 1.0f; Identity[2][3] = 0.0f;
 	Identity[3][0] = 0.0f; Identity[3][1] = 0.0f; Identity[3][2] = 0.0f; Identity[3][3] = 1.0f;
 
+	double mTicksPerSecond = m_pScene->mAnimations[animToPlay]->mTicksPerSecond;
+	double mDuration = m_pScene->mAnimations[animToPlay]->mDuration;
+
 	float TicksPerSecond = (float)(mTicksPerSecond != 0 ? mTicksPerSecond : 25.0f);
 	float TimeInTicks = TimeInSeconds * TicksPerSecond;
 	float AnimationTime = fmod(TimeInTicks, (float)mDuration);
@@ -527,7 +531,8 @@ void Model::SetModel(glm::mat4 model)
 }
 void Model::SetAnimPlay(int anim)
 {
-	animToPlay = anim;
+	if (anim >= 0 && anim < mNumAnimations)
+		animToPlay = anim;
 }
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {
