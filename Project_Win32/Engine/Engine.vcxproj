@@ -168,8 +168,8 @@
   <ItemGroup>
     <None Include="..\..\Resources\Shaders\DepthShader.fs" />
     <None Include="..\..\Resources\Shaders\DepthShader.vs" />
-    <None Include="..\..\Resources\Shaders\framebuffers_screen.fs" />
-    <None Include="..\..\Resources\Shaders\framebuffers_screen.vs" />
+    <None Include="..\..\Resources\Shaders\framebuffers_debug.fs" />
+    <None Include="..\..\Resources\Shaders\framebuffers_debug.vs" />
     <None Include="..\..\Resources\Shaders\model_loading.fs" />
     <None Include="..\..\Resources\Shaders\model_loading.vs" />
   </ItemGroup>

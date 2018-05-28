@@ -44,7 +44,7 @@ void main()
 	}
 	else
 	{
-		color = vec4(material_color_diffuse,1.0);
+		color = vec4(material_color_diffuse, material_transparent);
 		color_ambient = color;
 		color_specular = vec4(material_color_specular,1.0);
 		color_diffuse = vec4(material_color_diffuse,1.0);
@@ -71,19 +71,22 @@ void main()
     // check whether current frag pos is in shadow
 	vec3 lightDir = normalize(light_position - FragPos);
 
-	float bias = 0.005;//max(0.05 * (1.0 - dot(Normal, lightDir)), 0.005);
+	float bias = max(0.05 * (1.0 - dot(Normal, lightDir)), 0.005);
     float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
 
-    //vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
-    //for(int x = -1; x <= 1; ++x)
-    //{
-    //    for(int y = -1; y <= 1; ++y)
-    //    {
-    //        float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
-    //        shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;        
-    //    }    
-    //}
-    //shadow /= 9.0;
+	ivec2 texsize = textureSize(shadowMap, 0);
+
+    float texelSize = 1.0 / float(texsize.x);
+
+    for(int m = -1; m <= 1; ++m)
+    {
+        for(int n = -1; n <= 1; ++n)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(float(m), float(n)) * texelSize).r; 
+            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;        
+        }    
+    }
+    shadow /= 9.0;
 
 	if(projCoords.z > 1.0)
         shadow = 0.0;

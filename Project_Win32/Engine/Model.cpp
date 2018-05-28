@@ -72,7 +72,6 @@ Model::Model()
 	useCustomColor = false;
 	customColor = glm::vec3(1.0f);
 	m_NumBones = 0;
-	//mTicksPerSecond = 0.0f;
 	m_pScene = NULL;
 	hasAnimation = false;
 	timeStampAnim = -1;
@@ -128,8 +127,6 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	if (m_pScene->HasAnimations())
 	{
 		m_GlobalInverseTransform = glm::inverse(AiToGLMMat4(m_pScene->mRootNode->mTransformation));
-		//mTicksPerSecond = m_pScene->mAnimations[0]->mTicksPerSecond;
-		//mDuration = m_pScene->mAnimations[0]->mDuration;
 		mNumAnimations = m_pScene->mNumAnimations;
 	}
 	// process ASSIMP's root node recursively

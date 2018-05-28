@@ -14,7 +14,7 @@ void Basic::Init()
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
-	ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_screen.vs", "Shaders/framebuffers_screen.fs"); // For debug
+	ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	//ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
 	//mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
@@ -32,12 +32,12 @@ void Basic::Init()
 	mSun.SetCustomColor(glm::vec3(1.0f));
 	//mSun.SetScale(glm::vec3(0.00001f));
 
-	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.obj", mCamera, true);
-	mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
+	mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.obj", mCamera, true);
+	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
 	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
-	mSpider.SetAnimPlay(10);
+	mSpider.SetAnimPlay(0);
 
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
@@ -49,7 +49,7 @@ void Basic::Init()
 	//mMonster_1.SetTranslate(glm::vec3(-40.0f, 0.0f, 0.0f));
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mframebuffer.Init(2048, 2048);
-	mframebuffer.EnableDebug(true);
+	//mframebuffer.EnableDebug(true);
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	mSkyBox.Init("SkyBox");
@@ -66,7 +66,7 @@ void Basic::Draw()
 	mMonster_1.SetRotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));*/
 
 	glm::mat4 model_lamp_temp;
-	glm::vec3 lampPos = glm::vec3(10.2f, 6.0f, 9.0f);;
+	glm::vec3 lampPos = glm::vec3(10.2f, 16.0f, 12.0f);;
 	//float timestamp_for_lamp = Timer::getMillisecond()/1000.0f;
 	model_lamp_temp = glm::rotate(model_lamp_temp, glm::radians(timestamp_for_lamp * 10), glm::vec3(0.0f, 1.0f, 0.0f));
 	model_lamp_temp = glm::translate(model_lamp_temp, lampPos);
@@ -128,32 +128,57 @@ void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 }
 void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
-	LOGI("Key: %d", key);
+	//LOGI("Key: %d", key);
 	if (action == 0) return;
 	switch (key)
 	{
-	case 83: //num 2
+	case 83: //num s
 		mCamera->Target.y -= 0.1;
 		return;
-	case 87: //num 8
+	case 87: //num w
 		mCamera->Target.y += 0.1;
 		return;
-	case 65: //num 4
+	case 65: //num a
 		mCamera->Target.x -= 0.1;
 		return;
-	case 68: //num 6
+	case 68: //num d
 		mCamera->Target.x += 0.1;
+		return;
+	case 262:
+		timestamp_for_lamp += 1;
+		return;
+	case 320: //num 0
+		mSpider.SetAnimPlay(0);
+		return;
+	case 321:
+		mSpider.SetAnimPlay(1);
+		return;
+	case 322:
+		mSpider.SetAnimPlay(2);
+		return;
+	case 323:
+		mSpider.SetAnimPlay(3);
+		return;
+	case 324:
+		mSpider.SetAnimPlay(4);
+		return;
+	case 325:
+		mSpider.SetAnimPlay(5);
+		return;
+	case 326:
+		mSpider.SetAnimPlay(6);
+		return;
+	case 327:
+		mSpider.SetAnimPlay(7);
+		return;
+	case 328:
+		mSpider.SetAnimPlay(8);
+		return;
+	case 329: // num 9
+		mSpider.SetAnimPlay(9);
 		return;
 	default:
 		break;
-	}
-	if (key == 262 && action != 0)
-		timestamp_for_lamp += 1;
-	else if (action == 1 || action == 2)
-	{
-		static int time = 0;
-		time += 2;
-		mSpider.SetTimeStampAnim(time);
 	}
 }
 Basic::Basic()

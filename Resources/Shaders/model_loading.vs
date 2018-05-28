@@ -44,7 +44,7 @@ void main()
 		PosL    =  vec4(aPos, 1.0);
     gl_Position = WorldViewProjectionMatrix * PosL;
 
-	FragPos = vec3(model * vec4(aPos, 1.0));
+	FragPos = vec3(model * PosL);
 	Normal = mat3(model_inverse) * NormalL.xyz; 
     TexCoords = aTexCoords; 
 	FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);

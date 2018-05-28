@@ -169,16 +169,16 @@
     <None Include="..\..\Resources\Shaders\DepthShader.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\Resources\Shaders\framebuffers_screen.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\Resources\Shaders\framebuffers_screen.vs">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\Resources\Shaders\model_loading.fs">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\Resources\Shaders\model_loading.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\framebuffers_debug.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\framebuffers_debug.vs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
