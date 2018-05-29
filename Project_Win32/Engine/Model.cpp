@@ -35,21 +35,6 @@ glm::mat4 AiToGLMMat4(aiMatrix4x4& in_mat)
 	return tmp;
 }
 
-void InitScaleTransform(glm::mat4 &m, float ScaleX, float ScaleY, float ScaleZ)
-{
-	m[0][0] = ScaleX; m[0][1] = 0.0f;   m[0][2] = 0.0f;   m[0][3] = 0.0f;
-	m[1][0] = 0.0f;   m[1][1] = ScaleY; m[1][2] = 0.0f;   m[1][3] = 0.0f;
-	m[2][0] = 0.0f;   m[2][1] = 0.0f;   m[2][2] = ScaleZ; m[2][3] = 0.0f;
-	m[3][0] = 0.0f;   m[3][1] = 0.0f;   m[3][2] = 0.0f;   m[3][3] = 1.0f;
-}
-
-void InitTranslationTransform(glm::mat4 &m, float x, float y, float z)
-{
-	m[0][0] = 1.0f; m[0][1] = 0.0f; m[0][2] = 0.0f; m[0][3] = x;
-	m[1][0] = 0.0f; m[1][1] = 1.0f; m[1][2] = 0.0f; m[1][3] = y;
-	m[2][0] = 0.0f; m[2][1] = 0.0f; m[2][2] = 1.0f; m[2][3] = z;
-	m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[3][3] = 1.0f;
-}
 glm::mat4 testfun(glm::mat4 a, glm::mat4 b)
 {
 	glm::mat4 result(0.0f);
@@ -482,11 +467,7 @@ void Model::UpdateTransform(int64_t time)
 }
 void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 {
-	glm::mat4 Identity;
-	Identity[0][0] = 1.0f; Identity[0][1] = 0.0f; Identity[0][2] = 0.0f; Identity[0][3] = 0.0f;
-	Identity[1][0] = 0.0f; Identity[1][1] = 1.0f; Identity[1][2] = 0.0f; Identity[1][3] = 0.0f;
-	Identity[2][0] = 0.0f; Identity[2][1] = 0.0f; Identity[2][2] = 1.0f; Identity[2][3] = 0.0f;
-	Identity[3][0] = 0.0f; Identity[3][1] = 0.0f; Identity[3][2] = 0.0f; Identity[3][3] = 1.0f;
+	glm::mat4 Identity = glm::mat4();
 
 	double mTicksPerSecond = m_pScene->mAnimations[animToPlay]->mTicksPerSecond;
 	double mDuration = m_pScene->mAnimations[animToPlay]->mDuration;
@@ -547,22 +528,29 @@ void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::ma
 		// Interpolate scaling and generate scaling transformation matrix
 		aiVector3D Scaling;
 		CalcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
-		glm::mat4 ScalingM;
-		InitScaleTransform(ScalingM, Scaling.x, Scaling.y, Scaling.z);
+		glm::mat4 ScalingM = glm::mat4();
+		ScalingM = glm::scale(ScalingM, glm::vec3(Scaling.x, Scaling.y, Scaling.z));
+		//InitScaleTransform(ScalingM, Scaling.x, Scaling.y, Scaling.z);
 
 		// Interpolate rotation and generate rotation transformation matrix
 		aiQuaternion RotationQ;
 		CalcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);
 		aiMatrix3x3 tmpmat3 = RotationQ.GetMatrix();
 		glm::mat4 RotationM = glm::mat4(glm::make_mat3(&tmpmat3.a1));
-		RotationM[0][3] = 0.0f; RotationM[1][3] = 0.0f; RotationM[2][3] = 0.0f; RotationM[3][3] = 1.0f;
-		RotationM[3][0] = 0.0f; RotationM[3][1] = 0.0f; RotationM[3][2] = 0.0f;
+		RotationM[0][3] = 0.0f; 
+		RotationM[1][3] = 0.0f; 
+		RotationM[2][3] = 0.0f; 
+		RotationM[3][0] = 0.0f; RotationM[3][1] = 0.0f; RotationM[3][2] = 0.0f; RotationM[3][3] = 1.0f;
 		
 		// Interpolate translation and generate translation transformation matrix
 		aiVector3D Translation;
 		CalcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
-		glm::mat4 TranslationM;
-		InitTranslationTransform(TranslationM, Translation.x, Translation.y, Translation.z);
+
+		//InitTranslationTransform
+		glm::mat4 TranslationM = glm::mat4();
+		TranslationM[0][3] = Translation.x;
+		TranslationM[1][3] = Translation.y;
+		TranslationM[2][3] = Translation.z;
 
 		// Combine the above transformations
 		glm::mat4 tmp1 = testfun(TranslationM, RotationM);
