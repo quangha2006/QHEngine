@@ -390,14 +390,14 @@ void Model::Draw(glm::vec3 &lamppos)
 		tmp_model = glm::rotate(tmp_model, glm::radians(270.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	}
 
-	ShaderManager::getInstance()->setMat4("model", tmp_model);
+	ShaderManager::getInstance()->setMat4("world", tmp_model);
 	glm::mat4 lookat_tmp = camera->WorldViewProjectionMatrix * tmp_model;
 	
 	ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", lookat_tmp);
 
 	glm::mat4 model_inverse = glm::inverse(tmp_model);
 	model_inverse = glm::transpose(model_inverse);
-	ShaderManager::getInstance()->setMat4("model_inverse", model_inverse);
+	ShaderManager::getInstance()->setMat4("world_inverse", model_inverse);
 
 	ShaderManager::getInstance()->setFloat("material_shininess", 18.0f);
 	ShaderManager::getInstance()->setVec3("light_position", lamppos);

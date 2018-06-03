@@ -15,8 +15,8 @@ out vec4 FragPosLightSpace; //shadow
 out vec4 we;
 out vec4 id;
 
-uniform mat4 model;
-uniform mat4 model_inverse;
+uniform mat4 world;
+uniform mat4 world_inverse;
 uniform mat4 WorldViewProjectionMatrix;
 uniform mat4 lightSpaceMatrix; //shadow
 uniform mat4 gBones[48];
@@ -44,13 +44,13 @@ void main()
 		PosL    =  vec4(aPos, 1.0);
     gl_Position = WorldViewProjectionMatrix * PosL;
 
-	FragPos = vec3(model * PosL);
-	Normal = mat3(model_inverse) * NormalL.xyz; 
+	FragPos = vec3(world * PosL);
+	Normal = mat3(world_inverse) * NormalL.xyz; 
     TexCoords = aTexCoords; 
 	FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
 
-	vec3 T = normalize(vec3(model * vec4(aTangent,   0.0)));
-	vec3 B = normalize(vec3(model * vec4(aBitangent, 0.0)));
-	vec3 N = normalize(vec3(model * NormalL));
+	vec3 T = normalize(vec3(world * vec4(aTangent,   0.0)));
+	vec3 B = normalize(vec3(world * vec4(aBitangent, 0.0)));
+	vec3 N = normalize(vec3(world * NormalL));
 	TBN = mat3(T, B, N);
 }

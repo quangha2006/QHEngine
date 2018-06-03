@@ -9,7 +9,7 @@ in vec3 aBitangent;
 
 out vec2 TexCoords;
 uniform mat4 lightSpaceMatrix;
-uniform mat4 model;
+uniform mat4 world;
 uniform mat4 gBones[48];
 uniform bool useAnim;
 
@@ -32,7 +32,7 @@ void main()
 	else
 		PosL   = vec4(aPos, 1.0);
 	
-    gl_Position =  lightSpaceMatrix * model * PosL;
+    gl_Position =  lightSpaceMatrix * world * PosL;
 
 	TexCoords = aTexCoords;
 }

@@ -23,9 +23,9 @@ void Basic::Init()
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 
-	/*mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
+	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 0.5f));*/
+	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 0.5f));
 
 	mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
 	mSun.SetUseLighting(false);
@@ -33,11 +33,11 @@ void Basic::Init()
 	//mSun.SetScale(glm::vec3(0.00001f));
 
 	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.obj", mCamera, true);
-	mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
+	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	mSpider.SetScale(glm::vec3(0.05f));
+	/*mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
-	mSpider.SetAnimPlay(0);
+	mSpider.SetAnimPlay(0);*/
 
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
@@ -49,7 +49,7 @@ void Basic::Init()
 	//mMonster_1.SetTranslate(glm::vec3(-40.0f, 0.0f, 0.0f));
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mframebuffer.Init(2048, 2048);
-	//mframebuffer.EnableDebug(true);
+	mframebuffer.EnableDebug(true);
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	mSkyBox.Init("SkyBox");
@@ -66,7 +66,7 @@ void Basic::Draw()
 	mMonster_1.SetRotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));*/
 
 	glm::mat4 model_lamp_temp;
-	glm::vec3 lampPos = glm::vec3(10.2f, 16.0f, 12.0f);;
+	glm::vec3 lampPos = glm::vec3(8.2f, 10.0f, 9.0f);;
 	//float timestamp_for_lamp = Timer::getMillisecond()/1000.0f;
 	model_lamp_temp = glm::rotate(model_lamp_temp, glm::radians(timestamp_for_lamp * 10), glm::vec3(0.0f, 1.0f, 0.0f));
 	model_lamp_temp = glm::translate(model_lamp_temp, lampPos);
