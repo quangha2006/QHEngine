@@ -49,6 +49,7 @@ private:
 	Camera *camera;
 	bool isModelLoaded;
 	bool isEnableAlpha;
+	bool isDrawPolygon;
 	bool uselighting;
 	glm::vec3 customColor;
 	bool useCustomColor;
@@ -61,7 +62,7 @@ private:
 	glm::vec3 translate;
 	glm::vec3 rotate;
 	float angle;
-	glm::mat4 model;
+	glm::mat4 world;
 
 	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -85,9 +86,9 @@ public:
 	void SetScale(glm::vec3 scal);
 	void SetTranslate(glm::vec3 trans);
 	void SetRotate(float angle, glm::vec3 rotate);
-	void SetModel(glm::mat4 model = glm::mat4());
+	void SetWorld(glm::mat4 world = glm::mat4());
 	void SetAnimPlay(int anim);
-
+	void SetDrawPolygon(bool isdrawpolygon);
 	Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
 	{
 	}

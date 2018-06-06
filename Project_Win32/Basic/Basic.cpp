@@ -17,13 +17,14 @@ void Basic::Init()
 	ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	//ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
-	//mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
-	//mNanosuit.SetScale(glm::vec3(0.7f));
-	//mNanosuit.SetTranslate(glm::vec3(9.0f, 0.0f, 0.0f));
+	mNanosuit.Init("Light Bulb/Light Bulb 1.dae", mCamera, false);
+	mNanosuit.SetScale(glm::vec3(0.4f));
+	mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
+	mNanosuit.SetDrawPolygon(true);
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 
-	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
+	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 0.5f));
 
@@ -49,7 +50,7 @@ void Basic::Init()
 	//mMonster_1.SetTranslate(glm::vec3(-40.0f, 0.0f, 0.0f));
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mframebuffer.Init(2048, 2048);
-	mframebuffer.EnableDebug(true);
+	//mframebuffer.EnableDebug(true);
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	mSkyBox.Init("SkyBox");
@@ -110,7 +111,7 @@ void Basic::Draw()
 
 	mNanosuit.Draw(lamppos);
 
-	mSun.SetModel();
+	mSun.SetWorld();
 	mSun.SetTranslate(lampPos);
 	mSun.Draw(lamppos);
 

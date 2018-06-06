@@ -25,7 +25,7 @@ void Mesh::setupMesh()
 
 }
 
-void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
+void Mesh::Draw(bool isdrawpolygon, bool useCustomColor, glm::vec3 customColor)
 {
 	Shaderv2 * modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
@@ -135,7 +135,11 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 		ShaderManager::getInstance()->setBool("useTexture", false);
 		ShaderManager::getInstance()->setVec3("material_color_diffuse", customColor);
 	}
-	QHEngine::DrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);//GL_TRIANGLES //GL_POINTS
+	if (isdrawpolygon)
+		QHEngine::DrawElements(GL_LINE_STRIP, indices.size(), GL_UNSIGNED_INT, (void*)0);//GL_TRIANGLES //GL_POINTS
+	else
+		QHEngine::DrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);//GL_TRIANGLES //GL_POINTS
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 

@@ -13,25 +13,11 @@
 glm::mat4 AiToGLMMat4(aiMatrix4x4& in_mat)
 {
 	glm::mat4 tmp;
-	tmp[0][0] = in_mat.a1;
-	tmp[1][0] = in_mat.b1;
-	tmp[2][0] = in_mat.c1;
-	tmp[3][0] = in_mat.d1;
+	tmp[0][0] = in_mat.a1;	tmp[0][1] = in_mat.a2;	tmp[0][2] = in_mat.a3;	tmp[0][3] = in_mat.a4;
+	tmp[1][0] = in_mat.b1;	tmp[1][1] = in_mat.b2;	tmp[1][2] = in_mat.b3;	tmp[1][3] = in_mat.b4;
+	tmp[2][0] = in_mat.c1;	tmp[2][1] = in_mat.c2;	tmp[2][2] = in_mat.c3;	tmp[2][3] = in_mat.c4;
+	tmp[3][0] = in_mat.d1;	tmp[3][1] = in_mat.d2;	tmp[3][2] = in_mat.d3;	tmp[3][3] = in_mat.d4;
 
-	tmp[0][1] = in_mat.a2;
-	tmp[1][1] = in_mat.b2;
-	tmp[2][1] = in_mat.c2;
-	tmp[3][1] = in_mat.d2;
-
-	tmp[0][2] = in_mat.a3;
-	tmp[1][2] = in_mat.b3;
-	tmp[2][2] = in_mat.c3;
-	tmp[3][2] = in_mat.d3;
-
-	tmp[0][3] = in_mat.a4;
-	tmp[1][3] = in_mat.b4;
-	tmp[2][3] = in_mat.c4;
-	tmp[3][3] = in_mat.d4;
 	return tmp;
 }
 
@@ -64,8 +50,9 @@ Model::Model()
 	translate = glm::vec3(0.0f);
 	rotate = glm::vec3(0.0f);
 	angle = 0.0f;
-	this->model = glm::mat4();
+	this->world = glm::mat4();
 	animToPlay = 0;
+	isDrawPolygon = false;
 }
 Model::~Model()
 {
@@ -382,7 +369,7 @@ void Model::Draw(glm::vec3 &lamppos)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	//ShaderManager::getInstance()->setUseProgram(useshadername.c_str());
-	glm::mat4 tmp_model = model;
+	glm::mat4 tmp_model = world;
 
 	if (needRotate)
 	{
@@ -423,7 +410,7 @@ void Model::Draw(glm::vec3 &lamppos)
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
 		ShaderManager::getInstance()->setBool("uselighting", uselighting);
-		meshes[i].Draw(useCustomColor,customColor);
+		meshes[i].Draw(isDrawPolygon, useCustomColor, customColor);
 	}
 		
 	glDisable(GL_DEPTH_TEST);
@@ -487,13 +474,13 @@ void Model::SetScale(glm::vec3 scal)
 {
 	this->scale = scal;
 
-	this->model = glm::scale(this->model, scal);
+	this->world = glm::scale(this->world, scal);
 }
 void Model::SetTranslate(glm::vec3 trans)
 {
 	this->translate = trans;
 
-	this->model = glm::translate(this->model, trans);
+	this->world = glm::translate(this->world, trans);
 }
 void Model::SetRotate(float angle, glm::vec3 rotate)
 {
@@ -501,16 +488,20 @@ void Model::SetRotate(float angle, glm::vec3 rotate)
 
 	this->rotate = rotate;
 
-	this->model = glm::rotate(this->model, glm::radians(angle), rotate);
+	this->world = glm::rotate(this->world, glm::radians(angle), rotate);
 }
-void Model::SetModel(glm::mat4 model)
+void Model::SetWorld(glm::mat4 model)
 {
-	this->model = model;
+	this->world = model;
 }
 void Model::SetAnimPlay(int anim)
 {
 	if (anim >= 0 && anim < mNumAnimations)
 		animToPlay = anim;
+}
+void Model::SetDrawPolygon(bool isdrawpolygon)
+{
+	isDrawPolygon = isdrawpolygon;
 }
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {
@@ -603,14 +594,14 @@ void Model::CalcInterpolatedScaling(aiVector3D & Out, float AnimationTime, const
 }
 void Model::UpdateModel()
 {
-	this->model = glm::mat4();
+	this->world = glm::mat4();
 
-	this->model = glm::scale(this->model, this->scale);
+	this->world = glm::scale(this->world, this->scale);
 
 	if (this->angle > 0.0f || this->angle < 0.0f)
-		this->model = glm::rotate(this->model, glm::radians(this->angle), this->rotate);
+		this->world = glm::rotate(this->world, glm::radians(this->angle), this->rotate);
 
-	this->model = glm::translate(this->model, this->translate);
+	this->world = glm::translate(this->world, this->translate);
 }
 uint Model::FindScaling(float AnimationTime, const aiNodeAnim * pNodeAnim)
 {
