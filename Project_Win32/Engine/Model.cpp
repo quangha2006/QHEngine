@@ -390,7 +390,7 @@ void Model::Draw(glm::vec3 &lamppos)
 	ShaderManager::getInstance()->setVec3("light_position", lamppos);
 	ShaderManager::getInstance()->setVec3("viewPos", camera->Pos);
 	ShaderManager::getInstance()->setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
-	ShaderManager::getInstance()->setVec3("light_diffuse", 1.0f, 1.0f, 1.0f);
+	ShaderManager::getInstance()->setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
 	ShaderManager::getInstance()->setVec3("light_specular", 1.1f, 1.1f, 1.1f);
 	ShaderManager::getInstance()->setBool("enableAlpha", this->isEnableAlpha);
 	ShaderManager::getInstance()->setBool("usenormalmap", false);

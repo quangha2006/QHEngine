@@ -17,10 +17,10 @@ void Basic::Init()
 	ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	//ShaderManager::getInstance()->Init("model", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
-	mNanosuit.Init("Light Bulb/Light Bulb 1.dae", mCamera, false);
-	mNanosuit.SetScale(glm::vec3(0.4f));
-	mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
-	mNanosuit.SetDrawPolygon(true);
+	//mNanosuit.Init("Light Bulb/Light Bulb 1.dae", mCamera, false);
+	//mNanosuit.SetScale(glm::vec3(0.4f));
+	//mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
+	//mNanosuit.SetDrawPolygon(true);
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 
@@ -35,10 +35,10 @@ void Basic::Init()
 
 	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.obj", mCamera, true);
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
-	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	/*mSpider.SetScale(glm::vec3(0.05f));
+	mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
+	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
-	mSpider.SetAnimPlay(0);*/
+	mSpider.SetAnimPlay(0);
 
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));

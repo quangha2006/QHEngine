@@ -136,7 +136,7 @@ void Mesh::Draw(bool isdrawpolygon, bool useCustomColor, glm::vec3 customColor)
 		ShaderManager::getInstance()->setVec3("material_color_diffuse", customColor);
 	}
 	if (isdrawpolygon)
-		QHEngine::DrawElements(GL_LINE_STRIP, indices.size(), GL_UNSIGNED_INT, (void*)0);//GL_TRIANGLES //GL_POINTS
+		QHEngine::DrawElements(GL_LINE_LOOP, indices.size(), GL_UNSIGNED_INT, (void*)0);//GL_TRIANGLES //GL_POINTS
 	else
 		QHEngine::DrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);//GL_TRIANGLES //GL_POINTS
 

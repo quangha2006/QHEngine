@@ -11,10 +11,15 @@ uniform vec3 material_color_diffuse;
 uniform vec3 material_color_specular;
 uniform float material_transparent;
 
+// light
 uniform vec3 light_position;
 uniform vec3 light_ambient;
 uniform vec3 light_diffuse;
 uniform vec3 light_specular;
+// point light
+uniform float constant
+uniform float linear
+uniform float quadratic
 
 in vec3 FragPos;
 in vec2 TexCoords;
@@ -52,7 +57,7 @@ void main()
 
 	if ((enableAlpha == true) && (color.a < 0.5))
 	{
-			discard;
+		discard;
 	}
 
 	//*********** calculate shadow **********************
