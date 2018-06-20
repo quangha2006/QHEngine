@@ -410,7 +410,7 @@ void Model::Draw(glm::vec3 &lamppos)
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
 		ShaderManager::getInstance()->setBool("uselighting", uselighting);
-		meshes[i].Draw(isDrawPolygon, useCustomColor, customColor);
+		meshes[i].Draw(useCustomColor, customColor);
 	}
 		
 	glDisable(GL_DEPTH_TEST);
@@ -501,7 +501,15 @@ void Model::SetAnimPlay(int anim)
 }
 void Model::SetDrawPolygon(bool isdrawpolygon)
 {
+	if (isdrawpolygon == isDrawPolygon)
+		return;
+
 	isDrawPolygon = isdrawpolygon;
+
+	for (unsigned int i = 0; i < meshes.size(); i++)
+	{
+		meshes[i].SetDrawPolygon(isDrawPolygon);
+	}
 }
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {

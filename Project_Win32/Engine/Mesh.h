@@ -62,6 +62,7 @@ private:
 	void setupMesh();
 	string meshName;
 	bool hasNormals;
+	bool isDrawPolygon;
 public:
 	/*  Mesh Data  */
 	vector<Vertex> vertices;
@@ -71,9 +72,10 @@ public:
 	Material material;
 	GLuint texture;
 
-	void Draw(bool isdrawpolygon = false, bool useCustomColor = false, glm::vec3 customColor = glm::vec3(0.0f,0.0f,0.0f));
+	void Draw(bool useCustomColor = false, glm::vec3 customColor = glm::vec3(0.0f,0.0f,0.0f));
 	void DeleteBuffer();
 	void SetUseLighting(bool isuse);
+	void SetDrawPolygon(bool isdrawpolygon);
 	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material material, string meshname, bool hasnormals = false);
 	~Mesh();
 };

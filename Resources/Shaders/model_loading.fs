@@ -16,10 +16,11 @@ uniform vec3 light_position;
 uniform vec3 light_ambient;
 uniform vec3 light_diffuse;
 uniform vec3 light_specular;
+
 // point light
-uniform float constant
-uniform float linear
-uniform float quadratic
+uniform float pointlight_constant;
+uniform float pointlight_linear;
+uniform float pointlight_quadratic;
 
 in vec3 FragPos;
 in vec2 TexCoords;

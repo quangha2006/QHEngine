@@ -25,7 +25,7 @@ void Mesh::setupMesh()
 
 }
 
-void Mesh::Draw(bool isdrawpolygon, bool useCustomColor, glm::vec3 customColor)
+void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 {
 	Shaderv2 * modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
@@ -135,7 +135,7 @@ void Mesh::Draw(bool isdrawpolygon, bool useCustomColor, glm::vec3 customColor)
 		ShaderManager::getInstance()->setBool("useTexture", false);
 		ShaderManager::getInstance()->setVec3("material_color_diffuse", customColor);
 	}
-	if (isdrawpolygon)
+	if (isDrawPolygon)
 		QHEngine::DrawElements(GL_LINE_LOOP, indices.size(), GL_UNSIGNED_INT, (void*)0);//GL_TRIANGLES //GL_POINTS
 	else
 		QHEngine::DrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);//GL_TRIANGLES //GL_POINTS
@@ -157,6 +157,11 @@ void Mesh::SetUseLighting(bool isuse)
 	this->hasNormals = isuse;
 }
 
+void Mesh::SetDrawPolygon(bool isdrawpolygon)
+{
+	isDrawPolygon = isdrawpolygon;
+}
+
 Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname, bool hasnormals)
 {
 	this->vertices = vertices;
@@ -167,6 +172,7 @@ Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> text
 	this->hasNormals = hasnormals;
 	// now that we have all the required data, set the vertex buffers and its attribute pointers.
 	setupMesh();
+	bool isdrawpolygon = false;
 }
 Mesh::~Mesh()
 {
