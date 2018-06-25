@@ -1,5 +1,7 @@
 package com.android.learnning3D;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -25,7 +27,20 @@ public class GLES3View extends GLSurfaceView{
         heightPixels = metrics.heightPixels;
         this.getHolder().setFixedSize((int)(widthPixels*0.6),(int)(heightPixels*0.6));
         setEGLConfigChooser(new MyConfigChooser());
-        setEGLContextClientVersion(3);
+
+        final ActivityManager activityManager = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
+        final ConfigurationInfo configurationInfo;
+        configurationInfo = activityManager.getDeviceConfigurationInfo();
+
+        final boolean supportsEs3 = configurationInfo.reqGlEsVersion >= 0x30000;
+        if (supportsEs3) {
+            setEGLContextClientVersion(3);
+            //Log.i("QHEngine", "setEGLContextClientVersion = 3");
+        }
+        else {
+            setEGLContextClientVersion(2);
+            //Log.i("QHEngine", "setEGLContextClientVersion = 2");
+        }
         setPreserveEGLContextOnPause(true);
         setRenderer(new Renderer());
         glSurfaceView = this;
