@@ -392,6 +392,9 @@ void Model::Draw(glm::vec3 &lamppos)
 	ShaderManager::getInstance()->setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
 	ShaderManager::getInstance()->setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
 	ShaderManager::getInstance()->setVec3("light_specular", 1.1f, 1.1f, 1.1f);
+	ShaderManager::getInstance()->setFloat("pointlight_constant", 1.0f);
+	ShaderManager::getInstance()->setFloat("pointlight_linear", 0.007f);
+	ShaderManager::getInstance()->setFloat("pointlight_quadratic", 0.0002f);
 	ShaderManager::getInstance()->setBool("enableAlpha", this->isEnableAlpha);
 	ShaderManager::getInstance()->setBool("usenormalmap", false);
 	ShaderManager::getInstance()->setVec3("color_pick", 0.0f, 0.0f, 0.0f);

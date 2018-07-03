@@ -132,6 +132,15 @@ void main()
 
 	vec3 specular = light_specular * spec * color_specular.rgb;  
 
+	// pointlight
+	float distance = length(light_position - FragPos);
+	float attenuation = 1.0 / (pointlight_constant + pointlight_linear * distance + pointlight_quadratic * (distance * distance));
+
+	ambient  *= attenuation; 
+	diffuse  *= attenuation;
+	specular *= attenuation;
+
+
 	// Total lighting + shadow
 	vec3 lighting = ambient + (diffuse + specular) * (1.0 - shadow) + color_pick;
 

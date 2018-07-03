@@ -9,7 +9,7 @@
 
 void Basic::Init()
 {
-	mCamera->Pos = glm::vec3(2.0f, 3.8f, 10.0f);
+	mCamera->Pos = glm::vec3(2.0f, 3.8f, 2.0f);
 	mCamera->Target = glm::vec3(0.0f, 3.0f, 0.2f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
