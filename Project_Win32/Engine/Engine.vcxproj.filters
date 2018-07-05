@@ -93,6 +93,9 @@
     <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\package_utils.cpp">
       <Filter>Android</Filter>
     </ClCompile>
+    <ClCompile Include="QHTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="..\..\AndroidPort\AndroidSource\app\jni\package_utils.h">
       <Filter>Android</Filter>
+    </ClInclude>
+    <ClInclude Include="QHTexture.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
