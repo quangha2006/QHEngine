@@ -9,8 +9,8 @@
 
 void Basic::Init()
 {
-	mCamera->Pos = glm::vec3(2.0f, 3.8f, 2.0f);
-	mCamera->Target = glm::vec3(0.0f, 3.0f, 0.2f);
+	mCamera->Pos = glm::vec3(3.0f, 1.0f, 3.0f);
+	mCamera->Target = glm::vec3(0.0f, 1.0f, 0.2f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
@@ -23,10 +23,11 @@ void Basic::Init()
 	//mNanosuit.SetDrawPolygon(true);
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
+	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
-	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 0.5f));
+	//mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+	//mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 0.5f));
 
 	mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
 	mSun.SetUseLighting(false);
@@ -34,8 +35,8 @@ void Basic::Init()
 	//mSun.SetScale(glm::vec3(0.00001f));
 
 	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.obj", mCamera, true);
-	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
-	mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
+	mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
+	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
 	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
