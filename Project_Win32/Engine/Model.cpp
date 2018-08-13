@@ -98,8 +98,10 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations()?"True":"False");
 	if (m_pScene->HasAnimations())
 	{
+		hasAnimation = true;
 		m_GlobalInverseTransform = glm::inverse(AiToGLMMat4(m_pScene->mRootNode->mTransformation));
 		mNumAnimations = m_pScene->mNumAnimations;
+		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
 	// process ASSIMP's root node recursively
 	processNode(m_pScene->mRootNode, m_pScene, fixedModel);
@@ -135,6 +137,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 	int WEIGHTS_PER_VERTEX = 4;
 	int boneArraysSize = mesh->mNumVertices * WEIGHTS_PER_VERTEX;
 	bool hasnormals = false;
+	bool hasbone = false;
 	// data to fill
 	vector<Vertex> vertices;
 	vector<GLuint> indices;
@@ -213,7 +216,8 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 
 	if (scene->HasAnimations())
 	{
-		hasAnimation = true;
+		if (mesh->mNumBones > 0)
+			hasbone = true;
 		for (unsigned int i = 0; i < mesh->mNumBones; i++)
 		{
 			aiBone* aiBone = mesh->mBones[i]; //CREATING A POINTER TO THE CURRENT BONE
@@ -326,7 +330,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 	mesh_material.shininess = shininess;
 	mesh_material.transparent = transparent;
 	
-	return Mesh(vertices, indices, textures, mesh_material, string(mesh->mName.C_Str()), hasnormals);
+	return Mesh(vertices, indices, textures, mesh_material, string(mesh->mName.C_Str()), hasnormals, hasbone);
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, string typeName)
@@ -402,13 +406,10 @@ void Model::Draw(glm::vec3 &lamppos)
 	//animation
 	if (hasAnimation && Transforms.size() > 0)
 	{
-		ShaderManager::getInstance()->setBool("useAnim", true);
 		int m_boneLocation = glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), "gBones");
 		if (m_boneLocation >= 0)
 			glUniformMatrix4fv(m_boneLocation, Transforms.size(), GL_TRUE, glm::value_ptr(Transforms[0]));
 	}
-	else
-		ShaderManager::getInstance()->setBool("useAnim", false);
 
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{

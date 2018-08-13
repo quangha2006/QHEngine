@@ -25,9 +25,10 @@ void Basic::Init()
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
-	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
+	mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", mCamera, false);
 	//mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	//mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 0.5f));
+	mMerce.SetTranslate(glm::vec3(0.0f, 0.5f, 0.5f));
+	mMerce.SetAnimPlay(0);
 
 	mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
 	mSun.SetUseLighting(false);
@@ -35,7 +36,7 @@ void Basic::Init()
 	//mSun.SetScale(glm::vec3(0.00001f));
 
 	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.obj", mCamera, true);
-	mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
+	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
 	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
@@ -63,6 +64,7 @@ void Basic::Draw()
 	mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateTransform();
+	mMerce.UpdateTransform();
 	/*mMonster_1.UpdateTransform();
 	mMonster_1.SetTranslate(glm::vec3(0.5f, 0.0f, 0.0f));
 	mMonster_1.SetRotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));*/

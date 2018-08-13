@@ -82,7 +82,10 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 	unsigned int heightNr = 1;
 	bool hasmaterial_texture_diffuse1 = false;
 	ShaderManager::getInstance()->setBool("useNormalMap", false);
-	ShaderManager::getInstance()->setBool("useTexture", true);
+	if (hasBone)
+		ShaderManager::getInstance()->setBool("useAnim", true);
+	else
+		ShaderManager::getInstance()->setBool("useAnim", false);
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
@@ -125,10 +128,11 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 	ShaderManager::getInstance()->setVec3("material_color_specular", material.specular);
 	if (material.shininess < 0.001f || !hasNormals)
 		ShaderManager::getInstance()->setBool("uselighting", false);
-	if (!hasmaterial_texture_diffuse1)
-	{
+
+	if (hasmaterial_texture_diffuse1)
+		ShaderManager::getInstance()->setBool("useTexture", true);
+	else
 		ShaderManager::getInstance()->setBool("useTexture", false);
-	}
 
 	if (useCustomColor)
 	{
@@ -164,7 +168,7 @@ void Mesh::SetDrawPolygon(bool isdrawpolygon)
 	isDrawPolygon = isdrawpolygon;
 }
 
-Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname, bool hasnormals)
+Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname, bool hasnormals, bool hasbone)
 {
 	this->vertices = vertices;
 	this->indices = indices;
@@ -172,6 +176,7 @@ Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> text
 	this->material = meterial;
 	this->meshName = meshname;
 	this->hasNormals = hasnormals;
+	this->hasBone = hasbone;
 	// now that we have all the required data, set the vertex buffers and its attribute pointers.
 	setupMesh();
 	isDrawPolygon = false;
