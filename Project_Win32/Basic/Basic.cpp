@@ -25,8 +25,8 @@ void Basic::Init()
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
-	mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", mCamera, false);
-	//mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
+	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetTranslate(glm::vec3(0.0f, 0.5f, 0.5f));
 	mMerce.SetAnimPlay(0);
 
@@ -59,8 +59,8 @@ void Basic::Init()
 }
 void Basic::Draw()
 {
-	mCamera->UpdateView();
-	mCamera->UpdateWorldViewProjection();
+	//mCamera->UpdateView();
+	//mCamera->UpdateWorldViewProjection();
 	mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateTransform();
@@ -70,7 +70,7 @@ void Basic::Draw()
 	mMonster_1.SetRotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));*/
 
 	glm::mat4 model_lamp_temp;
-	glm::vec3 lampPos = glm::vec3(8.2f, 10.0f, 9.0f);;
+	glm::vec3 lampPos = glm::vec3(8.2f, 10.0f, 9.0f);
 	//float timestamp_for_lamp = Timer::getMillisecond()/1000.0f;
 	model_lamp_temp = glm::rotate(model_lamp_temp, glm::radians(timestamp_for_lamp * 10), glm::vec3(0.0f, 1.0f, 0.0f));
 	model_lamp_temp = glm::translate(model_lamp_temp, lampPos);
@@ -80,7 +80,6 @@ void Basic::Draw()
 	lamppos.x = model_lamp_temp[3].x;
 	lamppos.y = model_lamp_temp[3].y;
 	lamppos.z = model_lamp_temp[3].z;
-	//glm::mat4 lookat = (mCamera->projection) * (mCamera->view); // need to * with model in model.draw
 	
 	mframebuffer.Enable(mContext->GetWindowWidth(), mContext->GetWindowHeight());
 	
@@ -187,7 +186,6 @@ void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 }
 Basic::Basic()
 {
-	Pos_model_Original = glm::translate(Pos_model_Original, glm::vec3(0.0f, 0.0f, 0.0f));
 	timestamp_for_lamp = 0;
 }
 

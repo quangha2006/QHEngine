@@ -49,6 +49,8 @@ void AppBase::rendering()
 {
 	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+	mCamera->UpdateView();
+	mCamera->UpdateWorldViewProjection();
 	Draw();
 	unsigned short numDrawCall = Debugging::getInstance()->getNumDrawCall();
 	int numTriangle = Debugging::getInstance()->getNumTriangle();

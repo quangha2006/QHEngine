@@ -1,24 +1,26 @@
 #pragma once
 #include <AppBase.h>
-#include <Shader.h>
 #include <Model.h>
+#include <SkyBox.h>
+#include <Logs.h>
 #include <Camera.h>
-#include <ShaderManager.h>
 #include <FrameBuffer.h>
-#include "SkyBox.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
-class Basic : public AppBase
+class EnvMapping : public AppBase
 {
 private:
-	Model mNanosuit, m_Streetenvironment, mMerce, mSun, mSpider, saberclass, mGallacticCruiser, mMonster_1;
-	FrameBuffer mframebuffer;
+	Model mNanosuit;
 	SkyBox mSkyBox;
-	float timestamp_for_lamp;
+	FrameBuffer mframebuffer;
 public:
 	void Draw();
 	void Init();
 	void GetRequireScreenSize(int32_t &width, int32_t &height);
 	void OnGameKeyPressed(int key, int scancode, int action, int mods);
-	Basic();
-	~Basic();
+	EnvMapping();
+	~EnvMapping();
 };
+

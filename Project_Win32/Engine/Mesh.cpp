@@ -139,7 +139,7 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 		ShaderManager::getInstance()->setBool("useTexture", false);
 		ShaderManager::getInstance()->setVec3("material_color_diffuse", customColor);
 	}
-	
+	CheckGLError("Draw mesh 1 ");
 	if (isDrawPolygon)
 		QHEngine::DrawElements(GL_LINE_LOOP, indices.size(), GL_UNSIGNED_INT, (void*)0);
 	else
@@ -164,7 +164,6 @@ void Mesh::SetUseLighting(bool isuse)
 
 void Mesh::SetDrawPolygon(bool isdrawpolygon)
 {
-	LOGI("SetDraw: %d", isdrawpolygon);
 	isDrawPolygon = isdrawpolygon;
 }
 
