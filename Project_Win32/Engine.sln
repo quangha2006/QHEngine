@@ -23,6 +23,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype_2015", "External\freetype_2015\builds\win32\visualc\freetype_2015.vcxproj", "{ADD22788-E9F2-8745-A2DC-4078E9A91BA7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnvironmentMapping", "EnvironmentMapping\EnvironmentMapping.vcxproj", "{50F6BC87-B3CE-48D4-A96E-27AC3C0D7045}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0A820982-59C6-4B6F-A0AB-6AE1D0478A9B} = {0A820982-59C6-4B6F-A0AB-6AE1D0478A9B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

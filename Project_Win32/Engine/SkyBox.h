@@ -17,6 +17,7 @@ public:
 	void Draw(Camera *camera);
 	void setScale(float scale);
 	unsigned int loadCubemap(const char * texturepath, std::vector<std::string> faces);
+	GLuint getTextureID();
 	SkyBox();
 	~SkyBox();
 };

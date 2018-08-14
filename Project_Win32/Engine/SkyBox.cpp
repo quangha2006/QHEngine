@@ -128,6 +128,11 @@ unsigned int SkyBox::loadCubemap(const char * texturepath, std::vector<std::stri
 	return textureID;
 }
 
+GLuint SkyBox::getTextureID()
+{
+	return textureID;
+}
+
 SkyBox::SkyBox()
 {
 	skyboxVertices = new GLfloat[108]{

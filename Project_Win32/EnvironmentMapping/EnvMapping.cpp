@@ -20,6 +20,7 @@ void EnvMapping::Draw()
 	ShaderManager::getInstance()->setFloat("far_plane", far_plane);
 
 	mNanosuit.Draw(lampPos);
+	mMerce.Draw(lampPos);
 
 	GLuint depthMap = mframebuffer.Disable();
 
@@ -28,9 +29,11 @@ void EnvMapping::Draw()
 	glBindTexture(GL_TEXTURE_2D, depthMap);
 	ShaderManager::getInstance()->setInt("shadowMap", 10);
 	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", lightSpaceMatrix);
-
+	glActiveTexture(GL_TEXTURE11);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, mSkyBox.getTextureID());
+	ShaderManager::getInstance()->setInt("skybox", 11);
 	mNanosuit.Draw(lampPos);
-
+	mMerce.Draw(lampPos);
 	//Debugging::getInstance()->DrawTex(depthMap);
 }
 
@@ -46,9 +49,14 @@ void EnvMapping::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
+	//mNanosuit.Init("nanosuit/nanosuit.obj", mCamera, false);
 	mNanosuit.SetScale(glm::vec3(0.2f));
 	mNanosuit.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f));
+
+	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
+	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+	mMerce.SetTranslate(glm::vec3(0.0f, 0.5f, 0.5f));
+	mMerce.SetAnimPlay(0);
 
 	mframebuffer.Init(2048, 2048);
 

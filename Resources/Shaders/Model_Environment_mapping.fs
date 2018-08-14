@@ -4,6 +4,7 @@ uniform sampler2D material_texture_diffuse1;
 uniform sampler2D material_texture_specular1;
 uniform sampler2D material_texture_normal1;
 uniform sampler2D shadowMap;
+uniform samplerCube skybox;
 uniform float material_shininess;
 
 uniform vec3 material_color_ambient;
@@ -147,8 +148,22 @@ void main()
 	// Total lighting + not shadow
 	//vec3 lighting = ambient + (diffuse + specular) + color_pick;
 
+	vec4 finalcolor;
+
 	if (enableAlpha == true)
-		FragColor = vec4(lighting, color.a);
+		finalcolor = vec4(lighting, color.a);
 	else
-		FragColor = vec4(lighting, material_transparent);
+		finalcolor = vec4(lighting, material_transparent);
+
+	vec3 I = normalize(FragPos - viewPos);
+    vec3 R = reflect(I, normalize(Normal));
+	vec4 envmapping = vec4(texture(skybox, R).rgb, 1.0);
+
+	finalcolor.rgb = pow(finalcolor.rgb,vec3(2.2));
+
+	vec4 finalcolor2 = mix(finalcolor, envmapping, color_diffuse);
+
+	//finalcolor2.rgb = pow(finalcolor2.rgb,vec3(.4545));
+
+    FragColor = finalcolor2;
 }

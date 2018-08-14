@@ -12,7 +12,7 @@
 class EnvMapping : public AppBase
 {
 private:
-	Model mNanosuit;
+	Model mNanosuit,mMerce;
 	SkyBox mSkyBox;
 	FrameBuffer mframebuffer;
 public:
