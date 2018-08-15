@@ -283,16 +283,16 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 	// normal: texture_normalN
 
 	// 1. diffuse maps
-	vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+	vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, TextureType_DIFFUSE);
 	textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 	// 2. specular maps
-	vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+	vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, TextureType_SPECULAR);
 	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	// 3. normal maps
-	std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+	std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS, TextureType_NORMALS);
 	textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 	// 4. height maps
-	std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+	std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, TextureType_AMBIENT);
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
 	// Get material color
@@ -333,7 +333,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 	return Mesh(vertices, indices, textures, mesh_material, string(mesh->mName.C_Str()), hasnormals, hasbone);
 }
 
-vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, string typeName)
+vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, TextureType typeName)
 {
 	vector<Texture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)

@@ -92,24 +92,31 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 										  // retrieve texture number (the N in diffuse_textureN)
 		stringstream ss;
 		string number;
-		string name = textures[i].type;
-		if (name == "texture_diffuse")
+		string name;
+		TextureType texturetype = textures[i].type;
+		if (texturetype == TextureType_DIFFUSE)
 		{
+			name = "texture_diffuse";
 			ss << diffuseNr++; // transfer unsigned int to stream
 			hasmaterial_texture_diffuse1 = true;
 		}
-		else if (name == "texture_specular")
+		else if (texturetype == TextureType_SPECULAR)
 		{
+			name = "texture_specular";
 			ss << specularNr++; // transfer unsigned int to stream
 			hasmaterial_texture_diffuse1 = true;
 		}
-		else if (name == "texture_normal")
+		else if (texturetype == TextureType_NORMALS)
 		{
+			name = "texture_normal";
 			ss << normalNr++; // transfer unsigned int to stream
 			ShaderManager::getInstance()->setBool("useNormalMap", true);
 		}
-		else if (name == "texture_height")
+		else if (texturetype == TextureType_HEIGHT)
+		{
+			name = "texture_height";
 			ss << heightNr++; // transfer unsigned int to stream
+		}
 		number = ss.str();
 		// now set the sampler to the correct texture unit
 		string Material = "material_";
