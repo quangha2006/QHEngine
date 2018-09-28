@@ -21,7 +21,7 @@ void Basic::Init()
 	//mNanosuit.SetScale(glm::vec3(0.4f));
 	//mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
 	//mNanosuit.SetDrawPolygon(true);
-
+	//testcommit
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
@@ -49,7 +49,7 @@ void Basic::Init()
 
 	mMonster_1.Init("meomeo/Ship03.dae", mCamera, false);
 	//mMonster_1.SetScale(glm::vec3(0.08f));
-	mMonster_1.SetTranslate(glm::vec3(0.0f, 10.0f, 0.0f));
+	mMonster_1.SetTranslate(glm::vec3(0.0f, 5.0f, 0.0f));
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mframebuffer.Init(2048, 2048);
 	//mframebuffer.EnableDebug(true);
