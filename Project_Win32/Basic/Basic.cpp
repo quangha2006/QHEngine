@@ -36,7 +36,7 @@ void Basic::Init()
 	//mSun.SetScale(glm::vec3(0.00001f));
 
 	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.obj", mCamera, true);
-	mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
+	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
 	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
@@ -47,9 +47,9 @@ void Basic::Init()
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, false, 0.1f);
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
-	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
+	mMonster_1.Init("meomeo/Ship03.dae", mCamera, false);
 	//mMonster_1.SetScale(glm::vec3(0.08f));
-	//mMonster_1.SetTranslate(glm::vec3(-40.0f, 0.0f, 0.0f));
+	mMonster_1.SetTranslate(glm::vec3(0.0f, 10.0f, 0.0f));
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mframebuffer.Init(2048, 2048);
 	//mframebuffer.EnableDebug(true);
@@ -65,9 +65,10 @@ void Basic::Draw()
 	
 	mSpider.UpdateTransform();
 	mMerce.UpdateTransform();
-	/*mMonster_1.UpdateTransform();
-	mMonster_1.SetTranslate(glm::vec3(0.5f, 0.0f, 0.0f));
-	mMonster_1.SetRotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));*/
+	mMonster_1.UpdateTransform();
+	
+	//mMonster_1.SetTranslate(glm::vec3(0.5f, 0.0f, 0.0f));
+	//mMonster_1.SetRotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));*/
 
 	glm::mat4 model_lamp_temp;
 	glm::vec3 lampPos = glm::vec3(8.2f, 10.0f, 9.0f);
