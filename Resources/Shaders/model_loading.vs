@@ -25,26 +25,21 @@ void main()
 {
 	highp vec4 PosL = vec4(aPos, 1.0);
 	vec4 NormalL = vec4(aNormal, 0.0);
+
 	if (useAnim == true)
 	{
-		PosL = vec4(0.0, 0.0, 0.0, 1.0);
-		NormalL = vec4(0.0, 0.0, 0.0, 0.0);
-
-		int index = int(sIDs[0]);
-		PosL.xyz += sWeights[0] * (gBones[index] * vec4(aPos, 1.0)).xyz;
-		NormalL.xyz += sWeights[0] * (gBones[index] * vec4(aNormal, 0.0)).xyz;
-
+	int index = int(sIDs[0]);
+	mat4 BoneTransform	= gBones[index] * sWeights[0];
 		index = int(sIDs[1]);
-		PosL.xyz += sWeights[1] * (gBones[index] * vec4(aPos, 1.0)).xyz;
-		NormalL.xyz += sWeights[1] * (gBones[index] * vec4(aNormal, 0.0)).xyz;
-
+		BoneTransform += gBones[index] * sWeights[1];
 		index = int(sIDs[2]);
-		PosL.xyz += sWeights[2] * (gBones[index] * vec4(aPos, 1.0)).xyz;
-		NormalL.xyz += sWeights[2] * (gBones[index] * vec4(aNormal, 0.0)).xyz;
-
+		BoneTransform += gBones[index] * sWeights[2];
 		index = int(sIDs[3]);
-		PosL.xyz += sWeights[3] * (gBones[index] * vec4(aPos, 1.0)).xyz;
-		NormalL.xyz += sWeights[3] * (gBones[index] * vec4(aNormal, 0.0)).xyz;
+		BoneTransform += gBones[index] * sWeights[3];
+
+		PosL    = BoneTransform * vec4(aPos, 1.0);
+
+		NormalL = BoneTransform * vec4(aNormal, 0.0);
 	}
 
     gl_Position = WorldViewProjectionMatrix * PosL;
