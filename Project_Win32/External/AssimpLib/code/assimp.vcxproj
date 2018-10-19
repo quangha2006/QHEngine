@@ -14,7 +14,7 @@
     <ProjectGUID>{538D83D8-668C-3F7F-8644-84C46936CF30}</ProjectGUID>
     <Keyword>Win32Proj</Keyword>
     <Platform>Win32</Platform>
-    <ProjectName>assimp</ProjectName>
+    <ProjectName>assimp-3.2.0</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

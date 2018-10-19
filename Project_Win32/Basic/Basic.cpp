@@ -35,7 +35,7 @@ void Basic::Init()
 	mSun.SetCustomColor(glm::vec3(1.0f));
 	//mSun.SetScale(glm::vec3(0.00001f));
 
-	mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
+	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
 	mSpider.SetScale(glm::vec3(0.05f));
@@ -47,11 +47,13 @@ void Basic::Init()
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, false, 0.1f);
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
-	mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
-	mMonster_1.SetTranslate(glm::vec3(-5.0f, 0.0f, 0.0f)); 
-	mMonster_1.SetScale(glm::vec3(0.08f));
-	
+	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
+	mMonster_1.Init("bountyhunter/mai/source.dae", mCamera, false);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	mMonster_1.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f)); 
+	mMonster_1.SetScale(glm::vec3(1.0f));
+	mMonster_1.SetNeedRotate(false);
+	
 	mframebuffer.Init(2048, 2048);
 	//mframebuffer.EnableDebug(true);
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));

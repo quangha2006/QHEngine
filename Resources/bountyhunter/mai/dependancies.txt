@@ -1,0 +1,49 @@
+3d/Characters/maishiranui/_texture/maishiranui_d.tga
+ProfileCOMMON_emul.cg;;;frag;;;FS;;;-DFOG -DSPLIT_ALPHA=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;frag;;;FS;;;-DFOG -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;frag;;;FS;;;-DSPLIT_ALPHA=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;frag;;;FS;;;-DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;vert;;;VS;;;-DFOG -DLIGHTING -DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;vert;;;VS;;;-DFOG -DLIGHTING -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;vert;;;VS;;;-DFOG -DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;vert;;;VS;;;-DFOG -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;vert;;;VS;;;-DLIGHTING -DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;vert;;;VS;;;-DLIGHTING -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;vert;;;VS;;;-DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.cg;;;vert;;;VS;;;-DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;frag;;;FS;;;-DFOG -DSPLIT_ALPHA=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;frag;;;FS;;;-DFOG -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;frag;;;FS;;;-DSPLIT_ALPHA=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;frag;;;FS;;;-DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;vert;;;VS;;;-DFOG -DLIGHTING -DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;vert;;;VS;;;-DFOG -DLIGHTING -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;vert;;;VS;;;-DFOG -DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;vert;;;VS;;;-DFOG -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;vert;;;VS;;;-DLIGHTING -DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;vert;;;VS;;;-DLIGHTING -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;vert;;;VS;;;-DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul.hlsl;;;vert;;;VS;;;-DTEXTURED-tsn
+ProfileCOMMON_emul_FS.glsl;;;frag;;;main;;;#define FOG^#define GLITCH_SHADING_LANGUAGE 300 es^#define SPLIT_ALPHA 1^#define TEXTURED-tsn
+ProfileCOMMON_emul_FS.glsl;;;frag;;;main;;;#define FOG^#define GLITCH_SHADING_LANGUAGE 300 es^#define TEXTURED-tsn
+ProfileCOMMON_emul_FS.glsl;;;frag;;;main;;;#define GLITCH_SHADING_LANGUAGE 300 es^#define SPLIT_ALPHA 1^#define TEXTURED-tsn
+ProfileCOMMON_emul_FS.glsl;;;frag;;;main;;;#define GLITCH_SHADING_LANGUAGE 300 es^#define TEXTURED-tsn
+ProfileCOMMON_emul_FS.msl;;;frag;;;FS;;;-DFOG -DSPLIT_ALPHA=1 -DTEXTURED-tsn
+ProfileCOMMON_emul_FS.msl;;;frag;;;FS;;;-DFOG -DTEXTURED-tsn
+ProfileCOMMON_emul_FS.msl;;;frag;;;FS;;;-DSPLIT_ALPHA=1 -DTEXTURED-tsn
+ProfileCOMMON_emul_FS.msl;;;frag;;;FS;;;-DTEXTURED-tsn
+ProfileCOMMON_emul_VS.glsl;;;vert;;;main;;;#define FOG^#define GLITCH_SHADING_LANGUAGE 300 es^#define LIGHTING^#define SKINNED 1^#define TEXTURED-tsn
+ProfileCOMMON_emul_VS.glsl;;;vert;;;main;;;#define FOG^#define GLITCH_SHADING_LANGUAGE 300 es^#define LIGHTING^#define TEXTURED-tsn
+ProfileCOMMON_emul_VS.glsl;;;vert;;;main;;;#define FOG^#define GLITCH_SHADING_LANGUAGE 300 es^#define SKINNED 1^#define TEXTURED-tsn
+ProfileCOMMON_emul_VS.glsl;;;vert;;;main;;;#define FOG^#define GLITCH_SHADING_LANGUAGE 300 es^#define TEXTURED-tsn
+ProfileCOMMON_emul_VS.glsl;;;vert;;;main;;;#define GLITCH_SHADING_LANGUAGE 300 es^#define LIGHTING^#define SKINNED 1^#define TEXTURED-tsn
+ProfileCOMMON_emul_VS.glsl;;;vert;;;main;;;#define GLITCH_SHADING_LANGUAGE 300 es^#define LIGHTING^#define TEXTURED-tsn
+ProfileCOMMON_emul_VS.glsl;;;vert;;;main;;;#define GLITCH_SHADING_LANGUAGE 300 es^#define SKINNED 1^#define TEXTURED-tsn
+ProfileCOMMON_emul_VS.glsl;;;vert;;;main;;;#define GLITCH_SHADING_LANGUAGE 300 es^#define TEXTURED-tsn
+ProfileCOMMON_emul_VS.msl;;;vert;;;VS;;;-DFOG -DLIGHTING -DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul_VS.msl;;;vert;;;VS;;;-DFOG -DLIGHTING -DTEXTURED-tsn
+ProfileCOMMON_emul_VS.msl;;;vert;;;VS;;;-DFOG -DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul_VS.msl;;;vert;;;VS;;;-DFOG -DTEXTURED-tsn
+ProfileCOMMON_emul_VS.msl;;;vert;;;VS;;;-DLIGHTING -DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul_VS.msl;;;vert;;;VS;;;-DLIGHTING -DTEXTURED-tsn
+ProfileCOMMON_emul_VS.msl;;;vert;;;VS;;;-DSKINNED=1 -DTEXTURED-tsn
+ProfileCOMMON_emul_VS.msl;;;vert;;;VS;;;-DTEXTURED-tsn

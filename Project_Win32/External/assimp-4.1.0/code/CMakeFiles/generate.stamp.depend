@@ -1,0 +1,6 @@
+# CMake generation dependency list for this directory.
+C:/Users/quang.haduy/Downloads/assimp-4.1.0/code/CMakeLists.txt
+C:/Users/quang.haduy/Downloads/assimp-4.1.0/cmake-modules/FindRT.cmake
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/FindPackageHandleStandardArgs.cmake
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/FindPackageMessage.cmake
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CMakeParseArguments.cmake

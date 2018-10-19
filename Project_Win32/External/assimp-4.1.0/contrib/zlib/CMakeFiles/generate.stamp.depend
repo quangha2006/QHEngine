@@ -1,0 +1,17 @@
+# CMake generation dependency list for this directory.
+C:/Users/quang.haduy/Downloads/assimp-4.1.0/contrib/zlib/CMakeLists.txt
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckTypeSize.cmake
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckIncludeFile.cmake
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckIncludeFileCXX.cmake
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckFunctionExists.cmake
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckIncludeFile.cmake
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckCSourceCompiles.cmake
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckIncludeFile.c.in
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckIncludeFile.c.in
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckIncludeFile.c.in
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckTypeSize.c.in
+C:/Users/quang.haduy/Downloads/assimp-4.1.0/CMakeFiles/CheckTypeSize/OFF64_T.c
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckFunctionExists.c
+Y:/android-sdk-windows/cmake/3.6.3155560/share/cmake-3.6/Modules/CheckIncludeFile.c.in
+C:/Users/quang.haduy/Downloads/assimp-4.1.0/contrib/zlib/zlib.pc.cmakein
+C:/Users/quang.haduy/Downloads/assimp-4.1.0/contrib/zlib/zconf.h.cmakein

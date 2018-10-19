@@ -88,7 +88,7 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	// check for errors
 	if (!m_pScene || m_pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_pScene->mRootNode) // if is Not Zero
 	{
-		LOGE("ERROR::ASSIMP:: %s", importer.GetErrorString());
+		LOGE("ERROR::ASSIMP:: %s\n", importer.GetErrorString());
 		return;
 	}
 	// retrieve the directory path of the filepath
@@ -515,6 +515,10 @@ void Model::SetDrawPolygon(bool isdrawpolygon)
 	{
 		meshes[i].SetDrawPolygon(isDrawPolygon);
 	}
+}
+void Model::SetNeedRotate(bool isNeedRotate)
+{
+	this->needRotate = isNeedRotate;
 }
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {

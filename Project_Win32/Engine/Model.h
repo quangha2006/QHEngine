@@ -89,6 +89,7 @@ public:
 	void SetWorld(glm::mat4 world = glm::mat4());
 	void SetAnimPlay(int anim);
 	void SetDrawPolygon(bool isdrawpolygon);
+	void SetNeedRotate(bool isNeedRotate);
 	Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
 	{
 	}
