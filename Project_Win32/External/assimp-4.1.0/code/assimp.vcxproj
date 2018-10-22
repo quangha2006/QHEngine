@@ -723,9 +723,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../ZERO_CHECK.vcxproj">
-      <Project>D7538FDE-BC7C-3DD3-870E-D2475B0202A3</Project>
-    </ProjectReference>
     <ProjectReference Include="../contrib/irrXML/IrrXML.vcxproj">
       <Project>9E9BC94F-BB27-32FF-BA4E-65B2624E57D0</Project>
     </ProjectReference>
