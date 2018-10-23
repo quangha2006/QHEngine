@@ -1,6 +1,7 @@
 precision highp float;
 
 uniform sampler2D material_texture_diffuse1;
+//uniform sampler2D material_texture_diffuse2;
 uniform sampler2D material_texture_specular1;
 uniform sampler2D material_texture_normal1;
 uniform sampler2D shadowMap;
@@ -41,6 +42,7 @@ out vec4 FragColor;
 void main()
 {   
 	vec4 color, color_ambient, color_specular, color_diffuse;
+	highp vec4 masksTexture = texture2D(material_texture_diffuse2,TexCoords);
 	if (useTexture == true)
 	{
 		color = texture(material_texture_diffuse1, TexCoords);
@@ -55,7 +57,7 @@ void main()
 		color_specular = vec4(material_color_specular,1.0);
 		color_diffuse = vec4(material_color_diffuse,1.0);
 	}
-
+	//color_diffuse.rgb = mix(color_diffuse.rgb, color_diffuse.rgb * 3.0 * (pow(vec3(1.0, 1.0, 0.0), vec3(.4545))), masksTexture.r);
 	if ((enableAlpha == true) && (color.a < 0.5))
 	{
 		discard;

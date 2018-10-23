@@ -22,7 +22,7 @@ void Basic::Init()
 	//mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
 	//mNanosuit.SetDrawPolygon(true);
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
+	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
@@ -48,7 +48,7 @@ void Basic::Init()
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
 	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
-	mMonster_1.Init("bountyhunter/mai/source.dae", mCamera, false);
+	mMonster_1.Init("bountyhunter/monkeyking/skandengine_rig_awk_01.dae", mCamera, false);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mMonster_1.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f)); 
 	mMonster_1.SetScale(glm::vec3(1.0f));

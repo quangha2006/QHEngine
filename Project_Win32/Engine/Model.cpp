@@ -72,7 +72,7 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	LOGI("\nLoad Model: %s\n", path_modif.c_str());
 	if (ShaderManager::getInstance()->GetProgram(useshadername.c_str()) == 0)
 	{
-		LOGE("ERROR! modelShader is invalid!");
+		LOGE("ERROR! modelShader is invalid!\n");
 		return;
 	}
 
@@ -177,6 +177,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 			vec.x = mesh->mTextureCoords[0][i].x;
 			vec.y = mesh->mTextureCoords[0][i].y;
 			vertex.TexCoords = vec;
+			//LOGI("%d: %f %f\n", i, vec.x, vec.y);
 		}
 		else
 			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
@@ -337,8 +338,10 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, TextureType typeName)
 {
 	vector<Texture> textures;
+	bool abc = false;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
+		//abc = true;
 		aiString str;
 		mat->GetTexture(type, i, &str);
 		// check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
@@ -362,6 +365,17 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 			textures.push_back(texture);
 			textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
 		}
+	}
+	if (abc)
+	{   // if texture hasn't been loaded already, load it
+		aiString str("skandengine_body_masks.tga");
+		Texture texture;
+		texture.id = GenTextureId();
+		TextureFromFile(str.C_Str(), this->directory, texture.id);
+		texture.type = typeName;
+		texture.path = str;
+		textures.push_back(texture);
+		textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
 	}
 	return textures;
 }
