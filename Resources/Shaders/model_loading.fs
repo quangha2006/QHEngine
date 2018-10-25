@@ -42,7 +42,7 @@ out vec4 FragColor;
 void main()
 {   
 	vec4 color, color_ambient, color_specular, color_diffuse;
-	highp vec4 masksTexture = texture2D(material_texture_diffuse2,TexCoords);
+	//highp vec4 masksTexture = texture2D(material_texture_diffuse2,TexCoords);
 	if (useTexture == true)
 	{
 		color = texture(material_texture_diffuse1, TexCoords);

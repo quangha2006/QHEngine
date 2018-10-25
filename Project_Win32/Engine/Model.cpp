@@ -79,6 +79,8 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	// read file via ASSIMP
 	//Assimp::Importer importer;
 	m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
+	//m_pScene = importer.ReadFile("../../Resources/bountyhunter/bountyhunter/anm/source.dae", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
+	
 	if ((path_modif.find_last_of(".dae") == (path_modif.length() - 1)) || (path_modif.find_last_of(".md5mesh") == (path_modif.length() - 1)))
 		needRotate = true;
 	else
@@ -86,7 +88,7 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	uint64_t time_loadmodel = Timer::getMillisecond();
 	LOGI("Load Model time : %.3fs\n", ((int)(time_loadmodel - time_ms_begin)) / 1000.0f);
 	// check for errors
-	if (!m_pScene || m_pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_pScene->mRootNode) // if is Not Zero
+	if (!m_pScene || /*m_pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||*/ !m_pScene->mRootNode) // if is Not Zero
 	{
 		LOGE("ERROR::ASSIMP:: %s\n", importer.GetErrorString());
 		return;
@@ -103,6 +105,7 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
+
 	// process ASSIMP's root node recursively
 	processNode(m_pScene->mRootNode, m_pScene, fixedModel);
 
@@ -644,7 +647,7 @@ uint Model::FindScaling(float AnimationTime, const aiNodeAnim * pNodeAnim)
 		}
 	}
 
-	assert(0);
+	//assert(0);
 
 	return 0;
 }
@@ -695,7 +698,7 @@ uint Model::FindRotation(float AnimationTime, const aiNodeAnim * pNodeAnim)
 		}
 	}
 
-	assert(0);
+	//assert(0);
 
 	return 0;
 }
@@ -707,7 +710,7 @@ uint Model::FindPosition(float AnimationTime, const aiNodeAnim * pNodeAnim)
 		}
 	}
 
-	assert(0);
+	//assert(0);
 
 	return 0;
 }

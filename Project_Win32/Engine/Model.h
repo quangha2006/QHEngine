@@ -34,8 +34,8 @@ private:
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, TextureType typeName);
 
 	/*==== Animation ====*/
-	Assimp::Importer importer;
-	const aiScene* m_pScene;
+	Assimp::Importer importer, importer_anim;
+	const aiScene* m_pScene, *m_pScene_anim;
 	map<string, uint> m_BoneMapping;
 	vector<BoneInfo> m_BoneInfo;
 	vector<glm::mat4> Transforms;
