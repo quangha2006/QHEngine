@@ -78,8 +78,8 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 
 	// read file via ASSIMP
 	//Assimp::Importer importer;
-	m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
-	//m_pScene = importer.ReadFile("../../Resources/bountyhunter/bountyhunter/anm/source.dae", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
+	//m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
+	m_pScene = importer.ReadFile("../../Resources/bountyhunter/bountyhunter/anm/source.dae", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
 	
 	if ((path_modif.find_last_of(".dae") == (path_modif.length() - 1)) || (path_modif.find_last_of(".md5mesh") == (path_modif.length() - 1)))
 		needRotate = true;
@@ -132,6 +132,7 @@ void Model::processNode(aiNode * node, const aiScene * scene, float fixedModel)
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		processNode(node->mChildren[i], scene, fixedModel);
+		break;
 	}
 }
 
