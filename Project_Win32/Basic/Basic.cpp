@@ -9,8 +9,8 @@
 
 void Basic::Init()
 {
-	mCamera->Pos = glm::vec3(0.0f, 3.0f, 20.0f);
-	mCamera->Target = glm::vec3(0.0f, 1.0f, 0.2f);
+	mCamera->Pos = glm::vec3(0.0f, 5.0f, 20.0f);
+	mCamera->Target = glm::vec3(0.0f, 5.0f, 0.2f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
@@ -48,11 +48,11 @@ void Basic::Init()
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
 	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
-	mMonster_1.Init("bountyhunter/bountyhunter/bountyhunter_rig_01.dae", mCamera, false);
+	mMonster_1.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", mCamera, true);
 	//mMonster_1.Init("Monster_1/Monster_1.dae", mCamera, false);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	mMonster_1.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f)); 
-	mMonster_1.SetScale(glm::vec3(1.0f));
+	mMonster_1.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f)); 
+	mMonster_1.SetScale(glm::vec3(0.02f));
 	mMonster_1.SetNeedRotate(false);
 	
 	mframebuffer.Init(2048, 2048);
@@ -67,9 +67,9 @@ void Basic::Draw()
 	//mCamera->UpdateWorldViewProjection();
 	mSkyBox.Draw(mCamera);
 	
-	mSpider.UpdateTransform();
-	mMerce.UpdateTransform();
-	mMonster_1.UpdateTransform();
+	mSpider.UpdateSkeleton();
+	mMerce.UpdateSkeleton();
+	mMonster_1.UpdateSkeleton();
 	
 	//mMonster_1.SetTranslate(glm::vec3(0.5f, 0.0f, 0.0f));
 	//mMonster_1.SetRotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));*/
@@ -127,7 +127,7 @@ void Basic::Draw()
 	saberclass.Draw(lamppos);
 	mGallacticCruiser.Draw(lamppos);
 
-	mMonster_1.Draw(lamppos);
+	mMonster_1.Draw(lamppos, 0);
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

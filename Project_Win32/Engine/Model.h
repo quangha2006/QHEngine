@@ -51,6 +51,7 @@ private:
 	bool isEnableAlpha;
 	bool isDrawPolygon;
 	bool uselighting;
+	bool isUsePointLight;
 	glm::vec3 customColor;
 	bool useCustomColor;
 	bool needRotate;
@@ -75,13 +76,14 @@ private:
 	void UpdateModel();
 
 public:
-	void Init(string const &path, Camera *camera, bool enableAlpha, float fixedModel = 1.0f);
-	void Draw(glm::vec3 &lamppos);
+	void Init(string const &path, Camera *camera, bool FlipUVs = false, bool enableAlpha = false, float fixedModel = 1.0f);
+	void Draw(glm::vec3 lamppos, int drawmesh = -1);
 	void SetUseLighting(bool UseLighting);
+	void SetisUsePointLight(bool UsePointLight);
 	void DisableLightingForMesh(int numMesh);
 	void SetCustomColor(glm::vec3 color);
 	void SetTimeStampAnim(int64_t time);
-	void UpdateTransform(int64_t time = -1.0f);
+	void UpdateSkeleton(int64_t time = -1.0f);
 	void BoneTransform(float TimeInSeconds, vector<glm::mat4> &Transforms);
 	void SetScale(glm::vec3 scal);
 	void SetTranslate(glm::vec3 trans);

@@ -1,7 +1,7 @@
 precision highp float;
 
 uniform sampler2D material_texture_diffuse1;
-//uniform sampler2D material_texture_diffuse2;
+uniform sampler2D material_texture_diffuse2;
 uniform sampler2D material_texture_specular1;
 uniform sampler2D material_texture_normal1;
 uniform sampler2D shadowMap;
@@ -36,6 +36,7 @@ uniform bool useNormalMap;
 uniform bool isPicking;
 uniform vec3 color_pick;
 uniform bool uselighting;
+uniform bool usepointlight;
 
 out vec4 FragColor;
 
@@ -57,7 +58,7 @@ void main()
 		color_specular = vec4(material_color_specular,1.0);
 		color_diffuse = vec4(material_color_diffuse,1.0);
 	}
-	//color_diffuse.rgb = mix(color_diffuse.rgb, color_diffuse.rgb * 3.0 * (pow(vec3(1.0, 1.0, 0.0), vec3(.4545))), masksTexture.r);
+	//color_diffuse.rgb = mix(color_diffuse.rgb, color_diffuse.rgb * 3.0 * (pow(vec3(1.0, 0.0, 0.0), vec3(.4545))), masksTexture.r);
 	if ((enableAlpha == true) && (color.a < 0.5))
 	{
 		discard;
@@ -135,13 +136,15 @@ void main()
 	vec3 specular = light_specular * spec * color_specular.rgb;  
 
 	// pointlight
-	float distance = length(light_position - FragPos);
-	float attenuation = 1.0 / (pointlight_constant + pointlight_linear * distance + pointlight_quadratic * (distance * distance));
+	if (usepointlight == true)
+	{
+		float distance = length(light_position - FragPos);
+		float attenuation = 1.0 / (pointlight_constant + pointlight_linear * distance + pointlight_quadratic * (distance * distance));
 
-	ambient  *= attenuation; 
-	diffuse  *= attenuation;
-	specular *= attenuation;
-
+		ambient  *= attenuation; 
+		diffuse  *= attenuation;
+		specular *= attenuation;
+	}
 
 	// Total lighting + shadow
 	vec3 lighting = ambient + (diffuse + specular) * (1.0 - shadow) + color_pick;

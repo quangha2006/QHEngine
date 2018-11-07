@@ -21,7 +21,7 @@ glm::mat4 AiToGLMMat4(aiMatrix4x4& in_mat)
 	return tmp;
 }
 
-glm::mat4 testfun(glm::mat4 a, glm::mat4 b)
+glm::mat4 Combinetransformations(glm::mat4 a, glm::mat4 b)
 {
 	glm::mat4 result(0.0f);
 	for (unsigned int i = 0; i < 4; i++) {
@@ -53,6 +53,7 @@ Model::Model()
 	this->world = glm::mat4();
 	animToPlay = 0;
 	isDrawPolygon = false;
+	isUsePointLight = false;
 }
 Model::~Model()
 {
@@ -62,7 +63,7 @@ Model::~Model()
 	for (unsigned int i = 0; i < textures_loaded.size(); i++)
 		glDeleteTextures(1, &textures_loaded[i].id);
 }
-void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fixedModel)
+void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableAlpha, float fixedModel)
 {
 	uint64_t time_ms_begin = Timer::getMillisecond();
 	this->camera = camera;
@@ -77,9 +78,10 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	}
 
 	// read file via ASSIMP
-	//Assimp::Importer importer;
-	//m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
-	m_pScene = importer.ReadFile("../../Resources/bountyhunter/bountyhunter/anm/source.dae", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
+	if (FlipUVs)
+		m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
+	else
+		m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
 	
 	if ((path_modif.find_last_of(".dae") == (path_modif.length() - 1)) || (path_modif.find_last_of(".md5mesh") == (path_modif.length() - 1)))
 		needRotate = true;
@@ -95,22 +97,24 @@ void Model::Init(string const & path, Camera *camera, bool enableAlpha, float fi
 	}
 	// retrieve the directory path of the filepath
 	directory = path_modif.substr(0, path_modif.find_last_of('/'));
+	// process ASSIMP's root node recursively
+	processNode(m_pScene->mRootNode, m_pScene, fixedModel);
+
 	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
 	LOGI("Material Count: %d\n", m_pScene->mNumMaterials);
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations()?"True":"False");
+
 	if (m_pScene->HasAnimations())
 	{
 		hasAnimation = true;
 		m_GlobalInverseTransform = glm::inverse(AiToGLMMat4(m_pScene->mRootNode->mTransformation));
+		Transforms.resize(m_NumBones);
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
 
-	// process ASSIMP's root node recursively
-	processNode(m_pScene->mRootNode, m_pScene, fixedModel);
-
 	isModelLoaded = true;
-
+	
 	uint64_t time_ms_end = Timer::getMillisecond();
 
 	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
@@ -132,7 +136,7 @@ void Model::processNode(aiNode * node, const aiScene * scene, float fixedModel)
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		processNode(node->mChildren[i], scene, fixedModel);
-		break;
+		//break;
 	}
 }
 
@@ -348,6 +352,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		//abc = true;
 		aiString str;
 		mat->GetTexture(type, i, &str);
+		if (str.length <= 0) continue;
 		// check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
 		bool skip = false;
 		for (unsigned int j = 0; j < textures_loaded.size(); j++)
@@ -372,7 +377,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	}
 	if (abc)
 	{   // if texture hasn't been loaded already, load it
-		aiString str("skandengine_body_masks.tga");
+		aiString str("bountyhunter_body_masks.tga");
 		Texture texture;
 		texture.id = GenTextureId();
 		TextureFromFile(str.C_Str(), this->directory, texture.id);
@@ -384,7 +389,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	return textures;
 }
 
-void Model::Draw(glm::vec3 &lamppos)
+void Model::Draw(glm::vec3 lamppos, int drawmesh)
 {
 	if (!isModelLoaded || !camera) return;
 
@@ -415,9 +420,10 @@ void Model::Draw(glm::vec3 &lamppos)
 	ShaderManager::getInstance()->setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
 	ShaderManager::getInstance()->setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
 	ShaderManager::getInstance()->setVec3("light_specular", 1.1f, 1.1f, 1.1f);
+	ShaderManager::getInstance()->setBool("usepointlight", this->isUsePointLight);
 	ShaderManager::getInstance()->setFloat("pointlight_constant", 1.0f);
-	ShaderManager::getInstance()->setFloat("pointlight_linear", 0.007f);
-	ShaderManager::getInstance()->setFloat("pointlight_quadratic", 0.0002f);
+	ShaderManager::getInstance()->setFloat("pointlight_linear", 0.0014f);
+	ShaderManager::getInstance()->setFloat("pointlight_quadratic", 0.000007f);
 	ShaderManager::getInstance()->setBool("enableAlpha", this->isEnableAlpha);
 	ShaderManager::getInstance()->setBool("usenormalmap", false);
 	ShaderManager::getInstance()->setVec3("color_pick", 0.0f, 0.0f, 0.0f);
@@ -430,12 +436,23 @@ void Model::Draw(glm::vec3 &lamppos)
 			glUniformMatrix4fv(m_boneLocation, Transforms.size(), GL_TRUE, glm::value_ptr(Transforms[0]));
 	}
 
-	for (unsigned int i = 0; i < meshes.size(); i++)
+	if (drawmesh > -1)
 	{
-		ShaderManager::getInstance()->setBool("uselighting", uselighting);
-		meshes[i].Draw(useCustomColor, customColor);
+		if (drawmesh < meshes.size())
+		{
+			ShaderManager::getInstance()->setBool("uselighting", uselighting);
+			meshes[drawmesh].Draw(useCustomColor, customColor);
+		}
 	}
-		
+	else
+	{
+		for (unsigned int i = 0; i < meshes.size(); i++)
+		{
+			ShaderManager::getInstance()->setBool("uselighting", uselighting);
+			meshes[i].Draw(useCustomColor, customColor);
+		}
+	}
+
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 }
@@ -443,6 +460,10 @@ void Model::Draw(glm::vec3 &lamppos)
 void Model::SetUseLighting(bool UseLighting)
 {
 	this->uselighting = UseLighting;
+}
+void Model::SetisUsePointLight(bool UsePointLight)
+{
+	this->isUsePointLight = UsePointLight;
 }
 void Model::DisableLightingForMesh(int numMesh)
 {
@@ -458,11 +479,9 @@ void Model::SetTimeStampAnim(int64_t time)
 {
 	timeStampAnim = (float)(time / 1000.0f);
 }
-void Model::UpdateTransform(int64_t time)
+void Model::UpdateSkeleton(int64_t time)
 {
 	if (!hasAnimation) return;
-
-	Transforms.clear();
 
 	float RunningTime = 0.0f;
 
@@ -487,7 +506,6 @@ void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 	float AnimationTime = fmod(TimeInTicks, (float)mDuration);
 
 	ReadNodeHeirarchy(AnimationTime, m_pScene->mRootNode, Identity);
-	Transforms.resize(m_NumBones);
 
 	for (uint i = 0; i < m_NumBones; i++) {
 		Transforms[i] = m_BoneInfo[i].FinalTransformation;
@@ -579,17 +597,17 @@ void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::ma
 		TranslationM[2][3] = Translation.z;
 
 		// Combine the above transformations
-		glm::mat4 tmp1 = testfun(TranslationM, RotationM);
-		glm::mat4 tmp2 = testfun(tmp1, ScalingM);
+		glm::mat4 tmp1 = Combinetransformations(TranslationM, RotationM);
+		glm::mat4 tmp2 = Combinetransformations(tmp1, ScalingM);
 		NodeTransformation = tmp2;
 	}
 
-	glm::mat4 GlobalTransformation = testfun(ParentTransform, NodeTransformation);
+	glm::mat4 GlobalTransformation = Combinetransformations(ParentTransform, NodeTransformation);
 
 	if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
 		uint BoneIndex = m_BoneMapping[NodeName];
-		glm::mat4 tmp3 = testfun(m_GlobalInverseTransform, GlobalTransformation);
-		glm::mat4 tmp4 = testfun(tmp3, m_BoneInfo[BoneIndex].BoneOffset);
+		glm::mat4 tmp3 = Combinetransformations(m_GlobalInverseTransform, GlobalTransformation);
+		glm::mat4 tmp4 = Combinetransformations(tmp3, m_BoneInfo[BoneIndex].BoneOffset);
 		m_BoneInfo[BoneIndex].FinalTransformation = tmp4;
 	}
 

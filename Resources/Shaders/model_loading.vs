@@ -28,8 +28,8 @@ void main()
 
 	if (useAnim == true)
 	{
-	int index = int(sIDs[0]);
-	mat4 BoneTransform	= gBones[index] * sWeights[0];
+		int index = int(sIDs[0]);
+		mat4 BoneTransform	= gBones[index] * sWeights[0];
 		index = int(sIDs[1]);
 		BoneTransform += gBones[index] * sWeights[1];
 		index = int(sIDs[2]);

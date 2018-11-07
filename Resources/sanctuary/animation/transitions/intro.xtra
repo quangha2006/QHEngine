@@ -1,0 +1,45 @@
+{
+	"glitch" : 
+	{
+		"colladaConverter" : 
+		{
+			"args" : 
+			{
+				"stripAttributeBinormal0" : false,
+				"stripAttributeBinormal1" : true,
+				"stripAttributeBinormal2" : true,
+				"stripAttributeBinormal3" : true,
+				"stripAttributeBinormals" : true,
+				"stripAttributeTangent0" : false,
+				"stripAttributeTangent1" : true,
+				"stripAttributeTangent2" : true,
+				"stripAttributeTangent3" : true,
+				"stripAttributeTangents" : true,
+				"stripAttributeTexcoord1" : true,
+				"stripAttributeTexcoord10" : true,
+				"stripAttributeTexcoord11" : true,
+				"stripAttributeTexcoord12" : true,
+				"stripAttributeTexcoord13" : true,
+				"stripAttributeTexcoord2" : true,
+				"stripAttributeTexcoord3" : true,
+				"stripAttributeTexcoord4" : true,
+				"stripAttributeTexcoord5" : true,
+				"stripAttributeTexcoord6" : true,
+				"stripAttributeTexcoord7" : true,
+				"stripAttributeTexcoord8" : true,
+				"stripAttributeTexcoord9" : true,
+				"compress" : true,
+				"source" : false,
+				"thumbnail" : false
+			},
+			"keyReduction" : 
+			{
+				"types" : 
+				{
+					"rotation" : 0.0,
+					"translation" : 0.0
+				}
+			}
+		}
+	}
+}
