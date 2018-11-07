@@ -1,0 +1,5906 @@
+|XMD_005A#0MAX#0005.0.4|
+JOINT Bip001
+{
+	id 46
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	-5.95184 59.3942 9.36811
+	rotation_orient	0 0 0 1
+	rotation	-0.0254099 -0.715097 -0.00194195 0.698561
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.0227339 0.0336279 0.999176 0
+		0.0390542 0.998701 -0.0327234 0
+		-0.998978 0.0382781 -0.0240177 0
+		-5.95184 59.3942 9.36811 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 0
+	child_joints 1
+		1 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.65098 0.792157 0.941176
+	}
+}
+JOINT Bip001_Head
+{
+	id 5
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	8.31272 -1.2733e-06 -3.55397e-06
+	rotation_orient	0 0 0 1
+	rotation	0.450744 -0.276863 0.120568 0.840024
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.817621 -0.0470276 0.573833 0
+		-0.452149 0.564587 0.69051 0
+		-0.356452 -0.824033 0.440355 0
+		8.31272 -1.2733e-06 -3.55397e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 4
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 Head"
+		wire_colour colour 0.65098 0.792157 0.941176
+	}
+}
+JOINT Bip001_L_Calf
+{
+	id 20
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	55.4182 3.82545e-06 2.31929e-06
+	rotation_orient	0 0 0 1
+	rotation	4.29555e-09 -0.782183 3.24232e-10 0.623049
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.223619 -6.31578e-09 0.974677 0
+		-7.12383e-09 1 4.84546e-09 0
+		-0.974677 -5.8599e-09 -0.223619 0
+		55.4182 3.82545e-06 2.31929e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 19
+	child_joints 1
+		21 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 L Calf"
+		wire_colour colour 0.109804 0.109804 0.694118
+	}
+}
+JOINT Bip001_L_Clavicle
+{
+	id 6
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	30.7037 3.87928 0.057228
+	rotation_orient	0 0 0 1
+	rotation	0.819973 0.570192 -0.0283659 0.0414868
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.348154 0.93273 -0.0938295 0
+		0.937437 -0.346321 0.0356881 0
+		0.00079225 -0.100384 -0.994948 0
+		30.7037 3.87928 0.057228 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 3
+	child_joints 2
+		7 12 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 L Clavicle"
+		wire_colour colour 0.109804 0.109804 0.694118
+	}
+}
+JOINT Bip001_L_Foot
+{
+	id 21
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	55.4182 -2.97739e-06 5.81357e-07
+	rotation_orient	0 0 0 1
+	rotation	-0.0741958 0.0395816 -0.0519953 0.9951
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.991459 -0.109355 -0.0710597 0
+		0.0976075 0.983583 -0.151781 0
+		0.0864911 0.143548 0.985856 0
+		55.4182 -2.97739e-06 5.81357e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 20
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 L Foot"
+		wire_colour colour 0.109804 0.109804 0.694118
+	}
+}
+JOINT Bip001_L_ForeTwist
+{
+	id 26
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	0 0 -0
+	rotation_orient	0 0 0 1
+	rotation	-0.127191 0 0 0.991878
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 0 -0 0
+		-0 0.967645 -0.252316 0
+		0 0.252316 0.967645 0
+		0 0 -0 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 8
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 L ForeTwist"
+		wire_colour colour 0.313726 0.313726 0.313726
+	}
+}
+JOINT Bip001_L_Forearm
+{
+	id 8
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	37.1165 2.39869e-06 3.70482e-06
+	rotation_orient	0 0 0 1
+	rotation	-2.42864e-08 -0.285962 -2.36066e-08 0.958241
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.836451 -3.13517e-08 0.548041 0
+		5.91317e-08 1 -3.30432e-08 0
+		-0.548042 6.00456e-08 0.836451 0
+		37.1165 2.39869e-06 3.70482e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 7
+	child_joints 2
+		9 26 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 L Forearm"
+		wire_colour colour 0.109804 0.109804 0.694118
+	}
+}
+JOINT Bip001_L_Hand
+{
+	id 9
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	30.2262 -3.91427e-06 -4.48827e-06
+	rotation_orient	0 0 0 1
+	rotation	-0.861823 -0.0117798 0.0371031 0.505713
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.996969 0.0578312 -0.0520382 0
+		-0.0172228 -0.488232 -0.872544 0
+		-0.0758669 0.870796 -0.485756 0
+		30.2262 -3.91427e-06 -4.48827e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 8
+	child_joints 1
+		10 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 L Hand"
+		wire_colour colour 0.109804 0.109804 0.694118
+	}
+}
+JOINT Bip001_L_Thigh
+{
+	id 19
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	-1.85013e-05 13.1784 -2.07517e-05
+	rotation_orient	0 0 0 1
+	rotation	0.00564197 0.0766093 -0.981742 -0.174017
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.939373 0.342544 0.0155847 0
+		-0.340815 -0.927698 -0.152385 0
+		-0.0377406 -0.148457 0.988198 0
+		-1.85013e-05 13.1784 -2.07517e-05 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 1
+	child_joints 1
+		20 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 L Thigh"
+		wire_colour colour 0.109804 0.109804 0.694118
+	}
+}
+JOINT Bip001_L_UpperArm
+{
+	id 7
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	21.211 2.01209e-06 -4.21524e-07
+	rotation_orient	0 0 0 1
+	rotation	-0.654251 -0.0986404 -0.197658 0.723296
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.902403 -0.156859 0.401329 0
+		0.415002 0.0657733 -0.90744 0
+		0.115944 0.985429 0.124451 0
+		21.211 2.01209e-06 -4.21524e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 6
+	child_joints 1
+		8 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 L UpperArm"
+		wire_colour colour 0.109804 0.109804 0.694118
+	}
+}
+JOINT Bip001_Neck
+{
+	id 4
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	39.8174 -0.000162889 1.99863
+	rotation_orient	0 0 0 1
+	rotation	0.00646921 0.342865 -0.0185112 0.93918
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.764201 -0.0303346 -0.644264 0
+		0.0392068 0.999231 -0.000542184 0
+		0.643785 -0.0248452 0.764803 0
+		39.8174 -0.000162889 1.99863 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 3
+	child_joints 1
+		5 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 Neck"
+		wire_colour colour 0.0313726 0.431373 0.52549
+	}
+}
+JOINT Bip001_Pelvis
+{
+	id 1
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	5.95991 -2.19222e-07 -5.58278
+	rotation_orient	0 0 0 1
+	rotation	-0.499999 -0.5 0.5 0.500001
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-2.38419e-07 1 1.3411e-06 0
+		-1.3411e-06 1.13249e-06 -1 0
+		-1 -5.96046e-08 1.13249e-06 0
+		5.95991 -2.19222e-07 -5.58278 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 46
+	child_joints 3
+		2 19 22 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 Pelvis"
+		wire_colour colour 0.878431 0.776471 0.341176
+	}
+}
+JOINT Bip001_R_Calf
+{
+	id 23
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	55.4182 1.77243e-06 1.34694e-06
+	rotation_orient	0 0 0 1
+	rotation	-7.48816e-09 0.874698 4.90693e-10 -0.484669
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.530191 -1.35754e-08 0.847878 0
+		-1.26241e-08 1 8.11697e-09 0
+		-0.847878 -6.40014e-09 -0.530191 0
+		55.4182 1.77243e-06 1.34694e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 22
+	child_joints 1
+		24 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 R Calf"
+		wire_colour colour 0.0235294 0.52549 0.0235294
+	}
+}
+JOINT Bip001_R_Clavicle
+{
+	id 13
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	30.7037 -3.87928 0.0572067
+	rotation_orient	0 0 0 1
+	rotation	-0.602325 0.765775 -0.17737 -0.139045
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.235742 -0.873166 0.426623 0
+		-0.971815 0.211489 -0.104151 0
+		0.00071539 -0.439151 -0.898413 0
+		30.7037 -3.87928 0.0572067 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 3
+	child_joints 2
+		14 18 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 R Clavicle"
+		wire_colour colour 0.0235294 0.52549 0.0235294
+	}
+}
+JOINT Bip001_R_Foot
+{
+	id 24
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	55.4182 -2.65516e-06 -4.18334e-06
+	rotation_orient	0 0 0 1
+	rotation	-0.000454654 0.274823 -0.116515 0.954409
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.821793 -0.222656 -0.524481 0
+		0.222156 0.972848 -0.0649097 0
+		0.524693 -0.063174 0.848944 0
+		55.4182 -2.65516e-06 -4.18334e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 23
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 R Foot"
+		wire_colour colour 0.0235294 0.52549 0.0235294
+	}
+}
+JOINT Bip001_R_ForeTwist
+{
+	id 27
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	0 0 -0
+	rotation_orient	0 0 0 1
+	rotation	0.0308084 6.93564e-18 -2.13776e-19 0.999525
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 2.61079e-24 -1.38779e-17 0
+		8.54702e-19 0.998102 0.0615875 0
+		1.38515e-17 -0.0615875 0.998102 0
+		0 0 -0 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 15
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 R ForeTwist"
+		wire_colour colour 0.313726 0.313726 0.313726
+	}
+}
+JOINT Bip001_R_Forearm
+{
+	id 15
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	37.1165 -2.09297e-06 -2.79774e-07
+	rotation_orient	0 0 0 1
+	rotation	3.83813e-09 -0.244471 -1.32483e-08 0.969657
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.880468 -2.75692e-08 0.474106 0
+		2.38159e-08 1 1.3921e-08 0
+		-0.474106 -9.65706e-10 0.880468 0
+		37.1165 -2.09297e-06 -2.79774e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 14
+	child_joints 2
+		16 27 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 R Forearm"
+		wire_colour colour 0.0235294 0.52549 0.0235294
+	}
+}
+JOINT Bip001_R_Hand
+{
+	id 16
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	30.2262 -1.10682e-06 1.15662e-06
+	rotation_orient	0 0 0 1
+	rotation	0.732615 0.0137341 -0.152346 0.663233
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.953205 -0.181957 -0.241439 0
+		0.222205 -0.119867 0.967604 0
+		-0.205003 -0.975973 -0.0738262 0
+		30.2262 -1.10682e-06 1.15662e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 15
+	child_joints 1
+		17 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 R Hand"
+		wire_colour colour 0.0235294 0.52549 0.0235294
+	}
+}
+JOINT Bip001_R_Thigh
+{
+	id 22
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	1.83141e-05 -13.1784 1.50344e-05
+	rotation_orient	0 0 0 1
+	rotation	0.67988 0.0144614 -0.723628 0.117967
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.0476944 -0.151064 -0.987373 0
+		0.190392 -0.97175 0.139477 0
+		-0.980549 -0.181336 0.0751081 0
+		1.83141e-05 -13.1784 1.50344e-05 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 1
+	child_joints 1
+		23 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 R Thigh"
+		wire_colour colour 0.0235294 0.52549 0.0235294
+	}
+}
+JOINT Bip001_R_UpperArm
+{
+	id 14
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	21.211 5.37982e-06 6.90969e-07
+	rotation_orient	0 0 0 1
+	rotation	-0.0876424 0.00161887 0.325189 0.941577
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.788499 0.612098 -0.0600493 0
+		-0.612666 0.773142 -0.163991 0
+		-0.0539522 0.166097 0.984632 0
+		21.211 5.37982e-06 6.90969e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 13
+	child_joints 1
+		15 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 R UpperArm"
+		wire_colour colour 0.0235294 0.52549 0.0235294
+	}
+}
+JOINT Bip001_Spine
+{
+	id 2
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	12.7441 0.00845914 0.0113383
+	rotation_orient	0 0 0 1
+	rotation	-0.308884 -0.0890205 -0.0324206 0.946369
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.982048 -0.00636986 0.188521 0
+		0.116358 0.807079 -0.578864 0
+		-0.148464 0.590409 0.793332 0
+		12.7441 0.00845914 0.0113383 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 1
+	child_joints 1
+		3 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 Spine"
+		wire_colour colour 0.0313726 0.431373 0.52549
+	}
+}
+JOINT Bip001_Spine1
+{
+	id 3
+	visible	1
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	17.9625 0.00572244 0.0231231
+	rotation_orient	0 0 0 1
+	rotation	-0.123751 0.131829 -0.0452127 0.982478
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.961154 -0.121469 -0.247848 0
+		0.056213 0.965283 -0.255086 0
+		0.270228 0.231245 0.934614 0
+		17.9625 0.00572244 0.0231231 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 2
+	child_joints 5
+		4 6 13 40 55 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		original_name string "Bip001 Spine1"
+		wire_colour colour 0.0313726 0.431373 0.52549
+	}
+}
+JOINT bn_cape_01
+{
+	id 55
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	35.3632 12.2539 17.027
+	rotation_orient	0 0 0 1
+	rotation	-0.165417 -0.672737 -0.71183 0.115586
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.918554 0.0580088 0.391016 0
+		0.38712 -0.0681285 0.919509 0
+		0.0799789 0.995989 0.0401233 0
+		35.3632 12.2539 17.027 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 3
+	child_joints 1
+		56 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.682353 0.729412 0.796078
+	}
+}
+JOINT bn_cape_02
+{
+	id 56
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	37.4656 1.66889e-05 1.54483e-06
+	rotation_orient	0 0 0 1
+	rotation	2.36019e-08 -0.0136185 -0.0442489 0.998928
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.995713 -0.0884028 0.0272078 0
+		0.0884028 0.996084 0.00120525 0
+		-0.0272078 0.00120516 0.999629 0
+		37.4656 1.66889e-05 1.54483e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 55
+	child_joints 1
+		57 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.682353 0.729412 0.796078
+	}
+}
+JOINT bn_cape_03
+{
+	id 57
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	41.0951 -1.90039e-05 0.00127293
+	rotation_orient	0 0 0 1
+	rotation	-4.74289e-09 -0.0569426 0.0741964 0.995617
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.982505 0.147742 0.113386 0
+		-0.147742 0.98899 -0.00844987 0
+		-0.113386 -0.00844986 0.993515 0
+		41.0951 -1.90039e-05 0.00127293 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 56
+	child_joints 1
+		58 
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.682353 0.729412 0.796078
+	}
+}
+JOINT bn_cape_04
+{
+	id 58
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	49.3999 3.44915e-06 -1.60235e-05
+	rotation_orient	0 0 0 1
+	rotation	1.83505e-09 0.032345 0.0486317 0.998293
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.993178 0.0970974 -0.0645795 0
+		-0.0970974 0.99527 0.00314599 0
+		0.0645795 0.00314598 0.997908 0
+		49.3999 3.44915e-06 -1.60235e-05 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 57
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.682353 0.729412 0.796078
+	}
+}
+BONE bn_foot_L_01
+{
+	id 45
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	4.58206 0.000125881 0.000238635
+	rotation_orient	0 0 0 1
+	rotation	-0.133865 -0.243505 -0.462773 0.841799
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.453092 -0.713931 0.533864 0
+		0.844318 0.535842 4.17233e-07 0
+		-0.286067 0.450751 0.845571 0
+		4.58206 0.000125881 0.000238635 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 49
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_foot_R_01
+{
+	id 44
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	5.91258 -7.92019e-07 -6.769e-07
+	rotation_orient	0 0 0 1
+	rotation	-0.149169 0.893216 -0.0698681 -0.418368
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.605434 -0.208019 0.76823 0
+		-0.324941 0.945734 3.20375e-07 0
+		-0.726542 -0.24963 -0.640174 0
+		5.91258 -7.92019e-07 -6.769e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 48
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_hand_L_01
+{
+	id 43
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	10.3249 0.000284067 -6.57932e-06
+	rotation_orient	0 0 0 1
+	rotation	-0.373259 0.487751 -0.767398 0.184057
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.653602 -0.646605 0.393328 0
+		-0.0816247 -0.456444 -0.886001 0
+		0.752425 -0.611197 0.245553 0
+		10.3249 0.000284067 -6.57932e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 39
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_hand_R_01
+{
+	id 42
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	10.3251 0.000368765 2.10113e-06
+	rotation_orient	0 0 0 1
+	rotation	-0.167202 -0.0548981 -0.0984935 0.979453
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.97457 -0.174581 0.140477 0
+		0.211298 0.924685 -0.316718 0
+		-0.0746037 0.338347 0.93806 0
+		10.3251 0.000368765 2.10113e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 38
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_head_01
+{
+	id 41
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	3.37438e-06 7.8085 -0.0272984
+	rotation_orient	0 0 0 1
+	rotation	-0.344023 -0.124399 0.125935 0.922124
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.93733 0.317848 0.142773 0
+		-0.146664 0.731577 -0.665797 0
+		-0.316072 0.603132 0.732346 0
+		3.37438e-06 7.8085 -0.0272984 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 35
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_hips_01
+{
+	id 40
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	64.0653 26.3546 8.43584
+	rotation_orient	0 0 0 1
+	rotation	0.753928 0.47282 -0.447289 -0.0892545
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.152748 0.792789 -0.590045 0
+		0.633099 -0.536951 -0.557557 0
+		-0.75885 -0.288391 -0.583933 0
+		64.0653 26.3546 8.43584 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 3
+	child_joints 4
+		30 31 51 54 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_lowerarm_L_01
+{
+	id 39
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	9.04176 0.000615559 0.00016689
+	rotation_orient	0 0 0 1
+	rotation	2.9872e-07 -8.24714e-08 0.487708 0.873007
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.524281 0.851545 4.35373e-07 0
+		-0.851545 0.524281 4.41125e-07 0
+		1.4738e-07 -6.02013e-07 1 0
+		9.04176 0.000615559 0.00016689 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 33
+	child_joints 1
+		43 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_lowerarm_R_01
+{
+	id 38
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	9.042 2.45405e-05 -8.56414e-07
+	rotation_orient	0 0 0 1
+	rotation	-2.93374e-08 1.13343e-07 0.778012 0.62825
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.210605 0.977571 -1.88065e-07 0
+		-0.977571 -0.210605 1.39502e-07 0
+		9.67653e-08 2.13226e-07 1 0
+		9.042 2.45405e-05 -8.56414e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 32
+	child_joints 1
+		42 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_lowerleg_L_01
+{
+	id 37
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	5.6657 3.19147e-06 3.72292e-07
+	rotation_orient	0 0 0 1
+	rotation	-0.00356545 0.141933 0.362615 0.921061
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.69673 0.666969 -0.264044 0
+		-0.668993 0.736995 0.0963664 0
+		0.258873 0.109502 0.959684 0
+		5.6657 3.19147e-06 3.72292e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 50
+	child_joints 1
+		49 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_lowerleg_L_02
+{
+	id 49
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	4.58119 9.87913e-07 -7.41735e-07
+	rotation_orient	0 0 0 1
+	rotation	0 0 0 1
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 0 0 0
+		0 1 0 0
+		0 0 1 0
+		4.58119 9.87913e-07 -7.41735e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 37
+	child_joints 1
+		45 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_lowerleg_R_01
+{
+	id 36
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	6.82527 -1.21887e-06 -4.33192e-07
+	rotation_orient	0 0 0 1
+	rotation	-0.102494 0.498475 0.547686 0.664122
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.096875 0.625279 -0.774365 0
+		-0.829641 0.379071 0.409879 0
+		0.549828 0.682152 0.482035 0
+		6.82527 -1.21887e-06 -4.33192e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 47
+	child_joints 1
+		48 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_lowerleg_R_02
+{
+	id 48
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	5.91258 -1.42263e-06 -1.61919e-06
+	rotation_orient	0 0 0 1
+	rotation	0 0 0 1
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 0 0 0
+		0 1 0 0
+		0 0 1 0
+		5.91258 -1.42263e-06 -1.61919e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 36
+	child_joints 1
+		44 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_pistol_cannon_01
+{
+	id 11
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	32.163 7.53958 2.62653e-06
+	rotation_orient	0 0 0 1
+	rotation	0 0 0 1
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 0 0 0
+		0 1 0 0
+		0 0 1 0
+		32.163 7.53958 2.62653e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 10
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_pistol_handle_01
+{
+	id 10
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	22.8752 -5.52928 -2.43406
+	rotation_orient	0 0 0 1
+	rotation	1 1.43932e-07 -2.89978e-07 -4.01339e-07
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 2.87863e-07 -5.79957e-07 0
+		2.87863e-07 -1 -8.02679e-07 0
+		-5.79957e-07 8.02678e-07 -1 0
+		22.8752 -5.52928 -2.43406 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 9
+	child_joints 1
+		11 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_shoulder_L_01
+{
+	id 53
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	3.04401 5.10338 -0.273098
+	rotation_orient	0 0 0 1
+	rotation	0.618772 -0.143513 -0.0480013 0.770858
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.9542 -0.251608 0.161852 0
+		-0.103599 0.229634 0.967748 0
+		-0.280659 -0.940193 0.193051 0
+		3.04401 5.10338 -0.273098 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 35
+	child_joints 1
+		33 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_shoulder_R_01
+{
+	id 52
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	-3.04365 5.10339 -0.273085
+	rotation_orient	0 0 0 1
+	rotation	-0.231571 0.75433 0.607047 -0.0940974
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.875041 -0.463605 -0.139188 0
+		-0.235119 0.155737 0.959409 0
+		-0.42311 0.872248 -0.245279 0
+		-3.04365 5.10339 -0.273085 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 35
+	child_joints 1
+		32 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+JOINT bn_shoulderpad_L
+{
+	id 12
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	21.211 -1.08723e-05 1.44622e-06
+	rotation_orient	0 0 0 1
+	rotation	-0.352411 -0.0531326 -0.106468 0.92825
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.971683 -0.160209 0.173682 0
+		0.235107 0.728942 -0.642937 0
+		-0.0235996 0.665565 0.745967 0
+		21.211 -1.08723e-05 1.44622e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 6
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.643137 0.776471 0.807843
+	}
+}
+JOINT bn_shoulderpad_R
+{
+	id 18
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	21.211 1.28339e-05 2.67481e-07
+	rotation_orient	0 0 0 1
+	rotation	-0.0444757 0.000821496 0.165023 0.985286
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.945534 0.325116 -0.0162978 0
+		-0.325262 0.941579 -0.0873716 0
+		-0.0130602 0.0879138 0.996043 0
+		21.211 1.28339e-05 2.67481e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 13
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.643137 0.776471 0.807843
+	}
+}
+BONE bn_spine_01
+{
+	id 51
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	3.07248e-06 2.00001 -1.13625e-05
+	rotation_orient	0 0 0 1
+	rotation	0.0392907 1.40075e-07 5.86426e-08 0.999228
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 1.28202e-07 -2.75325e-07 0
+		-1.06187e-07 0.996913 0.0785208 0
+		2.84542e-07 -0.0785208 0.996913 0
+		3.07248e-06 2.00001 -1.13625e-05 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 40
+	child_joints 1
+		35 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_spine_02
+{
+	id 35
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	5.60357e-07 8.80606 4.75133e-07
+	rotation_orient	0 0 0 1
+	rotation	0.284184 1.3156e-07 1.26411e-07 0.95877
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 3.17172e-07 -1.80425e-07 0
+		-1.67623e-07 0.838479 0.544934 0
+		3.2412e-07 -0.544934 0.838479 0
+		5.60357e-07 8.80606 4.75133e-07 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 51
+	child_joints 3
+		41 52 53 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_sword_blade_01
+{
+	id 28
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	-0.892257 -2.1069e-06 52.8861
+	rotation_orient	0 0 0 1
+	rotation	-1.72198e-08 -0.147082 7.10716e-08 0.989124
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.956733 1.45663e-07 0.290966 0
+		-1.35532e-07 1 -5.49719e-08 0
+		-0.290966 1.31583e-08 0.956734 0
+		-0.892257 -2.1069e-06 52.8861 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 17
+	child_joints 1
+		29 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_sword_blade_02
+{
+	id 29
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	7.14895e-07 -9.63543e-06 37.312
+	rotation_orient	0 0 0 1
+	rotation	0 0 0 1
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 0 0 0
+		0 1 0 0
+		0 0 1 0
+		7.14895e-07 -9.63543e-06 37.312 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 28
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_sword_handle_01
+{
+	id 17
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	9.72401 -0.0902387 -1.88336
+	rotation_orient	0 0 0 1
+	rotation	-0.701057 0.0922962 -0.0922957 0.701057
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.965926 -0.258819 -6.10948e-07 0
+		-7.00355e-07 -2.38419e-07 -1 0
+		0.258819 0.965926 -3.57628e-07 0
+		9.72401 -0.0902387 -1.88336 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 16
+	child_joints 1
+		28 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_tail_01
+{
+	id 54
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	3.18051e-06 -1.89598 -3.68952
+	rotation_orient	0 0 0 1
+	rotation	-1.24837e-07 0.923687 -0.383148 -4.37114e-08
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-1 -1.97124e-07 1.76413e-07 0
+		-2.64116e-07 0.706395 -0.707818 0
+		1.49109e-08 -0.707818 -0.706395 0
+		3.18051e-06 -1.89598 -3.68952 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 40
+	child_joints 1
+		34 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_tail_02
+{
+	id 34
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	-3.71023e-06 -1.87244e-05 12.3111
+	rotation_orient	0 0 0 1
+	rotation	-0.604162 1.03779e-07 8.85049e-09 0.796861
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 -1.11293e-07 -1.76089e-07 0
+		-1.39504e-07 0.269976 -0.962867 0
+		1.547e-07 0.962867 0.269976 0
+		-3.71023e-06 -1.87244e-05 12.3111 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 54
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_upperarm_L_01
+{
+	id 33
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	5.90977 -1.35562e-06 1.40287e-05
+	rotation_orient	0 0 0 1
+	rotation	-0.384359 -0.58308 0.382768 0.604794
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.0270136 0.911215 0.411046 0
+		-0.0147675 0.411515 -0.911283 0
+		-0.999526 0.0185469 0.0245728 0
+		5.90977 -1.35562e-06 1.40287e-05 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 53
+	child_joints 1
+		39 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_upperarm_R_01
+{
+	id 32
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	5.90977 -3.39969e-06 1.43587e-05
+	rotation_orient	0 0 0 1
+	rotation	0.150964 0.333004 0.0399114 0.929906
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.775031 0.174771 -0.607274 0
+		0.0263152 0.951234 0.307345 0
+		0.631375 -0.254183 0.732637 0
+		5.90977 -3.39969e-06 1.43587e-05 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 52
+	child_joints 1
+		38 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_upperleg_L_01
+{
+	id 31
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	2.108 0.506068 -0.8031
+	rotation_orient	0 0 0 1
+	rotation	-0.535376 -0.433499 -0.357715 0.630468
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		0.368236 0.0131139 0.92964 0
+		0.915227 0.170824 -0.364937 0
+		-0.16359 0.985214 0.0509013 0
+		2.108 0.506068 -0.8031 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 40
+	child_joints 1
+		50 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_upperleg_L_02
+{
+	id 50
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	5.6657 7.00221e-06 1.96665e-06
+	rotation_orient	0 0 0 1
+	rotation	0 0 0 1
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 0 0 0
+		0 1 0 0
+		0 0 1 0
+		5.6657 7.00221e-06 1.96665e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 31
+	child_joints 1
+		37 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_upperleg_R_01
+{
+	id 30
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	-2.10841 0.50607 -0.8031
+	rotation_orient	0 0 0 1
+	rotation	-0.0463256 -0.486559 -0.840828 0.232643
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		-0.887462 -0.346145 0.304293 0
+		0.436306 -0.418276 0.79667 0
+		-0.148485 0.839779 0.522229 0
+		-2.10841 0.50607 -0.8031 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 40
+	child_joints 1
+		47 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+BONE bn_upperleg_R_02
+{
+	id 47
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	6.82528 -8.77422e-08 3.36725e-06
+	rotation_orient	0 0 0 1
+	rotation	0 0 0 1
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 0 0 0
+		0 1 0 0
+		0 0 1 0
+		6.82528 -8.77422e-08 3.36725e-06 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 30
+	child_joints 1
+		36 
+	INSTANCE_LIST
+	{
+	}
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0.054902 1 0.00784314
+	}
+}
+JOINT root_displacement
+{
+	id 25
+	visible	0
+	scale_pivot	0 0 0
+	rotate_pivot	0 0 0
+	min_bound	0 0 0
+	max_bound	0 0 0
+	scale	1 1 1
+	translate	0 0 -0
+	rotation_orient	0 0 0 1
+	rotation	0 0 0 1
+	joint_orient	0 0 0 1
+	bind_pose_matrix
+		1 0 0 0
+		0 1 0 0
+		0 0 1 0
+		0 0 -0 1
+	rotation_order xyz
+	inherits_transform 1
+	shearing 0 0 0
+	rotate_pivot_translate	0 0 0
+	scale_pivot_translate	0 0 0
+	translate_limit_x -INF +INF
+	translate_limit_y -INF +INF
+	translate_limit_z -INF +INF
+	rotate_limit_x -INF +INF
+	rotate_limit_y -INF +INF
+	rotate_limit_z -INF +INF
+	scale_limit_x -INF +INF
+	scale_limit_y -INF +INF
+	scale_limit_z -INF +INF
+	parent 0
+	child_joints 0
+	INSTANCE_LIST
+	{
+	}
+	segment_scale_compensate 1
+	EXTRA_ATTRIBUTES
+	{
+		wire_colour colour 0 0.87451 0.145098
+	}
+}
+ANIMATION_TAKE skill_demoralizingshout_01
+{
+	id 59
+	start_time 0
+	end_time 35
+	fps 30
+	current_time 0
+	num_animated_nodes 58
+	num_event_tracks 0
+	ANIM_NODE 56
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				2.36019e-08 -0.0136185 -0.0442489 0.998928 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				37.4656 1.66889e-05 1.54483e-06 
+			}
+		}
+	}
+	ANIM_NODE 57
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-4.74289e-09 -0.0569426 0.0741964 0.995617 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				41.0951 -1.90039e-05 0.00127293 
+			}
+		}
+	}
+	ANIM_NODE 19
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				0.00564197 0.0766093 -0.981742 -0.174017 
+				0.00259993 0.0770365 -0.98133 -0.17621 
+				-0.0022733 0.0789934 -0.980359 -0.180698 
+				-0.0077682 0.0814644 -0.97923 -0.185502 
+				-0.0125756 0.0831438 -0.978393 -0.188882 
+				0.0923339 0.0814966 -0.976756 -0.175445 
+				0.104409 0.0838878 -0.976214 -0.170491 
+				0.113573 0.0732458 -0.974901 -0.176929 
+				0.148077 0.056301 -0.970025 -0.184267 
+				0.185992 0.0384496 -0.963021 -0.191098 
+				0.209284 0.0258767 -0.957937 -0.19465 
+				0.216485 0.0185135 -0.956222 -0.19604 
+				0.21857 0.012814 -0.955613 -0.197148 
+				0.217941 0.00775334 -0.955509 -0.198606 
+				0.216975 0.0023306 -0.955295 -0.200819 
+				0.217945 -0.00436855 -0.9544 -0.203965 
+				0.222988 -0.0131679 -0.952274 -0.208033 
+				0.232727 -0.0289192 -0.947721 -0.216397 
+				0.246904 -0.0506814 -0.940332 -0.228575 
+				0.266775 -0.0711093 -0.931066 -0.238518 
+				0.294524 -0.0844925 -0.921218 -0.239737 
+				0.317205 -0.0516114 -0.911785 -0.255667 
+				0.347682 0.00333278 -0.903154 -0.251831 
+				0.359204 0.069776 -0.899716 -0.237939 
+				0.332379 0.141919 -0.906444 -0.218502 
+				0.293812 0.203839 -0.909034 -0.213965 
+				0.251563 0.209179 -0.919939 -0.216039 
+				0.194975 0.209366 -0.929432 -0.233039 
+				0.135399 0.206197 -0.934053 -0.258254 
+				0.078836 0.202747 -0.934552 -0.281586 
+				0.028503 0.200997 -0.934304 -0.293025 
+				-0.00300257 0.2085 -0.932158 -0.295973 
+				-0.0103488 0.210152 -0.931235 -0.297542 
+				-0.00308095 0.208082 -0.931389 -0.298675 
+				0.00434201 0.206335 -0.931724 -0.298826 
+				0.00392927 0.206648 -0.931607 -0.29898 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				-1.85013e-05 13.1784 -2.07517e-05 
+			}
+		}
+	}
+	ANIM_NODE 54
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-1.24837e-07 0.923687 -0.383148 -4.37114e-08 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				3.18051e-06 -1.89598 -3.68952 
+			}
+		}
+	}
+	ANIM_NODE 20
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				4.29555e-09 -0.782183 3.24232e-10 0.623049 
+				1.67605e-09 -0.781237 2.32261e-08 0.624234 
+				-5.1474e-09 -0.780257 -7.61108e-09 0.625459 
+				2.86232e-08 -0.779094 6.58974e-09 0.626908 
+				3.49259e-09 -0.777808 2.75376e-09 0.628502 
+				3.1357e-08 -0.847846 1.1201e-10 0.530243 
+				6.0552e-10 -0.854676 8.31139e-09 0.519161 
+				2.19558e-08 -0.857106 -3.9543e-09 0.51514 
+				1.61127e-08 0.867827 -6.61526e-09 -0.496867 
+				-7.63778e-09 0.878863 8.66818e-09 -0.477075 
+				1.00479e-10 0.886075 2.05881e-09 -0.463543 
+				4.96504e-09 0.889869 -1.02004e-09 -0.456217 
+				-8.24523e-09 0.89256 5.72558e-09 -0.450928 
+				9.98282e-09 0.894373 2.8097e-08 -0.447321 
+				-8.55532e-09 0.895502 -8.13818e-09 -0.445057 
+				-5.94504e-09 0.896127 1.7181e-08 -0.443797 
+				2.3497e-09 0.896393 2.86969e-09 -0.44326 
+				3.5973e-09 0.895542 -2.22909e-08 -0.444978 
+				1.31475e-09 0.892883 2.28566e-09 -0.450289 
+				2.56562e-08 0.888988 1.41651e-08 -0.457931 
+				2.24734e-08 0.885066 -1.6927e-08 -0.465466 
+				4.43738e-09 0.875937 4.98672e-09 -0.482426 
+				1.65483e-08 -0.848075 -1.90632e-08 0.529876 
+				-3.10771e-08 -0.796822 5.56391e-09 0.604214 
+				4.14215e-09 -0.714428 2.65907e-08 0.699708 
+				2.04288e-08 -0.6299 8.55056e-10 0.776676 
+				-3.11455e-08 -0.567126 -1.52606e-08 0.823631 
+				-8.85687e-09 -0.498066 2.10675e-08 0.867139 
+				-1.68397e-08 -0.419419 9.74251e-09 0.907793 
+				-6.89775e-09 -0.329803 2.16562e-08 0.94405 
+				-1.5773e-08 -0.238124 -8.12605e-09 0.971235 
+				-6.42804e-09 -0.17789 -1.98411e-09 0.98405 
+				-6.47964e-09 -0.173738 1.41179e-08 0.984792 
+				1.59004e-08 -0.204226 -4.92276e-09 0.978924 
+				-3.71225e-08 -0.235971 -1.55958e-08 0.97176 
+				2.52463e-08 -0.25017 -2.57855e-08 0.968202 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				55.4182 3.82545e-06 2.31929e-06 
+			}
+		}
+	}
+	ANIM_NODE 24
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.000454654 0.274823 -0.116515 0.954409 
+				-0.00734163 0.276165 -0.115595 0.954105 
+				-0.0225154 0.27746 -0.113475 0.953746 
+				-0.0399876 0.278489 -0.111142 0.953149 
+				-0.053751 0.279349 -0.109599 0.952399 
+				-0.038304 0.13637 -0.117339 0.982938 
+				-0.0379559 0.126584 -0.138944 0.981443 
+				-0.027938 0.133617 -0.156113 0.978261 
+				-0.0153501 0.123274 -0.168379 0.977863 
+				-0.00215546 0.11292 -0.181756 0.976836 
+				0.00344653 0.107031 -0.187925 0.976328 
+				0.00155909 0.105538 -0.186898 0.976693 
+				-0.00250454 0.10596 -0.184608 0.97708 
+				-0.00733539 0.107282 -0.180677 0.977646 
+				-0.0112724 0.109149 -0.17467 0.978494 
+				-0.0133007 0.110353 -0.166498 0.979757 
+				-0.0122379 0.110244 -0.156073 0.981498 
+				-0.00449014 0.110848 -0.140994 0.983775 
+				0.00998757 0.111909 -0.121993 0.986151 
+				0.0261191 0.109376 -0.104057 0.988194 
+				0.0385451 0.0995276 -0.0923005 0.989995 
+				0.0677177 0.0751872 -0.0962847 0.990197 
+				0.109749 0.0329863 -0.100072 0.988359 
+				0.152752 -0.0229941 -0.101384 0.982781 
+				0.1856 -0.0818089 -0.101662 0.973922 
+				0.196926 -0.118706 -0.109364 0.967041 
+				0.183899 -0.0976493 -0.13524 0.968688 
+				0.157108 -0.0301825 -0.168545 0.972625 
+				0.12253 0.0505775 -0.191255 0.972548 
+				0.0819585 0.117254 -0.196 0.970112 
+				0.0359462 0.152263 -0.189977 0.969243 
+				0.0473269 0.161584 -0.186077 0.968001 
+				0.0436682 0.168526 -0.1866 0.966888 
+				0.0313417 0.17533 -0.189622 0.965567 
+				0.0169285 0.18167 -0.193016 0.964082 
+				0.00689681 0.187844 -0.195295 0.962563 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				55.4182 -2.65516e-06 -4.18334e-06 
+			}
+		}
+	}
+	ANIM_NODE 58
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				1.83505e-09 0.032345 0.0486317 0.998293 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				49.3999 3.44915e-06 -1.60235e-05 
+			}
+		}
+	}
+	ANIM_NODE 55
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.165417 -0.672737 -0.71183 0.115586 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				35.3632 12.2539 17.027 
+			}
+		}
+	}
+	ANIM_NODE 34
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.604162 1.03779e-07 8.85049e-09 0.796861 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				-3.71023e-06 -1.87244e-05 12.3111 
+			}
+		}
+	}
+	ANIM_NODE 21
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.0741958 0.0395816 -0.0519953 0.9951 
+				-0.0815917 0.0481041 -0.0389542 0.994742 
+				-0.0934792 0.0669381 -0.0154217 0.993249 
+				-0.10704 0.0886701 0.011603 0.990225 
+				-0.119522 0.106173 0.0351468 0.986512 
+				-0.150584 0.102966 0.0127916 0.983137 
+				-0.159201 0.107517 -0.00994241 0.981324 
+				-0.152365 0.1096 -0.0266668 0.981866 
+				-0.145922 0.106451 -0.0475044 0.982404 
+				-0.138742 0.103779 -0.0692842 0.982436 
+				-0.133853 0.104046 -0.0799907 0.982272 
+				-0.13139 0.108385 -0.0794492 0.98218 
+				-0.129461 0.114579 -0.0763918 0.981975 
+				-0.127203 0.120792 -0.0714649 0.981897 
+				-0.123946 0.125177 -0.0652784 0.982195 
+				-0.119283 0.125988 -0.058419 0.9831 
+				-0.11302 0.121552 -0.0514628 0.984786 
+				-0.100346 0.108664 -0.0421186 0.988104 
+				-0.0818878 0.0865048 -0.0316592 0.992375 
+				-0.0656496 0.0573727 -0.025623 0.995862 
+				-0.0593109 0.0236655 -0.0285701 0.99755 
+				-0.116618 0.101539 0.0514606 0.986632 
+				-0.184851 0.156291 0.0993471 0.96516 
+				-0.238345 0.210337 0.127097 0.939573 
+				-0.26514 0.293537 0.146483 0.906686 
+				-0.24682 0.319995 0.209721 0.890337 
+				-0.201648 0.279008 0.190268 0.919397 
+				-0.136079 0.23282 0.184422 0.945128 
+				-0.0672835 0.178208 0.188871 0.96335 
+				-0.0120497 0.117969 0.199419 0.972713 
+				0.0154416 0.0632895 0.210197 0.975486 
+				0.0269047 0.0316109 0.21615 0.975477 
+				0.0253623 0.0342642 0.220567 0.97444 
+				0.0170634 0.0578469 0.224189 0.972678 
+				0.00656037 0.0831909 0.228146 0.970044 
+				-0.000361505 0.0982868 0.232489 0.96762 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				55.4182 -2.97739e-06 5.81357e-07 
+			}
+		}
+	}
+	ANIM_NODE 22
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				0.67988 0.0144614 -0.723628 0.117967 
+				0.679983 0.0112305 -0.724468 0.11244 
+				0.680057 0.00704743 -0.725279 0.106972 
+				0.680166 0.00277294 -0.726034 0.1012 
+				0.680324 -0.000687613 -0.726762 0.0947395 
+				0.702956 0.00774234 -0.704677 0.0960376 
+				0.692092 0.0137823 -0.7111 0.123108 
+				0.683602 0.0182661 -0.715739 0.141676 
+				0.68054 0.0139053 -0.714673 0.160982 
+				0.67886 0.00986921 -0.711438 0.181404 
+				0.680695 0.00492788 -0.706249 0.194529 
+				0.685856 -0.000870205 -0.699672 0.200149 
+				0.691411 -0.00678713 -0.692885 0.204488 
+				0.697371 -0.0130133 -0.686097 0.206822 
+				0.703663 -0.0197444 -0.679572 0.206518 
+				0.710085 -0.0271566 -0.673642 0.203097 
+				0.716298 -0.035381 -0.668694 0.196249 
+				0.723022 -0.0448444 -0.664899 0.182036 
+				0.728801 -0.055504 -0.663143 0.161275 
+				0.730547 -0.0664733 -0.664717 0.141537 
+				0.72617 -0.0767348 -0.670602 0.130695 
+				0.704908 -0.0747122 -0.694591 0.122744 
+				0.660453 -0.0750999 -0.738242 0.114722 
+				0.595703 -0.0770695 -0.791741 0.111105 
+				0.513732 -0.0807435 -0.846447 0.1144 
+				0.42794 -0.0850066 -0.890823 0.126791 
+				0.351718 -0.0869468 -0.919688 0.151356 
+				0.270582 -0.0852253 -0.942534 0.176498 
+				0.178409 -0.0830496 -0.962301 0.187749 
+				0.0845215 -0.0848081 -0.975667 0.18368 
+				0.00695608 -0.0870123 -0.98068 0.175061 
+				-0.0206127 -0.0938004 -0.981217 0.1673 
+				-0.0216859 -0.0938337 -0.981023 0.168281 
+				-0.00747518 -0.0898114 -0.980569 0.174251 
+				0.0100404 -0.0848819 -0.979744 0.181095 
+				0.0191097 -0.0820205 -0.979014 0.185576 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1.83141e-05 -13.1784 1.50344e-05 
+			}
+		}
+	}
+	ANIM_NODE 23
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-7.48816e-09 0.874698 4.90693e-10 -0.484669 
+				-1.30784e-08 0.873929 2.35276e-08 -0.486054 
+				-8.50726e-09 0.872606 8.91855e-10 -0.488426 
+				4.03062e-10 0.871014 2.4854e-08 -0.491258 
+				1.29248e-08 0.86953 3.96744e-09 -0.49388 
+				3.17987e-09 -0.822691 -1.34294e-08 0.568489 
+				1.49094e-08 -0.815705 -2.59275e-09 0.578468 
+				8.81545e-09 -0.817202 -4.47005e-09 0.576352 
+				-1.31349e-08 -0.812553 1.86954e-09 0.582887 
+				1.02666e-08 -0.809052 6.37564e-09 0.587737 
+				1.36537e-08 -0.809091 -3.41522e-08 0.587683 
+				-2.21376e-09 -0.812272 -1.60571e-08 0.583279 
+				2.21032e-08 -0.816467 -2.46498e-08 0.577393 
+				6.69252e-09 -0.821019 1.12509e-08 0.5709 
+				-3.87617e-09 -0.825292 2.69675e-08 0.564706 
+				2.16468e-08 -0.82863 -3.84002e-08 0.559796 
+				2.1389e-08 -0.830323 -1.45562e-08 0.557283 
+				3.46206e-09 -0.831354 8.47667e-10 0.555743 
+				7.71793e-09 -0.830769 4.19005e-09 0.556618 
+				1.49486e-08 -0.82534 -3.63881e-08 0.564637 
+				1.19523e-08 -0.812271 2.43227e-09 0.583281 
+				2.06708e-08 -0.775091 1.94594e-09 0.63185 
+				-1.14135e-08 -0.700469 4.78078e-09 0.713683 
+				1.86049e-08 -0.590316 -1.72223e-08 0.807172 
+				-1.78023e-09 -0.455832 -3.16572e-08 0.890066 
+				1.72558e-08 -0.339697 -5.07887e-09 0.940535 
+				-2.56852e-08 -0.302275 -6.02586e-09 0.953221 
+				-3.33291e-09 -0.315072 1.64768e-08 0.949068 
+				-1.84707e-08 -0.330352 1.07922e-08 0.943858 
+				3.69942e-09 -0.323476 -1.69455e-08 0.946236 
+				-4.30296e-09 -0.289829 -2.17313e-08 0.957079 
+				9.16821e-09 -0.279541 1.49076e-08 0.960134 
+				3.09102e-09 -0.284079 1.06941e-09 0.958801 
+				1.18131e-09 -0.297819 -2.24077e-08 0.954622 
+				-7.04117e-09 -0.312795 -5.83086e-09 0.949821 
+				2.34925e-09 -0.322124 3.91589e-08 0.946697 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				55.4182 1.77243e-06 1.34694e-06 
+			}
+		}
+	}
+	ANIM_NODE 46
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.0254099 -0.715097 -0.00194195 0.698561 
+				-0.0287515 -0.717711 -0.00844264 0.695696 
+				-0.0329471 -0.720926 -0.0166093 0.692029 
+				-0.0374812 -0.724316 -0.0254405 0.687979 
+				-0.0418396 -0.727491 -0.0339355 0.683999 
+				-0.0617884 -0.726069 -0.0151519 0.684672 
+				-0.0651224 -0.712375 -0.00983167 0.698702 
+				-0.0643328 -0.694991 -0.00867977 0.716082 
+				-0.0627464 -0.672793 -0.00970315 0.737101 
+				-0.060219 -0.648949 -0.012121 0.758348 
+				-0.057989 -0.634315 -0.0147145 0.770756 
+				-0.0564178 -0.629417 -0.017014 0.77483 
+				-0.0549773 -0.626785 -0.0193522 0.777009 
+				-0.0536262 -0.625838 -0.0217199 0.777804 
+				-0.0523218 -0.625978 -0.0241076 0.77771 
+				-0.0510209 -0.626605 -0.0265055 0.777213 
+				-0.0496803 -0.627116 -0.0289041 0.776802 
+				-0.0482569 -0.626912 -0.0312937 0.776965 
+				-0.0467074 -0.625388 -0.0336648 0.778187 
+				-0.0449881 -0.621934 -0.0360069 0.780946 
+				-0.043054 -0.615923 -0.0383087 0.785695 
+				-0.0399109 -0.606529 -0.0427536 0.792907 
+				-0.0354484 -0.592844 -0.0493213 0.803023 
+				-0.030944 -0.574077 -0.0546935 0.816387 
+				-0.0276707 -0.549397 -0.0555545 0.833254 
+				-0.0268928 -0.517865 -0.0485872 0.853658 
+				-0.0297064 -0.471977 -0.0292837 0.880623 
+				-0.0351745 -0.41082 0.00024068 0.911038 
+				-0.0415192 -0.344433 0.0331459 0.937306 
+				-0.0470701 -0.284571 0.0624906 0.955457 
+				-0.0503154 -0.244027 0.0815238 0.965025 
+				-0.0509875 -0.228879 0.0881956 0.96811 
+				-0.0502068 -0.231579 0.0870871 0.967608 
+				-0.0485937 -0.244465 0.0815277 0.965002 
+				-0.0467599 -0.259832 0.0748342 0.961614 
+				-0.0453383 -0.270082 0.0703596 0.959192 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				-5.95184 59.3942 9.36811 
+				-6.4071 59.5105 9.00356 
+				-6.86237 59.6802 8.63902 
+				-7.31763 59.8896 8.27447 
+				-7.7729 60.1182 7.90992 
+				-7.7729 59.5891 -13.4481 
+				-4.91098 59.5828 -10.4441 
+				-2.31198 59.7946 -4.07684 
+				-1.44528 59.8927 -1.84339 
+				-1.21682 59.7094 -0.478692 
+				-1.30064 59.224 0.206481 
+				-1.43523 58.5358 0.475221 
+				-1.60495 57.7922 0.508306 
+				-1.85274 57.0832 0.371511 
+				-2.22155 56.4957 0.13061 
+				-2.75431 56.1141 -0.148623 
+				-3.49397 56.0208 -0.400411 
+				-4.84476 56.2729 -0.420765 
+				-6.7704 56.9389 -0.36809 
+				-8.65304 58.1214 -0.720207 
+				-9.87482 59.9291 -1.95494 
+				-10.3511 64.564 -4.86517 
+				-10.4728 72.8016 -9.08179 
+				-10.3351 82.624 -13.3396 
+				-10.0333 92.0495 -16.3735 
+				-9.6626 99.1374 -16.9182 
+				-9.11373 103.772 -13.8966 
+				-8.32315 107.266 -8.15215 
+				-7.45487 109.794 -1.30053 
+				-6.67291 111.535 5.04245 
+				-6.14128 112.723 9.26111 
+				-5.91638 113.149 10.9366 
+				-5.88885 112.683 11.146 
+				-5.97412 111.732 10.5177 
+				-6.08758 110.682 9.67998 
+				-6.14464 109.891 9.26111 
+			}
+		}
+	}
+	ANIM_NODE 4
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				0.00646921 0.342865 -0.0185112 0.93918 
+				0.00646918 0.342865 -0.0185112 0.93918 
+				0.0064692 0.342865 -0.0185112 0.93918 
+				0.00646925 0.342865 -0.0185112 0.93918 
+				0.00646925 0.342865 -0.0185112 0.93918 
+				0.00646924 0.342865 -0.0185112 0.93918 
+				0.00647094 0.342951 -0.0185106 0.939149 
+				0.00646923 0.342865 -0.0185112 0.93918 
+				0.0064598 0.342387 -0.0185145 0.939354 
+				0.00644735 0.341756 -0.0185188 0.939584 
+				0.00643543 0.34115 -0.018523 0.939804 
+				0.00642383 0.340561 -0.018527 0.940018 
+				0.0064127 0.339998 -0.0185309 0.940222 
+				0.00640616 0.339665 -0.0185331 0.940342 
+				0.00639555 0.339129 -0.0185368 0.940535 
+				0.0063751 0.33809 -0.0185438 0.94091 
+				0.00635274 0.336956 -0.0185515 0.941316 
+				0.00633659 0.336137 -0.018557 0.941609 
+				0.00633473 0.336043 -0.0185576 0.941642 
+				0.00635525 0.337084 -0.0185507 0.941271 
+				0.00640614 0.339665 -0.0185331 0.940342 
+				0.00650894 0.344881 -0.0184972 0.938442 
+				0.00666472 0.352783 -0.0184417 0.9355 
+				0.00685081 0.362221 -0.0183733 0.931886 
+				0.00704476 0.372057 -0.0182998 0.928003 
+				0.00722448 0.381169 -0.0182296 0.924298 
+				0.00740398 0.390268 -0.0181574 0.920492 
+				0.00759778 0.400092 -0.0180772 0.916265 
+				0.00778504 0.409581 -0.0179973 0.912063 
+				0.00794521 0.417697 -0.0179271 0.908375 
+				0.00805805 0.423416 -0.0178767 0.905723 
+				0.00811084 0.42609 -0.0178528 0.904468 
+				0.00811741 0.426424 -0.0178498 0.904311 
+				0.00809766 0.425421 -0.0178588 0.904783 
+				0.00807127 0.424084 -0.0178707 0.90541 
+				0.00805805 0.423416 -0.0178767 0.905723 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				39.8174 -0.000162889 1.99863 
+				39.8174 -0.000165258 1.99862 
+				39.8174 -0.000162767 1.99863 
+				39.8174 -0.000159199 1.99863 
+				39.8174 -0.000163598 1.99863 
+				39.8174 -0.000165457 1.99863 
+				39.8174 -0.000163644 1.99862 
+				39.8174 -0.000165293 1.99863 
+				39.8174 -0.000161368 1.99863 
+				39.8174 -0.000163264 1.99864 
+				39.8173 -0.000163653 1.99864 
+				39.8174 -0.000162372 1.99865 
+				39.8173 -0.000162136 1.99865 
+				39.8173 -0.000161888 1.99865 
+				39.8173 -0.000161174 1.99866 
+				39.8173 -0.000159936 1.99867 
+				39.8173 -0.000160286 1.99868 
+				39.8173 -0.000160453 1.99869 
+				39.8173 -0.000160084 1.99869 
+				39.8173 -0.00016149 1.99868 
+				39.8173 -0.000161732 1.99866 
+				39.8174 -0.000164279 1.99861 
+				39.8175 -0.000167712 1.99853 
+				39.8176 -0.000171777 1.99845 
+				39.8177 -0.000175873 1.99835 
+				39.8178 -0.000179423 1.99826 
+				39.8179 -0.000183234 1.99816 
+				39.818 -0.00018749 1.99806 
+				39.8181 -0.000190693 1.99796 
+				39.8181 -0.000195856 1.99787 
+				39.8182 -0.00019656 1.99781 
+				39.8182 -0.000197431 1.99778 
+				39.8182 -0.000196535 1.99778 
+				39.8182 -0.000197754 1.99779 
+				39.8182 -0.000195463 1.9978 
+				39.8182 -0.00019623 1.99781 
+			}
+		}
+	}
+	ANIM_NODE 25
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0 0 0 1 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				0 0 -0 
+			}
+		}
+	}
+	ANIM_NODE 1
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.499999 -0.5 0.5 0.500001 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				5.95991 -2.19222e-07 -5.58278 
+				6.47463 -1.06998e-06 -6.15373 
+				6.93768 -2.78979e-07 -6.74873 
+				7.36681 1.66252e-07 -7.36007 
+				7.79118 5.55808e-07 -7.97208 
+				14.6426 -8.45703e-07 -11.4264 
+				10.8654 1.65093e-06 -10.102 
+				4.87616 -8.17626e-07 -7.57362 
+				0.964607 1.00646e-06 -6.96666 
+				-2.06149 6.29231e-07 -7.25896 
+				-3.60842 2.28521e-08 -7.67418 
+				-4.01316 -6.64683e-07 -7.78474 
+				-3.8904 5.99725e-07 -7.83693 
+				-3.46838 7.32535e-09 -7.79387 
+				-2.96227 -1.20716e-06 -7.64611 
+				-2.57414 -1.5082e-06 -7.40982 
+				-2.49744 -1.04509e-06 -7.11937 
+				-2.88971 -8.73984e-07 -6.6263 
+				-3.59263 -8.15827e-07 -5.93807 
+				-4.32342 1.02282e-06 -5.33069 
+				-4.82412 -7.05698e-07 -5.07434 
+				-5.15858 2.90439e-06 -5.2853 
+				-5.54919 1.36548e-07 -5.7013 
+				-5.96194 4.82889e-07 -6.03116 
+				-6.2755 -9.57118e-07 -6.10818 
+				-6.32452 -2.83077e-06 -5.89522 
+				-5.99995 3.22423e-06 -5.43116 
+				-5.36827 2.86844e-06 -4.78919 
+				-4.53481 3.71186e-06 -4.02639 
+				-3.60476 1.36513e-06 -3.26234 
+				-2.67223 -1.62292e-06 -2.69127 
+				-1.70285 -2.18825e-06 -2.39314 
+				-0.615722 -2.2568e-07 -2.26523 
+				0.568103 3.62445e-06 -2.24294 
+				1.81951 2.06971e-06 -2.27369 
+				3.08962 8.36866e-07 -2.31923 
+			}
+		}
+	}
+	ANIM_NODE 5
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				0.450744 -0.276863 0.120568 0.840024 
+				0.454176 -0.281718 0.126602 0.835662 
+				0.449977 -0.293368 0.130674 0.833295 
+				0.442607 -0.297517 0.137685 0.834641 
+				0.436245 -0.279603 0.151713 0.841722 
+				0.117848 -0.0756525 0.0650955 0.988004 
+				0.147445 -0.0474605 0.0626481 0.985943 
+				0.235125 -0.090108 0.0674224 0.965428 
+				0.285748 -0.181114 0.0686024 0.938531 
+				0.33196 -0.290341 0.0679734 0.894921 
+				0.352781 -0.370364 0.059541 0.857223 
+				0.347489 -0.413237 0.0481939 0.840336 
+				0.334356 -0.442056 0.0413151 0.831315 
+				0.320662 -0.463958 0.0380654 0.824906 
+				0.309592 -0.482902 0.0364078 0.818311 
+				0.300394 -0.498502 0.0349605 0.812427 
+				0.294461 -0.511009 0.0338306 0.806857 
+				0.290463 -0.514613 0.0305018 0.806147 
+				0.282733 -0.509637 0.0243791 0.812243 
+				0.266516 -0.505201 0.0188254 0.820601 
+				0.238122 -0.509977 0.0169632 0.826398 
+				0.194374 -0.528486 0.0190181 0.826172 
+				0.138035 -0.553784 0.0201693 0.820891 
+				0.0752923 -0.577312 0.0154275 0.812898 
+				0.012654 -0.59116 0.00266399 0.80645 
+				-0.0440001 -0.588136 -0.0165112 0.807395 
+				-0.0950974 -0.56063 -0.0393381 0.821646 
+				-0.145243 -0.51203 -0.0625644 0.844284 
+				-0.195295 -0.453078 -0.0831084 0.865837 
+				-0.244562 -0.396396 -0.101982 0.879011 
+				-0.290984 -0.355612 -0.123834 0.879508 
+				-0.333255 -0.335479 -0.151916 0.867938 
+				-0.37263 -0.32787 -0.183739 0.848462 
+				-0.410586 -0.326916 -0.21621 0.823285 
+				-0.44798 -0.326561 -0.247044 0.794759 
+				-0.484747 -0.320837 -0.275525 0.765617 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				8.31272 -1.2733e-06 -3.55397e-06 
+			}
+		}
+	}
+	ANIM_NODE 2
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.308884 -0.0890205 -0.0324206 0.946369 
+				-0.307893 -0.0909689 -0.0374771 0.94632 
+				-0.302306 -0.0933697 -0.0422964 0.947684 
+				-0.294859 -0.0959451 -0.0470177 0.949548 
+				-0.28831 -0.0984227 -0.0517829 0.951057 
+				-0.151156 -0.173655 -0.0831041 0.969582 
+				-0.148548 -0.0938076 -0.0822482 0.981004 
+				-0.172564 -0.00880732 -0.0731251 0.982241 
+				-0.192293 0.0184695 -0.0620125 0.979202 
+				-0.214516 0.0265085 -0.0494965 0.975105 
+				-0.229972 0.0235761 -0.0409282 0.97205 
+				-0.238102 0.0138175 -0.037196 0.970429 
+				-0.244483 -0.00197414 -0.0351517 0.969014 
+				-0.249113 -0.020503 -0.0340901 0.967657 
+				-0.252038 -0.0384703 -0.0333105 0.966379 
+				-0.253362 -0.052583 -0.0321189 0.965407 
+				-0.253228 -0.0595577 -0.0298264 0.965111 
+				-0.251735 -0.0518546 -0.0253942 0.966072 
+				-0.247431 -0.0316956 -0.0194477 0.968192 
+				-0.23821 -0.010464 -0.0138001 0.971059 
+				-0.222164 0.000430372 -0.0102774 0.974955 
+				-0.196532 -0.00185471 -0.00990037 0.980446 
+				-0.16324 -0.010446 -0.0114775 0.986464 
+				-0.127587 -0.0221559 -0.0135178 0.991488 
+				-0.095017 -0.0337824 -0.0145383 0.994796 
+				-0.0710562 -0.0421372 -0.0130735 0.996496 
+				-0.0594252 -0.0457364 -0.00760795 0.997155 
+				-0.056522 -0.0467188 0.000873688 0.997307 
+				-0.0568839 -0.0473382 0.0100772 0.997207 
+				-0.0550434 -0.0498466 0.0177096 0.997082 
+				-0.0455345 -0.0564949 0.0214773 0.997133 
+				-0.0267362 -0.0683204 0.0204426 0.997096 
+				-0.00228661 -0.0837867 0.0161229 0.996351 
+				0.0253847 -0.101268 0.00991211 0.994486 
+				0.053831 -0.119153 0.00321966 0.99141 
+				0.0806114 -0.135871 -0.0025366 0.987438 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				12.7441 0.00845914 0.0113383 
+				12.7441 0.00844702 0.0113464 
+				12.744 0.00832334 0.011431 
+				12.744 0.00815305 0.0115449 
+				12.7439 0.00800425 0.011638 
+				12.7417 0.00462208 0.0127769 
+				12.7439 0.00440621 0.0134105 
+				12.7463 0.00488313 0.0134402 
+				12.747 0.00536975 0.0132277 
+				12.7472 0.00596162 0.0129587 
+				12.7471 0.00638245 0.0127668 
+				12.7468 0.0066099 0.0126684 
+				12.7464 0.00679385 0.0125857 
+				12.7459 0.00693109 0.0125083 
+				12.7454 0.00701901 0.0124358 
+				12.745 0.00705921 0.0123796 
+				12.7448 0.0070557 0.0123589 
+				12.7449 0.00700921 0.0124054 
+				12.7455 0.00688496 0.012515 
+				12.746 0.00663539 0.0126693 
+				12.7463 0.00621055 0.0128832 
+				12.7462 0.00552774 0.0131891 
+				12.7459 0.00462479 0.0135281 
+				12.7456 0.00364354 0.0138136 
+				12.7453 0.00273266 0.0140022 
+				12.745 0.00205535 0.0140973 
+				12.7449 0.00171905 0.0141307 
+				12.7448 0.00162528 0.0141394 
+				12.7448 0.0016215 0.0141366 
+				12.7448 0.00155703 0.0141347 
+				12.7445 0.00127649 0.0141442 
+				12.7442 0.000734537 0.0141407 
+				12.7438 3.90865e-05 0.0140938 
+				12.7433 -0.000738191 0.0139811 
+				12.7428 -0.00152381 0.0138052 
+				12.7423 -0.00225258 0.0135803 
+			}
+		}
+	}
+	ANIM_NODE 3
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.123751 0.131829 -0.0452127 0.982478 
+				-0.126474 0.131103 -0.0514839 0.981919 
+				-0.127177 0.131213 -0.0583297 0.981431 
+				-0.127068 0.131654 -0.0654036 0.98094 
+				-0.127356 0.131919 -0.0723588 0.980379 
+				0.0563739 0.0819598 -0.134141 0.985957 
+				-0.000880584 0.000215601 -0.0957387 0.995406 
+				-0.0900439 -0.049526 -0.0498322 0.993457 
+				-0.139088 -0.0187124 -0.0368483 0.989417 
+				-0.17761 0.0423924 -0.0334941 0.982617 
+				-0.196076 0.0934104 -0.0300028 0.975668 
+				-0.197488 0.126342 -0.0224012 0.971872 
+				-0.191649 0.158652 -0.013802 0.968457 
+				-0.180832 0.188319 -0.00519823 0.965302 
+				-0.167382 0.213389 0.0024177 0.962519 
+				-0.153705 0.231982 0.00805786 0.960466 
+				-0.142251 0.242283 0.0107418 0.959661 
+				-0.132518 0.230782 0.00791913 0.963907 
+				-0.122431 0.198281 -0.000341373 0.972469 
+				-0.112185 0.164678 -0.011059 0.979884 
+				-0.102274 0.150361 -0.0212295 0.983097 
+				-0.0916708 0.162624 -0.0309843 0.981932 
+				-0.0800459 0.188931 -0.0417187 0.977833 
+				-0.0691007 0.220108 -0.0523305 0.971617 
+				-0.0606075 0.24715 -0.0617639 0.965106 
+				-0.0563937 0.261299 -0.0690249 0.961134 
+				-0.0610334 0.258913 -0.0737676 0.961144 
+				-0.0733257 0.245868 -0.0766579 0.963481 
+				-0.0864446 0.227804 -0.0782537 0.9667 
+				-0.093609 0.210506 -0.0791591 0.969875 
+				-0.0880943 0.199882 -0.0800201 0.972565 
+				-0.0666408 0.197052 -0.0806572 0.974794 
+				-0.0337016 0.197982 -0.080593 0.976305 
+				0.00582345 0.200849 -0.0800377 0.97633 
+				0.0469746 0.203927 -0.0792495 0.974642 
+				0.0847832 0.205636 -0.0785505 0.97178 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				17.9625 0.00572244 0.0231231 
+				17.9625 0.00581165 0.0230948 
+				17.9626 0.00579715 0.0230891 
+				17.9626 0.00574436 0.0230828 
+				17.9627 0.00570595 0.0230786 
+				17.9595 -0.00329087 0.0242489 
+				17.9559 4.30785e-05 0.0247382 
+				17.9536 0.00454933 0.0242132 
+				17.9552 0.00684284 0.0237618 
+				17.9582 0.00856534 0.0230887 
+				17.9606 0.00932675 0.0224039 
+				17.9621 0.00935604 0.0220202 
+				17.9636 0.00907635 0.0216792 
+				17.9649 0.00858832 0.0213676 
+				17.966 0.00799747 0.0211009 
+				17.9668 0.00739713 0.0209094 
+				17.9673 0.00688277 0.0208377 
+				17.9668 0.00641013 0.0212379 
+				17.9654 0.00588739 0.0220534 
+				17.9639 0.00535115 0.0227769 
+				17.9633 0.00481763 0.0231027 
+				17.9639 0.00420463 0.0230166 
+				17.9652 0.00348375 0.0226573 
+				17.9666 0.00275348 0.0221098 
+				17.9678 0.00213971 0.0215394 
+				17.9685 0.00179167 0.021206 
+				17.9684 0.00195786 0.0212415 
+				17.9679 0.0025643 0.0214821 
+				17.9671 0.00325453 0.0218063 
+				17.9663 0.0036699 0.0221183 
+				17.9658 0.00344925 0.022376 
+				17.9656 0.00243074 0.0226012 
+				17.9655 0.000839878 0.0227432 
+				17.9655 -0.0010748 0.0227422 
+				17.9655 -0.00306334 0.0225791 
+				17.9654 -0.0048764 0.0222868 
+			}
+		}
+	}
+	ANIM_NODE 8
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-2.42864e-08 -0.285962 -2.36066e-08 0.958241 
+				2.1354e-08 -0.273985 2.11841e-08 0.961734 
+				-4.96453e-08 -0.26134 1.57452e-08 0.965247 
+				-3.69621e-08 -0.246978 3.29327e-08 0.969021 
+				-1.41424e-08 -0.230502 2.92347e-10 0.973072 
+				-1.03588e-08 -0.612537 2.37433e-08 0.790442 
+				9.85964e-08 -0.725947 -5.64275e-08 0.687751 
+				-4.56128e-08 -0.761464 -1.35692e-08 0.648207 
+				-8.22821e-09 -0.767757 3.75854e-08 0.640741 
+				-9.93209e-09 -0.772061 -2.43883e-08 0.635549 
+				-9.40701e-09 -0.773938 -1.29769e-08 0.633262 
+				2.95906e-10 -0.772929 5.85526e-09 0.634492 
+				2.44387e-08 -0.76853 1.11868e-08 0.639814 
+				4.96986e-08 -0.760158 -4.16778e-09 0.649739 
+				1.59672e-08 -0.747126 1.97376e-08 0.664682 
+				1.16972e-08 -0.72861 3.37176e-08 0.684928 
+				-1.30574e-08 -0.703621 3.10822e-08 0.710575 
+				-1.08637e-08 -0.642108 -3.16879e-08 0.766614 
+				6.53935e-09 -0.533095 -1.47199e-08 0.846055 
+				-1.82606e-08 -0.413988 1.72432e-08 0.910282 
+				-1.65824e-08 -0.335651 2.35483e-09 0.941986 
+				3.42143e-08 -0.305436 -1.94369e-08 0.952213 
+				9.00059e-10 -0.294935 -4.78401e-08 0.955517 
+				1.908e-08 -0.305405 4.63679e-08 0.952223 
+				3.51568e-08 -0.337646 -2.8476e-08 0.941273 
+				-1.70415e-08 -0.391842 6.41451e-08 0.920032 
+				3.25617e-08 -0.483576 -2.63955e-08 0.875302 
+				1.60838e-09 -0.605182 -2.39708e-08 0.796087 
+				6.56962e-09 -0.723484 -7.59423e-09 0.690342 
+				-2.15264e-08 -0.814392 3.80892e-08 0.580315 
+				-5.52135e-09 0.866904 1.21354e-08 -0.498475 
+				-1.03269e-08 0.886776 5.97008e-08 -0.4622 
+				1.33455e-08 0.889154 -2.5114e-08 -0.457609 
+				-1.62621e-08 0.881949 7.72898e-09 -0.471346 
+				-2.50831e-08 0.872012 3.0502e-08 -0.489484 
+				2.01607e-08 0.866904 3.14625e-08 -0.498475 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				37.1165 2.39869e-06 3.70482e-06 
+			}
+		}
+	}
+	ANIM_NODE 9
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.861823 -0.0117798 0.0371031 0.505713 
+				-0.861825 -0.0147414 0.035794 0.505726 
+				-0.857458 -0.0204342 0.0419086 0.512438 
+				-0.851351 -0.0274806 0.0504676 0.521439 
+				-0.846222 -0.0344974 0.0566145 0.528691 
+				0.831408 -0.0741106 -0.253703 -0.488778 
+				-0.821982 -0.0836131 0.0743998 0.558408 
+				-0.77125 -0.220267 -0.102335 0.588374 
+				-0.757147 -0.245387 -0.13458 0.590256 
+				-0.746692 -0.263607 -0.157115 0.59015 
+				-0.740009 -0.275759 -0.171362 0.589049 
+				-0.736816 -0.28257 -0.178702 0.587641 
+				-0.736563 -0.284678 -0.180465 0.586401 
+				-0.738532 -0.282662 -0.177942 0.58567 
+				-0.741918 -0.277065 -0.172407 0.58572 
+				-0.745888 -0.268422 -0.165123 0.586801 
+				-0.749617 -0.257275 -0.157362 0.589171 
+				-0.759739 -0.22321 -0.133726 0.595895 
+				-0.775089 -0.161335 -0.0884966 0.604464 
+				-0.786182 -0.0966436 -0.0382727 0.609191 
+				-0.790545 -0.0555896 -0.000603272 0.609876 
+				-0.791423 -0.043627 0.0212979 0.609338 
+				-0.791341 -0.0450281 0.0373319 0.608571 
+				-0.790721 -0.0546857 0.0494907 0.607717 
+				-0.789767 -0.0674737 0.0597741 0.606747 
+				-0.788736 -0.0782644 0.0701905 0.605676 
+				-0.787549 -0.0885657 0.080922 0.604462 
+				-0.785975 -0.101787 0.0906195 0.603051 
+				-0.784192 -0.115663 0.0990125 0.601549 
+				-0.782472 -0.127942 0.105844 0.600138 
+				-0.781173 -0.136385 0.110869 0.599063 
+				-0.780552 -0.140084 0.113455 0.598534 
+				-0.780473 -0.140546 0.113778 0.598467 
+				-0.780709 -0.13916 0.112809 0.598668 
+				-0.781019 -0.13731 0.111516 0.598932 
+				-0.781173 -0.136385 0.110869 0.599063 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				30.2262 -3.91427e-06 -4.48827e-06 
+			}
+		}
+	}
+	ANIM_NODE 6
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				0.819973 0.570192 -0.0283659 0.0414868 
+				0.819682 0.57065 -0.0281303 0.0411007 
+				0.818973 0.571761 -0.0275563 0.040164 
+				0.818094 0.573132 -0.0268439 0.0390089 
+				0.817296 0.574369 -0.0261961 0.0379659 
+				0.826097 0.543573 0.0820208 -0.123951 
+				0.821181 0.553636 0.0776763 -0.114522 
+				0.816893 0.567189 0.0600935 -0.085863 
+				0.814881 0.569047 0.0634418 -0.0901665 
+				0.81293 0.570066 0.0686661 -0.0972411 
+				0.811008 0.570381 0.0751726 -0.106211 
+				0.809104 0.570143 0.0823598 -0.116209 
+				0.807239 0.569528 0.0896273 -0.126371 
+				0.805477 0.56874 0.0963808 -0.135838 
+				0.80392 0.568011 0.102035 -0.143755 
+				0.802696 0.56759 0.106012 -0.14927 
+				0.801942 0.567732 0.107738 -0.151531 
+				0.803686 0.568005 0.102679 -0.144627 
+				0.807744 0.568417 0.0903047 -0.127661 
+				0.811053 0.569988 0.0759608 -0.107413 
+				0.811087 0.574168 0.0648368 -0.0909142 
+				0.807527 0.581611 0.0576676 -0.0793962 
+				0.801951 0.591136 0.0514707 -0.0691631 
+				0.79511 0.60175 0.0458596 -0.0599415 
+				0.787778 0.612472 0.0404876 -0.0514318 
+				0.780762 0.622341 0.0350347 -0.0433173 
+				0.773564 0.63206 0.0292917 -0.0352222 
+				0.765643 0.642255 0.023475 -0.0273666 
+				0.757816 0.651905 0.0179704 -0.0202801 
+				0.750971 0.660045 0.013224 -0.0144429 
+				0.746039 0.665752 0.00972325 -0.010298 
+				0.74369 0.668426 0.00798108 -0.00828428 
+				0.743395 0.668759 0.0077623 -0.00803335 
+				0.744278 0.667759 0.00841797 -0.00878649 
+				0.745453 0.666421 0.00928905 -0.00979341 
+				0.746039 0.665752 0.00972326 -0.010298 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				30.7037 3.87928 0.057228 
+			}
+		}
+	}
+	ANIM_NODE 7
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.654251 -0.0986404 -0.197658 0.723296 
+				-0.654861 -0.0983892 -0.200461 0.722005 
+				-0.652934 -0.10967 -0.204041 0.721123 
+				-0.650184 -0.126105 -0.207251 0.720003 
+				-0.648272 -0.140975 -0.20943 0.718337 
+				-0.338934 -0.379363 -0.669568 0.54119 
+				-0.412526 -0.304095 -0.549288 0.660023 
+				-0.508637 -0.201584 -0.346627 0.761907 
+				-0.542074 -0.142333 -0.286577 0.777027 
+				-0.578662 -0.0780796 -0.254625 0.770856 
+				-0.59817 -0.0333167 -0.259967 0.757298 
+				-0.599051 -0.0128576 -0.291918 0.745491 
+				-0.594324 -0.00311917 -0.333483 0.731819 
+				-0.585738 -0.00310908 -0.37668 0.717644 
+				-0.576589 -0.0110318 -0.414152 0.704203 
+				-0.571579 -0.0245707 -0.439554 0.692449 
+				-0.576065 -0.0413094 -0.447329 0.682891 
+				-0.615375 -0.0845708 -0.401554 0.672991 
+				-0.677592 -0.159445 -0.298971 0.652735 
+				-0.724349 -0.23254 -0.190027 0.620592 
+				-0.745834 -0.267358 -0.130596 0.595984 
+				-0.750797 -0.262564 -0.13379 0.591155 
+				-0.746054 -0.243075 -0.166325 0.597205 
+				-0.731091 -0.213278 -0.212986 0.612092 
+				-0.70866 -0.17305 -0.258956 0.633085 
+				-0.68622 -0.118261 -0.290889 0.656125 
+				-0.664754 -0.0266124 -0.305508 0.681219 
+				-0.637448 0.102335 -0.306112 0.69963 
+				-0.604835 0.237711 -0.29396 0.700897 
+				-0.570852 0.348608 -0.277737 0.689538 
+				-0.541192 0.408731 -0.271567 0.682863 
+				-0.519448 0.408955 -0.282869 0.694921 
+				-0.503206 0.366623 -0.305441 0.72047 
+				-0.488454 0.297688 -0.333476 0.749392 
+				-0.471886 0.219857 -0.360895 0.773784 
+				-0.451797 0.153072 -0.382084 0.791493 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				21.211 2.01209e-06 -4.21524e-07 
+			}
+		}
+	}
+	ANIM_NODE 15
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				3.83813e-09 -0.244471 -1.32483e-08 0.969657 
+				-6.13619e-09 -0.242647 2.86896e-08 0.970115 
+				-8.5528e-09 -0.241191 2.70873e-08 0.970478 
+				9.36465e-09 -0.239883 7.12232e-09 0.970802 
+				2.77434e-08 -0.2385 2.03062e-08 0.971143 
+				-1.25247e-08 -0.322817 -3.81779e-08 0.946462 
+				-2.3894e-08 -0.317687 3.96121e-08 0.948196 
+				5.99126e-09 -0.313838 6.92582e-08 0.949477 
+				-2.6216e-08 -0.3074 3.16062e-08 0.95158 
+				4.26035e-08 -0.294468 2.50744e-08 0.955661 
+				1.236e-08 -0.274282 -3.98603e-10 0.961649 
+				2.78914e-10 -0.249811 -1.72063e-08 0.968295 
+				7.08484e-09 -0.222708 3.81949e-08 0.974885 
+				-1.57179e-08 -0.194678 7.40793e-09 0.980867 
+				3.38499e-09 -0.167472 2.73116e-08 0.985877 
+				3.79034e-09 -0.142876 2.70398e-08 0.989741 
+				2.43587e-08 -0.122691 -9.14544e-09 0.992445 
+				1.84122e-08 -0.108719 -9.10891e-09 0.994072 
+				-7.46342e-09 -0.103474 3.43008e-08 0.994632 
+				8.59408e-09 -0.10663 -4.63e-09 0.994299 
+				9.6812e-09 -0.11571 3.54261e-08 0.993283 
+				1.67085e-08 -0.128232 -3.24749e-08 0.991744 
+				-7.86085e-09 -0.14172 -4.34502e-08 0.989907 
+				-4.89015e-09 -0.153711 -8.50564e-09 0.988116 
+				-8.90616e-10 -0.165459 5.48932e-09 0.986217 
+				4.28037e-10 -0.179193 8.67525e-09 0.983814 
+				1.79782e-08 -0.193931 -1.79403e-08 0.981015 
+				-1.34493e-08 -0.2087 -1.60982e-08 0.97798 
+				-1.72935e-08 -0.222539 1.08033e-08 0.974924 
+				-2.4414e-08 -0.234497 -3.74063e-09 0.972117 
+				2.5971e-09 -0.243636 -5.12515e-09 0.969867 
+				-2.84934e-09 -0.248382 -1.91163e-08 0.968662 
+				-1.40203e-08 -0.248974 -2.41629e-08 0.96851 
+				5.30413e-09 -0.247196 5.89637e-08 0.968966 
+				-2.11425e-08 -0.244824 4.15219e-09 0.969568 
+				1.78202e-08 -0.243636 -2.78059e-08 0.969867 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				37.1165 -2.09297e-06 -2.79774e-07 
+			}
+		}
+	}
+	ANIM_NODE 26
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.127191 0 0 0.991878 
+				-0.127126 -3.52846e-18 2.75304e-17 0.991887 
+				-0.123142 2.75443e-17 3.41789e-18 0.992389 
+				-0.117735 -2.75625e-17 -3.26779e-18 0.993045 
+				-0.113264 -2.44332e-17 -3.07206e-17 0.993565 
+				-0.145241 2.343e-17 3.14925e-17 0.989396 
+				-0.0927152 2.57336e-18 -2.7636e-17 0.995693 
+				-0.0598369 0 0 0.998208 
+				-0.0543 1.50713e-18 -2.77148e-17 0.998525 
+				-0.0507625 1.386e-17 7.04472e-19 0.998711 
+				-0.0488648 2.77224e-17 1.35627e-18 0.998805 
+				-0.0482826 1.38616e-17 6.70055e-19 0.998834 
+				-0.0486866 1.38612e-17 6.75662e-19 0.998814 
+				-0.0497342 1.38606e-17 6.90201e-19 0.998762 
+				-0.05107 -1.38597e-17 -7.08739e-19 0.998695 
+				-0.0523364 -1.45263e-18 2.77173e-17 0.99863 
+				-0.0531792 -2.77164e-17 -1.47602e-18 0.998585 
+				-0.0552658 0 0 0.998472 
+				-0.0586326 -1.62738e-18 2.77078e-17 0.99828 
+				-0.0615707 -8.54465e-19 1.38515e-17 0.998103 
+				-0.063362 -2.8579e-17 1.20912e-17 0.997991 
+				-0.0641189 -1.77966e-18 2.76984e-17 0.997942 
+				-0.0644981 -8.95091e-19 1.38489e-17 0.997918 
+				-0.0645377 -2.76976e-17 -1.79128e-18 0.997915 
+				-0.064355 1.78621e-18 -2.76982e-17 0.997927 
+				-0.0642236 8.91281e-19 -1.38491e-17 0.997936 
+				-0.0641031 2.8588e-17 -1.207e-17 0.997943 
+				-0.0637112 0 0 0.997968 
+				-0.0631297 -2.77001e-17 -1.7522e-18 0.998005 
+				-0.0625085 2.77014e-17 1.73496e-18 0.998044 
+				-0.0620558 1.38509e-17 8.61197e-19 0.998073 
+				-0.0618685 1.7172e-18 -2.77024e-17 0.998084 
+				-0.0618445 -1.71653e-18 2.77024e-17 0.998086 
+				-0.0619156 1.7185e-18 -2.77021e-17 0.998081 
+				-0.0620097 -1.3851e-17 -8.60558e-19 0.998076 
+				-0.0620567 -1.38511e-17 -8.6121e-19 0.998073 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				0 0 -0 
+			}
+		}
+	}
+	ANIM_NODE 12
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.352411 -0.0531326 -0.106468 0.92825 
+				-0.352872 -0.053017 -0.108018 0.927902 
+				-0.351923 -0.0591111 -0.109975 0.927664 
+				-0.350556 -0.0679912 -0.111742 0.927363 
+				-0.349694 -0.0760453 -0.112972 0.926913 
+				-0.193051 -0.216079 -0.381374 0.877835 
+				-0.226402 -0.166893 -0.301459 0.91105 
+				-0.270958 -0.107387 -0.184653 0.938591 
+				-0.287539 -0.0754996 -0.152013 0.94261 
+				-0.307481 -0.0414888 -0.135299 0.940972 
+				-0.319071 -0.0177716 -0.138669 0.937363 
+				-0.320619 -0.00688154 -0.156238 0.934209 
+				-0.319342 -0.00167599 -0.179188 0.930543 
+				-0.316025 -0.00167751 -0.203231 0.926727 
+				-0.312313 -0.00597548 -0.224328 0.923093 
+				-0.310673 -0.013355 -0.238913 0.919905 
+				-0.313999 -0.0225167 -0.243828 0.917303 
+				-0.336417 -0.0462338 -0.219524 0.914601 
+				-0.372693 -0.0876986 -0.164442 0.909048 
+				-0.402342 -0.129165 -0.105551 0.900164 
+				-0.417458 -0.149645 -0.0730969 0.893304 
+				-0.420873 -0.147185 -0.0749987 0.891952 
+				-0.417421 -0.136002 -0.0930598 0.893646 
+				-0.407156 -0.118778 -0.118616 0.897801 
+				-0.39212 -0.095753 -0.143287 0.903627 
+				-0.377053 -0.06498 -0.159833 0.909979 
+				-0.362522 -0.014513 -0.166608 0.916847 
+				-0.345743 0.0555047 -0.16603 0.921854 
+				-0.327931 0.128883 -0.15938 0.922198 
+				-0.310545 0.189643 -0.15109 0.919113 
+				-0.294993 0.222791 -0.148026 0.917296 
+				-0.282132 0.222119 -0.153637 0.920576 
+				-0.271273 0.197643 -0.16466 0.927489 
+				-0.261135 0.159149 -0.178281 0.935252 
+				-0.250537 0.116728 -0.191609 0.941749 
+				-0.238683 0.0808671 -0.201853 0.946439 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				21.211 -1.08723e-05 1.44622e-06 
+			}
+		}
+	}
+	ANIM_NODE 11
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				-0.165568 0.00458899 -0.746398 0.644559 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+				0 0 0 1 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				2.55796 2.55796 2.55796 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				32.163 7.53958 2.62653e-06 
+				32.1629 7.53958 5.2413e-06 
+				32.163 7.53959 1.0153e-06 
+				32.163 7.53958 1.72955e-06 
+				32.163 7.53958 7.63695e-06 
+				32.163 7.53959 -3.06038e-06 
+				28.8432 -57.8882 5.08579 
+				32.163 7.53959 8.07898e-06 
+				32.163 7.53957 -4.55384e-06 
+				32.163 7.53959 1.01896e-05 
+				32.163 7.53959 -1.70841e-06 
+				32.163 7.53958 4.30697e-06 
+				32.163 7.53958 2.5105e-06 
+				32.163 7.53959 5.70525e-06 
+				32.163 7.53958 3.58279e-06 
+				32.163 7.53958 8.10871e-06 
+				32.163 7.53958 8.42135e-06 
+				32.163 7.53959 -1.68958e-06 
+				32.163 7.53958 5.00286e-06 
+				32.163 7.53957 1.30803e-05 
+				32.163 7.5396 3.87987e-06 
+				32.163 7.53959 5.44301e-06 
+				32.163 7.5396 7.79985e-06 
+				32.163 7.53959 6.77186e-09 
+				32.163 7.53958 3.59418e-06 
+				32.163 7.53959 3.75987e-06 
+				32.163 7.5396 8.79187e-07 
+				32.163 7.53958 -5.06009e-06 
+				32.163 7.53957 8.01343e-06 
+				32.163 7.53958 4.25179e-06 
+				32.163 7.53958 4.69176e-06 
+				32.163 7.53958 5.49764e-06 
+				32.163 7.53959 3.23964e-06 
+				32.163 7.53958 -2.59476e-06 
+				32.163 7.53959 2.71017e-06 
+				32.163 7.53958 4.10559e-06 
+			}
+		}
+	}
+	ANIM_NODE 13
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.602325 0.765775 -0.17737 -0.139045 
+				-0.602901 0.766291 -0.174745 -0.137017 
+				-0.603983 0.767427 -0.169244 -0.132728 
+				-0.605231 0.768765 -0.162585 -0.127525 
+				-0.60634 0.76993 -0.156491 -0.122765 
+				-0.694763 0.719192 -0.00616379 -0.00540091 
+				0.709098 -0.70466 -0.0174652 -0.0181395 
+				0.723607 -0.687346 -0.0429891 -0.0458316 
+				0.73439 -0.672493 -0.0616952 -0.0679558 
+				0.73894 -0.66644 -0.0660967 -0.0738728 
+				0.738645 -0.66853 -0.057709 -0.0643482 
+				0.736478 -0.67329 -0.0438524 -0.0485542 
+				0.732385 -0.679804 -0.0258748 -0.0284602 
+				0.726412 -0.687213 -0.00516647 -0.00604046 
+				0.718799 -0.694813 0.016778 0.0167849 
+				0.710021 -0.702098 0.0383326 0.0382014 
+				-0.700774 0.708791 -0.0577436 -0.056536 
+				-0.691924 0.71481 -0.0731526 -0.070265 
+				-0.683122 0.721169 -0.0838658 -0.0789039 
+				-0.673667 0.728605 -0.0911055 -0.0837062 
+				-0.663903 0.736668 -0.095832 -0.0858436 
+				-0.654139 0.744863 -0.0990323 -0.0864541 
+				-0.644679 0.752685 -0.101737 -0.0866286 
+				-0.635843 0.759628 -0.105026 -0.0874066 
+				-0.627298 0.766045 -0.108763 -0.0885647 
+				-0.618659 0.77248 -0.112093 -0.0892781 
+				-0.610178 0.778725 -0.115038 -0.0896496 
+				-0.602112 0.784579 -0.117625 -0.0897838 
+				-0.594728 0.789851 -0.119881 -0.0897845 
+				-0.588297 0.794359 -0.121839 -0.0897551 
+				-0.583091 0.797923 -0.123533 -0.0897977 
+				-0.580207 0.799858 -0.124541 -0.0898663 
+				-0.579846 0.800099 -0.124667 -0.0898745 
+				-0.580929 0.799375 -0.124289 -0.0898497 
+				-0.582371 0.798408 -0.123785 -0.0898153 
+				-0.583091 0.797923 -0.123533 -0.0897977 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				30.7037 -3.87928 0.0572067 
+			}
+		}
+	}
+	ANIM_NODE 14
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.0876424 0.00161887 0.325189 0.941577 
+				-0.0914316 0.00585944 0.313655 0.945107 
+				-0.0901643 0.0167575 0.303837 0.9483 
+				-0.0869556 0.0304897 0.294865 0.951085 
+				-0.0848086 0.0432019 0.28572 0.953575 
+				0.030808 0.29556 0.293252 0.908679 
+				-0.0105375 0.233554 0.308004 0.922212 
+				-0.0308403 0.107825 0.352969 0.928889 
+				0.00724002 0.0214117 0.362089 0.931869 
+				0.0523319 -0.0632237 0.362457 0.92838 
+				0.0751201 -0.121573 0.365508 0.919772 
+				0.0783074 -0.151177 0.373968 0.911681 
+				0.0734425 -0.171902 0.384839 0.903855 
+				0.061547 -0.185891 0.397303 0.896553 
+				0.0439501 -0.19536 0.410057 0.889807 
+				0.0222703 -0.202748 0.421431 0.883625 
+				-0.00159933 -0.21077 0.429577 0.878087 
+				-0.0316981 -0.216241 0.432972 0.874511 
+				-0.0668917 -0.216393 0.429405 0.874249 
+				-0.0978006 -0.214244 0.419314 0.876761 
+				-0.113665 -0.212528 0.404703 0.882116 
+				-0.108291 -0.21001 0.388118 0.890805 
+				-0.088461 -0.204502 0.37254 0.90087 
+				-0.063633 -0.197787 0.360712 0.90924 
+				-0.0443586 -0.193537 0.351309 0.914963 
+				-0.0413895 -0.195117 0.340534 0.918832 
+				-0.0618384 -0.206203 0.326845 0.920233 
+				-0.0988687 -0.223545 0.311399 0.918305 
+				-0.140899 -0.238472 0.297132 0.913778 
+				-0.176105 -0.243481 0.28695 0.909595 
+				-0.192706 -0.232008 0.283425 0.910333 
+				-0.184835 -0.199107 0.289316 0.917872 
+				-0.159365 -0.148571 0.303198 0.927686 
+				-0.123901 -0.0872522 0.321211 0.934804 
+				-0.0861284 -0.0226879 0.339681 0.936314 
+				-0.0534163 0.0368728 0.355393 0.932461 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				21.211 5.37982e-06 6.90969e-07 
+			}
+		}
+	}
+	ANIM_NODE 10
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				1 1.43932e-07 -2.89978e-07 -4.01339e-07 
+				1 6.74652e-08 -3.72431e-07 -4.01339e-07 
+				1 4.32826e-08 -4.08572e-07 -4.01339e-07 
+				1 1.99384e-07 -2.9228e-07 -4.01339e-07 
+				1 1.33868e-07 -3.50044e-07 -4.01339e-07 
+				1 -1.29563e-07 -4.72751e-07 -4.01339e-07 
+				1 2.75582e-08 -3.91931e-07 -2.8213e-07 
+				1 1.12684e-07 -2.82036e-07 -4.01339e-07 
+				1 3.66042e-08 -3.75582e-07 -2.8213e-07 
+				1 5.67264e-08 -3.72361e-07 -4.01339e-07 
+				1 1.55901e-07 -3.40345e-07 -4.01339e-07 
+				1 7.04408e-08 -3.06291e-07 -4.01339e-07 
+				1 5.81515e-08 -3.0563e-07 -1.62921e-07 
+				1 1.77058e-07 -2.53747e-07 -5.20549e-07 
+				1 7.93597e-08 -2.60656e-07 -5.20549e-07 
+				1 3.47328e-08 -2.73327e-07 -2.8213e-07 
+				1 1.44536e-07 -2.08931e-07 -2.8213e-07 
+				1 7.16757e-08 -3.84731e-07 -4.01339e-07 
+				0.995808 0.0914638 -3.15201e-07 -4.01339e-07 
+				0.94004 0.341064 -2.72693e-07 -5.20549e-07 
+				0.737191 0.675684 -3.2964e-07 -5.20549e-07 
+				0.319451 0.947603 -2.80086e-07 -5.20549e-07 
+				-0.258082 0.966123 -9.90646e-08 -2.8213e-07 
+				0.784679 -0.619903 -1.68442e-07 -1.62921e-07 
+				1 4.81412e-07 -3.38025e-07 -4.01339e-07 
+				0.784679 0.619903 -4.72349e-07 -5.20549e-07 
+				0.258081 0.966123 -2.31675e-07 -5.20549e-07 
+				-0.319451 0.947603 -1.02905e-07 -1.62921e-07 
+				0.737191 -0.675684 -1.63349e-07 -4.37114e-08 
+				0.94004 -0.341064 -2.98171e-07 -2.8213e-07 
+				0.995808 -0.0914641 -3.20837e-07 -2.8213e-07 
+				1 -2.11446e-07 -1.89557e-07 -2.8213e-07 
+				1 -2.58769e-07 -4.11537e-07 -2.8213e-07 
+				1 -1.4628e-07 -3.19516e-07 -5.20549e-07 
+				1 -2.2625e-07 -2.58425e-07 -4.01339e-07 
+				1 -3.4418e-07 -2.63112e-07 -5.20549e-07 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				22.8752 -5.52928 -2.43406 
+			}
+		}
+	}
+	ANIM_NODE 16
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				0.732615 0.0137341 -0.152346 0.663233 
+				0.743068 0.0176823 -0.174062 0.645941 
+				0.751944 0.0229314 -0.195728 0.629082 
+				0.759812 0.0286885 -0.21727 0.612091 
+				0.767215 0.0341573 -0.238605 0.594376 
+				0.683088 0.216273 -0.34404 0.606839 
+				0.661131 0.225617 -0.316712 0.641636 
+				0.63463 0.237065 -0.286975 0.677267 
+				0.612265 0.24256 -0.259716 0.706289 
+				0.603998 0.234623 -0.240412 0.722732 
+				0.608973 0.21158 -0.226591 0.730098 
+				0.618446 0.179142 -0.212621 0.735 
+				0.63074 0.141167 -0.19936 0.736542 
+				0.644454 0.101632 -0.187744 0.734236 
+				0.65857 0.0646094 -0.178817 0.728104 
+				0.672449 0.0342118 -0.173704 0.718658 
+				0.685703 0.0145349 -0.173563 0.706737 
+				0.697924 0.00963976 -0.179513 0.693242 
+				0.711121 0.0303418 -0.199011 0.673632 
+				0.724526 0.076956 -0.233196 0.644018 
+				0.733769 0.137449 -0.273596 0.606495 
+				0.736885 0.199649 -0.312333 0.565323 
+				0.73535 0.251918 -0.342795 0.527532 
+				0.733505 0.283602 -0.359765 0.502104 
+				0.733927 0.29567 -0.36407 0.491307 
+				0.735649 0.297806 -0.361189 0.489567 
+				0.738277 0.292846 -0.353312 0.494327 
+				0.741206 0.283545 -0.342522 0.502886 
+				0.743898 0.272689 -0.330934 0.512581 
+				0.746021 0.263143 -0.320759 0.520887 
+				0.747443 0.257846 -0.314292 0.525419 
+				0.748114 0.256446 -0.311835 0.526612 
+				0.748197 0.256271 -0.311527 0.526761 
+				0.747947 0.256796 -0.312449 0.526314 
+				0.747612 0.257496 -0.313678 0.525718 
+				0.747443 0.257846 -0.314292 0.525419 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				30.2262 -1.10682e-06 1.15662e-06 
+			}
+		}
+	}
+	ANIM_NODE 30
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.0463256 -0.486559 -0.840828 0.232643 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				-2.10841 0.50607 -0.8031 
+			}
+		}
+	}
+	ANIM_NODE 36
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.102494 0.498475 0.547686 0.664122 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				6.82527 -1.21887e-06 -4.33192e-07 
+			}
+		}
+	}
+	ANIM_NODE 18
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.0444757 0.000821496 0.165023 0.985286 
+				-0.0463565 0.0029707 0.159025 0.986181 
+				-0.0456765 0.00848913 0.153921 0.98699 
+				-0.0440196 0.0154347 0.14927 0.987696 
+				-0.0429053 0.0218561 0.144548 0.988326 
+				0.0157681 0.151274 0.150092 0.976903 
+				-0.00537447 0.119116 0.157087 0.98036 
+				-0.0157019 0.0548971 0.179708 0.982061 
+				0.00368314 0.010893 0.184209 0.98282 
+				0.0266473 -0.0321936 0.184563 0.981932 
+				0.0383367 -0.0620435 0.186534 0.979738 
+				0.0400478 -0.077315 0.191254 0.977671 
+				0.0376369 -0.0880944 0.197218 0.975668 
+				0.0316014 -0.0954464 0.203997 0.973795 
+				0.0226065 -0.100488 0.210922 0.972061 
+				0.0114739 -0.104458 0.217127 0.97047 
+				-0.000825362 -0.108752 0.22165 0.969043 
+				-0.0163711 -0.111681 0.223615 0.96812 
+				-0.0345498 -0.111767 0.221788 0.968052 
+				-0.0504804 -0.110583 0.216431 0.9687 
+				-0.0585854 -0.109541 0.208592 0.970081 
+				-0.0556872 -0.107994 0.199584 0.972318 
+				-0.0453693 -0.104883 0.191065 0.974903 
+				-0.0325641 -0.101217 0.184593 0.977047 
+				-0.0226665 -0.098894 0.179512 0.97851 
+				-0.0211281 -0.0996006 0.173831 0.979498 
+				-0.031555 -0.105221 0.166783 0.979855 
+				-0.0504761 -0.114128 0.15898 0.979363 
+				-0.0720192 -0.121893 0.151876 0.978207 
+				-0.0901127 -0.124589 0.146832 0.977137 
+				-0.0985888 -0.118695 0.145 0.977326 
+				-0.0943756 -0.101663 0.147723 0.979253 
+				-0.0811632 -0.075666 0.154416 0.981755 
+				-0.0629857 -0.0443551 0.163289 0.983566 
+				-0.0437669 -0.011529 0.172611 0.98395 
+				-0.027171 0.0187558 0.180775 0.98297 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				21.211 1.28339e-05 2.67481e-07 
+			}
+		}
+	}
+	ANIM_NODE 17
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.701057 0.0922962 -0.0922957 0.701057 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				9.72401 -0.0902387 -1.88336 
+			}
+		}
+	}
+	ANIM_NODE 28
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-1.72198e-08 -0.147082 7.10716e-08 0.989124 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				-0.892257 -2.1069e-06 52.8861 
+			}
+		}
+	}
+	ANIM_NODE 29
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0 0 0 1 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				7.14895e-07 -9.63543e-06 37.312 
+			}
+		}
+	}
+	ANIM_NODE 27
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				0.0308084 6.93564e-18 -2.13776e-19 0.999525 
+				0.0427838 -6.93243e-18 2.96872e-19 0.999084 
+				0.0544412 -8.43968e-18 -2.73368e-17 0.998517 
+				0.066201 6.92364e-18 -4.59361e-19 0.997806 
+				0.0784746 6.91747e-18 -5.44527e-19 0.996916 
+				0.0611674 -1.69774e-18 -2.77037e-17 0.998128 
+				0.0264055 7.32901e-19 2.77468e-17 0.999651 
+				-0.0102828 0 0 0.999947 
+				-0.0387089 1.38672e-17 5.37193e-19 0.999251 
+				-0.0501906 -1.39307e-18 2.77209e-17 0.99874 
+				-0.0484057 1.25182e-17 2.83952e-17 0.998828 
+				-0.0429685 1.19262e-18 -2.77298e-17 0.999076 
+				-0.0355099 -1.38692e-17 -4.92799e-19 0.999369 
+				-0.0271026 0 0 0.999633 
+				-0.0182951 1.48902e-17 -5.52445e-17 0.999833 
+				-0.00923216 7.44907e-18 -5.54286e-17 0.999957 
+				0 0 0 1 
+				0.0100126 8.67129e-19 -8.68456e-21 0.99995 
+				0.0238667 3.46833e-18 -8.28043e-20 0.999715 
+				0.0437309 4.67989e-18 2.75772e-17 0.999043 
+				0.0677416 1.58128e-18 -2.79269e-17 0.997703 
+				0.0942936 -2.61717e-18 -2.7632e-17 0.995544 
+				0.12052 0 -0 0.992711 
+				0.139893 -7.76563e-18 -5.49652e-17 0.990167 
+				0.148203 0 -0 0.988957 
+				0.148659 0 -0 0.988889 
+				0.14354 -1.71676e-18 2.49003e-19 0.989644 
+				0.135574 2.43874e-17 2.46771e-17 0.990767 
+				0.127214 1.7296e-17 2.57647e-17 0.991875 
+				0.120398 0 -0 0.992726 
+				0.116677 -3.08045e-17 -2.43276e-17 0.99317 
+				0.1156 -2.43609e-17 3.0778e-17 0.993296 
+				0.115466 -2.75699e-17 3.20483e-18 0.993311 
+				0.115868 0 -0 0.993265 
+				0.116406 0 -0 0.993202 
+				0.116676 3.23841e-18 2.7566e-17 0.99317 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				0 0 -0 
+			}
+		}
+	}
+	ANIM_NODE 40
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				0.753928 0.47282 -0.447289 -0.0892545 
+				0.753608 0.473424 -0.447164 -0.089379 
+				0.75283 0.474892 -0.446859 -0.0896805 
+				0.751866 0.476703 -0.446477 -0.0900503 
+				0.750993 0.478342 -0.446127 -0.0903826 
+				0.731944 0.532498 -0.344257 -0.249381 
+				0.729817 0.53753 -0.350085 -0.236366 
+				0.731342 0.535812 -0.368761 -0.205085 
+				0.729008 0.539862 -0.365939 -0.207808 
+				0.726268 0.544569 -0.361219 -0.213307 
+				0.723235 0.54961 -0.355154 -0.220737 
+				0.720038 0.554672 -0.348314 -0.229261 
+				0.716834 0.559469 -0.341286 -0.238051 
+				0.713817 0.563739 -0.334672 -0.24629 
+				0.711219 0.567251 -0.329088 -0.253171 
+				0.709297 0.569792 -0.325156 -0.257893 
+				0.708316 0.571154 -0.323497 -0.259657 
+				0.710884 0.567713 -0.328462 -0.253887 
+				0.717003 0.559051 -0.34046 -0.239702 
+				0.723068 0.54986 -0.354349 -0.221954 
+				0.725839 0.545223 -0.365433 -0.205787 
+				0.724819 0.546325 -0.373217 -0.192029 
+				0.721858 0.550027 -0.380322 -0.178173 
+				0.717597 0.555214 -0.386953 -0.1645 
+				0.712716 0.560785 -0.393286 -0.151271 
+				0.707941 0.565666 -0.399491 -0.138738 
+				0.702915 0.570321 -0.405857 -0.126194 
+				0.697146 0.575459 -0.412258 -0.113483 
+				0.691271 0.580425 -0.418233 -0.101651 
+				0.686019 0.584621 -0.423302 -0.0917097 
+				0.682189 0.587492 -0.426974 -0.0846431 
+				0.680357 0.588784 -0.428773 -0.0812521 
+				0.680126 0.588944 -0.428999 -0.0808289 
+				0.680817 0.588462 -0.428323 -0.082099 
+				0.681733 0.587816 -0.427423 -0.0837944 
+				0.682189 0.587492 -0.426974 -0.0846431 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				64.0653 26.3546 8.43584 
+				64.0419 26.3831 8.45256 
+				63.985 26.4521 8.49338 
+				63.9143 26.537 8.54432 
+				63.85 26.6135 8.59087 
+				65.1218 19.6788 15.9982 
+				64.6693 20.7433 15.8775 
+				64.0934 22.6769 14.8936 
+				63.9773 22.6885 15.1378 
+				63.8918 22.5458 15.4992 
+				63.8317 22.2846 15.9356 
+				63.7917 21.9424 16.405 
+				63.7662 21.5604 16.8678 
+				63.7494 21.1833 17.2878 
+				63.7358 20.859 17.6331 
+				63.7195 20.6373 17.8749 
+				63.6947 20.5685 17.985 
+				63.73 20.8285 17.6735 
+				63.8194 21.4348 16.8946 
+				63.847 22.2162 15.9828 
+				63.6969 23.0599 15.2854 
+				63.3318 23.9929 14.8623 
+				62.8252 25.045 14.499 
+				62.2253 26.1466 14.1602 
+				61.5873 27.2298 13.8158 
+				60.9739 28.2304 13.4393 
+				60.3436 29.2129 13.0197 
+				59.6517 30.216 12.5766 
+				58.9677 31.1462 12.1404 
+				58.3683 31.9193 11.752 
+				57.9357 32.4584 11.4586 
+				57.7294 32.7118 11.3106 
+				57.7035 32.7433 11.292 
+				57.7811 32.6487 11.3479 
+				57.8842 32.522 11.4219 
+				57.9357 32.4584 11.4586 
+			}
+		}
+	}
+	ANIM_NODE 47
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0 0 0 1 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				6.82528 -8.77422e-08 3.36725e-06 
+			}
+		}
+	}
+	ANIM_NODE 48
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0 0 0 1 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				5.91258 -1.42263e-06 -1.61919e-06 
+			}
+		}
+	}
+	ANIM_NODE 44
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.149169 0.893216 -0.0698681 -0.418368 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				5.91258 -7.92019e-07 -6.769e-07 
+			}
+		}
+	}
+	ANIM_NODE 45
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.133865 -0.243505 -0.462773 0.841799 
+				-0.134563 -0.243773 -0.464151 0.840852 
+				-0.134066 -0.243449 -0.463382 0.841449 
+				-0.133106 -0.242902 -0.461759 0.84265 
+				-0.132391 -0.242496 -0.460537 0.843548 
+				-0.253412 -0.486079 -0.386642 0.741632 
+				-0.189841 -0.409642 -0.375179 0.809564 
+				-0.128976 -0.321572 -0.349197 0.870642 
+				-0.12885 -0.325142 -0.345147 0.87095 
+				-0.138765 -0.342223 -0.349205 0.86121 
+				-0.148964 -0.364582 -0.347667 0.850892 
+				-0.155749 -0.387664 -0.338706 0.843052 
+				-0.163636 -0.416181 -0.32729 0.832405 
+				-0.171063 -0.447885 -0.313116 0.819814 
+				-0.176226 -0.479207 -0.296767 0.806991 
+				-0.177828 -0.50595 -0.279872 0.796281 
+				-0.175556 -0.524186 -0.26464 0.790174 
+				-0.167641 -0.519783 -0.25713 0.797249 
+				-0.15581 -0.498025 -0.254708 0.814136 
+				-0.145001 -0.482825 -0.248403 0.827134 
+				-0.1381 -0.493923 -0.231162 0.82676 
+				-0.130584 -0.540296 -0.195289 0.808016 
+				-0.112876 -0.604896 -0.144598 0.774888 
+				-0.0855965 -0.663902 -0.0949964 0.736806 
+				-0.0606553 -0.704239 -0.0607006 0.704758 
+				-0.0463334 -0.727955 -0.0434522 0.682676 
+				-0.0418577 -0.743306 -0.0375376 0.666585 
+				-0.0444507 -0.757162 -0.0381948 0.650593 
+				-0.0530091 -0.771604 -0.0434462 0.6324 
+				-0.0660321 -0.786473 -0.0513779 0.611932 
+				-0.0806835 -0.800625 -0.0595301 0.590717 
+				-0.0952117 -0.812997 -0.0668162 0.570531 
+				-0.110281 -0.822998 -0.0740081 0.5523 
+				-0.125871 -0.830399 -0.0813428 0.536635 
+				-0.142121 -0.835449 -0.0890301 0.523355 
+				-0.159247 -0.838659 -0.0971666 0.511713 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				4.58206 0.000125881 0.000238635 
+				4.62666 0.000129403 0.000238632 
+				4.62989 9.42642e-05 0.000230635 
+				4.61543 0.000118605 0.000234071 
+				4.60811 0.000114542 0.000230863 
+				2.64397 0.000314876 0.000400776 
+				2.70619 0.00029641 0.000347224 
+				3.09904 0.000345996 0.000285103 
+				3.07593 0.000361201 0.000289228 
+				2.96152 0.000351807 0.000300694 
+				2.84228 0.000359373 0.000317697 
+				2.74008 0.000376125 0.000334486 
+				2.63598 0.000398826 0.000351724 
+				2.54304 0.000432381 0.000368911 
+				2.47072 0.000472134 0.000383089 
+				2.42288 0.000492253 0.000405559 
+				2.39815 0.000523492 0.000406772 
+				2.40698 0.000539686 0.000403658 
+				2.44693 0.00053616 0.000389863 
+				2.48697 0.000540723 0.000380653 
+				2.48298 0.00057145 0.000384085 
+				2.44944 0.000628025 0.000403394 
+				2.49364 0.000703309 0.000419674 
+				2.69001 0.000755315 0.00043349 
+				3.00557 0.000781437 0.000424626 
+				3.32341 0.000789695 0.00042814 
+				3.55822 0.000792863 0.000426504 
+				3.71141 0.000790496 0.000428674 
+				3.7965 0.000794303 0.000436998 
+				3.85621 0.000797512 0.000423913 
+				3.95657 0.000801604 0.00041063 
+				4.1283 0.000803812 0.000405609 
+				4.34318 0.000803552 0.00040802 
+				4.58275 0.00080674 0.000401994 
+				4.82413 0.000807087 0.00039579 
+				5.04221 0.000808615 0.000388775 
+			}
+		}
+	}
+	ANIM_NODE 50
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0 0 0 1 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				5.6657 7.00221e-06 1.96665e-06 
+				5.64629 3.21899e-06 3.21169e-06 
+				5.63709 5.35415e-06 9.06319e-07 
+				5.63294 4.39526e-06 2.48125e-06 
+				5.6275 4.14437e-06 3.05727e-06 
+				7.54208 1.4148e-06 -1.86337e-07 
+				7.19742 1.08015e-06 2.51747e-06 
+				6.57438 2.1755e-06 -2.41186e-07 
+				6.59583 3.3968e-06 1.13381e-06 
+				6.74503 3.94127e-06 8.27723e-07 
+				6.90187 3.90183e-06 2.87098e-06 
+				7.03538 1.00038e-06 3.60327e-07 
+				7.18591 4.72554e-06 1.16648e-06 
+				7.33919 2.04917e-06 4.97824e-06 
+				7.48051 2.0867e-06 4.39182e-06 
+				7.59602 4.15872e-06 3.41919e-06 
+				7.67292 2.49801e-06 3.64203e-06 
+				7.6504 3.51961e-06 4.06914e-06 
+				7.54675 5.54624e-06 2.3256e-06 
+				7.46729 2.69888e-06 3.71095e-06 
+				7.51283 2.38844e-06 5.11946e-06 
+				7.72903 7.66784e-06 2.75247e-06 
+				8.04693 1.24968e-05 1.03952e-05 
+				8.39126 3.7006e-06 2.60244e-06 
+				8.70174 2.93654e-06 5.934e-06 
+				8.93975 5.41126e-06 7.81262e-06 
+				9.10964 1.57354e-05 1.04506e-05 
+				9.24701 6.67043e-06 6.78089e-07 
+				9.36558 2.51838e-06 2.97958e-06 
+				9.47558 5.17334e-06 1.5493e-06 
+				9.59288 1.09651e-05 1.58911e-05 
+				9.72391 9.54539e-06 1.48999e-05 
+				9.85376 7.63542e-07 3.23968e-06 
+				9.97242 2.06618e-06 4.82636e-06 
+				10.071 2.56432e-06 4.48339e-06 
+				10.1422 5.86664e-06 3.13809e-06 
+			}
+		}
+	}
+	ANIM_NODE 49
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0 0 0 1 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				4.58119 9.87913e-07 -7.41735e-07 
+				4.62581 4.69378e-07 -2.79692e-07 
+				4.62903 4.22323e-07 -1.01693e-06 
+				4.61456 1.88278e-07 -1.80622e-06 
+				4.60725 4.24884e-07 -2.1104e-06 
+				2.64322 1.23599e-07 -2.14737e-06 
+				2.70543 1.45495e-07 3.96391e-07 
+				3.09826 -4.59013e-08 -6.6427e-08 
+				3.07515 6.747e-08 3.95729e-07 
+				2.96076 7.19629e-07 -1.89381e-06 
+				2.84153 6.87147e-07 -4.56317e-07 
+				2.73932 -4.97697e-08 -6.15305e-08 
+				2.63524 3.01033e-07 4.3092e-08 
+				2.54232 3.28729e-07 -1.50513e-06 
+				2.47005 6.26167e-07 -1.29184e-06 
+				2.42222 9.72774e-07 -2.4465e-06 
+				2.39753 6.75382e-07 -7.25763e-07 
+				2.40638 1.34533e-06 -1.75053e-06 
+				2.44632 1.26271e-06 -1.30202e-06 
+				2.48636 1.00979e-06 -9.96504e-07 
+				2.48241 1.07307e-06 -1.39164e-06 
+				2.44895 1.61376e-06 7.7333e-07 
+				2.49326 9.75741e-07 6.60777e-07 
+				2.68977 8.04944e-07 8.29782e-07 
+				3.00545 4.55757e-07 -4.05937e-07 
+				3.32334 6.1062e-07 -8.62371e-08 
+				3.55817 1.9333e-06 -1.31826e-05 
+				3.71139 2.23756e-06 6.01018e-07 
+				3.79647 1.71783e-06 3.21487e-07 
+				3.85619 -2.99433e-07 -1.07678e-06 
+				3.95653 3.95336e-06 -1.36691e-05 
+				4.12828 3.94177e-06 7.04182e-07 
+				4.34314 5.7015e-06 -1.20694e-05 
+				4.58267 4.99466e-06 -1.11501e-05 
+				4.82403 3.43168e-06 -1.07158e-05 
+				5.04211 4.62294e-06 -1.18187e-05 
+			}
+		}
+	}
+	ANIM_NODE 37
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.00356545 0.141933 0.362615 0.921061 
+				-0.00324579 0.143537 0.367465 0.918889 
+				-0.00366658 0.143028 0.366262 0.919446 
+				-0.0043644 0.141664 0.362579 0.921113 
+				-0.00489442 0.140726 0.359998 0.922266 
+				0.198273 0.372934 0.206313 0.882634 
+				0.11873 0.291055 0.168536 0.93423 
+				0.0386756 0.19623 0.119666 0.97246 
+				0.0404826 0.199686 0.113054 0.972474 
+				0.0545423 0.21801 0.119966 0.967008 
+				0.0715834 0.241416 0.118732 0.960467 
+				0.0870325 0.26502 0.106524 0.954381 
+				0.105664 0.294227 0.0920644 0.945404 
+				0.125328 0.326771 0.0749461 0.933754 
+				0.143089 0.359085 0.055538 0.920597 
+				0.156144 0.386924 0.035244 0.908112 
+				0.162629 0.406163 0.0160998 0.899068 
+				0.155481 0.401694 0.00346924 0.902472 
+				0.138362 0.378931 -0.00526477 0.915008 
+				0.124929 0.363168 -0.0181176 0.923133 
+				0.125505 0.375495 -0.0418256 0.917335 
+				0.140193 0.426813 -0.0846604 0.889387 
+				0.153898 0.501974 -0.141989 0.839152 
+				0.156762 0.577103 -0.195916 0.777171 
+				0.152983 0.635097 -0.231533 0.720861 
+				0.15013 0.673081 -0.247661 0.680505 
+				0.150837 0.697535 -0.250472 0.654184 
+				0.155338 0.716434 -0.244448 0.634695 
+				0.16359 0.732715 -0.231586 0.618656 
+				0.174685 0.747903 -0.214507 0.603418 
+				0.186281 0.763238 -0.196998 0.58648 
+				0.196588 0.778687 -0.181063 0.567641 
+				0.205897 0.792755 -0.16593 0.549193 
+				0.214235 0.804801 -0.151464 0.532407 
+				0.222 0.814567 -0.137293 0.518022 
+				0.22982 0.822001 -0.122981 0.506333 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				5.6657 3.19147e-06 3.72292e-07 
+				5.64628 9.93096e-07 -1.02062e-06 
+				5.63709 -8.15018e-07 -4.76449e-07 
+				5.63294 4.76984e-08 8.55537e-07 
+				5.6275 8.85933e-07 1.66004e-06 
+				7.54208 2.92557e-07 3.72249e-07 
+				7.19742 1.13738e-06 -1.51409e-06 
+				6.57438 1.01026e-06 -1.06983e-06 
+				6.59583 5.6141e-07 -1.45867e-06 
+				6.74502 1.62288e-06 -1.31947e-06 
+				6.90187 5.0999e-07 1.11175e-06 
+				7.03538 -6.08637e-07 1.22954e-06 
+				7.18591 6.20115e-07 1.71664e-07 
+				7.33918 -2.6404e-07 -1.29513e-06 
+				7.48051 2.41058e-06 -9.74012e-07 
+				7.59603 1.16472e-06 -3.61606e-06 
+				7.67292 1.00881e-06 -8.78207e-07 
+				7.65041 1.49565e-06 8.52303e-08 
+				7.54675 5.05678e-07 -7.27388e-08 
+				7.46728 -1.56401e-06 1.10309e-06 
+				7.51283 1.43433e-07 4.68082e-07 
+				7.72901 2.18616e-06 7.99867e-07 
+				8.04693 1.44613e-06 -3.30223e-07 
+				8.39126 1.41205e-06 -9.47266e-07 
+				8.70175 2.81237e-06 2.33198e-07 
+				8.93977 2.42636e-06 5.75255e-07 
+				9.10966 4.38806e-07 -1.47217e-07 
+				9.24701 -5.92427e-07 -1.12721e-06 
+				9.36558 1.36632e-06 -2.97052e-07 
+				9.47557 -1.97912e-07 1.05526e-06 
+				9.59288 4.19584e-07 1.72245e-07 
+				9.72391 -1.70684e-07 -6.72207e-07 
+				9.85377 2.97332e-06 -2.19751e-06 
+				9.97243 -7.13719e-07 3.85601e-07 
+				10.071 1.92284e-06 -1.61934e-07 
+				10.1422 -3.96519e-07 -6.06986e-07 
+			}
+		}
+	}
+	ANIM_NODE 31
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			SAMPLED_KEYS
+			{
+
+				-0.535376 -0.433499 -0.357715 0.630468 
+				-0.534084 -0.436246 -0.359313 0.628759 
+				-0.534232 -0.435993 -0.359115 0.628921 
+				-0.534981 -0.434483 -0.358173 0.629866 
+				-0.535472 -0.433517 -0.357546 0.630472 
+				-0.578875 -0.3926 -0.287529 0.654291 
+				-0.582648 -0.377126 -0.281306 0.662695 
+				-0.584234 -0.361413 -0.277971 0.671404 
+				-0.58528 -0.360519 -0.27608 0.671754 
+				-0.585473 -0.362999 -0.275901 0.670322 
+				-0.586791 -0.364708 -0.273693 0.669146 
+				-0.589228 -0.364969 -0.26945 0.668585 
+				-0.591893 -0.365769 -0.264844 0.667633 
+				-0.594687 -0.366922 -0.260037 0.666405 
+				-0.597495 -0.368119 -0.255214 0.665097 
+				-0.600175 -0.368974 -0.250602 0.663963 
+				-0.60257 -0.369083 -0.24646 0.663283 
+				-0.604036 -0.366913 -0.243826 0.664126 
+				-0.604864 -0.362822 -0.242161 0.666226 
+				-0.606209 -0.35916 -0.239576 0.667921 
+				-0.609235 -0.357826 -0.234247 0.667774 
+				-0.615064 -0.359791 -0.224378 0.664757 
+				-0.623383 -0.364684 -0.210468 0.658865 
+				-0.633087 -0.372019 -0.194273 0.650431 
+				-0.642483 -0.380838 -0.178473 0.640567 
+				-0.649525 -0.389614 -0.166392 0.631373 
+				-0.653215 -0.397449 -0.159741 0.624361 
+				-0.653833 -0.405061 -0.158054 0.619231 
+				-0.65173 -0.412773 -0.160735 0.615655 
+				-0.647973 -0.420995 -0.165933 0.612667 
+				-0.64414 -0.430456 -0.170793 0.608787 
+				-0.64087 -0.441563 -0.173991 0.603353 
+				-0.637572 -0.45376 -0.176476 0.597043 
+				-0.634016 -0.466569 -0.178633 0.590277 
+				-0.629952 -0.479425 -0.181015 0.583562 
+				-0.625153 -0.491663 -0.184287 0.577485 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				2.108 0.506068 -0.8031 
+			}
+		}
+	}
+	ANIM_NODE 51
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0.0392907 1.40075e-07 5.86426e-08 0.999228 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				3.07248e-06 2.00001 -1.13625e-05 
+			}
+		}
+	}
+	ANIM_NODE 35
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0.284184 1.3156e-07 1.26411e-07 0.95877 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				5.60357e-07 8.80606 4.75133e-07 
+			}
+		}
+	}
+	ANIM_NODE 41
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.344023 -0.124399 0.125935 0.922124 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				3.37438e-06 7.8085 -0.0272984 
+			}
+		}
+	}
+	ANIM_NODE 43
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.373259 0.487751 -0.767398 0.184057 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				10.3249 0.000284067 -6.57932e-06 
+			}
+		}
+	}
+	ANIM_NODE 33
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.384359 -0.58308 0.382768 0.604794 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				5.90977 -1.35562e-06 1.40287e-05 
+			}
+		}
+	}
+	ANIM_NODE 52
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.231571 0.75433 0.607047 -0.0940974 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				-3.04365 5.10339 -0.273085 
+			}
+		}
+	}
+	ANIM_NODE 38
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-2.93374e-08 1.13343e-07 0.778012 0.62825 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				9.042 2.45405e-05 -8.56414e-07 
+			}
+		}
+	}
+	ANIM_NODE 32
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0.150964 0.333004 0.0399114 0.929906 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				5.90977 -3.39969e-06 1.43587e-05 
+			}
+		}
+	}
+	ANIM_NODE 42
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				-0.167202 -0.0548981 -0.0984935 0.979453 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				10.3251 0.000368765 2.10113e-06 
+			}
+		}
+	}
+	ANIM_NODE 53
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				0.618772 -0.143513 -0.0480013 0.770858 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				3.04401 5.10338 -0.273098 
+			}
+		}
+	}
+	ANIM_NODE 39
+	{
+		num_animated_attrs 3
+		num_animated_attrs_user 0
+		ATTR rotation
+		{
+			num_streams 1
+			elements_per_sample 4
+			POSE_KEY
+			{
+				2.9872e-07 -8.24714e-08 0.487708 0.873007 
+			}
+		}
+		ATTR scale
+		{
+			num_streams 1
+			elements_per_sample 3
+			POSE_KEY
+			{
+				1 1 1 
+			}
+		}
+		ATTR translate
+		{
+			num_streams 1
+			elements_per_sample 3
+			SAMPLED_KEYS
+			{
+
+				9.04176 0.000615559 0.00016689 
+				9.04174 0.000610142 0.000161512 
+				9.04176 0.000617332 0.000157645 
+				9.04175 0.000609212 0.000169778 
+				9.04176 0.000613086 0.00016995 
+				9.04176 0.000131837 0.000606466 
+				9.04178 0.000219498 0.000589247 
+				9.04187 0.000387826 0.000538884 
+				9.04187 0.000422758 0.000501504 
+				9.04184 0.000431244 0.000481229 
+				9.04183 0.00043273 0.00047637 
+				9.04185 0.000424854 0.000485003 
+				9.04184 0.000401216 0.000513733 
+				9.04181 0.000370532 0.000519362 
+				9.04185 0.000362307 0.000540126 
+				9.04186 0.000341333 0.000550745 
+				9.04186 0.000324722 0.000563625 
+				9.04188 0.000333297 0.000568984 
+				9.04189 0.000345718 0.000559425 
+				9.04189 0.000349544 0.000551403 
+				9.04193 0.000343333 0.000567369 
+				9.04193 0.000303019 0.000593397 
+				9.04197 0.00024755 0.000608943 
+				9.04197 0.000169253 0.000639633 
+				9.04204 0.000112288 0.000635916 
+				9.04209 4.72372e-05 0.000643776 
+				9.04212 -1.09113e-05 0.000629047 
+				9.04215 -8.60946e-05 0.000614188 
+				9.04216 -0.000151015 0.000606626 
+				9.04216 -0.000213868 0.000583063 
+				9.04212 -0.000290369 0.000551546 
+				9.04211 -0.000349623 0.000520359 
+				9.04212 -0.000403593 0.00046032 
+				9.04211 -0.000451752 0.000425954 
+				9.04209 -0.000508748 0.000368456 
+				9.04208 -0.000539666 0.000299056 
+			}
+		}
+	}
+}
