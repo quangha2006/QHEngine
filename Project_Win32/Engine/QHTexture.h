@@ -1,4 +1,5 @@
 #pragma once
+#include "stdafx.h"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -6,6 +7,8 @@
 #include <vector>
 #include <map>
 #include <assimp/Importer.hpp>
+#include <SOIL.h>
+
 enum TextureType
 {
 	TextureType_DIFFUSE,
@@ -22,6 +25,7 @@ struct Texture {
 class QHTexture
 {
 public:
+	bool TextureFromFile(const char * path, const std::string & directory, unsigned int textureID, bool gamma);
 	QHTexture();
 	~QHTexture();
 };
