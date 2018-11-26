@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Timer.h"
 #include "Utils.h"
+#include "QHTexture.h"
 #include <SOIL.h>
 #include <thread>
 #include <Logs.h>
@@ -368,6 +369,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		{   // if texture hasn't been loaded already, load it
 			Texture texture;
 			texture.id = GenTextureId();
+			QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.id);
 			TextureFromFile(str.C_Str(), this->directory, texture.id);
 			texture.type = typeName;
 			texture.path = str;

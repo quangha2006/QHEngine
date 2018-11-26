@@ -22,11 +22,8 @@ struct Texture {
 	TextureType type;
 	aiString path;
 };
-class QHTexture
+namespace QHTexture
 {
-public:
-	bool TextureFromFile(const char * path, const std::string & directory, unsigned int textureID, bool gamma);
-	QHTexture();
-	~QHTexture();
+	bool TextureFromFile(const char * path, const std::string & directory, unsigned int textureID);
 };
 
