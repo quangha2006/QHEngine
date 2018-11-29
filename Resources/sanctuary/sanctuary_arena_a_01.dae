@@ -1144,11 +1144,8 @@
           <input semantic="POSITION" source="#sanctuary_bridge_arena_a_01-mesh-positions"/>
           <input semantic="NORMAL" source="#sanctuary_bridge_arena_a_01-mesh-normals"/>
           <input semantic="TEXCOORD" source="#sanctuary_bridge_arena_a_01-mesh-map-channel1"/>
-          <input semantic="TEXCOORD" source="#sanctuary_bridge_arena_a_01-mesh-map-channel2"/>
           <input semantic="TEXTANGENT" source="#sanctuary_bridge_arena_a_01-mesh-map-channel1-tangents"/>
           <input semantic="TEXBINORMAL" source="#sanctuary_bridge_arena_a_01-mesh-map-channel1-binormals"/>
-          <input semantic="TEXTANGENT" source="#sanctuary_bridge_arena_a_01-mesh-map-channel2-tangents"/>
-          <input semantic="TEXBINORMAL" source="#sanctuary_bridge_arena_a_01-mesh-map-channel2-binormals"/>
         </vertices>
         <triangles material="sanctuary_floor_01" count="562">
           <input semantic="VERTEX" source="#sanctuary_bridge_arena_a_01-mesh-vertices" offset="0"/>

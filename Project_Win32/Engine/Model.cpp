@@ -101,7 +101,6 @@ void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableA
 	// process ASSIMP's root node recursively
 	processNode(m_pScene->mRootNode, m_pScene, fixedModel);
 
-	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
 	LOGI("Material Count: %d\n", m_pScene->mNumMaterials);
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations()?"True":"False");
 
@@ -113,13 +112,18 @@ void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableA
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
+	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
+	//for (int i = 0; i < meshes.size(); i++)
+	//{
+	//	//LOGI("  %d: %s\n", i, meshes[i].GetName());
+	//}
 
 	isModelLoaded = true;
 	
 	uint64_t time_ms_end = Timer::getMillisecond();
 
 	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
-
+	LOGW("\n======================================================\n");
 }
 
 void Model::processNode(aiNode * node, const aiScene * scene, float fixedModel)
@@ -377,7 +381,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 			textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
 		}
 	}
-	if (abc)
+	if (abc) // cheat
 	{   // if texture hasn't been loaded already, load it
 		aiString str("bountyhunter_body_masks.tga");
 		Texture texture;

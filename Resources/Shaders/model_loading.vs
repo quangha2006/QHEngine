@@ -14,6 +14,7 @@ out mat3 TBN;
 out vec4 FragPosLightSpace; //shadow
 out vec4 we;
 out vec4 id;
+out vec4 temp;
 
 uniform mat4 world;
 uniform mat4 world_inverse;
@@ -25,7 +26,7 @@ void main()
 {
 	highp vec4 PosL = vec4(aPos, 1.0);
 	vec4 NormalL = vec4(aNormal, 0.0);
-
+	temp = sWeights;
 	if (useAnim == true)
 	{
 		int index = int(sIDs[0]);

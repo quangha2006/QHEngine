@@ -1,5 +1,6 @@
 #include "Game.h"
 
+int kayy = 0;
 void Game::Init()
 {
 	mCamera->Pos = glm::vec3(-10.0f, 15.0f, 30.0f);
@@ -12,6 +13,18 @@ void Game::Init()
 	map1.SetNeedRotate(false);
 	map1.SetScale(glm::vec3(0.02f));
 
+	sanctuary_arena_a_01.Init("sanctuary/sanctuary_arena_a_01.dae", mCamera, false);
+	sanctuary_arena_a_01.SetNeedRotate(false);
+	sanctuary_arena_a_01.SetTranslate(glm::vec3(8.0f, -9.75f, 0.0f));
+	sanctuary_arena_a_01.SetRotate(180, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.SetScale(glm::vec3(0.7f));
+
+	//sanctuary_arena_b_01.Init("sanctuary/sanctuary_arena_b_01.dae", mCamera, false);
+	//sanctuary_arena_b_01.SetNeedRotate(false);
+	//sanctuary_arena_b_01.SetTranslate(glm::vec3(18.0f, 0.0f, -3.0f));
+	//sanctuary_arena_b_01.SetRotate(220, glm::vec3(0.0f, 1.0f, 0.0f));
+	//sanctuary_arena_b_01.SetScale(glm::vec3(0.7f));
+
 	sanctuary_arena_tower_01.Init("sanctuary/sanctuary_stone_a_01.dae", mCamera, false);
 	sanctuary_arena_tower_01.SetNeedRotate(false);
 	sanctuary_arena_tower_01.SetTranslate(glm::vec3(3.0f, 0.0f, 0.0f));
@@ -20,17 +33,8 @@ void Game::Init()
 	sanctuary_bird_01.SetNeedRotate(false);
 	sanctuary_bird_01.SetTranslate(glm::vec3(4.15f, 5.725f, 0.0f));
 
-	sanctuary_arena_a_01.Init("sanctuary/sanctuary_arena_a_01.dae", mCamera, false);
-	sanctuary_arena_a_01.SetNeedRotate(false);
-	sanctuary_arena_a_01.SetTranslate(glm::vec3(8.0f, -9.75f, 0.0f));
-	sanctuary_arena_a_01.SetRotate(180, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.SetScale(glm::vec3(0.7f));
 
-	sanctuary_arena_b_01.Init("sanctuary/sanctuary_arena_b_01.dae", mCamera, false);
-	sanctuary_arena_b_01.SetNeedRotate(false);
-	sanctuary_arena_b_01.SetTranslate(glm::vec3(18.0f, 0.0f, -3.0f));
-	sanctuary_arena_b_01.SetRotate(220, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_b_01.SetScale(glm::vec3(0.7f));
+
 }
 
 void Game::Draw()
@@ -42,7 +46,7 @@ void Game::Draw()
 	map1.Draw(lampPos, 0);
 	sanctuary_arena_tower_01.Draw(lampPos);
 	sanctuary_bird_01.Draw(lampPos);
-	sanctuary_arena_a_01.Draw(lampPos);
+	sanctuary_arena_a_01.Draw(lampPos, kayy);
 	sanctuary_arena_b_01.Draw(lampPos);
 }
 
@@ -68,6 +72,14 @@ void Game::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		return;
 	case 68: //num d
 		mCamera->Target.x += 0.1;
+		return;
+	case 321: //num 1
+		kayy++;
+		LOGI("%d\n", kayy);
+		return;
+	case 320: //num 0
+		kayy--;
+		LOGI("%d\n", kayy);
 		return;
 	default:
 		break;

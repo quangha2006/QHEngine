@@ -65,7 +65,6 @@ public:
 	vector<Vertex> vertices;
 	vector<GLuint> indices;
 	vector<Texture> textures;
-	//vector<BoneInfo> m_BoneInfo;
 	Material material;
 	GLuint texture;
 
@@ -73,6 +72,8 @@ public:
 	void DeleteBuffer();
 	void SetUseLighting(bool isuse);
 	void SetDrawPolygon(bool isdrawpolygon);
+	int GetNumVertex();
+	std::string GetName();
 	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material material, string meshname, bool hasnormals = false, bool hasbone = false);
 	~Mesh();
 };

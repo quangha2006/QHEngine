@@ -48,7 +48,7 @@ void Basic::Init()
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
 	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
-	mMonster_1.Init("/Pirate_full/piratemonkey_rig_01.dae", mCamera, true);
+	mMonster_1.Init("/Pirate_full/pirate_rig_01.dae", mCamera, false);
 	//mMonster_1.Init("Monster_1/Monster_1.dae", mCamera, false);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mMonster_1.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f)); 
@@ -127,7 +127,7 @@ void Basic::Draw()
 	saberclass.Draw(lamppos);
 	mGallacticCruiser.Draw(lamppos);
 
-	mMonster_1.Draw(lamppos, 0);
+	mMonster_1.Draw(lamppos);
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

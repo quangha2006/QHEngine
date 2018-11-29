@@ -174,6 +174,16 @@ void Mesh::SetDrawPolygon(bool isdrawpolygon)
 	isDrawPolygon = isdrawpolygon;
 }
 
+int Mesh::GetNumVertex()
+{
+	return vertices.size();
+}
+
+std::string Mesh::GetName()
+{
+	return meshName;
+}
+
 Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname, bool hasnormals, bool hasbone)
 {
 	this->vertices = vertices;
