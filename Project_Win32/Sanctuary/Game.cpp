@@ -19,11 +19,11 @@ void Game::Init()
 	sanctuary_arena_a_01.SetRotate(180, glm::vec3(0.0f, 1.0f, 0.0f));
 	sanctuary_arena_a_01.SetScale(glm::vec3(0.7f));
 
-	//sanctuary_arena_b_01.Init("sanctuary/sanctuary_arena_b_01.dae", mCamera, false);
-	//sanctuary_arena_b_01.SetNeedRotate(false);
-	//sanctuary_arena_b_01.SetTranslate(glm::vec3(18.0f, 0.0f, -3.0f));
-	//sanctuary_arena_b_01.SetRotate(220, glm::vec3(0.0f, 1.0f, 0.0f));
-	//sanctuary_arena_b_01.SetScale(glm::vec3(0.7f));
+	sanctuary_arena_b_01.Init("sanctuary/sanctuary_arena_b_01.dae", mCamera, false);
+	sanctuary_arena_b_01.SetNeedRotate(false);
+	sanctuary_arena_b_01.SetTranslate(glm::vec3(18.0f, 0.0f, -3.0f));
+	sanctuary_arena_b_01.SetRotate(220, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_b_01.SetScale(glm::vec3(0.7f));
 
 	sanctuary_arena_tower_01.Init("sanctuary/sanctuary_stone_a_01.dae", mCamera, false);
 	sanctuary_arena_tower_01.SetNeedRotate(false);
@@ -46,7 +46,7 @@ void Game::Draw()
 	map1.Draw(lampPos, 0);
 	sanctuary_arena_tower_01.Draw(lampPos);
 	sanctuary_bird_01.Draw(lampPos);
-	sanctuary_arena_a_01.Draw(lampPos, kayy);
+	sanctuary_arena_a_01.Draw(lampPos);
 	sanctuary_arena_b_01.Draw(lampPos);
 }
 

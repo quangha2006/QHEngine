@@ -1,11 +1,11 @@
 {
-	.PROJECT_Name = "Android_CPP"
+	.PROJECT_Name = "Basic_CPP"
 	#include "../__Common/__STD_ANDROID_CPP.bff"
 
 	.PROJECT_SourceFiles =
 	{
 		"$jni_Path$/jni_code.cpp"
-		"$Game_Sources_Path$/Basic.cpp"
+		"$Game_Sources_Path$/Basic/Basic.cpp"
 	}
 
 	.ExcludedUnitySources =
@@ -28,7 +28,7 @@
 										+ " -DANDROID"
 										+ " -DGLM_FORCE_DEPTH_ZERO_TO_ONE"
 		.PROJECT_IncludePaths = ""
-									+ " -I$Game_Sources_Path$"
+									+ " -I$Game_Sources_Path$/Basic"
                   					+ " -I$GameRoot$/Include"
 				  					+ " -I$GameRoot$/External"
 									+ " -I$GameRoot$/External/SOIL/src"

@@ -48,12 +48,12 @@ void Basic::Init()
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
 	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
-	mMonster_1.Init("/Pirate_full/pirate_rig_01.dae", mCamera, false);
+	mMonster_1.Init("/test/SquareBoneTest2_2Bone_Simple_7Anim.dae", mCamera, false);
 	//mMonster_1.Init("Monster_1/Monster_1.dae", mCamera, false);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mMonster_1.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f)); 
 	//mMonster_1.SetScale(glm::vec3(0.02f));
-	mMonster_1.SetNeedRotate(false);
+	mMonster_1.SetNeedRotate(true);
 	
 	mframebuffer.Init(2048, 2048);
 	//mframebuffer.EnableDebug(true);

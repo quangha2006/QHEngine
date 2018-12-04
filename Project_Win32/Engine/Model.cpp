@@ -501,11 +501,11 @@ void Model::UpdateSkeleton(int64_t time)
 	//for (int i = 0; i < Transforms.size(); i++)
 	//{
 	//	glm::mat4 abc = Transforms[i];
-		//LOGI("\n");
-		//LOGI("\n%f, %f, %f, %f", abc[0][0], abc[0][1], abc[0][2], abc[0][3]);
-		//LOGI("\n%f, %f, %f, %f", abc[1][0], abc[1][1], abc[1][2], abc[1][3]);
-		//LOGI("\n%f, %f, %f, %f", abc[2][0], abc[2][1], abc[2][2], abc[2][3]);
-		//LOGI("\n%f, %f, %f, %f", abc[3][0], abc[3][1], abc[3][2], abc[3][3]);
+	//	LOGI("\n");
+	//	LOGI("\n%f, %f, %f, %f", abc[0][0], abc[0][1], abc[0][2], abc[0][3]);
+	//	LOGI("\n%f, %f, %f, %f", abc[1][0], abc[1][1], abc[1][2], abc[1][3]);
+	//	LOGI("\n%f, %f, %f, %f", abc[2][0], abc[2][1], abc[2][2], abc[2][3]);
+	//	LOGI("\n%f, %f, %f, %f", abc[3][0], abc[3][1], abc[3][2], abc[3][3]);
 	//}
 	BoneTransform(RunningTime, Transforms);
 }

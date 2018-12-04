@@ -117,36 +117,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/quang.haduy/Downloads/assimp-4.1.0/contrib/zlib/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-Y:\android-sdk-windows\cmake\3.6.3155560\bin\cmake.exe -HC:/Users/quang.haduy/Downloads/assimp-4.1.0 -BC:/Users/quang.haduy/Downloads/assimp-4.1.0 --check-stamp-file CMakeFiles\generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/quang.haduy/Downloads/assimp-4.1.0/contrib/zlib/CMakeLists.txt;CMakeLists.txt;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckTypeSize.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFileCXX.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckFunctionExists.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckCSourceCompiles.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.c.in;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.c.in;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.c.in;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckTypeSize.c.in;C:\Users\quang.haduy\Downloads\assimp-4.1.0\CMakeFiles\CheckTypeSize\OFF64_T.c;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckFunctionExists.c;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.c.in;zlib.pc.cmakein;zconf.h.cmakein;CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/quang.haduy/Downloads/assimp-4.1.0/contrib/zlib/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-Y:\android-sdk-windows\cmake\3.6.3155560\bin\cmake.exe -HC:/Users/quang.haduy/Downloads/assimp-4.1.0 -BC:/Users/quang.haduy/Downloads/assimp-4.1.0 --check-stamp-file CMakeFiles\generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/quang.haduy/Downloads/assimp-4.1.0/contrib/zlib/CMakeLists.txt;CMakeLists.txt;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckTypeSize.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFileCXX.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckFunctionExists.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckCSourceCompiles.cmake;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.c.in;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.c.in;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.c.in;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckTypeSize.c.in;C:\Users\quang.haduy\Downloads\assimp-4.1.0\CMakeFiles\CheckTypeSize\OFF64_T.c;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckFunctionExists.c;Y:\android-sdk-windows\cmake\3.6.3155560\share\cmake-3.6\Modules\CheckIncludeFile.c.in;zlib.pc.cmakein;zconf.h.cmakein;CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="zconf.h" />
     <ClInclude Include="zlib.h" />
     <ClInclude Include="crc32.h" />

@@ -4,7 +4,8 @@
 .AllTargets = 
 {
 	// main
-	"Android_CPP"
+	"Sanctuary_CPP"
+	//"Basic_CPP"
 	"EngineLib"
 	
 	//"native_app_glue"

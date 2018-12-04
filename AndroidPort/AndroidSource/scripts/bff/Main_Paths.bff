@@ -8,7 +8,7 @@
 .generated_Path = "$GameRoot$/../AndroidPort/generated"
 .precompiled_search_Paths = "$GameRoot$/../AndroidPort/precompiledLib"
 .jni_Path = "$GameRoot$/../AndroidPort/AndroidSource/app/jni"
-.Game_Sources_Path = "$GameRoot$/Basic"
+.Game_Sources_Path = "$GameRoot$"
 .Engine_Sources_Path = "$GameRoot$/Engine"
 .STL_LibPath_Clang = "$NDK_Root$/sources/cxx-stl/llvm-libc++"
 .STL_LibPath_GCC = "$NDK_Root$/sources/cxx-stl/gnu-libstdc++/4.8"
