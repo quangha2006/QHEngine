@@ -22,6 +22,7 @@
 	"$Engine_Sources_Path$/QHText.cpp"
 	"$Engine_Sources_Path$/Utils.cpp"
 	"$Engine_Sources_Path$/SkyBox.cpp"
+	"$Engine_Sources_Path$/QHTexture.cpp"
 	}
 
 	.ExcludedUnitySources =

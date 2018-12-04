@@ -36,7 +36,6 @@
 									+ " -I$GameRoot$/External/freetype_2015/include"
 									+ " -I$GameRoot$/External/AssimpLib/include"
                   					+ " -I$Engine_Sources_Path$"
-                  					+ " -I$Engine_Sources_Path$"
 				  					+ " -I$NDK_Root$/sources/android/native_app_glue"
 
 		.PROJECT_CompilerFlags = ""
