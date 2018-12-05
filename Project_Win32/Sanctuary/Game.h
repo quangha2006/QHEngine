@@ -10,7 +10,7 @@
 class Game : public AppBase
 {
 private:
-	Model map1, sanctuary_arena_tower_01, sanctuary_bird_01, sanctuary_arena_a_01, sanctuary_arena_b_01;
+	Model bountyhunter, sanctuary_arena_tower_01, sanctuary_bird_01, sanctuary_arena_a_01, sanctuary_arena_b_01;
 public:
 	void Draw();
 	void Init();

@@ -395,7 +395,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	return textures;
 }
 
-void Model::Draw(glm::vec3 lamppos, int drawmesh)
+void Model::Draw(glm::vec3 lamppos, int drawmesh, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
 {
 	if (!isModelLoaded || !camera) return;
 
@@ -403,7 +403,14 @@ void Model::Draw(glm::vec3 lamppos, int drawmesh)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	//ShaderManager::getInstance()->setUseProgram(useshadername.c_str());
+
 	glm::mat4 tmp_model = world;
+
+	if (isTranslate)
+		tmp_model = glm::translate(tmp_model, translate);
+
+	if (isRotate)
+		tmp_model = glm::rotate(tmp_model, glm::radians(angle), axis);
 
 	if (needRotate)
 	{
