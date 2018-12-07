@@ -1,10 +1,11 @@
 #include "Game.h"
-
-int kayy = 0;
+#include "Timer.h"
+float a = 400.09f;
+float b = 4.67f;
 void Game::Init()
 {
-	mCamera->Pos = glm::vec3(-10.0f, 15.0f, -30.0f);
-	mCamera->Target = glm::vec3(0.0f, 5.0f, 0.2f);
+	mCamera->Pos = glm::vec3(20.0f, 15.0f, 30.0f);
+	mCamera->Target = glm::vec3(30.0f, 5.0f, 2.2f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 
 	ShaderManager::getInstance()->Init("model", "Shaders/model_loading.vs", "Shaders/model_loading.fs");
@@ -15,9 +16,10 @@ void Game::Init()
 
 	sanctuary_arena_a_01.Init("sanctuary/sanctuary_arena_a_01.dae", mCamera, false);
 	sanctuary_arena_a_01.SetNeedRotate(false);
-	sanctuary_arena_a_01.SetTranslate(glm::vec3(8.0f, -9.75f, 0.0f));
+	//sanctuary_arena_a_01.SetTranslate(glm::vec3(8.0f, -9.75f, 0.0f));
 	//sanctuary_arena_a_01.SetRotate(180, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.SetScale(glm::vec3(0.7f));
+	//sanctuary_arena_a_01.SetScale(glm::vec3(0.7f));
+	sanctuary_arena_a_01.SetisUsePointLight(false);
 
 	sanctuary_arena_b_01.Init("sanctuary/sanctuary_arena_b_01.dae", mCamera, false);
 	sanctuary_arena_b_01.SetNeedRotate(false);
@@ -45,9 +47,12 @@ void Game::Draw()
 	ShaderManager::getInstance()->setUseProgram("model");
 	glm::vec3 lampPos = glm::vec3(8.2f, 10.0f, 0.0f);
 
-	bountyhunter.Draw(lampPos, 0);
-	sanctuary_arena_tower_01.Draw(lampPos);
-	sanctuary_bird_01.Draw(lampPos);
+	bountyhunter.Draw(lampPos, 0, false, glm::vec3(a, 1.0, b), false, Timer::getMillisecond() / 10, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_tower_01.Draw(lampPos, 0, true, glm::vec3(15.6592f, -2.15f, 2.1054f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	
+	sanctuary_bird_01.Draw(lampPos, 0, true, glm::vec3(23.09f, -3.6f, 4.67f));
+	sanctuary_bird_01.Draw(lampPos, 0, true, glm::vec3(19.256f, -4.15f, 0.7717f));
+
 	sanctuary_arena_a_01.Draw(lampPos, 0, true, glm::vec3(20.6006f, 2.6813f, 20.47f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));		//sanctuary_arch_01
 	sanctuary_arena_a_01.Draw(lampPos, 1, true, glm::vec3(21.4392f,-13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_ground_a_01
 	sanctuary_arena_a_01.Draw(lampPos, 2, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -61,15 +66,15 @@ void Game::Draw()
 	sanctuary_arena_a_01.Draw(lampPos, 10, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	sanctuary_arena_a_01.Draw(lampPos, 11, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	sanctuary_arena_a_01.Draw(lampPos, 12, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 13, true, glm::vec3(25.6593f, -0.5003f, 27.3055f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_trunk_01
+	sanctuary_arena_a_01.Draw(lampPos, 13, true, glm::vec3(17.6593f, -0.5003f, 27.3055f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_trunk_01
 	sanctuary_arena_a_01.Draw(lampPos, 14, true, glm::vec3(32.5118f, -11.4552f, 22.7177f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_water010
 	sanctuary_arena_a_01.Draw(lampPos, 15, true, glm::vec3(25.7765f, -0.076f, 44.7686f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_bridge_arena_a_01
-	sanctuary_arena_a_01.Draw(lampPos, 16, true, glm::vec3(35.2565f, 3.6478f, 0.0717f), true, -90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_rock_part_01
-	sanctuary_arena_a_01.Draw(lampPos, 17, true, glm::vec3(35.2565f, 3.6478f, 0.0717f));
-	sanctuary_arena_a_01.Draw(lampPos, 18, true, glm::vec3(35.2565f, 3.6478f, 0.0717f));
-	sanctuary_arena_a_01.Draw(lampPos, 19, true, glm::vec3(35.2565f, 3.6478f, 0.0717f));
-	sanctuary_arena_a_01.Draw(lampPos, 20, true, glm::vec3(35.2565f, 3.6478f, 0.0717f));
-	sanctuary_arena_a_01.Draw(lampPos, 21, true, glm::vec3(35.2565f, 3.6478f, 0.0717f));
+	sanctuary_arena_a_01.Draw(lampPos, 16, true, glm::vec3(29.1565f, 3.6478f, -1.7717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_rock_part_01
+	sanctuary_arena_a_01.Draw(lampPos, 17, true, glm::vec3(29.1565f, 3.6478f, -1.7717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(lampPos, 18, true, glm::vec3(28.7564f, 3.6478f, -1.7717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(lampPos, 19, true, glm::vec3(28.9564f, 3.6478f, -0.9719f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(lampPos, 20, true, glm::vec3(29.3565f, 3.6478f, -1.1717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(lampPos, 21, true, glm::vec3(28.6564f, 3.6478f, -1.1717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	//sanctuary_arena_b_01.Draw(lampPos);
 }
 
@@ -97,13 +102,23 @@ void Game::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		mCamera->Target.x += 0.1;
 		return;
 	case 321: //num 1
-		kayy++;
-		LOGI("%d\n", kayy);
+		a++;
+		LOGI("a %f\n", a);
 		return;
 	case 320: //num 0
-		kayy--;
-		LOGI("%d\n", kayy);
+		a--;
+		LOGI("a %f\n", a);
 		return;
+	case 322: //num 1
+		b--;
+		LOGI("b %f\n", b);
+		return;
+	case 325: //num 0
+		b++;
+		LOGI("b %f\n", b);
+		return;
+
+
 	default:
 		break;
 	}

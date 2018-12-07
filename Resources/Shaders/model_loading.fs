@@ -103,8 +103,7 @@ void main()
 	// END calculate shadow
 
 	if (uselighting == false)
-	{
-		
+	{	
 		if (enableAlpha == true)
 			FragColor = vec4(color.rgb + color_pick, color.a);
 		else
@@ -137,15 +136,15 @@ void main()
 	vec3 specular = light_specular * spec * color_specular.rgb;  
 
 	// pointlight
-	if (usepointlight == true)
-	{
-		float distance = length(light_position - FragPos);
-		float attenuation = 1.0 / (pointlight_constant + pointlight_linear * distance + pointlight_quadratic * (distance * distance));
+	//if (usepointlight == true)
+	//{
+	//	float distance = length(light_position - FragPos);
+	//	float attenuation = 1.0 / (pointlight_constant + pointlight_linear * distance + pointlight_quadratic * (distance * distance));
 
-		ambient  *= attenuation; 
-		diffuse  *= attenuation;
-		specular *= attenuation;
-	}
+	//	ambient  *= attenuation; 
+	//	diffuse  *= attenuation;
+	//	specular *= attenuation;
+	//}
 
 	// Total lighting + shadow
 	vec3 lighting = ambient + (diffuse + specular) * (1.0 - shadow) + color_pick;
