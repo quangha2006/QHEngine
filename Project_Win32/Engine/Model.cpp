@@ -372,9 +372,8 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		if (!skip)
 		{   // if texture hasn't been loaded already, load it
 			Texture texture;
-			texture.id = GenTextureId();
+			texture.id = QHTexture::GenTextureId();
 			QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.id);
-			TextureFromFile(str.C_Str(), this->directory, texture.id);
 			texture.type = typeName;
 			texture.path = str;
 			textures.push_back(texture);
@@ -385,8 +384,8 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	{   // if texture hasn't been loaded already, load it
 		aiString str("bountyhunter_body_masks.tga");
 		Texture texture;
-		texture.id = GenTextureId();
-		TextureFromFile(str.C_Str(), this->directory, texture.id);
+		texture.id = QHTexture::GenTextureId();
+		QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.id);
 		texture.type = typeName;
 		texture.path = str;
 		textures.push_back(texture);
@@ -754,87 +753,4 @@ uint Model::FindPosition(float AnimationTime, const aiNodeAnim * pNodeAnim)
 	//assert(0);
 
 	return 0;
-}
-void SOIL_loader(string fullpath, unsigned int textureID/*, GLFWwindow* win*/)
-{
-	//bool MakeCurrent = eglMakeCurrent(ESContext::getInstance()->eglDisplay, ESContext::getInstance()->eglSurface, ESContext::getInstance()->eglSurface, esContex_loader);
-	CheckGLError("MakeCurrent");
-	//glfwMakeContextCurrent(win);
-	//if (!MakeCurrent)
-	{
-		//LOGI("eglMakeCurrent() returned error %d\n", eglGetError());
-	}
-	
-	if (strlen(fullpath.c_str()) > 3)
-	{
-		string filetype = fullpath.substr(fullpath.length() - 3, 3);
-		if (!filetype.compare("tga") || !filetype.compare("TGA"))
-		{
-			uint64_t time_begin = Timer::getMillisecond();
-			TGA::TextureData texture;
-			if (LoadTGA(texture, fullpath.c_str()))
-			{
-				//EnterCriticalSection(&CriticalSection);
-				glBindTexture(GL_TEXTURE_2D, textureID);
-				// Set the filtering mode
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-				glTexImage2D(GL_TEXTURE_2D, 0, texture.type, texture.width, texture.height, 0, texture.type, GL_UNSIGNED_BYTE, texture.imageData);
-				glGenerateMipmap(GL_TEXTURE_2D);
-				glBindTexture(GL_TEXTURE_2D, 0);
-				CheckGLError("glTexImage2D");
-				//LeaveCriticalSection(&CriticalSection);
-				uint64_t time_end = Timer::getMillisecond();
-				LOGI("ENDLOAD TGA  Load: %dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
-			}
-			else
-				LOGE("ERROR when load: %s \n", fullpath.c_str());
-		}
-		else
-		{
-			uint64_t time_begin = Timer::getMillisecond();
-			if (SOIL_load_OGL_texture(fullpath.c_str(), SOIL_LOAD_RGBA, textureID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS) == 0)
-			{
-				LOGE("ERROR when load: %s \n", fullpath.c_str());
-				return;
-			}
-			uint64_t time_end = Timer::getMillisecond();
-			LOGI("ENDLOAD SOIL Load: %dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
-		}
-	}
-	//glfwDestroyWindow(win);
-	//eglMakeCurrent(ESContext::getInstance()->eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-}
-unsigned int GenTextureId()
-{
-	unsigned int textureID = 0;
-	glGenTextures(1, &textureID);
-	CheckGLError("GenTextureId");
-	return textureID;
-}
-std::thread* TextureFromFile(const char * path, const string & directory, unsigned int textureID, bool gamma)
-{
-	string fullpath = directory + '/' + string(path);
-	//LOGI("Load texture: %s \n", fullpath.c_str());
-
-	//EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE, EGL_NONE };
-	//EGLConfig config;
-	//EGLint nNumConfigs;
-	//eglGetConfigs(ESContext::getInstance()->eglDisplay, &config, 1, &nNumConfigs);
-	//EGLContext esContex_loader;// = eglCreateContext(ESContext::getInstance()->eglDisplay, config, EGL_NO_CONTEXT, contextAttribs);
-	
-	/*CheckGLError("esContex_loader");
-	GLFWwindow* win;
-	glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-	int a = AppContext::getInstance()->GetWindowWidth();
-	int b = AppContext::getInstance()->GetWindowHeight();
-
-	win = glfwCreateWindow(AppContext::getInstance()->GetWindowWidth(), AppContext::getInstance()->GetWindowHeight(), "Optimus example", 0, AppContext::getInstance()->GetWindow());
-*/
-	//std::thread *loading = new thread(SOIL_loader, fullpath,textureID, win);
-	SOIL_loader(fullpath, textureID); // no thread
-	//loading->join();
-	return nullptr;
 }

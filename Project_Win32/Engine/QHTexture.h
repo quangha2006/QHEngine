@@ -25,5 +25,6 @@ struct Texture {
 namespace QHTexture
 {
 	bool TextureFromFile(const char * path, const std::string & directory, unsigned int textureID);
+	unsigned int GenTextureId();
 };
 

@@ -61,10 +61,11 @@ void AppBase::rendering()
 	std::string tmp_drawcall = Utils::toString("DrawCall: %d", numdrawcall);
 	std::string tmp_numtriangle = Utils::toString("numTriangle: %d", numTriangle);
 
+	text_FPS.setText(tmp_fps);
+	text_DrawCall.setPos(text_FPS.getEndPos());
 	text_DrawCall.setText(tmp_drawcall);
 	text_NumTriangle.setText(tmp_numtriangle);
-	text_FPS.setText(tmp_fps);
-
+	
 	FrameRate::getInstance()->Counter();
 	Debugging::getInstance()->resetCount();
 	TextRendering::getInstance()->Draw();

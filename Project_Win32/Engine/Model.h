@@ -20,8 +20,6 @@
 #include <vector>
 #include <thread>
 
-unsigned int GenTextureId();
-std::thread* TextureFromFile(const char *path, const string &directory, unsigned int textureID, bool gamma = false);
 using namespace std;
 
 class Model

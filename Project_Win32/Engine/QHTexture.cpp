@@ -50,4 +50,11 @@ namespace QHTexture
 		LOGI("ENDLOAD TGA  Load: %dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
 		return true;
 	}
+	unsigned int GenTextureId()
+	{
+		unsigned int textureID = 0;
+		glGenTextures(1, &textureID);
+		CheckGLError("GenTextureId");
+		return textureID;
+	}
 }
