@@ -10,7 +10,13 @@
 class Game : public AppBase
 {
 private:
-	Model bountyhunter, sanctuary_arena_tower_01, sanctuary_bird_01, sanctuary_arena_a_01, sanctuary_arena_b_01;
+	Model bountyhunter,
+		sanctuary_arena_tower_01,
+		sanctuary_bird_01,
+		sanctuary_arena_a_01,
+		sanctuary_arena_b_01,
+		sanctuary_torch_a_01,
+		vfx_moba_torch_fire_red;
 public:
 	void Draw();
 	void Init();

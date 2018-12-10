@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>maurin.monnet</author>
+      <authoring_tool maxglitch_version="0.0.257.21044">3dsMax 17 - Max Glitch v3.05B.</authoring_tool>
+      <comments>MaxGlitch Export Options: triangulate_geometry=true;xref_export=EXPORT_LINKS;export_normals=true;export_texcoords=true;export_tangents=true;export_binormals=true;export_vertex_color=true;export_vertex_alpha=true;export_vertex_illum=false;strip_unused_geometry_streams=;convert_linear_splines_to_line_strips=true;export_animations=true;force_animation_sampling=true;force_sampling_at_animation_key_times=false;trim_biped_animations=false;export_degenerate_animation_curves=false;export_invalid_transform_animations=false;export_invalid_morph_target_weight_animations=false;compress_animation_keys=false;remove_redundant_keyframes=true;export_one_animation_channel_per_animation_curve=false;bake_matrices=true;decompose_matrices=true;path_convention=CUSTOM_MODIFIER;strip_nodes_associated_with_stripped_libraries=false;remove_null_skin_weights=true;remove_duplicate_skin_weights=true;deindex_vertex_data=true;sort_dae=true;export_ambient_environment_light=false;sample_rate=30.000000;secondary_sample_rate=30.000000;remove_redundant_keyframes_tolerance=0.000100;animation_key_compression_tolerance=0.010000;use_additive_animation_format=false;custom_path=;relative_path_start=T:%5CArt%5CData;strip_unused_sub_materials=true;texture_coordinates_origin=UPPER_LEFT;profile_common_use_technique_default=true;profile_common_use_technique_fog=true;profile_common_use_technique_lighting=true;profile_common_use_technique_fog_lighting=true;profile_common_use_technique_skin=true;profile_common_use_technique_split_alpha=true;geometry_position_format=FLOAT;geometry_normal_format=FLOAT;geometry_texture_format=FLOAT;geometry_color_format=UNSIGNED_BYTE;mesh_buffer_size_upper_limit=65536;export_up_axis=1;target_unit=meter;target_unit_scale=1.000000;camera_lookat=Z_Neg;cubic_interpolation=2;libraries_to_strip=0x00000000;animation_channel_position_format=FLOAT;animation_channel_rotation_format=FLOAT;animation_channel_scale_format=FLOAT;collada_converter_command_line=-i $1 -o $2 -dep -no_binary -nnfo -nthumbnail -nmetadata;warning_negative_scale=true;warning_incompatible_morph_target=true;warning_invalid_geometry=true;warning_invalid_tangent_binormal=true;warning_invalid_skins=true;warning_duplicate_effect_id=true;warning_uv_anim_excess=true;warning_invalid_modular_skin=true;warning_invalid_mesh_buffer_size=true;warning_invalid_material=true;warning_undefined_custom_path_modifier=true;warning_duplicate_node_name=true;warning_invalid_path_start=true;warning_default_thumbnail=true;treat_warning_as_error=0x0000000000000000;export_selected_nodes_only=true;pre_export_scripts=;enforce_asset_thumbnail_definition=false;default_thumbnail=$(GlitchDir)media/thumbnails/generic.png;</comments>
+      <animation_clips>
+        <animation_clip id="AUTO_Current_Range" start="0" end="3.3333333"></animation_clip>
+      </animation_clips>
+      <source_data>file:///T:/art_workspace/Environments/sanctuary/sanctuary_all09.max</source_data>
+    </contributor>
+    <created>2017-03-22T15:38:27Z</created>
+    <modified>2017-03-22T15:38:27Z</modified>
+    <unit meter="1" name="meter"/>
+    <up_axis>Y_UP</up_axis>
+  </asset>
+  <library_animation_clips>
+    <animation_clip id="AUTO_Current_Range" start="0" end="3.3333333"></animation_clip>
+  </library_animation_clips>
+  <library_images>
+    <image id="Map__6__sanctuary_props_02_d.tga_" name="Map__6__sanctuary_props_02_d_tga_">
+      <init_from>3d/Environments/_texture/sanctuary_props_02_d.tga</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="sanctuary_props_02" name="sanctuary_props_02">
+      <instance_effect url="#sanctuary_props_02-fx"/>
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="sanctuary_props_02-fx" name="sanctuary_props_02">
+      <profile_COMMON id="sanctuary_props_02-fx-profile_COMMON">
+        <newparam sid="diffuse-surface">
+          <surface type="2D">
+            <init_from>Map__6__sanctuary_props_02_d.tga_</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="diffuse-sampler">
+          <sampler2D>
+            <source>diffuse-surface</source>
+            <wrap_s>NONE</wrap_s>
+            <wrap_t>NONE</wrap_t>
+            <minfilter>NONE</minfilter>
+            <magfilter>NONE</magfilter>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <blinn>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0.58823532 0.58823532 0.58823532 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="diffuse-sampler" texcoord="CHANNEL1">
+                <extra>
+                  <technique profile="MAYA">
+                    <wrapU>true</wrapU>
+                    <wrapV>true</wrapV>
+                    <repeatU>1</repeatU>
+                    <repeatV>1</repeatV>
+                    <offsetU>0</offsetU>
+                    <offsetV>0</offsetV>
+                    <rotateUV>0</rotateUV>
+                  </technique>
+                  <technique profile="MAX3D">
+                    <amount>1</amount>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <specular>
+              <color>0.89999998 0.89999998 0.89999998 1</color>
+            </specular>
+            <shininess>
+              <float>0.41593927</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <reflectivity>
+              <float>1</float>
+            </reflectivity>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+          </blinn>
+          <extra>
+            <technique profile="Glitch">
+              <spec_level>
+                <float>0</float>
+              </spec_level>
+              <diffuse_color>
+                <color>0.58823532 0.58823532 0.58823532 1</color>
+              </diffuse_color>
+              <emission_level>
+                <float>1</float>
+              </emission_level>
+            </technique>
+          </extra>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="MAX3D">
+          <faceted>false</faceted>
+          <double_sided>false</double_sided>
+          <wireframe>false</wireframe>
+          <face_map>false</face_map>
+        </technique>
+      </extra>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="sanctuary_torch_a_01-mesh" name="sanctuary_torch_a_01">
+      <mesh>
+        <source id="sanctuary_torch_a_01-mesh-positions">
+          <float_array id="sanctuary_torch_a_01-mesh-positions-array" count="162">0.09079563 -0.20121132 -0.10822315 0.0441956 -0.18041594 -0.20766921 0.14604035 0.50264311 -0.13666086 0.21052231 0.47386762 0.00094583 -0.06379015 -0.16527115 -0.23223034 -0.00338301 0.52359939 -0.17064689 -0.06379015 -0.16527115 -0.23223034 -0.15184614 -0.16718155 -0.16341151 -0.12522888 0.52095598 -0.07542008 -0.00338301 0.52359939 -0.17064689 -0.15366441 -0.1847084 -0.05303474 -0.1277449 0.49670348 0.07731178 -0.06787577 -0.2046537 0.01578403 -0.00903641 0.46910462 0.17253855 0.04091915 -0.21199821 -0.00877708 0.14150663 0.45894164 0.13855253 -0.0147789 -0.65225971 -0.18158486 -0.04022624 -0.64090371 -0.23589031 -0.09919504 -0.63263351 -0.24930266 -0.09919504 -0.63263351 -0.24930266 -0.14728062 -0.63367665 -0.21172211 -0.14827354 -0.64324772 -0.15144762 -0.10142612 -0.65413952 -0.11386708 -0.04201544 -0.65815026 -0.12727942 -0.08793273 -0.67575544 -0.18652087 0.14136693 0.64180481 -0.09050265 0.19481926 0.61795151 0.02356641 0.01750244 0.65917665 -0.11867538 -0.08350169 0.65698528 -0.03973712 0.01750244 0.65917665 -0.11867538 -0.08558733 0.63688123 0.08686998 0.01281605 0.61400312 0.1658082 0.13760872 0.60557842 0.13763551 0.0510105 0.66355985 0.02843961 -0.24323376 -0.04841369 -0.19954757 0.24287364 -0.04841369 -0.19954757 0.24287364 0.35158628 -0.19954757 -0.24323376 0.35158628 -0.19954757 -0.24323376 -0.04841369 -0.37702757 0.24287364 -0.04841369 -0.37702757 0.24287364 -0.04841369 -0.19954757 -0.24323376 -0.04841369 -0.19954757 0.24287364 -0.04841369 -0.37702757 0.24287364 0.35158628 -0.37702757 0.24287364 0.35158628 -0.19954757 0.24287364 -0.04841369 -0.19954757 0.24287364 0.35158628 -0.37702757 -0.24323376 0.35158628 -0.37702757 -0.24323376 0.35158628 -0.19954757 0.24287364 0.35158628 -0.19954757 -0.24323376 0.35158628 -0.37702757 -0.24323376 -0.04841369 -0.37702757 -0.24323376 -0.04841369 -0.19954757 -0.24323376 0.35158628 -0.19954757</float_array>
+          <technique_common>
+            <accessor source="#sanctuary_torch_a_01-mesh-positions-array" count="54" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="sanctuary_torch_a_01-mesh-normals">
+          <float_array id="sanctuary_torch_a_01-mesh-normals-array" count="162">0.98003793 -0.19821861 -0.01533073 0.61997068 -0.03753686 -0.78372651 0.63825387 0.12342658 -0.75986701 0.99923557 -0.03766344 0.01048021 -0.21440923 0.07948283 -0.97350454 -0.19824523 0.24074338 -0.95012712 -0.21440923 0.07948283 -0.97350454 -0.89479649 0.06472211 -0.44175816 -0.88036042 0.22594517 -0.41703027 -0.19824523 0.24074338 -0.95012712 -0.90884572 -0.07070382 0.4110966 -0.89444554 0.09017532 0.43799052 -0.2459777 -0.22481646 0.94284272 -0.229894 -0.06432873 0.97108734 0.5946545 -0.28156587 0.75306475 0.61287326 -0.12122243 0.7808274 0.78341311 -0.61568075 -0.0848596 0.47851694 -0.47961891 -0.73551834 -0.22801563 -0.38052994 -0.89621753 -0.22801563 -0.38052994 -0.89621753 -0.80415118 -0.39302874 -0.44594774 -0.81604791 -0.50770396 0.27622887 -0.25474739 -0.63820338 0.7264986 0.45707974 -0.68625742 0.5657993 -0.10189807 -0.98222399 -0.15764771 0.55165887 0.67304748 -0.49262533 0.82975256 0.54894704 0.1008368 -0.09276548 0.7634269 -0.63919789 -0.6182555 0.7520262 -0.22850972 -0.09276548 0.7634269 -0.63919789 -0.62910628 0.64743161 0.43018323 -0.11714718 0.52840465 0.84087157 0.53210616 0.48457402 0.69429898 0.10189818 0.98222405 0.15764715 0 0 1 0 0 1 0 0 1 0 0 1 0 -0.99999994 0 0 -1 0 0 -0.99999994 0 0 -1 0 1 0 0 1 0 0 1 0 0 1 0 0 0 0.99999994 0 0 1 0 0 0.99999994 0 0 1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0</float_array>
+          <technique_common>
+            <accessor source="#sanctuary_torch_a_01-mesh-normals-array" count="54" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="sanctuary_torch_a_01-mesh-map-channel1">
+          <float_array id="sanctuary_torch_a_01-mesh-map-channel1-array" count="108">0.63933158 0.48109829 0.63923067 0.48491144 0.66645402 0.48553002 0.6653533 0.48146898 0.63860279 0.48884118 0.66804141 0.49017084 0.63852268 0.46159965 0.63917214 0.46552539 0.66638833 0.4647578 0.66796154 0.46011013 0.63929462 0.46933722 0.66530913 0.46883571 0.63930714 0.47323751 0.66474509 0.47301668 0.63931978 0.47719753 0.6647594 0.47729886 0.62210262 0.47728908 0.62179458 0.47859359 0.62072319 0.47992611 0.62069565 0.47062266 0.62177461 0.47194886 0.62209016 0.47325182 0.62219208 0.47458678 0.62219638 0.47595358 0.61989462 0.47527695 0.67539561 0.48212469 0.6737802 0.47955394 0.67847222 0.48431027 0.67533726 0.46814126 0.67841029 0.46594173 0.67373288 0.47072917 0.67290241 0.47361982 0.67291415 0.4766829 0.68010473 0.47497249 0.44230664 0.46401727 0.45637107 0.46345431 0.45545623 0.4522652 0.44230664 0.45247638 0.44279921 0.46920145 0.45630068 0.46807539 0.45637107 0.46345431 0.44230664 0.46401727 0.46296263 0.46218753 0.46162552 0.45149112 0.45545623 0.4522652 0.45637107 0.46345431 0.45433024 0.44813675 0.44230664 0.44785523 0.44230664 0.45247638 0.45545623 0.4522652 0.43670025 0.45325041 0.43705213 0.46422839 0.44230664 0.46401727 0.44230664 0.45247638</float_array>
+          <technique_common>
+            <accessor source="#sanctuary_torch_a_01-mesh-map-channel1-array" count="54" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="sanctuary_torch_a_01-mesh-map-channel1-tangents">
+          <float_array id="sanctuary_torch_a_01-mesh-map-channel1-tangents-array" count="162">0.1948913 0.94262099 0.27107763 0.31257671 0.92798716 0.20281906 -0.22285265 0.97442341 -0.02890878 0.03836377 0.99625528 -0.07748324 0.44232932 0.8965255 -0.02422289 -0.12320396 0.95555747 0.26782599 -0.11819077 0.98724854 0.10663588 -0.08637005 0.94565421 0.31349364 0.29140702 0.95138854 -0.09970874 0.65459186 0.75401747 0.05447171 0.07644467 0.94060791 0.3307763 0.07782572 0.99590021 -0.04610773 0.13904688 0.95448393 0.26386812 0.06379798 0.99467063 0.08099445 0.13863289 0.95854974 0.24892442 0.12908429 0.99024737 0.05241602 0.51105672 0.56046289 0.65169191 0.83984417 0.49447817 0.22394897 0.88607234 0.30044284 -0.35300121 -0.7933622 0.60621029 -0.05554701 -0.59116799 0.60721034 0.5308634 -0.12947927 0.62635255 0.76871169 0.15633321 0.71422178 0.68223691 0.20475137 0.70024151 0.68391424 0.20790271 -0.17599978 0.96218532 -0.82296222 0.53529942 -0.19023062 -0.41576704 0.72846544 -0.544496 -0.90441263 0.20389982 0.37478355 0.72291446 0.42998278 -0.54084146 0.97889501 -0.04747929 -0.19877203 0.20629397 0.67263484 -0.71063715 -0.06857948 0.84037608 -0.53764755 -0.08308161 0.84595323 -0.52674532 -0.17776927 0.17390028 -0.96858495 0.99960196 -0.02821306 0 0.99914408 -0.04136591 0 0.99960196 -0.02821306 0 0.99988669 -0.01505533 0 0.99794114 0 -0.06413639 0.99606574 0 -0.08861739 0.99794114 0 -0.06413639 0.99921495 0 -0.03961673 0 -0.2043063 -0.97890699 0 -0.16097566 -0.98695838 0 -0.2043063 -0.97890699 0 -0.24724008 -0.96895427 0.99999839 0 -0.0017821 0.99975276 0 -0.02223606 0.99999839 0 -0.0017821 0.99982566 0 0.01867261 0 -0.09651773 0.99533129 0 -0.04330211 0.999062 0 -0.09651773 0.99533129 0 -0.14945868 0.98876798</float_array>
+          <technique_common>
+            <accessor source="#sanctuary_torch_a_01-mesh-map-channel1-tangents-array" count="54" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="sanctuary_torch_a_01-mesh-map-channel1-binormals">
+          <float_array id="sanctuary_torch_a_01-mesh-map-channel1-binormals-array" count="162">-0.03928154 -0.26865417 0.96243542 0.719675 -0.37071651 0.58705801 0.73686415 0.18778953 0.6494354 -0.00752265 0.07782606 0.99693859 0.87084639 -0.43580323 -0.2273809 0.97237831 0.17015463 -0.15977421 0.9695667 0.13792299 -0.20228112 0.43804044 0.31866768 -0.84057808 0.37422913 -0.2093052 -0.90340686 0.7295261 -0.61114669 -0.30706903 -0.41006792 0.33205074 -0.84946257 -0.44035262 -0.00715393 -0.89779639 -0.95925021 0.19600502 -0.20352174 -0.97112232 0.08057355 -0.22456476 -0.79193866 -0.04362447 0.60904026 -0.77956629 0.06866818 0.62254405 -0.35367358 -0.55391204 0.75372171 0.2562876 -0.72488415 0.63942134 0.40358967 -0.87460339 0.26867139 0.56443357 0.69835949 -0.44012353 0.0621395 0.69052446 -0.72063488 -0.56329465 0.59153968 -0.57687086 -0.95428699 0.28737396 -0.08217375 -0.86553741 -0.19675519 0.46057832 -0.97282743 0.06526944 0.2221411 0.13566785 0.51035434 0.8491953 -0.37235546 0.40987223 0.83268011 0.41645217 0.61286557 0.67153805 -0.30847174 -0.4995712 -0.80948985 -0.18209657 -0.64414686 -0.74291027 -0.7494452 -0.35832211 -0.55672002 -0.99074388 -0.12065043 -0.06220998 -0.84259152 0.22260095 0.49039611 -0.9787823 0.07067222 0.19232942 0.02821306 0.99960196 0 0.04136591 0.99914408 0 0.02821306 0.99960196 0 0.01505533 0.99988669 0 0.06413639 0 0.99794114 0.08861739 0 0.99606574 0.06413639 0 0.99794114 0.03961673 0 0.99921495 0 0.97890699 -0.2043063 0 0.98695838 -0.16097568 0 0.97890699 -0.2043063 0 0.96895427 -0.24724008 -0.0017821 0 -0.99999839 -0.02223606 0 -0.99975276 -0.0017821 0 -0.99999839 0.0186726 0 -0.99982566 0 0.99533129 0.09651773 0 0.999062 0.04330211 0 0.99533129 0.09651773 0 0.98876798 0.14945868</float_array>
+          <technique_common>
+            <accessor source="#sanctuary_torch_a_01-mesh-map-channel1-binormals-array" count="54" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="sanctuary_torch_a_01-mesh-vertices">
+          <input semantic="POSITION" source="#sanctuary_torch_a_01-mesh-positions"/>
+          <input semantic="NORMAL" source="#sanctuary_torch_a_01-mesh-normals"/>
+          <input semantic="TEXCOORD" source="#sanctuary_torch_a_01-mesh-map-channel1"/>
+          <input semantic="TEXTANGENT" source="#sanctuary_torch_a_01-mesh-map-channel1-tangents"/>
+          <input semantic="TEXBINORMAL" source="#sanctuary_torch_a_01-mesh-map-channel1-binormals"/>
+        </vertices>
+        <triangles material="sanctuary_props_02" count="66">
+          <input semantic="VERTEX" source="#sanctuary_torch_a_01-mesh-vertices" offset="0"/>
+          <p>0 1 2 2 3 0 1 4 5 5 2 1 6 7 8 8 9 6 7 10 11 11 8 7 10 12 13 13 11 10 12 14 15 15 13 12 14 0 3 3 15 14 1 0 16 16 17 1 4 1 17 17 18 4 7 6 19 19 20 7 10 7 20 20 21 10 12 10 21 21 22 12 14 12 22 22 23 14 0 14 23 23 16 0 17 16 24 18 17 24 20 19 24 21 20 24 22 21 24 23 22 24 16 23 24 3 2 25 25 26 3 2 5 27 27 25 2 9 8 28 28 29 9 8 11 30 30 28 8 11 13 31 31 30 11 13 15 32 32 31 13 15 3 26 26 32 15 26 25 33 25 27 33 29 28 33 28 30 33 30 31 33 31 32 33 32 26 33 34 35 36 36 37 34 38 39 40 40 41 38 42 43 44 44 45 42 46 47 48 48 49 46 50 51 52 52 53 50</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="sanctuary_all09.max" name="sanctuary_all09_max">
+      <node id="sanctuary_torch_a_01-node" name="sanctuary_torch_a_01" type="NODE">
+        <translate>0 0 0</translate>
+        <rotate>0 0 0 0</rotate>
+        <scale>1 1 1</scale>
+        <instance_geometry url="#sanctuary_torch_a_01-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="sanctuary_props_02" target="#sanctuary_props_02">
+                <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+          <extra>
+            <technique profile="Glitch">
+              <draw_layer>0</draw_layer>
+            </technique>
+          </extra>
+        </instance_geometry>
+        <extra>
+          <technique profile="Glitch">
+            <visibility>1</visibility>
+          </technique>
+        </extra>
+      </node>
+      <extra>
+        <technique profile="Glitch">
+          <start_time>0</start_time>
+          <end_time>3.3333333</end_time>
+        </technique>
+        <technique profile="MAX3D">
+          <frame_rate>30</frame_rate>
+        </technique>
+      </extra>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#sanctuary_all09.max"/>
+  </scene>
+</COLLADA>
