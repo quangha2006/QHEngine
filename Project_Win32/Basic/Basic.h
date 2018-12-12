@@ -6,6 +6,7 @@
 #include <ShaderManager.h>
 #include <FrameBuffer.h>
 #include "SkyBox.h"
+#include "Sound.h"
 
 class Basic : public AppBase
 {
@@ -14,6 +15,7 @@ private:
 	FrameBuffer mframebuffer;
 	SkyBox mSkyBox;
 	float timestamp_for_lamp;
+	Sound soundIntro;
 public:
 	void Draw();
 	void Init();

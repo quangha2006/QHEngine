@@ -10,7 +10,7 @@
 void Basic::Init()
 {
 	mCamera->Pos = glm::vec3(0.0f, 5.0f, 20.0f);
-	mCamera->Target = glm::vec3(0.0f, 5.0f, 0.2f);
+	mCamera->Target = glm::vec3(0.1f, 5.0f, 0.2f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
@@ -22,7 +22,7 @@ void Basic::Init()
 	//mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
 	//mNanosuit.SetDrawPolygon(true);
 
-	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, false);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, true);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
@@ -38,8 +38,9 @@ void Basic::Init()
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	mSpider.SetScale(glm::vec3(0.05f));
-	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
+	mSpider.Init("astroBoy/astroBoy_walk_Max.dae", mCamera, true);
+	//mSpider.SetScale(glm::vec3(0.05f));
+	mSpider.SetTranslate(glm::vec3(5.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
@@ -60,6 +61,8 @@ void Basic::Init()
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	mSkyBox.Init("SkyBox");
+	soundIntro.Init("Sound/chuabaogio.wav");
+	soundIntro.Play();
 }
 void Basic::Draw()
 {
@@ -105,7 +108,8 @@ void Basic::Draw()
 	mSpider.Draw(lamppos);
 	saberclass.Draw(lamppos);
 	mGallacticCruiser.Draw(lamppos);
-	
+	mMonster_1.Draw(lamppos);
+
 	GLuint depthMap = mframebuffer.Disable();
 	
 	ShaderManager::getInstance()->setUseProgram("model");

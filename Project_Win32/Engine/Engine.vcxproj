@@ -129,6 +129,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="TextRendering.cpp" />
     <ClCompile Include="TGA.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextRendering.h" />
     <ClInclude Include="TGA.h" />
