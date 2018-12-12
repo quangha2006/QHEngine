@@ -29,9 +29,9 @@ Camera::Camera()
 	Front	= vec3(0.0f, 0.0f, -1.0f);
 	view = glm::mat4(0.0f);
 	projection = glm::mat4(0.0f);
-	zoom = 45.0f;
+	zoom = 75.0f;
 	View_near = 0.1f;
-	View_far = 150.0f;
+	View_far = 100000.0f;
 }
 vec3 Camera::ExtractCameraPos(const glm::mat4 & a_modelView)
 {

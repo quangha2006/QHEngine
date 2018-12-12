@@ -123,6 +123,7 @@
     <ClCompile Include="MainWin32.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="QHAxis.cpp" />
     <ClCompile Include="QHText.cpp" />
     <ClCompile Include="QHTexture.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Logs.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="QHAxis.h" />
     <ClInclude Include="QHText.h" />
     <ClInclude Include="QHTexture.h" />
     <ClInclude Include="Shader.h" />

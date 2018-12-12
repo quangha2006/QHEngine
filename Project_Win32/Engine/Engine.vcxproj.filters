@@ -96,6 +96,9 @@
     <ClCompile Include="QHTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QHAxis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -165,6 +168,9 @@
       <Filter>Android</Filter>
     </ClInclude>
     <ClInclude Include="QHTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QHAxis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

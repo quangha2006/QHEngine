@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Logs.h"
 #include "QHText.h"
+#include "QHAxis.h"
 
 class AppBase
 {
@@ -11,6 +12,7 @@ protected:
 	AppContext* mContext;
 	Camera *mCamera;
 	QHText text_FPS, text_DrawCall, text_NumTriangle;
+	QHAxis axis;
 public:
 	bool initialize(int32_t width, int32_t height, ANativeWindow *window = NULL);
 	void rendering();

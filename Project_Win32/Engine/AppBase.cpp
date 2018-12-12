@@ -3,6 +3,7 @@
 #include "Debugging.h"
 #include "TextRendering.h"
 #include "Utils.h"
+#include "QHAxis.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #if defined(_WINDOWS)
@@ -13,6 +14,8 @@
 #include <unistd.h>
 #endif
 #include <vector>
+#include <stdlib.h>
+
 bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 {
 #if defined(_WINDOWS)
@@ -41,6 +44,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	text_NumTriangle.setPos(265,0);
 	text_NumTriangle.setScale(0.5f);
 	text_NumTriangle.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
+	axis.Init();
 
 	return true;
 }
@@ -69,6 +73,7 @@ void AppBase::rendering()
 	FrameRate::getInstance()->Counter();
 	Debugging::getInstance()->resetCount();
 	TextRendering::getInstance()->Draw();
+	axis.Draw(mCamera->view, mCamera->projection);
 }
 
 void AppBase::Resize(int width, int height)
@@ -101,10 +106,15 @@ void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 	if (!preesed) return;
 	
 	mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(x - touch_old_x)), glm::vec3(0.0f, 1.0f, 0.0f));
+
+	mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(y - touch_old_y)), glm::vec3(1.0f, 0.0f, 1.0f));
+	//mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(y - touch_old_y)), glm::vec3(0.0f, 0.0f, 1.0f));
+
 	//mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(y - touch_old_y)), glm::vec3(0.0f, mCamera->Pos.y, mCamera->Pos.z));
 	//glm::mat4::
 	mCamera->Pos = mCamera->ExtractCameraPos(mCamera->view);
-	mCamera->Pos.y += ((y - touch_old_y)*0.1);
+
+	//mCamera->Pos.y += ((y - touch_old_y)*0.1);
 
 	//if ((mCamera->Pos.y > 0.5) && (mCamera->Pos.y < 80))
 	//{
@@ -118,22 +128,45 @@ void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 	//		mCamera->Pos.z += ((y - touch_old_y)*0.3);
 	//}
 
-	if (mCamera->Pos.y > 60) mCamera->Pos.y = 60;
-	if (mCamera->Pos.y < 0.5) mCamera->Pos.y = 0.5;
-	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
+	//if (mCamera->Pos.y > 60) mCamera->Pos.y = 60;
+	//if (mCamera->Pos.y < 0.5) mCamera->Pos.y = 0.5;
+	//mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	touch_old_x = x;
 	touch_old_y = y;
 }
 void AppBase::ZoomCamera(double xoffset, double yoffset)
 {
-	if (mCamera->zoom >= 1.0f && mCamera->zoom <= 45.0f)
+	LOGI("mCamera->Pos: %f, %f, %f\n", mCamera->Pos.x, mCamera->Pos.y, mCamera->Pos.z);
+	LOGI("mCamera->Target: %f, %f, %f\n\n", mCamera->Target.x, mCamera->Target.y, mCamera->Target.z);
+	int offset = 10;
+	float dis_x = abs(mCamera->Pos.x / mCamera->Target.x / offset);
+	float dis_y = abs(mCamera->Pos.y / mCamera->Target.y / offset);
+	float dis_z = abs(mCamera->Pos.z / mCamera->Target.z / offset);
+
+	if (yoffset > 0.0f)
+	{
+		mCamera->view = glm::translate(mCamera->view, glm::vec3(mCamera->Pos.x -= dis_x, mCamera->Pos.y -= dis_y, mCamera->Pos.z -= dis_z));
+		//mCamera->Target.x -= dis_x;
+		//mCamera->Target.y -= dis_y;
+		//mCamera->Target.z -= dis_z;
+	}
+	else
+	{
+		mCamera->view = glm::translate(mCamera->view, glm::vec3(mCamera->Pos.x += dis_x, mCamera->Pos.y += dis_y, mCamera->Pos.z += dis_z));
+		//mCamera->Target.x += dis_x;
+		//mCamera->Target.y += dis_y;
+		//mCamera->Target.z += dis_z;
+	}
+	//mCamera->Pos = mCamera->ExtractCameraPos(mCamera->view);
+	/*if (mCamera->zoom >= 1.0f && mCamera->zoom <= 45.0f)
 		mCamera->zoom -= (float)yoffset;
 	if (mCamera->zoom <= 1.0f)
 		mCamera->zoom = 1.0f;
 	if (mCamera->zoom >= 45.0f)
 		mCamera->zoom = 45.0f;
 	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(mContext->GetWindowWidth()) / (float)(mContext->GetWindowHeight()), mCamera->View_near, mCamera->View_far);
-}
+	*/
+	}
 AppBase::AppBase()
 {
 }

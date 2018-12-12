@@ -1,18 +1,18 @@
 #include "Game.h"
 #include "Timer.h"
-float a = 24.445f;
-float b = 17.5039f;
+float a = 9.0;
+float b = -0.8f;
 void Game::Init()
 {
-	mCamera->Pos = glm::vec3(10.0f, 3.0f, 8.0f);
-	mCamera->Target = glm::vec3(24.0f, 2.9f, 19.2f);
+	mCamera->Pos = glm::vec3(40.0f, 3.0f, 18.0f);
+	mCamera->Target = glm::vec3(1.0f, 1.0f, 1.0f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 
 	ShaderManager::getInstance()->Init("model", "Shaders/model_loading.vs", "Shaders/model_loading.fs");
 
 	bountyhunter.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", mCamera, true);
 	bountyhunter.SetNeedRotate(false);
-	bountyhunter.SetScale(glm::vec3(0.02f));
+	bountyhunter.SetScale(glm::vec3(0.015f));
 
 	sanctuary_arena_a_01.Init("sanctuary/sanctuary_arena_a_01.dae", mCamera, false);
 	sanctuary_arena_a_01.SetNeedRotate(false);
@@ -38,8 +38,9 @@ void Game::Init()
 	sanctuary_torch_a_01.Init("sanctuary/sanctuary_torch_a_01.dae", mCamera, false);
 	sanctuary_torch_a_01.SetNeedRotate(false);
 
-	vfx_moba_torch_fire_red.Init("sanctuary/vfx_moba_torch_fire_red.dae", mCamera, false);
-	vfx_moba_torch_fire_red.SetNeedRotate(false);
+	sanctuary_waterfall_01.Init("sanctuary/sanctuary_waterfall_01.dae", mCamera, false);
+	sanctuary_waterfall_01.SetNeedRotate(false);
+	sanctuary_waterfall_01.SetScale(glm::vec3(3.0f));
 }
 
 void Game::Draw()
@@ -50,7 +51,7 @@ void Game::Draw()
 	ShaderManager::getInstance()->setUseProgram("model");
 	glm::vec3 lampPos = glm::vec3(8.2f, 10.0f, 0.0f);
 
-	bountyhunter.Draw(lampPos, 0, false, glm::vec3(a, 1.0, b), false, Timer::getMillisecond() / 10, glm::vec3(0.0f, 1.0f, 0.0f));
+	bountyhunter.Draw(lampPos, 0, true, glm::vec3(1210.6f, 0.0, 606.5f), false, 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	sanctuary_arena_tower_01.Draw(lampPos, 0, true, glm::vec3(15.6592f, -2.15f, 2.1054f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	
 	sanctuary_bird_01.Draw(lampPos, 0, true, glm::vec3(23.09f, -3.6f, 4.67f));
@@ -81,7 +82,7 @@ void Game::Draw()
 	
 	sanctuary_torch_a_01.Draw(lampPos, 0, true, glm::vec3(24.445f, 2.9169f, 17.5039f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	sanctuary_torch_a_01.Draw(lampPos, 0, true, glm::vec3(15.6449, 2.0f, 19.9f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	vfx_moba_torch_fire_red.Draw(lampPos);
+	sanctuary_waterfall_01.Draw(lampPos, -1, true, glm::vec3(a, 1.0f, b), false, 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Game::GetRequireScreenSize(int32_t & width, int32_t & height)
