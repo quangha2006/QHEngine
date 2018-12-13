@@ -103,7 +103,7 @@ void Sound::Init(string const &path)
 	}
 	else
 	{
-		LOGE("Audio handle done\n");
+		LOGI("Audio handle done\n");
 
 		context = alcCreateContext(device, context_attribs);
 		if (!alcMakeContextCurrent(context))
