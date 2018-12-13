@@ -44,7 +44,6 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	text_NumTriangle.setPos(265,0);
 	text_NumTriangle.setScale(0.5f);
 	text_NumTriangle.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
-	axis.Init();
 
 	return true;
 }
@@ -73,7 +72,6 @@ void AppBase::rendering()
 	FrameRate::getInstance()->Counter();
 	Debugging::getInstance()->resetCount();
 	TextRendering::getInstance()->Draw();
-	//axis.Draw(mCamera->view, mCamera->projection);
 }
 
 void AppBase::Resize(int width, int height)

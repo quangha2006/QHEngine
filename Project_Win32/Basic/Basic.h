@@ -7,6 +7,7 @@
 #include <FrameBuffer.h>
 #include "SkyBox.h"
 #include "Sound.h"
+#include "QHAxis.h"
 
 class Basic : public AppBase
 {

@@ -71,6 +71,8 @@ void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableA
 	this->isEnableAlpha = enableAlpha;
 	string path_modif = Utils::getResourcesFolder() + path;
 
+	LOGW("\n======================================================\n");
+
 	LOGI("\nLoad Model: %s\n", path_modif.c_str());
 	if (ShaderManager::getInstance()->GetProgram(useshadername.c_str()) == 0)
 	{
@@ -89,7 +91,7 @@ void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableA
 	else
 		needRotate = false;
 	uint64_t time_loadmodel = Timer::getMillisecond();
-	LOGI("Load Model time : %.3fs\n", ((int)(time_loadmodel - time_ms_begin)) / 1000.0f);
+	LOGI("Load Model time : %.3fs\n\n", ((int)(time_loadmodel - time_ms_begin)) / 1000.0f);
 	// check for errors
 	if (!m_pScene || /*m_pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||*/ !m_pScene->mRootNode) // if is Not Zero
 	{
@@ -101,7 +103,7 @@ void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableA
 	// process ASSIMP's root node recursively
 	processNode(m_pScene->mRootNode, m_pScene, fixedModel);
 
-	LOGI("Material Count: %d\n", m_pScene->mNumMaterials);
+	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations()?"True":"False");
 
 	if (m_pScene->HasAnimations())
@@ -123,7 +125,6 @@ void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableA
 	uint64_t time_ms_end = Timer::getMillisecond();
 
 	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
-	LOGW("\n======================================================\n");
 }
 
 void Model::processNode(aiNode * node, const aiScene * scene, float fixedModel)

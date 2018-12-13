@@ -31,7 +31,7 @@ namespace QHTexture
 				}
 				else
 				{
-					LOGE("ERROR when load: %s \n", fullpath.c_str());
+					LOGE("Load texture ERROR!: %s \n", fullpath.c_str());
 					return false;
 				}
 			}
@@ -40,14 +40,14 @@ namespace QHTexture
 				uint64_t time_begin = Timer::getMillisecond();
 				if (SOIL_load_OGL_texture(fullpath.c_str(), SOIL_LOAD_RGBA, textureID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS) == 0)
 				{
-					LOGE("ERROR when load: %s \n", fullpath.c_str());
+					LOGE("Load texture ERROR!: %s \n", fullpath.c_str());
 					return false;
 				}
 			}
 		}
 
 		uint64_t time_end = Timer::getMillisecond();
-		LOGI("ENDLOAD TGA  Load: %dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
+		LOGI("Load texture: %dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
 		return true;
 	}
 	unsigned int GenTextureId()

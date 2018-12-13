@@ -41,7 +41,7 @@ GLuint ShaderManager::createProgram(const char * vtxSrc, const char * fragSrc)
 		program = 0;
 		return program;
 	}
-	LOGI("Create Program: %d\n", program);
+
 	return program;
 }
 
@@ -49,11 +49,11 @@ GLuint ShaderManager::createShader(GLenum shaderType, const char * src)
 {
 	string fullPath(Utils::getResourcesFolder() + src);
 
-	LOGI("Create shader: %s\n", fullPath.c_str());
+	LOGI("Load shader: %s\n", fullPath.c_str());
 	FILE * pf = fopen(fullPath.c_str(), "rb");
 	if (pf == NULL)
 	{
-		LOGE("Load %s failed\n", fullPath.c_str());
+		LOGE("Load shader ERROR: %s\n", fullPath.c_str());
 		return false;
 	}
 	fseek(pf, 0, SEEK_END);

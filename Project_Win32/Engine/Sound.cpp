@@ -6,7 +6,8 @@ char* Sound::readWAV(string const & filename, BasicWAVEHeader* header) {
 	char* buffer = 0;
 	FILE* file = fopen(filename.c_str(), "rb");
 	if (!file) {
-		return 0;
+		LOGE("Audio handle error : Open %s\n", filename);
+		return NULL;
 	}
 	if (fread(header, sizeof(BasicWAVEHeader), 1, file)) {
 
@@ -19,7 +20,7 @@ char* Sound::readWAV(string const & filename, BasicWAVEHeader* header) {
 		}
 		else dataSize[0] = header->listSize;
 
-		LOGI("ChunkID: %.4s\nChunkSize: %d\nFormat: %.4s\nSubchunk1ID: %4s\nSubchunk1Size: %d\nAudioFormat: %u\nNumChannels: %u\nsamplesPerSec: %d\nbytesPerSec: %d\nblockAlign: %u\nbitsPerSample: %d\nlist size: %d\ndata: %.4s\ndatasize: %d\n", header->riff, header->riffSize, header->wave, header->fmt, header->fmtSize, header->format, header->channels, header->samplesPerSec, header->bytesPerSec, header->blockAlign, header->bitsPerSample, header->listSize, data, dataSize[0]);
+		//LOGI("ChunkID: %.4s\nChunkSize: %d\nFormat: %.4s\nSubchunk1ID: %4s\nSubchunk1Size: %d\nAudioFormat: %u\nNumChannels: %u\nsamplesPerSec: %d\nbytesPerSec: %d\nblockAlign: %u\nbitsPerSample: %d\nlist size: %d\ndata: %.4s\ndatasize: %d\n", header->riff, header->riffSize, header->wave, header->fmt, header->fmtSize, header->format, header->channels, header->samplesPerSec, header->bytesPerSec, header->blockAlign, header->bitsPerSample, header->listSize, data, dataSize[0]);
 
 		if (!(memcmp("RIFF", header->riff, 4) ||
 			memcmp("WAVE", header->wave, 4) ||
@@ -39,12 +40,8 @@ char* Sound::readWAV(string const & filename, BasicWAVEHeader* header) {
 	fclose(file);
 	return buffer;
 }
-ALuint Sound::createBufferFromWave(char* data, BasicWAVEHeader header) {
-
-	ALCenum error;
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		LOGE("0: %d\n", error);
+ALuint Sound::createBufferFromWave(char* data, BasicWAVEHeader header) 
+{
 	ALuint buffer = 0;
 	ALCenum format = 0;
 	switch (header.bitsPerSample) {
@@ -57,20 +54,11 @@ ALuint Sound::createBufferFromWave(char* data, BasicWAVEHeader header) {
 	default:
 		return 0;
 	}
-	LOGI("format: %d\n", format);
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		LOGE("1: %d\n", error);
+
 	alGenBuffers((ALuint)1, &buffer);
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		LOGE("alGenBuffers: %d\n", error);
-	LOGI("Info: buffer %d, format %d, header.dataSize %d, header.samplesPerSec %d\n", buffer, format, dataSize[0], header.samplesPerSec);
+
 	alBufferData(buffer, format, data, dataSize[0], header.samplesPerSec);
 
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		LOGE("alBufferData: %d\n", error);
 	return buffer;
 }
 void Sound::Play()
@@ -91,63 +79,56 @@ void Sound::Init(string const &path)
 
 	device = alcOpenDevice(devicename);
 
-	ALCenum error = alGetError();
-	if (error != AL_NO_ERROR)
-		LOGE("failed to make context current: %d", error);
-	size_t len = 0;
-
-	LOGI("=========== Audio ===========\n");
+	LOGW("======================================================\n\n");
 	if (!device)
 	{
-		LOGE("Audio handle errors\n");
+		LOGE("Audio handle error: device NULL!\n");
+		return;
 	}
-	else
+
+	context = alcCreateContext(device, context_attribs);
+
+	if (!alcMakeContextCurrent(context))
 	{
-		LOGI("Audio handle done\n");
-
-		context = alcCreateContext(device, context_attribs);
-		if (!alcMakeContextCurrent(context))
-		{
-			ALCenum error = alGetError();
-			if (error != AL_NO_ERROR)
-				LOGE("failed to make context current: %d", error);
-		}
-
-		BasicWAVEHeader header;
-		char* data = readWAV(path_modif, &header);
-		if (data) {
-			//Now We've Got A Wave In Memory, Time To Turn It Into A Usable Buffer
-			buffer = createBufferFromWave(data, header);
-			if (!buffer) {
-				free(data);
-				LOGE("!create Buffer FromWave");
-			}
-
-		}
-		else {
-			LOGE("! Data");;
-		}
-
-		alGenSources(1, &source);
-
-		alSourcei(source, AL_BUFFER, buffer);
-		GetError();
-
-		// Play source
-		alSourcePlay(source);
-		//alSourcei(source, AL_LOOPING, AL_FALSE);
-		GetError();
-
-		LOGI("Play sound: %s", GetSourceState(source).c_str());
-
+		ALCenum error = alGetError();
+		if (error != AL_NO_ERROR)
+			LOGE("Audio handle error: make context current: %d\n", error);
+		return;
 	}
+
+	BasicWAVEHeader header;
+	char* data = readWAV(path_modif, &header);
+
+	if (!data)
+	{
+		return;
+	}
+	LOGI("Load audio file: %s\n", path_modif);
+		//Now We've Got A Wave In Memory, Time To Turn It Into A Usable Buffer
+	buffer = createBufferFromWave(data, header);
+	if (!buffer) 
+	{
+		free(data);
+		LOGE("Audio handle error: create Buffer From Wave NULL!\n");
+		return;
+	}
+
+	alGenSources(1, &source);
+
+	alSourcei(source, AL_BUFFER, buffer);
+	GetError();
+
+	// Play source
+	//alSourcePlay(source);
+	//alSourcei(source, AL_LOOPING, AL_FALSE);
+	GetError();
 }
 void Sound::GetError()
 {
 	ALCenum error;
 	error = alGetError();
 	if (error != AL_NO_ERROR)
-		LOGE("ERROR: %d\n", error);
+		LOGE("Audio handle error: %d\n", error);
 }
 
 string Sound::GetSourceState(ALuint source)

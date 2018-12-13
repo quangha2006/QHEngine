@@ -40,7 +40,7 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 		program = 0;
 		return false;
 	}
-	LOGI("Create Program: %d\n", program);
+	//LOGI("Create Program: %d\n", program);
 	return true;
 }
 
@@ -105,7 +105,7 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 		glDeleteShader(shader);
 		return 0;
 	}
-	//LOGI("DONE! (id: %d)\n", shader);
+
 	return shader;
 }
 
