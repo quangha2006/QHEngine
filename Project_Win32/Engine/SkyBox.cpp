@@ -9,16 +9,14 @@ void SkyBox::Init(const char * texturepath)
 	"attribute vec3 aPos;\n"
 	"varying vec3 TexCoords;\n"
 	"\n"
-	"uniform mat4 projection;\n"
-	"uniform mat4 view;\n"
-	"uniform mat4 model;\n"
+	"uniform mat4 WorldViewProjectionMatrix;\n"
 	"\n"
 	"void main()\n"
 	"{\n"
 	"	TexCoords = aPos;\n"
-	"	vec4 temp = projection * view * model * vec4(aPos, 1.0);\n"
+	"	vec4 temp = WorldViewProjectionMatrix * vec4(aPos, 1.0);\n"
 	"	temp.w = temp.z + 0.01; // add small offset for preventing z-buffer fighting\n"
-	"	gl_Position = temp.xyww;//projection * view * model * vec4(aPos, 1.0);\n"
+	"	gl_Position = temp.xyww;\n"
 	"}\n"
 	};
 	const char *fragShader = {
@@ -74,9 +72,10 @@ void SkyBox::Draw(Camera *camera)
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
 	mShader.setInt("skybox", 0);
-	mShader.setMat4("view", camera->view);
-	mShader.setMat4("projection", camera->projection);
-	mShader.setMat4("model", model);
+
+	glm::mat4 lookat_tmp = camera->WorldViewProjectionMatrix * model;
+
+	mShader.setMat4("WorldViewProjectionMatrix", lookat_tmp);
 
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
@@ -180,7 +179,7 @@ SkyBox::SkyBox()
 		1.0f, -1.0f,  1.0f
 	};
 	model = glm::mat4(1.0f);
-	scale = 100.0f;
+	scale = 900.0f;
 	setScale(scale);
 }
 

@@ -86,8 +86,11 @@ void Sound::Init(string const &path)
 	string path_modif = Utils::getResourcesFolder() + path;
 
 	const ALint context_attribs[] = { ALC_FREQUENCY, 44100, 0 };
+
 	const char * devicename = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
+
 	device = alcOpenDevice(devicename);
+
 	ALCenum error = alGetError();
 	if (error != AL_NO_ERROR)
 		LOGE("failed to make context current: %d", error);

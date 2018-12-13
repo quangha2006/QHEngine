@@ -12,12 +12,14 @@ private:
 	GLuint VBO;
 	float scale;
 	glm::mat4 model;
+
+	unsigned int loadCubemap(const char * texturepath, std::vector<std::string> faces);
+	GLuint getTextureID();
+
 public:
 	void Init(const char * texturepath);
 	void Draw(Camera *camera);
 	void setScale(float scale);
-	unsigned int loadCubemap(const char * texturepath, std::vector<std::string> faces);
-	GLuint getTextureID();
 	SkyBox();
 	~SkyBox();
 };

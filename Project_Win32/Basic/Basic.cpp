@@ -38,10 +38,11 @@ void Basic::Init()
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	mSpider.Init("astroBoy/astroBoy_walk_Max.dae", mCamera, true);
+	mSpider.Init("astroBoy/astroBoy_walk_Maya.dae", mCamera, true);
 	//mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetTranslate(glm::vec3(5.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
+	mSpider.SetNeedRotate(false);
 
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
@@ -66,8 +67,6 @@ void Basic::Init()
 }
 void Basic::Draw()
 {
-	//mCamera->UpdateView();
-	//mCamera->UpdateWorldViewProjection();
 	mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateSkeleton();

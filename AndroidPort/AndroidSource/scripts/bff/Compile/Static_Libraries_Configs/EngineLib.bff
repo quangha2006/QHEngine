@@ -23,6 +23,8 @@
 	"$Engine_Sources_Path$/Utils.cpp"
 	"$Engine_Sources_Path$/SkyBox.cpp"
 	"$Engine_Sources_Path$/QHTexture.cpp"
+	"$Engine_Sources_Path$/QHAxis.cpp"
+	"$Engine_Sources_Path$/Sound.cpp"
 	}
 
 	.ExcludedUnitySources =

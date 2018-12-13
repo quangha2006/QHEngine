@@ -1,16 +1,16 @@
 {
 	.EntryPointSymbolsLibs =
 	{
-		;"libAndroid_CPP.a"
+		"libBasic_CPP.a"
 		;"libnative_app_glue.a"
-		"libSanctuary_CPP.a"
+		;"libSanctuary_CPP.a"
 		"libEngineLib.a"
 	}
 
 	.GameStaticLibs = ""
 					+ " -Wl,--start-group"
-					;+ " -lAndroid_CPP"
-					+ " -lSanctuary_CPP"
+					+ " -lBasic_CPP"
+					;+ " -lSanctuary_CPP"
 					;+ " -lnative_app_glue"
               		+ " -lEngineLib"
 					+ " -lSOIL"
