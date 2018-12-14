@@ -4,27 +4,23 @@
 #include "QHAxis.h"
 
 
-bool QHAxis::Init()
+bool QHAxis::Init(Camera *camera)
 {
-	LOGI("\nInit Axis: ");
 	if (createProgram())
 	{
 		position_Attribute = glGetAttribLocation(program, "aPos");
 		color_Attribute = glGetAttribLocation(program, "aColor");
-		model_Uniform = glGetUniformLocation(program, "model");
-		view_Uniform = glGetUniformLocation(program, "view");
-		projection_Uniform = glGetUniformLocation(program, "projection");
-		LOGI("DONE!\n");
+		WorldViewProjectionMatrix_Uniform = glGetUniformLocation(program, "WorldViewProjectionMatrix");
 	}
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glBufferData(GL_ARRAY_BUFFER, 15 * 6 * sizeof(float), vertices_axis, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+	this->camera = camera;
 	return true;
 }
 
-void QHAxis::Draw(glm::mat4 view, glm::mat4 projection)
+void QHAxis::Draw()
 {
 	if (program == 0) return;
 	glUseProgram(program);
@@ -42,9 +38,10 @@ void QHAxis::Draw(glm::mat4 view, glm::mat4 projection)
 		glEnableVertexAttribArray(color_Attribute);
 		glVertexAttribPointer(color_Attribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	}
-	glUniformMatrix4fv(model_Uniform, 1, GL_FALSE, &model[0][0]);
-	glUniformMatrix4fv(view_Uniform, 1, GL_FALSE, &view[0][0]);
-	glUniformMatrix4fv(projection_Uniform, 1, GL_FALSE, &projection[0][0]);
+
+	glm::mat4 lookat_tmp = camera->WorldViewProjectionMatrix * model;
+
+	glUniformMatrix4fv(WorldViewProjectionMatrix_Uniform, 1, GL_FALSE, &lookat_tmp[0][0]);
 
 	glDrawArrays(GL_LINES, 0, 2);
 	glDrawArrays(GL_TRIANGLES, 2, 3);
@@ -67,13 +64,11 @@ bool QHAxis::createProgram()
 		"attribute vec3 aColor;\n"
 		"\n"
 		"varying vec3 thecolor;\n"
-		"uniform mat4 model;\n"
-		"uniform mat4 view;\n"
-		"uniform mat4 projection;\n"
+		"uniform mat4 WorldViewProjectionMatrix;\n"
 		"void main()\n"
 		"{\n"
 		"	thecolor = aColor;\n"
-		"	gl_Position =  projection * view * vec4(aPos, 1.0);\n"
+		"	gl_Position =  WorldViewProjectionMatrix * vec4(aPos, 1.0);\n"
 		"}\n"
 	};
 

@@ -9,8 +9,8 @@
 
 void Basic::Init()
 {
-	mCamera->Pos = glm::vec3(0.0f, 5.0f, 20.0f);
-	mCamera->Target = glm::vec3(0.1f, 5.0f, 0.2f);
+	mCamera->Pos = glm::vec3(5.0f, 5.0f, 20.0f);
+	mCamera->Target = glm::vec3(0.0f, 1.0f, 0.0f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
@@ -62,8 +62,9 @@ void Basic::Init()
 	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	mSkyBox.Init("SkyBox");
-	soundIntro.Init("Sound/chuabaogio.wav");
-	soundIntro.Play();
+	//soundIntro.Init("Sound/chuabaogio.wav");
+	//soundIntro.Play();
+	axis.Init(mCamera);
 }
 void Basic::Draw()
 {
@@ -107,7 +108,7 @@ void Basic::Draw()
 	mSpider.Draw(lamppos);
 	saberclass.Draw(lamppos);
 	mGallacticCruiser.Draw(lamppos);
-	mMonster_1.Draw(lamppos);
+	mMonster_1.Draw(lamppos, -1, true, glm::vec3(mCamera->Target));
 
 	GLuint depthMap = mframebuffer.Disable();
 	
@@ -130,7 +131,8 @@ void Basic::Draw()
 	saberclass.Draw(lamppos);
 	mGallacticCruiser.Draw(lamppos);
 
-	mMonster_1.Draw(lamppos);
+	mMonster_1.Draw(lamppos, -1, true, glm::vec3(mCamera->Target));
+	axis.Draw();
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

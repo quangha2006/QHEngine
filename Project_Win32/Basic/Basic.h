@@ -17,6 +17,7 @@ private:
 	SkyBox mSkyBox;
 	float timestamp_for_lamp;
 	Sound soundIntro;
+	QHAxis axis;
 public:
 	void Draw();
 	void Init();

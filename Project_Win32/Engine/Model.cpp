@@ -522,7 +522,7 @@ void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 
 	double mTicksPerSecond = m_pScene->mAnimations[animToPlay]->mTicksPerSecond;
 	double mDuration = m_pScene->mAnimations[animToPlay]->mDuration;
-
+	
 	float TicksPerSecond = (float)(mTicksPerSecond != 0 ? mTicksPerSecond : 25.0f);
 	float TimeInTicks = TimeInSeconds * TicksPerSecond;
 	float AnimationTime = fmod(TimeInTicks, (float)mDuration);

@@ -1,6 +1,12 @@
 #include "FrameRate.h"
 #include "Logs.h"
+
 FrameRate * FrameRate::instance = NULL;
+
+int FrameRate::GetPrevFrameTime()
+{
+	return prevFrametime;
+}
 
 void FrameRate::Counter()
 {
@@ -14,6 +20,8 @@ void FrameRate::Counter()
 	uint64_t currentTime = Timer::getMillisecond();
 
 	int deltatime = (int)(currentTime - lastTime);
+
+	prevFrametime = deltatime;
 
 	if (total_deltatime + 2 * deltatime >= 1000)
 	{
@@ -53,7 +61,7 @@ void FrameRate::limitFPS()
 	int64_t frame_time = Timer::getMillisecond() - lasttimeframe; // milisecond
 
 	int64_t sleep_time = SKIP_TICKS - frame_time;
-	//TextRendering::getInstance()->Draw("SleepTime: ", sleep_time, 400.0f, 5.0f, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
+
 	if (sleep_time > 0 && sleep_time < SKIP_TICKS) {
 		Timer::sleep(sleep_time);
 	}
@@ -62,8 +70,9 @@ void FrameRate::limitFPS()
 
 FrameRate::FrameRate()
 {
-	currentFPS = 60;
+	currentFPS = 60.0f;
 	SKIP_TICKS = 0;
+	prevFrametime = 0;
 }
 
 FrameRate::~FrameRate()

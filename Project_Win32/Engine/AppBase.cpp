@@ -27,7 +27,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	mCamera = new Camera();
 	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(width) / (float)(height), mCamera->View_near, mCamera->View_far);
 	FrameRate::getInstance();
-	//FrameRate::getInstance()->setLimitFPS(60);
+	FrameRate::getInstance()->setLimitFPS(30);
 
 	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", width, height);
 	Init();
@@ -45,6 +45,10 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	text_NumTriangle.setScale(0.5f);
 	text_NumTriangle.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
+	text_FrameTime.setPos(0, 18);
+	text_FrameTime.setScale(0.25f);
+	text_FrameTime.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
+
 	return true;
 }
 
@@ -59,16 +63,19 @@ void AppBase::rendering()
 	int numTriangle = Debugging::getInstance()->getNumTriangle();
 	int numdrawcall = Debugging::getInstance()->getNumDrawCall();
 	float fps = FrameRate::getInstance()->GetFPS();
+	int frameTime = FrameRate::getInstance()->GetPrevFrameTime();
 
 	std::string tmp_fps = Utils::toString("FPS: %.1f", fps);
 	std::string tmp_drawcall = Utils::toString("DrawCall: %d", numdrawcall);
 	std::string tmp_numtriangle = Utils::toString("numTriangle: %d", numTriangle);
+	std::string tmp_PrevFraTime = Utils::toString("PrevFrameTime: %d", frameTime);
 
 	text_FPS.setText(tmp_fps);
 	text_DrawCall.setPos(text_FPS.getEndPos());
 	text_DrawCall.setText(tmp_drawcall);
 	text_NumTriangle.setText(tmp_numtriangle);
-	
+	text_FrameTime.setText(tmp_PrevFraTime);
+
 	FrameRate::getInstance()->Counter();
 	Debugging::getInstance()->resetCount();
 	TextRendering::getInstance()->Draw();
@@ -134,47 +141,32 @@ void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 }
 void AppBase::ZoomCamera(double xoffset, double yoffset)
 {
-	LOGI("mCamera->Pos: %f, %f, %f\n", mCamera->Pos.x, mCamera->Pos.y, mCamera->Pos.z);
-	LOGI("mCamera->Target: %f, %f, %f\n\n", mCamera->Target.x, mCamera->Target.y, mCamera->Target.z);
-	int offset = 10;
-	static float dis_x = abs(mCamera->Pos.x / mCamera->Target.x / offset);
-	static float dis_y = abs(mCamera->Pos.y / mCamera->Target.y / offset);
-	static float dis_z = abs(mCamera->Pos.z / mCamera->Target.z / offset);
+	int offset = 20;
+	float dis_x = (mCamera->Pos.x - mCamera->Target.x) / offset;
+	float dis_y = (mCamera->Pos.y - mCamera->Target.y) / offset;
+	float dis_z = (mCamera->Pos.z - mCamera->Target.z) / offset;
 
 	if (yoffset > 0.0f)
 	{
-		//mCamera->view = glm::translate(mCamera->view, glm::vec3(mCamera->Pos.x -= dis_x, mCamera->Pos.y -= dis_y, mCamera->Pos.z -= dis_z));
-
 		mCamera->Pos.x -= dis_x;
 		mCamera->Pos.y -= dis_y;
 		mCamera->Pos.z -= dis_z;
 
-		//mCamera->Target.x -= dis_x;
-		//mCamera->Target.y -= dis_y;
-		//mCamera->Target.z -= dis_z;
+		mCamera->Target.x -= dis_x;
+		mCamera->Target.y -= dis_y;
+		mCamera->Target.z -= dis_z;
 	}
 	else
 	{
-		//mCamera->view = glm::translate(mCamera->view, glm::vec3(mCamera->Pos.x += dis_x, mCamera->Pos.y += dis_y, mCamera->Pos.z += dis_z));
-
 		mCamera->Pos.x += dis_x;
 		mCamera->Pos.y += dis_y;
 		mCamera->Pos.z += dis_z;
-		
-		//mCamera->Target.x += dis_x;
-		//mCamera->Target.y += dis_y;
-		//mCamera->Target.z += dis_z;
+
+		mCamera->Target.x += dis_x;
+		mCamera->Target.y += dis_y;
+		mCamera->Target.z += dis_z;
 	}
-	//mCamera->Pos = mCamera->ExtractCameraPos(mCamera->view);
-	/*if (mCamera->zoom >= 1.0f && mCamera->zoom <= 45.0f)
-		mCamera->zoom -= (float)yoffset;
-	if (mCamera->zoom <= 1.0f)
-		mCamera->zoom = 1.0f;
-	if (mCamera->zoom >= 45.0f)
-		mCamera->zoom = 45.0f;
-	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(mContext->GetWindowWidth()) / (float)(mContext->GetWindowHeight()), mCamera->View_near, mCamera->View_far);
-	*/
-	}
+}
 AppBase::AppBase()
 {
 }
