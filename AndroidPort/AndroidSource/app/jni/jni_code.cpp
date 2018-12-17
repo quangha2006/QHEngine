@@ -19,24 +19,24 @@ extern "C" {
 JNIEXPORT void JNICALL
 Java_com_android_learnning3D_GLES3JNILib_InitMainAndroid(JNIEnv* env, jobject obj, jint width, jint height)
 {
-      Init_MainAndroid(width, height);
+      //Init_MainAndroid(width, height);
 }
 JNIEXPORT void JNICALL
 Java_com_android_learnning3D_GLES3JNILib_InitWithNativeWindow(JNIEnv* env, jobject obj, jint width, jint height, jobject surface)
  {
 
     ANativeWindow *window = ANativeWindow_fromSurface(env, surface);
-     //LOG_INFO("Got window %p", window);
+     LOG_INFO("Got window %p", window);
 	
     //int width = ANativeWindow_getWidth(window);
  	//int height = ANativeWindow_getHeight(window);
 	//ANativeWindow_setBuffersGeometry(window, width * 0.5f, height * 0.5f);
  	//LOG_INFO("Got window %d %d", width,height);
 
- 	//LOG_INFO("window buffer count %d",window);
+ 	LOG_INFO("window buffer count %d",window);
 
      //Init_With_NativeWindows(static_cast<ANativeWindow*>(window));
-	 Init_MainAndroid(width, height);
+	 Init_MainAndroid(width, height, static_cast<ANativeWindow*>(window));
  }
 JNIEXPORT void JNICALL
 Java_com_android_learnning3D_GLES3JNILib_Update(JNIEnv* env, jobject obj, jlong deltaltime)

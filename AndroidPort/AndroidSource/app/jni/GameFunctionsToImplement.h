@@ -3,8 +3,8 @@
 
 /*Require includes for extern functions*/
 
-//#include <android/native_window_jni.h> //for ANativeWindow
-//#include <android/native_window.h> // requires ndk r5 or newer
+#include <android/native_window_jni.h> //for ANativeWindow
+#include <android/native_window.h> // requires ndk r5 or newer
 
 // All the following functions are callbacks.
 // Please implement them in the game.
@@ -13,7 +13,7 @@
 
 //extern void Init();
 
-extern void Init_MainAndroid(int w, int h);
+extern void Init_MainAndroid(int w, int h, ANativeWindow * window);
 
 extern void Resize(int w, int h);
 

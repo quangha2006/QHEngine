@@ -4,8 +4,8 @@
 #include "Logs.h"
 #include <math.h>
 #include <thread>
-//#include <android/native_window_jni.h> //for ANativeWindow
-//#include <android/native_window.h> // requires ndk r5 or newer
+#include <android/native_window_jni.h> //for ANativeWindow
+#include <android/native_window.h> // requires ndk r5 or newer
 #include <GLES3/gl3.h>
 #include <GLES3/gl3ext.h>
 #include <EGL/egl.h>
@@ -16,7 +16,7 @@ struct TouchPoint
 	int x;
 	int y;
 };
-void Init_MainAndroid(int w, int h)
+void Init_MainAndroid(int w, int h, ANativeWindow * window)
 {
 	LOGI("=====================================================");
 	LOGI("GL Renderer  : %s", glGetString(GL_RENDERER));

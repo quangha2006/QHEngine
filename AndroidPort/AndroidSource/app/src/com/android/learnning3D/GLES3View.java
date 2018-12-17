@@ -115,10 +115,10 @@ public class GLES3View extends GLSurfaceView{
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-            GLES3JNILib.InitMainAndroid(widthPixels , heightPixels);
+            //GLES3JNILib.InitMainAndroid(widthPixels , heightPixels);
 
-            //glSurfaceView.getHolder().setFixedSize(glWidth,glHeight);
-            //GLES3JNILib.InitWithNativeWindow(widthPixels , heightPixels, glSurfaceView);
+            glSurfaceView.getHolder().setFixedSize(glWidth,glHeight);
+            GLES3JNILib.InitWithNativeWindow(widthPixels , heightPixels, glSurfaceView);
         }
     }
 }

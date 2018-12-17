@@ -6,7 +6,7 @@ char* Sound::readWAV(string const & filename, BasicWAVEHeader* header) {
 	char* buffer = 0;
 	FILE* file = fopen(filename.c_str(), "rb");
 	if (!file) {
-		LOGE("Audio handle error : Open %s\n", filename);
+		LOGE("Audio handle error : Open %s\n", filename.c_str());
 		return NULL;
 	}
 	if (fread(header, sizeof(BasicWAVEHeader), 1, file)) {
@@ -103,7 +103,7 @@ void Sound::Init(string const &path)
 	{
 		return;
 	}
-	LOGI("Load audio file: %s\n", path_modif);
+	LOGI("Load audio file: %s\n", path_modif.c_str());
 		//Now We've Got A Wave In Memory, Time To Turn It Into A Usable Buffer
 	buffer = createBufferFromWave(data, header);
 	if (!buffer) 

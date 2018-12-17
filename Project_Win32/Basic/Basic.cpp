@@ -11,17 +11,19 @@
 void Basic::Init()
 {
 	ANativeWindow* win = mContext->GetWindow();
-	glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-	GLFWwindow* offscreen_context = glfwCreateWindow(900, 540, "", 0, win);
+	//glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+	//GLFWwindow* offscreen_context = glfwCreateWindow(900, 540, "", 0, win);
 	
 	mframebuffer.Init(2048, 2048);
 
-	new thread(&Basic::LoadingThread, this, offscreen_context);
+	//thread * abc = new thread(&Basic::LoadingThread, this, NULL);
+	//abc->join();
+	LoadingThread(NULL);
 }
 
 void Basic::LoadingThread(ANativeWindow* win)
 {
-	glfwMakeContextCurrent(win);
+	//glfwMakeContextCurrent(win);
 	QHText loadingText;
 	loadingText.setPos(mContext->GetWindowWidth()/2-150, mContext->GetWindowHeight()/2);
 	loadingText.setText(Utils::toString("Loading %d%c", 0, 37));
