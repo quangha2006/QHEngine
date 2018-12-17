@@ -45,7 +45,7 @@ namespace Timer
 #if defined(ANDROID)
 		usleep(sleep_time * 1000);
 #else
-		timeBeginPeriod(1); // Need to add winmm.lib
+		timeBeginPeriod(1); // Need add winmm.lib
 		Sleep(sleep_time);
 		timeEndPeriod(1);
 #endif

@@ -2,31 +2,6 @@
 #include "Logs.h"
 #include <thread>
 
-//void ThreadDemo(GLFWwindow* win)
-//{
-//	LOGI("From thread");
-//	GLenum err_code = glGetError();
-//	if (GL_NO_ERROR != err_code)
-//	{
-//		LOGI("OpenGL Error 1 @ : %i\n", err_code);
-//		//err_code = glGetError();
-//	}
-//	glfwMakeContextCurrent(win);
-//	err_code = glGetError();
-//	if (GL_NO_ERROR != err_code)
-//	{
-//		LOGI("OpenGL Error 2 @ : %i\n", err_code);
-//		//err_code = glGetError();
-//	}
-//	//LOGI("MakeCurrent: %d", MakeCurrent);
-//	LOGI("\n=====================================================\n");
-//	LOGI("GL Renderer  : %s\n", glGetString(GL_RENDERER));
-//	LOGI("GL Version   : %s\n", glGetString(GL_VERSION));
-//	LOGI("GL Vendor    : %s\n", glGetString(GL_VENDOR));
-//	LOGI("=====================================================\n");
-//	glfwDestroyWindow(win);
-//	//eglMakeCurrent(eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-//}
 bool GLFWContext::createWindow(int32_t width, int32_t height) 
 {
 	if (!glfwInit())
@@ -45,21 +20,13 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 	glfwWindowHint(GLFW_DEPTH_BITS, 24);
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
-	window = glfwCreateWindow(width, height, "Begin App", NULL, NULL); // Open a window and create its OpenGL context
+	window = glfwCreateWindow(width, height, "QHEngine", NULL, NULL); // Open a window and create its OpenGL context
 
 	if (window == NULL) {
 		LOGE("Failed to open GLFW window.");
 		glfwTerminate();
 		return false;
 	}
-
-	//test thread
-	//GLFWwindow* win;
-	//glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-	//win = glfwCreateWindow(width, height, "Optimus example", 0, window);
-
-	//std::thread *qqqqq = new std::thread(ThreadDemo, win);
-	//end test thread
 
 	glfwMakeContextCurrent(window); // Initialize GLEW
 	glViewport(0, 0, width, height);

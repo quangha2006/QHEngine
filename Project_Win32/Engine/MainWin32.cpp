@@ -16,7 +16,7 @@ void mouse_pos_callback(GLFWwindow* window, double xpos, double ypos);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void keyboard_button_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-//void processInput(GLFWwindow *window);
+void error_callback(int error, const char* description);
 
 std::string current_working_directory()
 {
@@ -37,6 +37,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	app->GetRequireScreenSize(defaultWidth, defaultHeight);
 
+	glfwSetErrorCallback(error_callback);
+
 	if (!app->initialize(defaultWidth, defaultHeight))
 	{
 		LOGE("FAILED initialize");
@@ -56,8 +58,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	{
 		app->rendering();
 		mContext->SwapBuffers();
-	} while (glfwGetKey(mContext->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-		glfwWindowShouldClose(mContext->GetWindow()) == 0);
+	} while (glfwGetKey(mContext->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(mContext->GetWindow()) == 0);
 	glfwDestroyWindow(mContext->GetWindow());
 	glfwTerminate();
 	return 0;
@@ -129,4 +130,8 @@ void keyboard_button_callback(GLFWwindow * window, int key, int scancode, int ac
 {
 	if (key!=256) // 256 = ESC key
 		app->OnGameKeyPressed(key, scancode, action, mods);
+}
+void error_callback(int error, const char* description)
+{
+	LOGE("GLFW ERROR: %s", description);
 }

@@ -6,13 +6,32 @@
 #include "Debugging.h"
 #include "QHText.h"
 #include "SkyBox.h"
+#include "Utils.h"
 
 void Basic::Init()
 {
+	ANativeWindow* win = mContext->GetWindow();
+	glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+	GLFWwindow* offscreen_context = glfwCreateWindow(900, 540, "", 0, win);
+	
+	mframebuffer.Init(2048, 2048);
+
+	new thread(&Basic::LoadingThread, this, offscreen_context);
+}
+
+void Basic::LoadingThread(ANativeWindow* win)
+{
+	glfwMakeContextCurrent(win);
+	QHText loadingText;
+	loadingText.setPos(mContext->GetWindowWidth()/2-150, mContext->GetWindowHeight()/2);
+	loadingText.setText(Utils::toString("Loading %d%c", 0, 37));
+	
 	mCamera->Pos = glm::vec3(5.0f, 5.0f, 20.0f);
 	mCamera->Target = glm::vec3(0.0f, 1.0f, 0.0f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	mCamera->lightPos = glm::vec3(8.2f, 10.0f, 9.0f);
+
+	loadingText.setText(Utils::toString("Loading %d%c", 5, 37));
 
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
 	ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
@@ -22,6 +41,7 @@ void Basic::Init()
 	//mNanosuit.SetScale(glm::vec3(0.4f));
 	//mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
 	//mNanosuit.SetDrawPolygon(true);
+	loadingText.setText(Utils::toString("Loading %d%c", 10, 37));
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, true);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
@@ -30,7 +50,7 @@ void Basic::Init()
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetTranslate(glm::vec3(0.0f, 0.5f, 0.5f));
 	mMerce.SetAnimPlay(0);
-
+	loadingText.setText(Utils::toString("Loading %d%c", 20, 37));
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
@@ -40,6 +60,7 @@ void Basic::Init()
 	mSpider.SetAnimPlay(0);
 	mSpider.SetNeedRotate(false);
 
+	loadingText.setText(Utils::toString("Loading %d%c", 40,37));
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, false, 0.1f);
@@ -52,17 +73,21 @@ void Basic::Init()
 	mMonster_1.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f)); 
 	//mMonster_1.SetScale(glm::vec3(0.02f));
 	mMonster_1.SetNeedRotate(true);
-	
-	mframebuffer.Init(2048, 2048);
-	//mframebuffer.EnableDebug(true);
-
+	loadingText.setText(Utils::toString("Loading %d%c", 80,37));
 	mSkyBox.Init("SkyBox");
 	//soundIntro.Init("Sound/chuabaogio.wav");
 	//soundIntro.Play();
+	loadingText.setText(Utils::toString("Loading %d%c", 100, 37));
 	axis.Init(mCamera);
+	isLoadingDone = true;
 }
+
 void Basic::Draw()
 {
+	if (!isLoadingDone)
+	{
+		return;
+	}
 	mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateSkeleton();
@@ -96,8 +121,8 @@ void Basic::Draw()
 	saberclass.Draw();
 	mGallacticCruiser.Draw();
 	mMonster_1.Draw();
-
-	axis.Draw();
+	
+	//axis.Draw();
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
@@ -162,6 +187,7 @@ void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 Basic::Basic()
 {
 	timestamp_for_lamp = 0;
+	isLoadingDone = false;
 }
 
 Basic::~Basic()

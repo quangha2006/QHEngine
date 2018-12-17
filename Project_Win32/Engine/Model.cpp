@@ -120,11 +120,11 @@ void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableA
 		LOGI("  %d: %s\n", i, meshes[i].GetName().c_str());
 	}
 
-	isModelLoaded = true;
-	
 	uint64_t time_ms_end = Timer::getMillisecond();
 
 	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
+
+	isModelLoaded = true;
 }
 
 void Model::processNode(aiNode * node, const aiScene * scene, float fixedModel)
@@ -495,7 +495,7 @@ void Model::SetTimeStampAnim(int64_t time)
 }
 void Model::UpdateSkeleton(int64_t time)
 {
-	if (!hasAnimation) return;
+	if (!isModelLoaded || !camera || !hasAnimation) return;
 
 	float RunningTime = 0.0f;
 

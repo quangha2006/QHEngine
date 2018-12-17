@@ -49,40 +49,39 @@ void Game::Draw()
 	sanctuary_bird_01.UpdateSkeleton();
 
 	ShaderManager::getInstance()->setUseProgram("model");
-	glm::vec3 lampPos = glm::vec3(8.2f, 10.0f, 0.0f);
 
-	bountyhunter.Draw(lampPos, 0, true, glm::vec3(1210.6f, 0.0, 606.5f), false, 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_tower_01.Draw(lampPos, 0, true, glm::vec3(15.6592f, -2.15f, 2.1054f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	bountyhunter.Draw(0, true, glm::vec3(1210.6f, 0.0, 606.5f), false, 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_tower_01.Draw(0, true, glm::vec3(15.6592f, -2.15f, 2.1054f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	
-	sanctuary_bird_01.Draw(lampPos, 0, true, glm::vec3(23.09f, -3.6f, 4.67f));
-	sanctuary_bird_01.Draw(lampPos, 0, true, glm::vec3(19.256f, -4.15f, 0.7717f));
+	sanctuary_bird_01.Draw(0, true, glm::vec3(23.09f, -3.6f, 4.67f));
+	sanctuary_bird_01.Draw(0, true, glm::vec3(19.256f, -4.15f, 0.7717f));
 
-	sanctuary_arena_a_01.Draw(lampPos, 0, true, glm::vec3(20.6006f, 2.6813f, 20.47f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));		//sanctuary_arch_01
-	sanctuary_arena_a_01.Draw(lampPos, 1, true, glm::vec3(21.4392f,-13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_ground_a_01
-	sanctuary_arena_a_01.Draw(lampPos, 2, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 3, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 4, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 5, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 6, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 7, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 8, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 9, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 10, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 11, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 12, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 13, true, glm::vec3(17.6593f, -0.5003f, 27.3055f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_trunk_01
-	sanctuary_arena_a_01.Draw(lampPos, 14, true, glm::vec3(32.5118f, -11.4552f, 22.7177f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_water010
-	sanctuary_arena_a_01.Draw(lampPos, 15, true, glm::vec3(25.7765f, -0.076f, 44.7686f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_bridge_arena_a_01
-	sanctuary_arena_a_01.Draw(lampPos, 16, true, glm::vec3(29.1565f, 3.6478f, -1.7717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_rock_part_01
-	sanctuary_arena_a_01.Draw(lampPos, 17, true, glm::vec3(29.1565f, 3.6478f, -1.7717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 18, true, glm::vec3(28.7564f, 3.6478f, -1.7717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 19, true, glm::vec3(28.9564f, 3.6478f, -0.9719f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 20, true, glm::vec3(29.3565f, 3.6478f, -1.1717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_arena_a_01.Draw(lampPos, 21, true, glm::vec3(28.6564f, 3.6478f, -1.1717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(0, true, glm::vec3(20.6006f, 2.6813f, 20.47f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));		//sanctuary_arch_01
+	sanctuary_arena_a_01.Draw(1, true, glm::vec3(21.4392f,-13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_ground_a_01
+	sanctuary_arena_a_01.Draw(2, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(3, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(4, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(5, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(6, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(7, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(8, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(9, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(10, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(11, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(12, true, glm::vec3(21.4392f, -13.9883f, 27.0087f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(13, true, glm::vec3(17.6593f, -0.5003f, 27.3055f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_trunk_01
+	sanctuary_arena_a_01.Draw(14, true, glm::vec3(32.5118f, -11.4552f, 22.7177f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_arena_a_water010
+	sanctuary_arena_a_01.Draw(15, true, glm::vec3(25.7765f, -0.076f, 44.7686f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_bridge_arena_a_01
+	sanctuary_arena_a_01.Draw(16, true, glm::vec3(29.1565f, 3.6478f, -1.7717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));	//sanctuary_rock_part_01
+	sanctuary_arena_a_01.Draw(17, true, glm::vec3(29.1565f, 3.6478f, -1.7717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(18, true, glm::vec3(28.7564f, 3.6478f, -1.7717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(19, true, glm::vec3(28.9564f, 3.6478f, -0.9719f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(20, true, glm::vec3(29.3565f, 3.6478f, -1.1717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_arena_a_01.Draw(21, true, glm::vec3(28.6564f, 3.6478f, -1.1717f), true, 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	
-	sanctuary_torch_a_01.Draw(lampPos, 0, true, glm::vec3(24.445f, 2.9169f, 17.5039f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_torch_a_01.Draw(lampPos, 0, true, glm::vec3(15.6449, 2.0f, 19.9f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	sanctuary_waterfall_01.Draw(lampPos, -1, true, glm::vec3(a, 1.0f, b), false, 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_torch_a_01.Draw(0, true, glm::vec3(24.445f, 2.9169f, 17.5039f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_torch_a_01.Draw(0, true, glm::vec3(15.6449, 2.0f, 19.9f), true, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	sanctuary_waterfall_01.Draw(-1, true, glm::vec3(a, 1.0f, b), false, 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Game::GetRequireScreenSize(int32_t & width, int32_t & height)
