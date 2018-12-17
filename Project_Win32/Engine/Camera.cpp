@@ -21,8 +21,6 @@ vec3 Camera::Right()
 
 Camera::Camera()
 {
-	//Pos		= vec3(0.0f, 10.5f, 20.0f);
-	//Target	= vec3(0.0f, 10.0f, 0.0f);
 	Pos = vec3(0.0f, 3.0f, 8.0f);
 	Target = vec3(0.0f, 1.0f, 0.0f);
 	up		= vec3(0.0f, 1.0f, 0.0f);
@@ -32,6 +30,8 @@ Camera::Camera()
 	zoom = 75.0f;
 	View_near = 0.1f;
 	View_far = 100000.0f;
+	light_near = 0.1f;
+	light_far = 40.0f;
 }
 vec3 Camera::ExtractCameraPos(const glm::mat4 & a_modelView)
 {
@@ -57,13 +57,15 @@ vec3 Camera::ExtractCameraPos(const glm::mat4 & a_modelView)
 
 	return top / -denom;
 }
-void Camera::UpdateView()
-{
-	view = glm::lookAt(Pos, Target, up);
-}
+
 void Camera::UpdateWorldViewProjection()
 {
+	view = glm::lookAt(Pos, Target, up);
 	WorldViewProjectionMatrix = projection * view;
+
+	lightProjection = glm::ortho(-12.0f, 15.0f, -5.0f, 14.0f, light_near, light_far);
+	lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 3.0, 0.2));
+	lightSpaceMatrix = lightProjection * lightView;
 }
 Camera::~Camera()
 {

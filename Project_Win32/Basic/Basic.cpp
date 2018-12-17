@@ -12,7 +12,8 @@ void Basic::Init()
 	mCamera->Pos = glm::vec3(5.0f, 5.0f, 20.0f);
 	mCamera->Target = glm::vec3(0.0f, 1.0f, 0.0f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
-	
+	mCamera->lightPos = glm::vec3(8.2f, 10.0f, 9.0f);
+
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
 	ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
@@ -29,11 +30,6 @@ void Basic::Init()
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetTranslate(glm::vec3(0.0f, 0.5f, 0.5f));
 	mMerce.SetAnimPlay(0);
-
-	//mSun.Init("sol/sol.obj", mCamera, false, 0.0001f);
-	mSun.SetUseLighting(false);
-	mSun.SetCustomColor(glm::vec3(1.0f));
-	//mSun.SetScale(glm::vec3(0.00001f));
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
@@ -59,7 +55,6 @@ void Basic::Init()
 	
 	mframebuffer.Init(2048, 2048);
 	//mframebuffer.EnableDebug(true);
-	//AddText("Current Time: " + Timer::getCalendar(), 0.0f, 0.0f, 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 
 	mSkyBox.Init("SkyBox");
 	//soundIntro.Init("Sound/chuabaogio.wav");
@@ -74,41 +69,18 @@ void Basic::Draw()
 	mMerce.UpdateSkeleton();
 	mMonster_1.UpdateSkeleton();
 	
-	//mMonster_1.SetTranslate(glm::vec3(0.5f, 0.0f, 0.0f));
-	//mMonster_1.SetRotate(1.0f, glm::vec3(0.0f, 1.0f, 0.0f));*/
-
-	glm::mat4 model_lamp_temp;
-	glm::vec3 lampPos = glm::vec3(8.2f, 10.0f, 9.0f);
-	//float timestamp_for_lamp = Timer::getMillisecond()/1000.0f;
-	model_lamp_temp = glm::rotate(model_lamp_temp, glm::radians(timestamp_for_lamp * 10), glm::vec3(0.0f, 1.0f, 0.0f));
-	model_lamp_temp = glm::translate(model_lamp_temp, lampPos);
-	model_lamp_temp = glm::scale(model_lamp_temp, glm::vec3(0.4f));
-
-	glm::vec3 lamppos;
-	lamppos.x = model_lamp_temp[3].x;
-	lamppos.y = model_lamp_temp[3].y;
-	lamppos.z = model_lamp_temp[3].z;
-	
 	mframebuffer.Enable(mContext->GetWindowWidth(), mContext->GetWindowHeight());
 	
-	glm::mat4 lightProjection, lightView;
-	glm::mat4 lightSpaceMatrix;
-	float near_plane = 0.1f, far_plane = 40.0f;
-	lightProjection = glm::ortho(-12.0f, 15.0f, -5.0f, 14.0f, near_plane, far_plane);
-	//lightProjection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
-	lightView = glm::lookAt(lamppos, glm::vec3(0.0f), glm::vec3(0.0, 3.0, 0.2));
-	lightSpaceMatrix = lightProjection * lightView;
+	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
+	ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
+	ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
 
-	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", lightSpaceMatrix);
-	ShaderManager::getInstance()->setFloat("near_plane", near_plane);
-	ShaderManager::getInstance()->setFloat("far_plane", far_plane);
-
-	mNanosuit.Draw(lamppos);	
-	mMerce.Draw(lamppos);
-	mSpider.Draw(lamppos);
-	saberclass.Draw(lamppos);
-	mGallacticCruiser.Draw(lamppos);
-	mMonster_1.Draw(lamppos, -1, true, glm::vec3(mCamera->Target));
+	mNanosuit.Draw();
+	mMerce.Draw();
+	mSpider.Draw();
+	saberclass.Draw();
+	mGallacticCruiser.Draw();
+	mMonster_1.Draw();
 
 	GLuint depthMap = mframebuffer.Disable();
 	
@@ -116,22 +88,15 @@ void Basic::Draw()
 	glActiveTexture(GL_TEXTURE10);
 	glBindTexture(GL_TEXTURE_2D, depthMap);
 	ShaderManager::getInstance()->setInt("shadowMap",10);
-	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 
-	m_Streetenvironment.Draw(lamppos);
+	m_Streetenvironment.Draw();
+	mNanosuit.Draw();
+	mMerce.Draw();
+	mSpider.Draw();
+	saberclass.Draw();
+	mGallacticCruiser.Draw();
+	mMonster_1.Draw();
 
-	mNanosuit.Draw(lamppos);
-
-	mSun.SetWorld();
-	mSun.SetTranslate(lampPos);
-	mSun.Draw(lamppos);
-
-	mMerce.Draw(lamppos);
-	mSpider.Draw(lamppos);
-	saberclass.Draw(lamppos);
-	mGallacticCruiser.Draw(lamppos);
-
-	mMonster_1.Draw(lamppos, -1, true, glm::vec3(mCamera->Target));
 	axis.Draw();
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)

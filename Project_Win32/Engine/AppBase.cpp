@@ -27,7 +27,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	mCamera = new Camera();
 	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(width) / (float)(height), mCamera->View_near, mCamera->View_far);
 	FrameRate::getInstance();
-	FrameRate::getInstance()->setLimitFPS(30);
+	//FrameRate::getInstance()->setLimitFPS(30);
 
 	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", width, height);
 	Init();
@@ -56,7 +56,6 @@ void AppBase::rendering()
 {
 	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
-	mCamera->UpdateView();
 	mCamera->UpdateWorldViewProjection();
 	Draw();
 	unsigned short numDrawCall = Debugging::getInstance()->getNumDrawCall();
@@ -135,7 +134,7 @@ void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 
 	if (mCamera->Pos.y > 60) mCamera->Pos.y = 60;
 	if (mCamera->Pos.y < 0.5) mCamera->Pos.y = 0.5;
-	//mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
+
 	touch_old_x = x;
 	touch_old_y = y;
 }

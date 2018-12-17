@@ -395,7 +395,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	return textures;
 }
 
-void Model::Draw(glm::vec3 lamppos, int drawmesh, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
+void Model::Draw(int drawmesh, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
 {
 	if (!isModelLoaded || !camera) return;
 
@@ -428,7 +428,8 @@ void Model::Draw(glm::vec3 lamppos, int drawmesh, bool isTranslate, glm::vec3 tr
 	ShaderManager::getInstance()->setMat4("world_inverse", model_inverse);
 
 	ShaderManager::getInstance()->setFloat("material_shininess", 18.0f);
-	ShaderManager::getInstance()->setVec3("light_position", lamppos);
+	ShaderManager::getInstance()->setVec3("light_position", camera->lightPos);
+	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", camera->lightSpaceMatrix);
 	ShaderManager::getInstance()->setVec3("viewPos", camera->Pos);
 	ShaderManager::getInstance()->setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
 	ShaderManager::getInstance()->setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
