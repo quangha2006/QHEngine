@@ -1,49 +1,17 @@
 #include "EGLAppContext.h"
 #include "Logs.h"
 #include <thread>
-
 #include <time.h>
 #include <unistd.h>
-char const * QueryString(EGLDisplay display, EGLint name)
-{
-	char const * eglString = eglQueryString(display, name);
-	if (eglString == NULL)
-	{
-		LOGE("NativeSurface::QueryString: eglQueryString failed.");
-	}
-	return eglString;
-}
-void ThreadDemo(EGLDisplay eglDisplay, EGLConfig config, EGLSurface eglSurface_draw, EGLSurface eglSurface_read, EGLContext esContex_loader)
-{
-	EGLint *attribList = new EGLint[21]
-	{
-		EGL_LEVEL, 0,
-		EGL_RENDERABLE_TYPE, 4,
-		EGL_COLOR_BUFFER_TYPE, EGL_RGB_BUFFER,
-		EGL_RED_SIZE,       8,
-		EGL_GREEN_SIZE,     8,
-		EGL_BLUE_SIZE,      8,
-		EGL_ALPHA_SIZE,     8,
-		EGL_DEPTH_SIZE,     24,
-		EGL_SAMPLE_BUFFERS, 1,
-		EGL_SAMPLES, 4,
-		EGL_NONE
-	};
-	EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE };
 
-	EGLContext share_context1 = eglCreateContext(eglDisplay, config, esContex_loader, contextAttribs);
-	LOGI("From thread");
+void ThreadDemo(EGLDisplay eglDisplay, EGLSurface eglSurface_draw, EGLSurface eglSurface_read, EGLContext share_context1)
+{
+
+	bool MakeCurrent = eglMakeCurrent(eglDisplay, eglSurface_draw, eglSurface_read, share_context1);
 	GLenum err_code = glGetError();
 	if (GL_NO_ERROR != err_code)
 	{
-		LOGI("OpenGL Error 1 @ : %i\n", err_code);
-		//err_code = glGetError();
-	}
-	bool MakeCurrent = eglMakeCurrent(eglDisplay, eglSurface_draw, eglSurface_read, share_context1);
-	err_code = glGetError();
-	if (GL_NO_ERROR != err_code)
-	{
-		LOGI("OpenGL Error 2 @ : %i\n", err_code);
+		LOGI("OpenGL Error 3 @ : %i\n", err_code);
 		//err_code = glGetError();
 	}
 	LOGI("MakeCurrent: %d", MakeCurrent);
@@ -52,13 +20,14 @@ void ThreadDemo(EGLDisplay eglDisplay, EGLConfig config, EGLSurface eglSurface_d
 	LOGI("GL Version   : %s", glGetString(GL_VERSION));
 	LOGI("GL Vendor    : %s", glGetString(GL_VENDOR));
 	LOGI("=====================================================\n");
-	eglMakeCurrent(eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+	LOGI("END THREAD!\n");
 }
 bool EGLAppContext::createWindow(int32_t width, int32_t height)
 {
+//	LOGI("EGLAppContext::createWindow: %d %d", width, height);
 	this->width = width;
 	this->height = height;
-	return true;
+//	return true;
 	EGLContext context = eglGetCurrentContext();
 	EGLDisplay display = eglGetCurrentDisplay();
 	EGLSurface surface_read = eglGetCurrentSurface(EGL_READ);
@@ -81,20 +50,32 @@ bool EGLAppContext::createWindow(int32_t width, int32_t height)
 		EGL_NONE
 	};
 	eglChooseConfig(display, attribList, &config, 1, &numConfigs);
-	//EGLContext share_context1 = eglCreateContext(display, config, context, contextAttribs);
-	//EGLContext share_context2 = eglCreateContext(display, config, context, contextAttribs);
-	/*if (share_context1 == EGL_NO_CONTEXT)
-		LOGI("ERROR! eglCreateContext Failed\n");
-	else
+	EGLContext share_context1 = eglCreateContext(display, config, context, contextAttribs);
+	if (share_context1 == EGL_NO_CONTEXT)
+		LOGE("ERROR! EGL_NO_CONTEXT\n");
+	if (display == EGL_NO_DISPLAY)
+		LOGI("ERROR! EGL_NO_DISPLAY\n");
+	if (surface_draw == EGL_NO_SURFACE)
+		LOGE("ERROR! EGL_NO_SURFACE draw\n");
+	if (surface_read == EGL_NO_SURFACE)
+		LOGE("ERROR! EGL_NO_SURFACE read\n");
+	GLenum err_code = glGetError();
+	if (GL_NO_ERROR != err_code)
 	{
-		LOGI("DONE! eglCreateContext successful\n");*/
-		//eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-		std::thread *qqqqq = new std::thread(ThreadDemo, display, config,surface_draw, surface_read, context);
-		//std::thread *qqqqq1 = new std::thread(ThreadDemo, display, surface_draw, surface_read, share_context2);
-		//qqqqq->join();
-		//qqqqq1->join();
-		//eglMakeCurrent(display, surface_draw, surface_read, context);
-	//}
+		LOGI("OpenGL Error 3 @ : %i\n", err_code);
+		//err_code = glGetError();
+	}
+	EGLSurface surface2 = eglCreatePbufferSurface(display, config, attribList);
+	//eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+	//eglMakeCurrent(display, surface_draw, surface_read, share_context1);
+	std::thread *abc = new std::thread(ThreadDemo, display, surface2, surface2, share_context1);
+	//abc->join();
+	//eglMakeCurrent(display, surface_draw, surface_read, context);
+	LOGI("=====================================================");
+	LOGI("GL Renderer  : %s", glGetString(GL_RENDERER));
+	LOGI("GL Version   : %s", glGetString(GL_VERSION));
+	LOGI("GL Vendor    : %s", glGetString(GL_VENDOR));
+	LOGI("=====================================================\n");
 
 	return true;
 	
@@ -169,22 +150,6 @@ bool EGLAppContext::createWindow(int32_t width, int32_t height)
 	LOGI("GL Version   : %s", glGetString(GL_VERSION));
 	LOGI("GL Vendor    : %s", glGetString(GL_VENDOR));
 	LOGI("=====================================================\n");
-
-	//EGLContext esContex_loader = eglCreateContext(display, config, context, contextAttribs);
-	//ThreadDemo(display, surface, surface, esContex_loader);
-	//LOGI("aaaaaaaa %d", MakeCurrent);
-	GLenum err_code = glGetError();
-	if (GL_NO_ERROR != err_code)
-	{
-		LOGI("OpenGL Error 3 @ : %i\n", err_code);
-		//err_code = glGetError();
-	}
-	//if (esContex_loader != EGL_NO_CONTEXT)
-	//{
-		//LOGI("Create esContex_loader successfull");
-		//std::thread *qqqqq = new std::thread(ThreadDemo, display, surface, surface, esContex_loader);
-		//newthread.join();
-	//}
 
 	mDisplay = display;
 	mSurface = surface;

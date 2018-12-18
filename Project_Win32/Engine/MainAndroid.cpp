@@ -18,15 +18,8 @@ struct TouchPoint
 };
 void Init_MainAndroid(int w, int h, ANativeWindow * window)
 {
-	LOGI("=====================================================");
-	LOGI("GL Renderer  : %s", glGetString(GL_RENDERER));
-	LOGI("GL Version   : %s", glGetString(GL_VERSION));
-	LOGI("GL Vendor    : %s", glGetString(GL_VENDOR));
-	LOGI("Screen Size  : %d, %d", w,h);
-	LOGI("=====================================================\n");
-
 	app = AppFactory();
-
+	//app->GetContext()->SetWindow(window);
 	if (!app->initialize(w, h))
 	{
 		LOGE("FAILED initialize");

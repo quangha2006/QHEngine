@@ -2,6 +2,7 @@ package com.android.learnning3D;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.view.Surface;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -35,15 +36,14 @@ public class GLES3View extends GLSurfaceView{
         final boolean supportsEs3 = configurationInfo.reqGlEsVersion >= 0x30000;
         if (supportsEs3) {
             setEGLContextClientVersion(3);
-            //Log.i("QHEngine", "setEGLContextClientVersion = 3");
         }
         else {
             setEGLContextClientVersion(2);
-            //Log.i("QHEngine", "setEGLContextClientVersion = 2");
         }
+        glSurfaceView = this;
         setPreserveEGLContextOnPause(true);
         setRenderer(new Renderer());
-        glSurfaceView = this;
+
     }
     public boolean onTouchEvent(MotionEvent event)
     {
@@ -116,9 +116,7 @@ public class GLES3View extends GLSurfaceView{
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
             //GLES3JNILib.InitMainAndroid(widthPixels , heightPixels);
-
-            glSurfaceView.getHolder().setFixedSize(glWidth,glHeight);
-            GLES3JNILib.InitWithNativeWindow(widthPixels , heightPixels, glSurfaceView);
+            GLES3JNILib.InitWithNativeWindow(widthPixels , heightPixels, glSurfaceView.getHolder().getSurface());
         }
     }
 }

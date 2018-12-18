@@ -161,9 +161,6 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AndroidPort\AndroidSource\app\jni\GameFunctionsToImplement.h">
-      <Filter>Android</Filter>
-    </ClInclude>
     <ClInclude Include="SkyBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>

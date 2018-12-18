@@ -24,6 +24,14 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	mContext = new EGLAppContext();
 #endif
 	mContext->createWindow(width, height);
+
+	LOGI("\n=====================================================\n");
+	LOGI("GL Renderer  : %s\n", glGetString(GL_RENDERER));
+	LOGI("GL Version   : %s\n", glGetString(GL_VERSION));
+	LOGI("GL Vendor    : %s\n", glGetString(GL_VENDOR));
+	LOGI("Screen Size  : %d, %d", width, height);
+	LOGI("=====================================================\n");
+
 	mCamera = new Camera();
 	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(width) / (float)(height), mCamera->View_near, mCamera->View_far);
 	FrameRate::getInstance();

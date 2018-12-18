@@ -40,11 +40,6 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-	LOGI("\n=====================================================\n");
-	LOGI("GL Renderer  : %s\n", glGetString(GL_RENDERER));
-	LOGI("GL Version   : %s\n", glGetString(GL_VERSION));
-	LOGI("GL Vendor    : %s\n", glGetString(GL_VENDOR));
-	LOGI("=====================================================\n");
 	return true; 
 }
 void GLFWContext::SwapBuffers()

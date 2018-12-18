@@ -1,11 +1,16 @@
 #include <jni.h>
-#include "GameFunctionsToImplement.h"
 #include <android/log.h>
 #include <android/native_window.h> // requires ndk r5 or newer
 #include <android/native_window_jni.h> // requires ndk r5 or newer
 #define LOG_TAG "QHEngine"
 #define LOG_INFO(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define LOG_ERROR(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+
+extern void Init_MainAndroid(int w, int h, ANativeWindow * window);
+extern void Resize(int w, int h);
+extern void Update(long deltaTime);
+extern void CleanUp();
+extern void OnGameTouchEvent(int eventId, int x, int y, int pointerId);
 
 extern "C" {
     JNIEXPORT void JNICALL Java_com_android_learnning3D_GLES3JNILib_InitMainAndroid(JNIEnv* env, jobject obj, jint width, jint height);
@@ -24,16 +29,7 @@ Java_com_android_learnning3D_GLES3JNILib_InitMainAndroid(JNIEnv* env, jobject ob
 JNIEXPORT void JNICALL
 Java_com_android_learnning3D_GLES3JNILib_InitWithNativeWindow(JNIEnv* env, jobject obj, jint width, jint height, jobject surface)
  {
-
-    ANativeWindow *window = ANativeWindow_fromSurface(env, surface);
-     LOG_INFO("Got window %p", window);
-	
-    //int width = ANativeWindow_getWidth(window);
- 	//int height = ANativeWindow_getHeight(window);
-	//ANativeWindow_setBuffersGeometry(window, width * 0.5f, height * 0.5f);
- 	//LOG_INFO("Got window %d %d", width,height);
-
- 	LOG_INFO("window buffer count %d",window);
+	ANativeWindow *window = ANativeWindow_fromSurface(env, surface);
 
      //Init_With_NativeWindows(static_cast<ANativeWindow*>(window));
 	 Init_MainAndroid(width, height, static_cast<ANativeWindow*>(window));
