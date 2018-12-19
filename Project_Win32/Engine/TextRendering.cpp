@@ -126,14 +126,14 @@ TextRendering * TextRendering::getInstance()
 
 void TextRendering::UpdateScreenSize(int w, int h)
 {
-#if defined(ANDROID)
-	float scale = 900.0f / w;
-	if (w > 900) w = 900;
-	h = h * scale;
-#endif
+//#if defined(ANDROID)
+//	float scale = 900.0f / w;
+//	if (w > 900) w = 900;
+//	h = h * scale;
+//#endif
 	projection = glm::ortho(0.0f, static_cast<GLfloat>(w), static_cast<GLfloat>(h), 0.0f);
-	this->screen_width = w;
-	this->screen_height = h;
+	screen_width = w;
+	screen_height = h;
 }
 
 int TextRendering::AddQHText(QHText *textneedrender)
@@ -386,8 +386,11 @@ void TextRendering::Draw()
 	vector<TextData> fulltextdata;
 	for (int i = 0; i < m_ListQHText.size(); i++)
 	{
-		vector<TextData> tmp = m_ListQHText[i]->getTextData();
-		fulltextdata.insert(fulltextdata.end(), tmp.begin(), tmp.end());
+		if (m_ListQHText[i]) // avoid crash randomly when remove a text on thread.
+		{
+			vector<TextData> tmp = m_ListQHText[i]->getTextData();
+			fulltextdata.insert(fulltextdata.end(), tmp.begin(), tmp.end());
+		}
 	}
 	if (fulltextdata.size() > m_Maxchar * 6)
 	{

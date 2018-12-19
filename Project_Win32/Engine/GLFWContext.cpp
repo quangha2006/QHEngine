@@ -42,6 +42,22 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 
 	return true; 
 }
+ShareContext GLFWContext::CreateShareContext()
+{
+	ShareContext shared_context;
+	glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+	shared_context.window = glfwCreateWindow(900, 540, "", 0, window);
+	return shared_context;
+}
+bool GLFWContext::MakeContextCurrent(ShareContext shared_context)
+{
+	glfwMakeContextCurrent(shared_context.window);
+	return true;
+}
+void GLFWContext::DestroyContext()
+{
+	glfwMakeContextCurrent(NULL);
+}
 void GLFWContext::SwapBuffers()
 {
 	glfwSwapBuffers(window);

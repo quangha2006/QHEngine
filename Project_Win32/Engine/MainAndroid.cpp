@@ -19,7 +19,7 @@ struct TouchPoint
 void Init_MainAndroid(int w, int h, ANativeWindow * window)
 {
 	app = AppFactory();
-	//app->GetContext()->SetWindow(window);
+
 	if (!app->initialize(w, h))
 	{
 		LOGE("FAILED initialize");

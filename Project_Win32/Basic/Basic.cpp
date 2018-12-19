@@ -10,21 +10,17 @@
 
 void Basic::Init()
 {
-	ANativeWindow* win = mContext->GetWindow();
-	//glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-	//GLFWwindow* offscreen_context = glfwCreateWindow(900, 540, "", 0, win);
-	
 	mframebuffer.Init(2048, 2048);
 
-	//thread * abc = new thread(&Basic::LoadingThread, this, NULL);
-	//abc->join();
-	LoadingThread(NULL);
+	ShareContext shared_context = mContext->CreateShareContext();
+	new thread(&Basic::LoadingThread, this, shared_context);
 }
 
-void Basic::LoadingThread(ANativeWindow* win)
+void Basic::LoadingThread(ShareContext shared_context)
 {
-	//glfwMakeContextCurrent(win);
+	mContext->MakeContextCurrent(shared_context);
 	QHText loadingText;
+
 	loadingText.setPos(mContext->GetWindowWidth()/2-150, mContext->GetWindowHeight()/2);
 	loadingText.setText(Utils::toString("Loading %d%c", 0, 37));
 	
@@ -81,6 +77,8 @@ void Basic::LoadingThread(ANativeWindow* win)
 	//soundIntro.Play();
 	loadingText.setText(Utils::toString("Loading %d%c", 100, 37));
 	axis.Init(mCamera);
+
+	mContext->DestroyContext();
 	isLoadingDone = true;
 }
 
@@ -124,7 +122,7 @@ void Basic::Draw()
 	mGallacticCruiser.Draw();
 	mMonster_1.Draw();
 	
-	//axis.Draw();
+	axis.Draw();
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

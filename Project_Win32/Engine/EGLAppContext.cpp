@@ -4,37 +4,25 @@
 #include <time.h>
 #include <unistd.h>
 
-void ThreadDemo(EGLDisplay eglDisplay, EGLSurface eglSurface_draw, EGLSurface eglSurface_read, EGLContext share_context1)
-{
-
-	bool MakeCurrent = eglMakeCurrent(eglDisplay, eglSurface_draw, eglSurface_read, share_context1);
-	GLenum err_code = glGetError();
-	if (GL_NO_ERROR != err_code)
-	{
-		LOGI("OpenGL Error 3 @ : %i\n", err_code);
-		//err_code = glGetError();
-	}
-	LOGI("MakeCurrent: %d", MakeCurrent);
-	LOGI("=====================================================");
-	LOGI("GL Renderer  : %s", glGetString(GL_RENDERER));
-	LOGI("GL Version   : %s", glGetString(GL_VERSION));
-	LOGI("GL Vendor    : %s", glGetString(GL_VENDOR));
-	LOGI("=====================================================\n");
-	LOGI("END THREAD!\n");
-}
 bool EGLAppContext::createWindow(int32_t width, int32_t height)
 {
-//	LOGI("EGLAppContext::createWindow: %d %d", width, height);
 	this->width = width;
 	this->height = height;
-//	return true;
+	return true;
+
+	Initializee = true;
+	return true;
+}
+
+ShareContext EGLAppContext::CreateShareContext()
+{
+	ShareContext shared_context;
+
 	EGLContext context = eglGetCurrentContext();
 	EGLDisplay display = eglGetCurrentDisplay();
-	EGLSurface surface_read = eglGetCurrentSurface(EGL_READ);
-	EGLSurface surface_draw = eglGetCurrentSurface(EGL_DRAW);
-	EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE };
 	EGLConfig config;
 	EGLint numConfigs;
+	EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE };
 	EGLint *attribList = new EGLint[21]
 	{
 		EGL_LEVEL, 0,
@@ -50,118 +38,35 @@ bool EGLAppContext::createWindow(int32_t width, int32_t height)
 		EGL_NONE
 	};
 	eglChooseConfig(display, attribList, &config, 1, &numConfigs);
-	EGLContext share_context1 = eglCreateContext(display, config, context, contextAttribs);
-	if (share_context1 == EGL_NO_CONTEXT)
+	EGLContext sharecontext = eglCreateContext(display, config, context, contextAttribs);
+	EGLSurface surface = eglCreatePbufferSurface(display, config, attribList);
+
+	if (sharecontext == EGL_NO_CONTEXT)
 		LOGE("ERROR! EGL_NO_CONTEXT\n");
 	if (display == EGL_NO_DISPLAY)
 		LOGI("ERROR! EGL_NO_DISPLAY\n");
-	if (surface_draw == EGL_NO_SURFACE)
-		LOGE("ERROR! EGL_NO_SURFACE draw\n");
-	if (surface_read == EGL_NO_SURFACE)
-		LOGE("ERROR! EGL_NO_SURFACE read\n");
-	GLenum err_code = glGetError();
-	if (GL_NO_ERROR != err_code)
-	{
-		LOGI("OpenGL Error 3 @ : %i\n", err_code);
-		//err_code = glGetError();
-	}
-	EGLSurface surface2 = eglCreatePbufferSurface(display, config, attribList);
-	//eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-	//eglMakeCurrent(display, surface_draw, surface_read, share_context1);
-	std::thread *abc = new std::thread(ThreadDemo, display, surface2, surface2, share_context1);
-	//abc->join();
-	//eglMakeCurrent(display, surface_draw, surface_read, context);
-	LOGI("=====================================================");
-	LOGI("GL Renderer  : %s", glGetString(GL_RENDERER));
-	LOGI("GL Version   : %s", glGetString(GL_VERSION));
-	LOGI("GL Vendor    : %s", glGetString(GL_VENDOR));
-	LOGI("=====================================================\n");
 
-	return true;
-	
-	EGLint majorVersion;
-	EGLint minorVersion;
-	//EGLDisplay display;
-	//EGLContext context;
-	EGLSurface surface;
-	//EGLConfig config;
-	//EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE };
-
-
-
-	display = eglGetDisplay(EGL_DEFAULT_DISPLAY); // Default display is used.
-	if (display == EGL_NO_DISPLAY)
-	{
-		LOGI("eglGetDisplay failed.");
-	}
-	eglInitialize(display, &majorVersion, &minorVersion);
-	// Get configs
-	if (!eglGetConfigs(display, NULL, 0, &numConfigs))
-	{
-		LOGI("eglGetConfigs: FALSE");
-		//return EGL_FALSE;
-	}
-
-	// Choose config
-	if (!eglChooseConfig(display, attribList, &config, 1, &numConfigs))
-	{
-		LOGI("eglChooseConfig: FALSE");
-		//return EGL_FALSE;
-	}
-
-	// Create a surface
-	
-
-	// Create a GL context
-	context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
-	if (context == EGL_NO_CONTEXT)
-	{
-		LOGE("ERROR! eglCreateContext Failed\n");
-		//return EGL_FALSE;
-	}
-
-	if (window == NULL) LOGE("window == NULL eglCreateWindowSurface");
-	surface = eglCreateWindowSurface(display, config, window, NULL);
-	//surface = eglCreatePbufferSurface(display, config, attribList);
-	if (surface == EGL_NO_SURFACE)
-	{
-		delete[] attribList;
-		LOGE("ERROR! eglCreateWindowSurface Failed\n");
-		//return EGL_FALSE;
-	}
-
-	// Make the context current
-	//eglSwapInterval(display, 0);
-	if (!eglMakeCurrent(display, surface, surface, context))
-	{
-		LOGE("ERROR! eglMakeCurrent Failed\n");
-		//return EGL_FALSE;
-	}
-
-	if (eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE)
-	{
-		LOGE("eglBindAPI FAILED\n");
-		//return false;
-	}
-
-
-	LOGI("=====================================================");
-	LOGI("GL Renderer  : %s", glGetString(GL_RENDERER));
-	LOGI("GL Version   : %s", glGetString(GL_VERSION));
-	LOGI("GL Vendor    : %s", glGetString(GL_VENDOR));
-	LOGI("=====================================================\n");
-
-	mDisplay = display;
-	mSurface = surface;
-	Initializee = true;
-	return true;
+	shared_context.display = display;
+	shared_context.surface = surface;
+	shared_context.shared_context = sharecontext;
+	this->display = display;
+	return shared_context;
 }
 
+bool EGLAppContext::MakeContextCurrent(ShareContext shared_context)
+{
+	return eglMakeCurrent(shared_context.display, shared_context.surface, shared_context.surface, shared_context.shared_context);
+}
+
+void EGLAppContext::DestroyContext()
+{
+	eglMakeCurrent(this->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+}
 
 void EGLAppContext::SwapBuffers()
 {
 	if (Initializee) {
-		eglSwapBuffers(mDisplay, mSurface);
+		//eglSwapBuffers(mDisplay, mSurface);
 	}
 }
 

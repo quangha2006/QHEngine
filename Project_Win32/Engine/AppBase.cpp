@@ -29,7 +29,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	LOGI("GL Renderer  : %s\n", glGetString(GL_RENDERER));
 	LOGI("GL Version   : %s\n", glGetString(GL_VERSION));
 	LOGI("GL Vendor    : %s\n", glGetString(GL_VENDOR));
-	LOGI("Screen Size  : %d, %d", width, height);
+	LOGI("Screen Size  : %d, %d\n", width, height);
 	LOGI("=====================================================\n");
 
 	mCamera = new Camera();
