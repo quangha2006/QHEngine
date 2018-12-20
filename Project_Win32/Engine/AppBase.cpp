@@ -23,6 +23,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 #elif defined(ANDROID)
 	mContext = new EGLAppContext();
 #endif
+
 	mContext->createWindow(width, height);
 
 	LOGI("\n=====================================================\n");

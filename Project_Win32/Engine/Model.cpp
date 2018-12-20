@@ -38,7 +38,7 @@ glm::mat4 Combinetransformations(glm::mat4 a, glm::mat4 b)
 Model::Model()
 {
 	gammaCorrection = false;
-	isModelLoaded = false;
+	m_initialized = false;
 	useshadername = "model";
 	uselighting = true;
 	useCustomColor = false;
@@ -124,7 +124,7 @@ void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableA
 
 	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
 
-	isModelLoaded = true;
+	m_initialized = true;
 }
 
 void Model::processNode(aiNode * node, const aiScene * scene, float fixedModel)
@@ -397,7 +397,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 
 void Model::Draw(int drawmesh, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
 {
-	if (!isModelLoaded || !camera) return;
+	if (!m_initialized || !camera) return;
 
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -495,7 +495,7 @@ void Model::SetTimeStampAnim(int64_t time)
 }
 void Model::UpdateSkeleton(int64_t time)
 {
-	if (!isModelLoaded || !camera || !hasAnimation) return;
+	if (!m_initialized || !camera || !hasAnimation) return;
 
 	float RunningTime = 0.0f;
 

@@ -72,8 +72,4 @@ GLenum CheckGLError(const char *calling_location)
 	}
 	return err_code;
 }
-/**
-TextRendering::Add(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color, GLfloat alpha)
-**/
-//#define AddText(...) TextRendering::getInstance()->Add(__VA_ARGS__)
 // TODO: reference additional headers your program requires here

@@ -22,7 +22,7 @@ private:
 	Sound soundIntro;
 	QHAxis axis;
 
-	bool isLoadingDone;
+	bool m_initialized;;
 	
 public:
 	void Draw();

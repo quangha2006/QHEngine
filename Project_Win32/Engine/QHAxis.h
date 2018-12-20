@@ -17,6 +17,7 @@ private:
 	GLint WorldViewProjectionMatrix_Uniform;
 	bool createProgram();
 	GLuint createShader(GLenum shaderType, const char * src);
+	bool m_initialized;
 public:
 	void Draw();
 	bool Init(Camera *camera);

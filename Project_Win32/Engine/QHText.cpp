@@ -122,5 +122,4 @@ QHText::QHText(std::string text, int pos_x, int pos_y, glm::vec3 color, float sc
 QHText::~QHText()
 {
 	TextRendering::getInstance()->RemoveQHText(id);
-	m_textdata.clear();
 }

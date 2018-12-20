@@ -10,7 +10,7 @@
 
 void Basic::Init()
 {
-	mframebuffer.Init(2048, 2048);
+	mframebuffer.Init(mContext, 2048, 2048);
 
 	ShareContext shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
@@ -39,7 +39,10 @@ void Basic::LoadingThread(ShareContext shared_context)
 	//mNanosuit.SetScale(glm::vec3(0.4f));
 	//mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
 	//mNanosuit.SetDrawPolygon(true);
+
 	loadingText.setText(Utils::toString("Loading %d%c", 10, 37));
+
+	mSkyBox.Init("SkyBox");
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, true);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
@@ -72,30 +75,29 @@ void Basic::LoadingThread(ShareContext shared_context)
 	//mMonster_1.SetScale(glm::vec3(0.02f));
 	mMonster_1.SetNeedRotate(true);
 	loadingText.setText(Utils::toString("Loading %d%c", 80,37));
-	mSkyBox.Init("SkyBox");
+	
 	//soundIntro.Init("Sound/chuabaogio.wav");
 	//soundIntro.Play();
 	loadingText.setText(Utils::toString("Loading %d%c", 100, 37));
-	axis.Init(mCamera);
+	//axis.Init(mCamera);
 
 	mContext->DestroyContext();
-	isLoadingDone = true;
+	m_initialized = true;
 }
 
 void Basic::Draw()
 {
-	if (!isLoadingDone)
-	{
+	if (!m_initialized)
 		return;
-	}
+
 	mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateSkeleton();
 	mMerce.UpdateSkeleton();
 	mMonster_1.UpdateSkeleton();
 	
-	mframebuffer.Enable(mContext->GetWindowWidth(), mContext->GetWindowHeight());
-	
+	mframebuffer.Enable("depthShader");
+	mframebuffer.EnableDebug(true);
 	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
 	ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
 	ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
@@ -122,7 +124,7 @@ void Basic::Draw()
 	mGallacticCruiser.Draw();
 	mMonster_1.Draw();
 	
-	axis.Draw();
+	//axis.Draw();
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
@@ -187,7 +189,7 @@ void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 Basic::Basic()
 {
 	timestamp_for_lamp = 0;
-	isLoadingDone = false;
+	m_initialized = false;
 }
 
 Basic::~Basic()

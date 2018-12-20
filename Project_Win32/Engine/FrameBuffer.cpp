@@ -2,16 +2,17 @@
 #include "ShaderManager.h"
 #include "Debugging.h"
 
-bool FrameBuffer::Init(int texWidth, int texHeight)
+bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWidth, int texHeight)
 {
-	width = texWidth;
-	height = texHeight;
+	m_appcontext = appcontext;
+	m_texBufferWidth = texWidth;
+	m_texBufferHeight = texHeight;
 	glGenFramebuffers(1, &depthMapFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 	// create depth texture
 	glGenTextures(1, &texdepthMap);
 	glBindTexture(GL_TEXTURE_2D, texdepthMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, m_texBufferWidth, m_texBufferHeight, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
@@ -41,15 +42,12 @@ bool FrameBuffer::Init(int texWidth, int texHeight)
 	return true;
 }
 
-void FrameBuffer::Enable(int32_t screen_width, int32_t screen_height)
+void FrameBuffer::Enable(const char* shadername)
 {
-	current_screen_width = screen_width;
-	current_screen_height = screen_height;
-
-	ShaderManager::getInstance()->setUseProgram("depthShader");
+	ShaderManager::getInstance()->setUseProgram(shadername);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
@@ -58,7 +56,7 @@ void FrameBuffer::Enable(int32_t screen_width, int32_t screen_height)
 GLuint FrameBuffer::Disable()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(0, 0, current_screen_width, current_screen_height);
+	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 	//glDisable(GL_CULL_FACE);
 	if (isEnableDebug)
 		Debugging::getInstance()->DrawTex(texdepthMap);
@@ -72,8 +70,6 @@ void FrameBuffer::EnableDebug(bool isEnable)
 
 FrameBuffer::FrameBuffer()
 {
-	width = 1024;
-	height = 1024;
 	isEnableDebug = false;
 }
 

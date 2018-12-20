@@ -45,7 +45,7 @@ private:
 
 	string useshadername;
 	Camera *camera;
-	bool isModelLoaded;
+	bool m_initialized;
 	bool isEnableAlpha;
 	bool isDrawPolygon;
 	bool uselighting;

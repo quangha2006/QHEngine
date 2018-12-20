@@ -17,12 +17,13 @@ bool QHAxis::Init(Camera *camera)
 	glBufferData(GL_ARRAY_BUFFER, 15 * 6 * sizeof(float), vertices_axis, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	this->camera = camera;
+	m_initialized = true;
 	return true;
 }
 
 void QHAxis::Draw()
 {
-	if (program == 0) return;
+	if (!m_initialized || program == 0) return;
 	glUseProgram(program);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
@@ -152,6 +153,7 @@ GLuint QHAxis::createShader(GLenum shaderType, const char *src)
 
 QHAxis::QHAxis()
 {
+	m_initialized = false;
 	vertices_axis = new float[15 * 6]{
 		-10.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 		10.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,

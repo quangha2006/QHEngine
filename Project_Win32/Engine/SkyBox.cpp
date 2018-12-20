@@ -53,11 +53,13 @@ void SkyBox::Init(const char * texturepath)
 	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(GLfloat), &skyboxVertices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+	m_initialized = true;
 }
 
 void SkyBox::Draw(Camera *camera)
 {
+	if (!m_initialized) return;
+
 	mShader.use();
 	glDepthMask(GL_FALSE);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -134,6 +136,7 @@ GLuint SkyBox::getTextureID()
 
 SkyBox::SkyBox()
 {
+	m_initialized = false;
 	skyboxVertices = new GLfloat[108]{
 		// positions          
 		-1.0f,  1.0f, -1.0f,

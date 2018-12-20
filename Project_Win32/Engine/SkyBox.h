@@ -15,7 +15,7 @@ private:
 
 	unsigned int loadCubemap(const char * texturepath, std::vector<std::string> faces);
 	GLuint getTextureID();
-
+	bool m_initialized;
 public:
 	void Init(const char * texturepath);
 	void Draw(Camera *camera);
