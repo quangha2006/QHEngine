@@ -16,7 +16,7 @@ public:
 	void addDrawCall(unsigned short count);
 	unsigned short getNumDrawCall();
 	void resetCount();
-	void DrawTex(GLuint TexId);
+	void DrawTex(GLuint TexId, const char *shadername);
 	Debugging();
 	~Debugging();
 };

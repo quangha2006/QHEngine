@@ -126,6 +126,8 @@ bool ShaderManager::setUseProgram(const char * shadername)
 			return true;
 		}
 	}
+	LOGI("ERROR!: not found shader name: %s\n", shadername);
+	return false;
 }
 
 GLuint ShaderManager::GetProgram(const char * shadername)

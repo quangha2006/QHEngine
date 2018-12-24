@@ -37,12 +37,12 @@ void Debugging::resetCount()
 	numDrawCall = 0;
 }
 
-void Debugging::DrawTex(GLuint TexId)
+void Debugging::DrawTex(GLuint TexId, const char *shadername)
 {
 
 	//Debug
 	glEnable(GL_DEPTH_TEST);
-	ShaderManager::getInstance()->setUseProgram("screenShader");
+	ShaderManager::getInstance()->setUseProgram(shadername);
 	glBindVertexArray(quadVAO);
 
 	glActiveTexture(GL_TEXTURE0);

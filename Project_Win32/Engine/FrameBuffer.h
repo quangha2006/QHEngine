@@ -11,9 +11,10 @@ enum FrameBufferType
 class FrameBuffer
 {
 private:
-	GLuint depthMapFBO;
+	GLuint m_FBOId;
+	GLuint m_rboDepth;
 	GLuint m_texBufferWidth, m_texBufferHeight;
-	GLuint texdepthMap;
+	GLuint m_TexId;
 	bool isEnableDebug;
 	AppContext * m_appcontext;
 public:

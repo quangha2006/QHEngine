@@ -38,12 +38,15 @@ uniform bool isPicking;
 uniform vec3 color_pick;
 uniform bool uselighting;
 uniform bool usepointlight;
+uniform bool useShadowMap;
 
 out vec4 FragColor;
 
 void main()
 {   
 	vec4 color, color_ambient, color_specular, color_diffuse;
+	float shadow;
+	vec3 lighting;
 	//highp vec4 masksTexture = texture2D(material_texture_diffuse2,TexCoords);
 	if (useTexture == true)
 	{
@@ -65,42 +68,46 @@ void main()
 		discard;
 	}
 
-	//*********** calculate shadow **********************
-	// perform perspective divide
-    vec3 projCoords = FragPosLightSpace.xyz / FragPosLightSpace.w;
-
-    // transform to [0,1] range
-    projCoords = projCoords * 0.5 + 0.5;
-
-    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
-    float closestDepth = texture(shadowMap, projCoords.xy).r;
-
-    // get depth of current fragment from light's perspective
-    float currentDepth = projCoords.z;
-
-    // check whether current frag pos is in shadow
+	// check whether current frag pos is in shadow
 	vec3 lightDir = normalize(light_position - FragPos);
 
-	float bias = max(0.05 * (1.0 - dot(Normal, lightDir)), 0.005);
-    float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+	//*********** calculate shadow **********************
+	if (useShadowMap == true)
+	{
+		// perform perspective divide
+		vec3 projCoords = FragPosLightSpace.xyz / FragPosLightSpace.w;
 
-	ivec2 texsize = textureSize(shadowMap, 0);
+		// transform to [0,1] range
+		projCoords = projCoords * 0.5 + 0.5;
 
-    float texelSize = 1.0 / float(texsize.x);
+		// get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+		float closestDepth = texture(shadowMap, projCoords.xy).r;
 
-    for(int m = -1; m <= 1; ++m)
-    {
-        for(int n = -1; n <= 1; ++n)
-        {
-            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(float(m), float(n)) * texelSize).r; 
-            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;        
-        }    
-    }
-    shadow /= 9.0;
+		// get depth of current fragment from light's perspective
+		float currentDepth = projCoords.z;
 
-	if(projCoords.z > 1.0)
-        shadow = 0.0;
-	// END calculate shadow
+		float bias = max(0.05 * (1.0 - dot(Normal, lightDir)), 0.005);
+		shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+
+		ivec2 texsize = textureSize(shadowMap, 0);
+
+		float texelSize = 1.0 / float(texsize.x);
+
+		for(int m = -1; m <= 1; ++m)
+		{
+			for(int n = -1; n <= 1; ++n)
+			{
+				float pcfDepth = texture(shadowMap, projCoords.xy + vec2(float(m), float(n)) * texelSize).r; 
+				shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;        
+			}    
+		}
+		shadow /= 9.0;
+
+		if(projCoords.z > 1.0)
+			shadow = 0.0;
+	
+	}
+		// END calculate shadow
 
 	if (uselighting == false)
 	{	
@@ -146,11 +153,16 @@ void main()
 	//	specular *= attenuation;
 	//}
 
-	// Total lighting + shadow
-	vec3 lighting = ambient + (diffuse + specular) * (1.0 - shadow) + color_pick;
-
-	// Total lighting + not shadow
-	//vec3 lighting = ambient + (diffuse + specular) + color_pick;
+	if (uselighting == true)
+	{
+		// Total lighting + shadow
+		lighting = ambient + (diffuse + specular) * (1.0 - shadow) + color_pick;
+	}
+	else
+	{
+		// Total lighting + not shadow
+		lighting = ambient + (diffuse + specular) + color_pick;
+	}
 
 	if (enableAlpha == true)
 		FragColor = vec4(lighting, color.a);

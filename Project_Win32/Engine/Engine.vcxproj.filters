@@ -27,9 +27,6 @@
     <ClCompile Include="AppBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MainWin32.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AppContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -101,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWin32.cpp">
+      <Filter>GLFW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
