@@ -43,6 +43,7 @@ private:
 public:
 	static ShaderManager *getInstance();
 	bool setUseProgram(const char *shadername);
+	bool setUseProgram(GLuint shaderProgram);
 	GLuint GetProgram(const char *shadername);
 	GLuint GetCurrentProgram();
 	Shaderv2 *GetShader(const char *shadername);

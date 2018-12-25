@@ -69,7 +69,8 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 
 void FrameBuffer::Enable(const char* shadername)
 {
-	ShaderManager::getInstance()->setUseProgram(shadername);
+	if (shadername != NULL)
+		ShaderManager::getInstance()->setUseProgram(shadername);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId);
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
@@ -93,9 +94,82 @@ void FrameBuffer::EnableDebug(bool isEnable)
 	isEnableDebug = isEnable;
 }
 
+void FrameBuffer::Render(bool useDefaultShader)
+{
+	if (useDefaultShader)
+	{
+		if (!m_default_shader.m_initialized)
+			InitDefaultShader();
+
+		m_default_shader.use();
+	}
+	if (quadVAO == 0) InitquadVAO();
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_TexId);
+	glBindVertexArray(quadVAO);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindVertexArray(0);
+}
+void FrameBuffer::InitDefaultShader()
+{
+	const char * verShader = {
+		"#version 100\n"
+		"attribute vec3 aPos;\n"
+		"attribute vec2 aTexCoords;\n"
+		"varying vec2 TexCoords;\n"
+		"\n"
+		"void main()\n"
+		"{\n"
+		"	TexCoords = aTexCoords;\n"
+		"	gl_Position =  vec4(aPos, 1.0);\n"
+		"}\n"
+	};
+	const char *fragShader = {
+		"#version 100\n"
+		"precision highp float;\n"
+		"\n"
+		"varying vec2 TexCoords;\n"
+		"\n"
+		"uniform sampler2D tex;\n"
+		"\n"
+		"void main()\n"
+		"{\n"
+		"	gl_FragColor = texture2D(tex, TexCoords);\n"
+		"}\n"
+	};
+
+	m_default_shader.LoadShader(verShader, fragShader, true);
+}
+
+void FrameBuffer::InitquadVAO()
+{
+	if (quadVAO == 0)
+	{
+		float quadVertices[] = {
+			// positions        // texture Coords
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+			1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		};
+		// setup plane VAO
+		glGenVertexArrays(1, &quadVAO);
+		glGenBuffers(1, &quadVBO);
+		glBindVertexArray(quadVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	}
+}
+
 FrameBuffer::FrameBuffer()
 {
 	isEnableDebug = false;
+	quadVAO = 0;
 }
 
 

@@ -116,12 +116,13 @@ bool Shader::LoadShader(const char * fileVertexShader, const char * fileFragment
 	position_Attribute = glGetAttribLocation(program, "aPos");
 	texCoord_Attribute = glGetAttribLocation(program, "aTexCoords");
 	color_Attribute = glGetAttribLocation(program, "aColor");
+	m_initialized = true;
 	return true;
 }
 
 void Shader::use()
 {
-	if (program != -1)
+	if (m_initialized)
 		glUseProgram(program);
 	else
 		LOGE("ERROR! Cannot set UseProgram!");
@@ -157,6 +158,7 @@ Shader::Shader()
 	program = -1;
 	position_Attribute = -1;
 	color_Attribute = -1;
+	m_initialized = false;
 }
 
 

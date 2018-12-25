@@ -14,9 +14,9 @@ private:
 	GLint texCoord_Attribute;
 	GLint color_Attribute;
 	GLuint createShader(GLenum shaderType, const char* src, bool isFromString = false);
-
+	
 public:
-
+	bool m_initialized;
 	bool createProgram(const char* vtxSrc, const char* fragSrc, bool isFromString = false);
 	bool LoadShader(const char* fileVertexShader, const char* fileFragmentShader, bool isFromString = false);
 	void use();

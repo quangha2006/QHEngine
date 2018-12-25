@@ -130,6 +130,24 @@ bool ShaderManager::setUseProgram(const char * shadername)
 	return false;
 }
 
+bool ShaderManager::setUseProgram(GLuint shaderProgram)
+{
+	int shader_list_size = Shader_list.size();
+	if (shader_list_size == 0 || shaderProgram == -1) return false;
+	for (int i = 0; i < shader_list_size; i++)
+	{
+		if (Shader_list[i]->program == shaderProgram)
+		{
+			glUseProgram(Shader_list[i]->program);
+			Current_program = Shader_list[i]->program;
+			Current_shader = i;
+			return true;
+		}
+	}
+	LOGI("ERROR!: not found shader program: %d\n", shaderProgram);
+	return false;
+}
+
 GLuint ShaderManager::GetProgram(const char * shadername)
 {
 	int shader_list_size = Shader_list.size();
@@ -192,8 +210,8 @@ bool ShaderManager::Init(const char * shadername, const char * fileVertexShader,
 
 ShaderManager::ShaderManager()
 {
-	Current_program = 0;
-	Current_shader = 0;
+	Current_program = -1;
+	Current_shader = -1;
 }
 
 

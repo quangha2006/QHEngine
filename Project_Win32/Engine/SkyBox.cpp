@@ -1,6 +1,7 @@
 #include "SkyBox.h"
 #include <SOIL.h>
 #include "Utils.h"
+#include <ShaderManager.h>
 
 void SkyBox::Init(const char * texturepath)
 {
@@ -59,7 +60,7 @@ void SkyBox::Init(const char * texturepath)
 void SkyBox::Draw(Camera *camera)
 {
 	if (!m_initialized) return;
-
+	GLint currentid = ShaderManager::getInstance()->GetCurrentProgram();
 	mShader.use();
 	glDepthMask(GL_FALSE);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -84,6 +85,7 @@ void SkyBox::Draw(Camera *camera)
 	glDepthMask(GL_TRUE);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	ShaderManager::getInstance()->setUseProgram(currentid);
 }
 
 void SkyBox::setScale(float scale)

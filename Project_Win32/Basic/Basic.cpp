@@ -10,10 +10,10 @@
 
 void Basic::Init()
 {
-	//mframebuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
+	mframebuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
 	//mframebuffer.EnableDebug(true);
 	HDRBuffer.Init(mContext, FrameBufferType_HDRCOLOR, mContext->GetWindowWidth(), mContext->GetWindowHeight());
-	HDRBuffer.EnableDebug(true);
+	//HDRBuffer.EnableDebug(true);
 	ShareContext shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
 }
@@ -70,7 +70,7 @@ void Basic::LoadingThread(ShareContext shared_context)
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
 	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
-	mMonster_1.Init("/aboy/model.dae", mCamera, true);
+	//mMonster_1.Init("/aboy/model.dae", mCamera, true);
 	//mMonster_1.Init("Monster_1/Monster_1.dae", mCamera, false);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mMonster_1.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f)); 
@@ -92,32 +92,30 @@ void Basic::Draw()
 	if (!m_initialized)
 		return;
 
-	mSkyBox.Draw(mCamera);
-	
 	mSpider.UpdateSkeleton();
 	mMerce.UpdateSkeleton();
 	mMonster_1.UpdateSkeleton();
 	
-	//mframebuffer.Enable("depthShader");
-	////mframebuffer.EnableDebug(true);
-	//ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
-	//ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
-	//ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
+	mframebuffer.Enable("depthShader");
+	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
+	ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
+	ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
 
-	//mNanosuit.Draw();
-	//mMerce.Draw();
-	//mSpider.Draw();
-	//saberclass.Draw();
-	//mGallacticCruiser.Draw();
-	//mMonster_1.Draw();
+	mNanosuit.Draw();
+	mMerce.Draw();
+	mSpider.Draw();
+	saberclass.Draw();
+	mGallacticCruiser.Draw();
+	mMonster_1.Draw();
 
-	//GLuint depthMap = mframebuffer.Disable();
-	//return;
+	GLuint depthMap = mframebuffer.Disable();
+
 	HDRBuffer.Enable("model");
-	//ShaderManager::getInstance()->setUseProgram("model");
-	//(GL_TEXTURE10);
-	//glBindTexture(GL_TEXTURE_2D, depthMap);
-	ShaderManager::getInstance()->setBool("useShadowMap", false);
+	mSkyBox.Draw(mCamera);
+	
+	glActiveTexture(GL_TEXTURE10);
+	glBindTexture(GL_TEXTURE_2D, depthMap);
+	ShaderManager::getInstance()->setBool("useShadowMap", true);
 	ShaderManager::getInstance()->setInt("shadowMap",10);
 
 	m_Streetenvironment.Draw();
@@ -128,6 +126,12 @@ void Basic::Draw()
 	mGallacticCruiser.Draw();
 	mMonster_1.Draw();
 	HDRBuffer.Disable();
+
+	ShaderManager::getInstance()->setUseProgram("basic");
+	ShaderManager::getInstance()->setBool("hdr", true);
+	ShaderManager::getInstance()->setFloat("exposure", 1.0f);
+	ShaderManager::getInstance()->setInt("hdrBuffer", 0);
+	HDRBuffer.Render();
 	//axis.Draw();
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
