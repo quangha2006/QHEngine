@@ -24,6 +24,7 @@ public class GLES3View extends GLSurfaceView{
         super(context);
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
+
         widthPixels = metrics.widthPixels;
         heightPixels = metrics.heightPixels;
         this.getHolder().setFixedSize((int)(widthPixels*0.6),(int)(heightPixels*0.6));
@@ -115,8 +116,7 @@ public class GLES3View extends GLSurfaceView{
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-            //GLES3JNILib.InitMainAndroid(widthPixels , heightPixels);
-            GLES3JNILib.InitWithNativeWindow(widthPixels , heightPixels, glSurfaceView.getHolder().getSurface());
+            GLES3JNILib.InitWithNativeWindow(glSurfaceView.getHolder().getSurface());
         }
     }
 }

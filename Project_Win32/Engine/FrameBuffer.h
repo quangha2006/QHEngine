@@ -17,6 +17,7 @@ private:
 	GLuint m_texBufferWidth, m_texBufferHeight;
 	GLuint m_TexId;
 	bool isEnableDebug;
+	FrameBufferType m_type;
 	AppContext * m_appcontext;
 	Shader m_default_shader;
 	void InitDefaultShader();

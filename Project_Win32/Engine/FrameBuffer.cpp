@@ -7,6 +7,8 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 	m_appcontext = appcontext;
 	m_texBufferWidth = texWidth;
 	m_texBufferHeight = texHeight;
+	m_type = type;
+
 	glGenFramebuffers(1, &m_FBOId);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId);
 	// create depth texture
@@ -17,6 +19,7 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 	switch (type)
 	{
 	case FrameBufferType_DEPTH:
+		LOGI("Create FrameBufferType_DEPTH: %d, %d\n", texWidth, texHeight);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
@@ -33,8 +36,11 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		glBindTexture(GL_TEXTURE_2D, 0);
 		// attach depth texture as FBO's depth buffer
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_TexId, 0);
+		glDrawBuffers(0, GL_NONE);
+		glReadBuffer(GL_NONE);
 		break;
 	case FrameBufferType_HDRCOLOR:
+		LOGI("Create FrameBufferType_HDRCOLOR: %d, %d\n", texWidth, texHeight);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -59,11 +65,7 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 
 	if (Status != GL_FRAMEBUFFER_COMPLETE)
 		LOGE("ERROR::FRAMEBUFFER:: Framebuffer is not complete!\n");
-
-	// Disable writes to the color buffer
-	//glDrawBuffers(0, GL_NONE);
-	//glReadBuffer(GL_NONE);
-
+	
 	return true;
 }
 
@@ -71,7 +73,17 @@ void FrameBuffer::Enable(const char* shadername)
 {
 	if (shadername != NULL)
 		ShaderManager::getInstance()->setUseProgram(shadername);
-
+	//if (m_type == FrameBufferType_DEPTH)
+	//{
+	//	// Disable writes to the color buffer
+	//	glDrawBuffers(0, GL_NONE);
+	//	//glReadBuffer(GL_NONE);
+	//}
+	//else
+	//{
+	//	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0 };
+	//	glDrawBuffers(1, drawBuffers);
+	//}
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId);
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

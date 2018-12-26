@@ -16,11 +16,14 @@ struct TouchPoint
 	int x;
 	int y;
 };
-void Init_MainAndroid(int w, int h, ANativeWindow * window)
+void Init_MainAndroid(ANativeWindow * window)
 {
+	int current_width = ANativeWindow_getWidth(window);
+	int current_height = ANativeWindow_getHeight(window);
+
 	app = AppFactory();
 
-	if (!app->initialize(w, h))
+	if (!app->initialize(current_width, current_height))
 	{
 		LOGE("FAILED initialize");
 	}

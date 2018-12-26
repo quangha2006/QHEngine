@@ -70,7 +70,7 @@ void Basic::LoadingThread(ShareContext shared_context)
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
 	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
-	//mMonster_1.Init("/aboy/model.dae", mCamera, true);
+	mMonster_1.Init("/aboy/model.dae", mCamera, true);
 	//mMonster_1.Init("Monster_1/Monster_1.dae", mCamera, false);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mMonster_1.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f)); 
@@ -91,7 +91,7 @@ void Basic::Draw()
 {
 	if (!m_initialized)
 		return;
-
+	
 	mSpider.UpdateSkeleton();
 	mMerce.UpdateSkeleton();
 	mMonster_1.UpdateSkeleton();
@@ -112,7 +112,7 @@ void Basic::Draw()
 
 	HDRBuffer.Enable("model");
 	mSkyBox.Draw(mCamera);
-	
+	//ShaderManager::getInstance()->setUseProgram("model");
 	glActiveTexture(GL_TEXTURE10);
 	glBindTexture(GL_TEXTURE_2D, depthMap);
 	ShaderManager::getInstance()->setBool("useShadowMap", true);
