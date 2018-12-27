@@ -73,31 +73,19 @@ void FrameBuffer::Enable(const char* shadername)
 {
 	if (shadername != NULL)
 		ShaderManager::getInstance()->setUseProgram(shadername);
-	//if (m_type == FrameBufferType_DEPTH)
-	//{
-	//	// Disable writes to the color buffer
-	//	glDrawBuffers(0, GL_NONE);
-	//	//glReadBuffer(GL_NONE);
-	//}
-	//else
-	//{
-	//	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0 };
-	//	glDrawBuffers(1, drawBuffers);
-	//}
+
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId);
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
 }
 
 GLuint FrameBuffer::Disable()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
-	//glDisable(GL_CULL_FACE);
+
 	if (isEnableDebug)
-		Debugging::getInstance()->DrawTex(m_TexId, "basic");
+		Debugging::getInstance()->DrawTex(m_TexId, "screenShader");
 	return m_TexId;
 }
 

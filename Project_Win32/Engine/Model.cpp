@@ -581,6 +581,9 @@ void Model::SetNeedRotate(bool isNeedRotate)
 }
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {
+	//static int check = 0;
+	//if (check > 1000) return;
+	//check ++;
 	string NodeName(pNode->mName.data);
 
 	const aiAnimation* pAnimation = m_pScene->mAnimations[animToPlay];

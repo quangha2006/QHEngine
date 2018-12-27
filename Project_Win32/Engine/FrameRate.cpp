@@ -8,6 +8,22 @@ int FrameRate::GetPrevFrameTime()
 	return prevFrametime;
 }
 
+void FrameRate::BeginCpuTime()
+{
+	m_begincputime = Timer::getMillisecond();
+}
+
+void FrameRate::EndCpuTime()
+{
+	m_endcputime = Timer::getMillisecond();
+	m_prevCputime = m_endcputime - m_begincputime;
+}
+
+int FrameRate::GetPrevCpuTime()
+{
+	return (int)m_prevCputime;
+}
+
 void FrameRate::Counter()
 {
 	static unsigned int framesPerSecond = 0;       // This will store our fps
@@ -73,6 +89,9 @@ FrameRate::FrameRate()
 	currentFPS = 60.0f;
 	SKIP_TICKS = 0;
 	prevFrametime = 0;
+	m_begincputime = 0;
+	m_endcputime = 0;
+	m_prevCputime = 0;
 }
 
 FrameRate::~FrameRate()

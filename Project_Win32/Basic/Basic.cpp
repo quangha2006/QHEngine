@@ -11,9 +11,9 @@
 void Basic::Init()
 {
 	mframebuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
-	//mframebuffer.EnableDebug(true);
+
 	HDRBuffer.Init(mContext, FrameBufferType_HDRCOLOR, mContext->GetWindowWidth(), mContext->GetWindowHeight());
-	//HDRBuffer.EnableDebug(true);
+
 	ShareContext shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
 }
@@ -49,16 +49,16 @@ void Basic::LoadingThread(ShareContext shared_context)
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, true);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
-	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, false);
-	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	mMerce.SetTranslate(glm::vec3(0.0f, 0.5f, 0.5f));
-	mMerce.SetAnimPlay(0);
+	mMerce.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, true);
+	//mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+	mMerce.SetTranslate(glm::vec3(0.0f, -10.5f, 0.5f));
+	mMerce.SetScale(glm::vec3(0.1f));
 	loadingText.setText(Utils::toString("Loading %d%c", 20, 37));
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	mSpider.Init("astroBoy/astroBoy_walk_Maya.dae", mCamera, true);
-	//mSpider.SetScale(glm::vec3(0.05f));
+	//mSpider.Init("astroBoy/astroBoy_walk_Maya.dae", mCamera, true);
+	//mSpider.SetScale(glm::vec3(3.0f));
 	mSpider.SetTranslate(glm::vec3(5.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	mSpider.SetNeedRotate(false);
@@ -70,11 +70,11 @@ void Basic::LoadingThread(ShareContext shared_context)
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
 	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", mCamera, false);
-	mMonster_1.Init("/aboy/model.dae", mCamera, true);
-	//mMonster_1.Init("Monster_1/Monster_1.dae", mCamera, false);
+	//mMonster_1.Init("/astroBoy/AnimSimple.dae", mCamera, true);
+	//mMonster_1.Init("aboy/model.dae", mCamera, true);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mMonster_1.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f)); 
-	//mMonster_1.SetScale(glm::vec3(0.02f));
+	//mMonster_1.SetScale(glm::vec3(5.02f));
 	mMonster_1.SetNeedRotate(true);
 	loadingText.setText(Utils::toString("Loading %d%c", 80,37));
 	
@@ -91,6 +91,7 @@ void Basic::Draw()
 {
 	if (!m_initialized)
 		return;
+	//mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateSkeleton();
 	mMerce.UpdateSkeleton();
@@ -128,7 +129,7 @@ void Basic::Draw()
 	HDRBuffer.Disable();
 
 	ShaderManager::getInstance()->setUseProgram("basic");
-	ShaderManager::getInstance()->setBool("hdr", true);
+	ShaderManager::getInstance()->setBool("hdr", false);
 	ShaderManager::getInstance()->setFloat("exposure", 1.0f);
 	ShaderManager::getInstance()->setInt("hdrBuffer", 0);
 	HDRBuffer.Render();

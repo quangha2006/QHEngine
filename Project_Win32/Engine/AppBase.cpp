@@ -27,10 +27,10 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	mContext->createWindow(width, height);
 
 	LOGI("\n=====================================================\n");
-	LOGI("GL Renderer	: %s\n", glGetString(GL_RENDERER));
-	LOGI("GL Version	: %s\n", glGetString(GL_VERSION));
-	LOGI("GL Vendor		: %s\n", glGetString(GL_VENDOR));
-	LOGI("Viewport		: %d, %d\n", width, height);
+	LOGI("GL Renderer  : %s\n", glGetString(GL_RENDERER));
+	LOGI("GL Version   : %s\n", glGetString(GL_VERSION));
+	LOGI("GL Vendor    : %s\n", glGetString(GL_VENDOR));
+	LOGI("Viewport     : %d, %d\n", width, height);
 	LOGI("=====================================================\n");
 
 	mCamera = new Camera();
@@ -65,6 +65,7 @@ void AppBase::rendering()
 {
 	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+	FrameRate::getInstance()->BeginCpuTime();
 	mCamera->UpdateWorldViewProjection();
 	Draw();
 	unsigned short numDrawCall = Debugging::getInstance()->getNumDrawCall();
@@ -72,11 +73,12 @@ void AppBase::rendering()
 	int numdrawcall = Debugging::getInstance()->getNumDrawCall();
 	float fps = FrameRate::getInstance()->GetFPS();
 	int frameTime = FrameRate::getInstance()->GetPrevFrameTime();
+	int cpuTime = FrameRate::getInstance()->GetPrevCpuTime();
 
 	std::string tmp_fps = Utils::toString("FPS: %.1f", fps);
 	std::string tmp_drawcall = Utils::toString("DrawCall: %d", numdrawcall);
 	std::string tmp_numtriangle = Utils::toString("numTriangle: %d", numTriangle);
-	std::string tmp_PrevFraTime = Utils::toString("PrevFrameTime: %d", frameTime);
+	std::string tmp_PrevFraTime = Utils::toString("PrevFrameTime: %d cpu: %d", frameTime, cpuTime);
 
 	text_FPS.setText(tmp_fps);
 	text_DrawCall.setPos(text_FPS.getEndPos());
@@ -87,6 +89,7 @@ void AppBase::rendering()
 	FrameRate::getInstance()->Counter();
 	Debugging::getInstance()->resetCount();
 	TextRendering::getInstance()->Draw();
+	FrameRate::getInstance()->EndCpuTime();
 }
 
 void AppBase::Resize(int width, int height)
