@@ -25,7 +25,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 #endif
 
 	mContext->createWindow(width, height);
-
+	glEnable(GL_MULTISAMPLE);
 	LOGI("\n=====================================================\n");
 	LOGI("GL Renderer  : %s\n", glGetString(GL_RENDERER));
 	LOGI("GL Version   : %s\n", glGetString(GL_VERSION));

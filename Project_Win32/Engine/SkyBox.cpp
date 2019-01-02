@@ -62,6 +62,7 @@ void SkyBox::Draw(Camera *camera)
 	if (!m_initialized) return;
 	GLint currentid = ShaderManager::getInstance()->GetCurrentProgram();
 	mShader.use();
+	glDisable(GL_DEPTH_TEST);
 	glDepthMask(GL_FALSE);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
@@ -83,7 +84,7 @@ void SkyBox::Draw(Camera *camera)
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	glDepthMask(GL_TRUE);
-
+	glEnable(GL_DEPTH_TEST);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	ShaderManager::getInstance()->setUseProgram(currentid);
 }

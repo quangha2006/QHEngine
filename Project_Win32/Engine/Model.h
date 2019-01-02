@@ -29,7 +29,7 @@ private:
 	vector<Texture> textures_loaded;
 	void processNode(aiNode *node, const aiScene *scene, float fixedModel);
 	Mesh processMesh(aiMesh *mesh, const aiScene *scene, float fixedModel);
-	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, TextureType typeName);
+	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);
 
 	/*==== Animation ====*/
 	Assimp::Importer importer, importer_anim;

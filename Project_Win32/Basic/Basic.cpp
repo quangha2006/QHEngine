@@ -12,8 +12,8 @@ void Basic::Init()
 {
 	mframebuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
 
-	HDRBuffer.Init(mContext, FrameBufferType_HDRCOLOR, mContext->GetWindowWidth(), mContext->GetWindowHeight());
-
+	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	//HDRBuffer.EnableDebug(true);
 	ShareContext shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
 }
@@ -49,19 +49,19 @@ void Basic::LoadingThread(ShareContext shared_context)
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, true);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
-	mMerce.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, true);
+	//mMerce.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, true);
 	//mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetTranslate(glm::vec3(0.0f, -10.5f, 0.5f));
 	mMerce.SetScale(glm::vec3(0.1f));
 	loadingText.setText(Utils::toString("Loading %d%c", 20, 37));
-	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", mCamera, true);
+	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.dae", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	//mSpider.Init("astroBoy/astroBoy_walk_Maya.dae", mCamera, true);
-	//mSpider.SetScale(glm::vec3(3.0f));
+	mSpider.Init("astroBoy/astroBoy_walk_Max.dae", mCamera, true);
+	//mSpider.SetScale(glm::vec3(0.1f));
 	mSpider.SetTranslate(glm::vec3(5.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
-	mSpider.SetNeedRotate(false);
+	mSpider.SetNeedRotate(true);
 
 	loadingText.setText(Utils::toString("Loading %d%c", 40,37));
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
@@ -91,7 +91,6 @@ void Basic::Draw()
 {
 	if (!m_initialized)
 		return;
-	//mSkyBox.Draw(mCamera);
 	
 	mSpider.UpdateSkeleton();
 	mMerce.UpdateSkeleton();

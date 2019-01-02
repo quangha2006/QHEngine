@@ -11,15 +11,17 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 
 	glGenFramebuffers(1, &m_FBOId);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId);
-	// create depth texture
-	glGenTextures(1, &m_TexId);
-	glBindTexture(GL_TEXTURE_2D, m_TexId);
+	// create texture
+	//glGenTextures(1, &m_TexId);
+	//glBindTexture(GL_TEXTURE_2D, m_TexId);
 	
 	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	switch (type)
 	{
 	case FrameBufferType_DEPTH:
 		LOGI("Create FrameBufferType_DEPTH: %d, %d\n", texWidth, texHeight);
+		glGenTextures(1, &m_TexId);
+		glBindTexture(GL_TEXTURE_2D, m_TexId);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
@@ -38,9 +40,12 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_TexId, 0);
 		glDrawBuffers(0, GL_NONE);
 		glReadBuffer(GL_NONE);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		break;
-	case FrameBufferType_HDRCOLOR:
-		LOGI("Create FrameBufferType_HDRCOLOR: %d, %d\n", texWidth, texHeight);
+	case FrameBufferType_COLORBUFFER:
+		LOGI("Create FrameBufferType_COLORBUFFER: %d, %d\n", texWidth, texHeight);
+		glGenTextures(1, &m_TexId);
+		glBindTexture(GL_TEXTURE_2D, m_TexId);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -58,9 +63,41 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		// attach buffers
 		
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rboDepth);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		break;
+	case FrameBufferType_COLORBUFFERMULTISAMPLED:
+		LOGI("Create FrameBufferType_COLORBUFFERMULTISAMPLED: %d, %d\n", texWidth, texHeight);
+		// configure MSAA framebuffer
+		glGenTextures(1, &m_TexId);
+		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_TexId);
+		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGB, m_texBufferWidth, m_texBufferHeight, GL_TRUE);
+		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, m_TexId, 0);
+
+		glGenRenderbuffers(1, &m_rboDepth);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_rboDepth);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, m_texBufferWidth, m_texBufferHeight);
+		glBindRenderbuffer(GL_RENDERBUFFER, 0);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rboDepth);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		// configure second post-processing framebuffer
+		unsigned int intermediateFBO;
+		glGenFramebuffers(1, &intermediateFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, intermediateFBO);
+		// create a color attachment texture
+		unsigned int screenTexture;
+		glGenTextures(1, &screenTexture);
+		glBindTexture(GL_TEXTURE_2D, screenTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_texBufferWidth, m_texBufferHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, screenTexture, 0);	// we only need a color buffer
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 		break;
 	}
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
 	GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 	if (Status != GL_FRAMEBUFFER_COMPLETE)
@@ -76,12 +113,24 @@ void FrameBuffer::Enable(const char* shadername)
 
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId);
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
+	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 }
 
 GLuint FrameBuffer::Disable()
 {
+	if (m_type == FrameBufferType_COLORBUFFERMULTISAMPLED)
+	{
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FBOId);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, intermediateFBO);
+		glBlitFramebuffer(0, 0, m_texBufferWidth, m_texBufferHeight, 0, 0, m_texBufferWidth, m_texBufferHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	}
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_DEPTH_TEST);
 	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 
 	if (isEnableDebug)
@@ -105,9 +154,15 @@ void FrameBuffer::Render(bool useDefaultShader)
 	}
 	if (quadVAO == 0) InitquadVAO();
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_TexId);
 	glBindVertexArray(quadVAO);
+
+	glActiveTexture(GL_TEXTURE0);
+
+	if (m_type == FrameBufferType_COLORBUFFERMULTISAMPLED)
+		glBindTexture(GL_TEXTURE_2D, screenTexture);
+	else
+		glBindTexture(GL_TEXTURE_2D, m_TexId);
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 }
@@ -150,8 +205,8 @@ void FrameBuffer::InitquadVAO()
 			// positions        // texture Coords
 			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-			1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-			1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
 		};
 		// setup plane VAO
 		glGenVertexArrays(1, &quadVAO);
@@ -171,7 +226,6 @@ FrameBuffer::FrameBuffer()
 	isEnableDebug = false;
 	quadVAO = 0;
 }
-
 
 FrameBuffer::~FrameBuffer()
 {

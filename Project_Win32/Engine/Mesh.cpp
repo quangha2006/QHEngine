@@ -2,6 +2,9 @@
 #include "Mesh.h"
 #include "ShaderManager.h"
 #include "Debugging.h"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 //#include "Globals.h"
 
 void Mesh::setupMesh()
@@ -79,7 +82,6 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
 	unsigned int normalNr = 1;
-	unsigned int heightNr = 1;
 	bool hasmaterial_texture_diffuse1 = false;
 	ShaderManager::getInstance()->setBool("useNormalMap", false);
 	if (hasBone)
@@ -93,29 +95,24 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 		stringstream ss;
 		string number;
 		string name;
-		TextureType texturetype = textures[i].type;
-		if (texturetype == TextureType_DIFFUSE)
+		aiTextureType texturetype = textures[i].type;
+		if (texturetype == aiTextureType_DIFFUSE)
 		{
 			name = "texture_diffuse";
 			ss << diffuseNr++; // transfer unsigned int to stream
 			hasmaterial_texture_diffuse1 = true;
 		}
-		else if (texturetype == TextureType_SPECULAR)
+		else if (texturetype == aiTextureType_SPECULAR)
 		{
 			name = "texture_specular";
 			ss << specularNr++; // transfer unsigned int to stream
 			hasmaterial_texture_diffuse1 = true;
 		}
-		else if (texturetype == TextureType_NORMALS)
+		else if (texturetype == aiTextureType_NORMALS || texturetype == aiTextureType_HEIGHT)
 		{
 			name = "texture_normal";
 			ss << normalNr++; // transfer unsigned int to stream
 			ShaderManager::getInstance()->setBool("useNormalMap", true);
-		}
-		else if (texturetype == TextureType_HEIGHT)
-		{
-			name = "texture_height";
-			ss << heightNr++; // transfer unsigned int to stream
 		}
 		number = ss.str();
 		// now set the sampler to the correct texture unit

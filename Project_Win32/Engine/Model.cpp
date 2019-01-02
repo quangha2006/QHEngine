@@ -181,7 +181,10 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 			hasnormals = true;
 		}
 		else
+		{
+			LOGW("WARNING!!!: Mesh has no normal\n");
 			vertex.Normal = glm::vec3(0.0f, 0.0f, 0.0f);
+		}
 		// texture coordinates
 		if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
 		{
@@ -298,18 +301,19 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 	// normal: texture_normalN
 
 	// 1. diffuse maps
-	vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, TextureType_DIFFUSE);
+	vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE);
 	textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 	// 2. specular maps
-	vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, TextureType_SPECULAR);
+	vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR);
 	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	// 3. normal maps
-	std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS, TextureType_NORMALS);
-	if (normalMaps.size() == 0) normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, TextureType_NORMALS);
+	std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS);
 	textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-	// 4. height maps
-	std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, TextureType_AMBIENT);
+	std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_HEIGHT);
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+	// 4. height maps
+	std::vector<Texture> ambientMaps = loadMaterialTextures(material, aiTextureType_AMBIENT);
+	textures.insert(textures.end(), ambientMaps.begin(), ambientMaps.end());
 
 	// Get material color
 	aiColor3D ka_color(0.0f, 0.0f, 0.0f);
@@ -349,7 +353,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 	return Mesh(vertices, indices, textures, mesh_material, string(mesh->mName.C_Str()), hasnormals, hasbone);
 }
 
-vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, TextureType typeName)
+vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type)
 {
 	vector<Texture> textures;
 	bool abc = false;
@@ -375,7 +379,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 			Texture texture;
 			texture.id = QHTexture::GenTextureId();
 			QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.id);
-			texture.type = typeName;
+			texture.type = type;
 			texture.path = str;
 			textures.push_back(texture);
 			textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
@@ -387,7 +391,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		Texture texture;
 		texture.id = QHTexture::GenTextureId();
 		QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.id);
-		texture.type = typeName;
+		texture.type = type;
 		texture.path = str;
 		textures.push_back(texture);
 		textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
@@ -579,11 +583,10 @@ void Model::SetNeedRotate(bool isNeedRotate)
 {
 	this->needRotate = isNeedRotate;
 }
+
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {
-	//static int check = 0;
 	//if (check > 1000) return;
-	//check ++;
 	string NodeName(pNode->mName.data);
 
 	const aiAnimation* pAnimation = m_pScene->mAnimations[animToPlay];

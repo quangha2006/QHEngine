@@ -6,16 +6,18 @@
 enum FrameBufferType
 {
 	FrameBufferType_DEPTH,
-	FrameBufferType_HDRCOLOR
+	FrameBufferType_COLORBUFFER,
+	FrameBufferType_COLORBUFFERMULTISAMPLED
 };
 
 class FrameBuffer
 {
 private:
-	GLuint m_FBOId;
+	GLuint m_FBOId, intermediateFBO;
 	GLuint m_rboDepth;
 	GLuint m_texBufferWidth, m_texBufferHeight;
-	GLuint m_TexId;
+	GLuint m_TexId, screenTexture;
+
 	bool isEnableDebug;
 	FrameBufferType m_type;
 	AppContext * m_appcontext;

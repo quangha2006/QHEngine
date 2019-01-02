@@ -7,19 +7,21 @@
 #include <vector>
 #include <map>
 #include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 #include <SOIL.h>
 
-enum TextureType
-{
-	TextureType_DIFFUSE,
-	TextureType_SPECULAR,
-	TextureType_NORMALS,
-	TextureType_HEIGHT,
-	TextureType_AMBIENT
-};
+//enum TextureType
+//{
+//	TextureType_DIFFUSE,
+//	TextureType_SPECULAR,
+//	TextureType_NORMALS,
+//	TextureType_HEIGHT,
+//	TextureType_AMBIENT
+//};
 struct Texture {
 	unsigned int id;
-	TextureType type;
+	aiTextureType type;
 	aiString path;
 };
 namespace QHTexture
