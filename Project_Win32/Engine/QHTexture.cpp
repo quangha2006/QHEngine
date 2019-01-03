@@ -47,7 +47,7 @@ namespace QHTexture
 		}
 
 		uint64_t time_end = Timer::getMillisecond();
-		LOGI("Load texture: %dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
+		LOGI("Load texture: %3dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
 		return true;
 	}
 	unsigned int GenTextureId()

@@ -146,7 +146,7 @@ class MyConfigChooser implements GLSurfaceView.EGLConfigChooser {
             Log.e("QHEngine","Failed to chose config!");
             return null;
         } else {
-            if (false)
+            if (false) // print configs
             {
                 int[] r = new int[1];
                 int[] g = new int[1];

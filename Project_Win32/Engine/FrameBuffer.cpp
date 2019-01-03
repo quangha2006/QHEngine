@@ -8,7 +8,7 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 	m_texBufferWidth = texWidth;
 	m_texBufferHeight = texHeight;
 	m_type = type;
-
+	GLenum Status;
 	glGenFramebuffers(1, &m_FBOId);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId);
 	// create texture
@@ -41,6 +41,12 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		glDrawBuffers(0, GL_NONE);
 		glReadBuffer(GL_NONE);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+		if (Status != GL_FRAMEBUFFER_COMPLETE)
+			LOGE("ERROR!! FrameBufferType_DEPTH is not complete!\n");
+
 		break;
 	case FrameBufferType_COLORBUFFER:
 		LOGI("Create FrameBufferType_COLORBUFFER: %d, %d\n", texWidth, texHeight);
@@ -64,13 +70,20 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rboDepth);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+		if (Status != GL_FRAMEBUFFER_COMPLETE)
+			LOGE("ERROR!! FrameBufferType_COLORBUFFER is not complete!\n");
+
 		break;
-	case FrameBufferType_COLORBUFFERMULTISAMPLED:
-		LOGI("Create FrameBufferType_COLORBUFFERMULTISAMPLED: %d, %d\n", texWidth, texHeight);
+	case FrameBufferType_COLORBUFFER_MULTISAMPLED:
+#ifdef _WINDOWS
+		LOGI("Create FrameBufferType_COLORBUFFER_MULTISAMPLED: %d, %d\n", texWidth, texHeight);
 		// configure MSAA framebuffer
 		glGenTextures(1, &m_TexId);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_TexId);
-		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGB, m_texBufferWidth, m_texBufferHeight, GL_TRUE);
+		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGBA16F, m_texBufferWidth, m_texBufferHeight, GL_TRUE);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, m_TexId, 0);
 
@@ -81,27 +94,32 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rboDepth);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+		if (Status != GL_FRAMEBUFFER_COMPLETE)
+			LOGE("ERROR!! FrameBufferType_COLORBUFFER_MULTISAMPLED is not complete!\n");
 		// configure second post-processing framebuffer
-		unsigned int intermediateFBO;
+
 		glGenFramebuffers(1, &intermediateFBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, intermediateFBO);
 		// create a color attachment texture
-		unsigned int screenTexture;
+
 		glGenTextures(1, &screenTexture);
 		glBindTexture(GL_TEXTURE_2D, screenTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_texBufferWidth, m_texBufferHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, m_texBufferWidth, m_texBufferHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, screenTexture, 0);	// we only need a color buffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+		if (Status != GL_FRAMEBUFFER_COMPLETE)
+			LOGE("ERROR!! FrameBufferType_COLORBUFFER_MULTISAMPLED screenTexture is not complete!\n");
+#endif
 		break;
 	}
-	
-	GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
-	if (Status != GL_FRAMEBUFFER_COMPLETE)
-		LOGE("ERROR::FRAMEBUFFER:: Framebuffer is not complete!\n");
 	
 	return true;
 }
@@ -120,7 +138,7 @@ void FrameBuffer::Enable(const char* shadername)
 
 GLuint FrameBuffer::Disable()
 {
-	if (m_type == FrameBufferType_COLORBUFFERMULTISAMPLED)
+	if (m_type == FrameBufferType_COLORBUFFER_MULTISAMPLED)
 	{
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FBOId);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, intermediateFBO);
@@ -135,7 +153,10 @@ GLuint FrameBuffer::Disable()
 
 	if (isEnableDebug)
 		Debugging::getInstance()->DrawTex(m_TexId, "screenShader");
-	return m_TexId;
+	if (m_type == FrameBufferType_COLORBUFFER_MULTISAMPLED)
+		return screenTexture;
+	else
+		return m_TexId;
 }
 
 void FrameBuffer::EnableDebug(bool isEnable)
@@ -158,7 +179,7 @@ void FrameBuffer::Render(bool useDefaultShader)
 
 	glActiveTexture(GL_TEXTURE0);
 
-	if (m_type == FrameBufferType_COLORBUFFERMULTISAMPLED)
+	if (m_type == FrameBufferType_COLORBUFFER_MULTISAMPLED)
 		glBindTexture(GL_TEXTURE_2D, screenTexture);
 	else
 		glBindTexture(GL_TEXTURE_2D, m_TexId);

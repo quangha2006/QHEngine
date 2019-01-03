@@ -12,8 +12,10 @@ void Basic::Init()
 {
 	mframebuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
 
-	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
-	//HDRBuffer.EnableDebug(true);
+	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+
+	//HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+
 	ShareContext shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
 }
@@ -49,19 +51,19 @@ void Basic::LoadingThread(ShareContext shared_context)
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, true);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
-	//mMerce.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", mCamera, true);
-	//mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	mMerce.SetTranslate(glm::vec3(0.0f, -10.5f, 0.5f));
-	mMerce.SetScale(glm::vec3(0.1f));
+	//mMerce.Init("\MercedesBenzSLSAMG/sls_amg.obj", mCamera, true);
+	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+	mMerce.SetTranslate(glm::vec3(0.0f, 1.0f, 0.5f));
+	//mMerce.SetScale(glm::vec3(0.1f));
 	loadingText.setText(Utils::toString("Loading %d%c", 20, 37));
 	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.dae", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	mSpider.Init("astroBoy/astroBoy_walk_Max.dae", mCamera, true);
+	mSpider.Init("astroBoy/astroBoy_walk_Maya.dae", mCamera, true);
 	//mSpider.SetScale(glm::vec3(0.1f));
 	mSpider.SetTranslate(glm::vec3(5.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
-	mSpider.SetNeedRotate(true);
+	mSpider.SetNeedRotate(false);
 
 	loadingText.setText(Utils::toString("Loading %d%c", 40,37));
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
@@ -136,8 +138,8 @@ void Basic::Draw()
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
-	width = 900;
-	height = 540;
+	width = 1920;//900;
+	height = 1027;//540;
 }
 void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {

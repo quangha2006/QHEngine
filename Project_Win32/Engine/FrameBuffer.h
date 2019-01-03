@@ -7,7 +7,7 @@ enum FrameBufferType
 {
 	FrameBufferType_DEPTH,
 	FrameBufferType_COLORBUFFER,
-	FrameBufferType_COLORBUFFERMULTISAMPLED
+	FrameBufferType_COLORBUFFER_MULTISAMPLED
 };
 
 class FrameBuffer
