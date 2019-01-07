@@ -11,10 +11,10 @@
 void Basic::Init()
 {
 	mframebuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
-
+	//mframebuffer.EnableDebug(true);
 	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	//HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	//HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth()*0.85, mContext->GetWindowHeight()*0.85);
 
 	ShareContext shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
@@ -138,8 +138,10 @@ void Basic::Draw()
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
-	width = 1920;//900;
-	height = 1027;//540;
+	width = 900;
+	height = 540;
+	//width = 1920;
+	//height = 1024;
 }
 void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {

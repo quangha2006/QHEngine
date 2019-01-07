@@ -4,7 +4,7 @@ float a = 9.0;
 float b = -0.8f;
 void Game::Init()
 {
-	testHDR.Init(mContext, FrameBufferType_HDRCOLOR, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	testHDR.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 	mCamera->Pos = glm::vec3(40.0f, 3.0f, 18.0f);
 	mCamera->Target = glm::vec3(1.0f, 1.0f, 1.0f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);

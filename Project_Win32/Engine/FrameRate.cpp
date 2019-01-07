@@ -86,7 +86,7 @@ void FrameRate::limitFPS()
 
 FrameRate::FrameRate()
 {
-	currentFPS = 60.0f;
+	currentFPS = 0.0f;
 	SKIP_TICKS = 0;
 	prevFrametime = 0;
 	m_begincputime = 0;

@@ -153,6 +153,7 @@ GLuint FrameBuffer::Disable()
 
 	if (isEnableDebug)
 		Debugging::getInstance()->DrawTex(m_TexId, "screenShader");
+
 	if (m_type == FrameBufferType_COLORBUFFER_MULTISAMPLED)
 		return screenTexture;
 	else
