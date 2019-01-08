@@ -16,13 +16,13 @@ void Basic::Init()
 
 	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	ShareContext *shared_context = mContext->CreateShareContext();
+	AppSharedContext *shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
 }
 
-void Basic::LoadingThread(ShareContext *shared_context)
+void Basic::LoadingThread(AppSharedContext *shared_context)
 {
-	mContext->MakeContextCurrent(shared_context);
+	shared_context->MakeContextCurrent();
 	QHText loadingText;
 
 	loadingText.setPos(mContext->GetWindowWidth()/2-150, mContext->GetWindowHeight()/2);
@@ -86,7 +86,7 @@ void Basic::LoadingThread(ShareContext *shared_context)
 	loadingText.setText(Utils::toString("Loading %d%c", 100, 37));
 	axis.Init(mCamera);
 
-	mContext->DestroyContext();
+	shared_context->DestroyContext();
 	m_initialized = true;
 	delete(shared_context);
 }

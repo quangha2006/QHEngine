@@ -6,6 +6,20 @@
 #include <android/sensor.h>
 #endif
 
+class EGLSharedContext : public AppSharedContext
+{
+private:
+	EGLSurface surface;
+	EGLDisplay display;
+	EGLContext shared_context;
+public:
+	bool MakeContextCurrent();
+	void DestroyContext();
+	void SetSurface(EGLSurface surface);
+	void SetDisplay(EGLDisplay display);
+	void SetContext(EGLContext shared_context);
+};
+
 class EGLAppContext : public AppContext
 {
 private:
@@ -13,8 +27,7 @@ private:
 	bool Initializee;
 public:
 	bool createWindow(int32_t width, int32_t height);
-	ShareContext *CreateShareContext();
-	bool MakeContextCurrent(ShareContext *shared_context);
+	AppSharedContext *CreateShareContext();
 	void DestroyContext();
 	void SwapBuffers();
 	EGLAppContext();

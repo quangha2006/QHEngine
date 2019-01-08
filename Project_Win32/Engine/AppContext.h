@@ -6,7 +6,6 @@
 #include <GL/glew.h>
 #define GLFW_INCLUDE_ES2
 #include <GLFW/glfw3.h>
-
 #elif defined(ANDROID)
 #include <EGL/egl.h>
 #include <GLES3/gl3.h>
@@ -14,17 +13,20 @@
 #endif
 #if defined(_WINDOWS)
 typedef GLFWwindow ANativeWindow;
+typedef void *EGLContext;
+typedef void *EGLDisplay;
+typedef void *EGLSurface;
 #endif
 
-struct ShareContext
+class AppSharedContext
 {
-#if defined(_WINDOWS)
-	ANativeWindow* window;
-#elif defined(ANDROID)
-	EGLSurface surface;
-	EGLDisplay display;
-	EGLContext shared_context;
-#endif
+public:
+	virtual bool MakeContextCurrent() { return false; };
+	virtual void DestroyContext() {};
+	virtual void SetWindows(ANativeWindow* window) {};
+	virtual void SetSurface(EGLSurface surface) {};
+	virtual void SetDisplay(EGLDisplay display) {};
+	virtual void SetContext(EGLContext shared_context) {};
 };
 
 class AppContext
@@ -37,8 +39,7 @@ public:
 	virtual bool createWindow(int32_t width, int32_t height) { return false; }
 	virtual void SwapBuffers() {}
 	virtual void SetWindow(ANativeWindow* window) { this->window = window; }
-	virtual ShareContext *CreateShareContext() { return new ShareContext(); };
-	virtual bool MakeContextCurrent(ShareContext *shared_context) { return false; };
+	virtual AppSharedContext *CreateShareContext() { return new AppSharedContext(); };
 	virtual void DestroyContext() {};
 	virtual ANativeWindow* GetWindow() { return window; }
 	virtual void SetWindowSize(int32_t width, int32_t height);

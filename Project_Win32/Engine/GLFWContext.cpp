@@ -42,18 +42,14 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 	glfwSwapInterval(1);
 	return true; 
 }
-ShareContext *GLFWContext::CreateShareContext()
+AppSharedContext *GLFWContext::CreateShareContext()
 {
-	ShareContext *shared_context = new ShareContext();
+	AppSharedContext *shared_context = new GLFWSharedContext();
 	glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-	shared_context->window = glfwCreateWindow(width, height, "", 0, window);
+	shared_context->SetWindows(glfwCreateWindow(width, height, "", 0, window));
 	return shared_context;
 }
-bool GLFWContext::MakeContextCurrent(ShareContext *shared_context)
-{
-	glfwMakeContextCurrent(shared_context->window);
-	return true;
-}
+
 void GLFWContext::DestroyContext()
 {
 	glfwMakeContextCurrent(NULL);
@@ -69,4 +65,20 @@ GLFWContext::GLFWContext()
 }
 GLFWContext::~GLFWContext()
 {
+}
+
+void GLFWSharedContext::SetWindows(ANativeWindow * window)
+{
+	this->window = window;
+}
+
+bool GLFWSharedContext::MakeContextCurrent()
+{
+	glfwMakeContextCurrent(window);
+	return true;
+}
+
+void GLFWSharedContext::DestroyContext()
+{
+	glfwMakeContextCurrent(NULL);
 }
