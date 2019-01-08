@@ -14,9 +14,9 @@ bool EGLAppContext::createWindow(int32_t width, int32_t height)
 	return true;
 }
 
-ShareContext EGLAppContext::CreateShareContext()
+ShareContext *EGLAppContext::CreateShareContext()
 {
-	ShareContext shared_context;
+	ShareContext *shared_context = new ShareContext();
 
 	EGLContext context = eglGetCurrentContext();
 	EGLDisplay display = eglGetCurrentDisplay();
@@ -46,16 +46,16 @@ ShareContext EGLAppContext::CreateShareContext()
 	if (display == EGL_NO_DISPLAY)
 		LOGI("ERROR! EGL_NO_DISPLAY\n");
 
-	shared_context.display = display;
-	shared_context.surface = surface;
-	shared_context.shared_context = sharecontext;
+	shared_context->display = display;
+	shared_context->surface = surface;
+	shared_context->shared_context = sharecontext;
 	this->display = display;
 	return shared_context;
 }
 
-bool EGLAppContext::MakeContextCurrent(ShareContext shared_context)
+bool EGLAppContext::MakeContextCurrent(ShareContext *shared_context)
 {
-	return eglMakeCurrent(shared_context.display, shared_context.surface, shared_context.surface, shared_context.shared_context);
+	return eglMakeCurrent(shared_context->display, shared_context->surface, shared_context->surface, shared_context->shared_context);
 }
 
 void EGLAppContext::DestroyContext()

@@ -39,19 +39,19 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 	}
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-
+	glfwSwapInterval(1);
 	return true; 
 }
-ShareContext GLFWContext::CreateShareContext()
+ShareContext *GLFWContext::CreateShareContext()
 {
-	ShareContext shared_context;
+	ShareContext *shared_context = new ShareContext();
 	glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-	shared_context.window = glfwCreateWindow(900, 540, "", 0, window);
+	shared_context->window = glfwCreateWindow(width, height, "", 0, window);
 	return shared_context;
 }
-bool GLFWContext::MakeContextCurrent(ShareContext shared_context)
+bool GLFWContext::MakeContextCurrent(ShareContext *shared_context)
 {
-	glfwMakeContextCurrent(shared_context.window);
+	glfwMakeContextCurrent(shared_context->window);
 	return true;
 }
 void GLFWContext::DestroyContext()

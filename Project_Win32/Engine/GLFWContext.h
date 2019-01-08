@@ -3,12 +3,10 @@
 
 class GLFWContext : public AppContext
 {
-private:
-
 public:
 	bool createWindow(int32_t width, int32_t height);
-	ShareContext CreateShareContext();
-	bool MakeContextCurrent(ShareContext shared_context);
+	ShareContext *CreateShareContext();
+	bool MakeContextCurrent(ShareContext *shared_context);
 	void DestroyContext();
 	void SwapBuffers();
 	GLFWContext();

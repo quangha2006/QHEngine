@@ -102,8 +102,8 @@ void AppBase::Resize(int width, int height)
 }
 void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 {
-	static int touch_old_x = 0;
-	static int touch_old_y = 0;
+	static int touch_old_x = x;
+	static int touch_old_y = y;
 	static bool preesed = false;
 	if (eventId == 0)
 	{
@@ -121,7 +121,7 @@ void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 	}
 	if (!preesed) return;
 	
-	mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(x - touch_old_x)), glm::vec3(0.0f, 1.0f, 0.0f));
+	mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(x - touch_old_x)), glm::vec3(0.0f, 5.0f, 0.0f));
 
 	//mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(y - touch_old_y)), glm::vec3(1.0f, 0.0f, 1.0f));
 	//mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(y - touch_old_y)), glm::vec3(0.0f, 0.0f, 1.0f));

@@ -8,11 +8,11 @@ void Game::Init()
 	mCamera->Pos = glm::vec3(40.0f, 3.0f, 18.0f);
 	mCamera->Target = glm::vec3(1.0f, 1.0f, 1.0f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
-	ShareContext sharedContext = mContext->CreateShareContext();
+	ShareContext *sharedContext = mContext->CreateShareContext();
 	new thread(&Game::LoadingThread, this, sharedContext);
 }
 
-void Game::LoadingThread(ShareContext shared_context)
+void Game::LoadingThread(ShareContext *shared_context)
 {
 	mContext->MakeContextCurrent(shared_context);
 

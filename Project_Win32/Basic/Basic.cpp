@@ -12,15 +12,15 @@ void Basic::Init()
 {
 	mframebuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
 	//mframebuffer.EnableDebug(true);
-	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	//HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	//HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth()*0.85, mContext->GetWindowHeight()*0.85);
+	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	ShareContext shared_context = mContext->CreateShareContext();
+	ShareContext *shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
 }
 
-void Basic::LoadingThread(ShareContext shared_context)
+void Basic::LoadingThread(ShareContext *shared_context)
 {
 	mContext->MakeContextCurrent(shared_context);
 	QHText loadingText;
@@ -53,15 +53,16 @@ void Basic::LoadingThread(ShareContext shared_context)
 
 	//mMerce.Init("\MercedesBenzSLSAMG/sls_amg.obj", mCamera, true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	mMerce.SetTranslate(glm::vec3(0.0f, 1.0f, 0.5f));
-	//mMerce.SetScale(glm::vec3(0.1f));
+	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 1.2f));
+	mMerce.SetScale(glm::vec3(2.5f));
+
 	loadingText.setText(Utils::toString("Loading %d%c", 20, 37));
 	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.dae", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
 	mSpider.Init("astroBoy/astroBoy_walk_Maya.dae", mCamera, true);
-	//mSpider.SetScale(glm::vec3(0.1f));
-	mSpider.SetTranslate(glm::vec3(5.0f, 0.0f, 0.0f));
+	mSpider.SetScale(glm::vec3(0.22f));
+	mSpider.SetTranslate(glm::vec3(20.0f, 0.0f, -10.0f));
 	mSpider.SetAnimPlay(0);
 	mSpider.SetNeedRotate(false);
 
@@ -83,10 +84,11 @@ void Basic::LoadingThread(ShareContext shared_context)
 	//soundIntro.Init("Sound/chuabaogio.wav");
 	//soundIntro.Play();
 	loadingText.setText(Utils::toString("Loading %d%c", 100, 37));
-	//axis.Init(mCamera);
+	axis.Init(mCamera);
 
 	mContext->DestroyContext();
 	m_initialized = true;
+	delete(shared_context);
 }
 
 void Basic::Draw()
@@ -134,7 +136,7 @@ void Basic::Draw()
 	ShaderManager::getInstance()->setFloat("exposure", 1.0f);
 	ShaderManager::getInstance()->setInt("hdrBuffer", 0);
 	HDRBuffer.Render();
-	//axis.Draw();
+	axis.Draw();
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
