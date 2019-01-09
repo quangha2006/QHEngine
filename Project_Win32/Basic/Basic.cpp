@@ -12,9 +12,9 @@ void Basic::Init()
 {
 	mframebuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
 	//mframebuffer.EnableDebug(true);
-	//HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	//HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
 	AppSharedContext *shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
@@ -51,7 +51,7 @@ void Basic::LoadingThread(AppSharedContext *shared_context)
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", mCamera, true);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 
-	//mMerce.Init("\MercedesBenzSLSAMG/sls_amg.obj", mCamera, true);
+	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", mCamera, true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));

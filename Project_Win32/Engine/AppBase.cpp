@@ -131,7 +131,7 @@ void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 	mCamera->Pos = mCamera->ExtractCameraPos(mCamera->view);
 
 	mCamera->Pos.y += ((y - touch_old_y)*0.1);
-
+	mCamera->Target.y += ((y - touch_old_y)*0.1);
 	//if ((mCamera->Pos.y > 0.5) && (mCamera->Pos.y < 80))
 	//{
 	//	if (mCamera->Pos.x > 0)
@@ -144,8 +144,8 @@ void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 	//		mCamera->Pos.z += ((y - touch_old_y)*0.3);
 	//}
 
-	if (mCamera->Pos.y > 60) mCamera->Pos.y = 60;
-	if (mCamera->Pos.y < 0.5) mCamera->Pos.y = 0.5;
+	//if (mCamera->Pos.y > 60) mCamera->Pos.y = 60;
+	//if (mCamera->Pos.y < 0.5) mCamera->Pos.y = 0.5;
 
 	touch_old_x = x;
 	touch_old_y = y;
@@ -163,9 +163,9 @@ void AppBase::ZoomCamera(double xoffset, double yoffset)
 		mCamera->Pos.y -= dis_y;
 		mCamera->Pos.z -= dis_z;
 
-		mCamera->Target.x -= dis_x;
-		mCamera->Target.y -= dis_y;
-		mCamera->Target.z -= dis_z;
+		//mCamera->Target.x -= dis_x;
+		//mCamera->Target.y -= dis_y;
+		//mCamera->Target.z -= dis_z;
 	}
 	else
 	{
@@ -173,9 +173,9 @@ void AppBase::ZoomCamera(double xoffset, double yoffset)
 		mCamera->Pos.y += dis_y;
 		mCamera->Pos.z += dis_z;
 
-		mCamera->Target.x += dis_x;
-		mCamera->Target.y += dis_y;
-		mCamera->Target.z += dis_z;
+		//mCamera->Target.x += dis_x;
+		//mCamera->Target.y += dis_y;
+		//mCamera->Target.z += dis_z;
 	}
 }
 AppBase::AppBase()

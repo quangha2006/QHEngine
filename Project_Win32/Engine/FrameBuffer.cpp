@@ -20,8 +20,8 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 	{
 	case FrameBufferType_DEPTH:
 		LOGI("Create FrameBufferType_DEPTH: %d, %d\n", texWidth, texHeight);
-		glGenTextures(1, &m_TexId);
-		glBindTexture(GL_TEXTURE_2D, m_TexId);
+		glGenTextures(1, m_TexId);
+		glBindTexture(GL_TEXTURE_2D, m_TexId[0]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
@@ -31,13 +31,13 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 #else
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-		//float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
 		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 #endif
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, m_texBufferWidth, m_texBufferHeight, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		// attach depth texture as FBO's depth buffer
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_TexId, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_TexId[0], 0);
 		glDrawBuffers(0, GL_NONE);
 		glReadBuffer(GL_NONE);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -50,8 +50,8 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		break;
 	case FrameBufferType_COLORBUFFER:
 		LOGI("Create FrameBufferType_COLORBUFFER: %d, %d\n", texWidth, texHeight);
-		glGenTextures(1, &m_TexId);
-		glBindTexture(GL_TEXTURE_2D, m_TexId);
+		glGenTextures(1, m_TexId);
+		glBindTexture(GL_TEXTURE_2D, m_TexId[0]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -59,7 +59,7 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, m_texBufferWidth, m_texBufferHeight, 0, GL_RGBA, GL_FLOAT, NULL);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TexId, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TexId[0], 0);
 
 		// create depth buffer (renderbuffer)
 		glGenRenderbuffers(1, &m_rboDepth);
@@ -81,11 +81,11 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 #ifdef _WINDOWS
 		LOGI("Create FrameBufferType_COLORBUFFER_MULTISAMPLED: %d, %d\n", texWidth, texHeight);
 		// configure MSAA framebuffer
-		glGenTextures(1, &m_TexId);
-		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_TexId);
+		glGenTextures(1, m_TexId);
+		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_TexId[0]);
 		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGBA16F, m_texBufferWidth, m_texBufferHeight, GL_TRUE);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, m_TexId, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, m_TexId[0], 0);
 
 		glGenRenderbuffers(1, &m_rboDepth);
 		glBindRenderbuffer(GL_RENDERBUFFER, m_rboDepth);
@@ -117,6 +117,39 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		if (Status != GL_FRAMEBUFFER_COMPLETE)
 			LOGE("ERROR!! FrameBufferType_COLORBUFFER_MULTISAMPLED screenTexture is not complete!\n");
 #endif
+		break;
+	case FrameBufferType_COLORBUFFER_BRIGHTNESS:
+		LOGI("Create FrameBufferType_COLORBUFFER_BRIGHTNESS: %d, %d\n", texWidth, texHeight);
+		// configure MSAA framebuffer
+		glGenTextures(2, m_TexId);
+		for (unsigned int i = 0; i < 2; i++)
+		{
+			glBindTexture(GL_TEXTURE_2D, m_TexId[i]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, m_texBufferWidth, m_texBufferHeight, 0, GL_RGBA, GL_FLOAT, NULL);
+			
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_TexId[i], 0);
+		}
+		glGenRenderbuffers(1, &m_rboDepth);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_rboDepth);
+
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, m_texBufferWidth, m_texBufferHeight);
+		// attach buffers
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rboDepth);
+
+		GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+		glDrawBuffers(2, attachments);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+		if (Status != GL_FRAMEBUFFER_COMPLETE)
+			LOGE("ERROR!! FrameBufferType_COLORBUFFER is not complete!\n");
 		break;
 	}
 
@@ -152,12 +185,12 @@ GLuint FrameBuffer::Disable()
 	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 
 	if (isEnableDebug)
-		Debugging::getInstance()->DrawTex(m_TexId, "screenShader");
+		Debugging::getInstance()->DrawTex(m_TexId[0], "screenShader");
 
 	if (m_type == FrameBufferType_COLORBUFFER_MULTISAMPLED)
 		return screenTexture;
 	else
-		return m_TexId;
+		return m_TexId[0];
 }
 
 void FrameBuffer::EnableDebug(bool isEnable)
@@ -183,7 +216,7 @@ void FrameBuffer::Render(bool useDefaultShader)
 	if (m_type == FrameBufferType_COLORBUFFER_MULTISAMPLED)
 		glBindTexture(GL_TEXTURE_2D, screenTexture);
 	else
-		glBindTexture(GL_TEXTURE_2D, m_TexId);
+		glBindTexture(GL_TEXTURE_2D, m_TexId[0]);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
@@ -252,5 +285,8 @@ FrameBuffer::FrameBuffer()
 FrameBuffer::~FrameBuffer()
 {
 	glDeleteFramebuffers(1, &m_FBOId);
-	glDeleteTextures(1, &m_TexId);
+	//if (m_type == FrameBufferType_DEPTH)
+		glDeleteTextures(1, m_TexId);
+	//else
+		//glDeleteTextures(2, m_TexId);
 }

@@ -8,38 +8,38 @@ bool cmpf(float A, float B, float epsilon = 0.0001f)
 void QHText::MakeTextData()
 {
 	m_textdata.clear();
-	if (text.size() > 0)
-		endPos = TextRendering::getInstance()->Add(text, pos.x, pos.y, scale, color, alpha, m_textdata);
+	if (m_text.size() > 0)
+		m_endPos = TextRendering::getInstance()->Add(m_text, m_pos.x, m_pos.y, m_scale, m_color, m_alpha, m_textdata);
 }
 
 void QHText::setText(std::string newText)
 {
-	if (this->text == newText) return;
-	this->text = newText;
+	if (m_text == newText) return;
+	m_text = newText;
 	MakeTextData();
 }
 
 void QHText::setPos(int pos_x, int pos_y)
 {
-	if (cmpf(this->pos.x , pos_x) && cmpf(this->pos.y , pos_y)) return;
-	this->pos.x = pos_x;
-	this->pos.y = pos_y;
+	if (cmpf(m_pos.x , pos_x) && cmpf(m_pos.y , pos_y)) return;
+	m_pos.x = pos_x;
+	m_pos.y = pos_y;
 	MakeTextData();
 }
 
 void QHText::setPos(glm::ivec2 newPos)
 {
-	if (this->pos == newPos) return;
-	this->pos = newPos;
+	if (m_pos == newPos) return;
+	m_pos = newPos;
 	MakeTextData();
 }
 
 void QHText::setColor(glm::vec3 newColor)
 {
-	if (this->color == newColor)
+	if (m_color == newColor)
 		return;
 
-	this->color = newColor;
+	m_color = newColor;
 	for (int i = 0; i < m_textdata.size(); i++)
 	{
 		m_textdata[i].Color = newColor;
@@ -48,10 +48,10 @@ void QHText::setColor(glm::vec3 newColor)
 
 void QHText::setAlpha(float newAlpha)
 {
-	if (cmpf(this->alpha , newAlpha))
+	if (cmpf(m_alpha , newAlpha))
 		return;
 
-	this->alpha = newAlpha;
+	m_alpha = newAlpha;
 	for (int i = 0; i < m_textdata.size(); i++)
 	{
 		m_textdata[i].Alpha = newAlpha;
@@ -60,41 +60,41 @@ void QHText::setAlpha(float newAlpha)
 
 void QHText::setScale(float newScale)
 {
-	if (cmpf(this->scale , newScale))
+	if (cmpf(m_scale , newScale))
 		return;
 
-	this->scale = newScale;
+	m_scale = newScale;
 	MakeTextData();
 }
 
 glm::vec3 QHText::getColor(glm::vec3 newColor)
 {
-	return this->color;
+	return m_color;
 }
 
 GLfloat QHText::getAlpha(float newAlpha)
 {
-	return this->alpha;
+	return m_alpha;
 }
 
 GLfloat QHText::getScale(float newScale)
 {
-	return this->scale;
+	return m_scale;
 }
 
 glm::ivec2 QHText::getEndPos()
 {
-	return this->endPos;
+	return m_endPos;
 }
 
 int QHText::getEndPos_x()
 {
-	return this->endPos.x;
+	return m_endPos.x;
 }
 
 int QHText::getEndPos_y()
 {
-	return this->endPos.y;
+	return m_endPos.y;
 }
 
 std::vector<TextData> QHText::getTextData()
@@ -104,22 +104,23 @@ std::vector<TextData> QHText::getTextData()
 
 void QHText::UpdateId(int newid)
 {
-	id = newid;
+	m_id = newid;
 }
 
 QHText::QHText(std::string text, int pos_x, int pos_y, glm::vec3 color, float scale, float alpha)
 {
-	this->id = TextRendering::getInstance()->AddQHText(this);
-	this->text = text;
-	this->color = color;
-	this->pos = glm::vec2(pos_x, pos_y);
-	this->alpha = alpha;
-	this->scale = scale;
+	m_id = TextRendering::getInstance()->AddQHText(this);
+	m_text = text;
+	m_color = color;
+	m_pos = glm::vec2(pos_x, pos_y);
+	m_alpha = alpha;
+	m_scale = scale;
+	visible = true;
 	MakeTextData();
 }
 
 
 QHText::~QHText()
 {
-	TextRendering::getInstance()->RemoveQHText(id);
+	TextRendering::getInstance()->RemoveQHText(m_id);
 }

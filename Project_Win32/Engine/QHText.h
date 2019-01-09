@@ -16,15 +16,16 @@ class QHText
 {
 private:
 	std::vector<TextData> m_textdata;
-	std::string text;
-	glm::vec3 color;
-	glm::ivec2 pos;
-	glm::ivec2 endPos;
-	float alpha;
-	float scale;
-	int id;
+	std::string m_text;
+	glm::vec3 m_color;
+	glm::ivec2 m_pos;
+	glm::ivec2 m_endPos;
+	float m_alpha;
+	float m_scale;
+	int m_id;
 	void MakeTextData();
 public:
+	bool visible;
 	void setText(std::string newText);
 	void setPos(int pos_x, int pos_y);
 	void setPos(glm::ivec2 newPos);

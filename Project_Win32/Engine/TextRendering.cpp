@@ -383,21 +383,16 @@ void TextRendering::Draw()
 	// Update content of VBO memory
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	
-	vector<TextData> fulltextdata;
-	//for (int i = 0; i < m_ListQHText.size(); i++)
-	//{
-	//	if (m_ListQHText[i]) // avoid crash randomly when remove a text on thread.
-	//	{
-	//		vector<TextData> tmp = m_ListQHText[i]->getTextData();
-	//		fulltextdata.insert(fulltextdata.end(), tmp.begin(), tmp.end());
-	//	}
-	//}
+	fulltextdata.clear();
 	for (auto &ListQHText : m_ListQHText)
 	{
+		if (ListQHText->visible == false) continue;
+
 		vector<TextData> tmp = ListQHText->getTextData();
 		if (tmp.size() > 0)
 			fulltextdata.insert(fulltextdata.end(), tmp.begin(), tmp.end());
 	}
+	if (fulltextdata.size() <= 0) return;
 	if (fulltextdata.size() > m_Maxchar * 6)
 	{
 		glBufferData(GL_ARRAY_BUFFER, fulltextdata.size() * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters

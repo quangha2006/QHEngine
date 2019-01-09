@@ -7,7 +7,8 @@ enum FrameBufferType
 {
 	FrameBufferType_DEPTH,
 	FrameBufferType_COLORBUFFER,
-	FrameBufferType_COLORBUFFER_MULTISAMPLED
+	FrameBufferType_COLORBUFFER_MULTISAMPLED,
+	FrameBufferType_COLORBUFFER_BRIGHTNESS
 };
 
 class FrameBuffer
@@ -16,8 +17,8 @@ private:
 	GLuint m_FBOId, intermediateFBO;
 	GLuint m_rboDepth;
 	GLuint m_texBufferWidth, m_texBufferHeight;
-	GLuint m_TexId, screenTexture;
-
+	GLuint m_TexId[2], screenTexture;
+	//GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 	bool isEnableDebug;
 	FrameBufferType m_type;
 	AppContext * m_appcontext;

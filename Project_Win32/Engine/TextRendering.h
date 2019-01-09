@@ -40,7 +40,7 @@ private:
 	bool createProgram();
 	GLuint createShader(GLenum shaderType, const char * src);
 	TextRendering();
-
+	std::vector<TextData> fulltextdata;
 	bool isFontLoaded;
 public:
 	static TextRendering* getInstance();
