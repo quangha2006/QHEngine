@@ -9,18 +9,18 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 	m_texBufferHeight = texHeight;
 	m_type = type;
 	GLenum Status;
-	glGenFramebuffers(1, &m_FBOId);
-	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId);
-	// create texture
-	//glGenTextures(1, &m_TexId);
-	//glBindTexture(GL_TEXTURE_2D, m_TexId);
+	glGenFramebuffers(1, &m_FBOId[0]);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
 	
 	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 	switch (type)
 	{
 	case FrameBufferType_DEPTH:
 		LOGI("Create FrameBufferType_DEPTH: %d, %d\n", texWidth, texHeight);
-		glGenTextures(1, m_TexId);
+		glGenFramebuffers(1, &m_FBOId[0]);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
+		glGenTextures(1, &m_TexId[0]);
 		glBindTexture(GL_TEXTURE_2D, m_TexId[0]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -50,7 +50,9 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		break;
 	case FrameBufferType_COLORBUFFER:
 		LOGI("Create FrameBufferType_COLORBUFFER: %d, %d\n", texWidth, texHeight);
-		glGenTextures(1, m_TexId);
+		glGenFramebuffers(1, &m_FBOId[0]);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
+		glGenTextures(1, &m_TexId[0]);
 		glBindTexture(GL_TEXTURE_2D, m_TexId[0]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -81,7 +83,9 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 #ifdef _WINDOWS
 		LOGI("Create FrameBufferType_COLORBUFFER_MULTISAMPLED: %d, %d\n", texWidth, texHeight);
 		// configure MSAA framebuffer
-		glGenTextures(1, m_TexId);
+		glGenFramebuffers(1, &m_FBOId[0]);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
+		glGenTextures(1, &m_TexId[0]);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, m_TexId[0]);
 		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGBA16F, m_texBufferWidth, m_texBufferHeight, GL_TRUE);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
@@ -121,6 +125,8 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 	case FrameBufferType_COLORBUFFER_BRIGHTNESS:
 		LOGI("Create FrameBufferType_COLORBUFFER_BRIGHTNESS: %d, %d\n", texWidth, texHeight);
 		// configure MSAA framebuffer
+		glGenFramebuffers(1, &m_FBOId[0]);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
 		glGenTextures(2, m_TexId);
 		for (unsigned int i = 0; i < 2; i++)
 		{
@@ -141,7 +147,7 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		// attach buffers
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rboDepth);
 
-		GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+		
 		glDrawBuffers(2, attachments);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -149,7 +155,28 @@ bool FrameBuffer::Init(AppContext * appcontext, FrameBufferType type, int texWid
 		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 		if (Status != GL_FRAMEBUFFER_COMPLETE)
-			LOGE("ERROR!! FrameBufferType_COLORBUFFER is not complete!\n");
+			LOGE("ERROR!! FrameBufferType_COLORBUFFER_BRIGHTNESS is not complete!\n");
+		break;
+	case FrameBufferType_COLORBUFFER_BLURRING:
+		LOGI("Create FrameBufferType_COLORBUFFER_BLURRING!\n");
+		glGenFramebuffers(2, m_FBOId);
+		glGenTextures(2, m_TexId);
+		for (unsigned int i = 0; i < 2; i++)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[i]);
+			glBindTexture(GL_TEXTURE_2D, m_TexId[i]);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, m_texBufferWidth, m_texBufferHeight, 0, GL_RGB, GL_FLOAT, NULL);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // we clamp to the edge as the blur filter would otherwise sample repeated texture values!
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TexId[i], 0);
+			// also check if framebuffers are complete (no need for depth buffer)
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+				LOGE("FrameBufferType_COLORBUFFER_BLURRING [%d] not complete!", i);
+		}
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 		break;
 	}
 
@@ -162,7 +189,7 @@ void FrameBuffer::Enable(const char* shadername)
 	if (shadername != NULL)
 		ShaderManager::getInstance()->setUseProgram(shadername);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
 	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -173,7 +200,7 @@ GLuint FrameBuffer::Disable()
 {
 	if (m_type == FrameBufferType_COLORBUFFER_MULTISAMPLED)
 	{
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FBOId);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FBOId[0]);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, intermediateFBO);
 		glBlitFramebuffer(0, 0, m_texBufferWidth, m_texBufferHeight, 0, 0, m_texBufferWidth, m_texBufferHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
@@ -191,6 +218,11 @@ GLuint FrameBuffer::Disable()
 		return screenTexture;
 	else
 		return m_TexId[0];
+}
+
+int FrameBuffer::GetTextureId(int index)
+{
+	return m_TexId[index];
 }
 
 void FrameBuffer::EnableDebug(bool isEnable)
@@ -216,10 +248,42 @@ void FrameBuffer::Render(bool useDefaultShader)
 	if (m_type == FrameBufferType_COLORBUFFER_MULTISAMPLED)
 		glBindTexture(GL_TEXTURE_2D, screenTexture);
 	else
-		glBindTexture(GL_TEXTURE_2D, m_TexId[0]);
+		glBindTexture(GL_TEXTURE_2D, m_TexId[1]);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
+}
+void FrameBuffer::MakeBlur(GLuint normalTexture, GLuint BriTexture)
+{
+	bool horizontal = true, first_iteration = true;
+	unsigned int amount = 10;
+	for (unsigned int i = 0; i < amount; i++)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[horizontal]);
+		ShaderManager::getInstance()->setInt("horizontal", horizontal);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, first_iteration ? BriTexture : m_TexId[!horizontal]);  // bind texture of other framebuffer (or scene if first iteration)
+
+		if (quadVAO == 0) InitquadVAO();
+		glBindVertexArray(quadVAO);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glBindVertexArray(0);
+		horizontal = !horizontal;
+		if (first_iteration)
+			first_iteration = false;
+	}
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	ShaderManager::getInstance()->setUseProgram("bloom_Final");
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, normalTexture);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_TexId[!horizontal]);
+	ShaderManager::getInstance()->setInt("bloom", 1);
+	glBindVertexArray(quadVAO);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindVertexArray(0);
+
 }
 void FrameBuffer::InitDefaultShader()
 {
@@ -284,9 +348,9 @@ FrameBuffer::FrameBuffer()
 
 FrameBuffer::~FrameBuffer()
 {
-	glDeleteFramebuffers(1, &m_FBOId);
+	//glDeleteFramebuffers(1, m_FBOId);
 	//if (m_type == FrameBufferType_DEPTH)
-		glDeleteTextures(1, m_TexId);
+		//glDeleteTextures(1, m_TexId);
 	//else
 		//glDeleteTextures(2, m_TexId);
 }

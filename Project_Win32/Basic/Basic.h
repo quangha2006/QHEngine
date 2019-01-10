@@ -16,7 +16,7 @@ class Basic : public AppBase
 {
 private:
 	Model mNanosuit, m_Streetenvironment, mMerce, mSpider, saberclass, mGallacticCruiser, mMonster_1;
-	FrameBuffer mframebuffer, HDRBuffer;
+	FrameBuffer mframebuffer, HDRBuffer, bluringBuffer;
 	SkyBox mSkyBox;
 	float timestamp_for_lamp;
 	Sound soundIntro;

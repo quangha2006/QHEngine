@@ -196,5 +196,11 @@
     <None Include="..\..\Resources\Shaders\framebuffers_debug.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\..\Resources\Shaders\blur.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\bloom_final.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
