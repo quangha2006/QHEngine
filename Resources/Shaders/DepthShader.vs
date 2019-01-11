@@ -10,7 +10,7 @@ in vec3 aBitangent;
 out vec2 TexCoords;
 uniform mat4 lightSpaceMatrix;
 uniform mat4 world;
-uniform mat4 gBones[48];
+uniform mat4 gBones[64];
 uniform bool useAnim;
 
 void main()

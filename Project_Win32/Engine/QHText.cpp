@@ -107,6 +107,11 @@ void QHText::UpdateId(int newid)
 	m_id = newid;
 }
 
+int QHText::GetId()
+{
+	return m_id;
+}
+
 QHText::QHText(std::string text, int pos_x, int pos_y, glm::vec3 color, float scale, float alpha)
 {
 	m_id = TextRendering::getInstance()->AddQHText(this);

@@ -273,17 +273,22 @@ void FrameBuffer::MakeBlur(GLuint normalTexture, GLuint BriTexture)
 		if (first_iteration)
 			first_iteration = false;
 	}
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	ShaderManager::getInstance()->setUseProgram("bloom_Final");
+	glBindVertexArray(quadVAO);
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, normalTexture);
+
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, m_TexId[!horizontal]);
 	ShaderManager::getInstance()->setInt("bloom", 1);
-	glBindVertexArray(quadVAO);
+	ShaderManager::getInstance()->setInt("scene", 0);
+	ShaderManager::getInstance()->setInt("bloomBlur", 1);
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
-
 }
 void FrameBuffer::InitDefaultShader()
 {

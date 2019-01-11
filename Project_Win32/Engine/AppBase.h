@@ -16,7 +16,7 @@ protected:
 public:
 	bool initialize(int32_t width, int32_t height, ANativeWindow *window = NULL);
 	void rendering();
-	virtual void Draw() {}
+	virtual void Update() {}
 	virtual void Init() {}
 	virtual void GetRequireScreenSize(int32_t &width, int32_t &height) {}
 	virtual void OnGameTouchEvent(int eventId, int x, int y, int pointerId);

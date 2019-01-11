@@ -40,7 +40,8 @@ uniform bool uselighting;
 uniform bool usepointlight;
 uniform bool useShadowMap;
 
-out vec4 FragColor;
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out vec4 BrightColor;
 
 void main()
 {   
@@ -164,9 +165,17 @@ void main()
 		lighting = ambient + (diffuse + specular) + color_pick;
 	}
 
+    // check whether result is higher than some threshold, if so, output as bloom threshold color
+    float brightness = dot(lighting, vec3(0.2126, 0.7152, 0.0722));
+    if(brightness > 1.0)
+        BrightColor = vec4(lighting, 1.0);
+    else
+        BrightColor = vec4(0.0, 0.0, 0.0, 1.0);
+
 	if (enableAlpha == true)
 		FragColor = vec4(lighting, color.a);
 	else
 		FragColor = vec4(lighting, material_transparent);
+
 	//FragColor = vec4(temp.xyz, 1.0);
 }

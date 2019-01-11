@@ -27,7 +27,7 @@ public class GLES3View extends GLSurfaceView{
 
         widthPixels = metrics.widthPixels;
         heightPixels = metrics.heightPixels;
-        this.getHolder().setFixedSize((int)(widthPixels*0.6),(int)(heightPixels*0.6));
+        this.getHolder().setFixedSize((int)(widthPixels*0.8),(int)(heightPixels*0.8));
         setEGLConfigChooser(new MyConfigChooser());
 
         final ActivityManager activityManager = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);

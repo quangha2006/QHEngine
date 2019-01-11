@@ -139,19 +139,27 @@ void TextRendering::UpdateScreenSize(int w, int h)
 int TextRendering::AddQHText(QHText *textneedrender)
 {
 	m_ListQHText.push_back(textneedrender);
-	return m_ListQHText.size() - 1;
+	return currentLastId++;
 }
 
 void TextRendering::RemoveQHText(int id)
 {
-	if (id >= 0 && id < m_ListQHText.size())
-		m_ListQHText.erase(m_ListQHText.begin() + id);
-	// Update id for older text
-	if (id < m_ListQHText.size())
+	//if (id >= 0 && id < m_ListQHText.size())
+	//	m_ListQHText.erase(m_ListQHText.begin() + id);
+	//// Update id for older text
+	//if (id < m_ListQHText.size())
+	//{
+	//	for (int i = id; i < m_ListQHText.size(); i++)
+	//	{
+	//		m_ListQHText[i]->UpdateId(i);
+	//	}
+	//}
+	for (int i = 0; i < m_ListQHText.size(); i++)
 	{
-		for (int i = id; i < m_ListQHText.size(); i++)
+		if (m_ListQHText[i]->GetId() == id)
 		{
-			m_ListQHText[i]->UpdateId(i);
+			m_ListQHText.erase(m_ListQHText.begin() + i);
+			return;
 		}
 	}
 }
@@ -416,6 +424,7 @@ TextRendering::TextRendering()
 	screen_width = 0;
 	screen_height = 0;
 	isFontLoaded = false;
+	currentLastId = 0;
 }
 
 TextRendering::~TextRendering()

@@ -25,7 +25,7 @@ private:
 	bool m_initialized;;
 	
 public:
-	void Draw();
+	void Update();
 	void Init();
 	void LoadingThread(AppSharedContext *shared_context);
 	void GetRequireScreenSize(int32_t &width, int32_t &height);

@@ -66,11 +66,11 @@ void Basic::LoadingThread(AppSharedContext *shared_context)
 	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.dae", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	mSpider.Init("aboy/model.dae", mCamera, true);
-	mSpider.SetScale(glm::vec3(0.22f));
-	mSpider.SetTranslate(glm::vec3(20.0f, 0.0f, -10.0f));
+	mSpider.Init("astroBoy/astroBoy_walk_Mayas.dae", mCamera, true);
+	mSpider.SetScale(glm::vec3(0.42f));
+	//mSpider.SetTranslate(glm::vec3(20.0f, 0.0f, -10.0f));
 	mSpider.SetAnimPlay(0);
-	mSpider.SetNeedRotate(true);
+	mSpider.SetNeedRotate(false);
 
 	loadingText.setText(Utils::toString("Loading %d%c", 40,37));
 	//saberclass.Init("test/untitled.obj", mCamera, false, 3.0f);
@@ -97,7 +97,7 @@ void Basic::LoadingThread(AppSharedContext *shared_context)
 	delete(shared_context);
 }
 
-void Basic::Draw()
+void Basic::Update()
 {
 	if (!m_initialized)
 		return;
@@ -136,6 +136,10 @@ void Basic::Draw()
 	mGallacticCruiser.Draw();
 	mMonster_1.Draw();
 	HDRBuffer.Disable();
+
+	//ShaderManager::getInstance()->setUseProgram("basic");
+	//ShaderManager::getInstance()->setInt("bloom", 0);
+	//HDRBuffer.Render();
 	ShaderManager::getInstance()->setUseProgram("blur");
 
 	bluringBuffer.MakeBlur(HDRBuffer.GetTextureId(0), HDRBuffer.GetTextureId(1));
@@ -145,7 +149,7 @@ void Basic::Draw()
 	//ShaderManager::getInstance()->setFloat("exposure", 1.0f);
 	//ShaderManager::getInstance()->setInt("hdrBuffer", 0);
 	//HDRBuffer.Render();
-	axis.Draw();
+	//axis.Draw();
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

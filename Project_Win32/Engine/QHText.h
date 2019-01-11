@@ -40,6 +40,7 @@ public:
 	int getEndPos_y();
 	std::vector<TextData> getTextData();
 	void UpdateId(int newid);
+	int GetId();
 	QHText(std::string text = "", int pos_x = 0.0f, int pos_y = 0.0f, glm::vec3 color = glm::vec3(1.0f), float scale = 1.0f, float alpha = 1.0f);
 	~QHText();
 };

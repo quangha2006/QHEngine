@@ -42,6 +42,7 @@ private:
 	TextRendering();
 	std::vector<TextData> fulltextdata;
 	bool isFontLoaded;
+	int currentLastId;
 public:
 	static TextRendering* getInstance();
 	void UpdateScreenSize(int w, int h);

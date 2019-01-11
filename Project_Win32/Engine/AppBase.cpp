@@ -67,7 +67,7 @@ void AppBase::rendering()
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 	FrameRate::getInstance()->BeginCpuTime();
 	mCamera->UpdateWorldViewProjection();
-	Draw();
+	Update();
 	unsigned short numDrawCall = Debugging::getInstance()->getNumDrawCall();
 	int numTriangle = Debugging::getInstance()->getNumTriangle();
 	int numdrawcall = Debugging::getInstance()->getNumDrawCall();
