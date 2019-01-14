@@ -170,6 +170,7 @@
   <ItemGroup>
     <None Include="..\..\Resources\Shaders\bloom_final.fs" />
     <None Include="..\..\Resources\Shaders\blur.fs" />
+    <None Include="..\..\Resources\Shaders\brightness.fs" />
     <None Include="..\..\Resources\Shaders\DepthShader.fs" />
     <None Include="..\..\Resources\Shaders\DepthShader.vs" />
     <None Include="..\..\Resources\Shaders\framebuffers_debug.fs" />

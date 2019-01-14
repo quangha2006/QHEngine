@@ -248,7 +248,7 @@ void FrameBuffer::Render(bool useDefaultShader)
 	if (m_type == FrameBufferType_COLORBUFFER_MULTISAMPLED)
 		glBindTexture(GL_TEXTURE_2D, screenTexture);
 	else
-		glBindTexture(GL_TEXTURE_2D, m_TexId[1]);
+		glBindTexture(GL_TEXTURE_2D, m_TexId[0]);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);

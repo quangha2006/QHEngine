@@ -10,13 +10,13 @@
 
 void Basic::Init()
 {
-	mframebuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
+	mShadowBuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
 	//mframebuffer.EnableDebug(true);
-	//HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	mSenceBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	//HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	//mSenceBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	HDRBuffer.Init(mContext, FrameBufferType_COLORBUFFER_BRIGHTNESS, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	mBrightnessBuffer.Init(mContext, FrameBufferType_COLORBUFFER_BRIGHTNESS, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
 	bluringBuffer.Init(mContext, FrameBufferType_COLORBUFFER_BLURRING, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
@@ -40,9 +40,10 @@ void Basic::LoadingThread(AppSharedContext *shared_context)
 	loadingText.setText(Utils::toString("Loading %d%c", 5, 37));
 
 	ShaderManager::getInstance()->Init("model","Shaders/model_loading.vs" ,"Shaders/model_loading.fs");
-	ShaderManager::getInstance()->Init("screenShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
+	ShaderManager::getInstance()->Init("debugShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	ShaderManager::getInstance()->Init("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
+	ShaderManager::getInstance()->Init("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs");
 	ShaderManager::getInstance()->Init("blur", "Shaders/BasicVS.vs", "Shaders/blur.fs");
 	ShaderManager::getInstance()->Init("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
 	//mNanosuit.Init("Light Bulb/Light Bulb 1.dae", mCamera, false);
@@ -66,9 +67,9 @@ void Basic::LoadingThread(AppSharedContext *shared_context)
 	//mSpider.Init("Low-Poly Spider/Only_Spider_with_Animations_Export.dae", mCamera, true);
 	//mSpider.Init("Simple.dae", mCamera, true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", mCamera, true);
-	mSpider.Init("astroBoy/astroBoy_walk_Mayas.dae", mCamera, true);
-	mSpider.SetScale(glm::vec3(0.42f));
-	//mSpider.SetTranslate(glm::vec3(20.0f, 0.0f, -10.0f));
+	mSpider.Init("Frog/source.dae", mCamera, true);
+	//mSpider.SetScale(glm::vec3(0.42f));
+	mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	mSpider.SetNeedRotate(false);
 
@@ -106,7 +107,7 @@ void Basic::Update()
 	mMerce.UpdateSkeleton();
 	mMonster_1.UpdateSkeleton();
 	
-	mframebuffer.Enable("depthShader");
+	mShadowBuffer.Enable("depthShader");
 	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
 	ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
 	ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
@@ -118,13 +119,12 @@ void Basic::Update()
 	mGallacticCruiser.Draw();
 	mMonster_1.Draw();
 
-	GLuint depthMap = mframebuffer.Disable();
+	GLuint depthMapRT = mShadowBuffer.Disable();
 
-	HDRBuffer.Enable("model");
+	mSenceBuffer.Enable("model");
 	mSkyBox.Draw(mCamera);
-	//ShaderManager::getInstance()->setUseProgram("model");
 	glActiveTexture(GL_TEXTURE10);
-	glBindTexture(GL_TEXTURE_2D, depthMap);
+	glBindTexture(GL_TEXTURE_2D, depthMapRT);
 	ShaderManager::getInstance()->setBool("useShadowMap", true);
 	ShaderManager::getInstance()->setInt("shadowMap",10);
 
@@ -135,21 +135,17 @@ void Basic::Update()
 	saberclass.Draw();
 	mGallacticCruiser.Draw();
 	mMonster_1.Draw();
-	HDRBuffer.Disable();
+	GLuint SenceRT = mSenceBuffer.Disable();
 
-	//ShaderManager::getInstance()->setUseProgram("basic");
-	//ShaderManager::getInstance()->setInt("bloom", 0);
-	//HDRBuffer.Render();
+	mBrightnessBuffer.Enable();
+	ShaderManager::getInstance()->setUseProgram("Brightness");
+	mSenceBuffer.Render();
+	GLuint brightnessRT = mBrightnessBuffer.Disable();
 	ShaderManager::getInstance()->setUseProgram("blur");
 
-	bluringBuffer.MakeBlur(HDRBuffer.GetTextureId(0), HDRBuffer.GetTextureId(1));
-
-	//ShaderManager::getInstance()->setUseProgram("bloom");
-	//ShaderManager::getInstance()->setBool("hdr", false);
-	//ShaderManager::getInstance()->setFloat("exposure", 1.0f);
-	//ShaderManager::getInstance()->setInt("hdrBuffer", 0);
-	//HDRBuffer.Render();
+	bluringBuffer.MakeBlur(SenceRT, brightnessRT);
 	//axis.Draw();
+	Debugging::getInstance()->DrawTex(depthMapRT, "debugShader");
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
