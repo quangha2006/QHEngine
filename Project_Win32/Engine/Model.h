@@ -1,3 +1,4 @@
+#pragma once
 #include "Mesh.h"
 #include "Shader.h"
 #include "Camera.h"
@@ -63,6 +64,8 @@ private:
 	float angle;
 	glm::mat4 world;
 
+	int m_Id;
+
 	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -75,13 +78,13 @@ private:
 
 public:
 	void Init(string const &path, Camera *camera, bool FlipUVs = false, bool enableAlpha = false, float fixedModel = 1.0f);
-	void Draw(int drawmesh = -1, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
+	void Render(int drawmesh = -1, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
 	void SetUseLighting(bool UseLighting);
 	void SetisUsePointLight(bool UsePointLight);
 	void DisableLightingForMesh(int numMesh);
 	void SetCustomColor(glm::vec3 color);
 	void SetTimeStampAnim(int64_t time);
-	void UpdateSkeleton(int64_t time = -1.0f);
+	void Update(int64_t time = -1.0f);
 	void BoneTransform(float TimeInSeconds, vector<glm::mat4> &Transforms);
 	void SetScale(glm::vec3 scal);
 	void SetTranslate(glm::vec3 trans);
@@ -90,9 +93,8 @@ public:
 	void SetAnimPlay(int anim);
 	void SetDrawPolygon(bool isdrawpolygon);
 	void SetNeedRotate(bool isNeedRotate);
-	Model(string const &path, bool gamma = false) : gammaCorrection(gamma)
-	{
-	}
+	void SetId(int id);
+	int GetId();
 	Model();
 	~Model();
 };

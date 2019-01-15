@@ -4,6 +4,8 @@
 #include "TextRendering.h"
 #include "Utils.h"
 #include "QHAxis.h"
+#include "ModelManager.h"
+#include "RenderManager.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #if defined(_WINDOWS)
@@ -39,6 +41,8 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	//FrameRate::getInstance()->setLimitFPS(30);
 
 	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", width, height);
+	RenderManager::getInstance()->Init(mContext, mCamera);
+	ModelManager::getInstance()->Init();
 	Init();
 
 	text_FPS.setPos(0, 0);
@@ -68,6 +72,8 @@ void AppBase::rendering()
 	FrameRate::getInstance()->BeginCpuTime();
 	mCamera->UpdateWorldViewProjection();
 	Update();
+	RenderManager::getInstance()->Update();
+	RenderManager::getInstance()->Render();
 	unsigned short numDrawCall = Debugging::getInstance()->getNumDrawCall();
 	int numTriangle = Debugging::getInstance()->getNumTriangle();
 	int numdrawcall = Debugging::getInstance()->getNumDrawCall();

@@ -10,15 +10,15 @@
 
 void Basic::Init()
 {
-	mShadowBuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
-	//mframebuffer.EnableDebug(true);
-	mSenceBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	//mShadowBuffer.Init(mContext, FrameBufferType_DEPTH, 2048, 2048);
+	////mframebuffer.EnableDebug(true);
+	//mSenceBuffer.Init(mContext, FrameBufferType_COLORBUFFER_MULTISAMPLED, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	//mSenceBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	////mSenceBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	mBrightnessBuffer.Init(mContext, FrameBufferType_COLORBUFFER_BRIGHTNESS, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	//mBrightnessBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
-	bluringBuffer.Init(mContext, FrameBufferType_COLORBUFFER_BLURRING, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	//bluringBuffer.Init(mContext, FrameBufferType_COLORBUFFER_BLURRING, mContext->GetWindowWidth(), mContext->GetWindowHeight());
 
 	AppSharedContext *shared_context = mContext->CreateShareContext();
 	new thread(&Basic::LoadingThread, this, shared_context);
@@ -27,7 +27,7 @@ void Basic::Init()
 void Basic::LoadingThread(AppSharedContext *shared_context)
 {
 	shared_context->MakeContextCurrent();
-	QHText loadingText;
+	
 
 	loadingText.setPos(mContext->GetWindowWidth()/2-150, mContext->GetWindowHeight()/2);
 	loadingText.setText(Utils::toString("Loading %d%c", 0, 37));
@@ -92,7 +92,7 @@ void Basic::LoadingThread(AppSharedContext *shared_context)
 	//soundIntro.Play();
 	loadingText.setText(Utils::toString("Loading %d%c", 100, 37));
 	axis.Init(mCamera);
-
+	loadingText.visible = false;
 	shared_context->DestroyContext();
 	m_initialized = true;
 	delete(shared_context);
@@ -103,21 +103,21 @@ void Basic::Update()
 	if (!m_initialized)
 		return;
 	
-	mSpider.UpdateSkeleton();
-	mMerce.UpdateSkeleton();
-	mMonster_1.UpdateSkeleton();
+	/*mSpider.Update();
+	mMerce.Update();
+	mMonster_1.Update();*/
 	
-	mShadowBuffer.Enable("depthShader");
+	/*mShadowBuffer.Enable("depthShader");
 	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
 	ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
 	ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
 
-	mNanosuit.Draw();
-	mMerce.Draw();
-	mSpider.Draw();
-	saberclass.Draw();
-	mGallacticCruiser.Draw();
-	mMonster_1.Draw();
+	mNanosuit.Render();
+	mMerce.Render();
+	mSpider.Render();
+	saberclass.Render();
+	mGallacticCruiser.Render();
+	mMonster_1.Render();
 
 	GLuint depthMapRT = mShadowBuffer.Disable();
 
@@ -128,13 +128,13 @@ void Basic::Update()
 	ShaderManager::getInstance()->setBool("useShadowMap", true);
 	ShaderManager::getInstance()->setInt("shadowMap",10);
 
-	m_Streetenvironment.Draw();
-	mNanosuit.Draw();
-	mMerce.Draw();
-	mSpider.Draw();
-	saberclass.Draw();
-	mGallacticCruiser.Draw();
-	mMonster_1.Draw();
+	m_Streetenvironment.Render();
+	mNanosuit.Render();
+	mMerce.Render();
+	mSpider.Render();
+	saberclass.Render();
+	mGallacticCruiser.Render();
+	mMonster_1.Render();
 	GLuint SenceRT = mSenceBuffer.Disable();
 
 	mBrightnessBuffer.Enable();
@@ -143,9 +143,9 @@ void Basic::Update()
 	GLuint brightnessRT = mBrightnessBuffer.Disable();
 	ShaderManager::getInstance()->setUseProgram("blur");
 
-	bluringBuffer.MakeBlur(SenceRT, brightnessRT);
+	bluringBuffer.MakeBlur(SenceRT, brightnessRT);*/
 	//axis.Draw();
-	Debugging::getInstance()->DrawTex(depthMapRT, "debugShader");
+	//Debugging::getInstance()->DrawTex(depthMapRT, "debugShader");
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

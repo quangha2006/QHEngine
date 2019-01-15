@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include "Utils.h"
 #include "QHTexture.h"
+#include "ModelManager.h"
 #include <SOIL.h>
 #include <thread>
 #include <Logs.h>
@@ -55,9 +56,13 @@ Model::Model()
 	animToPlay = 0;
 	isDrawPolygon = false;
 	isUsePointLight = false;
+	m_Id = -1;
+	ModelManager::getInstance()->AddModel(this);
 }
 Model::~Model()
 {
+	ModelManager::getInstance()->RemoveModel(m_Id);
+
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].DeleteBuffer();
 
@@ -399,7 +404,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	return textures;
 }
 
-void Model::Draw(int drawmesh, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
+void Model::Render(int drawmesh, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
 {
 	if (!m_initialized || !camera) return;
 
@@ -497,7 +502,7 @@ void Model::SetTimeStampAnim(int64_t time)
 {
 	timeStampAnim = (float)(time / 1000.0f);
 }
-void Model::UpdateSkeleton(int64_t time)
+void Model::Update(int64_t time)
 {
 	if (!m_initialized || !camera || !hasAnimation) return;
 
@@ -582,6 +587,16 @@ void Model::SetDrawPolygon(bool isdrawpolygon)
 void Model::SetNeedRotate(bool isNeedRotate)
 {
 	this->needRotate = isNeedRotate;
+}
+
+void Model::SetId(int id)
+{
+	m_Id = id;
+}
+
+int Model::GetId()
+{
+	return m_Id;
 }
 
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)

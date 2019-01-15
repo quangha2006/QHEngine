@@ -21,7 +21,7 @@ private:
 	float timestamp_for_lamp;
 	Sound soundIntro;
 	QHAxis axis;
-
+	QHText loadingText;
 	bool m_initialized;;
 	
 public:
