@@ -41,16 +41,24 @@ void ModelManager::Update()
 	}
 }
 
-void ModelManager::Render()
+void ModelManager::Render(RenderMode mode)
 {
 	for (int i = 0; i < mListModel.size(); i++)
 	{
-		mListModel[i]->Render();
+		mListModel[i]->Render(mode);
 	}
 }
 
 void ModelManager::Init()
 {
+}
+
+void ModelManager::Loading()
+{
+	for (int i = 0; i < mListModel.size(); i++)
+	{
+		mListModel[i]->Loading();
+	}
 }
 
 ModelManager::ModelManager()

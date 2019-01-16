@@ -296,7 +296,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
 	glBufferData(GL_ARRAY_BUFFER, 4 * 5 * sizeof(float), quadVertices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	isFontLoaded = true;
+	m_initialized = true;
 	return true;
 }
 
@@ -376,7 +376,7 @@ glm::ivec2 TextRendering::Add(std::string text, int number, int x, int y, float 
 
 void TextRendering::Draw()
 {
-	if (program == 0 || !isFontLoaded || m_ListQHText.size() <= 0) return;
+	if (program == 0 || !m_initialized || m_ListQHText.size() <= 0) return;
 
 	glDisable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -411,7 +411,7 @@ void TextRendering::Draw()
 
 	//QHEngine::DrawArrays(GL_TRIANGLES, 0, m_TextData.size()); // for debug to add num draw call and num triangles
 	glDrawArrays(GL_TRIANGLES, 0, fulltextdata.size());
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_BLEND);
@@ -423,7 +423,7 @@ TextRendering::TextRendering()
 	program = 0;
 	screen_width = 0;
 	screen_height = 0;
-	isFontLoaded = false;
+	m_initialized = false;
 	currentLastId = 0;
 }
 

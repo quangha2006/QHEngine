@@ -5,6 +5,7 @@
 #include "Logs.h"
 #include "QHText.h"
 #include "QHAxis.h"
+#include "SkyBox.h"
 
 class AppBase
 {
@@ -13,9 +14,12 @@ protected:
 	Camera *mCamera;
 	QHText text_FPS, text_DrawCall, text_NumTriangle, text_FrameTime;
 	QHAxis axis;
+	SkyBox mSkyBox;
+	bool mIsLoadingThreadFinish;
 public:
 	bool initialize(int32_t width, int32_t height, ANativeWindow *window = NULL);
 	void rendering();
+	void LoadingThread(AppSharedContext *shared_context);
 	virtual void Update() {}
 	virtual void Init() {}
 	virtual void GetRequireScreenSize(int32_t &width, int32_t &height) {}

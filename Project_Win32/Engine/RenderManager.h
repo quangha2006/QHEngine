@@ -4,20 +4,21 @@
 #include "ModelManager.h"
 #include "RenderTarget.h"
 #include "AppContext.h"
+#include "SkyBox.h"
 
 class RenderManager
 {
 private:
 	static RenderManager* instance;
 	RenderTarget mShadowRT, mSenceRT, mBrightnessRT, mBluringRT;
-
+	SkyBox *mSkybox;
 	AppContext * mAppcontext;
-	Camera *mCamera;
 public:
 	static RenderManager* getInstance();
 	void Init(AppContext * appcontext, Camera *camera);
 	void Update();
 	void Render();
+	void SetSkyBox(SkyBox *skybox);
 	RenderManager();
 	~RenderManager();
 };

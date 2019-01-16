@@ -35,13 +35,14 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	LOGI("Viewport     : %d, %d\n", width, height);
 	LOGI("=====================================================\n");
 
-	mCamera = new Camera();
+	mCamera = Camera::getInstance();
 	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(width) / (float)(height), mCamera->View_near, mCamera->View_far);
 	FrameRate::getInstance();
 	//FrameRate::getInstance()->setLimitFPS(30);
 
 	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", width, height);
 	RenderManager::getInstance()->Init(mContext, mCamera);
+	RenderManager::getInstance()->SetSkyBox(&mSkyBox);
 	ModelManager::getInstance()->Init();
 	Init();
 
@@ -62,7 +63,19 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	text_FrameTime.setScale(0.25f);
 	text_FrameTime.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
+	AppSharedContext *shared_context = mContext->CreateShareContext();
+	new thread(&AppBase::LoadingThread, this, shared_context);
+
 	return true;
+}
+
+void AppBase::LoadingThread(AppSharedContext * shared_context)
+{
+	shared_context->MakeContextCurrent();
+	ModelManager::getInstance()->Loading();
+	shared_context->DestroyContext();
+	mIsLoadingThreadFinish = true;
+	delete(shared_context);
 }
 
 void AppBase::rendering()
@@ -72,8 +85,11 @@ void AppBase::rendering()
 	FrameRate::getInstance()->BeginCpuTime();
 	mCamera->UpdateWorldViewProjection();
 	Update();
-	RenderManager::getInstance()->Update();
-	RenderManager::getInstance()->Render();
+	if (mIsLoadingThreadFinish)
+	{
+		RenderManager::getInstance()->Update();
+		RenderManager::getInstance()->Render();
+	}
 	unsigned short numDrawCall = Debugging::getInstance()->getNumDrawCall();
 	int numTriangle = Debugging::getInstance()->getNumTriangle();
 	int numdrawcall = Debugging::getInstance()->getNumDrawCall();
@@ -186,6 +202,7 @@ void AppBase::ZoomCamera(double xoffset, double yoffset)
 }
 AppBase::AppBase()
 {
+	mIsLoadingThreadFinish = false;
 }
 
 AppBase::~AppBase()

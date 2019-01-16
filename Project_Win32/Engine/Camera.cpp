@@ -3,6 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+Camera * Camera::instance = NULL;
+
 vec3 Camera::Direction()
 {
 	return normalize(Pos - Target);
@@ -17,7 +19,6 @@ vec3 Camera::Right()
 {
 	return normalize(cross(up, Direction()));
 }
-
 
 Camera::Camera()
 {
@@ -66,6 +67,14 @@ void Camera::UpdateWorldViewProjection()
 	lightProjection = glm::ortho(-12.0f, 15.0f, -5.0f, 14.0f, light_near, light_far);
 	lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 3.0, 0.2));
 	lightSpaceMatrix = lightProjection * lightView;
+}
+Camera * Camera::getInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new Camera();
+	}
+	return instance;
 }
 Camera::~Camera()
 {

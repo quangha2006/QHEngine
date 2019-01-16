@@ -17,7 +17,7 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 	switch (type)
 	{
 	case RenderTargetType_DEPTH:
-		LOGI("Create FrameBufferType_DEPTH: %d, %d\n", texWidth, texHeight);
+		LOGI("Create RenderTargetType_DEPTH: %d, %d\n", texWidth, texHeight);
 		glGenFramebuffers(1, &m_FBOId[0]);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
 		glGenTextures(1, &m_TexId[0]);
@@ -45,11 +45,11 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 		if (Status != GL_FRAMEBUFFER_COMPLETE)
-			LOGE("ERROR!! FrameBufferType_DEPTH is not complete!\n");
+			LOGE("ERROR!! RenderTargetType_DEPTH is not complete!\n");
 
 		break;
 	case RenderTargetType_COLOR:
-		LOGI("Create FrameBufferType_COLORBUFFER: %d, %d\n", texWidth, texHeight);
+		LOGI("Create RenderTargetType_COLOR: %d, %d\n", texWidth, texHeight);
 		glGenFramebuffers(1, &m_FBOId[0]);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
 		glGenTextures(1, &m_TexId[0]);
@@ -76,12 +76,12 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 		if (Status != GL_FRAMEBUFFER_COMPLETE)
-			LOGE("ERROR!! FrameBufferType_COLORBUFFER is not complete!\n");
+			LOGE("ERROR!! RenderTargetType_COLOR is not complete!\n");
 
 		break;
 	case RenderTargetType_COLOR_MULTISAMPLED:
 #ifdef _WINDOWS
-		LOGI("Create FrameBufferType_COLORBUFFER_MULTISAMPLED: %d, %d\n", texWidth, texHeight);
+		LOGI("Create RenderTargetType_COLOR_MULTISAMPLED: %d, %d\n", texWidth, texHeight);
 		// configure MSAA framebuffer
 		glGenFramebuffers(1, &m_FBOId[0]);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
@@ -101,7 +101,7 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 		if (Status != GL_FRAMEBUFFER_COMPLETE)
-			LOGE("ERROR!! FrameBufferType_COLORBUFFER_MULTISAMPLED is not complete!\n");
+			LOGE("ERROR!! RenderTargetType_COLOR_MULTISAMPLED is not complete!\n");
 		// configure second post-processing framebuffer
 
 		glGenFramebuffers(1, &intermediateFBO);
@@ -119,11 +119,11 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 		if (Status != GL_FRAMEBUFFER_COMPLETE)
-			LOGE("ERROR!! FrameBufferType_COLORBUFFER_MULTISAMPLED screenTexture is not complete!\n");
+			LOGE("ERROR!! RenderTargetType_COLOR_MULTISAMPLED screenTexture is not complete!\n");
 #endif
 		break;
 	case RenderTargetType_COLOR_BRIGHTNESS:
-		LOGI("Create FrameBufferType_COLORBUFFER_BRIGHTNESS: %d, %d\n", texWidth, texHeight);
+		LOGI("Create RenderTargetType_COLOR_BRIGHTNESS: %d, %d\n", texWidth, texHeight);
 		// configure MSAA framebuffer
 		glGenFramebuffers(1, &m_FBOId[0]);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
@@ -155,10 +155,10 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 		if (Status != GL_FRAMEBUFFER_COMPLETE)
-			LOGE("ERROR!! FrameBufferType_COLORBUFFER_BRIGHTNESS is not complete!\n");
+			LOGE("ERROR!! RenderTargetType_COLOR_BRIGHTNESS is not complete!\n");
 		break;
 	case RenderTargetType_COLOR_BLURRING:
-		LOGI("Create FrameBufferType_COLORBUFFER_BLURRING!\n");
+		LOGI("Create RenderTargetType_COLOR_BLURRING!\n");
 		glGenFramebuffers(2, m_FBOId);
 		glGenTextures(2, m_TexId);
 		for (unsigned int i = 0; i < 2; i++)
@@ -173,7 +173,7 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TexId[i], 0);
 			// also check if framebuffers are complete (no need for depth buffer)
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-				LOGE("FrameBufferType_COLORBUFFER_BLURRING [%d] not complete!", i);
+				LOGE("RenderTargetType_COLOR_BLURRING [%d] not complete!", i);
 		}
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 

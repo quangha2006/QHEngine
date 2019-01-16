@@ -41,7 +41,7 @@ private:
 	GLuint createShader(GLenum shaderType, const char * src);
 	TextRendering();
 	std::vector<TextData> fulltextdata;
-	bool isFontLoaded;
+	bool m_initialized;
 	int currentLastId;
 public:
 	static TextRendering* getInstance();

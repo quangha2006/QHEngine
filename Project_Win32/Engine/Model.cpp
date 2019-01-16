@@ -57,6 +57,9 @@ Model::Model()
 	isDrawPolygon = false;
 	isUsePointLight = false;
 	m_Id = -1;
+	mSrcPath = "";
+	mIsDrawDepthMap = true;
+	mCamera = Camera::getInstance();
 	ModelManager::getInstance()->AddModel(this);
 }
 Model::~Model()
@@ -69,67 +72,16 @@ Model::~Model()
 	for (unsigned int i = 0; i < textures_loaded.size(); i++)
 		glDeleteTextures(1, &textures_loaded[i].id);
 }
-void Model::Init(string const & path, Camera *camera, bool FlipUVs, bool enableAlpha, float fixedModel)
+void Model::Init(string const & path, bool FlipUVs, bool enableAlpha, float fixedModel)
 {
-	uint64_t time_ms_begin = Timer::getMillisecond();
-	this->camera = camera;
-	this->isEnableAlpha = enableAlpha;
-	string path_modif = Utils::getResourcesFolder() + path;
-
-	LOGW("\n======================================================\n");
-
-	LOGI("\nLoad Model: %s\n", path_modif.c_str());
-	if (ShaderManager::getInstance()->GetProgram(useshadername.c_str()) == 0)
+	if (m_initialized)
 	{
-		LOGE("ERROR! modelShader is invalid!\n");
-		return;
+		LOGE("initialized: %s", path.c_str());
 	}
-
-	// read file via ASSIMP
-	if (FlipUVs)
-		m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
-	else
-		m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
-	
-	if ((path_modif.find_last_of(".dae") == (path_modif.length() - 1)) || (path_modif.find_last_of(".md5mesh") == (path_modif.length() - 1)))
-		needRotate = true;
-	else
-		needRotate = false;
-	uint64_t time_loadmodel = Timer::getMillisecond();
-	LOGI("Load Model time : %.3fs\n\n", ((int)(time_loadmodel - time_ms_begin)) / 1000.0f);
-	// check for errors
-	if (!m_pScene || /*m_pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||*/ !m_pScene->mRootNode) // if is Not Zero
-	{
-		LOGE("ERROR::ASSIMP:: %s\n", importer.GetErrorString());
-		return;
-	}
-	// retrieve the directory path of the filepath
-	directory = path_modif.substr(0, path_modif.find_last_of('/'));
-	// process ASSIMP's root node recursively
-	processNode(m_pScene->mRootNode, m_pScene, fixedModel);
-
-	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
-	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations()?"True":"False");
-
-	if (m_pScene->HasAnimations())
-	{
-		hasAnimation = true;
-		m_GlobalInverseTransform = glm::inverse(AiToGLMMat4(m_pScene->mRootNode->mTransformation));
-		Transforms.resize(m_NumBones);
-		mNumAnimations = m_pScene->mNumAnimations;
-		LOGI("NumAnimation: %d\n", mNumAnimations);
-	}
-	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
-	for (int i = 0; i < meshes.size(); i++)
-	{
-		LOGI("  %d: %s\n", i, meshes[i].GetName().c_str());
-	}
-
-	uint64_t time_ms_end = Timer::getMillisecond();
-
-	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
-
-	m_initialized = true;
+	mSrcPath = path;
+	mIsEnableAlpha = enableAlpha;
+	mFixedModel = fixedModel;
+	mFlipUVs = FlipUVs;
 }
 
 void Model::processNode(aiNode * node, const aiScene * scene, float fixedModel)
@@ -404,9 +356,10 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	return textures;
 }
 
-void Model::Render(int drawmesh, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
+void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
 {
-	if (!m_initialized || !camera) return;
+	if (!m_initialized || !mCamera) return;
+	if (mode == RenderMode_Depth && mIsDrawDepthMap == false) return;
 
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -428,7 +381,7 @@ void Model::Render(int drawmesh, bool isTranslate, glm::vec3 translate, bool isR
 	}
 
 	ShaderManager::getInstance()->setMat4("world", tmp_model);
-	glm::mat4 lookat_tmp = camera->WorldViewProjectionMatrix * tmp_model;
+	glm::mat4 lookat_tmp = mCamera->WorldViewProjectionMatrix * tmp_model;
 	
 	ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", lookat_tmp);
 
@@ -437,9 +390,9 @@ void Model::Render(int drawmesh, bool isTranslate, glm::vec3 translate, bool isR
 	ShaderManager::getInstance()->setMat4("world_inverse", model_inverse);
 
 	ShaderManager::getInstance()->setFloat("material_shininess", 18.0f);
-	ShaderManager::getInstance()->setVec3("light_position", camera->lightPos);
-	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", camera->lightSpaceMatrix);
-	ShaderManager::getInstance()->setVec3("viewPos", camera->Pos);
+	ShaderManager::getInstance()->setVec3("light_position", mCamera->lightPos);
+	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
+	ShaderManager::getInstance()->setVec3("viewPos", mCamera->Pos);
 	ShaderManager::getInstance()->setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
 	ShaderManager::getInstance()->setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
 	ShaderManager::getInstance()->setVec3("light_specular", 1.1f, 1.1f, 1.1f);
@@ -447,7 +400,7 @@ void Model::Render(int drawmesh, bool isTranslate, glm::vec3 translate, bool isR
 	ShaderManager::getInstance()->setFloat("pointlight_constant", 1.0f);
 	ShaderManager::getInstance()->setFloat("pointlight_linear", 0.0014f);
 	ShaderManager::getInstance()->setFloat("pointlight_quadratic", 0.000007f);
-	ShaderManager::getInstance()->setBool("enableAlpha", this->isEnableAlpha);
+	ShaderManager::getInstance()->setBool("enableAlpha", mIsEnableAlpha);
 	ShaderManager::getInstance()->setBool("usenormalmap", false);
 	ShaderManager::getInstance()->setVec3("color_pick", 0.0f, 0.0f, 0.0f);
 
@@ -504,7 +457,7 @@ void Model::SetTimeStampAnim(int64_t time)
 }
 void Model::Update(int64_t time)
 {
-	if (!m_initialized || !camera || !hasAnimation) return;
+	if (!m_initialized || !mCamera || !hasAnimation) return;
 
 	float RunningTime = 0.0f;
 
@@ -589,14 +542,86 @@ void Model::SetNeedRotate(bool isNeedRotate)
 	this->needRotate = isNeedRotate;
 }
 
+void Model::SetCamera(Camera * camera)
+{
+	mCamera = camera;
+}
+
 void Model::SetId(int id)
 {
 	m_Id = id;
 }
 
+void Model::Loading()
+{
+	if (mSrcPath == "") return;
+	uint64_t time_ms_begin = Timer::getMillisecond();
+	string path_modif = Utils::getResourcesFolder() + mSrcPath;
+
+	LOGW("\n======================================================\n");
+
+	LOGI("\nLoad Model: %s\n", path_modif.c_str());
+	if (ShaderManager::getInstance()->GetProgram(useshadername.c_str()) == 0)
+	{
+		LOGE("ERROR! modelShader is invalid!\n");
+		return;
+	}
+
+	// read file via ASSIMP
+	if (mFlipUVs)
+		m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
+	else
+		m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
+
+	if ((path_modif.find_last_of(".dae") == (path_modif.length() - 1)) || (path_modif.find_last_of(".md5mesh") == (path_modif.length() - 1)))
+		needRotate = true;
+	else
+		needRotate = false;
+	uint64_t time_loadmodel = Timer::getMillisecond();
+	LOGI("Load Model time : %.3fs\n\n", ((int)(time_loadmodel - time_ms_begin)) / 1000.0f);
+	// check for errors
+	if (!m_pScene || /*m_pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||*/ !m_pScene->mRootNode) // if is Not Zero
+	{
+		LOGE("ERROR::ASSIMP:: %s\n", importer.GetErrorString());
+		return;
+	}
+	// retrieve the directory path of the filepath
+	directory = path_modif.substr(0, path_modif.find_last_of('/'));
+	// process ASSIMP's root node recursively
+	processNode(m_pScene->mRootNode, m_pScene, mFixedModel);
+
+	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
+	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
+
+	if (m_pScene->HasAnimations())
+	{
+		hasAnimation = true;
+		m_GlobalInverseTransform = glm::inverse(AiToGLMMat4(m_pScene->mRootNode->mTransformation));
+		Transforms.resize(m_NumBones);
+		mNumAnimations = m_pScene->mNumAnimations;
+		LOGI("NumAnimation: %d\n", mNumAnimations);
+	}
+	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
+	for (int i = 0; i < meshes.size(); i++)
+	{
+		LOGI("  %d: %s\n", i, meshes[i].GetName().c_str());
+	}
+
+	uint64_t time_ms_end = Timer::getMillisecond();
+
+	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
+
+	m_initialized = true;
+}
+
 int Model::GetId()
 {
 	return m_Id;
+}
+
+void Model::SetIsDrawDepthMap(bool isDraw)
+{
+	mIsDrawDepthMap = isDraw;
 }
 
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)

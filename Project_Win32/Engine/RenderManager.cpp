@@ -15,13 +15,12 @@ RenderManager * RenderManager::getInstance()
 void RenderManager::Init(AppContext * appcontext, Camera *camera)
 {
 	mAppcontext = appcontext;
-	mCamera = camera;
 
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
 
-	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
-	//mSenceBuffer.Init(mContext, FrameBufferType_COLORBUFFER, mContext->GetWindowWidth(), mContext->GetWindowHeight());
+	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
 	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
@@ -35,35 +34,24 @@ void RenderManager::Update()
 
 void RenderManager::Render()
 {
+	Camera *mCamera = Camera::getInstance();
 	mShadowRT.Enable("depthShader");
 	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
 	ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
 	ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
 
-	/*mNanosuit.Render();
-	mMerce.Render();
-	mSpider.Render();
-	saberclass.Render();
-	mGallacticCruiser.Render();
-	mMonster_1.Render();*/
-	ModelManager::getInstance()->Render();
+	ModelManager::getInstance()->Render(RenderMode_Depth);
 	GLuint depthMapRT = mShadowRT.Disable();
 
 	mSenceRT.Enable("model");
-	//mSkyBox.Draw(mCamera);
+	mSkybox->Draw(mCamera);
 	glActiveTexture(GL_TEXTURE10);
 	glBindTexture(GL_TEXTURE_2D, depthMapRT);
 	ShaderManager::getInstance()->setBool("useShadowMap", true);
 	ShaderManager::getInstance()->setInt("shadowMap", 10);
 
-	//m_Streetenvironment.Render();
-	//mNanosuit.Render();
-	//mMerce.Render();
-	//mSpider.Render();
-	//saberclass.Render();
-	//mGallacticCruiser.Render();
-	//mMonster_1.Render();
-	ModelManager::getInstance()->Render();
+
+	ModelManager::getInstance()->Render(RenderMode_Sence);
 	GLuint SenceRT = mSenceRT.Disable();
 
 	mBrightnessRT.Enable();
@@ -73,6 +61,11 @@ void RenderManager::Render()
 	ShaderManager::getInstance()->setUseProgram("blur");
 
 	mBluringRT.MakeBlur(SenceRT, brightnessRT);
+}
+
+void RenderManager::SetSkyBox(SkyBox * skybox)
+{
+	mSkybox = skybox;
 }
 
 RenderManager::RenderManager()

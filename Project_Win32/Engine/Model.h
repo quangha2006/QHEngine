@@ -22,7 +22,11 @@
 #include <thread>
 
 using namespace std;
-
+enum RenderMode
+{
+	RenderMode_Depth,
+	RenderMode_Sence
+};
 class Model
 {
 private:
@@ -45,9 +49,9 @@ private:
 	int mNumAnimations;
 
 	string useshadername;
-	Camera *camera;
+	Camera *mCamera;
 	bool m_initialized;
-	bool isEnableAlpha;
+	bool mIsEnableAlpha;
 	bool isDrawPolygon;
 	bool uselighting;
 	bool isUsePointLight;
@@ -56,8 +60,11 @@ private:
 	bool needRotate;
 	bool gammaCorrection;
 	string directory;
+	string mSrcPath;
+	bool mFlipUVs;
+	float mFixedModel;
 	float timeStampAnim;
-
+	bool mIsDrawDepthMap;
 	glm::vec3 scale;
 	glm::vec3 translate;
 	glm::vec3 rotate;
@@ -77,8 +84,8 @@ private:
 	void UpdateModel();
 
 public:
-	void Init(string const &path, Camera *camera, bool FlipUVs = false, bool enableAlpha = false, float fixedModel = 1.0f);
-	void Render(int drawmesh = -1, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
+	void Init(string const &path, bool FlipUVs = false, bool enableAlpha = false, float fixedModel = 1.0f);
+	void Render(RenderMode mode, int drawmesh = -1, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
 	void SetUseLighting(bool UseLighting);
 	void SetisUsePointLight(bool UsePointLight);
 	void DisableLightingForMesh(int numMesh);
@@ -93,8 +100,11 @@ public:
 	void SetAnimPlay(int anim);
 	void SetDrawPolygon(bool isdrawpolygon);
 	void SetNeedRotate(bool isNeedRotate);
+	void SetCamera(Camera * camera);
 	void SetId(int id);
+	void Loading();
 	int GetId();
+	void SetIsDrawDepthMap(bool isDraw);
 	Model();
 	~Model();
 };

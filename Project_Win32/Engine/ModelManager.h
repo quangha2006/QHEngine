@@ -13,8 +13,9 @@ public:
 	void AddModel(Model* model);
 	void RemoveModel(int id);
 	void Update();
-	void Render();
+	void Render(RenderMode mode);
 	void Init();
+	void Loading();
 	ModelManager();
 	~ModelManager();
 };

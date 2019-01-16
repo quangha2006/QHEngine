@@ -3,6 +3,8 @@
 using namespace glm;
 class Camera
 {
+private:
+	static Camera* instance;
 public:
 	float zoom;
 	float View_near;
@@ -31,6 +33,7 @@ public:
 	vec3 ExtractCameraPos(const glm::mat4 & a_modelView);
 	void UpdateView();
 	void UpdateWorldViewProjection();
+	static Camera* getInstance();
 	Camera();
 	~Camera();
 };
