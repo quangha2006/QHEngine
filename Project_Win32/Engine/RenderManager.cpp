@@ -1,5 +1,5 @@
 #include "RenderManager.h"
-
+#include "Debugging.h"
 RenderManager * RenderManager::instance = NULL;
 
 
@@ -54,6 +54,8 @@ void RenderManager::Render()
 	ModelManager::getInstance()->Render(RenderMode_Sence);
 	GLuint SenceRT = mSenceRT.Disable();
 
+	//mSenceRT.Render(true);
+
 	mBrightnessRT.Enable();
 	ShaderManager::getInstance()->setUseProgram("Brightness");
 	mSenceRT.Render();
@@ -61,6 +63,7 @@ void RenderManager::Render()
 	ShaderManager::getInstance()->setUseProgram("blur");
 
 	mBluringRT.MakeBlur(SenceRT, brightnessRT);
+	//Debugging::getInstance()->DrawTex(depthMapRT, "debugShader");
 }
 
 void RenderManager::SetSkyBox(SkyBox * skybox)

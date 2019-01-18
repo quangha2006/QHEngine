@@ -25,6 +25,9 @@
 	"$Engine_Sources_Path$/QHTexture.cpp"
 	"$Engine_Sources_Path$/QHAxis.cpp"
 	"$Engine_Sources_Path$/Sound.cpp"
+	"$Engine_Sources_Path$/RenderManager.cpp"
+	"$Engine_Sources_Path$/ModelManager.cpp"
+	"$Engine_Sources_Path$/RenderTarget.cpp"
 	}
 
 	.ExcludedUnitySources =

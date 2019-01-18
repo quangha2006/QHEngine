@@ -47,7 +47,8 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromString )
 {
 	//LOGI("Create shader: %s\n", src);
-	char * shaderSrc;
+	char * shaderSrc = NULL;
+	std::string final_shaderSrc = "";
 	if (!isFromString)
 	{
 		std::string path_modif(src);
@@ -72,18 +73,30 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 		shaderSrc[size] = 0;
 		fclose(pf);
 	}
-
+	else
+	{
+		shaderSrc = new char[strlen(src) + 1];
+		strcpy(shaderSrc, src);
+	}
+		
+	if (shaderSrc != NULL && strncmp(shaderSrc, "#version", 8) != 0)
+	{
+#ifdef ANDROID
+		final_shaderSrc = "#version 300 es\n";
+#else
+		final_shaderSrc = "#version 330\n";
+#endif
+	}
 	GLuint shader = glCreateShader(shaderType);
+
+	final_shaderSrc += std::string(shaderSrc);
+
+	delete[] shaderSrc;
 	if (shader == 0) {
 		return 0;
 	}
-	if (!isFromString)
-	{
-		glShaderSource(shader, 1, (const char**)&shaderSrc, NULL);
-		delete[] shaderSrc;
-	}
-	else
-		glShaderSource(shader, 1, (const char**)&src, NULL);
+	const char *source = (const char *)final_shaderSrc.c_str();
+	glShaderSource(shader, 1, &source, NULL);
 
 	GLint compiled = GL_FALSE;
 

@@ -212,7 +212,7 @@ GLuint RenderTarget::Disable()
 	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 
 	if (isEnableDebug)
-		Debugging::getInstance()->DrawTex(m_TexId[0], "screenShader");
+		Debugging::getInstance()->DrawTex(m_TexId[0], "debugShader");
 
 	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)
 		return screenTexture;
@@ -293,10 +293,10 @@ void RenderTarget::MakeBlur(GLuint normalTexture, GLuint BriTexture)
 void RenderTarget::InitDefaultShader()
 {
 	const char * verShader = {
-		"#version 100\n"
-		"attribute vec3 aPos;\n"
-		"attribute vec2 aTexCoords;\n"
-		"varying vec2 TexCoords;\n"
+		"#version 300 es\n"
+		"layout (location = 0) in vec3 aPos;\n"
+		"layout (location = 1) in vec2 aTexCoords;\n"
+		"out vec2 TexCoords;\n"
 		"\n"
 		"void main()\n"
 		"{\n"
@@ -305,16 +305,17 @@ void RenderTarget::InitDefaultShader()
 		"}\n"
 	};
 	const char *fragShader = {
-		"#version 100\n"
+		"#version 300 es\n"
 		"precision highp float;\n"
 		"\n"
-		"varying vec2 TexCoords;\n"
+		"in vec2 TexCoords;\n"
 		"\n"
 		"uniform sampler2D tex;\n"
 		"\n"
+		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
-		"	gl_FragColor = texture2D(tex, TexCoords);\n"
+		"	FragColor = texture2D(tex, TexCoords);\n"
 		"}\n"
 	};
 
@@ -325,7 +326,7 @@ void RenderTarget::InitquadVAO()
 {
 	if (quadVAO == 0)
 	{
-		float quadVertices[] = {
+		static float quadVertices[] = {
 			// positions        // texture Coords
 			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
@@ -338,10 +339,12 @@ void RenderTarget::InitquadVAO()
 		glBindVertexArray(quadVAO);
 		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glBindVertexArray(0);
 	}
 }
 
