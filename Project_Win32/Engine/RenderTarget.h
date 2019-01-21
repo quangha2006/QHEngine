@@ -35,7 +35,7 @@ public:
 	int GetTextureId(int index);
 	void EnableDebug(bool isEnable);
 	void Render(bool useDefaultShader = false);
-	void MakeBlur(GLuint normalTexture, GLuint BriTexture);
+	void MakeBloom(GLuint normalTexture, GLuint BriTexture);
 	RenderTarget();
 	~RenderTarget();
 };

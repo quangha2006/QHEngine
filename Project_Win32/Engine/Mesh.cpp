@@ -2,6 +2,7 @@
 #include "Mesh.h"
 #include "ShaderManager.h"
 #include "Debugging.h"
+#include "RenderManager.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -88,7 +89,8 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 		ShaderManager::getInstance()->setBool("useAnim", true);
 	else
 		ShaderManager::getInstance()->setBool("useAnim", false);
-	for (unsigned int i = 0; i < textures.size(); i++)
+	unsigned int i = 0;
+	for (; i < textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
 										  // retrieve texture number (the N in diffuse_textureN)

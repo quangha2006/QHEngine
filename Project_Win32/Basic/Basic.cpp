@@ -10,14 +10,6 @@
 
 void Basic::Init()
 {
-	ShaderManager::getInstance()->Init("model", "Shaders/model_loading.vs", "Shaders/model_loading.fs");
-	ShaderManager::getInstance()->Init("debugShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
-	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
-	ShaderManager::getInstance()->Init("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
-	ShaderManager::getInstance()->Init("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs");
-	ShaderManager::getInstance()->Init("blur", "Shaders/BasicVS.vs", "Shaders/blur.fs");
-	ShaderManager::getInstance()->Init("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
-
 	mCamera->Pos = glm::vec3(5.0f, 5.0f, 20.0f);
 	mCamera->Target = glm::vec3(0.0f, 1.0f, 0.0f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);

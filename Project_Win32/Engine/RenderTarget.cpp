@@ -253,7 +253,7 @@ void RenderTarget::Render(bool useDefaultShader)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 }
-void RenderTarget::MakeBlur(GLuint normalTexture, GLuint BriTexture)
+void RenderTarget::MakeBloom(GLuint normalTexture, GLuint BriTexture)
 {
 	bool horizontal = true, first_iteration = true;
 	unsigned int amount = 10;
@@ -290,6 +290,7 @@ void RenderTarget::MakeBlur(GLuint normalTexture, GLuint BriTexture)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 }
+
 void RenderTarget::InitDefaultShader()
 {
 	const char * verShader = {

@@ -11,6 +11,7 @@ class RenderManager
 private:
 	static RenderManager* instance;
 	RenderTarget mShadowRT, mSenceRT, mBrightnessRT, mBluringRT;
+	GLuint mDepthMapRT;
 	SkyBox *mSkybox;
 	AppContext * mAppcontext;
 public:
@@ -19,6 +20,8 @@ public:
 	void Update();
 	void Render();
 	void SetSkyBox(SkyBox *skybox);
+	GLuint RenderDepthMap();
+	GLuint GetDepthMapId();
 	RenderManager();
 	~RenderManager();
 };
