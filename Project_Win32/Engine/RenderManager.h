@@ -11,16 +11,26 @@ class RenderManager
 private:
 	static RenderManager* instance;
 	RenderTarget mShadowRT, mSenceRT, mBrightnessRT, mBluringRT;
-	GLuint mDepthMapRT;
+	GLuint mDepthMapTexId, mSenceTexId, mBloom_bright;
 	SkyBox *mSkybox;
 	AppContext * mAppcontext;
+
+	Shader m_default_shader;
+	GLuint quadVAO, quadVBO;
+
+	GLuint RenderDepthMap();
+	GLuint RenderSence();
+	GLuint PostProcessBloom(GLuint textsrc);
+	void InitDefaultShader();
+	void InitquadVAO();
+	void RenderFinal();
 public:
 	static RenderManager* getInstance();
 	void Init(AppContext * appcontext, Camera *camera);
 	void Update();
 	void Render();
 	void SetSkyBox(SkyBox *skybox);
-	GLuint RenderDepthMap();
+	
 	GLuint GetDepthMapId();
 	RenderManager();
 	~RenderManager();

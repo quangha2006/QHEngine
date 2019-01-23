@@ -22,11 +22,7 @@
 #include <thread>
 
 using namespace std;
-enum RenderMode
-{
-	RenderMode_Depth,
-	RenderMode_Sence
-};
+
 class Model
 {
 private:

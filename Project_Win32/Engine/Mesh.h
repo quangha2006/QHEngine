@@ -12,6 +12,11 @@
 #include <vector>
 #include <map>
 using namespace std;
+enum RenderMode
+{
+	RenderMode_Depth,
+	RenderMode_Sence
+};
 /**
 glm::vec3 Position;		// position
 glm::vec3 Normal;		// normal
@@ -68,7 +73,7 @@ public:
 	Material material;
 	GLuint texture;
 
-	void Draw(bool useCustomColor = false, glm::vec3 customColor = glm::vec3(0.0f,0.0f,0.0f));
+	void Draw(RenderMode mode, bool useCustomColor = false, glm::vec3 customColor = glm::vec3(0.0f,0.0f,0.0f));
 	void DeleteBuffer();
 	void SetUseLighting(bool isuse);
 	void SetDrawPolygon(bool isdrawpolygon);

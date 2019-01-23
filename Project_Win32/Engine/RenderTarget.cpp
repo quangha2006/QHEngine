@@ -253,14 +253,18 @@ void RenderTarget::Render(bool useDefaultShader)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 }
-void RenderTarget::MakeBloom(GLuint normalTexture, GLuint BriTexture)
+GLuint RenderTarget::MakeBloom(GLuint BriTexture)
 {
 	bool horizontal = true, first_iteration = true;
 	unsigned int amount = 10;
 	for (unsigned int i = 0; i < amount; i++)
 	{
+		if (horizontal)
+			ShaderManager::getInstance()->setUseProgram("Blur_Horizontal");
+		else
+			ShaderManager::getInstance()->setUseProgram("Blur_Vertical");
+
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[horizontal]);
-		ShaderManager::getInstance()->setInt("horizontal", horizontal);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, first_iteration ? BriTexture : m_TexId[!horizontal]);  // bind texture of other framebuffer (or scene if first iteration)
@@ -275,20 +279,22 @@ void RenderTarget::MakeBloom(GLuint normalTexture, GLuint BriTexture)
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	ShaderManager::getInstance()->setUseProgram("bloom_Final");
-	glBindVertexArray(quadVAO);
+	return m_TexId[!horizontal];
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, normalTexture);
+	//ShaderManager::getInstance()->setUseProgram("bloom_Final");
+	//glBindVertexArray(quadVAO);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, m_TexId[!horizontal]);
-	ShaderManager::getInstance()->setInt("bloom", 1);
-	ShaderManager::getInstance()->setInt("scene", 0);
-	ShaderManager::getInstance()->setInt("bloomBlur", 1);
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, normalTexture);
 
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glBindVertexArray(0);
+	//glActiveTexture(GL_TEXTURE1);
+	//glBindTexture(GL_TEXTURE_2D, m_TexId[!horizontal]);
+	//ShaderManager::getInstance()->setInt("bloom", 1);
+	//ShaderManager::getInstance()->setInt("scene", 0);
+	//ShaderManager::getInstance()->setInt("bloomBlur", 1);
+
+	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	//glBindVertexArray(0);
 }
 
 void RenderTarget::InitDefaultShader()

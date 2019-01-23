@@ -29,7 +29,7 @@ void Mesh::setupMesh()
 
 }
 
-void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
+void Mesh::Draw(RenderMode mode, bool useCustomColor, glm::vec3 customColor)
 {
 	Shaderv2 * modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
@@ -127,6 +127,20 @@ void Mesh::Draw(bool useCustomColor, glm::vec3 customColor)
 		// and finally bind the texture
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}
+	if (mode != RenderMode_Depth)
+	{
+		GLuint depthmap = RenderManager::getInstance()->GetDepthMapId();
+		if (depthmap != -1)
+		{
+			ShaderManager::getInstance()->setBool("useShadowMap", true);
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, depthmap);
+			ShaderManager::getInstance()->setInt("shadowMap", i);
+		}
+		else
+			ShaderManager::getInstance()->setBool("useShadowMap", false);
+	}
+
 	ShaderManager::getInstance()->setFloat("material_transparent", material.transparent);
 	ShaderManager::getInstance()->setFloat("material_shininess", material.shininess);
 	ShaderManager::getInstance()->setVec3("material_color_ambient", material.ambient);

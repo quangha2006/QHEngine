@@ -26,8 +26,7 @@ private:
 	Shader m_default_shader;
 	void InitDefaultShader();
 	void InitquadVAO();
-	GLuint quadVAO;
-	GLuint quadVBO;
+	GLuint quadVAO, quadVBO;
 public:
 	bool Init(AppContext * appcontext, RenderTargetType type, int texBufferWidth = 1024, int texBufferHeight = 1024);
 	void Enable(const char* shadername = NULL);
@@ -35,7 +34,7 @@ public:
 	int GetTextureId(int index);
 	void EnableDebug(bool isEnable);
 	void Render(bool useDefaultShader = false);
-	void MakeBloom(GLuint normalTexture, GLuint BriTexture);
+	GLuint MakeBloom(GLuint BriTexture);
 	RenderTarget();
 	~RenderTarget();
 };

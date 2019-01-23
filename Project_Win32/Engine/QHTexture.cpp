@@ -20,7 +20,7 @@ namespace QHTexture
 				{
 					glBindTexture(GL_TEXTURE_2D, textureID);
 					// Set the filtering mode
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -37,7 +37,7 @@ namespace QHTexture
 			}
 			else
 			{
-				uint64_t time_begin = Timer::getMillisecond();
+				//uint64_t time_begin = Timer::getMillisecond();
 				if (SOIL_load_OGL_texture(fullpath.c_str(), SOIL_LOAD_RGBA, textureID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS) == 0)
 				{
 					LOGE("Load texture ERROR!: %s \n", fullpath.c_str());

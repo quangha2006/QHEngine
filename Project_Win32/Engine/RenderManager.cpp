@@ -21,7 +21,8 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	ShaderManager::getInstance()->Init("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
 	ShaderManager::getInstance()->Init("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs");
-	ShaderManager::getInstance()->Init("blur", "Shaders/BasicVS.vs", "Shaders/blur.fs");
+	ShaderManager::getInstance()->Init("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/Blur_Horizontal.fs");
+	ShaderManager::getInstance()->Init("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/Blur_Vertical.fs");
 	ShaderManager::getInstance()->Init("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
 
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
@@ -33,6 +34,8 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
 	mBluringRT.Init(mAppcontext, RenderTargetType_COLOR_BLURRING, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+
+	InitquadVAO();
 }
 
 void RenderManager::Update()
@@ -42,30 +45,13 @@ void RenderManager::Update()
 
 void RenderManager::Render()
 {
-	Camera *mCamera = Camera::getInstance();
-	mDepthMapRT = RenderDepthMap();
+	mDepthMapTexId = RenderDepthMap();
 
-	mSenceRT.Enable("model");
-	mSkybox->Draw(mCamera);
-	glActiveTexture(GL_TEXTURE10);
-	glBindTexture(GL_TEXTURE_2D, mDepthMapRT);
-	ShaderManager::getInstance()->setBool("useShadowMap", true);
-	ShaderManager::getInstance()->setInt("shadowMap", 10);
+	mSenceTexId = RenderSence();
 
+	mBloom_bright =  PostProcessBloom(mSenceTexId);
 
-	ModelManager::getInstance()->Render(RenderMode_Sence);
-	GLuint SenceRT = mSenceRT.Disable();
-
-	//mSenceRT.Render(true);
-
-	mBrightnessRT.Enable();
-	ShaderManager::getInstance()->setUseProgram("Brightness");
-	mSenceRT.Render();
-	GLuint brightnessRT = mBrightnessRT.Disable();
-	ShaderManager::getInstance()->setUseProgram("blur");
-
-	mBluringRT.MakeBloom(SenceRT, brightnessRT);
-	//Debugging::getInstance()->DrawTex(depthMapRT, "debugShader");
+	RenderFinal();
 }
 
 void RenderManager::SetSkyBox(SkyBox * skybox)
@@ -85,14 +71,113 @@ GLuint RenderManager::RenderDepthMap()
 	return mShadowRT.Disable();
 }
 
+GLuint RenderManager::RenderSence()
+{
+	Camera *mCamera = Camera::getInstance();
+	mSenceRT.Enable("model");
+	mSkybox->Draw(mCamera);
+
+	ModelManager::getInstance()->Render(RenderMode_Sence);
+
+	return mSenceRT.Disable();;
+}
+
+GLuint RenderManager::PostProcessBloom(GLuint textsrc)
+{
+	mBrightnessRT.Enable();
+	ShaderManager::getInstance()->setUseProgram("Brightness");
+	mSenceRT.Render();
+	GLuint brightnessRT = mBrightnessRT.Disable();
+
+	return mBluringRT.MakeBloom(brightnessRT);
+}
+
 GLuint RenderManager::GetDepthMapId()
 {
-	return mDepthMapRT;
+	return mDepthMapTexId;
+}
+
+void RenderManager::InitDefaultShader()
+{
+	const char * verShader = {
+		"#version 300 es\n"
+		"layout (location = 0) in vec3 aPos;\n"
+		"layout (location = 1) in vec2 aTexCoords;\n"
+		"out vec2 TexCoords;\n"
+		"\n"
+		"void main()\n"
+		"{\n"
+		"	TexCoords = aTexCoords;\n"
+		"	gl_Position =  vec4(aPos, 1.0);\n"
+		"}\n"
+	};
+	const char *fragShader = {
+		"#version 300 es\n"
+		"precision highp float;\n"
+		"\n"
+		"in vec2 TexCoords;\n"
+		"\n"
+		"uniform sampler2D tex;\n"
+		"\n"
+		"out vec4 FragColor;\n"
+		"void main()\n"
+		"{\n"
+		"	FragColor = texture2D(tex, TexCoords);\n"
+		"}\n"
+	};
+
+	m_default_shader.LoadShader(verShader, fragShader, true);
+}
+
+void RenderManager::InitquadVAO()
+{
+	if (quadVAO == 0)
+	{
+		static float quadVertices[] = {
+			// positions        // texture Coords
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+			1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		};
+		// setup plane VAO
+		glGenVertexArrays(1, &quadVAO);
+		glGenBuffers(1, &quadVBO);
+		glBindVertexArray(quadVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glBindVertexArray(0);
+	}
+}
+
+void RenderManager::RenderFinal()
+{
+	ShaderManager::getInstance()->setUseProgram("bloom_Final");
+
+	glBindVertexArray(quadVAO);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mSenceTexId);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, mBloom_bright);
+
+	ShaderManager::getInstance()->setInt("bloom", 1);
+	ShaderManager::getInstance()->setInt("scene", 0);
+	ShaderManager::getInstance()->setInt("bloomBlur", 1);
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindVertexArray(0);
 }
 
 RenderManager::RenderManager()
 {
-	mDepthMapRT = -1;
+	mDepthMapTexId = -1;
 }
 
 

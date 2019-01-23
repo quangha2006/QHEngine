@@ -417,7 +417,7 @@ void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 tr
 		if (drawmesh < meshes.size())
 		{
 			ShaderManager::getInstance()->setBool("uselighting", uselighting);
-			meshes[drawmesh].Draw(useCustomColor, customColor);
+			meshes[drawmesh].Draw(mode, useCustomColor, customColor);
 		}
 	}
 	else
@@ -425,7 +425,7 @@ void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 tr
 		for (unsigned int i = 0; i < meshes.size(); i++)
 		{
 			ShaderManager::getInstance()->setBool("uselighting", uselighting);
-			meshes[i].Draw(useCustomColor, customColor);
+			meshes[i].Draw(mode, useCustomColor, customColor);
 		}
 	}
 
