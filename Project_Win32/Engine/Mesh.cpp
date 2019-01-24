@@ -29,7 +29,7 @@ void Mesh::setupMesh()
 
 }
 
-void Mesh::Draw(RenderMode mode, bool useCustomColor, glm::vec3 customColor)
+void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::vec3 customColor)
 {
 	Shaderv2 * modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
@@ -85,6 +85,7 @@ void Mesh::Draw(RenderMode mode, bool useCustomColor, glm::vec3 customColor)
 	unsigned int normalNr = 1;
 	bool hasmaterial_texture_diffuse1 = false;
 	ShaderManager::getInstance()->setBool("useNormalMap", false);
+	ShaderManager::getInstance()->setBool("enableAlpha", isEnableAlpha);
 	if (hasBone)
 		ShaderManager::getInstance()->setBool("useAnim", true);
 	else
@@ -92,6 +93,8 @@ void Mesh::Draw(RenderMode mode, bool useCustomColor, glm::vec3 customColor)
 	unsigned int i = 0;
 	for (; i < textures.size(); i++)
 	{
+		if (!isEnableAlpha && mode == RenderMode_Depth) break;
+
 		glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
 										  // retrieve texture number (the N in diffuse_textureN)
 		stringstream ss;
@@ -149,7 +152,9 @@ void Mesh::Draw(RenderMode mode, bool useCustomColor, glm::vec3 customColor)
 	if (material.shininess < 0.001f || !hasNormals)
 		ShaderManager::getInstance()->setBool("uselighting", false);
 
-	if (hasmaterial_texture_diffuse1)
+	if (!isEnableAlpha && mode == RenderMode_Depth)
+		ShaderManager::getInstance()->setBool("useTexture", false);
+	else if (hasmaterial_texture_diffuse1)
 		ShaderManager::getInstance()->setBool("useTexture", true);
 	else
 		ShaderManager::getInstance()->setBool("useTexture", false);

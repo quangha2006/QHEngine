@@ -27,15 +27,16 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
 
-	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
 	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
-	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+	//mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
 	mBluringRT.Init(mAppcontext, RenderTargetType_COLOR_BLURRING, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
 	InitquadVAO();
+	InitDefaultShader();
 }
 
 void RenderManager::Update()
@@ -100,7 +101,6 @@ GLuint RenderManager::GetDepthMapId()
 void RenderManager::InitDefaultShader()
 {
 	const char * verShader = {
-		"#version 300 es\n"
 		"layout (location = 0) in vec3 aPos;\n"
 		"layout (location = 1) in vec2 aTexCoords;\n"
 		"out vec2 TexCoords;\n"
@@ -112,17 +112,16 @@ void RenderManager::InitDefaultShader()
 		"}\n"
 	};
 	const char *fragShader = {
-		"#version 300 es\n"
 		"precision highp float;\n"
 		"\n"
 		"in vec2 TexCoords;\n"
 		"\n"
-		"uniform sampler2D tex;\n"
+		"uniform sampler2D scene;\n"
 		"\n"
 		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
-		"	FragColor = texture2D(tex, TexCoords);\n"
+		"	FragColor = texture(scene, TexCoords);\n"
 		"}\n"
 	};
 
@@ -131,33 +130,31 @@ void RenderManager::InitDefaultShader()
 
 void RenderManager::InitquadVAO()
 {
-	if (quadVAO == 0)
-	{
-		static float quadVertices[] = {
-			// positions        // texture Coords
-			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
-			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-			1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-			1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-		};
-		// setup plane VAO
-		glGenVertexArrays(1, &quadVAO);
-		glGenBuffers(1, &quadVBO);
-		glBindVertexArray(quadVAO);
-		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+	float quadVertices[] = {
+		// positions        // texture Coords
+		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+		1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+		1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+	};
+	// setup plane VAO
+	glGenVertexArrays(1, &quadVAO);
+	glGenBuffers(1, &quadVBO);
+	glBindVertexArray(quadVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-		glBindVertexArray(0);
-	}
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glBindVertexArray(0);
 }
 
 void RenderManager::RenderFinal()
 {
 	ShaderManager::getInstance()->setUseProgram("bloom_Final");
+	//m_default_shader.use();
 
 	glBindVertexArray(quadVAO);
 
@@ -173,11 +170,13 @@ void RenderManager::RenderFinal()
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
+	CheckGLError("RenderFinal");
 }
 
 RenderManager::RenderManager()
 {
 	mDepthMapTexId = -1;
+	quadVAO = -1;
 }
 
 

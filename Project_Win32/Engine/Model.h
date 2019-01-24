@@ -80,7 +80,7 @@ private:
 	void UpdateModel();
 
 public:
-	void Init(string const &path, bool FlipUVs = false, bool enableAlpha = false, float fixedModel = 1.0f);
+	void Init(string const &path, bool FlipUVs = false, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderMode mode, int drawmesh = -1, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
 	void SetUseLighting(bool UseLighting);
 	void SetisUsePointLight(bool UsePointLight);

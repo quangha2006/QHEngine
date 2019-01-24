@@ -22,7 +22,7 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 
@@ -31,15 +31,15 @@ void Basic::Init()
 	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	mSpider.Init("aboy/model.dae", true);
+	//mSpider.Init("aboy/model.dae", true, true);
 	//mSpider.Init("Simple.dae", true);
-	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
+	mSpider.Init("boblampclean/boblampclean.md5mesh", true);
 	//mSpider.Init("Frog/source.dae", true);
-	mSpider.SetScale(glm::vec3(0.42f));
+	mSpider.SetScale(glm::vec3(0.2f));
 	//mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	mSpider.SetNeedRotate(true);
-
+	
 	//saberclass.Init("test/untitled.obj", false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", false, 0.1f);

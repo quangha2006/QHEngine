@@ -73,7 +73,7 @@ public:
 	Material material;
 	GLuint texture;
 
-	void Draw(RenderMode mode, bool useCustomColor = false, glm::vec3 customColor = glm::vec3(0.0f,0.0f,0.0f));
+	void Draw(RenderMode mode, bool isEnableAlpha = false, bool useCustomColor = false, glm::vec3 customColor = glm::vec3(0.0f,0.0f,0.0f));
 	void DeleteBuffer();
 	void SetUseLighting(bool isuse);
 	void SetDrawPolygon(bool isdrawpolygon);

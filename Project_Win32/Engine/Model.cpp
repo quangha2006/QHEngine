@@ -117,6 +117,8 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 	
 	
 	// Walk through each of the mesh's vertices
+	if (!mesh->HasNormals())
+		LOGW("WARNING!!!: Mesh has no normal => disable lighting for this mesh\n");
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
@@ -139,8 +141,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 		}
 		else
 		{
-			LOGW("WARNING!!!: Mesh has no normal\n");
-			vertex.Normal = glm::vec3(0.0f, 0.0f, 0.0f);
+			vertex.Normal = glm::vec3(1.0f, 1.0f, 1.0f);
 		}
 		// texture coordinates
 		if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
@@ -400,7 +401,6 @@ void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 tr
 	ShaderManager::getInstance()->setFloat("pointlight_constant", 1.0f);
 	ShaderManager::getInstance()->setFloat("pointlight_linear", 0.0014f);
 	ShaderManager::getInstance()->setFloat("pointlight_quadratic", 0.000007f);
-	ShaderManager::getInstance()->setBool("enableAlpha", mIsEnableAlpha);
 	ShaderManager::getInstance()->setBool("usenormalmap", false);
 	ShaderManager::getInstance()->setVec3("color_pick", 0.0f, 0.0f, 0.0f);
 
@@ -417,7 +417,7 @@ void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 tr
 		if (drawmesh < meshes.size())
 		{
 			ShaderManager::getInstance()->setBool("uselighting", uselighting);
-			meshes[drawmesh].Draw(mode, useCustomColor, customColor);
+			meshes[drawmesh].Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}
 	else
@@ -425,7 +425,7 @@ void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 tr
 		for (unsigned int i = 0; i < meshes.size(); i++)
 		{
 			ShaderManager::getInstance()->setBool("uselighting", uselighting);
-			meshes[i].Draw(mode, useCustomColor, customColor);
+			meshes[i].Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}
 

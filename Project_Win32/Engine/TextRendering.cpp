@@ -39,6 +39,7 @@ bool TextRendering::createProgram()
 		return false;
 	}
 	char fragSrc[] = {
+		"#version 100\n"
 		"precision highp float;\n"
 		"\n"
 		"varying vec2 thetexCoord;\n"

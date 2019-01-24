@@ -300,7 +300,6 @@ GLuint RenderTarget::MakeBloom(GLuint BriTexture)
 void RenderTarget::InitDefaultShader()
 {
 	const char * verShader = {
-		"#version 300 es\n"
 		"layout (location = 0) in vec3 aPos;\n"
 		"layout (location = 1) in vec2 aTexCoords;\n"
 		"out vec2 TexCoords;\n"
@@ -312,7 +311,6 @@ void RenderTarget::InitDefaultShader()
 		"}\n"
 	};
 	const char *fragShader = {
-		"#version 300 es\n"
 		"precision highp float;\n"
 		"\n"
 		"in vec2 TexCoords;\n"
@@ -322,7 +320,7 @@ void RenderTarget::InitDefaultShader()
 		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
-		"	FragColor = texture2D(tex, TexCoords);\n"
+		"	FragColor = texture(tex, TexCoords);\n"
 		"}\n"
 	};
 
