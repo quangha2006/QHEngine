@@ -260,7 +260,7 @@ goto:eof
 		pause
 		exit !errorlevel!
 	) else (
-		echo    Copied: !FAST_BUILD_GENERATED!\!architecture!\!build_type!\SharedLibs\Unstripped\lib!SO_LIB_FILE!.so
+		echo    Copied: !FAST_BUILD_GENERATED!\!architecture!\!build_type!\SharedLibs\lib!SO_LIB_FILE!.so
 		echo        To: !jniLibs_path!\!architectures!\lib!SO_LIB_FILE!.so
 	)
 
