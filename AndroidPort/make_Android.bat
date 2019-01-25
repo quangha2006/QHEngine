@@ -33,16 +33,13 @@ cls
 echo Do job: %DO_JOB%
 if %DO_JOB%==1 (
   echo  ************************ 1. Clean UP ************************
-TortoiseProc.exe /path:"%CUR_MPATH%" /command:cleanup /nodlg /noui /noprogressui /revert /delunversioned /delignored /refreshshell /externals /closeonend:2
+git clean -d -f -fx
+git checkout ./
 goto END
 ) else if %DO_JOB%==2 (
 echo.
   echo  ************************ 2. Update ************************
-  svn info
-  echo =============================
-  svn cleanup
-  echo Update SVN To Head Revision.
-  svn update --non-interactive --trust-server-cert --accept=theirs-full
+  git pull
 goto END
 ) else if %DO_JOB%==3 (
   pushd AndroidSource\scripts\
