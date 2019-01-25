@@ -180,12 +180,17 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 		break;
 	}
 
-
+	m_initialized = true;
 	return true;
 }
 
 void RenderTarget::Enable(const char* shadername)
 {
+	if (!m_initialized)
+	{
+		LOGE("ERROR! RenderTarget not init!!!!!");
+		return;
+	}
 	if (shadername != NULL)
 		ShaderManager::getInstance()->setUseProgram(shadername);
 
@@ -198,6 +203,10 @@ void RenderTarget::Enable(const char* shadername)
 
 GLuint RenderTarget::Disable()
 {
+	if (!m_initialized)
+	{
+		return -1;
+	}
 	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)
 	{
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FBOId[0]);
@@ -356,6 +365,7 @@ void RenderTarget::InitquadVAO()
 RenderTarget::RenderTarget()
 {
 	isEnableDebug = false;
+	m_initialized = false;
 	quadVAO = 0;
 }
 

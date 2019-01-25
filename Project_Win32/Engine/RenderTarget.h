@@ -21,6 +21,7 @@ private:
 	GLuint m_TexId[2], screenTexture;
 
 	bool isEnableDebug;
+	bool m_initialized;
 	RenderTargetType m_type;
 	AppContext * m_appcontext;
 	Shader m_default_shader;

@@ -19,7 +19,7 @@ private:
 	float timestamp_for_lamp;
 	Sound soundIntro;
 	QHAxis axis;
-	bool m_initialized;;
+	bool m_initialized;
 public:
 	void Update();
 	void Init();
