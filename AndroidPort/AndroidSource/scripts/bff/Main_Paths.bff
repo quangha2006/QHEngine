@@ -4,7 +4,7 @@
 .NDK_PlatformVersion = "android-19"
 .GameRoot = "$CompilePath$/../../../../../Project_Win32/"
 .ExternalLibs_Path = "$GameRoot$/External"
-.NDK_Root = "Y:/android-ndk-r15c"
+.NDK_Root = "F:/Android/android-ndk-r15c"
 .generated_Path = "$GameRoot$/../AndroidPort/generated"
 .precompiled_search_Paths = "$GameRoot$/../AndroidPort/precompiledLib"
 .jni_Path = "$GameRoot$/../AndroidPort/AndroidSource/app/jni"
