@@ -39,13 +39,17 @@ cls
 echo Do job: %DO_JOB%
 if %DO_JOB%==1 (
   echo  ************************ 1. Clean UP ************************
-git clean -d -f -fx
-git checkout ./
+  pushd ..
+  git clean -d -f -fx
+  git checkout ./
+  popd
 goto END
 ) else if %DO_JOB%==2 (
-echo.
+  pushd ..
+  echo.
   echo  ************************ 2. Update ************************
   git pull
+  popd
 goto END
 ) else if %DO_JOB%==3 (
   pushd AndroidSource\scripts\
