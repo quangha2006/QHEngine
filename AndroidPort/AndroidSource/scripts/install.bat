@@ -1,23 +1,22 @@
 @echo off
-pushd ..
-set ispushdata=%1
-REM if ispushdata=="pushdata"
-REM (
-	REM pushd ..\NewTrainingFramework
-	REM adb push Resources /sdcard/
-	REM popd
-REM )
-if exist bin\app-release.apk (
-echo.
-echo ****************************************
-echo ********     Install apk      **********
-echo ****************************************
-echo.
-    call adb install -r bin\app-release.apk
+
+
+set BUILD_TYPE=%1
+set INSTALL_TYPE=installDebug
+
+if %BUILD_TYPE%==Release (
+  set INSTALL_TYPE=installRelease
+) else if %BUILD_TYPE%==Debug (
+  set INSTALL_TYPE=installDebug
 ) else (
-  echo.    
-  echo  *********** Install APK FAILED ************
-  echo.
-  pause
-)  
+  echo Error : Invalid %BUILD_TYPE%.
+  exit 1
+)
+pushd ..
+echo.
+echo *************************************
+echo *****     Install apk %BUILD_TYPE%  *****
+echo *************************************
+echo.
+    call gradlew.bat %INSTALL_TYPE%
 popd

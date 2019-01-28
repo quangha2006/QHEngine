@@ -16,15 +16,21 @@ color A
 	echo.
 	echo         2. Update
 	echo.        
-	echo         3. Build APK FULL
+	echo         3. Build APK FULL Release
 	echo.
-	echo         4. Build Native
+	echo         4. Build APK FULL Debug
 	echo.
-	echo         5. Build Java
+	echo         5. Build Native
 	echo.
-	echo         6. Install APK
+	echo         6. Build Java Release
 	echo.
-	echo         7. Push data
+	echo         7. Build Java Debug
+	echo.
+	echo         8. Install APK Release
+	echo.
+	echo         9. Install APK Debug
+	echo.
+	echo         10. Push data
 	echo.
 	echo.
 	set /P DO_JOB=.           Enter your choose: 
@@ -44,30 +50,50 @@ goto END
 ) else if %DO_JOB%==3 (
   pushd AndroidSource\scripts\
   call:CleanOldSoFile
-  call build_native_java_install.bat
+  call build_native_java_install.bat Release
   popd
   goto END
 ) else if %DO_JOB%==4 (
   pushd AndroidSource\scripts\
   call:CleanOldSoFile
-  call external_native_fastbuild.bat
+  call build_native_java_install.bat Debug
   popd
   goto END
 ) else if %DO_JOB%==5 (
   pushd AndroidSource\scripts\
+  call:CleanOldSoFile
+  call external_native_fastbuild.bat
+  popd
+  goto END
+) else if %DO_JOB%==6 (
+  pushd AndroidSource\scripts\
   if exist "..\app\libs\*" (
-	call build_java.bat
+	call build_java.bat Release
   ) else (
   echo "Missing native lib" 
   )
   popd
   goto END
-) else if %DO_JOB%==6 (
+) else if %DO_JOB%==7 (
   pushd AndroidSource\scripts\
-  call install.bat
+  if exist "..\app\libs\*" (
+	call build_java.bat Debug
+  ) else (
+  echo "Missing native lib" 
+  )
   popd
   goto END
-) else if %DO_JOB%==7 (
+) else if %DO_JOB%==8 (
+  pushd AndroidSource\scripts\
+  call install.bat Release
+  popd
+  goto END
+) else if %DO_JOB%==9 (
+  pushd AndroidSource\scripts\
+  call install.bat Debug
+  popd
+  goto END
+) else if %DO_JOB%==10 (
 	pushd %CUR_MPATH%\..
 	adb push Resources /sdcard/Android/data/com.android.learnning3D/files/
   popd
