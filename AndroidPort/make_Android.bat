@@ -1,4 +1,5 @@
 @echo OFF
+setlocal EnableExtensions EnableDelayedExpansion
 set CUR_MPATH=%~dp0
 REM set ANDROID_HOME=F:\Android\android-sdk
 :START

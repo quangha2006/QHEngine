@@ -36,8 +36,9 @@ REM !FAST_BUILD_TOOL! -cachewrite -cacheread -dist -summary All-Compile-!archite
 	rem Check if COMPILE step is OK
 	if NOT "!errorlevel!"=="0" (
 	   echo COMPILE ERROR code returned by fbuild.exe, target All-Compile-!architecture!-!build_type!: !errorlevel!
-	   pause
-		exit !errorlevel!
+	   REM pause
+	   goto:eof
+	   exit !errorlevel!
 	)
 	
 	rem LINK 1
@@ -53,7 +54,8 @@ REM !FAST_BUILD_TOOL! -cachewrite -cacheread -dist -summary All-Compile-!archite
 
 	if NOT "!errorlevel!"=="0" (
 		echo LINK ERROR first Link Command :: code returned by fbuild.exe, target !SO_LIB_FILE!-SharedLib-!architecture!-!build_type!: !errorlevel!
-		pause
+		REM pause
+		goto:eof
 		exit !errorlevel!
 	)
 
@@ -93,7 +95,8 @@ goto:eof
 	if "!ERRORLEVEL!"=="1" (
 		echo ERROR @ copy lid!SO_LIB_FILE!.so file into 'AndroidFramework\libs' directory
 		echo ^^! Will EXIT without having the lid!SO_LIB_FILE!.so updated ^^!
-		pause
+		REM pause
+		goto:eof
 		exit !errorlevel!
 	) else (
 		echo Copied: !FAST_BUILD_GENERATED!\!architecture!\!build_type!\SharedLibs\lib!SO_LIB_FILE!.so
