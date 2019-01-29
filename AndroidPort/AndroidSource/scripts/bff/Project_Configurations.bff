@@ -22,10 +22,9 @@
 							+ " -DANDROID_NDK"
 							+ " -DGAME_ANDROID"							
 	.IncludePaths = ""
-							#if USE_CLANG
-							+ " -I$STL_LibPath_Clang$/include"
-							#endif
-							+ " -I$NDK_Root$/sources/android/cpufeatures"
+							+ ' -I$NDK_Root$\sources\cxx-stl\llvm-libc++\include'						
+							+ ' -I$NDK_Root$\sources\android\support\include'
+							+ ' -I$NDK_Root$\sysroot\usr\include'
 	.CompileFlags = ""
 							+ " -ffunction-sections"
 							+ " -funwind-tables"
@@ -115,10 +114,7 @@
 							+ " -DNDEBUG"
 							+ " -DNDK_DEBUG=0"
 	.IncludePaths + ""
-							#if USE_CLANG
-							+ " -I$NDK_Root$/sources/android/support/include"
-							#endif
-							+ " -I$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-arm/usr/include"
+							+ ' -I$NDK_Root$\sysroot\usr\include\arm-linux-androideabi'
 	.CompileFlags + ""
 							#if !USE_CLANG
 							+ " -g0"
@@ -143,10 +139,7 @@
 							+ " -D_DEBUG"
 							+ " -DDEBUG"
 	.IncludePaths + ""
-							#if USE_CLANG
-							+ " -I$NDK_Root$/sources/android/support/include"
-							#endif
-							+ " -I$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-arm/usr/include"
+							+ ' -I$NDK_Root$\sysroot\usr\include\arm-linux-androideabi'
 	.CompileFlags + ""
 							#if USE_CLANG
 							+ " -O0"
@@ -205,8 +198,7 @@
 							+ " -DANDROID_RELEASE"
 							+ " -DNDEBUG"
 	.IncludePaths + ""
-							+ " -I$NDK_Root$/sources/android/support/include"
-							+ " -I$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-x86/usr/include"
+							+ ' -I$NDK_Root$\sysroot\usr\include\i686-linux-android'
 	.CompileFlags + ""
 							+ " -w"
 							+ " -O3"
@@ -228,8 +220,7 @@
 							+ " -D_DEBUG"
 							+ " -DDEBUG"
 	.IncludePaths + ""
-							+ " -I$NDK_Root$/sources/android/support/include"
-							+ " -I$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-x86/usr/include"
+							+ ' -I$NDK_Root$\sysroot\usr\include\i686-linux-android'
 	.Precompiled_SearchPaths + ""
 							+ " -L$precompiled_search_Paths$/debug/x86"
 	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"

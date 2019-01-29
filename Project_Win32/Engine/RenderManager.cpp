@@ -93,6 +93,28 @@ GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 	return mBluringRT.MakeBloom(brightnessRT);
 }
 
+void RenderManager::RenderFinal()
+{
+	ShaderManager::getInstance()->setUseProgram("bloom_Final");
+	//m_default_shader.use();
+
+	glBindVertexArray(quadVAO);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mSenceTexId);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, mBloom_bright);
+
+	ShaderManager::getInstance()->setInt("bloom", 1);
+	ShaderManager::getInstance()->setInt("scene", 0);
+	ShaderManager::getInstance()->setInt("bloomBlur", 1);
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindVertexArray(0);
+	CheckGLError("RenderFinal");
+}
+
 GLuint RenderManager::GetDepthMapId()
 {
 	return mDepthMapTexId;
@@ -151,27 +173,6 @@ void RenderManager::InitquadVAO()
 	glBindVertexArray(0);
 }
 
-void RenderManager::RenderFinal()
-{
-	ShaderManager::getInstance()->setUseProgram("bloom_Final");
-	//m_default_shader.use();
-
-	glBindVertexArray(quadVAO);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, mSenceTexId);
-
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, mBloom_bright);
-
-	ShaderManager::getInstance()->setInt("bloom", 1);
-	ShaderManager::getInstance()->setInt("scene", 0);
-	ShaderManager::getInstance()->setInt("bloomBlur", 1);
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glBindVertexArray(0);
-	CheckGLError("RenderFinal");
-}
 
 RenderManager::RenderManager()
 {

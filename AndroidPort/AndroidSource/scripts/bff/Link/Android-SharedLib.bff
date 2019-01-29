@@ -28,62 +28,43 @@
 	.SystemLibs = ""
 					+ " -lGLESv3"
 					+ " -llog"
-					+ " -lc"
-					+ " -lm"
-					+ " -lz"
-					+ " -ldl"
 					+ " -landroid"
+					+ " -landroid_support"
 					+ " -lOpenSLES"
 					+ " -lEGL"
-					#if USE_CLANG
 					+ " -lc++_static"
+					+ " -lc++_shared"
 					+ " -lc++abi"
-					+ " -landroid_support"
-					#endif
-					#if !USE_CLANG
-					+ " -lgnustl_static"
-					+ " -lsupc++"
-					#endif
+					+ " -lc"
+					+ " -static-libstdc++"
 
 	.ARM_LinkValues =
 	[
 		Using(.ARM_Config)
 		.SystemLibs + ""
-							+ " -lunwind"
-							+ " -lgcc"
-							+ " $Linker_RPath_ARM$/crtbegin_so.o"
-							+ " $Linker_RPath_ARM$/crtend_so.o"
+							;+ " -lunwind"
+							;+ " -lgcc"
+							;+ " $Linker_RPath_ARM$/crtbegin_so.o"
+							;+ " $Linker_RPath_ARM$/crtend_so.o"
 		.LinkerFlags = ""
 							+ " -Wl,--build-id"
 							+ " -no-canonical-prefixes"
 							+ " -Wl,--fix-cortex-a8"
 							+ " -Wl,--no-undefined"
 							+ " -Wl,-z,noexecstack"
+							;+ " -Wl,--gc-sections -v -shared"
 							+ " -Wl,-rpath-link=$Linker_RPath_ARM$"
-							+ " --sysroot=$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-arm"
-							#if USE_CLANG
+							+ " --sysroot=$NDK_Root$\platforms\$NDK_PlatformVersion$\arch-arm"
 							+ " -gcc-toolchain $NDK_Root$/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64"
-							+ " -target armv7a-none-linux-androideabi"
+							+ " -target armv7a-none-linux-androideabi -marm -march=armv7-a -mtune=krait -mfpu=neon-fp16 -landroid_support -lunwind -latomic"
 							+ " -Wl,-z,relro"
 							+ " -Wl,-z,now"
-							+ " -nostdlib"
 							+ " -W1,-fuse-ld=gold"
 							+ " -W1,-threads"
-							#endif
-							#if !USE_CLANG
-							+ " -march=armv7-a"
-							+ " -Wl,--allow-multiple-definition"
-							#endif
 		.NDK_SearchPaths = ""
 							+ " -L$Linker_RPath_ARM$"
-							#if USE_CLANG
 							+ " -L$NDK_Root$/sources/cxx-stl/llvm-libc++/libs/armeabi-v7a"
-							#endif
-							#if !USE_CLANG
-							+ " -L$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/lib/gcc/arm-linux-androideabi/4.8"
-							+ " -L$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/arm-linux-androideabi/lib/armv7-a"
-							+ " -L$STL_LibPath_GCC$/libs/armeabi-v7a"
-							#endif
+							+ " -gcc-toolchain $NDK_Root$/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64"
 	]
 
 	.x86_LinkValues =
@@ -91,7 +72,6 @@
 		Using(.x86_Config)
 		.SystemLibs + ""
 							+ " -lgcc"
-							// hai.pn move here to seperate the link of ARM & x86
 		.LinkerFlags = ""
 							+ " -Wl,--build-id"
 							+ " -gcc-toolchain $NDK_Root$/toolchains/x86-$GCC_ToolchainVersion$/prebuilt/windows-x86_64"
