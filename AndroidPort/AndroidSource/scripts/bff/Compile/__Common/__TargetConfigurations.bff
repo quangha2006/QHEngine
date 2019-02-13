@@ -23,7 +23,5 @@ ForEach( .ConfigIter in .All_Configs )
 			.aux = .Target + "-$LibSufix$"
 			^Targets + .aux
 		}
-		
-		//.Targets = .Targets + 'tinythread-$LibSufix$'
 	}
 }

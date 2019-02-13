@@ -1,4 +1,4 @@
-	.PROJECT_LanguageStandard 	= ""
+	.PROJECT_LanguageStandard 	= "-std=c++11 -x c++"
 	.StaticLibOutputName     	= 'lib$PROJECT_Name$.a'
     .Compiler_Suffix			= "CPP"
 	.CompilerInputPattern   	= "*.cpp"

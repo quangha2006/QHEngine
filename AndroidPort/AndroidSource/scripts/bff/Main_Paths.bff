@@ -11,6 +11,5 @@
 .Game_Sources_Path = "$GameRoot$"
 .Engine_Sources_Path = "$GameRoot$/Engine"
 .STL_LibPath_Clang = "$NDK_Root$/sources/cxx-stl/llvm-libc++"
-.STL_LibPath_GCC = "$NDK_Root$/sources/cxx-stl/gnu-libstdc++/4.8"
 .Linker_RPath_ARM = "$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-arm/usr/lib"
 .Linker_RPath_x86 = "$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-x86/usr/lib"

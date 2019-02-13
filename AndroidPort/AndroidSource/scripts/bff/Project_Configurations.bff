@@ -47,12 +47,7 @@
 	.CompileFlags_C = ""
 	.Precompiled_SearchPaths = ""
 	.LinkerExecutable = ""
-							#if USE_CLANG
 							+ "$NDK_Root$/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe"
-							#endif
-							#if !USE_CLANG
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-g++.exe"
-							#endif
 ]
 
 // *************************************************************************************** //
@@ -63,12 +58,9 @@
 	Using(.Base_Config)
 	.PlatformName = "ARM"
 	.Defines + ""
-							#if USE_CLANG
 							+ " -D__ARM_NEON__"
-							#endif
 							+ " -D__ARM_ARCH_7__"
 	.CompileFlags + ""
-							#if USE_CLANG
 							+ " -target armv7-none-linux-androideabi"
 							+ " -mfpu=neon"
 							+ " -mtune=krait"
@@ -76,31 +68,17 @@
 							+ " -fPIC"
 							+ " -fstack-protector-strong"
 							+ " -g"
-							#endif
 							+ " -marm"
 							+ " -march=armv7-a"
 							+ " -mfloat-abi=softfp"
 	.Librarian = ""
-							#if USE_CLANG
 							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar.exe"
-							#endif
-							#if !USE_CLANG
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar.exe"
-							#endif
+
 	.ObjectCopyExecutable = ""
-							#if USE_CLANG
 							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-objcopy.exe"
-							#endif
-							#if !USE_CLANG
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-objcopy.exe"
-							#endif
+
 	.StripExecutable = ""
-							#if USE_CLANG
 							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-strip.exe"
-							#endif
-							#if !USE_CLANG
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-4.8/prebuilt/windows-x86_64/bin/arm-linux-androideabi-strip.exe"
-							#endif
 ]
 
 // *************************************************************************************** //
@@ -117,11 +95,9 @@
 	.IncludePaths + ""
 							+ ' -I$NDK_Root$\sysroot\usr\include\arm-linux-androideabi'
 	.CompileFlags + ""
-							#if !USE_CLANG
-							+ " -g0"
-							#endif
 							+ " -w"
 							+ " -Ofast"
+							
 	.Precompiled_SearchPaths + ""
 							+ " -L$precompiled_search_Paths$/release/armeabi-v7a"
 	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"
@@ -141,13 +117,10 @@
 							+ " -DDEBUG"
 	.IncludePaths + ""
 							+ ' -I$NDK_Root$\sysroot\usr\include\arm-linux-androideabi'
+
 	.CompileFlags + ""
-							#if USE_CLANG
 							+ " -O0"
-							#endif
-							#if !USE_CLANG
-							+ " -g"
-							#endif
+
 	.Precompiled_SearchPaths + ""
 							+ " -L$precompiled_search_Paths$/debug/armeabi-v7a"
 	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"

@@ -8,7 +8,7 @@ set FAST_BUILD_CONFIG=!ROOT_DIR!\AndroidSource\scripts\bff
 set FAST_BUILD_COMPILE=!FAST_BUILD_CONFIG!\Compile
 set FAST_BUILD_GENERATED=!ROOT_DIR!\generated
 set FAST_BUILD_LINK=!FAST_BUILD_CONFIG!\Link
-set FAST_BUILD_TOOL=%ROOT_DIR%\..\Tools\FastBuild\FBuild.exe
+set FAST_BUILD_TOOL=%ROOT_DIR%\..\Tools\FASTBuild-Windows-x64-v0.96\FBuild.exe
 set SO_LIB_FILE=native-activity
 
 rem uncomment the line below to see the entire command used on this .bat script
@@ -18,7 +18,7 @@ set architectures=armeabi-v7a
 set architecture=ARM
 set jniLibs_path=!FAST_BUILD_CONFIG!\..\..\app\libs
 
-set FASTBUILD_BROKERAGE_PATH=\\SA2BLD0010\FastBuild_Detection\
+set FASTBUILD_BROKERAGE_PATH=C:\Projects\DH6\Projects\Android\FastBuild_Detection\
 set DO_STATIC_LIBS_COMPARE=FALSE
 set DO_CLEAN_LINK=FALSE
 
@@ -30,7 +30,7 @@ set DO_CLEAN_LINK=FALSE
 REM !FAST_BUILD_TOOL! -cachewrite -cacheread -dist -summary All-Compile-!architecture!-!build_type! -clean // Note: Add -dist to enable distributed
 	echo 1^) --- COMPILE ---
 	pushd !FAST_BUILD_COMPILE!
-	!FAST_BUILD_TOOL! -cachewrite -cacheread -summary All-Compile-!architecture!-!build_type! -clean
+	!FAST_BUILD_TOOL! -cachewrite -cacheread -dist -summary All-Compile-!architecture!-!build_type! -clean
 	popd
 
 	rem Check if COMPILE step is OK

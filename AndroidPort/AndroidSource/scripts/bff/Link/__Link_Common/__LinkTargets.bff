@@ -52,6 +52,6 @@
 									    // output
 									    + " -o %2"	// expanded from .LinkerOutput
 
-			.LinkerType 			    = "gcc"
-		}		
+			//.LinkerType 			    = "gcc"
+		}
 	}

@@ -32,6 +32,7 @@
 									+ " -fexceptions"
 									+ " -frtti"
 									+ " -fpermissive"
+									+ " -Wc++11-narrowing"
 	]
 
 	.ReleaseValues =

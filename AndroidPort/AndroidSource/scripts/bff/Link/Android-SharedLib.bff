@@ -33,11 +33,8 @@
 					+ " -lOpenSLES"
 					+ " -lEGL"
 					+ " -lc++_static"
-					+ " -lc++_shared"
 					+ " -lc++abi"
 					+ " -lstdc++"
-					+ " -lc -lm -lz -ldl -lgcc"
-					+ " -lunwind -latomic"
 					+ " -static-libstdc++"
 
 	.ARM_LinkValues =
@@ -54,7 +51,6 @@
 							+ " -Wl,--fix-cortex-a8"
 							+ " -Wl,--no-undefined"
 							+ " -Wl,-z,noexecstack"
-							;+ " -Wl,--gc-sections -v -shared"
 							+ " -Wl,-rpath-link=$Linker_RPath_ARM$"
 							+ " --sysroot=$NDK_Root$\platforms\$NDK_PlatformVersion$\arch-arm"
 							+ " -gcc-toolchain $NDK_Root$/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64"

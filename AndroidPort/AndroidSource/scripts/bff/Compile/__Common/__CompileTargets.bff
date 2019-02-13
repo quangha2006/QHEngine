@@ -25,54 +25,26 @@
 										+ ."$PlatformName$_CompilerFlags"
 										+ ."$PlatformName$_$ConfigName$_CompilerFlags"
 
-
 		.IncludePaths 					+ " $PROJECT_IncludePaths$ "
 										+ ."PROJECT_$ConfigName$_IncludePaths"
 
 		Library( "$PROJECT_Name$-Lib-$PlatformName$-$ConfigName$" )
 		{
-            #if !USE_CLANG
-            .Compiler			        = "Compiler_$PlatformName$_$Compiler_Suffix$"
-            #endif
 
-            #if USE_CLANG
             .Compiler			        = "Compiler_CLANG_$Compiler_Suffix$"
-            #endif
 
 			.CompilerInputFiles 		+ ."PROJECT_$ConfigName$_SourceFiles"
 										+ ."$PlatformName$_SourceFiles"
 										+ ."$PlatformName$_$ConfigName$_SourceFiles"
 
-
-
 			.CompilerOutputPath			= "$Output_Objects$/$PROJECT_Name$"
 
-			#if USE_CLANG 
-			#if USE_PCH
-			.PCHInputFile 				= "$PrecompiledHeaderPath$/$PrecompiledHeaderName$.h" 													; (optional) Precompiled header (.cpp) file to compile 
-			.PCHOutputFile 				= "$Output_Objects$/$PROJECT_Name$/$PrecompiledHeaderName$.pch"											; (optional) Precompiled header compilation output 
-			.PCHOptions 				= "$PROJECT_LanguageStandard$ $Defines$ $CompileFlags$ $IncludePaths$ -x c++-header -emit-pch %1 -o %2"	; (optional) Options for compiler for precompiled header
-			#endif
-			#endif
-
 			.CompilerOptions			= "$PROJECT_LanguageStandard$ $Defines$ $CompileFlags$ $IncludePaths$"
-										
-										#if USE_CLANG
-										#if USE_PCH
-										+ " -include-pch $PCHOutputFile$"										
-										#endif
-										#endif
-										
 										+ " -c %1 -o %2"
 
 			.CompilerOutputExtension 	= ".o"
 
-
 			.LibrarianOutput 			= "$Output_StaticLibs$/$StaticLibOutputName$"
 			.LibrarianOptions  			= "-r -s %2 %1"
-			
-			#if USE_PCH
-			#undef USE_PCH
-			#endif
 		}
 	}

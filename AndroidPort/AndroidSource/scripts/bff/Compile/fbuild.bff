@@ -11,19 +11,19 @@
 	//"native_app_glue"
 	//"Audio_c"
 	// lib
-  	//"openal"
-	//"SOIL"
-	//"zlibstatic"
+  	
+	"SOIL"
+	"zlibstatic"
+	"Assimp"
+	"openddlparser"
+	"unzip"
+	"ConvertUTF"
+	"clipper"
+	"irrXML"
+	"poly2tri"
+	"freetype_2015"
+	//"openal"
 	//"freetypelib"
-	//"Assimp"
-	
-	//"openddlparser"
-	//"unzip"
-	//"ConvertUTF"
-	//"clipper"
-	//"irrXML"
-	//"poly2tri"
-	//"freetype_2015"
 }
 
 #include "__Common/__TargetConfigurations.bff"

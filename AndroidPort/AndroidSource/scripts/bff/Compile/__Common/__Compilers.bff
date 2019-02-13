@@ -1,46 +1,17 @@
 	.AndroidArmCompilerConfig =
 	[
-		.NDK_ToolchainRoot	= .NDK_GCC_ToolchainARM_Bin
+		.NDK_ToolchainRoot	= .NDK_CLANG_ToolchainBin
 		.NDK_ToolchainType	= .NDK_ToolchainArmType
 		.CompilerName		= "Compiler_ARM"
 	]
 
 	.AndroidX86CompilerConfig =
 	[
-		.NDK_ToolchainRoot = .NDK_GCC_ToolchainX86_Bin
+		.NDK_ToolchainRoot = .NDK_CLANG_ToolchainBin
 		.NDK_ToolchainType = .NDK_ToolchainX86Type
 		.CompilerName      = "Compiler_x86"
 	]
 
-	#if !USE_CLANG
-	{
-		Using ( .AndroidArmCompilerConfig )
-		Compiler( "$CompilerName$_CPP" )
-		{
-			.Executable		= "$NDK_ToolchainRoot$/$NDK_ToolchainType$-g++.exe"
-		}
-		Compiler( "$CompilerName$_C" )
-		{
-			.Executable		= "$NDK_ToolchainRoot$/$NDK_ToolchainType$-gcc.exe"
-		}
-	}
-
-	{
-		Using ( .AndroidX86CompilerConfig )
-		Compiler( "$CompilerName$_CPP" )
-		{
-			.Executable		= "$NDK_ToolchainRoot$/$NDK_ToolchainType$-g++.exe"
-		}
-		Compiler( "$CompilerName$_C" )
-		{
-			.Executable		= "$NDK_ToolchainRoot$/$NDK_ToolchainType$-gcc.exe"
-		}
-	}
-	#endif
-
-
-
-	#if USE_CLANG
 	{
 		Compiler( "Compiler_CLANG_CPP" )
 		{
@@ -54,4 +25,3 @@
 			.ExtraFiles  = "$NDK_CLANG_ToolchainBin$/libwinpthread-1.dll"
 		}
 	}
-	#endif
