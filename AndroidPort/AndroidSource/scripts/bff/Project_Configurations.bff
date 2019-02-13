@@ -20,10 +20,11 @@
 							+ " -DANDROID"
 							+ " -D_ANDROID"
 							+ " -DANDROID_NDK"
-							+ " -DGAME_ANDROID"							
+							+ " -DGAME_ANDROID"
+							+ " -D__ANDROID_API__=21"
 	.IncludePaths = ""
-							+ ' -I$NDK_Root$\sources\cxx-stl\llvm-libc++\include'						
 							+ ' -I$NDK_Root$\sources\android\support\include'
+							+ ' -I$NDK_Root$\sources\cxx-stl\llvm-libc++\include'
 							+ ' -I$NDK_Root$\sysroot\usr\include'
 	.CompileFlags = ""
 							+ " -ffunction-sections"

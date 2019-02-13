@@ -1,7 +1,7 @@
 .CompilePath = "."
 .GCC_ToolchainVersion = "4.9"
 .Clang_ToolchainVersion = "4.9"
-.NDK_PlatformVersion = "android-19"
+.NDK_PlatformVersion = "android-21"
 .GameRoot = "$CompilePath$/../../../../../Project_Win32/"
 .ExternalLibs_Path = "$GameRoot$/External"
 .NDK_Root = "Y:/android-ndk-r18b"
