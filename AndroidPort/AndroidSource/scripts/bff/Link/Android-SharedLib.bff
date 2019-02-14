@@ -3,13 +3,11 @@
 	{
 		"libEngineLib.a"
 		;"libnative_app_glue.a"
-		;"libSanctuary_CPP.a"
 	}
 
 	.GameStaticLibs = ""
 					+ " -Wl,--start-group"
 					+ " -lBasic_CPP"
-					;+ " -lSanctuary_CPP"
 					;+ " -lnative_app_glue"
               		+ " -lEngineLib"
 					+ " -lSOIL"
@@ -40,10 +38,7 @@
 	[
 		Using(.ARM_Config)
 		.SystemLibs + ""
-							;+ " -lunwind"
-							;+ " -lgcc"
-							;+ " $Linker_RPath_ARM$/crtbegin_so.o"
-							;+ " $Linker_RPath_ARM$/crtend_so.o"
+
 		.LinkerFlags = ""
 							+ " -Wl,--build-id"
 							+ " -no-canonical-prefixes"
@@ -71,7 +66,7 @@
 							+ " -lgcc"
 		.LinkerFlags = ""
 							+ " -Wl,--build-id"
-							+ " -gcc-toolchain $NDK_Root$/toolchains/x86-$GCC_ToolchainVersion$/prebuilt/windows-x86_64"
+							+ " -gcc-toolchain $NDK_Root$/toolchains/x86-$NDK_ToolchainVersion$/prebuilt/windows-x86_64"
 							+ " -march=i686"
 							+ " -target i686-none-linux-android"
 							+ " -Wl,--no-undefined"

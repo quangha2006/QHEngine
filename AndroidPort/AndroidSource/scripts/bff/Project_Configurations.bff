@@ -72,13 +72,13 @@
 							+ " -march=armv7-a"
 							+ " -mfloat-abi=softfp"
 	.Librarian = ""
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar.exe"
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$NDK_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar.exe"
 
 	.ObjectCopyExecutable = ""
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-objcopy.exe"
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$NDK_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-objcopy.exe"
 
 	.StripExecutable = ""
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-strip.exe"
+							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$NDK_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-strip.exe"
 ]
 
 // *************************************************************************************** //
@@ -154,11 +154,11 @@
 							+ " -fno-strict-aliasing"
 							+ " -fsigned-char"
 	.Librarian = ""
-							+ "$NDK_Root$/toolchains/x86-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/i686-linux-android-ar.exe"
+							+ "$NDK_Root$/toolchains/x86-$NDK_ToolchainVersion$/prebuilt/windows-x86_64/bin/i686-linux-android-ar.exe"
 	.ObjectCopyExecutable = ""
-							+ "$NDK_Root$/toolchains/x86-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/i686-linux-android-objcopy.exe"
+							+ "$NDK_Root$/toolchains/x86-$NDK_ToolchainVersion$/prebuilt/windows-x86_64/bin/i686-linux-android-objcopy.exe"
 	.StripExecutable = ""
-							+ "$NDK_Root$/toolchains/x86-$GCC_ToolchainVersion$/prebuilt/windows-x86_64/bin/i686-linux-android-strip.exe"
+							+ "$NDK_Root$/toolchains/x86-$NDK_ToolchainVersion$/prebuilt/windows-x86_64/bin/i686-linux-android-strip.exe"
 ]
 
 // *************************************************************************************** //

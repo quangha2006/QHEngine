@@ -8,8 +8,8 @@
 .NDK_ToolchainX86Type 				= "i686-linux-android"
 
 .NDK_CLANG_ToolchainBin				= "$NDKToolchains$/llvm/prebuilt/windows-x86_64/bin"
-.NDK_ToolchainForClang_ARM			= "$NDKToolchains$/$NDK_ToolchainArmType$-$GCC_ToolchainVersion$/prebuilt/windows-x86_64"
-.NDK_ToolchainForClang_x86			= "$NDKToolchains$/x86_64-$GCC_ToolchainVersion$/prebuilt/windows-x86_64"
+.NDK_ToolchainForClang_ARM			= "$NDKToolchains$/$NDK_ToolchainArmType$-$NDK_ToolchainVersion$/prebuilt/windows-x86_64"
+.NDK_ToolchainForClang_x86			= "$NDKToolchains$/x86_64-$NDK_ToolchainVersion$/prebuilt/windows-x86_64"
 
 Settings
 {
