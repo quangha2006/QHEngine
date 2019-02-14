@@ -15,7 +15,7 @@
 			ForEach ( .EPSymbolLib in .EntryPointSymbolsLibs)
 			{
 				// ^ instead of . :: pushes the changes to the variable into to the outer scope
-				^EntryPointLibsList + " $Output_StaticLibs$/$EPSymbolLib$"
+				^EntryPointLibsList + "$Output_StaticLibs$\$EPSymbolLib$"
 			}
 			// .EntryPointLibsList will have the value:
 			// " $OutputPath$/$PlatformName$/$ConfigName$/StaticLibs/libAndroid_CPP.a $OutputPath$/$PlatformName$/$ConfigName$/StaticLibs/libAndroid_C.a" 
@@ -25,7 +25,7 @@
 			.Linker 				    = "$LinkerExecutable$"
 			.LinkerOutput 			    = "$Output_SharedLibs$/Unstripped/$UnstrippedLibName$"		// Debug config will output the final .so file directly (no dsym or debug used)
 
-			.Libraries 				    = ""
+			.Libraries 				    = { "$EntryPointLibsList$" }
 
 			.LinkerSearchPath 		    = " $NDK_SearchPaths$"
 									    + " -L$Output_StaticLibs$"
@@ -51,7 +51,6 @@
 
 									    // output
 									    + " -o %2"	// expanded from .LinkerOutput
-
 			//.LinkerType 			    = "gcc"
 		}
 	}

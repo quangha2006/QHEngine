@@ -1,6 +1,6 @@
 {
 	.PROJECT_Name = "SOIL"
-	#include "../__Common/__STD_SOIL_CPP.bff"
+	#include "../__Common/__STD_ANDROID_CPP.bff"
 
 	.PROJECT_SourceFiles =
 	{
@@ -32,7 +32,6 @@
 									+ " -fexceptions"
 									+ " -frtti"
 									+ " -fpermissive"
-									+ " -Wc++11-narrowing"
 	]
 
 	.ReleaseValues =

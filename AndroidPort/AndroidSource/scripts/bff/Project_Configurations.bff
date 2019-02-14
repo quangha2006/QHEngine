@@ -100,9 +100,9 @@
 							
 	.Precompiled_SearchPaths + ""
 							+ " -L$precompiled_search_Paths$/release/armeabi-v7a"
-	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"
-	.Output_StaticLibs = "$OutputPath$/$PlatformName$/$ConfigName$/StaticLibs"
-	.Output_SharedLibs = "$OutputPath$/$PlatformName$/$ConfigName$/SharedLibs"
+	.Output_Objects = "$OutputPath$\$PlatformName$\$ConfigName$\Objects"
+	.Output_StaticLibs = "$OutputPath$\$PlatformName$\$ConfigName$\StaticLibs"
+	.Output_SharedLibs = "$OutputPath$\$PlatformName$\$ConfigName$\SharedLibs"
 ]
 
 // *************************************************************************************** //

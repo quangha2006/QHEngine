@@ -1,7 +1,6 @@
 {
 	.EntryPointSymbolsLibs =
 	{
-		"libBasic_CPP.a"
 		"libEngineLib.a"
 		;"libnative_app_glue.a"
 		;"libSanctuary_CPP.a"

@@ -4,7 +4,6 @@
 
 	.PROJECT_SourceFiles =
 	{
-		"$jni_Path$/jni_code.cpp"
 		"$Game_Sources_Path$/Basic/Basic.cpp"
 	}
 
