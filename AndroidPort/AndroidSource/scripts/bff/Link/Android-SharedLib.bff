@@ -19,7 +19,7 @@
 					+ " -lclipper"
 					+ " -lirrXML"
 					+ " -lpoly2tri"
-					+ " -lfreetype_2015"
+					+ " -lfreetypelib"
     			  	+ " -lopenal"
 					+ " -Wl,--end-group"
 	.SystemLibs = ""

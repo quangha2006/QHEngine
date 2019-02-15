@@ -5,8 +5,8 @@
 {
 	// main
 	//"Sanctuary_CPP"
-	//"Basic_CPP"
-	//"EngineLib"
+	"Basic_CPP"
+	"EngineLib"
 	
 	//"native_app_glue"
 	//"Audio_c"
@@ -21,9 +21,9 @@
 	//"clipper"
 	//"irrXML"
 	//"poly2tri"
-	"freetype"
+	//"freetype"
 	//"openal"
-	//"freetypelib"
+	"freetypelib"
 }
 
 #include "__Common/__TargetConfigurations.bff"
