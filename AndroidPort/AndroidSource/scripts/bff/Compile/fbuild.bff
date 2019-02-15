@@ -21,7 +21,6 @@
 	//"clipper"
 	//"irrXML"
 	//"poly2tri"
-	//"freetype"
 	//"openal"
 	"freetypelib"
 }
