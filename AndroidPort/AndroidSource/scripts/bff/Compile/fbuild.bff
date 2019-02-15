@@ -5,23 +5,23 @@
 {
 	// main
 	//"Sanctuary_CPP"
-	"Basic_CPP"
-	"EngineLib"
+	//"Basic_CPP"
+	//"EngineLib"
 	
 	//"native_app_glue"
 	//"Audio_c"
 	// lib
   	
-	"SOIL"
-	"zlibstatic"
-	"Assimp"
-	"openddlparser"
-	"unzip"
-	"ConvertUTF"
-	"clipper"
-	"irrXML"
-	"poly2tri"
-	"freetype_2015"
+	//"SOIL"
+	//"zlibstatic"
+	//"Assimp"
+	//"openddlparser"
+	//"unzip"
+	//"ConvertUTF"
+	//"clipper"
+	//"irrXML"
+	//"poly2tri"
+	"freetype"
 	//"openal"
 	//"freetypelib"
 }
