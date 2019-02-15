@@ -9,7 +9,6 @@
 	"EngineLib"
 	
 	//"native_app_glue"
-	//"Audio_c"
 	// lib
   	
 	//"SOIL"
@@ -22,7 +21,7 @@
 	//"irrXML"
 	//"poly2tri"
 	//"openal"
-	"freetypelib"
+	//"freetypelib"
 }
 
 #include "__Common/__TargetConfigurations.bff"
