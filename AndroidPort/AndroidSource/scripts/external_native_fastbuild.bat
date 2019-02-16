@@ -18,7 +18,7 @@ set architectures=armeabi-v7a
 set architecture=ARM
 set jniLibs_path=!FAST_BUILD_CONFIG!\..\..\app\libs
 
-set FASTBUILD_BROKERAGE_PATH=C:\Projects\DH6\Projects\Android\FastBuild_Detection\
+set FASTBUILD_BROKERAGE_PATH=C:\Projects\DH6\Projects\Android\FastBuild_Detection
 set DO_STATIC_LIBS_COMPARE=FALSE
 set DO_CLEAN_LINK=FALSE
 
