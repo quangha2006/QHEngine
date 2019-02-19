@@ -13,7 +13,7 @@
   	
 	//"SOIL"
 	//"zlibstatic"
-	//"Assimp"
+	"Assimp"
 	//"openddlparser"
 	//"unzip"
 	//"ConvertUTF"
