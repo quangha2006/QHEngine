@@ -60,8 +60,31 @@ void RenderManager::SetSkyBox(SkyBox * skybox)
 	mSkybox = skybox;
 }
 
+void RenderManager::SetEnableShadowMap(bool is_enable)
+{
+	m_isEnableShadowMap = is_enable;
+}
+
+void RenderManager::SetEnableBloom(bool is_enable)
+{
+	m_isEnableBloom = is_enable;
+}
+
+void RenderManager::SwitchBloomMode()
+{
+	m_isEnableBloom = !m_isEnableBloom;
+}
+
+void RenderManager::SwitchShadowMapMode()
+{
+	m_isEnableShadowMap = !m_isEnableShadowMap;
+}
+
 GLuint RenderManager::RenderDepthMap()
 {
+	if (!m_isEnableShadowMap)
+		return -1;
+
 	Camera *mCamera = Camera::getInstance();
 	mShadowRT.Enable("depthShader");
 	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
@@ -75,16 +98,24 @@ GLuint RenderManager::RenderDepthMap()
 GLuint RenderManager::RenderSence()
 {
 	Camera *mCamera = Camera::getInstance();
-	mSenceRT.Enable("model");
+
+	ShaderManager::getInstance()->setUseProgram("model");
+
+	if (m_isEnableBloom)
+		mSenceRT.Enable();
+
 	mSkybox->Draw(mCamera);
 
 	ModelManager::getInstance()->Render(RenderMode_Sence);
 
-	return mSenceRT.Disable();;
+	return mSenceRT.Disable();
 }
 
 GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 {
+	if (!m_isEnableBloom)
+		return -1;
+
 	mBrightnessRT.Enable();
 	ShaderManager::getInstance()->setUseProgram("Brightness");
 	mSenceRT.Render();
@@ -95,6 +126,9 @@ GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 
 void RenderManager::RenderFinal()
 {
+	if (!m_isEnableBloom)
+		return;
+
 	ShaderManager::getInstance()->setUseProgram("bloom_Final");
 	//m_default_shader.use();
 
@@ -178,6 +212,8 @@ RenderManager::RenderManager()
 {
 	mDepthMapTexId = -1;
 	quadVAO = -1;
+	m_isEnableShadowMap = true;
+	m_isEnableBloom = true;
 }
 
 

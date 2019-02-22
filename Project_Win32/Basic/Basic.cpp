@@ -7,6 +7,7 @@
 #include "QHText.h"
 #include "SkyBox.h"
 #include "Utils.h"
+#include "RenderManager.h"
 
 void Basic::Init()
 {
@@ -71,20 +72,27 @@ void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 }
 void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
-	//LOGI("Key: %d", key);
+	char c = (char)key;
+	//LOGI("Key: %d = %c\n",key, c);
 	if (action == 0) return;
-	switch (key)
+	switch (c)
 	{
-	case 83: //num s
+	case 'B':
+		RenderManager::getInstance()->SwitchBloomMode();
+		return;
+	case 'M':
+		RenderManager::getInstance()->SwitchShadowMapMode();
+		return;
+	case 'S': //num s
 		mCamera->Target.y -= 0.1;
 		return;
-	case 87: //num w
+	case 'W': //num w
 		mCamera->Target.y += 0.1;
 		return;
-	case 65: //num a
+	case 'A': //num a
 		mCamera->Target.x -= 0.1;
 		return;
-	case 68: //num d
+	case 'D': //num d
 		mCamera->Target.x += 0.1;
 		return;
 	case 262:
@@ -120,6 +128,7 @@ void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 	case 329: // num 9
 		mSpider.SetAnimPlay(9);
 		return;
+
 	default:
 		break;
 	}

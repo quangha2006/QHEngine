@@ -191,6 +191,9 @@ void RenderTarget::Enable(const char* shadername)
 		LOGE("ERROR! RenderTarget not init!!!!!");
 		return;
 	}
+
+	m_isEnable = true;
+
 	if (shadername != NULL)
 		ShaderManager::getInstance()->setUseProgram(shadername);
 
@@ -203,10 +206,13 @@ void RenderTarget::Enable(const char* shadername)
 
 GLuint RenderTarget::Disable()
 {
-	if (!m_initialized)
+	if (!m_initialized || !m_isEnable)
 	{
 		return -1;
 	}
+
+	m_isEnable = false;
+
 	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)
 	{
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_FBOId[0]);
@@ -367,6 +373,7 @@ RenderTarget::RenderTarget()
 	isEnableDebug = false;
 	m_initialized = false;
 	quadVAO = 0;
+	m_isEnable = false;
 }
 
 RenderTarget::~RenderTarget()

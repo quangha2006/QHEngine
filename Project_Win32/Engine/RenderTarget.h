@@ -22,6 +22,7 @@ private:
 
 	bool isEnableDebug;
 	bool m_initialized;
+	bool m_isEnable;
 	RenderTargetType m_type;
 	AppContext * m_appcontext;
 	Shader m_default_shader;

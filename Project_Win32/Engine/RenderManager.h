@@ -17,7 +17,7 @@ private:
 
 	Shader m_default_shader;
 	GLuint quadVAO, quadVBO;
-
+	bool m_isEnableShadowMap, m_isEnableBloom;
 	GLuint RenderDepthMap();
 	GLuint RenderSence();
 	GLuint PostProcessBloom(GLuint textsrc);
@@ -30,9 +30,11 @@ public:
 	void Update();
 	void Render();
 	void SetSkyBox(SkyBox *skybox);
-	
+	void SetEnableShadowMap(bool is_enable);
+	void SetEnableBloom(bool is_enable);
+	void SwitchBloomMode();
+	void SwitchShadowMapMode();
 	GLuint GetDepthMapId();
 	RenderManager();
 	~RenderManager();
 };
-
