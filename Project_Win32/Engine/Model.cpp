@@ -365,8 +365,10 @@ void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 tr
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
-	//ShaderManager::getInstance()->setUseProgram(useshadername.c_str());
 
+	glm::mat4 WorldViewLightSpaceMatrix;
+	glm::mat4 WorldViewProjectionMatrix;
+	glm::mat4 model_inverse;
 	glm::mat4 tmp_model = world;
 
 	if (isTranslate)
@@ -381,29 +383,52 @@ void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 tr
 		tmp_model = glm::rotate(tmp_model, glm::radians(270.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	}
 
-	ShaderManager::getInstance()->setMat4("world", tmp_model);
-	glm::mat4 lookat_tmp = mCamera->WorldViewProjectionMatrix * tmp_model;
+	switch (mode)
+	{
+		case RenderMode_Depth:
+			if (hasAnimation)
+				ShaderManager::getInstance()->setUseProgram("depthShader_skinning");
+			else
+				ShaderManager::getInstance()->setUseProgram("depthShader");
+
+			ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
+			ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
+
+			WorldViewLightSpaceMatrix = mCamera->lightSpaceMatrix * tmp_model;
+			ShaderManager::getInstance()->setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
+
+			break;
+		case RenderMode_Sence:
+			if (hasAnimation)
+				ShaderManager::getInstance()->setUseProgram("model_skinning");
+			else
+				ShaderManager::getInstance()->setUseProgram("model");
+
+			ShaderManager::getInstance()->setFloat("pointlight_constant", 1.0f);
+			ShaderManager::getInstance()->setFloat("pointlight_linear", 0.0014f);
+			ShaderManager::getInstance()->setFloat("pointlight_quadratic", 0.000007f);
+			ShaderManager::getInstance()->setFloat("material_shininess", 18.0f);
+			ShaderManager::getInstance()->setVec3("light_position", mCamera->lightPos);
+			ShaderManager::getInstance()->setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
+			ShaderManager::getInstance()->setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
+			ShaderManager::getInstance()->setVec3("light_specular", 1.1f, 1.1f, 1.1f);
+			ShaderManager::getInstance()->setVec3("viewPos", mCamera->Pos);
+			ShaderManager::getInstance()->setVec3("color_pick", 0.0f, 0.0f, 0.0f);
+			ShaderManager::getInstance()->setBool("usenormalmap", false);
+			ShaderManager::getInstance()->setBool("usepointlight", this->isUsePointLight);
+
+			model_inverse = glm::inverse(tmp_model);
+			model_inverse = glm::transpose(model_inverse);
+			ShaderManager::getInstance()->setMat4("world_inverse", model_inverse);
+
+			ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
+			ShaderManager::getInstance()->setMat4("world", tmp_model);
+
+			WorldViewProjectionMatrix = mCamera->WorldViewProjectionMatrix * tmp_model;
+			ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
+			break;
+	}
 	
-	ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", lookat_tmp);
-
-	glm::mat4 model_inverse = glm::inverse(tmp_model);
-	model_inverse = glm::transpose(model_inverse);
-	ShaderManager::getInstance()->setMat4("world_inverse", model_inverse);
-
-	ShaderManager::getInstance()->setFloat("material_shininess", 18.0f);
-	ShaderManager::getInstance()->setVec3("light_position", mCamera->lightPos);
-	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
-	ShaderManager::getInstance()->setVec3("viewPos", mCamera->Pos);
-	ShaderManager::getInstance()->setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
-	ShaderManager::getInstance()->setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
-	ShaderManager::getInstance()->setVec3("light_specular", 1.1f, 1.1f, 1.1f);
-	ShaderManager::getInstance()->setBool("usepointlight", this->isUsePointLight);
-	ShaderManager::getInstance()->setFloat("pointlight_constant", 1.0f);
-	ShaderManager::getInstance()->setFloat("pointlight_linear", 0.0014f);
-	ShaderManager::getInstance()->setFloat("pointlight_quadratic", 0.000007f);
-	ShaderManager::getInstance()->setBool("usenormalmap", false);
-	ShaderManager::getInstance()->setVec3("color_pick", 0.0f, 0.0f, 0.0f);
-
 	//animation
 	if (hasAnimation && Transforms.size() > 0)
 	{

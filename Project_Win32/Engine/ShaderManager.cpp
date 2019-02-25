@@ -3,15 +3,15 @@
 #include "Utils.h"
 ShaderManager *ShaderManager::instance = NULL;
 
-GLuint ShaderManager::createProgram(const char * vtxSrc, const char * fragSrc)
+GLuint ShaderManager::createProgram(const char * vtxSrc, const char * fragSrc, const char* definecode)
 {
 	GLint linked = GL_FALSE;
-	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vtxSrc);
+	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vtxSrc, definecode);
 	if (!vertexShader)
 	{
 		return 0;
 	}
-	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc);
+	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc, definecode);
 	if (!fragmentShader)
 	{
 		return 0;
@@ -45,11 +45,11 @@ GLuint ShaderManager::createProgram(const char * vtxSrc, const char * fragSrc)
 	return program;
 }
 
-GLuint ShaderManager::createShader(GLenum shaderType, const char * src)
+GLuint ShaderManager::createShader(GLenum shaderType, const char * src, const char* definecode)
 {
 	string fullPath(Utils::getResourcesFolder() + src);
 
-	LOGI("Load shader: %s\n", fullPath.c_str());
+	LOGI("Load shader: %s %s\n", fullPath.c_str(), (definecode != NULL ? definecode : " "));
 	FILE * pf = fopen(fullPath.c_str(), "rb");
 	if (pf == NULL)
 	{
@@ -65,12 +65,13 @@ GLuint ShaderManager::createShader(GLenum shaderType, const char * src)
 	shaderSrc[size] = 0;
 	fclose(pf);
 
-	string final_shaderSrc;
-#ifdef ANDROID
-	final_shaderSrc = "#version 300 es\n";	//300 es
-#else
-	final_shaderSrc = "#version 330\n";
-#endif
+	string final_shaderSrc =  Utils::getDefineVersionShader();
+	if (definecode != NULL)
+	{
+		final_shaderSrc += '\n';
+		final_shaderSrc += definecode;
+		final_shaderSrc += '\n';
+	}
 	final_shaderSrc += string(shaderSrc);
 	GLuint shader = glCreateShader(shaderType);
 	if (shader == 0) {
@@ -186,10 +187,10 @@ Shaderv2 * ShaderManager::GetCurrentShader()
 	return Shader_list[Current_shader];
 }
 
-bool ShaderManager::Init(const char * shadername, const char * fileVertexShader, const char * fileFragmentShader)
+bool ShaderManager::Init(const char * shadername, const char * fileVertexShader, const char * fileFragmentShader, const char* definecode)
 {
 	LOGI("\n");
-	GLuint program = createProgram(fileVertexShader, fileFragmentShader);
+	GLuint program = createProgram(fileVertexShader, fileFragmentShader, definecode);
 	if (program == 0)
 		return false;
 	Shaderv2 *shader = new Shaderv2();

@@ -86,7 +86,8 @@ void SkyBox::Draw(Camera *camera)
 	glDepthMask(GL_TRUE);
 	glEnable(GL_DEPTH_TEST);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	ShaderManager::getInstance()->setUseProgram(currentid);
+	if (currentid != -1)
+		ShaderManager::getInstance()->setUseProgram(currentid);
 }
 
 void SkyBox::setScale(float scale)

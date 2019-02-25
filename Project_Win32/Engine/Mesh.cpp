@@ -86,10 +86,10 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 	bool hasmaterial_texture_diffuse1 = false;
 	ShaderManager::getInstance()->setBool("useNormalMap", false);
 	ShaderManager::getInstance()->setBool("enableAlpha", isEnableAlpha);
-	if (hasBone)
+	/*if (hasBone)
 		ShaderManager::getInstance()->setBool("useAnim", true);
 	else
-		ShaderManager::getInstance()->setBool("useAnim", false);
+		ShaderManager::getInstance()->setBool("useAnim", false);*/
 	unsigned int i = 0;
 	for (; i < textures.size(); i++)
 	{
@@ -164,7 +164,7 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 		ShaderManager::getInstance()->setBool("useTexture", false);
 		ShaderManager::getInstance()->setVec3("material_color_diffuse", customColor);
 	}
-	CheckGLError("Draw mesh 1 ");
+
 	if (isDrawPolygon)
 		QHEngine::DrawElements(GL_LINE_LOOP, indices.size(), GL_UNSIGNED_INT, (void*)0);
 	else

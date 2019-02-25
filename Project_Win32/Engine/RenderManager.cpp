@@ -16,20 +16,22 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 {
 	mAppcontext = appcontext;
 
+	ShaderManager::getInstance()->Init("model_skinning", "Shaders/model_loading.vs", "Shaders/model_loading.fs", "#define SKINNED");
 	ShaderManager::getInstance()->Init("model", "Shaders/model_loading.vs", "Shaders/model_loading.fs");
 	ShaderManager::getInstance()->Init("debugShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
+	ShaderManager::getInstance()->Init("depthShader_skinning", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs", "#define SKINNED");
 	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	ShaderManager::getInstance()->Init("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
 	ShaderManager::getInstance()->Init("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs");
-	ShaderManager::getInstance()->Init("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/Blur_Horizontal.fs");
-	ShaderManager::getInstance()->Init("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/Blur_Vertical.fs");
+	ShaderManager::getInstance()->Init("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define HORIZONTAL");
+	ShaderManager::getInstance()->Init("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define VERTICAL");
 	ShaderManager::getInstance()->Init("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
 
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
 
-	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
-	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
 	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
 
@@ -85,21 +87,16 @@ GLuint RenderManager::RenderDepthMap()
 	if (!m_isEnableShadowMap)
 		return -1;
 
-	Camera *mCamera = Camera::getInstance();
-	mShadowRT.Enable("depthShader");
-	ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
-	ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
-	ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
+	mShadowRT.Enable();
 
 	ModelManager::getInstance()->Render(RenderMode_Depth);
+
 	return mShadowRT.Disable();
 }
 
 GLuint RenderManager::RenderSence()
 {
 	Camera *mCamera = Camera::getInstance();
-
-	ShaderManager::getInstance()->setUseProgram("model");
 
 	if (m_isEnableBloom)
 		mSenceRT.Enable();

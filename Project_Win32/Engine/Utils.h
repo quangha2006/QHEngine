@@ -18,4 +18,5 @@ namespace Utils
 		return std::move(str);
 	}
 	std::string getResourcesFolder();
+	std::string getDefineVersionShader();
 }

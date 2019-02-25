@@ -58,6 +58,7 @@ void Basic::Init()
 	//soundIntro.Play();
 	axis.Init(mCamera);
 	m_initialized = true;
+	//RenderManager::getInstance()->SetEnableShadowMap(false);
 }
 
 void Basic::Update()

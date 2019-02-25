@@ -38,8 +38,8 @@ private:
 	vector<Shaderv2*> Shader_list;
 	GLuint Current_program;
 	GLuint Current_shader;
-	GLuint createProgram(const char* vtxSrc, const char* fragSrc);
-	GLuint createShader(GLenum shaderType, const char* src);
+	GLuint createProgram(const char* vtxSrc, const char* fragSrc, const char* definecode);
+	GLuint createShader(GLenum shaderType, const char* src, const char* definecode);
 public:
 	static ShaderManager *getInstance();
 	bool setUseProgram(const char *shadername);
@@ -48,7 +48,7 @@ public:
 	GLuint GetCurrentProgram();
 	Shaderv2 *GetShader(const char *shadername);
 	Shaderv2 *GetCurrentShader();
-	bool Init(const char* shadername,const char* fileVertexShader, const char* fileFragmentShader);
+	bool Init(const char* shadername,const char* fileVertexShader, const char* fileFragmentShader, const char* definecode = NULL);
 	void setBool(const std::string &name, bool value);
 	void setInt(const std::string &name, int value);
 	void setFloat(const std::string &name, float value[], int size);

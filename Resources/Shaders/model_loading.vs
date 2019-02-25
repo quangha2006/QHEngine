@@ -21,14 +21,13 @@ uniform mat4 world_inverse;
 uniform mat4 WorldViewProjectionMatrix;
 uniform mat4 lightSpaceMatrix; //shadow
 uniform mat4 gBones[64];
-uniform bool useAnim; 
 void main()
 {
 	highp vec4 PosL = vec4(aPos, 1.0);
 	vec4 NormalL = vec4(aNormal, 0.0);
 	temp = sWeights;
-	if (useAnim == true)
-	{
+
+	#ifdef SKINNED
 		int index = int(sIDs[0]);
 		mat4 BoneTransform	= gBones[index] * sWeights[0];
 		index = int(sIDs[1]);
@@ -41,7 +40,7 @@ void main()
 		PosL    = BoneTransform * vec4(aPos, 1.0);
 
 		NormalL = BoneTransform * vec4(aNormal, 0.0);
-	}
+	#endif
 
     gl_Position = WorldViewProjectionMatrix * PosL;
 

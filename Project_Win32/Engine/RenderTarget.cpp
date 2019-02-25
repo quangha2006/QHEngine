@@ -194,8 +194,8 @@ void RenderTarget::Enable(const char* shadername)
 
 	m_isEnable = true;
 
-	if (shadername != NULL)
-		ShaderManager::getInstance()->setUseProgram(shadername);
+	//if (shadername != NULL)
+	//	ShaderManager::getInstance()->setUseProgram(shadername);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);

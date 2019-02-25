@@ -8,16 +8,13 @@ in vec3 aTangent;
 in vec3 aBitangent;
 
 out vec2 TexCoords;
-uniform mat4 lightSpaceMatrix;
-uniform mat4 world;
+uniform mat4 WorldViewLightSpaceMatrix;
 uniform mat4 gBones[64];
-uniform bool useAnim;
 
 void main()
 {
-	highp vec4 PosL = vec4(0.0, 0.0, 0.0, 1.0);
-	if (useAnim == true)
-	{
+	highp vec4 PosL = vec4(aPos, 1.0);
+	#ifdef SKINNED
 		int index = int(sIDs[0]);
 		mat4 BoneTransform	= gBones[index] * sWeights[0];
 		index = int(sIDs[1]);
@@ -28,11 +25,9 @@ void main()
 		BoneTransform += gBones[index] * sWeights[3];
 
 		PosL   = BoneTransform * vec4(aPos, 1.0);
-	}
-	else
-		PosL   = vec4(aPos, 1.0);
+	#endif
 	
-    gl_Position =  lightSpaceMatrix * world * PosL;
+    gl_Position =  WorldViewLightSpaceMatrix * PosL;
 
 	TexCoords = aTexCoords;
 }
