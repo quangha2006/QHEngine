@@ -223,11 +223,5 @@
     <None Include="..\..\Resources\Shaders\brightness.fs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\Resources\Shaders\Blur_Horizontal.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\Resources\Shaders\Blur_Vertical.fs">
-      <Filter>Resource Files</Filter>
-    </None>
   </ItemGroup>
 </Project>
