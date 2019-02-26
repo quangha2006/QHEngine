@@ -60,6 +60,7 @@ Model::Model()
 	mSrcPath = "";
 	mIsDrawDepthMap = true;
 	mCamera = Camera::getInstance();
+	m_meshdraw = -1;
 	ModelManager::getInstance()->AddModel(this);
 }
 Model::~Model()
@@ -314,7 +315,6 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, float fixedModel)
 vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type)
 {
 	vector<Texture> textures;
-	bool abc = false;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
 		//abc = true;
@@ -343,21 +343,11 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 			textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
 		}
 	}
-	if (abc) // cheat
-	{   // if texture hasn't been loaded already, load it
-		aiString str("bountyhunter_body_masks.tga");
-		Texture texture;
-		texture.id = QHTexture::GenTextureId();
-		QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.id);
-		texture.type = type;
-		texture.path = str;
-		textures.push_back(texture);
-		textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
-	}
+
 	return textures;
 }
 
-void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
+void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
 {
 	if (!m_initialized || !mCamera) return;
 	if (mode == RenderMode_Depth && mIsDrawDepthMap == false) return;
@@ -437,12 +427,12 @@ void Model::Render(RenderMode mode, int drawmesh, bool isTranslate, glm::vec3 tr
 			glUniformMatrix4fv(m_boneLocation, Transforms.size(), GL_TRUE, glm::value_ptr(Transforms[0]));
 	}
 
-	if (drawmesh > -1)
+	if (m_meshdraw > -1)
 	{
-		if (drawmesh < meshes.size())
+		if (m_meshdraw < meshes.size())
 		{
 			ShaderManager::getInstance()->setBool("uselighting", uselighting);
-			meshes[drawmesh].Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
+			meshes[m_meshdraw].Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}
 	else
@@ -570,6 +560,11 @@ void Model::SetNeedRotate(bool isNeedRotate)
 void Model::SetCamera(Camera * camera)
 {
 	mCamera = camera;
+}
+
+void Model::SetDrawMesh(int mesh)
+{
+	m_meshdraw = mesh;
 }
 
 void Model::SetId(int id)

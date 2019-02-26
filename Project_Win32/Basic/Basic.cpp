@@ -34,13 +34,13 @@ void Basic::Init()
 
 	//mSpider.Init("aboy/model.dae", true, true);
 	//mSpider.Init("Simple.dae", true);
-	mSpider.Init("boblampclean/boblampclean.md5mesh", true);
+	mSpider.Init("bountyhunter/bountyhunter/export_from_max/test2.FBX", true);
 	//mSpider.Init("Frog/source.dae", true);
-	mSpider.SetScale(glm::vec3(0.2f));
+	mSpider.SetScale(glm::vec3(0.02f));
 	//mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	mSpider.SetNeedRotate(true);
-	
+	mSpider.SetDrawMesh(0);
 	//saberclass.Init("test/untitled.obj", false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", false, 0.1f);

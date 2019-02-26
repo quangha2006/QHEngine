@@ -68,7 +68,7 @@ private:
 	glm::mat4 world;
 
 	int m_Id;
-
+	int m_meshdraw;
 	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -81,7 +81,7 @@ private:
 
 public:
 	void Init(string const &path, bool FlipUVs = false, bool enableAlpha = true, float fixedModel = 1.0f);
-	void Render(RenderMode mode, int drawmesh = -1, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
+	void Render(RenderMode mode, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
 	void SetUseLighting(bool UseLighting);
 	void SetisUsePointLight(bool UsePointLight);
 	void DisableLightingForMesh(int numMesh);
@@ -97,6 +97,7 @@ public:
 	void SetDrawPolygon(bool isdrawpolygon);
 	void SetNeedRotate(bool isNeedRotate);
 	void SetCamera(Camera * camera);
+	void SetDrawMesh(int mesh);
 	void SetId(int id);
 	void Loading();
 	int GetId();
