@@ -1,7 +1,9 @@
 #include "SkyBox.h"
-#include <SOIL.h>
+//#include <SOIL.h>
 #include "Utils.h"
 #include <ShaderManager.h>
+#include <stb_image.h>
+#include "QHTexture.h"
 
 void SkyBox::Init(const char * texturepath)
 {
@@ -46,7 +48,7 @@ void SkyBox::Init(const char * texturepath)
 		"Back.jpg"
 	};
 
-	textureID = loadCubemap(texturepath, faces);
+	textureID = QHTexture::loadCubemap(texturepath, faces, true);
 
 	glGenBuffers(1, &VBO);
 
@@ -96,7 +98,7 @@ void SkyBox::setScale(float scale)
 	this->model = glm::scale(model, glm::vec3(scale));
 }
 
-unsigned int SkyBox::loadCubemap(const char * texturepath, std::vector<std::string> faces)
+GLuint SkyBox::loadCubemap(const char * texturepath, std::vector<std::string> faces)
 {
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
@@ -110,18 +112,18 @@ unsigned int SkyBox::loadCubemap(const char * texturepath, std::vector<std::stri
 		fullPath += '/';
 		fullPath += faces[i];
 
-		unsigned char *data = SOIL_load_image(fullPath.c_str(), &width, &height, &nrChannels, 0);
+		unsigned char *data = stbi_load(fullPath.c_str(), &width, &height, &nrChannels, 0);
 		if (data)
 		{
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
 				0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
 			);
-			SOIL_free_image_data(data);
+			stbi_image_free(data);
 		}
 		else
 		{
 			std::cout << "Cubemap texture failed to load at path: " << fullPath << std::endl;
-			SOIL_free_image_data(data);
+			stbi_image_free(data);
 		}
 	}
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

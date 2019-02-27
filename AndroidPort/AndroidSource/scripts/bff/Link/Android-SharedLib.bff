@@ -10,7 +10,7 @@
 					+ " -lBasic_CPP"
 					;+ " -lnative_app_glue"
               		+ " -lEngineLib"
-					+ " -lSOIL"
+					;+ " -lSOIL"
 					+ " -lAssimp"
 					+ " -lzlibstatic"
 					+ " -lopenddlparser"

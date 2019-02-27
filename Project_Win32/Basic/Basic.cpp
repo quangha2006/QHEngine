@@ -16,7 +16,7 @@ void Basic::Init()
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	mCamera->lightPos = glm::vec3(8.2f, 10.0f, 9.0f);
 
-	//mNanosuit.Init("Light Bulb/Light Bulb 1.dae", mCamera, false);
+	//mNanosuit.Init("nanosuit/nanosuit.obj", true, false);
 	//mNanosuit.SetScale(glm::vec3(0.4f));
 	//mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
 	//mNanosuit.SetDrawPolygon(true);
@@ -27,20 +27,20 @@ void Basic::Init()
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 
-	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
+	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
 	//mSpider.Init("aboy/model.dae", true, true);
 	//mSpider.Init("Simple.dae", true);
-	mSpider.Init("bountyhunter/bountyhunter/export_from_max/test2.FBX", true);
+	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
 	//mSpider.Init("Frog/source.dae", true);
-	mSpider.SetScale(glm::vec3(0.02f));
+	mSpider.SetScale(glm::vec3(0.2f));
 	//mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	mSpider.SetNeedRotate(true);
-	mSpider.SetDrawMesh(0);
+	//mSpider.SetDrawMesh(0);
 	//saberclass.Init("test/untitled.obj", false, 3.0f);
 	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", false, 0.1f);

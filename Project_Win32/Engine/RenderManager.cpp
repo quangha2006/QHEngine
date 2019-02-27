@@ -26,7 +26,7 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	ShaderManager::getInstance()->Init("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define HORIZONTAL");
 	ShaderManager::getInstance()->Init("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define VERTICAL");
 	ShaderManager::getInstance()->Init("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
-
+	//glEnable(GL_FRAMEBUFFER_SRGB);
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
 
 	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
@@ -98,8 +98,7 @@ GLuint RenderManager::RenderSence()
 {
 	Camera *mCamera = Camera::getInstance();
 
-	if (m_isEnableBloom)
-		mSenceRT.Enable();
+	mSenceRT.Enable();
 
 	mSkybox->Draw(mCamera);
 
@@ -123,8 +122,6 @@ GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 
 void RenderManager::RenderFinal()
 {
-	if (!m_isEnableBloom)
-		return;
 
 	ShaderManager::getInstance()->setUseProgram("bloom_Final");
 	//m_default_shader.use();
@@ -137,10 +134,10 @@ void RenderManager::RenderFinal()
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, mBloom_bright);
 
-	ShaderManager::getInstance()->setInt("bloom", 1);
 	ShaderManager::getInstance()->setInt("scene", 0);
 	ShaderManager::getInstance()->setInt("bloomBlur", 1);
-
+	ShaderManager::getInstance()->setInt("bloom", m_isEnableBloom);
+	ShaderManager::getInstance()->setFloat("exposure", 1.0f);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 	CheckGLError("RenderFinal");

@@ -203,17 +203,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	// Disable byte-alignment restriction
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	// Generate texture
-	glTexImage2D(
-		GL_TEXTURE_2D,
-		0,
-		GL_LUMINANCE,
-		512,
-		512,
-		0,
-		GL_LUMINANCE,
-		GL_UNSIGNED_BYTE,
-		0
-	);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, 512, 512, 0, GL_RED, GL_UNSIGNED_BYTE, 0);
 	// Set texture options
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -240,7 +230,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 			posX = 2;
 			posY += (maxHeight + 2);
 		}
-		glTexSubImage2D(GL_TEXTURE_2D, 0, posX, posY, face->glyph->bitmap.width, face->glyph->bitmap.rows, GL_LUMINANCE, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, posX, posY, face->glyph->bitmap.width, face->glyph->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 		// Store Info.
 		GLuint Advance;
 		Advance = face->glyph->advance.x >> 6;     // Advance

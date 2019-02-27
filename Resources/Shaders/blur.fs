@@ -17,22 +17,22 @@ void main()
 	
     vec3 result = texture(image, TexCoords).rgb * weight[0];
 
-    #ifdef HORIZONTAL
-		tex_offset.x = 1.0 / float(texsize.x);
-        for(int i = 1; i < 5; ++i)
-        {
-           result += texture(image, TexCoords + vec2(tex_offset.x * float(i), 0.0)).rgb * weight[i];
-           result += texture(image, TexCoords - vec2(tex_offset.x * float(i), 0.0)).rgb * weight[i];
-        }
-	#endif
+#ifdef HORIZONTAL
+	tex_offset.x = 1.0 / float(texsize.x);
+	for(int i = 1; i < 5; ++i)
+    {
+        result += texture(image, TexCoords + vec2(tex_offset.x * float(i), 0.0)).rgb * weight[i];
+        result += texture(image, TexCoords - vec2(tex_offset.x * float(i), 0.0)).rgb * weight[i];
+	}
+#endif
 
-    #ifdef VERTICAL
-		tex_offset.y = 1.0 / float(texsize.y);
-        for(int i = 1; i < 5; ++i)
-        {
-            result += texture(image, TexCoords + vec2(0.0, tex_offset.y * float(i))).rgb * weight[i];
-            result += texture(image, TexCoords - vec2(0.0, tex_offset.y * float(i))).rgb * weight[i];
-        }
-	#endif
+#ifdef VERTICAL
+	tex_offset.y = 1.0 / float(texsize.y);
+	for(int i = 1; i < 5; ++i)
+	{
+        result += texture(image, TexCoords + vec2(0.0, tex_offset.y * float(i))).rgb * weight[i];
+        result += texture(image, TexCoords - vec2(0.0, tex_offset.y * float(i))).rgb * weight[i];
+	}
+#endif
     FragColor = vec4(result, 1.0);
 }

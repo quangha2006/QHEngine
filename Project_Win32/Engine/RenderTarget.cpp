@@ -226,9 +226,6 @@ GLuint RenderTarget::Disable()
 	glDisable(GL_DEPTH_TEST);
 	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 
-	if (isEnableDebug)
-		Debugging::getInstance()->DrawTex(m_TexId[0], "debugShader");
-
 	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)
 		return screenTexture;
 	else
@@ -240,9 +237,12 @@ int RenderTarget::GetTextureId(int index)
 	return m_TexId[index];
 }
 
-void RenderTarget::EnableDebug(bool isEnable)
+void RenderTarget::RenderDebug()
 {
-	isEnableDebug = isEnable;
+	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)
+		Debugging::getInstance()->DrawTex(screenTexture, "debugShader");
+	else
+		Debugging::getInstance()->DrawTex(m_TexId[0], "debugShader");
 }
 
 void RenderTarget::Render(bool useDefaultShader)
@@ -370,7 +370,6 @@ void RenderTarget::InitquadVAO()
 
 RenderTarget::RenderTarget()
 {
-	isEnableDebug = false;
 	m_initialized = false;
 	quadVAO = 0;
 	m_isEnable = false;

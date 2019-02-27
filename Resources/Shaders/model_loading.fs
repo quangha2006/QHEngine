@@ -163,7 +163,10 @@ void main()
 		// Total lighting + not shadow
 		lighting = ambient + (diffuse + specular) + color_pick;
 	}
-
+	if (useTexture == false)
+	{
+		lighting = pow(lighting, vec3(2.2));
+	}
 	if (enableAlpha == true)
 		FragColor = vec4(lighting, color.a);
 	else

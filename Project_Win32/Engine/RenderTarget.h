@@ -20,7 +20,6 @@ private:
 	GLuint m_texBufferWidth, m_texBufferHeight;
 	GLuint m_TexId[2], screenTexture;
 
-	bool isEnableDebug;
 	bool m_initialized;
 	bool m_isEnable;
 	RenderTargetType m_type;
@@ -34,7 +33,7 @@ public:
 	void Enable(const char* shadername = NULL);
 	GLuint Disable();
 	int GetTextureId(int index);
-	void EnableDebug(bool isEnable);
+	void RenderDebug();
 	void Render(bool useDefaultShader = false);
 	GLuint MakeBloom(GLuint BriTexture);
 	RenderTarget();
