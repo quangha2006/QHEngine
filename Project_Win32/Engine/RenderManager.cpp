@@ -26,7 +26,7 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	ShaderManager::getInstance()->Init("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define HORIZONTAL");
 	ShaderManager::getInstance()->Init("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define VERTICAL");
 	ShaderManager::getInstance()->Init("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
-	//glEnable(GL_FRAMEBUFFER_SRGB);
+
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
 
 	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
@@ -80,6 +80,11 @@ void RenderManager::SwitchBloomMode()
 void RenderManager::SwitchShadowMapMode()
 {
 	m_isEnableShadowMap = !m_isEnableShadowMap;
+}
+
+bool RenderManager::isEnablemGammaCorrection()
+{
+	return mGammaCorrection;
 }
 
 GLuint RenderManager::RenderDepthMap()
@@ -138,6 +143,8 @@ void RenderManager::RenderFinal()
 	ShaderManager::getInstance()->setInt("bloomBlur", 1);
 	ShaderManager::getInstance()->setInt("bloom", m_isEnableBloom);
 	ShaderManager::getInstance()->setFloat("exposure", 1.0f);
+	ShaderManager::getInstance()->setInt("GammaCorrection", mGammaCorrection);
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 	CheckGLError("RenderFinal");
@@ -208,6 +215,7 @@ RenderManager::RenderManager()
 	quadVAO = -1;
 	m_isEnableShadowMap = true;
 	m_isEnableBloom = true;
+	mGammaCorrection = false;
 }
 
 

@@ -48,7 +48,7 @@ void SkyBox::Init(const char * texturepath)
 		"Back.jpg"
 	};
 
-	textureID = QHTexture::loadCubemap(texturepath, faces, true);
+	textureID = QHTexture::loadCubemap(texturepath, faces, false);
 
 	glGenBuffers(1, &VBO);
 

@@ -18,6 +18,7 @@ private:
 	Shader m_default_shader;
 	GLuint quadVAO, quadVBO;
 	bool m_isEnableShadowMap, m_isEnableBloom;
+	bool mGammaCorrection;
 	GLuint RenderDepthMap();
 	GLuint RenderSence();
 	GLuint PostProcessBloom(GLuint textsrc);
@@ -34,6 +35,7 @@ public:
 	void SetEnableBloom(bool is_enable);
 	void SwitchBloomMode();
 	void SwitchShadowMapMode();
+	bool isEnablemGammaCorrection();
 	GLuint GetDepthMapId();
 	RenderManager();
 	~RenderManager();

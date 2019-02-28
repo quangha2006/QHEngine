@@ -53,17 +53,20 @@ namespace QHTexture
 	//	LOGI("Load texture: %3dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
 	//	return true;
 	//}
-	unsigned int GenTextureId()
+	GLuint GenTextureId()
 	{
 		unsigned int textureID = 0;
 		glGenTextures(1, &textureID);
 		CheckGLError("GenTextureId");
 		return textureID;
 	}
-	bool TextureFromFile(const char * path, const std::string & directory, unsigned int textureID, bool gammaCorrection)
+	GLuint TextureFromFile(const char * path, const std::string & directory, GLuint textureID, bool gammaCorrection)
 	{
 		std::string fullpath = directory + '/' + std::string(path);
 		uint64_t time_begin = Timer::getMillisecond();
+		GLuint texid = textureID;
+		if (texid == -1)
+			texid = GenTextureId();
 
 		int width, height, nrComponents;
 		unsigned char *data = stbi_load(fullpath.c_str(), &width, &height, &nrComponents, 0);
@@ -83,13 +86,13 @@ namespace QHTexture
 			}
 			else if (nrComponents == 4)
 			{
-				//internalFormat = gammaCorrection ? 0x8C42 : GL_RGBA;
-				internalFormat = gammaCorrection ? GL_SRGB_ALPHA : GL_RGBA;
+				internalFormat = gammaCorrection ? 0x8C42 : GL_RGBA;
+				//internalFormat = gammaCorrection ? GL_SRGB_ALPHA : GL_RGBA;
 				//internalFormat = GL_RGBA;//gammaCorrection ? GL_SRGB_ALPHA : GL_RGBA;
 				dataFormat = GL_RGBA;
 			}
 
-			glBindTexture(GL_TEXTURE_2D, textureID);
+			glBindTexture(GL_TEXTURE_2D, texid);
 			glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -104,11 +107,12 @@ namespace QHTexture
 		{
 			LOGE("Texture failed to load at path: %s", path);
 			stbi_image_free(data);
+			return -1;
 		}
 
 		uint64_t time_end = Timer::getMillisecond();
 		LOGI("Load texture: %3dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
-		return true;
+		return texid;
 	}
 	GLuint loadCubemap(const char * texturepath, std::vector<std::string> faces, bool gammaCorrection)
 	{
@@ -142,8 +146,8 @@ namespace QHTexture
 				}
 				else if (nrComponents == 4)
 				{
-					internalFormat = gammaCorrection ? GL_SRGB_ALPHA : GL_RGBA;
-					//internalFormat = gammaCorrection ? 0x8C42 : GL_RGBA;
+					//internalFormat = gammaCorrection ? GL_SRGB_ALPHA : GL_RGBA;
+					internalFormat = gammaCorrection ? 0x8C42 : GL_RGBA;
 					//internalFormat = GL_RGBA;
 					dataFormat = GL_RGBA;
 				}

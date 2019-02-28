@@ -27,7 +27,7 @@ void Basic::Init()
 	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 
-	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
+	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
@@ -35,7 +35,7 @@ void Basic::Init()
 	//mSpider.Init("aboy/model.dae", true, true);
 	//mSpider.Init("Simple.dae", true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
-	//mSpider.Init("Frog/source.dae", true);
+	mSpider.Init("Low-Poly Spider/Spider.fbx", true);
 	mSpider.SetScale(glm::vec3(0.2f));
 	//mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
@@ -46,12 +46,12 @@ void Basic::Init()
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", false, 0.1f);
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
-	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", false);
+	mMonster_1.Init("boblampclean/boblampclean.md5mesh", true);
 	//mMonster_1.Init("/astroBoy/AnimSimple.dae", true);
 	//mMonster_1.Init("aboy/model.dae", true);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	mMonster_1.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f));
-	//mMonster_1.SetScale(glm::vec3(5.02f));
+	mMonster_1.SetScale(glm::vec3(0.2f));
 	mMonster_1.SetNeedRotate(true);
 
 	//soundIntro.Init("Sound/chuabaogio.wav");
@@ -63,13 +63,12 @@ void Basic::Init()
 
 void Basic::Update()
 {
+	
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
-	width = 900;
+	width = 960;
 	height = 540;
-	//width = 1920;
-	//height = 1024;
 }
 void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {

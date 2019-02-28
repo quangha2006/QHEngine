@@ -61,6 +61,7 @@ Model::Model()
 	mIsDrawDepthMap = true;
 	mCamera = Camera::getInstance();
 	m_meshdraw = -1;
+	mGammaCorrection = false;
 	ModelManager::getInstance()->AddModel(this);
 }
 Model::~Model()
@@ -335,8 +336,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		if (!skip)
 		{   // if texture hasn't been loaded already, load it
 			Texture texture;
-			texture.id = QHTexture::GenTextureId();
-			QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.id, true);
+			texture.id = QHTexture::TextureFromFile(str.C_Str(), this->directory, -1, mGammaCorrection);
 			texture.type = type;
 			texture.path = str;
 			textures.push_back(texture);
@@ -406,6 +406,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 			ShaderManager::getInstance()->setVec3("color_pick", 0.0f, 0.0f, 0.0f);
 			ShaderManager::getInstance()->setBool("usenormalmap", false);
 			ShaderManager::getInstance()->setBool("usepointlight", this->isUsePointLight);
+			ShaderManager::getInstance()->setBool("GammaCorrection", mGammaCorrection);
 
 			model_inverse = glm::inverse(tmp_model);
 			model_inverse = glm::transpose(model_inverse);
@@ -575,6 +576,7 @@ void Model::SetId(int id)
 void Model::Loading()
 {
 	if (mSrcPath == "") return;
+
 	uint64_t time_ms_begin = Timer::getMillisecond();
 	string path_modif = Utils::getResourcesFolder() + mSrcPath;
 

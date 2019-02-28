@@ -37,10 +37,14 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 
 	mCamera = Camera::getInstance();
 	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(width) / (float)(height), mCamera->View_near, mCamera->View_far);
-	FrameRate::getInstance();
+	FrameRate::getInstance(); //Init
+
 	//FrameRate::getInstance()->setLimitFPS(30);
 
-	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", width, height);
+	int windowsWidth, windowsHeight;
+	GetRequireScreenSize(windowsWidth, windowsHeight);
+
+	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", windowsWidth, windowsHeight);
 	RenderManager::getInstance()->Init(mContext, mCamera);
 	RenderManager::getInstance()->SetSkyBox(&mSkyBox);
 	ModelManager::getInstance()->Init();
@@ -120,7 +124,6 @@ void AppBase::Resize(int width, int height)
 	glViewport(0, 0, width, height);
 	mContext->SetWindowSize(width, height);
 	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(width) / (float)(height), mCamera->View_near, mCamera->View_far);
-	TextRendering::getInstance()->UpdateScreenSize(width, height);
 }
 void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 {

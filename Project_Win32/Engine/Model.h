@@ -61,6 +61,7 @@ private:
 	float mFixedModel;
 	float timeStampAnim;
 	bool mIsDrawDepthMap;
+	bool mGammaCorrection;
 	glm::vec3 scale;
 	glm::vec3 translate;
 	glm::vec3 rotate;

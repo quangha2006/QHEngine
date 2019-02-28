@@ -6,6 +6,7 @@ in vec2 TexCoords;
 uniform sampler2D scene;
 uniform sampler2D bloomBlur;
 uniform bool bloom;
+uniform bool GammaCorrection;
 uniform float exposure;
 
 void main()
@@ -13,17 +14,19 @@ void main()
     const float gamma = 2.2;
     vec3 hdrColor = texture(scene, TexCoords).rgb;      
     vec3 bloomColor;
-    if(bloom)
+	vec3 result;
+    if(bloom == true)
 	{
 		bloomColor = texture(bloomBlur, TexCoords).rgb;
-		hdrColor += bloomColor;
+		result = hdrColor + bloomColor;
 	}
-        
-    // tone mapping
-    vec3 result = vec3(1.0) - exp(-hdrColor * exposure);
-
-    // also gamma correct while we're at it       
-    result = pow(result, vec3(1.0 / gamma));
-
+    if(GammaCorrection == true)    
+    {
+	// tone mapping
+		//result = vec3(1.0) - exp(-hdrColor * exposure);
+	
+	// also gamma correct while we're at it       
+		result = pow(result, vec3(1.0 / gamma));
+	}
     FragColor = vec4(result, 1.0);
 }

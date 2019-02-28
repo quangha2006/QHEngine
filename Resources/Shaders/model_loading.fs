@@ -39,6 +39,7 @@ uniform vec3 color_pick;
 uniform bool uselighting;
 uniform bool usepointlight;
 uniform bool useShadowMap;
+uniform bool GammaCorrection;
 
 layout (location = 0) out vec4 FragColor;
 
@@ -163,7 +164,7 @@ void main()
 		// Total lighting + not shadow
 		lighting = ambient + (diffuse + specular) + color_pick;
 	}
-	if (useTexture == false)
+	if (useTexture == false && GammaCorrection == true)
 	{
 		lighting = pow(lighting, vec3(2.2));
 	}

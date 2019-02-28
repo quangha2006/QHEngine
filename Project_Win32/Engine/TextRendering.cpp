@@ -127,11 +127,6 @@ TextRendering * TextRendering::getInstance()
 
 void TextRendering::UpdateScreenSize(int w, int h)
 {
-//#if defined(ANDROID)
-//	float scale = 900.0f / w;
-//	if (w > 900) w = 900;
-//	h = h * scale;
-//#endif
 	projection = glm::ortho(0.0f, static_cast<GLfloat>(w), static_cast<GLfloat>(h), 0.0f);
 	screen_width = w;
 	screen_height = h;
@@ -145,16 +140,6 @@ int TextRendering::AddQHText(QHText *textneedrender)
 
 void TextRendering::RemoveQHText(int id)
 {
-	//if (id >= 0 && id < m_ListQHText.size())
-	//	m_ListQHText.erase(m_ListQHText.begin() + id);
-	//// Update id for older text
-	//if (id < m_ListQHText.size())
-	//{
-	//	for (int i = id; i < m_ListQHText.size(); i++)
-	//	{
-	//		m_ListQHText[i]->UpdateId(i);
-	//	}
-	//}
 	for (int i = 0; i < m_ListQHText.size(); i++)
 	{
 		if (m_ListQHText[i]->GetId() == id)
@@ -173,7 +158,9 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 		color_Attribute = glGetAttribLocation(program, "textColor");
 		alpha_Attribute = glGetAttribLocation(program, "alpha");
 	}
+
 	UpdateScreenSize(width, height);
+
 	m_Maxchar = maxchar; // 6 vertexs for each character
 	// FreeType
 	FT_Library ft;
@@ -412,8 +399,8 @@ void TextRendering::Draw()
 TextRendering::TextRendering()
 {
 	program = 0;
-	screen_width = 0;
-	screen_height = 0;
+	screen_width = 960;
+	screen_height = 540;
 	m_initialized = false;
 	currentLastId = 0;
 }
