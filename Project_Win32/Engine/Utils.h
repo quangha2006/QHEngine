@@ -2,7 +2,9 @@
 #include "stdafx.h"
 #include <iostream>
 #include <cassert>
-
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Utils
 {
@@ -19,4 +21,5 @@ namespace Utils
 	}
 	std::string getResourcesFolder();
 	std::string getDefineVersionShader();
+	void PrintMat4(glm::mat4 mat4);
 }

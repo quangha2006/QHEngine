@@ -10,9 +10,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd Spinnen_Bein_tex_2.jpg
+map_Kd Spinnen_Bein_tex_2.tga
 map_Bump  haar_detail_NRM.jpg
-map_Ks  Spinnen_Bein_tex_2.jpg
+map_Ks  Spinnen_Bein_tex_2.tga
 
 newmtl Spider_Eye
 Ns 1.285036
@@ -58,8 +58,8 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Bump  haar_detail_NRM.jpg
-map_Kd  Spinnen_Bein_tex_2.jpg
-map_Ks  Spinnen_Bein_tex_2.jpg
+map_Kd  Spinnen_Bein_tex_2.tga
+map_Ks  Spinnen_Bein_tex_2.tga
 
 newmtl Spider_teeth
 Ns 0.000000

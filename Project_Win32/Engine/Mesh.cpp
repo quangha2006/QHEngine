@@ -86,6 +86,7 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 	bool hasmaterial_texture_diffuse1 = false;
 	ShaderManager::getInstance()->setBool("useNormalMap", false);
 	ShaderManager::getInstance()->setBool("enableAlpha", isEnableAlpha);
+	ShaderManager::getInstance()->setMat4("Transform", mTransform);
 	/*if (hasBone)
 		ShaderManager::getInstance()->setBool("useAnim", true);
 	else
@@ -202,7 +203,7 @@ std::string Mesh::GetName()
 	return meshName;
 }
 
-Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname, bool hasnormals, bool hasbone)
+Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname, glm::mat4 nodeTransformation, bool hasnormals, bool hasbone)
 {
 	this->vertices = vertices;
 	this->indices = indices;
@@ -211,6 +212,7 @@ Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> text
 	this->meshName = meshname;
 	this->hasNormals = hasnormals;
 	this->hasBone = hasbone;
+	this->mTransform = nodeTransformation;
 	// now that we have all the required data, set the vertex buffers and its attribute pointers.
 	setupMesh();
 	isDrawPolygon = false;

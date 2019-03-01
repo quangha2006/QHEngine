@@ -19,6 +19,7 @@ out vec4 temp;
 uniform mat4 world;
 uniform mat4 world_inverse;
 uniform mat4 WorldViewProjectionMatrix;
+uniform mat4 Transform;
 uniform mat4 lightSpaceMatrix; //shadow
 uniform mat4 gBones[64];
 void main()
@@ -40,6 +41,9 @@ void main()
 		PosL    = BoneTransform * vec4(aPos, 1.0);
 
 		NormalL = BoneTransform * vec4(aNormal, 0.0);
+	#else
+		PosL    = Transform * vec4(aPos, 1.0);
+		NormalL = Transform * vec4(aNormal, 0.0);
 	#endif
 
     gl_Position = WorldViewProjectionMatrix * PosL;

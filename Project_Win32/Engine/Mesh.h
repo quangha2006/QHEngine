@@ -65,6 +65,7 @@ private:
 	bool hasNormals;
 	bool hasBone;
 	bool isDrawPolygon;
+	glm::mat4 mTransform;
 public:
 	/*  Mesh Data  */
 	vector<Vertex> vertices;
@@ -79,6 +80,6 @@ public:
 	void SetDrawPolygon(bool isdrawpolygon);
 	int GetNumVertex();
 	std::string GetName();
-	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material material, string meshname, bool hasnormals = false, bool hasbone = false);
+	Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material material, string meshname, glm::mat4 nodeTransformation, bool hasnormals = false, bool hasbone = false);
 	~Mesh();
 };

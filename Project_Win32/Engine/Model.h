@@ -28,8 +28,8 @@ class Model
 private:
 	vector<Mesh> meshes;
 	vector<Texture> textures_loaded;
-	void processNode(aiNode *node, const aiScene *scene, float fixedModel);
-	Mesh processMesh(aiMesh *mesh, const aiScene *scene, float fixedModel);
+	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
+	Mesh processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 nodeTransformation);
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);
 
 	/*==== Animation ====*/

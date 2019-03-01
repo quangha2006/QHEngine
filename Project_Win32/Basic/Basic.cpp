@@ -35,8 +35,8 @@ void Basic::Init()
 	//mSpider.Init("aboy/model.dae", true, true);
 	//mSpider.Init("Simple.dae", true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
-	mSpider.Init("Low-Poly Spider/Spider.fbx", true);
-	mSpider.SetScale(glm::vec3(0.2f));
+	mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
+	mSpider.SetScale(glm::vec3(0.05f));
 	//mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	mSpider.SetNeedRotate(true);
@@ -46,7 +46,7 @@ void Basic::Init()
 	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", false, 0.1f);
 	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
-	mMonster_1.Init("boblampclean/boblampclean.md5mesh", true);
+	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", true);
 	//mMonster_1.Init("/astroBoy/AnimSimple.dae", true);
 	//mMonster_1.Init("aboy/model.dae", true);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -73,7 +73,7 @@ void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
-	//LOGI("Key: %d = %c\n",key, c);
+	LOGI("Key: %d = %c\n",key, c);
 	if (action == 0) return;
 	switch (c)
 	{

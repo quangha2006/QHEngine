@@ -2,6 +2,7 @@
 #include "Timer.h"
 #include "TGA.h"
 #include "Utils.h"
+//#include <SOIL.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
@@ -70,7 +71,7 @@ namespace QHTexture
 
 		int width, height, nrComponents;
 		unsigned char *data = stbi_load(fullpath.c_str(), &width, &height, &nrComponents, 0);
-
+		//unsigned char *data = SOIL_load_image(fullpath.c_str(), &width, &height, &nrComponents, 0);
 		if (data)
 		{
 			GLenum internalFormat;
@@ -89,6 +90,7 @@ namespace QHTexture
 				internalFormat = gammaCorrection ? 0x8C42 : GL_RGBA;
 				//internalFormat = gammaCorrection ? GL_SRGB_ALPHA : GL_RGBA;
 				//internalFormat = GL_RGBA;//gammaCorrection ? GL_SRGB_ALPHA : GL_RGBA;
+				LOGI("nrComponents == 4");
 				dataFormat = GL_RGBA;
 			}
 
@@ -132,7 +134,7 @@ namespace QHTexture
 			GLenum dataFormat;
 
 			unsigned char *data = stbi_load(fullPath.c_str(), &width, &height, &nrComponents, 0);
-
+			//unsigned char *data = SOIL_load_image(fullPath.c_str(), &width, &height, &nrComponents, 0);
 			if (data)
 			{
 				if (nrComponents == 1)

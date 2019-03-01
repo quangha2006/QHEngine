@@ -27,7 +27,6 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 #endif
 
 	mContext->createWindow(width, height);
-
 	LOGI("\n=====================================================\n");
 	LOGI("GL Renderer  : %s\n", glGetString(GL_RENDERER));
 	LOGI("GL Version   : %s\n", glGetString(GL_VERSION));
@@ -41,7 +40,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 
 	//FrameRate::getInstance()->setLimitFPS(30);
 
-	int windowsWidth, windowsHeight;
+	int windowsWidth = 960, windowsHeight = 540;
 	GetRequireScreenSize(windowsWidth, windowsHeight);
 
 	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", windowsWidth, windowsHeight);
