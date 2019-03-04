@@ -1,134 +1,131 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btAlignedAllocator.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btAlignedAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btConvexHull.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btConvexHull.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btConvexHullComputer.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btConvexHullComputer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btGeometryUtil.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btGeometryUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btPolarDecomposition.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btPolarDecomposition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btQuickprof.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btQuickprof.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btSerializer.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btSerializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btSerializer64.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btSerializer64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btThreads.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btThreads.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btVector3.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\btVector3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\TaskScheduler\btTaskScheduler.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\TaskScheduler\btTaskScheduler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\TaskScheduler\btThreadSupportPosix.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\TaskScheduler\btThreadSupportPosix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\TaskScheduler\btThreadSupportWin32.cpp">
+    <ClCompile Include="..\..\..\src\LinearMath\TaskScheduler\btThreadSupportWin32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btAabbUtil2.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btAabbUtil2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btAlignedAllocator.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btAlignedAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btAlignedObjectArray.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btAlignedObjectArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btConvexHull.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btConvexHull.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btConvexHullComputer.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btConvexHullComputer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btDefaultMotionState.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btDefaultMotionState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btGeometryUtil.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btGeometryUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btGrahamScan2dConvexHull.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btGrahamScan2dConvexHull.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btHashMap.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btHashMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btIDebugDraw.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btIDebugDraw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btList.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btMatrix3x3.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btMatrix3x3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btMinMax.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btMinMax.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btMotionState.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btMotionState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btPolarDecomposition.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btPolarDecomposition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btPoolAllocator.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btPoolAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btQuadWord.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btQuadWord.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btQuaternion.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btQuaternion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btQuickprof.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btQuickprof.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btRandom.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btRandom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btScalar.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btScalar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btSerializer.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btStackAlloc.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btStackAlloc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btThreads.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btThreads.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btTransform.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btTransform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btTransformUtil.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btTransformUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btVector3.h">
+    <ClInclude Include="..\..\..\src\LinearMath\btVector3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\TaskScheduler\btThreadSupportInterface.h">
+    <ClInclude Include="..\..\..\src\LinearMath\TaskScheduler\btThreadSupportInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

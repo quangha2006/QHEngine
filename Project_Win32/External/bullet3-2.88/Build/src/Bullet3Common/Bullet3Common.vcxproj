@@ -98,7 +98,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <StringPooling>true</StringPooling>
       <WarningLevel>Level3</WarningLevel>
@@ -124,61 +124,31 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/Bullet3Common/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-F:\Android\CMake\bin\cmake.exe -SC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88 -BC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build --check-stamp-file C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/src/Bullet3Common/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/Bullet3Common/CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3Common\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/Bullet3Common/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-F:\Android\CMake\bin\cmake.exe -SC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88 -BC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build --check-stamp-file C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/src/Bullet3Common/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/Bullet3Common/CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3Common\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3AlignedAllocator.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3Vector3.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3Logging.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3AlignedAllocator.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3AlignedObjectArray.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3CommandLineArgs.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3HashMap.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3Logging.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3Matrix3x3.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3MinMax.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3PoolAllocator.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3QuadWord.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3Quaternion.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3Random.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3Scalar.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3StackAlloc.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3Transform.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3TransformUtil.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\b3Vector3.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\shared\b3Float4.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\shared\b3Int2.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\shared\b3Int4.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\shared\b3Mat3x3.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\shared\b3PlatformDefinitions.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\Bullet3Common\shared\b3Quat.h" />
+    <ClCompile Include="..\..\..\src\Bullet3Common\b3AlignedAllocator.cpp" />
+    <ClCompile Include="..\..\..\src\Bullet3Common\b3Vector3.cpp" />
+    <ClCompile Include="..\..\..\src\Bullet3Common\b3Logging.cpp" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3AlignedAllocator.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3AlignedObjectArray.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3CommandLineArgs.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3HashMap.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3Logging.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3Matrix3x3.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3MinMax.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3PoolAllocator.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3QuadWord.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3Quaternion.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3Random.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3Scalar.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3StackAlloc.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3Transform.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3TransformUtil.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\b3Vector3.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\shared\b3Float4.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\shared\b3Int2.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\shared\b3Int4.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\shared\b3Mat3x3.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\shared\b3PlatformDefinitions.h" />
+    <ClInclude Include="..\..\..\src\Bullet3Common\shared\b3Quat.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\ZERO_CHECK.vcxproj">

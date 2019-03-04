@@ -98,7 +98,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <StringPooling>true</StringPooling>
       <WarningLevel>Level3</WarningLevel>
@@ -124,135 +124,105 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/BulletDynamics/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-F:\Android\CMake\bin\cmake.exe -SC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88 -BC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build --check-stamp-file C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/src/BulletDynamics/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/BulletDynamics/CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletDynamics\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/BulletDynamics/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-F:\Android\CMake\bin\cmake.exe -SC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88 -BC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build --check-stamp-file C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/src/BulletDynamics/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/BulletDynamics/CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletDynamics\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Character\btKinematicCharacterController.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btConeTwistConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btContactConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btFixedConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btGearConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpring2Constraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btHinge2Constraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btHingeConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolverMt.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btBatchedConstraints.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btNNCGConstraintSolver.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSliderConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btTypedConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btUniversalConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorldMt.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btSimulationIslandManagerMt.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btRigidBody.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btSimpleDynamicsWorld.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Vehicle\btRaycastVehicle.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Vehicle\btWheelInfo.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBody.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyFixedConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyGearConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyJointMotor.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyMLCPConstraintSolver.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyPoint2Point.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodySliderConstraint.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodySphericalJointMotor.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btDantzigLCP.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btMLCPSolver.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btLemkeAlgorithm.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\btBulletDynamicsCommon.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\btBulletCollisionCommon.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btConeTwistConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btConstraintSolver.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btContactConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btContactSolverInfo.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btFixedConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btGearConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpring2Constraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btHinge2Constraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btHingeConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btJacobianEntry.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolverMt.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btNNCGConstraintSolver.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSliderConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSolverBody.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btSolverConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btTypedConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\ConstraintSolver\btUniversalConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btActionInterface.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorldMt.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btSimulationIslandManagerMt.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btDynamicsWorld.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btSimpleDynamicsWorld.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Dynamics\btRigidBody.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Vehicle\btRaycastVehicle.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Vehicle\btVehicleRaycaster.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Vehicle\btWheelInfo.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Character\btCharacterControllerInterface.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Character\btKinematicCharacterController.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBody.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyFixedConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyGearConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyJointMotor.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyLink.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyLinkCollider.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyMLCPConstraintSolver.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodyPoint2Point.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodySliderConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\Featherstone\btMultiBodySolverConstraint.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btDantzigLCP.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btDantzigSolver.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btMLCPSolver.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btMLCPSolverInterface.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btPATHSolver.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btSolveProjectedGaussSeidel.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btLemkeSolver.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletDynamics\MLCPSolvers\btLemkeAlgorithm.h" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Character\btKinematicCharacterController.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btConeTwistConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btContactConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btFixedConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btGearConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpring2Constraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btHinge2Constraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btHingeConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolverMt.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btBatchedConstraints.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btNNCGConstraintSolver.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSliderConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btTypedConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\ConstraintSolver\btUniversalConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorldMt.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Dynamics\btSimulationIslandManagerMt.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Dynamics\btRigidBody.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Dynamics\btSimpleDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Vehicle\btRaycastVehicle.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Vehicle\btWheelInfo.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBody.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyFixedConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyGearConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyJointMotor.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyMLCPConstraintSolver.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyPoint2Point.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodySliderConstraint.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodySphericalJointMotor.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\MLCPSolvers\btDantzigLCP.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\MLCPSolvers\btMLCPSolver.cpp" />
+    <ClCompile Include="..\..\..\src\BulletDynamics\MLCPSolvers\btLemkeAlgorithm.cpp" />
+    <ClInclude Include="..\..\..\src\btBulletDynamicsCommon.h" />
+    <ClInclude Include="..\..\..\src\btBulletCollisionCommon.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btConeTwistConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btConstraintSolver.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btContactConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btContactSolverInfo.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btFixedConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btGearConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpring2Constraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btHinge2Constraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btHingeConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btJacobianEntry.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolverMt.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btNNCGConstraintSolver.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSliderConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSolverBody.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btSolverConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btTypedConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\ConstraintSolver\btUniversalConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Dynamics\btActionInterface.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorldMt.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Dynamics\btSimulationIslandManagerMt.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Dynamics\btDynamicsWorld.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Dynamics\btSimpleDynamicsWorld.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Dynamics\btRigidBody.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Vehicle\btRaycastVehicle.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Vehicle\btVehicleRaycaster.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Vehicle\btWheelInfo.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Character\btCharacterControllerInterface.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Character\btKinematicCharacterController.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBody.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyFixedConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyGearConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyJointMotor.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyLink.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyLinkCollider.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyMLCPConstraintSolver.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodyPoint2Point.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodySliderConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\Featherstone\btMultiBodySolverConstraint.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\MLCPSolvers\btDantzigLCP.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\MLCPSolvers\btDantzigSolver.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\MLCPSolvers\btMLCPSolver.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\MLCPSolvers\btMLCPSolverInterface.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\MLCPSolvers\btPATHSolver.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\MLCPSolvers\btSolveProjectedGaussSeidel.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\MLCPSolvers\btLemkeSolver.h" />
+    <ClInclude Include="..\..\..\src\BulletDynamics\MLCPSolvers\btLemkeAlgorithm.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\ZERO_CHECK.vcxproj">

@@ -98,7 +98,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <StringPooling>true</StringPooling>
       <WarningLevel>Level3</WarningLevel>
@@ -124,77 +124,47 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/LinearMath/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-F:\Android\CMake\bin\cmake.exe -SC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88 -BC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build --check-stamp-file C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/src/LinearMath/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/LinearMath/CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\LinearMath\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/LinearMath/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-F:\Android\CMake\bin\cmake.exe -SC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88 -BC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build --check-stamp-file C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/src/LinearMath/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/src/LinearMath/CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\LinearMath\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btAlignedAllocator.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btConvexHull.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btConvexHullComputer.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btGeometryUtil.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btPolarDecomposition.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btQuickprof.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btSerializer.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btSerializer64.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btThreads.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btVector3.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\TaskScheduler\btTaskScheduler.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\TaskScheduler\btThreadSupportPosix.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\TaskScheduler\btThreadSupportWin32.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btAabbUtil2.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btAlignedAllocator.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btAlignedObjectArray.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btConvexHull.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btConvexHullComputer.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btDefaultMotionState.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btGeometryUtil.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btGrahamScan2dConvexHull.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btHashMap.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btIDebugDraw.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btList.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btMatrix3x3.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btMinMax.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btMotionState.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btPolarDecomposition.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btPoolAllocator.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btQuadWord.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btQuaternion.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btQuickprof.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btRandom.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btScalar.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btSerializer.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btStackAlloc.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btThreads.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btTransform.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btTransformUtil.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\btVector3.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\LinearMath\TaskScheduler\btThreadSupportInterface.h" />
+    <ClCompile Include="..\..\..\src\LinearMath\btAlignedAllocator.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\btConvexHull.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\btConvexHullComputer.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\btGeometryUtil.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\btPolarDecomposition.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\btQuickprof.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\btSerializer.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\btSerializer64.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\btThreads.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\btVector3.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\TaskScheduler\btTaskScheduler.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\TaskScheduler\btThreadSupportPosix.cpp" />
+    <ClCompile Include="..\..\..\src\LinearMath\TaskScheduler\btThreadSupportWin32.cpp" />
+    <ClInclude Include="..\..\..\src\LinearMath\btAabbUtil2.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btAlignedAllocator.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btAlignedObjectArray.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btConvexHull.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btConvexHullComputer.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btDefaultMotionState.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btGeometryUtil.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btGrahamScan2dConvexHull.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btHashMap.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btIDebugDraw.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btList.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btMatrix3x3.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btMinMax.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btMotionState.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btPolarDecomposition.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btPoolAllocator.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btQuadWord.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btQuaternion.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btQuickprof.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btRandom.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btScalar.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btSerializer.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btStackAlloc.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btThreads.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btTransform.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btTransformUtil.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\btVector3.h" />
+    <ClInclude Include="..\..\..\src\LinearMath\TaskScheduler\btThreadSupportInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\ZERO_CHECK.vcxproj">
