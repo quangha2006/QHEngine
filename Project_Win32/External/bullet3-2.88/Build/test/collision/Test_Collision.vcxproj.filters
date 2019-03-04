@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\test\collision\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletCollision\CollisionShapes\btSphereShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletCollision\CollisionShapes\btMultiSphereShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletCollision\CollisionShapes\btPolyhedralConvexShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletCollision\CollisionShapes\btConvexShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletCollision\CollisionShapes\btConvexInternalShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletCollision\CollisionShapes\btCollisionShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletCollision\CollisionShapes\btConvexPolyhedron.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\test\collision\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{DCFB7E60-1595-3E53-80E4-5206019F9380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{7907DBD4-0C68-3ADD-B78F-8D02F11CE1F8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
