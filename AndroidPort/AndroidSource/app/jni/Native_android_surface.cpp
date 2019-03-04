@@ -28,36 +28,7 @@ struct engine {
 	int32_t height;
 
 };
-void ThreadDemo(EGLDisplay eglDisplay, EGLConfig eglconfig, EGLSurface eglSurface_draw, EGLSurface eglSurface_read, EGLContext esContex)
-{
-	LOGI2("From thread");
-	const EGLint context_attrib_list[] = {
-		// request a context using Open GL ES 2.0
-		EGL_CONTEXT_CLIENT_VERSION, 3,
-		EGL_NONE
-	};
-	EGLContext esContex_loader = eglCreateContext(eglDisplay, eglconfig, esContex, context_attrib_list);
-	GLenum err_code = glGetError();
-	if (GL_NO_ERROR != err_code)
-	{
-		LOGI2("OpenGL Error 1 @ : %i\n", err_code);
-		//err_code = glGetError();
-	}
-	bool MakeCurrent = eglMakeCurrent(eglDisplay, eglSurface_draw, eglSurface_read, esContex_loader);
-	err_code = glGetError();
-	if (GL_NO_ERROR != err_code)
-	{
-		LOGI2("OpenGL Error 2 @ : %i\n", err_code);
-		//err_code = glGetError();
-	}
-	LOGI2("MakeCurrent: %d", MakeCurrent);
-	LOGI2("=====================================================");
-	LOGI2("GL Renderer  : %s", glGetString(GL_RENDERER));
-	LOGI2("GL Version   : %s", glGetString(GL_VERSION));
-	LOGI2("GL Vendor    : %s", glGetString(GL_VENDOR));
-	LOGI2("=====================================================\n");
 
-}
 static int engine_init_display(struct engine* engine) {
 	/*
 	* Here specify the attributes of the desired configuration.
@@ -142,9 +113,6 @@ static int engine_init_display(struct engine* engine) {
 		LOGW("Unable to eglMakeCurrent");
 		return -1;
 	}
-
-	//EGLContext esContex_loader = eglCreateContext(display, config, context, context_attrib_list);
-	//std::thread *qqqqq = new std::thread(ThreadDemo, display, config, surface, surface, context);
 
 	eglQuerySurface(display, surface, EGL_WIDTH, &w);
 	eglQuerySurface(display, surface, EGL_HEIGHT, &h);

@@ -87,9 +87,10 @@ void AppBase::rendering()
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 	FrameRate::getInstance()->BeginCpuTime();
 	mCamera->UpdateWorldViewProjection();
-	Update();
+	
 	if (mIsLoadingThreadFinish)
 	{
+		Update();
 		RenderManager::getInstance()->Update();
 		RenderManager::getInstance()->Render();
 	}

@@ -393,10 +393,12 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
+	UpdateWorldModel();
+
 	glm::mat4 WorldViewLightSpaceMatrix;
 	glm::mat4 WorldViewProjectionMatrix;
 	glm::mat4 model_inverse;
-	glm::mat4 tmp_model = world;
+	glm::mat4 tmp_model = mWorld;
 
 	if (isTranslate)
 		tmp_model = glm::translate(tmp_model, translate);
@@ -541,29 +543,23 @@ void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 		Transforms[i] = m_BoneInfo[i].FinalTransformation;
 	}
 }
-void Model::SetScale(glm::vec3 scal)
+void Model::SetScale(glm::vec3 scale)
 {
-	this->scale = scal;
-
-	this->world = glm::scale(this->world, scal);
+	mScale = scale;
 }
-void Model::SetTranslate(glm::vec3 trans)
+void Model::SetPos(glm::vec3 pos)
 {
-	this->translate = trans;
-
-	this->world = glm::translate(this->world, trans);
+	mPos = pos;
 }
 void Model::SetRotate(float angle, glm::vec3 rotate)
 {
-	this->angle = angle;
+	mAngle = angle;
 
-	this->rotate = rotate;
-
-	this->world = glm::rotate(this->world, glm::radians(angle), rotate);
+	mRotate = rotate;
 }
-void Model::SetWorld(glm::mat4 model)
+void Model::SetWorld(glm::mat4 world)
 {
-	this->world = model;
+	mWorld = world;
 }
 void Model::SetAnimPlay(int anim)
 {
@@ -701,16 +697,18 @@ void Model::CalcInterpolatedScaling(aiVector3D & Out, float AnimationTime, const
 	aiVector3D Delta = End - Start;
 	Out = Start + Factor * Delta;
 }
-void Model::UpdateModel()
+void Model::UpdateWorldModel()
 {
-	this->world = glm::mat4();
+	mWorld = glm::mat4();
 
-	this->world = glm::scale(this->world, this->scale);
+	mWorld = glm::scale(mWorld, mScale);
 
-	if (this->angle > 0.0f || this->angle < 0.0f)
-		this->world = glm::rotate(this->world, glm::radians(this->angle), this->rotate);
+	mWorld = glm::translate(mWorld, (mPos / mScale));
 
-	this->world = glm::translate(this->world, this->translate);
+	if (mAngle > 0.0f || mAngle < 0.0f)
+		mWorld = glm::rotate(mWorld, glm::radians(mAngle), mRotate);
+
+	
 }
 uint Model::FindScaling(float AnimationTime, const aiNodeAnim * pNodeAnim)
 {
@@ -789,7 +787,22 @@ uint Model::FindPosition(float AnimationTime, const aiNodeAnim * pNodeAnim)
 
 	return 0;
 }
-
+glm::mat4 Model::GetWorld()
+{
+	return mWorld;
+}
+glm::vec3 Model::GetScale()
+{
+	return mScale;
+}
+glm::vec3 Model::GetPos()
+{
+	return mPos;
+}
+glm::vec3 Model::GetRotate()
+{
+	return mRotate;
+}
 Model::Model()
 {
 	gammaCorrection = false;
@@ -802,11 +815,11 @@ Model::Model()
 	m_pScene = NULL;
 	hasAnimation = false;
 	timeStampAnim = -1;
-	scale = glm::vec3(1.0f);
-	translate = glm::vec3(0.0f);
-	rotate = glm::vec3(0.0f);
-	angle = 0.0f;
-	this->world = glm::mat4();
+	mScale = glm::vec3(1.0f);
+	mPos = glm::vec3(0.0f);
+	mRotate = glm::vec3(0.0f);
+	mAngle = 0.0f;
+	mWorld = glm::mat4();
 	animToPlay = 0;
 	isDrawPolygon = false;
 	isUsePointLight = false;

@@ -90,7 +90,6 @@ namespace QHTexture
 				internalFormat = gammaCorrection ? 0x8C42 : GL_RGBA;
 				//internalFormat = gammaCorrection ? GL_SRGB_ALPHA : GL_RGBA;
 				//internalFormat = GL_RGBA;//gammaCorrection ? GL_SRGB_ALPHA : GL_RGBA;
-				LOGI("nrComponents == 4");
 				dataFormat = GL_RGBA;
 			}
 

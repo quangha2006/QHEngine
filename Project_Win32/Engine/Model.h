@@ -62,11 +62,11 @@ private:
 	float timeStampAnim;
 	bool mIsDrawDepthMap;
 	bool mGammaCorrection;
-	glm::vec3 scale;
-	glm::vec3 translate;
-	glm::vec3 rotate;
-	float angle;
-	glm::mat4 world;
+	glm::vec3 mScale;
+	glm::vec3 mPos;
+	glm::vec3 mRotate;
+	float mAngle;
+	glm::mat4 mWorld;
 
 	int m_Id;
 	int m_meshdraw;
@@ -78,7 +78,8 @@ private:
 	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, glm::mat4 &ParentTransform);
 	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const string NodeName);
 	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
-	void UpdateModel();
+	void UpdateWorldModel();
+	void SetWorld(glm::mat4 world = glm::mat4());
 
 public:
 	void Init(string const &path, bool FlipUVs = false, bool enableAlpha = true, float fixedModel = 1.0f);
@@ -90,10 +91,9 @@ public:
 	void SetTimeStampAnim(int64_t time);
 	void Update(int64_t time = -1.0f);
 	void BoneTransform(float TimeInSeconds, vector<glm::mat4> &Transforms);
-	void SetScale(glm::vec3 scal);
-	void SetTranslate(glm::vec3 trans);
+	void SetScale(glm::vec3 scale);
+	void SetPos(glm::vec3 pos);
 	void SetRotate(float angle, glm::vec3 rotate);
-	void SetWorld(glm::mat4 world = glm::mat4());
 	void SetAnimPlay(int anim);
 	void SetDrawPolygon(bool isdrawpolygon);
 	void SetNeedRotate(bool isNeedRotate);
@@ -102,6 +102,10 @@ public:
 	void SetId(int id);
 	void Loading();
 	int GetId();
+	glm::mat4 GetWorld();
+	glm::vec3 GetScale();
+	glm::vec3 GetPos();
+	glm::vec3 GetRotate();
 	void SetIsDrawDepthMap(bool isDraw);
 	Model();
 	~Model();

@@ -24,12 +24,12 @@ void Basic::Init()
 	mSkyBox.Init("SkyBox");
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
-	m_Streetenvironment.SetTranslate(glm::vec3(0.0f, -0.03f, 0.5f));
+	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	mMerce.SetTranslate(glm::vec3(0.0f, 0.0f, 1.2f));
+	mMerce.SetPos(glm::vec3(0.0f, 0.0f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
 	//mSpider.Init("aboy/model.dae", true, true);
@@ -37,7 +37,7 @@ void Basic::Init()
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
 	mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
 	mSpider.SetScale(glm::vec3(0.05f));
-	//mSpider.SetTranslate(glm::vec3(0.0f, 1.0f, 0.0f));
+	mSpider.SetPos(glm::vec3(0.0f, 10.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(0);
@@ -50,7 +50,7 @@ void Basic::Init()
 	//mMonster_1.Init("/astroBoy/AnimSimple.dae", true);
 	//mMonster_1.Init("aboy/model.dae", true);
 	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	mMonster_1.SetTranslate(glm::vec3(0.0f, 0.0f, 0.0f));
+	mMonster_1.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	mMonster_1.SetScale(glm::vec3(0.2f));
 	mMonster_1.SetNeedRotate(true);
 
@@ -63,7 +63,7 @@ void Basic::Init()
 
 void Basic::Update()
 {
-	
+	mSpider.SetRotate(Timer::getMillisecond()/100,glm::vec3(1.0f, 0.0f, 0.0f));
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
