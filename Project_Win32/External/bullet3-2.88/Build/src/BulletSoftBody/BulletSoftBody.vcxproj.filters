@@ -1,77 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBody.cpp">
+    <ClCompile Include="..\..\..\src\BulletSoftBody\btSoftBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBodyConcaveCollisionAlgorithm.cpp">
+    <ClCompile Include="..\..\..\src\BulletSoftBody\btSoftBodyConcaveCollisionAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBodyHelpers.cpp">
+    <ClCompile Include="..\..\..\src\BulletSoftBody\btSoftBodyHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBodyRigidBodyCollisionConfiguration.cpp">
+    <ClCompile Include="..\..\..\src\BulletSoftBody\btSoftBodyRigidBodyCollisionConfiguration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftRigidCollisionAlgorithm.cpp">
+    <ClCompile Include="..\..\..\src\BulletSoftBody\btSoftRigidCollisionAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftRigidDynamicsWorld.cpp">
+    <ClCompile Include="..\..\..\src\BulletSoftBody\btSoftRigidDynamicsWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftMultiBodyDynamicsWorld.cpp">
+    <ClCompile Include="..\..\..\src\BulletSoftBody\btSoftMultiBodyDynamicsWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftSoftCollisionAlgorithm.cpp">
+    <ClCompile Include="..\..\..\src\BulletSoftBody\btSoftSoftCollisionAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btDefaultSoftBodySolver.cpp">
+    <ClCompile Include="..\..\..\src\BulletSoftBody\btDefaultSoftBodySolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBody.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBodyData.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftBodyData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBodyConcaveCollisionAlgorithm.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftBodyConcaveCollisionAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBodyHelpers.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftBodyHelpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBodyRigidBodyCollisionConfiguration.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftBodyRigidBodyCollisionConfiguration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftRigidCollisionAlgorithm.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftRigidCollisionAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftRigidDynamicsWorld.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftRigidDynamicsWorld.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftMultiBodyDynamicsWorld.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftMultiBodyDynamicsWorld.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftSoftCollisionAlgorithm.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftSoftCollisionAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSparseSDF.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSparseSDF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBodySolvers.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftBodySolvers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btDefaultSoftBodySolver.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btDefaultSoftBodySolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\btSoftBodySolverVertexBuffer.h">
+    <ClInclude Include="..\..\..\src\BulletSoftBody\btSoftBodySolverVertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src\BulletSoftBody\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

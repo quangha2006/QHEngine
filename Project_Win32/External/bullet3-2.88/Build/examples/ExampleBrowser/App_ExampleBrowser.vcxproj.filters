@@ -1,698 +1,695 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExampleBrowser\main.cpp">
+    <ClCompile Include="..\..\..\examples\ExampleBrowser\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExampleBrowser\ExampleEntries.cpp">
+    <ClCompile Include="..\..\..\examples\ExampleBrowser\ExampleEntries.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\Chain.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\Chain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\Bridge.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\Bridge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\RigidBodyFromObj.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\RigidBodyFromObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\SimpleBox.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\SimpleBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\MultipleBoxes.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\MultipleBoxes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\CompoundBoxes.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\CompoundBoxes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\SimpleCloth.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\SimpleCloth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\SimpleJoint.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\SimpleJoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\NewtonsCradle.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\NewtonsCradle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\InclinedPlane.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\InclinedPlane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\MultiPendulum.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\MultiPendulum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\geometry.cpp">
+    <ClCompile Include="..\..\..\examples\TinyRenderer\geometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\model.cpp">
+    <ClCompile Include="..\..\..\examples\TinyRenderer\model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\tgaimage.cpp">
+    <ClCompile Include="..\..\..\examples\TinyRenderer\tgaimage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\our_gl.cpp">
+    <ClCompile Include="..\..\..\examples\TinyRenderer\our_gl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\TinyRenderer.cpp">
+    <ClCompile Include="..\..\..\examples\TinyRenderer\TinyRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\collisionFilterPlugin\collisionFilterPlugin.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\plugins\collisionFilterPlugin\collisionFilterPlugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\tinyRendererPlugin\tinyRendererPlugin.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\plugins\tinyRendererPlugin\tinyRendererPlugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\tinyRendererPlugin\TinyRendererVisualShapeConverter.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\plugins\tinyRendererPlugin\TinyRendererVisualShapeConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\IKTrajectoryHelper.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\IKTrajectoryHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServer.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientSharedMemory.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientSharedMemory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientSharedMemory_C_API.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientSharedMemory_C_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClient.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientC_API.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientC_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerExample.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerExampleBullet2.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerExampleBullet2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientExample.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PosixSharedMemory.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PosixSharedMemory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\Win32SharedMemory.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\Win32SharedMemory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\InProcessMemory.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\InProcessMemory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerSharedMemory.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerSharedMemory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsDirect.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsDirect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsDirectC_API.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsDirectC_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\SharedMemoryInProcessPhysicsC_API.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\SharedMemoryInProcessPhysicsC_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsLoopBack.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsLoopBack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsLoopBackC_API.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsLoopBackC_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerCommandProcessor.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerCommandProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\b3PluginManager.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\b3PluginManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\b3RobotSimulatorClientAPI_NoGUI.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\b3RobotSimulatorClientAPI_NoGUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RobotSimulator\b3RobotSimulatorClientAPI.cpp">
+    <ClCompile Include="..\..\..\examples\RobotSimulator\b3RobotSimulatorClientAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\BasicDemo\BasicExample.cpp">
+    <ClCompile Include="..\..\..\examples\BasicDemo\BasicExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\InverseDynamics\InverseDynamicsExample.cpp">
+    <ClCompile Include="..\..\..\examples\InverseDynamics\InverseDynamicsExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\InverseKinematics\InverseKinematicsExample.cpp">
+    <ClCompile Include="..\..\..\examples\InverseKinematics\InverseKinematicsExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ForkLift\ForkLiftDemo.cpp">
+    <ClCompile Include="..\..\..\examples\ForkLift\ForkLiftDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreadedDemo\MultiThreadedDemo.cpp">
+    <ClCompile Include="..\..\..\examples\MultiThreadedDemo\MultiThreadedDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreadedDemo\CommonRigidBodyMTBase.cpp">
+    <ClCompile Include="..\..\..\examples\MultiThreadedDemo\CommonRigidBodyMTBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Tutorial\Tutorial.cpp">
+    <ClCompile Include="..\..\..\examples\Tutorial\Tutorial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Tutorial\Dof6ConstraintTutorial.cpp">
+    <ClCompile Include="..\..\..\examples\Tutorial\Dof6ConstraintTutorial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Evolution\NN3DWalkers.cpp">
+    <ClCompile Include="..\..\..\examples\Evolution\NN3DWalkers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\NewtonsRopeCradle.cpp">
+    <ClCompile Include="..\..\..\examples\ExtendedTutorials\NewtonsRopeCradle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Collision\CollisionSdkC_Api.cpp">
+    <ClCompile Include="..\..\..\examples\Collision\CollisionSdkC_Api.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Collision\CollisionTutorialBullet2.cpp">
+    <ClCompile Include="..\..\..\examples\Collision\CollisionTutorialBullet2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Collision\Internal\Bullet2CollisionSdk.cpp">
+    <ClCompile Include="..\..\..\examples\Collision\Internal\Bullet2CollisionSdk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Collision\Internal\RealTimeBullet3CollisionSdk.cpp">
+    <ClCompile Include="..\..\..\examples\Collision\Internal\RealTimeBullet3CollisionSdk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\GyroscopicDemo\GyroscopicSetup.cpp">
+    <ClCompile Include="..\..\..\examples\GyroscopicDemo\GyroscopicSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Planar2D\Planar2D.cpp">
+    <ClCompile Include="..\..\..\examples\Planar2D\Planar2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RollingFrictionDemo\RollingFrictionDemo.cpp">
+    <ClCompile Include="..\..\..\examples\RollingFrictionDemo\RollingFrictionDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\FractureDemo\FractureDemo.cpp">
+    <ClCompile Include="..\..\..\examples\FractureDemo\FractureDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\FractureDemo\btFractureBody.cpp">
+    <ClCompile Include="..\..\..\examples\FractureDemo\btFractureBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\FractureDemo\btFractureDynamicsWorld.cpp">
+    <ClCompile Include="..\..\..\examples\FractureDemo\btFractureDynamicsWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\DynamicControlDemo\MotorDemo.cpp">
+    <ClCompile Include="..\..\..\examples\DynamicControlDemo\MotorDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreading\MultiThreadingExample.cpp">
+    <ClCompile Include="..\..\..\examples\MultiThreading\MultiThreadingExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreading\b3PosixThreadSupport.cpp">
+    <ClCompile Include="..\..\..\examples\MultiThreading\b3PosixThreadSupport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreading\b3Win32ThreadSupport.cpp">
+    <ClCompile Include="..\..\..\examples\MultiThreading\b3Win32ThreadSupport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreading\b3ThreadSupportInterface.cpp">
+    <ClCompile Include="..\..\..\examples\MultiThreading\b3ThreadSupportInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\TinyRendererSetup.cpp">
+    <ClCompile Include="..\..\..\examples\RenderingExamples\TinyRendererSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\TimeSeriesCanvas.cpp">
+    <ClCompile Include="..\..\..\examples\RenderingExamples\TimeSeriesCanvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\TimeSeriesFontData.cpp">
+    <ClCompile Include="..\..\..\examples\RenderingExamples\TimeSeriesFontData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\DynamicTexturedCubeDemo.cpp">
+    <ClCompile Include="..\..\..\examples\RenderingExamples\DynamicTexturedCubeDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\TinyVRGui.cpp">
+    <ClCompile Include="..\..\..\examples\RenderingExamples\TinyVRGui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RoboticsLearning\GripperGraspExample.cpp">
+    <ClCompile Include="..\..\..\examples\RoboticsLearning\GripperGraspExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RoboticsLearning\R2D2GraspExample.cpp">
+    <ClCompile Include="..\..\..\examples\RoboticsLearning\R2D2GraspExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RoboticsLearning\KukaGraspExample.cpp">
+    <ClCompile Include="..\..\..\examples\RoboticsLearning\KukaGraspExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\CoordinateSystemDemo.cpp">
+    <ClCompile Include="..\..\..\examples\RenderingExamples\CoordinateSystemDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\RaytracerSetup.cpp">
+    <ClCompile Include="..\..\..\examples\RenderingExamples\RaytracerSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\RenderInstancingDemo.cpp">
+    <ClCompile Include="..\..\..\examples\RenderingExamples\RenderInstancingDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\TimeSeriesExample.cpp">
+    <ClCompile Include="..\..\..\examples\RenderingExamples\TimeSeriesExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Benchmarks\BenchmarkDemo.cpp">
+    <ClCompile Include="..\..\..\examples\Benchmarks\BenchmarkDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Raycast\RaytestDemo.cpp">
+    <ClCompile Include="..\..\..\examples\Raycast\RaytestDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportBullet\SerializeSetup.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportBullet\SerializeSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportMeshUtility\b3ImportMeshUtility.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportMeshUtility\b3ImportMeshUtility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletWorldImporter\btWorldImporter.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletWorldImporter\btWorldImporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletWorldImporter\btMultiBodyWorldImporter.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletWorldImporter\btMultiBodyWorldImporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletWorldImporter\btBulletWorldImporter.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletWorldImporter\btBulletWorldImporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bChunk.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletFileLoader\bChunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bFile.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletFileLoader\bFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bDNA.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletFileLoader\bDNA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\btBulletFile.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletFileLoader\btBulletFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportMJCFDemo\BulletMJCFImporter.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportMJCFDemo\BulletMJCFImporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportMJCFDemo\ImportMJCFSetup.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportMJCFDemo\ImportMJCFSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportBsp\BspConverter.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportBsp\BspConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportBsp\BspLoader.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportBsp\BspLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportBsp\ImportBspExample.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportBsp\ImportBspExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportColladaDemo\ImportColladaSetup.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportColladaDemo\ImportColladaSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportColladaDemo\LoadMeshFromCollada.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportColladaDemo\LoadMeshFromCollada.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\ImportObjExample.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportObjDemo\ImportObjExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\LoadMeshFromObj.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportObjDemo\LoadMeshFromObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\Wavefront2GLInstanceGraphicsShape.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportObjDemo\Wavefront2GLInstanceGraphicsShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportSTLDemo\ImportSTLSetup.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportSTLDemo\ImportSTLSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportSDFDemo\ImportSDFSetup.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportSDFDemo\ImportSDFSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\ImportURDFSetup.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\ImportURDFSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\URDF2Bullet.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\URDF2Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\UrdfParser.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\UrdfParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Utils\RobotLoggingUtil.cpp">
+    <ClCompile Include="..\..\..\examples\Utils\RobotLoggingUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\urdfStringSplit.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\urdfStringSplit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\BulletUrdfImporter.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\BulletUrdfImporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\VoronoiFracture\VoronoiFractureDemo.cpp">
+    <ClCompile Include="..\..\..\examples\VoronoiFracture\VoronoiFractureDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\VoronoiFracture\btConvexConvexMprAlgorithm.cpp">
+    <ClCompile Include="..\..\..\examples\VoronoiFracture\btConvexConvexMprAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Vehicles\Hinge2Vehicle.cpp">
+    <ClCompile Include="..\..\..\examples\Vehicles\Hinge2Vehicle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\Pendulum.cpp">
+    <ClCompile Include="..\..\..\examples\MultiBody\Pendulum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\MultiBodySoftContact.cpp">
+    <ClCompile Include="..\..\..\examples\MultiBody\MultiBodySoftContact.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\TestJointTorqueSetup.cpp">
+    <ClCompile Include="..\..\..\examples\MultiBody\TestJointTorqueSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\InvertedPendulumPDControl.cpp">
+    <ClCompile Include="..\..\..\examples\MultiBody\InvertedPendulumPDControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\MultiBodyConstraintFeedback.cpp">
+    <ClCompile Include="..\..\..\examples\MultiBody\MultiBodyConstraintFeedback.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\SerialChains.cpp">
+    <ClCompile Include="..\..\..\examples\MultiBody\SerialChains.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\MultiDofDemo.cpp">
+    <ClCompile Include="..\..\..\examples\MultiBody\MultiDofDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RigidBody\RigidBodySoftContact.cpp">
+    <ClCompile Include="..\..\..\examples\RigidBody\RigidBodySoftContact.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Constraints\TestHingeTorque.cpp">
+    <ClCompile Include="..\..\..\examples\Constraints\TestHingeTorque.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Constraints\ConstraintDemo.cpp">
+    <ClCompile Include="..\..\..\examples\Constraints\ConstraintDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Constraints\Dof6Spring2Setup.cpp">
+    <ClCompile Include="..\..\..\examples\Constraints\Dof6Spring2Setup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Constraints\ConstraintPhysicsSetup.cpp">
+    <ClCompile Include="..\..\..\examples\Constraints\ConstraintPhysicsSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\stb_image\stb_image.cpp">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\stb_image\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\stb_image\stb_image_write.cpp">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\stb_image\stb_image_write.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.cpp">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\tinyxml2\tinyxml2.cpp">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\tinyxml2\tinyxml2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExampleBrowser\InProcessExampleBrowser.cpp">
+    <ClCompile Include="..\..\..\examples\ExampleBrowser\InProcessExampleBrowser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExampleBrowser\ExampleEntries.h">
+    <ClInclude Include="..\..\..\examples\ExampleBrowser\ExampleEntries.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\Chain.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\Chain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\Bridge.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\Bridge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\RigidBodyFromObj.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\RigidBodyFromObj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\SimpleBox.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\SimpleBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\MultipleBoxes.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\MultipleBoxes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\CompoundBoxes.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\CompoundBoxes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\SimpleCloth.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\SimpleCloth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\SimpleJoint.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\SimpleJoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\NewtonsCradle.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\NewtonsCradle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\InclinedPlane.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\InclinedPlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\MultiPendulum.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\MultiPendulum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\collisionFilterPlugin\collisionFilterPlugin.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\plugins\collisionFilterPlugin\collisionFilterPlugin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\IKTrajectoryHelper.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\IKTrajectoryHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsDirect.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsDirect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsDirectC_API.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsDirectC_API.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsLoopBack.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsLoopBack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsLoopBackC_API.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsLoopBackC_API.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerCommandProcessor.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsServerCommandProcessor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\SharedMemoryCommands.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\SharedMemoryCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\SharedMemoryPublic.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\SharedMemoryPublic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\b3RobotSimulatorClientAPI_NoGUI.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\b3RobotSimulatorClientAPI_NoGUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.h">
+    <ClInclude Include="..\..\..\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RobotSimulator\b3RobotSimulatorClientAPI.h">
+    <ClInclude Include="..\..\..\examples\RobotSimulator\b3RobotSimulatorClientAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\BasicDemo\BasicExample.h">
+    <ClInclude Include="..\..\..\examples\BasicDemo\BasicExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\InverseDynamics\InverseDynamicsExample.h">
+    <ClInclude Include="..\..\..\examples\InverseDynamics\InverseDynamicsExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\InverseKinematics\InverseKinematicsExample.h">
+    <ClInclude Include="..\..\..\examples\InverseKinematics\InverseKinematicsExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ForkLift\ForkLiftDemo.h">
+    <ClInclude Include="..\..\..\examples\ForkLift\ForkLiftDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreadedDemo\MultiThreadedDemo.h">
+    <ClInclude Include="..\..\..\examples\MultiThreadedDemo\MultiThreadedDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreadedDemo\CommonRigidBodyMTBase.h">
+    <ClInclude Include="..\..\..\examples\MultiThreadedDemo\CommonRigidBodyMTBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Tutorial\Tutorial.h">
+    <ClInclude Include="..\..\..\examples\Tutorial\Tutorial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Tutorial\Dof6ConstraintTutorial.h">
+    <ClInclude Include="..\..\..\examples\Tutorial\Dof6ConstraintTutorial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Evolution\NN3DWalkers.h">
+    <ClInclude Include="..\..\..\examples\Evolution\NN3DWalkers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Evolution\NN3DWalkersTimeWarpBase.h">
+    <ClInclude Include="..\..\..\examples\Evolution\NN3DWalkersTimeWarpBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExtendedTutorials\NewtonsRopeCradle.h">
+    <ClInclude Include="..\..\..\examples\ExtendedTutorials\NewtonsRopeCradle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Collision\CollisionSdkC_Api.h">
+    <ClInclude Include="..\..\..\examples\Collision\CollisionSdkC_Api.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Collision\CollisionTutorialBullet2.h">
+    <ClInclude Include="..\..\..\examples\Collision\CollisionTutorialBullet2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Collision\Internal\Bullet2CollisionSdk.h">
+    <ClInclude Include="..\..\..\examples\Collision\Internal\Bullet2CollisionSdk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Collision\Internal\CollisionSdkInterface.h">
+    <ClInclude Include="..\..\..\examples\Collision\Internal\CollisionSdkInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Collision\Internal\RealTimeBullet3CollisionSdk.h">
+    <ClInclude Include="..\..\..\examples\Collision\Internal\RealTimeBullet3CollisionSdk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\GyroscopicDemo\GyroscopicSetup.h">
+    <ClInclude Include="..\..\..\examples\GyroscopicDemo\GyroscopicSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Planar2D\Planar2D.h">
+    <ClInclude Include="..\..\..\examples\Planar2D\Planar2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RollingFrictionDemo\RollingFrictionDemo.h">
+    <ClInclude Include="..\..\..\examples\RollingFrictionDemo\RollingFrictionDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\FractureDemo\FractureDemo.h">
+    <ClInclude Include="..\..\..\examples\FractureDemo\FractureDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\FractureDemo\btFractureBody.h">
+    <ClInclude Include="..\..\..\examples\FractureDemo\btFractureBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\FractureDemo\btFractureDynamicsWorld.h">
+    <ClInclude Include="..\..\..\examples\FractureDemo\btFractureDynamicsWorld.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\DynamicControlDemo\MotorDemo.h">
+    <ClInclude Include="..\..\..\examples\DynamicControlDemo\MotorDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\TimeSeriesCanvas.h">
+    <ClInclude Include="..\..\..\examples\RenderingExamples\TimeSeriesCanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\TimeSeriesFontData.h">
+    <ClInclude Include="..\..\..\examples\RenderingExamples\TimeSeriesFontData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\DynamicTexturedCubeDemo.h">
+    <ClInclude Include="..\..\..\examples\RenderingExamples\DynamicTexturedCubeDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\TinyVRGui.h">
+    <ClInclude Include="..\..\..\examples\RenderingExamples\TinyVRGui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RoboticsLearning\GripperGraspExample.h">
+    <ClInclude Include="..\..\..\examples\RoboticsLearning\GripperGraspExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RoboticsLearning\R2D2GraspExample.h">
+    <ClInclude Include="..\..\..\examples\RoboticsLearning\R2D2GraspExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RoboticsLearning\KukaGraspExample.h">
+    <ClInclude Include="..\..\..\examples\RoboticsLearning\KukaGraspExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\CoordinateSystemDemo.h">
+    <ClInclude Include="..\..\..\examples\RenderingExamples\CoordinateSystemDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\RaytracerSetup.h">
+    <ClInclude Include="..\..\..\examples\RenderingExamples\RaytracerSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RenderingExamples\RenderInstancingDemo.h">
+    <ClInclude Include="..\..\..\examples\RenderingExamples\RenderInstancingDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Benchmarks\BenchmarkDemo.h">
+    <ClInclude Include="..\..\..\examples\Benchmarks\BenchmarkDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Benchmarks\landscapeData.h">
+    <ClInclude Include="..\..\..\examples\Benchmarks\landscapeData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Benchmarks\TaruData.h">
+    <ClInclude Include="..\..\..\examples\Benchmarks\TaruData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportBsp\BspConverter.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportBsp\BspConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportBullet\SerializeSetup.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportBullet\SerializeSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportMeshUtility\b3ImportMeshUtility.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportMeshUtility\b3ImportMeshUtility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportBsp\BspLoader.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportBsp\BspLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportBsp\ImportBspExample.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportBsp\ImportBspExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportColladaDemo\btMatrix4x4.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportColladaDemo\btMatrix4x4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportColladaDemo\ColladaGraphicsInstance.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportColladaDemo\ColladaGraphicsInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportColladaDemo\ImportColladaSetup.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportColladaDemo\ImportColladaSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportColladaDemo\LoadMeshFromCollada.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportColladaDemo\LoadMeshFromCollada.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\ImportObjExample.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportObjDemo\ImportObjExample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\LoadMeshFromObj.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportObjDemo\LoadMeshFromObj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\Wavefront2GLInstanceGraphicsShape.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportObjDemo\Wavefront2GLInstanceGraphicsShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportSTLDemo\ImportSTLSetup.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportSTLDemo\ImportSTLSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportSTLDemo\LoadMeshFromSTL.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportSTLDemo\LoadMeshFromSTL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\ConvertRigidBodies2MultiBody.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\ConvertRigidBodies2MultiBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\ImportURDFSetup.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\ImportURDFSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\URDF2Bullet.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\URDF2Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\urdf_samples.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\urdf_samples.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportMJCFDemo\BulletMJCFImporter.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportMJCFDemo\BulletMJCFImporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportMJCFDemo\ImportMJCFSetup.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportMJCFDemo\ImportMJCFSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Utils\RobotLoggingUtil.h">
+    <ClInclude Include="..\..\..\examples\Utils\RobotLoggingUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\urdfStringSplit.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\urdfStringSplit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\BulletUrdfImporter.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\BulletUrdfImporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\VoronoiFracture\VoronoiFractureDemo.h">
+    <ClInclude Include="..\..\..\examples\VoronoiFracture\VoronoiFractureDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\VoronoiFracture\btConvexConvexMprAlgorithm.h">
+    <ClInclude Include="..\..\..\examples\VoronoiFracture\btConvexConvexMprAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Vehicles\Hinge2Vehicle.h">
+    <ClInclude Include="..\..\..\examples\Vehicles\Hinge2Vehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\TestJointTorqueSetup.h">
+    <ClInclude Include="..\..\..\examples\MultiBody\TestJointTorqueSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\InvertedPendulumPDControl.h">
+    <ClInclude Include="..\..\..\examples\MultiBody\InvertedPendulumPDControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiBody\MultiDofDemo.h">
+    <ClInclude Include="..\..\..\examples\MultiBody\MultiDofDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Constraints\TestHingeTorque.h">
+    <ClInclude Include="..\..\..\examples\Constraints\TestHingeTorque.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Constraints\ConstraintDemo.h">
+    <ClInclude Include="..\..\..\examples\Constraints\ConstraintDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Constraints\Dof6Spring2Setup.h">
+    <ClInclude Include="..\..\..\examples\Constraints\Dof6Spring2Setup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Constraints\ConstraintPhysicsSetup.h">
+    <ClInclude Include="..\..\..\examples\Constraints\ConstraintPhysicsSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\stb_image\stb_image.h">
+    <ClInclude Include="..\..\..\examples\ThirdPartyLibs\stb_image\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExampleBrowser\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\build3\bullet.rc">
+    <ResourceCompile Include="..\..\..\build3\bullet.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>

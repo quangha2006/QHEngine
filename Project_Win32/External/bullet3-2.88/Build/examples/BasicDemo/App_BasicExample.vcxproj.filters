@@ -1,18 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\BasicDemo\BasicExample.cpp">
+    <ClCompile Include="..\..\..\examples\BasicDemo\BasicExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\BasicDemo\main.cpp">
+    <ClCompile Include="..\..\..\examples\BasicDemo\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\BasicDemo\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\build3\bullet.rc">
+    <ResourceCompile Include="..\..\..\build3\bullet.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>

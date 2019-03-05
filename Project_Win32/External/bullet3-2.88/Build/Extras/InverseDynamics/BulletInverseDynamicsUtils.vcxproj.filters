@@ -1,45 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\CloneTreeCreator.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\CloneTreeCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\CoilCreator.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\CoilCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\MultiBodyTreeCreator.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\MultiBodyTreeCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\btMultiBodyTreeCreator.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\btMultiBodyTreeCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\DillCreator.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\DillCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\MultiBodyTreeDebugGraph.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\MultiBodyTreeDebugGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\invdyn_bullet_comparison.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\invdyn_bullet_comparison.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\IDRandomUtil.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\IDRandomUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\RandomTreeCreator.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\RandomTreeCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\SimpleTreeCreator.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\SimpleTreeCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\MultiBodyNameMap.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\MultiBodyNameMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\User2InternalIndex.cpp">
+    <ClCompile Include="..\..\..\Extras\InverseDynamics\User2InternalIndex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\InverseDynamics\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

@@ -1,17 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\GIMPACTUtils\btGImpactConvexDecompositionShape.cpp">
+    <ClCompile Include="..\..\..\Extras\GIMPACTUtils\btGImpactConvexDecompositionShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\GIMPACTUtils\btGImpactConvexDecompositionShape.h">
+    <ClInclude Include="..\..\..\Extras\GIMPACTUtils\btGImpactConvexDecompositionShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\GIMPACTUtils\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

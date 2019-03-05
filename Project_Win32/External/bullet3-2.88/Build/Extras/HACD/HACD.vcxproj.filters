@@ -1,50 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdGraph.cpp">
+    <ClCompile Include="..\..\..\Extras\HACD\hacdGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdHACD.cpp">
+    <ClCompile Include="..\..\..\Extras\HACD\hacdHACD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdICHull.cpp">
+    <ClCompile Include="..\..\..\Extras\HACD\hacdICHull.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdManifoldMesh.cpp">
+    <ClCompile Include="..\..\..\Extras\HACD\hacdManifoldMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdCircularList.h">
+    <ClInclude Include="..\..\..\Extras\HACD\hacdCircularList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdGraph.h">
+    <ClInclude Include="..\..\..\Extras\HACD\hacdGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdHACD.h">
+    <ClInclude Include="..\..\..\Extras\HACD\hacdHACD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdICHull.h">
+    <ClInclude Include="..\..\..\Extras\HACD\hacdICHull.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdManifoldMesh.h">
+    <ClInclude Include="..\..\..\Extras\HACD\hacdManifoldMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdVector.h">
+    <ClInclude Include="..\..\..\Extras\HACD\hacdVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdVersion.h">
+    <ClInclude Include="..\..\..\Extras\HACD\hacdVersion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdCircularList.inl">
+    <ClInclude Include="..\..\..\Extras\HACD\hacdCircularList.inl">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\hacdVector.inl">
+    <ClInclude Include="..\..\..\Extras\HACD\hacdVector.inl">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\HACD\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

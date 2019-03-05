@@ -1,41 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bChunk.cpp">
+    <ClCompile Include="..\..\..\..\Extras\Serialize\BulletFileLoader\bChunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bDNA.cpp">
+    <ClCompile Include="..\..\..\..\Extras\Serialize\BulletFileLoader\bDNA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bFile.cpp">
+    <ClCompile Include="..\..\..\..\Extras\Serialize\BulletFileLoader\bFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\btBulletFile.cpp">
+    <ClCompile Include="..\..\..\..\Extras\Serialize\BulletFileLoader\btBulletFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bChunk.h">
+    <ClInclude Include="..\..\..\..\Extras\Serialize\BulletFileLoader\bChunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bCommon.h">
+    <ClInclude Include="..\..\..\..\Extras\Serialize\BulletFileLoader\bCommon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bDefines.h">
+    <ClInclude Include="..\..\..\..\Extras\Serialize\BulletFileLoader\bDefines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bDNA.h">
+    <ClInclude Include="..\..\..\..\Extras\Serialize\BulletFileLoader\bDNA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bFile.h">
+    <ClInclude Include="..\..\..\..\Extras\Serialize\BulletFileLoader\bFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\btBulletFile.h">
+    <ClInclude Include="..\..\..\..\Extras\Serialize\BulletFileLoader\btBulletFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
