@@ -75,7 +75,8 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;B3_USE_STANDALONE_EXAMPLE;GLEW_STATIC;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\glad;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui\OpenGLWindow\GlewWindows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\glad;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui\OpenGLWindow\GlewWindows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -86,13 +87,14 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>..\..\lib\Debug\BulletDynamics_Debug.lib;..\..\lib\Debug\BulletCollision_Debug.lib;..\..\lib\Debug\LinearMath_Debug.lib;..\..\lib\Debug\BulletDynamics_Debug.lib;..\..\lib\Debug\BulletCollision_Debug.lib;..\..\lib\Debug\LinearMath_Debug.lib;..\..\lib\Debug\OpenGLWindow_Debug.lib;..\..\lib\Debug\Bullet3Common_Debug.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>..\..\lib\BulletDynamics_Debug.lib;..\..\lib\BulletCollision_Debug.lib;..\..\lib\LinearMath_Debug.lib;..\..\lib\OpenGLWindow_Debug.lib;..\..\lib\Bullet3Common_Debug.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/BasicDemo/Debug/AppBasicExampleGui.lib</ImportLibrary>
+      <ImportLibrary>
+      </ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDataBaseFile>$(OutDir)$(TargetName).pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
@@ -125,7 +127,8 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;B3_USE_STANDALONE_EXAMPLE;GLEW_STATIC;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\glad;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui\OpenGLWindow\GlewWindows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\glad;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui\OpenGLWindow\GlewWindows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -153,7 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\BasicDemo\BasicExample.cpp" />
-    <ResourceCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\build3\bullet.rc" />
+    <ResourceCompile Include="..\..\..\build3\bullet.rc" />
     <ClCompile Include="..\..\..\examples\StandaloneMain\main_opengl_single_example.cpp" />
     <ClCompile Include="..\..\..\examples\ExampleBrowser\OpenGLGuiHelper.cpp" />
     <ClCompile Include="..\..\..\examples\ExampleBrowser\GL_ShapeDrawer.cpp" />
