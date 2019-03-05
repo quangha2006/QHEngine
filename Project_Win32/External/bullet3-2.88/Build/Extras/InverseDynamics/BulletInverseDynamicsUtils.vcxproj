@@ -137,14 +137,6 @@
     <ClCompile Include="..\..\..\Extras\InverseDynamics\MultiBodyNameMap.cpp" />
     <ClCompile Include="..\..\..\Extras\InverseDynamics\User2InternalIndex.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ZERO_CHECK.vcxproj">
-      <Project>{71748A02-695D-3AA9-8F98-98E05C2DDC3F}</Project>
-      <Name>ZERO_CHECK</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

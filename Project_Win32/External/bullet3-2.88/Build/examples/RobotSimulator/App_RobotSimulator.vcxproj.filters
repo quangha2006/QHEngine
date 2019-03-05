@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RobotSimulator\RobotSimulatorMain.cpp">
+    <ClCompile Include="..\..\..\examples\RobotSimulator\RobotSimulatorMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RobotSimulator\b3RobotSimulatorClientAPI.cpp">
+    <ClCompile Include="..\..\..\examples\RobotSimulator\b3RobotSimulatorClientAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RobotSimulator\MinitaurSetup.cpp">
+    <ClCompile Include="..\..\..\examples\RobotSimulator\MinitaurSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExampleBrowser\InProcessExampleBrowser.cpp">
+    <ClCompile Include="..\..\..\examples\ExampleBrowser\InProcessExampleBrowser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerExample.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerExampleBullet2.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerExampleBullet2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\SharedMemoryInProcessPhysicsC_API.cpp">
+    <ClCompile Include="..\..\..\examples\SharedMemory\SharedMemoryInProcessPhysicsC_API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RobotSimulator\b3RobotSimulatorClientAPI.h">
+    <ClInclude Include="..\..\..\examples\RobotSimulator\b3RobotSimulatorClientAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\RobotSimulator\MinitaurSetup.h">
+    <ClInclude Include="..\..\..\examples\RobotSimulator\MinitaurSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

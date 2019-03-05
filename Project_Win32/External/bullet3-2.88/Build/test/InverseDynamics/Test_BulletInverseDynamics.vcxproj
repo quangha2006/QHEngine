@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\test\InverseDynamics\.;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\test\InverseDynamics\..\..\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\test\InverseDynamics\..\gtest-1.7.0\include;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\test\InverseDynamics\..\..\Extras\InverseDynamics;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\test\InverseDynamics\..\..\examples\ThirdPartyLibs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\test\InverseDynamics\.;$(ProjectDir)..\..\..\test\InverseDynamics\..\..\src;$(ProjectDir)..\..\..\test\InverseDynamics\..\gtest-1.7.0\include;$(ProjectDir)..\..\..\test\InverseDynamics\..\..\Extras\InverseDynamics;$(ProjectDir)..\..\..\test\InverseDynamics\..\..\examples\ThirdPartyLibs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -94,7 +94,7 @@
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/test/InverseDynamics/Debug/Test_BulletInverseDynamics.lib</ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
-      <ProgramDataBaseFile>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/test/InverseDynamics/Debug/Test_BulletInverseDynamics.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>$(OutDir)$(TargetName).pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -152,52 +152,46 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\test\InverseDynamics\test_invdyn_kinematics.cpp" />
+    <ClCompile Include="..\..\..\test\InverseDynamics\test_invdyn_kinematics.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\ZERO_CHECK.vcxproj">
-      <Project>{71748A02-695D-3AA9-8F98-98E05C2DDC3F}</Project>
-      <Name>ZERO_CHECK</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3Common\Bullet3Common.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\Bullet3Common\Bullet3Common.vcxproj">
       <Project>{B226D407-5E8C-3C5E-BC55-AE835B1AB5F6}</Project>
       <Name>Bullet3Common</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletCollision\BulletCollision.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\BulletCollision\BulletCollision.vcxproj">
       <Project>{4F5D18A8-18B6-355F-B32C-09D0AF55D083}</Project>
       <Name>BulletCollision</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletDynamics\BulletDynamics.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\BulletDynamics\BulletDynamics.vcxproj">
       <Project>{4EEC0762-0137-3BD0-9B5A-4F28FD72A969}</Project>
       <Name>BulletDynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletInverseDynamics\BulletInverseDynamics.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\BulletInverseDynamics\BulletInverseDynamics.vcxproj">
       <Project>{310A3B39-2472-333D-8E0E-E8FCF2EFE62B}</Project>
       <Name>BulletInverseDynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\InverseDynamics\BulletInverseDynamicsUtils.vcxproj">
+    <ProjectReference Include="..\..\..\Build\Extras\InverseDynamics\BulletInverseDynamicsUtils.vcxproj">
       <Project>{F020F6B5-9AFF-331F-8970-289D448F27E2}</Project>
       <Name>BulletInverseDynamicsUtils</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\LinearMath\LinearMath.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\LinearMath\LinearMath.vcxproj">
       <Project>{4A644A2F-778A-36C2-9FA6-70C969E306C4}</Project>
       <Name>LinearMath</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\test\gtest-1.7.0\gtest.vcxproj">
+    <ProjectReference Include="..\..\..\Build\test\gtest-1.7.0\gtest.vcxproj">
       <Project>{97038326-8F74-3939-A13F-A46F8BF5613D}</Project>
       <Name>gtest</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

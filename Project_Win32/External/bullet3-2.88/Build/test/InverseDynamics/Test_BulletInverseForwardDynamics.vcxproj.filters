@@ -1,102 +1,102 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\test\InverseDynamics\test_invdyn_bullet.cpp">
+    <ClCompile Include="..\..\..\test\InverseDynamics\test_invdyn_bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Utils\b3ResourcePath.cpp">
+    <ClCompile Include="..\..\..\examples\Utils\b3ResourcePath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\BulletUrdfImporter.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\BulletUrdfImporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\urdfStringSplit.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\urdfStringSplit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\UrdfParser.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\UrdfParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\URDF2Bullet.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\URDF2Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportMeshUtility\b3ImportMeshUtility.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportMeshUtility\b3ImportMeshUtility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\stb_image\stb_image.cpp">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\stb_image\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Utils\b3Clock.cpp">
+    <ClCompile Include="..\..\..\examples\Utils\b3Clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletWorldImporter\btBulletWorldImporter.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletWorldImporter\btBulletWorldImporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletWorldImporter\btWorldImporter.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletWorldImporter\btWorldImporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bChunk.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletFileLoader\bChunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bFile.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletFileLoader\bFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\bDNA.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletFileLoader\bDNA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Extras\Serialize\BulletFileLoader\btBulletFile.cpp">
+    <ClCompile Include="..\..\..\Extras\Serialize\BulletFileLoader\btBulletFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\Wavefront2GLInstanceGraphicsShape.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportObjDemo\Wavefront2GLInstanceGraphicsShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\LoadMeshFromObj.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportObjDemo\LoadMeshFromObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportColladaDemo\LoadMeshFromCollada.cpp">
+    <ClCompile Include="..\..\..\examples\Importers\ImportColladaDemo\LoadMeshFromCollada.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.cpp">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\tinyxml2\tinyxml2.cpp">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\tinyxml2\tinyxml2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\ConvertRigidBodies2MultiBody.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\ConvertRigidBodies2MultiBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\MultiBodyCreationInterface.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\MultiBodyCreationInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\BulletUrdfImporter.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\BulletUrdfImporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\UrdfParser.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\UrdfParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\URDF2Bullet.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\URDF2Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\URDFImporterInterface.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\URDFImporterInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\URDFJointTypes.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportURDFDemo\URDFJointTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportSTLDemo\ImportSTLSetup.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportSTLDemo\ImportSTLSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportSTLDemo\LoadMeshFromSTL.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportSTLDemo\LoadMeshFromSTL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportColladaDemo\ColladaGraphicsInstance.h">
+    <ClInclude Include="..\..\..\examples\Importers\ImportColladaDemo\ColladaGraphicsInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
