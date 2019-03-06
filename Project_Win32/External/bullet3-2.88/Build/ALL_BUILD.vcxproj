@@ -61,297 +61,267 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-F:\Android\CMake\bin\cmake.exe -SC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88 -BC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build --check-stamp-file C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\3.14.0-rc2\CMakeCCompiler.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\3.14.0-rc2\CMakeCXXCompiler.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\3.14.0-rc2\CMakeRCCompiler.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\3.14.0-rc2\CMakeSystem.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\feature_tests.c;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\feature_tests.cxx;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\BulletConfig.cmake.in;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\CMakeLists.txt;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCCompiler.cmake.in;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCCompilerABI.c;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCXXCompiler.cmake.in;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCXXCompilerABI.cpp;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCompilerIdDetection.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCXXCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCompileFeatures.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCompilerABI.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCompilerId.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineRCCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineSystem.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeFindBinUtils.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeParseImplicitIncludeInfo.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeParseImplicitLinkInfo.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeRCCompiler.cmake.in;F:\Android\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeSystem.cmake.in;F:\Android\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeTestCCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeTestCXXCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeTestCompilerCommon.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeTestRCCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\ADSP-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\ARMCC-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\AppleClang-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Borland-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Clang-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Cray-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\GHS-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\GNU-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\HP-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\IAR-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Intel-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C-FeatureTests.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\PGI-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\PathScale-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\SCO-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\TI-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Watcom-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\XL-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\zOS-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CompilerId\VS-10.vcxproj.in;F:\Android\CMake\share\cmake-3.14\Modules\FindOpenGL.cmake;F:\Android\CMake\share\cmake-3.14\Modules\FindPackageHandleStandardArgs.cmake;F:\Android\CMake\share\cmake-3.14\Modules\FindPackageMessage.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Internal\FeatureTesting.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows-Determine-CXX.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/CMakeLists.txt</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-F:\Android\CMake\bin\cmake.exe -SC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88 -BC:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build --check-stamp-file C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/CMakeFiles/generate.stamp
-if %errorlevel% neq 0 goto :cmEnd
-:cmEnd
-endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
-:cmErrorLevel
-exit /b %1
-:cmDone
-if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/CMakeLists.txt;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\3.14.0-rc2\CMakeCCompiler.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\3.14.0-rc2\CMakeCXXCompiler.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\3.14.0-rc2\CMakeRCCompiler.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\3.14.0-rc2\CMakeSystem.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\feature_tests.c;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\feature_tests.cxx;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\BulletConfig.cmake.in;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\CMakeLists.txt;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCCompiler.cmake.in;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCCompilerABI.c;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCXXCompiler.cmake.in;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCXXCompilerABI.cpp;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeCompilerIdDetection.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCXXCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCompileFeatures.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCompilerABI.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineCompilerId.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineRCCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeDetermineSystem.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeFindBinUtils.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeParseImplicitIncludeInfo.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeParseImplicitLinkInfo.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeRCCompiler.cmake.in;F:\Android\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeSystem.cmake.in;F:\Android\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeTestCCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeTestCXXCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeTestCompilerCommon.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CMakeTestRCCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\ADSP-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\ARMCC-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\AppleClang-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Borland-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Clang-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Cray-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\GHS-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\GNU-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\HP-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\IAR-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Intel-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C-FeatureTests.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\MSVC-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\PGI-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\PathScale-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\SCO-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\TI-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\Watcom-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\XL-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\zOS-C-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;F:\Android\CMake\share\cmake-3.14\Modules\CompilerId\VS-10.vcxproj.in;F:\Android\CMake\share\cmake-3.14\Modules\FindOpenGL.cmake;F:\Android\CMake\share\cmake-3.14\Modules\FindPackageHandleStandardArgs.cmake;F:\Android\CMake\share\cmake-3.14\Modules\FindPackageMessage.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Internal\FeatureTesting.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows-Determine-CXX.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;F:\Android\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\CMakeFiles\generate.stamp</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\BasicDemo\AppBasicExampleGui.vcxproj">
+    <ProjectReference Include="examples\BasicDemo\AppBasicExampleGui.vcxproj">
       <Project>{306D4723-129A-3B03-B5BB-1BE5C180C273}</Project>
       <Name>AppBasicExampleGui</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\BasicDemo\App_BasicExample.vcxproj">
+    <ProjectReference Include="examples\BasicDemo\App_BasicExample.vcxproj">
       <Project>{AFA01644-C59D-308A-949C-D2D4AC31137E}</Project>
       <Name>App_BasicExample</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\ExampleBrowser\App_ExampleBrowser.vcxproj">
+    <ProjectReference Include="examples\ExampleBrowser\App_ExampleBrowser.vcxproj">
       <Project>{B8B7FC45-3B6A-3FBB-A6A4-FF4BD805CA44}</Project>
       <Name>App_ExampleBrowser</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\RobotSimulator\App_HelloBulletRobotics.vcxproj">
+    <ProjectReference Include="examples\RobotSimulator\App_HelloBulletRobotics.vcxproj">
       <Project>{D22E8291-A9BC-3EC4-B07D-21E5F890F57C}</Project>
       <Name>App_HelloBulletRobotics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\HelloWorld\App_HelloWorld.vcxproj">
+    <ProjectReference Include="examples\HelloWorld\App_HelloWorld.vcxproj">
       <Project>{F692C859-5C2A-3431-A04E-A01BAAF5D17C}</Project>
       <Name>App_HelloWorld</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\SharedMemory\App_PhysicsServer_SharedMemory.vcxproj">
+    <ProjectReference Include="examples\SharedMemory\App_PhysicsServer_SharedMemory.vcxproj">
       <Project>{13222E8D-A2DE-3397-B0B6-3427CF001D2E}</Project>
       <Name>App_PhysicsServer_SharedMemory</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\SharedMemory\App_PhysicsServer_SharedMemory_GUI.vcxproj">
+    <ProjectReference Include="examples\SharedMemory\App_PhysicsServer_SharedMemory_GUI.vcxproj">
       <Project>{C736AC9D-0479-3FCA-93FC-A2AEE259C56C}</Project>
       <Name>App_PhysicsServer_SharedMemory_GUI</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\SharedMemory\App_PhysicsServer_SharedMemory_VR.vcxproj">
+    <ProjectReference Include="examples\SharedMemory\App_PhysicsServer_SharedMemory_VR.vcxproj">
       <Project>{79DF08F9-41A7-36DE-AA81-2804F4BF11A2}</Project>
       <Name>App_PhysicsServer_SharedMemory_VR</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\RobotSimulator\App_RobotSimulator.vcxproj">
+    <ProjectReference Include="examples\RobotSimulator\App_RobotSimulator.vcxproj">
       <Project>{398DF9A6-6BDC-34B9-A7AA-13E58406F1D5}</Project>
       <Name>App_RobotSimulator</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\RobotSimulator\App_RobotSimulator_NoGUI.vcxproj">
+    <ProjectReference Include="examples\RobotSimulator\App_RobotSimulator_NoGUI.vcxproj">
       <Project>{3F6635A8-4B44-38C6-9B0A-B6A7D71FC123}</Project>
       <Name>App_RobotSimulator_NoGUI</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\TwoJoint\App_TwoJoint.vcxproj">
+    <ProjectReference Include="examples\TwoJoint\App_TwoJoint.vcxproj">
       <Project>{9CA8A8DD-2FC5-35D4-AF03-A10663782389}</Project>
       <Name>App_TwoJoint</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\obj2sdf\App_obj2sdf.vcxproj">
+    <ProjectReference Include="Extras\obj2sdf\App_obj2sdf.vcxproj">
       <Project>{75D09FA1-A07F-335A-9C13-26F6C0E1F3F9}</Project>
       <Name>App_obj2sdf</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3Serialize\Bullet2FileLoader\Bullet2FileLoader.vcxproj">
+    <ProjectReference Include="src\Bullet3Serialize\Bullet2FileLoader\Bullet2FileLoader.vcxproj">
       <Project>{76E547E7-3D5E-3C44-A883-06A6D2B5A0C2}</Project>
       <Name>Bullet2FileLoader</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3Collision\Bullet3Collision.vcxproj">
+    <ProjectReference Include="src\Bullet3Collision\Bullet3Collision.vcxproj">
       <Project>{8C1CD756-A926-3B02-9E2E-3957DB065320}</Project>
       <Name>Bullet3Collision</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3Common\Bullet3Common.vcxproj">
+    <ProjectReference Include="src\Bullet3Common\Bullet3Common.vcxproj">
       <Project>{B226D407-5E8C-3C5E-BC55-AE835B1AB5F6}</Project>
       <Name>Bullet3Common</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3Dynamics\Bullet3Dynamics.vcxproj">
+    <ProjectReference Include="src\Bullet3Dynamics\Bullet3Dynamics.vcxproj">
       <Project>{4721169A-98BB-30BD-B630-5CAF460716EE}</Project>
       <Name>Bullet3Dynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3Geometry\Bullet3Geometry.vcxproj">
+    <ProjectReference Include="src\Bullet3Geometry\Bullet3Geometry.vcxproj">
       <Project>{FCEF8E04-6E23-3BDF-8285-1A732CD3E836}</Project>
       <Name>Bullet3Geometry</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3OpenCL\Bullet3OpenCL_clew.vcxproj">
+    <ProjectReference Include="src\Bullet3OpenCL\Bullet3OpenCL_clew.vcxproj">
       <Project>{3AC0B5E6-5A15-3D4A-A6E5-FE65E49C8790}</Project>
       <Name>Bullet3OpenCL_clew</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletCollision\BulletCollision.vcxproj">
+    <ProjectReference Include="src\BulletCollision\BulletCollision.vcxproj">
       <Project>{4F5D18A8-18B6-355F-B32C-09D0AF55D083}</Project>
       <Name>BulletCollision</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletDynamics\BulletDynamics.vcxproj">
+    <ProjectReference Include="src\BulletDynamics\BulletDynamics.vcxproj">
       <Project>{4EEC0762-0137-3BD0-9B5A-4F28FD72A969}</Project>
       <Name>BulletDynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\ExampleBrowser\BulletExampleBrowserLib.vcxproj">
+    <ProjectReference Include="examples\ExampleBrowser\BulletExampleBrowserLib.vcxproj">
       <Project>{BAC53590-8133-38FD-BDA4-E1CFE98C0360}</Project>
       <Name>BulletExampleBrowserLib</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\Serialize\BulletFileLoader\BulletFileLoader.vcxproj">
+    <ProjectReference Include="Extras\Serialize\BulletFileLoader\BulletFileLoader.vcxproj">
       <Project>{E90864CA-E6F2-3E4E-BABA-FB8EF781537E}</Project>
       <Name>BulletFileLoader</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletInverseDynamics\BulletInverseDynamics.vcxproj">
+    <ProjectReference Include="src\BulletInverseDynamics\BulletInverseDynamics.vcxproj">
       <Project>{310A3B39-2472-333D-8E0E-E8FCF2EFE62B}</Project>
       <Name>BulletInverseDynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\InverseDynamics\BulletInverseDynamicsUtils.vcxproj">
+    <ProjectReference Include="Extras\InverseDynamics\BulletInverseDynamicsUtils.vcxproj">
       <Project>{F020F6B5-9AFF-331F-8970-289D448F27E2}</Project>
       <Name>BulletInverseDynamicsUtils</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\BulletRobotics\BulletRobotics.vcxproj">
+    <ProjectReference Include="Extras\BulletRobotics\BulletRobotics.vcxproj">
       <Project>{EFD59B0B-CF89-369B-8AD9-87EDABA8BB1F}</Project>
       <Name>BulletRobotics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletSoftBody\BulletSoftBody.vcxproj">
+    <ProjectReference Include="src\BulletSoftBody\BulletSoftBody.vcxproj">
       <Project>{ACE9B5D0-A7DA-38D9-BAFA-721CCBFD6210}</Project>
       <Name>BulletSoftBody</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\Serialize\BulletWorldImporter\BulletWorldImporter.vcxproj">
+    <ProjectReference Include="Extras\Serialize\BulletWorldImporter\BulletWorldImporter.vcxproj">
       <Project>{308B9384-C102-3C9E-94EF-079DEC5CB989}</Project>
       <Name>BulletWorldImporter</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\Serialize\BulletXmlWorldImporter\BulletXmlWorldImporter.vcxproj">
+    <ProjectReference Include="Extras\Serialize\BulletXmlWorldImporter\BulletXmlWorldImporter.vcxproj">
       <Project>{AFF1F143-FDB7-3790-A920-A48E8C483640}</Project>
       <Name>BulletXmlWorldImporter</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\ThirdPartyLibs\BussIK\BussIK.vcxproj">
+    <ProjectReference Include="examples\ThirdPartyLibs\BussIK\BussIK.vcxproj">
       <Project>{10D54382-28DE-3E51-A85D-B592069B4540}</Project>
       <Name>BussIK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\ConvexDecomposition\ConvexDecomposition.vcxproj">
+    <ProjectReference Include="Extras\ConvexDecomposition\ConvexDecomposition.vcxproj">
       <Project>{02C38B9A-229E-3805-925C-DD72B3348916}</Project>
       <Name>ConvexDecomposition</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\GIMPACTUtils\GIMPACTUtils.vcxproj">
+    <ProjectReference Include="Extras\GIMPACTUtils\GIMPACTUtils.vcxproj">
       <Project>{785FAD33-9075-321C-87CF-98FE83C9855E}</Project>
       <Name>GIMPACTUtils</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\HACD\HACD.vcxproj">
+    <ProjectReference Include="Extras\HACD\HACD.vcxproj">
       <Project>{C66D79CA-43D5-3837-91B5-82B50EE818EB}</Project>
       <Name>HACD</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\LinearMath\LinearMath.vcxproj">
+    <ProjectReference Include="src\LinearMath\LinearMath.vcxproj">
       <Project>{4A644A2F-778A-36C2-9FA6-70C969E306C4}</Project>
       <Name>LinearMath</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\OpenGLWindow\OpenGLWindow.vcxproj">
+    <ProjectReference Include="examples\OpenGLWindow\OpenGLWindow.vcxproj">
       <Project>{317BB1F2-7809-37A6-86EC-42EDF00D990E}</Project>
       <Name>OpenGLWindow</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\test\BulletDynamics\pendulum\Test_BulletDynamics.vcxproj">
+    <ProjectReference Include="test\BulletDynamics\pendulum\Test_BulletDynamics.vcxproj">
       <Project>{E96C128F-B6FE-3348-A86D-459D852D525D}</Project>
       <Name>Test_BulletDynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\test\InverseDynamics\Test_BulletInverseDynamics.vcxproj">
+    <ProjectReference Include="test\InverseDynamics\Test_BulletInverseDynamics.vcxproj">
       <Project>{504954E1-6FE3-3B43-A66F-C1EA1AA15221}</Project>
       <Name>Test_BulletInverseDynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\test\InverseDynamics\Test_BulletInverseDynamicsJacobian.vcxproj">
+    <ProjectReference Include="test\InverseDynamics\Test_BulletInverseDynamicsJacobian.vcxproj">
       <Project>{AA4D1D3B-E27C-3174-9AC4-CE0A11C1A1FD}</Project>
       <Name>Test_BulletInverseDynamicsJacobian</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\test\InverseDynamics\Test_BulletInverseForwardDynamics.vcxproj">
+    <ProjectReference Include="test\InverseDynamics\Test_BulletInverseForwardDynamics.vcxproj">
       <Project>{240EF07B-E1ED-3651-9386-EE114CE54296}</Project>
       <Name>Test_BulletInverseForwardDynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\test\collision\Test_Collision.vcxproj">
+    <ProjectReference Include="test\collision\Test_Collision.vcxproj">
       <Project>{61EAE57B-D899-38FC-93AF-D349A35C6ACF}</Project>
       <Name>Test_Collision</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\test\SharedMemory\Test_PhysicsClientServer.vcxproj">
+    <ProjectReference Include="test\SharedMemory\Test_PhysicsClientServer.vcxproj">
       <Project>{05E20BEE-0494-3901-84E9-548EBE6CA7E3}</Project>
       <Name>Test_PhysicsClientServer</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\test\BulletDynamics\Test_btKinematicCharacterController.vcxproj">
+    <ProjectReference Include="test\BulletDynamics\Test_btKinematicCharacterController.vcxproj">
       <Project>{26A863BE-1708-3DD1-AAE6-38C722EC8773}</Project>
       <Name>Test_btKinematicCharacterController</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\ThirdPartyLibs\clsocket\clsocket.vcxproj">
+    <ProjectReference Include="examples\ThirdPartyLibs\clsocket\clsocket.vcxproj">
       <Project>{07BCF3E7-17AD-3181-8417-8731A1E535CC}</Project>
       <Name>clsocket</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\test\gtest-1.7.0\gtest.vcxproj">
+    <ProjectReference Include="test\gtest-1.7.0\gtest.vcxproj">
       <Project>{97038326-8F74-3939-A13F-A46F8BF5613D}</Project>
       <Name>gtest</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\ThirdPartyLibs\Gwen\gwen.vcxproj">
+    <ProjectReference Include="examples\ThirdPartyLibs\Gwen\gwen.vcxproj">
       <Project>{8A47B160-ED42-3C79-B220-8D2781C01B48}</Project>
       <Name>gwen</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
