@@ -44,8 +44,8 @@
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\SharedMemory\Release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">App_PhysicsServer_SharedMemory_VR.dir\Release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)BIN\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">App_PhysicsServer_SharedMemory_VR</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
@@ -110,12 +110,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
     <Link>
       <AdditionalDependencies>..\..\lib\BulletSoftBody_Debug.lib;..\..\lib\Bullet3Common_Debug.lib;..\..\lib\BulletWorldImporter_Debug.lib;..\..\lib\BulletFileLoader_Debug.lib;..\..\lib\BulletInverseDynamicsUtils_Debug.lib;..\..\lib\BulletInverseDynamics_Debug.lib;..\..\lib\BulletDynamics_Debug.lib;..\..\lib\BulletCollision_Debug.lib;..\..\lib\LinearMath_Debug.lib;..\..\lib\BussIK_Debug.lib;..\..\lib\OpenGLWindow_Debug.lib;opengl32.lib;glu32.lib;openvr_api.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/examples/ThirdPartyLibs/openvr/lib/win32;C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/examples/ThirdPartyLibs/openvr/lib/win32/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\examples\ThirdPartyLibs\openvr\lib\win32;$(ProjectDir)..\..\..\examples\ThirdPartyLibs\openvr\lib\win32\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/SharedMemory/Debug/App_PhysicsServer_SharedMemory_VR.lib</ImportLibrary>
+      <ImportLibrary>
+      </ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDataBaseFile>$(OutDir)$(TargetName).pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
@@ -126,7 +127,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\glad;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\openvr\headers;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\openvr\samples\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\examples\ThirdPartyLibs;$(ProjectDir)..\..\..\examples\ThirdPartyLibs\glad;$(ProjectDir)..\..\..\examples\ThirdPartyLibs\openvr\headers;$(ProjectDir)..\..\..\examples\ThirdPartyLibs\openvr\samples\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
@@ -137,7 +138,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <StringPooling>true</StringPooling>
       <WarningLevel>Level3</WarningLevel>
@@ -148,7 +149,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;BT_ENABLE_VR;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;B3_USE_STANDALONE_EXAMPLE;GLEW_STATIC;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\glad;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\openvr\headers;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\openvr\samples\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\glad;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\openvr\headers;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\openvr\samples\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -181,15 +183,16 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>..\..\lib\Release\BulletSoftBody.lib;..\..\lib\Release\Bullet3Common.lib;..\..\lib\Release\BulletWorldImporter.lib;..\..\lib\Release\BulletFileLoader.lib;..\..\lib\Release\BulletInverseDynamicsUtils.lib;..\..\lib\Release\BulletInverseDynamics.lib;..\..\lib\Release\BulletDynamics.lib;..\..\lib\Release\BulletCollision.lib;..\..\lib\Release\LinearMath.lib;..\..\lib\Release\BussIK.lib;..\..\lib\Release\BulletSoftBody.lib;..\..\lib\Release\Bullet3Common.lib;..\..\lib\Release\BulletWorldImporter.lib;..\..\lib\Release\BulletInverseDynamicsUtils.lib;..\..\lib\Release\BulletInverseDynamics.lib;..\..\lib\Release\BulletDynamics.lib;..\..\lib\Release\BulletCollision.lib;..\..\lib\Release\LinearMath.lib;..\..\lib\Release\BussIK.lib;..\..\lib\Release\OpenGLWindow.lib;opengl32.lib;glu32.lib;..\..\lib\Release\Bullet3Common.lib;..\..\lib\Release\BulletWorldImporter.lib;..\..\lib\Release\BulletInverseDynamicsUtils.lib;..\..\lib\Release\BulletInverseDynamics.lib;..\..\lib\Release\BulletDynamics.lib;..\..\lib\Release\BulletCollision.lib;..\..\lib\Release\LinearMath.lib;..\..\lib\Release\BussIK.lib;openvr_api.lib;..\..\lib\Release\OpenGLWindow.lib;opengl32.lib;glu32.lib;openvr_api.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/examples/ThirdPartyLibs/openvr/lib/win32;C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/examples/ThirdPartyLibs/openvr/lib/win32/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>..\..\lib\BulletSoftBody.lib;..\..\lib\Bullet3Common.lib;..\..\lib\BulletWorldImporter.lib;..\..\lib\BulletFileLoader.lib;..\..\lib\BulletInverseDynamicsUtils.lib;..\..\lib\BulletInverseDynamics.lib;..\..\lib\BulletDynamics.lib;..\..\lib\BulletCollision.lib;..\..\lib\LinearMath.lib;..\..\lib\BussIK.lib;..\..\lib\OpenGLWindow.lib;opengl32.lib;glu32.lib;openvr_api.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\examples/ThirdPartyLibs/openvr/lib/win32;$(ProjectDir)..\..\..\examples/ThirdPartyLibs/openvr/lib/win32/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/SharedMemory/Release/App_PhysicsServer_SharedMemory_VR.lib</ImportLibrary>
+      <ImportLibrary>
+      </ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
-      <ProgramDataBaseFile>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/SharedMemory/Release/App_PhysicsServer_SharedMemory_VR.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>$(OutDir)$(TargetName).pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>

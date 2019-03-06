@@ -44,8 +44,8 @@
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\RobotSimulator\Release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">App_RobotSimulator.dir\Release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)BIN\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">App_RobotSimulator</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
@@ -92,7 +92,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/RobotSimulator/Debug/App_RobotSimulator_d.lib</ImportLibrary>
+      <ImportLibrary>
+      </ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDataBaseFile>$(OutDir)$(TargetName).pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
@@ -103,7 +104,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\include;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\clsocket\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui\OpenGLWindow\GlewWindows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\examples;$(ProjectDir)..\..\..\examples\SharedMemory;$(ProjectDir)..\..\..\examples\ThirdPartyLibs;$(ProjectDir)..\..\..\examples\ThirdPartyLibs\enet\include;$(ProjectDir)..\..\..\examples\ThirdPartyLibs\clsocket\src;$(ProjectDir)..\..\..\btgui\OpenGLWindow\GlewWindows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
@@ -114,7 +115,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <StringPooling>true</StringPooling>
       <WarningLevel>Level3</WarningLevel>
@@ -136,15 +137,16 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;opengl32.lib;glu32.lib;ws2_32.lib;Winmm.lib;..\..\lib\Release\BulletRobotics.lib;..\..\lib\Release\BulletExampleBrowserLib.lib;..\..\lib\Release\BulletFileLoader.lib;..\..\lib\Release\BulletWorldImporter.lib;..\..\lib\Release\BulletSoftBody.lib;..\..\lib\Release\BulletDynamics.lib;..\..\lib\Release\BulletCollision.lib;..\..\lib\Release\BulletInverseDynamicsUtils.lib;..\..\lib\Release\BulletInverseDynamics.lib;..\..\lib\Release\LinearMath.lib;..\..\lib\Release\OpenGLWindow.lib;..\..\lib\Release\gwen.lib;..\..\lib\Release\Bullet3Common.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;ws2_32.lib;Winmm.lib;..\..\lib\BulletRobotics.lib;..\..\lib\BulletExampleBrowserLib.lib;..\..\lib\BulletFileLoader.lib;..\..\lib\BulletWorldImporter.lib;..\..\lib\BulletSoftBody.lib;..\..\lib\BulletDynamics.lib;..\..\lib\BulletCollision.lib;..\..\lib\BulletInverseDynamicsUtils.lib;..\..\lib\BulletInverseDynamics.lib;..\..\lib\LinearMath.lib;..\..\lib\OpenGLWindow.lib;..\..\lib\gwen.lib;..\..\lib\Bullet3Common.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/RobotSimulator/Release/App_RobotSimulator.lib</ImportLibrary>
+      <ImportLibrary>
+      </ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
-      <ProgramDataBaseFile>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/RobotSimulator/Release/App_RobotSimulator.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>$(OutDir)$(TargetName).pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>

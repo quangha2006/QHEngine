@@ -44,8 +44,8 @@
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\TwoJoint\Release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">App_TwoJoint.dir\Release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)BIN\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">App_TwoJoint</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
@@ -92,7 +92,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/TwoJoint/Debug/App_TwoJoint_d.lib</ImportLibrary>
+      <ImportLibrary>
+      </ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDataBaseFile>$(OutDir)$(TargetName).pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
@@ -103,7 +104,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\include;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\clsocket\src;C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\btgui\OpenGLWindow\GlewWindows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src;$(ProjectDir)..\..\..\examples;$(ProjectDir)..\..\..\examples\ThirdPartyLibs;$(ProjectDir)..\..\..\examples\ThirdPartyLibs\enet\include;$(ProjectDir)..\..\..\examples\ThirdPartyLibs\clsocket\src;$(ProjectDir)..\..\..\btgui\OpenGLWindow\GlewWindows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
@@ -114,7 +115,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <StringPooling>true</StringPooling>
       <WarningLevel>Level3</WarningLevel>
@@ -136,15 +137,16 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;opengl32.lib;glu32.lib;ws2_32.lib;..\..\lib\Release\BulletExampleBrowserLib.lib;..\..\lib\Release\BulletFileLoader.lib;..\..\lib\Release\BulletWorldImporter.lib;..\..\lib\Release\BulletSoftBody.lib;..\..\lib\Release\BulletDynamics.lib;..\..\lib\Release\BulletCollision.lib;..\..\lib\Release\BulletInverseDynamicsUtils.lib;..\..\lib\Release\BulletInverseDynamics.lib;..\..\lib\Release\LinearMath.lib;..\..\lib\Release\OpenGLWindow.lib;..\..\lib\Release\gwen.lib;..\..\lib\Release\BussIK.lib;..\..\lib\Release\Bullet3Common.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;ws2_32.lib;..\..\lib\BulletExampleBrowserLib.lib;..\..\lib\BulletFileLoader.lib;..\..\lib\BulletWorldImporter.lib;..\..\lib\BulletSoftBody.lib;..\..\lib\BulletDynamics.lib;..\..\lib\BulletCollision.lib;..\..\lib\BulletInverseDynamicsUtils.lib;..\..\lib\BulletInverseDynamics.lib;..\..\lib\LinearMath.lib;..\..\lib\OpenGLWindow.lib;..\..\lib\gwen.lib;..\..\lib\BussIK.lib;..\..\lib\Bullet3Common.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/TwoJoint/Release/App_TwoJoint.lib</ImportLibrary>
+      <ImportLibrary>
+      </ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
-      <ProgramDataBaseFile>C:/Users/11122/Desktop/QHEngine/Project_Win32/External/bullet3-2.88/Build/examples/TwoJoint/Release/App_TwoJoint.pdb</ProgramDataBaseFile>
+      <ProgramDataBaseFile>$(OutDir)$(TargetName).pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -152,194 +154,194 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TwoJoint\TwoJointMain.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\collisionFilterPlugin\collisionFilterPlugin.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\IKTrajectoryHelper.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\IKTrajectoryHelper.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ExampleBrowser\InProcessExampleBrowser.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\tinyRendererPlugin\tinyRendererPlugin.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\plugins\tinyRendererPlugin\TinyRendererVisualShapeConverter.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\OpenGLWindow\SimpleCamera.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\OpenGLWindow\SimpleCamera.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\geometry.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\model.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\tgaimage.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\our_gl.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\TinyRenderer\TinyRenderer.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\InProcessMemory.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClient.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClient.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServer.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServer.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerExample.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerExampleBullet2.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\SharedMemoryInProcessPhysicsC_API.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerSharedMemory.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerSharedMemory.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsDirect.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsDirect.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsDirectC_API.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsDirectC_API.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerCommandProcessor.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsServerCommandProcessor.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\b3PluginManager.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientSharedMemory.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientSharedMemory.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientSharedMemory_C_API.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientSharedMemory_C_API.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientC_API.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientC_API.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\Win32SharedMemory.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\Win32SharedMemory.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PosixSharedMemory.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PosixSharedMemory.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Utils\b3ResourcePath.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Utils\b3ResourcePath.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Utils\RobotLoggingUtil.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Utils\RobotLoggingUtil.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\tinyxml2\tinyxml2.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\stb_image\stb_image.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportColladaDemo\LoadMeshFromCollada.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\LoadMeshFromObj.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportObjDemo\Wavefront2GLInstanceGraphicsShape.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportMJCFDemo\BulletMJCFImporter.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\BulletUrdfImporter.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\URDF2Bullet.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\UrdfParser.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportURDFDemo\urdfStringSplit.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\Importers\ImportMeshUtility\b3ImportMeshUtility.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreading\b3PosixThreadSupport.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreading\b3Win32ThreadSupport.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\MultiThreading\b3ThreadSupportInterface.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientUDP.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientUDP_C_API.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientUDP.h" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientUDP_C_API.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\win32.c">
+    <ClCompile Include="..\..\..\examples\TwoJoint\TwoJointMain.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\plugins\collisionFilterPlugin\collisionFilterPlugin.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\plugins\pdControlPlugin\pdControlPlugin.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\b3RobotSimulatorClientAPI_NoDirect.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\IKTrajectoryHelper.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\IKTrajectoryHelper.h" />
+    <ClCompile Include="..\..\..\examples\ExampleBrowser\InProcessExampleBrowser.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\plugins\tinyRendererPlugin\tinyRendererPlugin.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\plugins\tinyRendererPlugin\TinyRendererVisualShapeConverter.cpp" />
+    <ClCompile Include="..\..\..\examples\OpenGLWindow\SimpleCamera.cpp" />
+    <ClInclude Include="..\..\..\examples\OpenGLWindow\SimpleCamera.h" />
+    <ClCompile Include="..\..\..\examples\TinyRenderer\geometry.cpp" />
+    <ClCompile Include="..\..\..\examples\TinyRenderer\model.cpp" />
+    <ClCompile Include="..\..\..\examples\TinyRenderer\tgaimage.cpp" />
+    <ClCompile Include="..\..\..\examples\TinyRenderer\our_gl.cpp" />
+    <ClCompile Include="..\..\..\examples\TinyRenderer\TinyRenderer.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\InProcessMemory.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClient.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsClient.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServer.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsServer.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerExample.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerExampleBullet2.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\SharedMemoryInProcessPhysicsC_API.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerSharedMemory.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsServerSharedMemory.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsDirect.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsDirect.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsDirectC_API.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsDirectC_API.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsServerCommandProcessor.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsServerCommandProcessor.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\b3PluginManager.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientSharedMemory.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsClientSharedMemory.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientSharedMemory_C_API.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsClientSharedMemory_C_API.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientC_API.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsClientC_API.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\Win32SharedMemory.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\Win32SharedMemory.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PosixSharedMemory.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PosixSharedMemory.h" />
+    <ClCompile Include="..\..\..\examples\Utils\b3ResourcePath.cpp" />
+    <ClInclude Include="..\..\..\examples\Utils\b3ResourcePath.h" />
+    <ClCompile Include="..\..\..\examples\Utils\RobotLoggingUtil.cpp" />
+    <ClInclude Include="..\..\..\examples\Utils\RobotLoggingUtil.h" />
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.cpp" />
+    <ClInclude Include="..\..\..\examples\ThirdPartyLibs\Wavefront\tiny_obj_loader.h" />
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\stb_image\stb_image.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportColladaDemo\LoadMeshFromCollada.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportObjDemo\LoadMeshFromObj.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportObjDemo\Wavefront2GLInstanceGraphicsShape.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportMJCFDemo\BulletMJCFImporter.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\BulletUrdfImporter.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\MyMultiBodyCreator.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\URDF2Bullet.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\UrdfParser.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportURDFDemo\urdfStringSplit.cpp" />
+    <ClCompile Include="..\..\..\examples\Importers\ImportMeshUtility\b3ImportMeshUtility.cpp" />
+    <ClCompile Include="..\..\..\examples\MultiThreading\b3PosixThreadSupport.cpp" />
+    <ClCompile Include="..\..\..\examples\MultiThreading\b3Win32ThreadSupport.cpp" />
+    <ClCompile Include="..\..\..\examples\MultiThreading\b3ThreadSupportInterface.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientUDP.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientUDP_C_API.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsClientUDP.h" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsClientUDP_C_API.h" />
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\enet\win32.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\unix.c">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\enet\unix.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\callbacks.c">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\enet\callbacks.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\compress.c">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\enet\compress.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\host.c">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\enet\host.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\list.c">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\enet\list.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\packet.c">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\enet\packet.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\peer.c">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\enet\peer.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\enet\protocol.c">
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\enet\protocol.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsC</CompileAs>
     </ClCompile>
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientTCP.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientTCP.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientTCP_C_API.cpp" />
-    <ClInclude Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\SharedMemory\PhysicsClientTCP_C_API.h" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\clsocket\src\SimpleSocket.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\clsocket\src\ActiveSocket.cpp" />
-    <ClCompile Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\examples\ThirdPartyLibs\clsocket\src\PassiveSocket.cpp" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientTCP.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsClientTCP.h" />
+    <ClCompile Include="..\..\..\examples\SharedMemory\PhysicsClientTCP_C_API.cpp" />
+    <ClInclude Include="..\..\..\examples\SharedMemory\PhysicsClientTCP_C_API.h" />
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\clsocket\src\SimpleSocket.cpp" />
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\clsocket\src\ActiveSocket.cpp" />
+    <ClCompile Include="..\..\..\examples\ThirdPartyLibs\clsocket\src\PassiveSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\Bullet3Common\Bullet3Common.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\Bullet3Common\Bullet3Common.vcxproj">
       <Project>{B226D407-5E8C-3C5E-BC55-AE835B1AB5F6}</Project>
       <Name>Bullet3Common</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletCollision\BulletCollision.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\BulletCollision\BulletCollision.vcxproj">
       <Project>{4F5D18A8-18B6-355F-B32C-09D0AF55D083}</Project>
       <Name>BulletCollision</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletDynamics\BulletDynamics.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\BulletDynamics\BulletDynamics.vcxproj">
       <Project>{4EEC0762-0137-3BD0-9B5A-4F28FD72A969}</Project>
       <Name>BulletDynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\ExampleBrowser\BulletExampleBrowserLib.vcxproj">
+    <ProjectReference Include="..\..\..\Build\examples\ExampleBrowser\BulletExampleBrowserLib.vcxproj">
       <Project>{BAC53590-8133-38FD-BDA4-E1CFE98C0360}</Project>
       <Name>BulletExampleBrowserLib</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\Serialize\BulletFileLoader\BulletFileLoader.vcxproj">
+    <ProjectReference Include="..\..\..\Build\Extras\Serialize\BulletFileLoader\BulletFileLoader.vcxproj">
       <Project>{E90864CA-E6F2-3E4E-BABA-FB8EF781537E}</Project>
       <Name>BulletFileLoader</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletInverseDynamics\BulletInverseDynamics.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\BulletInverseDynamics\BulletInverseDynamics.vcxproj">
       <Project>{310A3B39-2472-333D-8E0E-E8FCF2EFE62B}</Project>
       <Name>BulletInverseDynamics</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\InverseDynamics\BulletInverseDynamicsUtils.vcxproj">
+    <ProjectReference Include="..\..\..\Build\Extras\InverseDynamics\BulletInverseDynamicsUtils.vcxproj">
       <Project>{F020F6B5-9AFF-331F-8970-289D448F27E2}</Project>
       <Name>BulletInverseDynamicsUtils</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\BulletSoftBody\BulletSoftBody.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\BulletSoftBody\BulletSoftBody.vcxproj">
       <Project>{ACE9B5D0-A7DA-38D9-BAFA-721CCBFD6210}</Project>
       <Name>BulletSoftBody</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\Extras\Serialize\BulletWorldImporter\BulletWorldImporter.vcxproj">
+    <ProjectReference Include="..\..\..\Build\Extras\Serialize\BulletWorldImporter\BulletWorldImporter.vcxproj">
       <Project>{308B9384-C102-3C9E-94EF-079DEC5CB989}</Project>
       <Name>BulletWorldImporter</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\ThirdPartyLibs\BussIK\BussIK.vcxproj">
+    <ProjectReference Include="..\..\..\Build\examples\ThirdPartyLibs\BussIK\BussIK.vcxproj">
       <Project>{10D54382-28DE-3E51-A85D-B592069B4540}</Project>
       <Name>BussIK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\src\LinearMath\LinearMath.vcxproj">
+    <ProjectReference Include="..\..\..\Build\src\LinearMath\LinearMath.vcxproj">
       <Project>{4A644A2F-778A-36C2-9FA6-70C969E306C4}</Project>
       <Name>LinearMath</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\OpenGLWindow\OpenGLWindow.vcxproj">
+    <ProjectReference Include="..\..\..\Build\examples\OpenGLWindow\OpenGLWindow.vcxproj">
       <Project>{317BB1F2-7809-37A6-86EC-42EDF00D990E}</Project>
       <Name>OpenGLWindow</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\11122\Desktop\QHEngine\Project_Win32\External\bullet3-2.88\Build\examples\ThirdPartyLibs\Gwen\gwen.vcxproj">
+    <ProjectReference Include="..\..\..\Build\examples\ThirdPartyLibs\Gwen\gwen.vcxproj">
       <Project>{8A47B160-ED42-3C79-B220-8D2781C01B48}</Project>
       <Name>gwen</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
