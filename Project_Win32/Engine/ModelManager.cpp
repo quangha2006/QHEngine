@@ -37,7 +37,8 @@ void ModelManager::Update()
 {
 	for (int i = 0; i < mListModel.size(); i++)
 	{
-		mListModel[i]->Update();
+		mListModel[i]->SyncPhysics();
+		mListModel[i]->UpdateAnimation();
 	}
 }
 

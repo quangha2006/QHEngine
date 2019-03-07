@@ -393,12 +393,12 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	UpdateWorldModel();
+	UpdateWorldTransform();
 
 	glm::mat4 WorldViewLightSpaceMatrix;
 	glm::mat4 WorldViewProjectionMatrix;
 	glm::mat4 model_inverse;
-	glm::mat4 tmp_model = mWorld;
+	glm::mat4 tmp_model = mWorldTransform;
 
 	if (isTranslate)
 		tmp_model = glm::translate(tmp_model, translate);
@@ -510,7 +510,7 @@ void Model::SetTimeStampAnim(int64_t time)
 {
 	timeStampAnim = (float)(time / 1000.0f);
 }
-void Model::Update(int64_t time)
+void Model::UpdateAnimation(int64_t time)
 {
 	if (!m_initialized || !mCamera || !hasAnimation) return;
 
@@ -525,6 +525,21 @@ void Model::Update(int64_t time)
 		RunningTime = time;
 
 	BoneTransform(RunningTime, Transforms);
+}
+void Model::SyncPhysics()
+{
+	if (isDynamic && mRigidBody && mRigidBody->getMotionState())
+	{
+		btTransform trans;
+
+		mRigidBody->getMotionState()->getWorldTransform(trans);
+
+		float x = float(trans.getOrigin().getX());
+		float y = float(trans.getOrigin().getY());
+		float z = float(trans.getOrigin().getZ());
+
+		mPos = glm::vec3(x, y, z);
+	}
 }
 void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 {
@@ -559,7 +574,7 @@ void Model::SetRotate(float angle, glm::vec3 rotate)
 }
 void Model::SetWorld(glm::mat4 world)
 {
-	mWorld = world;
+	mWorldTransform = world;
 }
 void Model::SetAnimPlay(int anim)
 {
@@ -606,6 +621,12 @@ int Model::GetId()
 void Model::SetIsDrawDepthMap(bool isDraw)
 {
 	mIsDrawDepthMap = isDraw;
+}
+
+void Model::CreatePhysicsBody(float mass, glm::mat4 transform, glm::vec3 boxshape)
+{
+	isDynamic = (mass != 0.f);
+	mRigidBody = PhysicsSimulation::getInstance()->createRigidBody(mass, transform, boxshape);
 }
 
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
@@ -697,16 +718,16 @@ void Model::CalcInterpolatedScaling(aiVector3D & Out, float AnimationTime, const
 	aiVector3D Delta = End - Start;
 	Out = Start + Factor * Delta;
 }
-void Model::UpdateWorldModel()
+void Model::UpdateWorldTransform()
 {
-	mWorld = glm::mat4();
+	mWorldTransform = glm::mat4();
 
-	mWorld = glm::scale(mWorld, mScale);
+	mWorldTransform = glm::scale(mWorldTransform, mScale);
 
-	mWorld = glm::translate(mWorld, (mPos / mScale));
+	mWorldTransform = glm::translate(mWorldTransform, (mPos / mScale));
 
 	if (mAngle > 0.0f || mAngle < 0.0f)
-		mWorld = glm::rotate(mWorld, glm::radians(mAngle), mRotate);
+		mWorldTransform = glm::rotate(mWorldTransform, glm::radians(mAngle), mRotate);
 
 	
 }
@@ -789,7 +810,7 @@ uint Model::FindPosition(float AnimationTime, const aiNodeAnim * pNodeAnim)
 }
 glm::mat4 Model::GetWorld()
 {
-	return mWorld;
+	return mWorldTransform;
 }
 glm::vec3 Model::GetScale()
 {
@@ -819,7 +840,7 @@ Model::Model()
 	mPos = glm::vec3(0.0f);
 	mRotate = glm::vec3(0.0f);
 	mAngle = 0.0f;
-	mWorld = glm::mat4();
+	mWorldTransform = glm::mat4();
 	animToPlay = 0;
 	isDrawPolygon = false;
 	isUsePointLight = false;
@@ -829,6 +850,7 @@ Model::Model()
 	mCamera = Camera::getInstance();
 	m_meshdraw = -1;
 	mGammaCorrection = false;
+	isDynamic = false;
 	ModelManager::getInstance()->AddModel(this);
 }
 Model::~Model()

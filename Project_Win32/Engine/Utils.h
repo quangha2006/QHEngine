@@ -22,4 +22,5 @@ namespace Utils
 	std::string getResourcesFolder();
 	std::string getDefineVersionShader();
 	void PrintMat4(glm::mat4 mat4);
+	glm::vec3 RandomColor();
 }

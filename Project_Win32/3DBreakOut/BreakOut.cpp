@@ -13,17 +13,24 @@ void BreakOut::Init()
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
+	m_Streetenvironment.CreatePhysicsBody(0.0f, glm::translate(glm::mat4(), glm::vec3(0.0f, -1.4f, 0.0f)), glm::vec3(50.0, 1.0, 50.0));
 
 	cube.Init("3DBreakOutGame/cube2.dae");
 	cube.SetPos(glm::vec3(2.0f, 10.0f, 0.0f));
 	cube.SetCustomColor(glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 cubestartTransform = glm::translate(glm::mat4(), glm::vec3(2.0f, 10.0f, 0.0f));
+	cube.CreatePhysicsBody(1.0f, cubestartTransform, glm::vec3(2.25, 0.2, 0.5));
 
-	//for (int i = 0; i < 20; i++)
-	//{
-	//	listcube[i] = cube;
-	//	listcube[i].SetTranslate(glm::vec3(0.0f, (float)i, 0.0f));
-	//	listcube[i].SetCustomColor(glm::vec3((float)i/10, 0.0f, 1.0f));
-	//}
+	for (int i = 0; i < 50; i++)
+	{
+		listcube[i].Init("3DBreakOutGame/cube2.dae"); 
+		listcube[i].SetPos(glm::vec3(2.0f + i*0.1, (float)i, 0.0f + i*0.2));
+		glm::vec3 color = Utils::RandomColor();
+		listcube[i].SetCustomColor(color);
+
+		glm::mat4 cubestartTransform = glm::translate(glm::mat4(), glm::vec3(2.0f + i*0.1, (float)i, 0.0f + i*0.2));
+		listcube[i].CreatePhysicsBody(1.0f, cubestartTransform, glm::vec3(2.25, 0.2, 0.5));
+	}
 
 	uvcircle.Init("3DBreakOutGame/UVCircle.dae");
 	uvcircle.SetPos(glm::vec3(0.0f, 0.0f, 5.0f));
@@ -32,7 +39,6 @@ void BreakOut::Init()
 void BreakOut::Update()
 {
 
-	//cube.SetPos(glm::vec3(x1, y1, z1));
 }
 
 void BreakOut::GetRequireScreenSize(int32_t & width, int32_t & height)

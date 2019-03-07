@@ -7,6 +7,8 @@
 class PhysicsSimulation
 {
 private:
+	static PhysicsSimulation* instance;
+
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
 	btBroadphaseInterface* overlappingPairCache;
@@ -17,7 +19,8 @@ public:
 	void initPhysics();
 	void exitPhysics();
 	void updatePhysics();
-	void createRigidBody(float mass, glm::mat4 transform, glm::vec3 boxshape);
+	btRigidBody* createRigidBody(float mass, glm::mat4 transform, glm::vec3 boxshape);
+	static PhysicsSimulation* getInstance();
 	PhysicsSimulation();
 	~PhysicsSimulation();
 };

@@ -29,13 +29,16 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
 
-	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+	int width = mAppcontext->GetWindowWidth();
+	int height = mAppcontext->GetWindowHeight();
 
-	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, width, height);
 
-	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
 
-	mBluringRT.Init(mAppcontext, RenderTargetType_COLOR_BLURRING, mAppcontext->GetWindowWidth(), mAppcontext->GetWindowHeight());
+	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
+
+	mBluringRT.Init(mAppcontext, RenderTargetType_COLOR_BLURRING, width, height);
 
 	InitquadVAO();
 	InitDefaultShader();
@@ -43,7 +46,7 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 
 void RenderManager::Update()
 {
-	ModelManager::getInstance()->Update();
+
 }
 
 void RenderManager::Render()

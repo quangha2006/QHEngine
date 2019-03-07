@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "TGA.h"
 #include "ShaderManager.h"
+#include "PhysicsSimulation.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -66,10 +67,14 @@ private:
 	glm::vec3 mPos;
 	glm::vec3 mRotate;
 	float mAngle;
-	glm::mat4 mWorld;
+	glm::mat4 mWorldTransform;
 
 	int m_Id;
 	int m_meshdraw;
+
+	btRigidBody* mRigidBody;
+	bool isDynamic;
+
 	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -78,7 +83,7 @@ private:
 	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, glm::mat4 &ParentTransform);
 	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const string NodeName);
 	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
-	void UpdateWorldModel();
+	void UpdateWorldTransform();
 	void SetWorld(glm::mat4 world = glm::mat4());
 
 public:
@@ -89,7 +94,8 @@ public:
 	void DisableLightingForMesh(int numMesh);
 	void SetCustomColor(glm::vec3 color);
 	void SetTimeStampAnim(int64_t time);
-	void Update(int64_t time = -1.0f);
+	void UpdateAnimation(int64_t time = -1.0f);
+	void SyncPhysics();
 	void BoneTransform(float TimeInSeconds, vector<glm::mat4> &Transforms);
 	void SetScale(glm::vec3 scale);
 	void SetPos(glm::vec3 pos);
@@ -107,6 +113,7 @@ public:
 	glm::vec3 GetPos();
 	glm::vec3 GetRotate();
 	void SetIsDrawDepthMap(bool isDraw);
+	void CreatePhysicsBody(float mass, glm::mat4 transform, glm::vec3 boxshape);
 	Model();
 	~Model();
 };

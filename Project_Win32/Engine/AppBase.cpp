@@ -6,6 +6,7 @@
 #include "QHAxis.h"
 #include "ModelManager.h"
 #include "RenderManager.h"
+#include "PhysicsSimulation.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #if defined(_WINDOWS)
@@ -44,6 +45,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	GetRequireScreenSize(windowsWidth, windowsHeight);
 
 	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", windowsWidth, windowsHeight);
+	PhysicsSimulation::getInstance()->initPhysics();
 	RenderManager::getInstance()->Init(mContext, mCamera);
 	RenderManager::getInstance()->SetSkyBox(&mSkyBox);
 	ModelManager::getInstance()->Init();
@@ -91,7 +93,8 @@ void AppBase::rendering()
 	if (mIsLoadingThreadFinish)
 	{
 		Update();
-		RenderManager::getInstance()->Update();
+		PhysicsSimulation::getInstance()->updatePhysics();
+		ModelManager::getInstance()->Update();
 		RenderManager::getInstance()->Render();
 	}
 	unsigned short numDrawCall = Debugging::getInstance()->getNumDrawCall();
@@ -210,5 +213,6 @@ AppBase::AppBase()
 
 AppBase::~AppBase()
 {
+	PhysicsSimulation::getInstance()->exitPhysics();
 	delete mContext;
 }
