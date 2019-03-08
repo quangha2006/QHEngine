@@ -16,9 +16,9 @@ subject to the following restrictions:
 #include "BasicExample.h"
 
 #include "btBulletDynamicsCommon.h"
-#define ARRAY_SIZE_Y 5
-#define ARRAY_SIZE_X 5
-#define ARRAY_SIZE_Z 5
+#define ARRAY_SIZE_Y 1
+#define ARRAY_SIZE_X 1
+#define ARRAY_SIZE_Z 1
 
 #include "LinearMath/btVector3.h"
 #include "LinearMath/btAlignedObjectArray.h"
@@ -76,7 +76,7 @@ void BasicExample::initPhysics()
 		//create a few dynamic rigidbodies
 		// Re-using the same collision is better for memory usage and performance
 
-		btBoxShape* colShape = createBoxShape(btVector3(.1, .1, .1));
+		btBoxShape* colShape = createBoxShape(btVector3(.1, .5, .1));
 
 		//btCollisionShape* colShape = new btSphereShape(btScalar(1.));
 		m_collisionShapes.push_back(colShape);
@@ -84,7 +84,9 @@ void BasicExample::initPhysics()
 		/// Create Dynamic Objects
 		btTransform startTransform;
 		startTransform.setIdentity();
-
+		
+		btQuaternion startQuater(btVector3(0, 0, 1), 0.5 * 3.1415926538);
+		startTransform.setRotation(startQuater);
 		btScalar mass(1.f);
 
 		//rigidbody is dynamic if and only if mass is non zero, otherwise static

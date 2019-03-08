@@ -65,28 +65,9 @@ void PhysicsSimulation::exitPhysics()
 void PhysicsSimulation::updatePhysics()
 {
 	dynamicsWorld->stepSimulation(1.f / 60.f, 10);
-	//float x1, y1, z1;
-	//for (int j = dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
-	//{
-	//	btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[j];
-	//	btRigidBody* body = btRigidBody::upcast(obj);
-	//	btTransform trans;
-	//	if (body && body->getMotionState())
-	//	{
-	//		body->getMotionState()->getWorldTransform(trans);
-	//	}
-	//	else
-	//	{
-	//		trans = obj->getWorldTransform();
-	//	}
-	//	x1 = float(trans.getOrigin().getX());
-	//	y1 = float(trans.getOrigin().getY());
-	//	z1 = float(trans.getOrigin().getZ());
-	//	break;
-	//}
 }
 
-btRigidBody* PhysicsSimulation::createRigidBody(float mass, glm::mat4 transform, glm::vec3 boxshape)
+btRigidBody* PhysicsSimulation::createRigidBody(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape)
 {
 	//create a dynamic rigidbody
 
@@ -98,18 +79,27 @@ btRigidBody* PhysicsSimulation::createRigidBody(float mass, glm::mat4 transform,
 	btTransform startTransform;
 	startTransform.setIdentity();
 
-	//btScalar mass(1.f);
-
 	//rigidbody is dynamic if and only if mass is non zero, otherwise static
-	bool isDynamic = (mass != 0.f);
 
+	bool isDynamic = (mass != 0.f);
+	
 	btVector3 localInertia(0, 0, 0);
 	if (isDynamic)
+	{
 		colShape->calculateLocalInertia(mass, localInertia);
+	}
 
-	startTransform.setOrigin(btVector3(transform[3][0], transform[3][1], transform[3][2]));
+	startTransform.setOrigin(btVector3(pos[0], pos[1], pos[2]));
+
+	if (isDynamic && angle != 0.0f)
+	{
+		btQuaternion startQuater(btVector3(rotate[0], rotate[1], rotate[2]), glm::radians(angle));
+		startTransform.setRotation(startQuater);
+	}
+		
 
 	//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
+
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
 	btRigidBody* body = new btRigidBody(rbInfo);

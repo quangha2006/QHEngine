@@ -393,8 +393,8 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	UpdateWorldTransform();
-
+	//UpdateWorldTransform();
+	//Utils::PrintMat4(mWorldTransform);
 	glm::mat4 WorldViewLightSpaceMatrix;
 	glm::mat4 WorldViewProjectionMatrix;
 	glm::mat4 model_inverse;
@@ -528,18 +528,45 @@ void Model::UpdateAnimation(int64_t time)
 }
 void Model::SyncPhysics()
 {
-	if (isDynamic && mRigidBody && mRigidBody->getMotionState())
+	if (m_initialized && isDynamic && mRigidBody && mRigidBody->getMotionState())
 	{
 		btTransform trans;
 
 		mRigidBody->getMotionState()->getWorldTransform(trans);
-
+		btQuaternion rotation = trans.getRotation();
 		float x = float(trans.getOrigin().getX());
 		float y = float(trans.getOrigin().getY());
 		float z = float(trans.getOrigin().getZ());
 
+		btScalar angle = rotation.getAngle();
+		btScalar ro_x = rotation.getAxis().getX();
+		btScalar ro_y = rotation.getAxis().getY();
+		btScalar ro_z = rotation.getAxis().getZ();
+
+		
 		mPos = glm::vec3(x, y, z);
+
+		mWorldTransform = glm::translate(glm::mat4(), mPos);
+
+		mWorldTransform = rotate(mWorldTransform, rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
+
 	}
+}
+
+void Model::UpdateWorldTransform()
+{
+	if (!m_initialized) return;
+
+	mWorldTransform = glm::mat4();
+
+	mWorldTransform = glm::scale(mWorldTransform, mScale);
+
+	mWorldTransform = glm::translate(mWorldTransform, (mPos / mScale));
+
+	if (mAngle > 0.0f || mAngle < 0.0f)
+		mWorldTransform = glm::rotate(mWorldTransform, glm::radians(mAngle), mRotate);
+
+
 }
 void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 {
@@ -623,10 +650,10 @@ void Model::SetIsDrawDepthMap(bool isDraw)
 	mIsDrawDepthMap = isDraw;
 }
 
-void Model::CreatePhysicsBody(float mass, glm::mat4 transform, glm::vec3 boxshape)
+void Model::CreatePhysicsBody(float mass, glm::vec3 boxshape)
 {
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->createRigidBody(mass, transform, boxshape);
+	mRigidBody = PhysicsSimulation::getInstance()->createRigidBody(mass, mPos, mRotate, mAngle, boxshape);
 }
 
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
@@ -718,19 +745,7 @@ void Model::CalcInterpolatedScaling(aiVector3D & Out, float AnimationTime, const
 	aiVector3D Delta = End - Start;
 	Out = Start + Factor * Delta;
 }
-void Model::UpdateWorldTransform()
-{
-	mWorldTransform = glm::mat4();
 
-	mWorldTransform = glm::scale(mWorldTransform, mScale);
-
-	mWorldTransform = glm::translate(mWorldTransform, (mPos / mScale));
-
-	if (mAngle > 0.0f || mAngle < 0.0f)
-		mWorldTransform = glm::rotate(mWorldTransform, glm::radians(mAngle), mRotate);
-
-	
-}
 uint Model::FindScaling(float AnimationTime, const aiNodeAnim * pNodeAnim)
 {
 	assert(pNodeAnim->mNumScalingKeys > 0);

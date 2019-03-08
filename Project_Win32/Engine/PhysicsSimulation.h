@@ -19,7 +19,7 @@ public:
 	void initPhysics();
 	void exitPhysics();
 	void updatePhysics();
-	btRigidBody* createRigidBody(float mass, glm::mat4 transform, glm::vec3 boxshape);
+	btRigidBody* createRigidBody(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape);
 	static PhysicsSimulation* getInstance();
 	PhysicsSimulation();
 	~PhysicsSimulation();
