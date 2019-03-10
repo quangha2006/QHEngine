@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "BreakOut.h"
 #include "Utils.h"
+#include "RenderManager.h"
+
 void BreakOut::Init()
 {
 	mCamera->Pos = glm::vec3(0.0f, 12.0f, 20.0f);
@@ -13,7 +15,7 @@ void BreakOut::Init()
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -1.0f, 0.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.CreatePhysicsBody(0.0f, glm::vec3(50.0, 1.0, 50.0));
+	m_Streetenvironment.CreatePhysicsBody(0.0f, glm::vec3(100.0, 1.0, 100.0));
 
 	cube.Init("3DBreakOutGame/cube2.dae");
 	cube.SetPos(glm::vec3(2.0f, 10.0f, 0.0f));
@@ -50,7 +52,14 @@ void BreakOut::GetRequireScreenSize(int32_t & width, int32_t & height)
 
 void BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
-
+	char c = (char)key;
+	if (action == 0) return;
+	switch (c)
+	{
+	case 'B':
+		RenderManager::getInstance()->SwitchBloomMode();
+		return;
+	}
 }
 
 BreakOut::BreakOut()

@@ -1,4 +1,6 @@
 #include "PhysicsSimulation.h"
+#include "ShaderManager.h"
+#include "Camera.h"
 
 PhysicsSimulation * PhysicsSimulation::instance = NULL;
 
@@ -21,6 +23,62 @@ void PhysicsSimulation::initPhysics()
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 
 	dynamicsWorld->setGravity(btVector3(0, -10.0, 0));
+}
+
+void PhysicsSimulation::initDebugPhysics()
+{
+	vertices = new float[3 * 36]{
+		-0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f,  0.5f, -0.5f,
+		0.5f,  0.5f, -0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+
+		-0.5f, -0.5f,  0.5f,
+		0.5f, -0.5f,  0.5f,
+		0.5f,  0.5f,  0.5f,
+		0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
+
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+
+		0.5f,  0.5f,  0.5f,
+		0.5f,  0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f,  0.5f,
+		0.5f,  0.5f,  0.5f,
+
+		-0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f,  0.5f,
+		0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f, -0.5f,
+
+		-0.5f,  0.5f, -0.5f,
+		0.5f,  0.5f, -0.5f,
+		0.5f,  0.5f,  0.5f,
+		0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f
+	};
+	glBindVertexArray(0);
+	glGenVertexArrays(1, &quadVAO);
+	glGenBuffers(1, &quadVBO);
+	glBindVertexArray(quadVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+	glBufferData(GL_ARRAY_BUFFER, 3 * 36 * sizeof(float), vertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glBindVertexArray(0);
 }
 
 void PhysicsSimulation::exitPhysics()
@@ -67,6 +125,25 @@ void PhysicsSimulation::updatePhysics()
 	dynamicsWorld->stepSimulation(1.f / 60.f, 10);
 }
 
+void PhysicsSimulation::RenderPhysicsDebug()
+{
+	ShaderManager::getInstance()->setUseProgram("debugPhysics");
+	glm::mat4 model = glm::translate(glm::mat4(),glm::vec3(3., 0., 10.));
+	glm::mat4 view;
+	glm::mat4 projection;
+	//ShaderManager::getInstance()->setMat4("model", model);
+	//ShaderManager::getInstance()->setMat4("view", view);
+	//ShaderManager::getInstance()->setMat4("projection", projection);
+	glEnable(GL_DEPTH_TEST);
+	glm::mat4 WorldViewProjectionMatrix = Camera::getInstance()->WorldViewProjectionMatrix * model;
+	ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
+	glBindVertexArray(quadVAO);
+
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glBindVertexArray(0);
+	glDisable(GL_DEPTH_TEST);
+}
+
 btRigidBody* PhysicsSimulation::createRigidBody(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape)
 {
 	//create a dynamic rigidbody
@@ -97,7 +174,6 @@ btRigidBody* PhysicsSimulation::createRigidBody(float mass, glm::vec3 pos, glm::
 		startTransform.setRotation(startQuater);
 	}
 		
-
 	//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
@@ -123,4 +199,9 @@ PhysicsSimulation::PhysicsSimulation()
 
 PhysicsSimulation::~PhysicsSimulation()
 {
+	if (vertices)
+	{
+		delete[] vertices;
+		glDeleteBuffers(1, &quadVBO);
+	}
 }

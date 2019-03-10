@@ -113,7 +113,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="FrameRate.cpp" />
     <ClCompile Include="GLFWContext.cpp" />
     <ClCompile Include="MainAndroid.cpp">
@@ -152,7 +151,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="FrameRate.h" />
     <ClInclude Include="GLFWContext.h" />
     <ClInclude Include="Logs.h" />
@@ -179,6 +177,8 @@
     <None Include="..\..\Resources\Shaders\bloom_final.fs" />
     <None Include="..\..\Resources\Shaders\blur.fs" />
     <None Include="..\..\Resources\Shaders\brightness.fs" />
+    <None Include="..\..\Resources\Shaders\DebugPhysics.fs" />
+    <None Include="..\..\Resources\Shaders\DebugPhysics.vs" />
     <None Include="..\..\Resources\Shaders\DepthShader.fs" />
     <None Include="..\..\Resources\Shaders\DepthShader.vs" />
     <None Include="..\..\Resources\Shaders\framebuffers_debug.fs" />

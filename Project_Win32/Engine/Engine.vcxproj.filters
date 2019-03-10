@@ -69,9 +69,6 @@
     <ClCompile Include="Debugging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FrameBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="QHText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -164,9 +161,6 @@
     <ClInclude Include="Debugging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FrameBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="QHText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -227,6 +221,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\Resources\Shaders\brightness.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\DebugPhysics.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\DebugPhysics.vs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

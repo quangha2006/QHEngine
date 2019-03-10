@@ -1,6 +1,8 @@
 #include "Utils.h"
+#include "Timer.h"
 #include <cstdlib>
 #include <ctime>
+
 //#include "package_utils.h"
 namespace Utils
 {
@@ -31,16 +33,18 @@ namespace Utils
 	}
 	glm::vec3 RandomColor()
 	{
-		srand((int)time(0));
-		float x = rand() % 99 + 1;
-		float r = x / 100.0;
-		//srand(time(NULL));
-		float y = rand() % 99 + 1;
-		float g = y / 100.0;
-		//srand(time(NULL));
-		float z = rand() % 99 + 1;
-		float b = z / 100.0;
-		LOGI("%f, %f, %f\n", x, y, z);
+		float r = 0.1;
+		float g = 0.1;
+		float b = 0.1;
+
+		srand(Timer::GetTicks());
+
+		r = (float)((rand() % 100) + 1) / 100.0f;
+
+		g = (float)((rand() % 100) + 1) / 100.0f;
+
+		b = (float)((rand() % 100) + 1) / 100.0f;
+
 		return glm::vec3(r,g,b);
 	}
 }

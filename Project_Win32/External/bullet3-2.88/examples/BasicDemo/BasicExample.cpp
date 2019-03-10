@@ -69,7 +69,7 @@ void BasicExample::initPhysics()
 
 	{
 		btScalar mass(0.);
-		createRigidBody(mass, groundTransform, groundShape, btVector4(0, 0, 1, 1));
+		createRigidBody(mass, groundTransform, groundShape, btVector4(0, 0, 1, 0.5));
 	}
 
 	{

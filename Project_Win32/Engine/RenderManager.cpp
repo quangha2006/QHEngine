@@ -26,6 +26,7 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	ShaderManager::getInstance()->Init("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define HORIZONTAL");
 	ShaderManager::getInstance()->Init("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define VERTICAL");
 	ShaderManager::getInstance()->Init("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
+	ShaderManager::getInstance()->Init("debugPhysics", "Shaders/DebugPhysics.vs", "Shaders/DebugPhysics.fs");
 
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
 
@@ -58,6 +59,9 @@ void RenderManager::Render()
 	mBloom_bright =  PostProcessBloom(mSenceTexId);
 
 	RenderFinal();
+
+	//debug
+	//Debugging::getInstance()->DrawTex(mBloom_bright, "debugShader");
 }
 
 void RenderManager::SetSkyBox(SkyBox * skybox)
@@ -111,7 +115,7 @@ GLuint RenderManager::RenderSence()
 	mSkybox->Draw(mCamera);
 
 	ModelManager::getInstance()->Render(RenderMode_Sence);
-
+	PhysicsSimulation::getInstance()->RenderPhysicsDebug();
 	return mSenceRT.Disable();
 }
 
