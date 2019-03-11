@@ -12,19 +12,19 @@ void BreakOut::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
+	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -1.0f, 0.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.CreatePhysicsBody(0.0f, glm::vec3(100.0, 1.0, 100.0));
 
-	cube.Init("3DBreakOutGame/cube2.dae");
+	cube.Init("3DBreakOutGame/cube_05_radius.dae");
 	cube.SetPos(glm::vec3(2.0f, 10.0f, 0.0f));
-	cube.SetRotate(90, glm::vec3(0., 0., 1.));
-	cube.SetCustomColor(glm::vec3(0.0f, 0.0f, 1.0f));
+	//cube.SetRotate(90, glm::vec3(0., 0., 1.));
+	//cube.SetCustomColor(glm::vec3(0.0f, 0.0f, 1.0f));
 
 	cube.CreatePhysicsBody(1.0f, glm::vec3(2.25, 0.2, 0.5));
 
-	for (int i = 0; i < 50; i++)
+	/*for (int i = 0; i < 50; i++)
 	{
 		listcube[i].Init("3DBreakOutGame/cube2.dae"); 
 		listcube[i].SetPos(glm::vec3(2.0f + i*0.1, (float)i, 0.0f + i*0.2));
@@ -33,7 +33,7 @@ void BreakOut::Init()
 
 		glm::mat4 cubestartTransform = glm::translate(glm::mat4(), glm::vec3(2.0f, (float)i, 0.0f));
 		listcube[i].CreatePhysicsBody(1.0f, glm::vec3(2.25, 0.2, 0.5));
-	}
+	}*/
 
 	uvcircle.Init("3DBreakOutGame/UVCircle.dae");
 	uvcircle.SetPos(glm::vec3(0.0f, 0.0f, 5.0f));

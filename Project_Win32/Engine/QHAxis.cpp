@@ -12,6 +12,7 @@ bool QHAxis::Init(Camera *camera)
 		color_Attribute = glGetAttribLocation(program, "aColor");
 		WorldViewProjectionMatrix_Uniform = glGetUniformLocation(program, "WorldViewProjectionMatrix");
 	}
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glBufferData(GL_ARRAY_BUFFER, 15 * 6 * sizeof(float), vertices_axis, GL_STATIC_DRAW);
@@ -24,6 +25,7 @@ bool QHAxis::Init(Camera *camera)
 void QHAxis::Draw()
 {
 	if (!m_initialized || program == 0) return;
+	glEnable(GL_DEPTH_TEST);
 	glUseProgram(program);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
@@ -54,6 +56,7 @@ void QHAxis::Draw()
 	glDrawArrays(GL_TRIANGLES, 12, 3);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDisable(GL_DEPTH_TEST);
 }
 
 bool QHAxis::createProgram()

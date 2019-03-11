@@ -23,62 +23,63 @@ void PhysicsSimulation::initPhysics()
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 
 	dynamicsWorld->setGravity(btVector3(0, -10.0, 0));
+
+	initDebugPhysics();
 }
 
 void PhysicsSimulation::initDebugPhysics()
 {
-	vertices = new float[3 * 36]{
-		-0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		0.5f,  0.5f, -0.5f,
-		0.5f,  0.5f, -0.5f,
-		-0.5f,  0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
+	float x = 2.0f;
+	float y = 2.0f;
+	float z = 2.0f;
+	vertices = new float[12 * 6]{
+		0.0f,	0.0f, 0.0f,			// ----
+		x,		0.0f, 0.0f,
 
-		-0.5f, -0.5f,  0.5f,
-		0.5f, -0.5f,  0.5f,
-		0.5f,  0.5f,  0.5f,
-		0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
-		-0.5f, -0.5f,  0.5f,
+		0.0f,	0.0f, 0.0f,
+		0.0f,	0.0f, -z,
 
-		-0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f, -0.5f,
-		-0.5f, -0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
+		0.0f,	0.0f, 0.0f,
+		0.0f,	-y, 0.0f,
 
-		0.5f,  0.5f,  0.5f,
-		0.5f,  0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f,  0.5f,
-		0.5f,  0.5f,  0.5f,
+		0.0f,	-y, 0.0f,
+		x,		-y, 0.0f,
 
-		-0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f,  0.5f,
-		0.5f, -0.5f,  0.5f,
-		-0.5f, -0.5f,  0.5f,
-		-0.5f, -0.5f, -0.5f,
+		0.0f,	-y, 0.0f,
+		0.0f,	-y, -z,
 
-		-0.5f,  0.5f, -0.5f,
-		0.5f,  0.5f, -0.5f,
-		0.5f,  0.5f,  0.5f,
-		0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f, -0.5f
+		x,		-y, -z,
+		0.0f,	-y,	-z,
+
+		x,		-y, -z,
+		x,		-y, 0.0f,
+
+		x,		-y, -z,
+		x,		0.0f, -z,
+
+		x,		0.0f, -z,
+		x,		0.0f, 0.0f,
+
+		x,		0.0f, -z,
+		0.0f,	0.0f, -z,
+
+		0.0f,	0.0f,	-z,
+		0.0f,	-y,	-z,
+
+		x,	0.0f, 0.0f,
+		x, -y, 0.0f
 	};
 	glBindVertexArray(0);
 	glGenVertexArrays(1, &quadVAO);
 	glGenBuffers(1, &quadVBO);
 	glBindVertexArray(quadVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	glBufferData(GL_ARRAY_BUFFER, 3 * 36 * sizeof(float), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 12 * 6 * sizeof(float), vertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	CheckGLError("initDebugPhysics");
 }
 
 void PhysicsSimulation::exitPhysics()
@@ -128,20 +129,41 @@ void PhysicsSimulation::updatePhysics()
 void PhysicsSimulation::RenderPhysicsDebug()
 {
 	ShaderManager::getInstance()->setUseProgram("debugPhysics");
-	glm::mat4 model = glm::translate(glm::mat4(),glm::vec3(3., 0., 10.));
-	glm::mat4 view;
-	glm::mat4 projection;
-	//ShaderManager::getInstance()->setMat4("model", model);
-	//ShaderManager::getInstance()->setMat4("view", view);
-	//ShaderManager::getInstance()->setMat4("projection", projection);
 	glEnable(GL_DEPTH_TEST);
-	glm::mat4 WorldViewProjectionMatrix = Camera::getInstance()->WorldViewProjectionMatrix * model;
-	ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
 	glBindVertexArray(quadVAO);
 
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	for (int j = dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+	{
+		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[j];
+		btRigidBody* body = btRigidBody::upcast(obj);
+		btTransform trans;
+		if (body && body->getMotionState())
+		{
+			body->getMotionState()->getWorldTransform(trans);
+		}
+		else
+		{
+			trans = obj->getWorldTransform();
+		}
+		//printf("world pos object %d = %f,%f,%f\n", j, float(trans.getOrigin().getX()), float(trans.getOrigin().getY()), float(trans.getOrigin().getZ()));
+
+		float trans_x = float(trans.getOrigin().getX());
+		float trans_y = float(trans.getOrigin().getY());
+		float trans_z = float(trans.getOrigin().getZ());
+
+
+		glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(trans_x, trans_y, trans_z));
+
+		glm::mat4 WorldViewProjectionMatrix = Camera::getInstance()->WorldViewProjectionMatrix * model;
+		ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
+		glDrawArrays(GL_LINES, 0, 24);
+	}
+
+	
 	glBindVertexArray(0);
 	glDisable(GL_DEPTH_TEST);
+
+	CheckGLError("RenderPhysicsDebug");
 }
 
 btRigidBody* PhysicsSimulation::createRigidBody(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape)

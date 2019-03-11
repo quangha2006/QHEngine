@@ -43,6 +43,8 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 
 	InitquadVAO();
 	InitDefaultShader();
+
+	axis.Init(camera);
 }
 
 void RenderManager::Update()
@@ -115,6 +117,7 @@ GLuint RenderManager::RenderSence()
 	mSkybox->Draw(mCamera);
 
 	ModelManager::getInstance()->Render(RenderMode_Sence);
+	axis.Draw();
 	PhysicsSimulation::getInstance()->RenderPhysicsDebug();
 	return mSenceRT.Disable();
 }

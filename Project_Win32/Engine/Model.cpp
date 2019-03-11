@@ -592,6 +592,7 @@ void Model::SetScale(glm::vec3 scale)
 void Model::SetPos(glm::vec3 pos)
 {
 	mPos = pos;
+	mWorldTransform = glm::translate(mWorldTransform, (mPos / mScale));
 }
 void Model::SetRotate(float angle, glm::vec3 rotate)
 {

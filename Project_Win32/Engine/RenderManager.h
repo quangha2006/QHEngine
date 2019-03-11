@@ -5,6 +5,7 @@
 #include "RenderTarget.h"
 #include "AppContext.h"
 #include "SkyBox.h"
+#include "QHAxis.h"
 
 class RenderManager
 {
@@ -25,6 +26,8 @@ private:
 	void InitDefaultShader();
 	void InitquadVAO();
 	void RenderFinal();
+
+	QHAxis axis;
 public:
 	static RenderManager* getInstance();
 	void Init(AppContext * appcontext, Camera *camera);
