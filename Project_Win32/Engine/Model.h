@@ -73,6 +73,7 @@ private:
 	int m_meshdraw;
 
 	btRigidBody* mRigidBody;
+	glm::vec3 mFixedBoxShape;
 	bool isDynamic;
 
 	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -113,7 +114,7 @@ public:
 	glm::vec3 GetPos();
 	glm::vec3 GetRotate();
 	void SetIsDrawDepthMap(bool isDraw);
-	void CreatePhysicsBody(float mass, glm::vec3 boxshape);
+	void CreatePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape = glm::vec3(0.));
 	Model();
 	~Model();
 };

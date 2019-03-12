@@ -89,7 +89,7 @@ void PhysicsSimulation::updatePhysics()
 void PhysicsSimulation::RenderPhysicsDebug()
 {
 	ShaderManager::getInstance()->setUseProgram("debugPhysics");
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 	glBindVertexArray(quadVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
 	for (int j = dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
@@ -148,7 +148,7 @@ void PhysicsSimulation::RenderPhysicsDebug()
 
 	
 	glBindVertexArray(0);
-	//glDisable(GL_DEPTH_TEST);
+	glDisable(GL_DEPTH_TEST);
 
 	CheckGLError("RenderPhysicsDebug");
 }
@@ -175,14 +175,14 @@ btRigidBody* PhysicsSimulation::createRigidBody(float mass, glm::vec3 pos, glm::
 		colShape->calculateLocalInertia(mass, localInertia);
 	}
 
-	startTransform.setOrigin(btVector3(pos[0], pos[1], pos[2]));
+	startTransform.setOrigin(btVector3(pos.x, pos.y, pos.z));
 
-	if (isDynamic && angle != 0.0f)
+	if (angle != 0.0f)
 	{
-		btQuaternion startQuater(btVector3(rotate[0], rotate[1], rotate[2]), glm::radians(angle));
+		btQuaternion startQuater(btVector3(rotate.x, rotate.y, rotate.z), glm::radians(angle));
 		startTransform.setRotation(startQuater);
 	}
-		
+
 	//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);

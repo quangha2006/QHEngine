@@ -63,7 +63,7 @@ void RenderManager::Render()
 	RenderFinal();
 
 	//debug
-	//Debugging::getInstance()->DrawTex(mBloom_bright, "debugShader");
+	Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
 }
 
 void RenderManager::SetSkyBox(SkyBox * skybox)
@@ -100,11 +100,11 @@ GLuint RenderManager::RenderDepthMap()
 {
 	if (!m_isEnableShadowMap)
 		return -1;
-
+	glCullFace(GL_FRONT);
 	mShadowRT.Enable();
 
 	ModelManager::getInstance()->Render(RenderMode_Depth);
-
+	glCullFace(GL_BACK);
 	return mShadowRT.Disable();
 }
 

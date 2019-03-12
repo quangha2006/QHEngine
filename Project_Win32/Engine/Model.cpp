@@ -544,11 +544,15 @@ void Model::SyncPhysics()
 		btScalar ro_z = rotation.getAxis().getZ();
 
 		
-		mPos = glm::vec3(x, y, z);
+		mPos = glm::vec3(x, y, z);// -mFixedBoxShape;
+
+		//mWorldTransform = rotate(glm::mat4(), rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
 
 		mWorldTransform = glm::translate(glm::mat4(), mPos);
 
 		mWorldTransform = rotate(mWorldTransform, rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
+
+		mWorldTransform = glm::translate(mWorldTransform, - mFixedBoxShape);
 
 	}
 	else if (m_initialized)
@@ -654,10 +658,11 @@ void Model::SetIsDrawDepthMap(bool isDraw)
 	mIsDrawDepthMap = isDraw;
 }
 
-void Model::CreatePhysicsBody(float mass, glm::vec3 boxshape)
+void Model::CreatePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape)
 {
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->createRigidBody(mass, mPos, mRotate, mAngle, boxshape);
+	mFixedBoxShape = fixedboxshape;
+	mRigidBody = PhysicsSimulation::getInstance()->createRigidBody(mass, mPos + fixedboxshape, mRotate, mAngle, boxshape);
 }
 
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
@@ -870,6 +875,7 @@ Model::Model()
 	m_meshdraw = -1;
 	mGammaCorrection = false;
 	isDynamic = false;
+	mFixedBoxShape = glm::vec3(0.);
 	ModelManager::getInstance()->AddModel(this);
 }
 Model::~Model()
