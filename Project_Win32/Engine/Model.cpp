@@ -551,6 +551,10 @@ void Model::SyncPhysics()
 		mWorldTransform = rotate(mWorldTransform, rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
 
 	}
+	else if (m_initialized)
+	{
+		UpdateWorldTransform();
+	}
 }
 
 void Model::UpdateWorldTransform()
@@ -565,9 +569,8 @@ void Model::UpdateWorldTransform()
 
 	if (mAngle > 0.0f || mAngle < 0.0f)
 		mWorldTransform = glm::rotate(mWorldTransform, glm::radians(mAngle), mRotate);
-
-
 }
+
 void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
 {
 	glm::mat4 Identity = glm::mat4();

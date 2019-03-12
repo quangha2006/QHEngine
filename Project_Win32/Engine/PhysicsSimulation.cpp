@@ -3,7 +3,7 @@
 #include "Camera.h"
 
 PhysicsSimulation * PhysicsSimulation::instance = NULL;
-
+float *GenVerticeData(const btVector3& halfExtents);
 void PhysicsSimulation::initPhysics()
 {
 	///-----initialization_start-----
@@ -29,52 +29,12 @@ void PhysicsSimulation::initPhysics()
 
 void PhysicsSimulation::initDebugPhysics()
 {
-	float x = 2.0f;
-	float y = 2.0f;
-	float z = 2.0f;
-	vertices = new float[12 * 6]{
-		0.0f,	0.0f, 0.0f,			// ----
-		x,		0.0f, 0.0f,
-
-		0.0f,	0.0f, 0.0f,
-		0.0f,	0.0f, -z,
-
-		0.0f,	0.0f, 0.0f,
-		0.0f,	-y, 0.0f,
-
-		0.0f,	-y, 0.0f,
-		x,		-y, 0.0f,
-
-		0.0f,	-y, 0.0f,
-		0.0f,	-y, -z,
-
-		x,		-y, -z,
-		0.0f,	-y,	-z,
-
-		x,		-y, -z,
-		x,		-y, 0.0f,
-
-		x,		-y, -z,
-		x,		0.0f, -z,
-
-		x,		0.0f, -z,
-		x,		0.0f, 0.0f,
-
-		x,		0.0f, -z,
-		0.0f,	0.0f, -z,
-
-		0.0f,	0.0f,	-z,
-		0.0f,	-y,	-z,
-
-		x,	0.0f, 0.0f,
-		x, -y, 0.0f
-	};
 	glBindVertexArray(0);
 	glGenVertexArrays(1, &quadVAO);
 	glGenBuffers(1, &quadVBO);
 	glBindVertexArray(quadVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	glBufferData(GL_ARRAY_BUFFER, 12 * 6 * sizeof(float), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 12 * 6 * sizeof(float), NULL, GL_DYNAMIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glBindVertexArray(0);
@@ -129,9 +89,9 @@ void PhysicsSimulation::updatePhysics()
 void PhysicsSimulation::RenderPhysicsDebug()
 {
 	ShaderManager::getInstance()->setUseProgram("debugPhysics");
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 	glBindVertexArray(quadVAO);
-
+	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
 	for (int j = dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
 	{
 		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[j];
@@ -145,23 +105,50 @@ void PhysicsSimulation::RenderPhysicsDebug()
 		{
 			trans = obj->getWorldTransform();
 		}
-		//printf("world pos object %d = %f,%f,%f\n", j, float(trans.getOrigin().getX()), float(trans.getOrigin().getY()), float(trans.getOrigin().getZ()));
 
 		float trans_x = float(trans.getOrigin().getX());
 		float trans_y = float(trans.getOrigin().getY());
 		float trans_z = float(trans.getOrigin().getZ());
 
+		btVector3 xxx(btScalar(1.0), btScalar(1.0), btScalar(1.0));
+
+		if (obj->getCollisionShape()->getShapeType() == BOX_SHAPE_PROXYTYPE)
+		{
+			btBoxShape* colShape = static_cast<btBoxShape*> (obj->getCollisionShape());
+			xxx = colShape->getHalfExtentsWithoutMargin();
+		}
+
+		float *vertices = GenVerticeData(xxx);
+
+		glBufferSubData(GL_ARRAY_BUFFER, 0, 12 * 6 * sizeof(float), vertices);
+
+		btQuaternion rotation = trans.getRotation();
+		float x = float(trans.getOrigin().getX());
+		float y = float(trans.getOrigin().getY());
+		float z = float(trans.getOrigin().getZ());
+
+		btScalar angle = rotation.getAngle();
+		btScalar ro_x = rotation.getAxis().getX();
+		btScalar ro_y = rotation.getAxis().getY();
+		btScalar ro_z = rotation.getAxis().getZ();
+
 
 		glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(trans_x, trans_y, trans_z));
+
+		model = rotate(model, rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
+
+		//glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(trans_x, trans_y, trans_z));
 
 		glm::mat4 WorldViewProjectionMatrix = Camera::getInstance()->WorldViewProjectionMatrix * model;
 		ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
 		glDrawArrays(GL_LINES, 0, 24);
+
+		delete[]vertices;
 	}
 
 	
 	glBindVertexArray(0);
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 
 	CheckGLError("RenderPhysicsDebug");
 }
@@ -221,9 +208,52 @@ PhysicsSimulation::PhysicsSimulation()
 
 PhysicsSimulation::~PhysicsSimulation()
 {
-	if (vertices)
+	//if (vertices)
 	{
-		delete[] vertices;
+		//delete[] vertices;
 		glDeleteBuffers(1, &quadVBO);
 	}
+}
+
+float *GenVerticeData(const btVector3& halfExtents)
+{
+	float x = halfExtents.getX();
+	float y = halfExtents.getY();
+	float z = halfExtents.getZ();
+
+	// -x, y, z, //1
+	//	x, y, z, //2
+	//	x,-y, z, //3
+	// -x, -y, z, //4
+	// -x,  y,-z, //5
+	//	x, y, -z, //6
+	//	x, -y, -z, //7
+	// -x, -y, -z, //8
+	float *vertices = new float[12 * 6]{
+		-x, y, z,
+		 x, y, z,
+		 x, y, z,
+		 x,-y, z,
+		 x,-y, z,
+		-x,-y, z,
+		-x,-y, z,
+		-x, y, z,
+		-x, y, z,
+		-x, y,-z,
+		 x, y, z,
+		 x, y,-z,
+		 x,-y, z,
+		 x,-y,-z,
+		-x,-y, z,
+		-x,-y,-z,
+		-x, y,-z,
+		 x, y,-z,
+		 x, y,-z,
+		 x,-y,-z,
+		 x,-y,-z,
+		-x,-y,-z,
+		-x,-y,-z,
+		-x, y,-z
+	};
+	return vertices;
 }

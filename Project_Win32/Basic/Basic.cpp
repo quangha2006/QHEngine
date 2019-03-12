@@ -63,7 +63,7 @@ void Basic::Init()
 
 void Basic::Update()
 {
-	mSpider.SetRotate(Timer::getMillisecond()/100,glm::vec3(1.0f, 0.0f, 0.0f));
+	//mSpider.SetRotate(Timer::getMillisecond()/100,glm::vec3(1.0f, 0.0f, 0.0f));
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

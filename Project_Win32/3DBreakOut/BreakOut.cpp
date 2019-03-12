@@ -15,14 +15,15 @@ void BreakOut::Init()
 	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -1.0f, 0.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.CreatePhysicsBody(0.0f, glm::vec3(100.0, 1.0, 100.0));
+	m_Streetenvironment.CreatePhysicsBody(0.0f, glm::vec3(10.0, 1.0, 10.0));
 
 	cube.Init("3DBreakOutGame/cube_05_radius.dae");
-	cube.SetPos(glm::vec3(2.0f, 10.0f, 0.0f));
+	cube.SetPos(glm::vec3(0.0f, 10.0f, 0.0f));
+	//cube.setA
 	//cube.SetRotate(90, glm::vec3(0., 0., 1.));
-	//cube.SetCustomColor(glm::vec3(0.0f, 0.0f, 1.0f));
+	cube.SetCustomColor(glm::vec3(0.0f, 0.0f, 1.0f));
 
-	cube.CreatePhysicsBody(1.0f, glm::vec3(2.25, 0.2, 0.5));
+	cube.CreatePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52));
 
 	/*for (int i = 0; i < 50; i++)
 	{

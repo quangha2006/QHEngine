@@ -59,13 +59,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.9.1\include;$(SolutionDir)External\assimp-4.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.9.1\include;$(SolutionDir)External\assimp-4.1.0\include;$(SolutionDir)External\bullet3-2.88\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib;$(SolutionDir)BIN;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engined.lib;glfw3d.lib;glew32sd.lib;opengl32.lib;OpenAL32.lib;assimpd.lib;zlibstaticd.lib;freetype-2.9.1d.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engined.lib;glfw3d.lib;glew32sd.lib;opengl32.lib;OpenAL32.lib;assimpd.lib;zlibstaticd.lib;freetype-2.9.1d.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;BulletDynamics_Debug.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -78,7 +78,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.9.1\include;$(SolutionDir)External\assimp-4.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.9.1\include;$(SolutionDir)External\assimp-4.1.0\include;$(SolutionDir)External\bullet3-2.88\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -86,7 +86,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib;$(SolutionDir)BIN;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engine.lib;glfw3.lib;glew32s.lib;opengl32.lib;OpenAL32.lib;assimp.lib;zlibstatic.lib;freetype-2.9.1.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.lib;glfw3.lib;glew32s.lib;opengl32.lib;OpenAL32.lib;assimp.lib;zlibstatic.lib;freetype-2.9.1.lib;BulletCollision.lib;LinearMath.lib;BulletDynamics.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>

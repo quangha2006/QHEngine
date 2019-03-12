@@ -5,7 +5,6 @@
 #include <Model.h>
 #include <Camera.h>
 #include <ShaderManager.h>
-#include <FrameBuffer.h>
 #include "SkyBox.h"
 #include "Sound.h"
 #include "QHAxis.h"

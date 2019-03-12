@@ -17,7 +17,6 @@ private:
 	btDiscreteDynamicsWorld* dynamicsWorld;
 	btAlignedObjectArray<btCollisionShape*> collisionShapes;
 	// debug
-	float *vertices;
 	GLuint quadVAO, quadVBO;
 public:
 	void initPhysics();
