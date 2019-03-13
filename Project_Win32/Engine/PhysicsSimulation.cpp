@@ -88,6 +88,7 @@ void PhysicsSimulation::updatePhysics()
 
 void PhysicsSimulation::RenderPhysicsDebug()
 {
+	return;
 	ShaderManager::getInstance()->setUseProgram("debugPhysics");
 	glEnable(GL_DEPTH_TEST);
 	glBindVertexArray(quadVAO);

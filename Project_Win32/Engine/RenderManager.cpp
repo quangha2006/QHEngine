@@ -44,7 +44,7 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	InitquadVAO();
 	InitDefaultShader();
 
-	axis.Init(camera);
+	//axis.Init(camera);
 }
 
 void RenderManager::Update()
@@ -63,7 +63,7 @@ void RenderManager::Render()
 	RenderFinal();
 
 	//debug
-	Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
+	//Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
 }
 
 void RenderManager::SetSkyBox(SkyBox * skybox)
@@ -117,7 +117,7 @@ GLuint RenderManager::RenderSence()
 	mSkybox->Draw(mCamera);
 
 	ModelManager::getInstance()->Render(RenderMode_Sence);
-	axis.Draw();
+	//axis.Draw();
 	PhysicsSimulation::getInstance()->RenderPhysicsDebug();
 	return mSenceRT.Disable();
 }

@@ -5,6 +5,7 @@
 #include "QHTexture.h"
 #include "ModelManager.h"
 #include "Debugging.h"
+#include "QHMath.h"
 #include <SOIL.h>
 #include <thread>
 #include <Logs.h>
@@ -12,31 +13,6 @@
 #include <windows.h>
 #endif
 #include "AppContext.h"
-
-glm::mat4 AiToGLMMat4(aiMatrix4x4& in_mat)
-{
-	glm::mat4 tmp;
-	tmp[0][0] = in_mat.a1;	tmp[0][1] = in_mat.a2;	tmp[0][2] = in_mat.a3;	tmp[0][3] = in_mat.a4;
-	tmp[1][0] = in_mat.b1;	tmp[1][1] = in_mat.b2;	tmp[1][2] = in_mat.b3;	tmp[1][3] = in_mat.b4;
-	tmp[2][0] = in_mat.c1;	tmp[2][1] = in_mat.c2;	tmp[2][2] = in_mat.c3;	tmp[2][3] = in_mat.c4;
-	tmp[3][0] = in_mat.d1;	tmp[3][1] = in_mat.d2;	tmp[3][2] = in_mat.d3;	tmp[3][3] = in_mat.d4;
-
-	return tmp;
-}
-
-glm::mat4 Combinetransformations(glm::mat4 a, glm::mat4 b)
-{
-	glm::mat4 result(0.0f);
-	for (unsigned int i = 0; i < 4; i++) {
-		for (unsigned int j = 0; j < 4; j++) {
-			result[i][j] = a[i][0] * b[0][j] +
-				a[i][1] * b[1][j] +
-				a[i][2] * b[2][j] +
-				a[i][3] * b[3][j];
-		}
-	}
-	return result;
-}
 
 void Model::Init(string const & path, bool FlipUVs, bool enableAlpha, float fixedModel)
 {
@@ -88,14 +64,14 @@ void Model::Loading()
 	directory = path_modif.substr(0, path_modif.find_last_of('/'));
 	// process ASSIMP's root node recursively
 	aiMatrix4x4 tmp = m_pScene->mRootNode->mTransformation;
-	glm::mat4 NodeTransformation = AiToGLMMat4(tmp);
+	glm::mat4 NodeTransformation = QHMath::AiToGLMMat4(tmp);
 	NodeTransformation = glm::transpose(NodeTransformation);
 	processNode(m_pScene->mRootNode, m_pScene, NodeTransformation);
 
 	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
 
-	m_GlobalInverseTransform = glm::inverse(AiToGLMMat4(m_pScene->mRootNode->mTransformation));
+	m_GlobalInverseTransform = glm::inverse(QHMath::AiToGLMMat4(m_pScene->mRootNode->mTransformation));
 
 	if (m_pScene->HasAnimations())
 	{
@@ -122,9 +98,9 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	// process each mesh located at the current node
 
 	aiMatrix4x4 tmp = node->mTransformation;
-	glm::mat4 currentNodeTransformation = AiToGLMMat4(tmp);
+	glm::mat4 currentNodeTransformation = QHMath::AiToGLMMat4(tmp);
 	currentNodeTransformation = glm::transpose(currentNodeTransformation);
-	glm::mat4 Transformation = Combinetransformations(nodeTransformation, currentNodeTransformation);
+	glm::mat4 Transformation = QHMath::Combinetransformations(nodeTransformation, currentNodeTransformation);
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -244,7 +220,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTran
 				BoneIndex = m_NumBones;
 				m_NumBones++;
 				BoneInfo bi;
-				glm::mat4 b_mat = AiToGLMMat4(aiBone->mOffsetMatrix);
+				glm::mat4 b_mat = QHMath::AiToGLMMat4(aiBone->mOffsetMatrix);
 				bi.BoneOffset = b_mat;
 				m_BoneInfo.push_back(bi);
 				m_BoneMapping[b_name] = BoneIndex;
@@ -544,9 +520,7 @@ void Model::SyncPhysics()
 		btScalar ro_z = rotation.getAxis().getZ();
 
 		
-		mPos = glm::vec3(x, y, z);// -mFixedBoxShape;
-
-		//mWorldTransform = rotate(glm::mat4(), rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
+		mPos = glm::vec3(x, y, z);
 
 		mWorldTransform = glm::translate(glm::mat4(), mPos);
 
@@ -572,7 +546,9 @@ void Model::UpdateWorldTransform()
 	mWorldTransform = glm::translate(mWorldTransform, (mPos / mScale));
 
 	if (mAngle > 0.0f || mAngle < 0.0f)
-		mWorldTransform = glm::rotate(mWorldTransform, glm::radians(mAngle), mRotate);
+		mWorldTransform = rotate(mWorldTransform, glm::radians(mAngle), mRotate);
+
+	mWorldTransform = glm::translate(mWorldTransform, -mFixedBoxShape);
 }
 
 void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)
@@ -673,7 +649,7 @@ void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::ma
 
 	aiMatrix4x4 tmp = pNode->mTransformation;
 
-	glm::mat4 NodeTransformation = AiToGLMMat4(tmp);
+	glm::mat4 NodeTransformation = QHMath::AiToGLMMat4(tmp);
 
 	const aiNodeAnim* pNodeAnim = FindNodeAnim(pAnimation, NodeName);
 
@@ -706,17 +682,17 @@ void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::ma
 		TranslationM[2][3] = Translation.z;
 
 		// Combine the above transformations
-		glm::mat4 tmp1 = Combinetransformations(TranslationM, RotationM);
-		glm::mat4 tmp2 = Combinetransformations(tmp1, ScalingM);
+		glm::mat4 tmp1 = QHMath::Combinetransformations(TranslationM, RotationM);
+		glm::mat4 tmp2 = QHMath::Combinetransformations(tmp1, ScalingM);
 		NodeTransformation = tmp2;
 	}
 
-	glm::mat4 GlobalTransformation = Combinetransformations(ParentTransform, NodeTransformation);
+	glm::mat4 GlobalTransformation = QHMath::Combinetransformations(ParentTransform, NodeTransformation);
 
 	if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
 		uint BoneIndex = m_BoneMapping[NodeName];
-		glm::mat4 tmp3 = Combinetransformations(m_GlobalInverseTransform, GlobalTransformation);
-		glm::mat4 tmp4 = Combinetransformations(tmp3, m_BoneInfo[BoneIndex].BoneOffset);
+		glm::mat4 tmp3 = QHMath::Combinetransformations(m_GlobalInverseTransform, GlobalTransformation);
+		glm::mat4 tmp4 = QHMath::Combinetransformations(tmp3, m_BoneInfo[BoneIndex].BoneOffset);
 		m_BoneInfo[BoneIndex].FinalTransformation = tmp4;
 	}
 
