@@ -87,7 +87,9 @@ void main()
 		// get depth of current fragment from light's perspective
 		float currentDepth = projCoords.z;
 
-		float bias = max(0.05 * (1.0 - dot(Normal, lightDir)), 0.015);
+		float bias = 0.002*tan(acos(dot(Normal, lightDir)));//max(0.05 * (1.0 - dot(Normal, lightDir)), 0.015); //0.001
+		bias = clamp(bias, 0, 0.01);
+		bias = 0.002;
 		shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
 
 		ivec2 texsize = textureSize(shadowMap, 0);
@@ -102,7 +104,7 @@ void main()
 				shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;        
 			}    
 		}
-		shadow /= 9.0;
+		shadow /= 10.0;
 
 		if(projCoords.z > 1.0)
 			shadow = 0.0;

@@ -33,9 +33,9 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	int width = mAppcontext->GetWindowWidth();
 	int height = mAppcontext->GetWindowHeight();
 
-	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, width, height);
+	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, width, height);
 
-	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
+	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
 
 	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
 
@@ -43,8 +43,8 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 
 	InitquadVAO();
 	InitDefaultShader();
-
-	//axis.Init(camera);
+	//glEnable(GL_CULL_FACE);
+	axis.Init(camera);
 }
 
 void RenderManager::Update()
@@ -63,7 +63,7 @@ void RenderManager::Render()
 	RenderFinal();
 
 	//debug
-	//Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
+	Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
 }
 
 void RenderManager::SetSkyBox(SkyBox * skybox)
@@ -100,11 +100,13 @@ GLuint RenderManager::RenderDepthMap()
 {
 	if (!m_isEnableShadowMap)
 		return -1;
-	glCullFace(GL_FRONT);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 	mShadowRT.Enable();
 
 	ModelManager::getInstance()->Render(RenderMode_Depth);
-	glCullFace(GL_BACK);
+	glDisable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
 	return mShadowRT.Disable();
 }
 
@@ -117,7 +119,7 @@ GLuint RenderManager::RenderSence()
 	mSkybox->Draw(mCamera);
 
 	ModelManager::getInstance()->Render(RenderMode_Sence);
-	//axis.Draw();
+	axis.Draw();
 	PhysicsSimulation::getInstance()->RenderPhysicsDebug();
 	return mSenceRT.Disable();
 }

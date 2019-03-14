@@ -32,7 +32,7 @@ Camera::Camera()
 	View_near = 0.1f;
 	View_far = 100000.0f;
 	light_near = 1.0f;
-	light_far = 50.0f;
+	light_far = 100.0f;
 }
 vec3 Camera::ExtractCameraPos(const glm::mat4 & a_modelView)
 {
