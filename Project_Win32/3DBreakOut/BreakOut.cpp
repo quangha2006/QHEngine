@@ -8,20 +8,20 @@ void BreakOut::Init()
 	mCamera->Pos = glm::vec3(0.0f, 12.0f, 20.0f);
 	mCamera->Target = glm::vec3(0.0f, 0.0f, 5.0f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
-	mCamera->lightPos = glm::vec3(10.0f, 10.0f, 10.0f);
+	mCamera->lightPos = glm::vec3(15.0f, 10.5f, 15.0f);
 
 	mSkyBox.Init("SkyBox");
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.CreatePhysicsBody(0.0f, glm::vec3(30.0, .1, 30.0), glm::vec3(0., 0.0001, 0.));
+	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(30.0, .1, 30.0), glm::vec3(0., 0.001, 0.));
 
 	cube.Init("3DBreakOutGame/cube_05_radius.dae");
 	cube.SetPos(glm::vec3(0.0f, 10.0f, 0.0f));
 	cube.SetCustomColor(glm::vec3(0.0f, 0.0f, 1.0f));
 	cube.SetRotate(45, glm::vec3(0.0, 1.0, 1.0));
-	cube.CreatePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
+	cube.CreateBoxShapePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
 
 	/*for (int i = 0; i < 30; i++)
 	{
@@ -41,7 +41,7 @@ void BreakOut::Init()
 				listcube[xxx].Init("3DBreakOutGame/cube_05_radius.dae");
 				listcube[xxx].SetPos(glm::vec3(1.01 * i, 10 + 1.01 * k, 1.01 * j));
 				listcube[xxx].SetCustomColor(Utils::RandomColor());
-				listcube[xxx].CreatePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
+				listcube[xxx].CreateBoxShapePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
 				xxx++;
 			}
 		}

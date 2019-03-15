@@ -44,7 +44,7 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	InitquadVAO();
 	InitDefaultShader();
 	//glEnable(GL_CULL_FACE);
-	axis.Init(camera);
+	//axis.Init(camera);
 }
 
 void RenderManager::Update()
@@ -63,7 +63,7 @@ void RenderManager::Render()
 	RenderFinal();
 
 	//debug
-	Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
+	//Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
 }
 
 void RenderManager::SetSkyBox(SkyBox * skybox)

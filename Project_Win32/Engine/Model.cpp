@@ -634,11 +634,16 @@ void Model::SetIsDrawDepthMap(bool isDraw)
 	mIsDrawDepthMap = isDraw;
 }
 
-void Model::CreatePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape)
+void Model::CreateBoxShapePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape)
 {
 	isDynamic = (mass != 0.f);
 	mFixedBoxShape = fixedboxshape;
-	mRigidBody = PhysicsSimulation::getInstance()->createRigidBody(mass, mPos + fixedboxshape, mRotate, mAngle, boxshape);
+	mRigidBody = PhysicsSimulation::getInstance()->createBoxShape(mass, mPos + fixedboxshape, mRotate, mAngle, boxshape);
+}
+
+void CreateSphereShapePhysiceBody(float mass, float radius, glm::vec3 fixedboxshape = glm::vec3(0.))
+{
+
 }
 
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)

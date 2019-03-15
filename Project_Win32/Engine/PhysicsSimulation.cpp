@@ -154,7 +154,7 @@ void PhysicsSimulation::RenderPhysicsDebug()
 	CheckGLError("RenderPhysicsDebug");
 }
 
-btRigidBody* PhysicsSimulation::createRigidBody(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape)
+btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape)
 {
 	//create a dynamic rigidbody
 
@@ -193,6 +193,11 @@ btRigidBody* PhysicsSimulation::createRigidBody(float mass, glm::vec3 pos, glm::
 	dynamicsWorld->addRigidBody(body);
 
 	return body;
+}
+
+btRigidBody * PhysicsSimulation::createSphereShape(float mass, float radius, glm::vec3 rotate, float angle, glm::vec3 boxshape)
+{
+	return nullptr;
 }
 
 PhysicsSimulation * PhysicsSimulation::getInstance()

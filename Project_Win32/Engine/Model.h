@@ -114,7 +114,8 @@ public:
 	glm::vec3 GetPos();
 	glm::vec3 GetRotate();
 	void SetIsDrawDepthMap(bool isDraw);
-	void CreatePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape = glm::vec3(0.));
+	void CreateBoxShapePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape = glm::vec3(0.));
+	void CreateSphereShapePhysiceBody(float mass, float radius, glm::vec3 fixedboxshape = glm::vec3(0.));
 	Model();
 	~Model();
 };
