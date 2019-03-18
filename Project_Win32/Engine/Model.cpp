@@ -579,9 +579,17 @@ void Model::SetPos(glm::vec3 pos)
 }
 void Model::SetRotate(float angle, glm::vec3 rotate)
 {
-	mAngle = angle;
+	mAngle += angle;
 
 	mRotate = rotate;
+
+	if (mRigidBody)
+	{
+		btTransform transform = mRigidBody->getWorldTransform();
+		btQuaternion quater(btVector3(rotate.x, rotate.y, rotate.z), glm::radians(mAngle));
+		transform.setRotation(quater);
+		mRigidBody->setWorldTransform(transform);
+	}
 }
 void Model::SetWorld(glm::mat4 world)
 {
@@ -639,11 +647,15 @@ void Model::CreateBoxShapePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 
 	isDynamic = (mass != 0.f);
 	mFixedBoxShape = fixedboxshape;
 	mRigidBody = PhysicsSimulation::getInstance()->createBoxShape(mass, mPos + fixedboxshape, mRotate, mAngle, boxshape);
+	mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
-void CreateSphereShapePhysiceBody(float mass, float radius, glm::vec3 fixedboxshape = glm::vec3(0.))
+void Model::CreateSphereShapePhysiceBody(float mass, float radius, glm::vec3 fixedboxshape)
 {
-
+	isDynamic = (mass != 0.f);
+	mFixedBoxShape = fixedboxshape;
+	mRigidBody = PhysicsSimulation::getInstance()->createSphereShape(mass, mPos + fixedboxshape, mRotate, mAngle, radius);
+	mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)

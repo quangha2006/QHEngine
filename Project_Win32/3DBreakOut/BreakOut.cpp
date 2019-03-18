@@ -23,14 +23,14 @@ void BreakOut::Init()
 	cube.SetRotate(45, glm::vec3(0.0, 1.0, 1.0));
 	cube.CreateBoxShapePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
 
-	/*for (int i = 0; i < 30; i++)
-	{
-		listcube[i].Init("3DBreakOutGame/cube_05_radius.dae"); 
-		listcube[i].SetPos(glm::vec3(2.0f + i*0.1, (float)i, 0.0f + i*0.2));
-		listcube[i].SetCustomColor(Utils::RandomColor());
-		listcube[i].SetRotate(30, glm::vec3(1.0, (float)i, (float)i * 2));
-		listcube[i].CreatePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
-	}*/
+	//for (int i = 0; i < 30; i++)
+	//{
+	//	listcube[i].Init("3DBreakOutGame/cube_05_radius.dae"); 
+	//	listcube[i].SetPos(glm::vec3(2.0f + i*0.1, (float)i, 0.0f + i*0.2));
+	//	listcube[i].SetCustomColor(Utils::RandomColor());
+	//	listcube[i].SetRotate(30, glm::vec3(1.0, (float)i, (float)i * 2));
+	//	listcube[i].CreatePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
+	//}
 	int xxx = 0;
 	for (int k = 0; k < 5; k++)
 	{
@@ -47,11 +47,10 @@ void BreakOut::Init()
 		}
 	}
 
-
-
-	uvcircle.Init("3DBreakOutGame/UVCircle.dae");
+	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	uvcircle.SetScale(glm::vec3(4.0));
-	uvcircle.SetPos(glm::vec3(0.0f, 0.0f, 5.0f));
+	uvcircle.SetPos(glm::vec3(0.0f, 4.0f, -.5f));
+	uvcircle.CreateSphereShapePhysiceBody(1.0, 1.);
 }
 
 void BreakOut::Update()
@@ -73,7 +72,16 @@ void BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 	{
 	case 'B':
 		RenderManager::getInstance()->SwitchBloomMode();
-		return;
+		break;
+	case 'M':
+		RenderManager::getInstance()->SwitchShadowMapMode();
+		break;
+	case 'U':
+		m_Streetenvironment.SetRotate(2, glm::vec3(0., 0., 1.));
+		break;
+	case 'H':
+		m_Streetenvironment.SetRotate(-2, glm::vec3(0., 0., 1.));
+		break;
 	}
 }
 

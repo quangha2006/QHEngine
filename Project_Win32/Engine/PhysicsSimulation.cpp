@@ -88,7 +88,7 @@ void PhysicsSimulation::updatePhysics()
 
 void PhysicsSimulation::RenderPhysicsDebug()
 {
-	return;
+	//return;
 	ShaderManager::getInstance()->setUseProgram("debugPhysics");
 	glEnable(GL_DEPTH_TEST);
 	glBindVertexArray(quadVAO);
@@ -98,9 +98,9 @@ void PhysicsSimulation::RenderPhysicsDebug()
 		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[j];
 		btRigidBody* body = btRigidBody::upcast(obj);
 		btTransform trans;
-		if (body && body->getMotionState())
+		if (body)
 		{
-			body->getMotionState()->getWorldTransform(trans);
+			trans = body->getWorldTransform();
 		}
 		else
 		{
@@ -113,10 +113,19 @@ void PhysicsSimulation::RenderPhysicsDebug()
 
 		btVector3 xxx(btScalar(1.0), btScalar(1.0), btScalar(1.0));
 
-		if (obj->getCollisionShape()->getShapeType() == BOX_SHAPE_PROXYTYPE)
+		int type = obj->getCollisionShape()->getShapeType();
+		if (type == BOX_SHAPE_PROXYTYPE)
 		{
 			btBoxShape* colShape = static_cast<btBoxShape*> (obj->getCollisionShape());
 			xxx = colShape->getHalfExtentsWithoutMargin();
+		}
+		else if (type == COMPOUND_SHAPE_PROXYTYPE)
+		{
+			btSphereShape* colShape = static_cast<btSphereShape*> (obj->getCollisionShape());
+			btVector3 center(btScalar(.0), btScalar(.0), btScalar(.0));
+			btScalar radius = 1.0f;
+			colShape->getBoundingSphere(center, radius);
+			LOGI("CollisionShape type: %f, %f, %f: %f\n", center.getX(), center.getY(), center.getZ(), radius);
 		}
 
 		float *vertices = GenVerticeData(xxx);
@@ -137,8 +146,6 @@ void PhysicsSimulation::RenderPhysicsDebug()
 		glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(trans_x, trans_y, trans_z));
 
 		model = rotate(model, rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
-
-		//glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(trans_x, trans_y, trans_z));
 
 		glm::mat4 WorldViewProjectionMatrix = Camera::getInstance()->WorldViewProjectionMatrix * model;
 		ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
@@ -195,9 +202,38 @@ btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::v
 	return body;
 }
 
-btRigidBody * PhysicsSimulation::createSphereShape(float mass, float radius, glm::vec3 rotate, float angle, glm::vec3 boxshape)
+btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, float radius)
 {
-	return nullptr;
+	btCollisionShape* childShape = new btSphereShape(btScalar(radius));
+	btCompoundShape* colShape = new btCompoundShape();
+	colShape->addChildShape(btTransform::getIdentity(), childShape);
+
+	collisionShapes.push_back(colShape);
+
+	/// Create Dynamic Objects
+	btTransform startTransform;
+	startTransform.setIdentity();
+
+	startTransform.setRotation(btQuaternion(btVector3(1, 1, 1), SIMD_PI / 10.));
+
+	//rigidbody is dynamic if and only if mass is non zero, otherwise static
+	bool isDynamic = (mass != 0.f);
+
+	btVector3 localInertia(0, 0, 0);
+	if (isDynamic)
+		colShape->calculateLocalInertia(mass, localInertia);
+
+	startTransform.setOrigin(btVector3(btScalar(pos.x), btScalar(pos.y), btScalar(pos.z)));
+
+	//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
+	btRigidBody* body = new btRigidBody(rbInfo);
+
+	dynamicsWorld->addRigidBody(body);
+
+	return body;
 }
 
 PhysicsSimulation * PhysicsSimulation::getInstance()

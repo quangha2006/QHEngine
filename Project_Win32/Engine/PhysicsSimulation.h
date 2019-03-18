@@ -25,9 +25,8 @@ public:
 	void updatePhysics();
 	void RenderPhysicsDebug();
 	btRigidBody* createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape);
-	btRigidBody* createSphereShape(float mass, float radius, glm::vec3 rotate, float angle, glm::vec3 boxshape);
+	btRigidBody* createSphereShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, float radius);
 	static PhysicsSimulation* getInstance();
 	PhysicsSimulation();
 	~PhysicsSimulation();
 };
-
