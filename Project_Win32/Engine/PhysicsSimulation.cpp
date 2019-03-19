@@ -88,9 +88,9 @@ void PhysicsSimulation::updatePhysics()
 
 void PhysicsSimulation::RenderPhysicsDebug()
 {
-	//return;
+	return;
 	ShaderManager::getInstance()->setUseProgram("debugPhysics");
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 	glBindVertexArray(quadVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
 	for (int j = dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
@@ -111,24 +111,22 @@ void PhysicsSimulation::RenderPhysicsDebug()
 		float trans_y = float(trans.getOrigin().getY());
 		float trans_z = float(trans.getOrigin().getZ());
 
-		btVector3 xxx(btScalar(1.0), btScalar(1.0), btScalar(1.0));
+		btVector3 halfextents(btScalar(1.0), btScalar(1.0), btScalar(1.0));
 
 		int type = obj->getCollisionShape()->getShapeType();
 		if (type == BOX_SHAPE_PROXYTYPE)
 		{
 			btBoxShape* colShape = static_cast<btBoxShape*> (obj->getCollisionShape());
-			xxx = colShape->getHalfExtentsWithoutMargin();
+			halfextents = colShape->getHalfExtentsWithoutMargin();
 		}
-		else if (type == COMPOUND_SHAPE_PROXYTYPE)
+		else if (type == SPHERE_SHAPE_PROXYTYPE)
 		{
 			btSphereShape* colShape = static_cast<btSphereShape*> (obj->getCollisionShape());
-			btVector3 center(btScalar(.0), btScalar(.0), btScalar(.0));
-			btScalar radius = 1.0f;
-			colShape->getBoundingSphere(center, radius);
-			LOGI("CollisionShape type: %f, %f, %f: %f\n", center.getX(), center.getY(), center.getZ(), radius);
+			btScalar radius = colShape->getRadius();
+			halfextents = btVector3(radius, radius, radius);
 		}
 
-		float *vertices = GenVerticeData(xxx);
+		float *vertices = GenVerticeData(halfextents);
 
 		glBufferSubData(GL_ARRAY_BUFFER, 0, 12 * 6 * sizeof(float), vertices);
 
@@ -156,7 +154,7 @@ void PhysicsSimulation::RenderPhysicsDebug()
 
 	
 	glBindVertexArray(0);
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 
 	CheckGLError("RenderPhysicsDebug");
 }
@@ -204,9 +202,9 @@ btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::v
 
 btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, float radius)
 {
-	btCollisionShape* childShape = new btSphereShape(btScalar(radius));
-	btCompoundShape* colShape = new btCompoundShape();
-	colShape->addChildShape(btTransform::getIdentity(), childShape);
+	btCollisionShape* colShape = new btSphereShape(btScalar(radius));
+	//btCompoundShape* colShape = new btCompoundShape();
+	//colShape->addChildShape(btTransform::getIdentity(), childShape);
 
 	collisionShapes.push_back(colShape);
 

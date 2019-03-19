@@ -8,6 +8,7 @@ class BreakOut : public AppBase
 {
 private:
 	Model m_Streetenvironment, cube, uvcircle;
+	Model top, botton, left, right;
 	Model listcube[5*5*5];
 public:
 	void Update();

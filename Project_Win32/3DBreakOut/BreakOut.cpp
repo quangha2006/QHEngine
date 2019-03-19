@@ -12,8 +12,9 @@ void BreakOut::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
+	m_Streetenvironment.Init("3DBreakOutGame/floor/Tiles_Terracotta_002a_SD/untitled2.dae", false, false);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+	m_Streetenvironment.SetScale(glm::vec3(5.0, 1.0, 5.0));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(30.0, .1, 30.0), glm::vec3(0., 0.001, 0.));
 
@@ -21,16 +22,28 @@ void BreakOut::Init()
 	cube.SetPos(glm::vec3(0.0f, 10.0f, 0.0f));
 	cube.SetCustomColor(glm::vec3(0.0f, 0.0f, 1.0f));
 	cube.SetRotate(45, glm::vec3(0.0, 1.0, 1.0));
-	cube.CreateBoxShapePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
+	cube.CreateBoxShapePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52));
 
-	//for (int i = 0; i < 30; i++)
-	//{
-	//	listcube[i].Init("3DBreakOutGame/cube_05_radius.dae"); 
-	//	listcube[i].SetPos(glm::vec3(2.0f + i*0.1, (float)i, 0.0f + i*0.2));
-	//	listcube[i].SetCustomColor(Utils::RandomColor());
-	//	listcube[i].SetRotate(30, glm::vec3(1.0, (float)i, (float)i * 2));
-	//	listcube[i].CreatePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
-	//}
+	top.Init("3DBreakOutGame/cube_05_radius.dae");
+	top.SetPos(glm::vec3(0.0f, 0.8f, -30.0f));
+	top.SetScale(glm::vec3(70.0, 1.0, 1.0));
+	top.CreateBoxShapePhysicsBody(0.0f, glm::vec3(35., 0.52, 0.52));
+
+	botton.Init("3DBreakOutGame/cube_05_radius.dae");
+	botton.SetPos(glm::vec3(0.0f, 0.8f, 30.0f));
+	botton.SetScale(glm::vec3(70.0, 1.0, 1.0));
+	botton.CreateBoxShapePhysicsBody(0.0f, glm::vec3(35., 0.52, 0.52));
+
+	left.Init("3DBreakOutGame/cube_05_radius.dae");
+	left.SetPos(glm::vec3(-30.0f, 0.8f, 0.0f));
+	left.SetScale(glm::vec3(1.0, 1.0, 70.0));
+	left.CreateBoxShapePhysicsBody(0.0f, glm::vec3(.52, 0.52, 35.));
+
+	right.Init("3DBreakOutGame/cube_05_radius.dae");
+	right.SetPos(glm::vec3(30.0f, 0.8f, 0.0f));
+	right.SetScale(glm::vec3(1.0, 1.0, 70.0));
+	right.CreateBoxShapePhysicsBody(0.0f, glm::vec3(.52, 0.52, 35.));
+
 	int xxx = 0;
 	for (int k = 0; k < 5; k++)
 	{
@@ -48,9 +61,9 @@ void BreakOut::Init()
 	}
 
 	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
-	uvcircle.SetScale(glm::vec3(4.0));
-	uvcircle.SetPos(glm::vec3(0.0f, 4.0f, -.5f));
-	uvcircle.CreateSphereShapePhysiceBody(1.0, 1.);
+	uvcircle.SetScale(glm::vec3(2.0));
+	uvcircle.SetPos(glm::vec3(0.0f, 4.0f, 0.0f));
+	uvcircle.CreateSphereShapePhysiceBody(1.0, 2.);
 }
 
 void BreakOut::Update()

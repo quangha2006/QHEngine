@@ -504,11 +504,12 @@ void Model::UpdateAnimation(int64_t time)
 }
 void Model::SyncPhysics()
 {
-	if (m_initialized && isDynamic && mRigidBody && mRigidBody->getMotionState())
+	if (m_initialized && isDynamic && mRigidBody)
 	{
-		btTransform trans;
+		btTransform trans = mRigidBody->getWorldTransform();;
 
-		mRigidBody->getMotionState()->getWorldTransform(trans);
+		//mRigidBody->getWorldTransform(trans);
+		//mRigidBody->set
 		btQuaternion rotation = trans.getRotation();
 		float x = float(trans.getOrigin().getX());
 		float y = float(trans.getOrigin().getY());
@@ -522,11 +523,16 @@ void Model::SyncPhysics()
 		
 		mPos = glm::vec3(x, y, z);
 
-		mWorldTransform = glm::translate(glm::mat4(), mPos);
+		mWorldTransform = glm::mat4();
+
+		mWorldTransform = glm::scale(mWorldTransform, mScale);
+
+		mWorldTransform = glm::translate(mWorldTransform, mPos / mScale);
 
 		mWorldTransform = rotate(mWorldTransform, rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
 
-		mWorldTransform = glm::translate(mWorldTransform, - mFixedBoxShape);
+		mWorldTransform = glm::translate(mWorldTransform, - mFixedBoxShape / mScale);
+
 
 	}
 	else if (m_initialized)
