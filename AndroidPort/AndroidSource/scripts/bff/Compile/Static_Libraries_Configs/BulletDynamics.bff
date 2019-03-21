@@ -1,5 +1,5 @@
 {
-	.PROJECT_Name = "EngineLib"
+	.PROJECT_Name = "BulletDynamics"
 	#include "../__Common/__STD_CPP.bff"
 
 	.PROJECT_SourceFiles =
@@ -21,16 +21,14 @@
 	"$Engine_Sources_Path$/Debugging.cpp"
 	"$Engine_Sources_Path$/FrameBuffer.cpp"
 	"$Engine_Sources_Path$/QHText.cpp"
-	"$Engine_Sources_Path$/QHTexture.cpp"
-	"$Engine_Sources_Path$/QHAxis.cpp"
-	"$Engine_Sources_Path$/QHMath.cpp"
-	"$Engine_Sources_Path$/Sound.cpp"
 	"$Engine_Sources_Path$/Utils.cpp"
 	"$Engine_Sources_Path$/SkyBox.cpp"
+	"$Engine_Sources_Path$/QHTexture.cpp"
+	"$Engine_Sources_Path$/QHAxis.cpp"
+	"$Engine_Sources_Path$/Sound.cpp"
 	"$Engine_Sources_Path$/RenderManager.cpp"
 	"$Engine_Sources_Path$/ModelManager.cpp"
 	"$Engine_Sources_Path$/RenderTarget.cpp"
-	"$Engine_Sources_Path$/PhysicsSimulation.cpp"
 	}
 
 	.ExcludedUnitySources =

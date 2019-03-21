@@ -22,7 +22,7 @@ void PhysicsSimulation::initPhysics()
 
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
 
-	dynamicsWorld->setGravity(btVector3(0, -10.0, 0));
+	dynamicsWorld->setGravity(btVector3(0, 0.0, 0));
 
 	initDebugPhysics();
 }
@@ -157,6 +157,11 @@ void PhysicsSimulation::RenderPhysicsDebug()
 	//glDisable(GL_DEPTH_TEST);
 
 	CheckGLError("RenderPhysicsDebug");
+}
+
+void PhysicsSimulation::SetGravity(btVector3 gravity)
+{
+	dynamicsWorld->setGravity(gravity);
 }
 
 btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape)

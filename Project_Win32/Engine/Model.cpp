@@ -664,6 +664,11 @@ void Model::CreateSphereShapePhysiceBody(float mass, float radius, glm::vec3 fix
 	mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
+btRigidBody * Model::GetRigidBody()
+{
+	return mRigidBody;
+}
+
 void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
 {
 	string NodeName(pNode->mName.data);

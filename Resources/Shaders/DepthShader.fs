@@ -33,5 +33,5 @@ void main()
 
     FragColor = vec4(vec3((2.0 * near_plane * far_plane) / (far_plane + near_plane - z * (far_plane - near_plane)) / far_plane), depthValue.a);
 	
-	//gl_FragColor = vec4(texture2D(material_texture_diffuse1, TexCoords).rgb, 1.0);
+	//FragColor = vec4(texture2D(material_texture_diffuse1, TexCoords).rgb, 1.0);
 }

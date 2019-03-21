@@ -22,6 +22,9 @@
 	//"poly2tri"
 	//"openal"
 	//"freetypelib"
+	"BulletCollision"
+	"BulletDynamics"
+	"LinearMath"
 }
 
 #include "__Common/__TargetConfigurations.bff"

@@ -3,13 +3,14 @@
 #include <AppContext.h>
 #include <SkyBox.h>
 #include <Model.h>
-
+#define MaxBall 10
 class BreakOut : public AppBase
 {
 private:
 	Model m_Streetenvironment, cube, uvcircle;
 	Model top, botton, left, right;
-	Model listcube[5*5*5];
+
+	Model listcube[MaxBall * MaxBall * MaxBall];
 public:
 	void Update();
 	void Init();

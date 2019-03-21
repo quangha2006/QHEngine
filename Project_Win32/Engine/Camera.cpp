@@ -28,11 +28,11 @@ Camera::Camera()
 	Front	= vec3(0.0f, 0.0f, -1.0f);
 	view = glm::mat4(0.0f);
 	projection = glm::mat4(0.0f);
-	zoom = 75.0f;
+	zoom = 45.0f;
 	View_near = 0.1f;
 	View_far = 100000.0f;
-	light_near = 1.0f;
-	light_far = 100.0f;
+	light_near = -20.1f;
+	light_far = 80.0f;
 }
 vec3 Camera::ExtractCameraPos(const glm::mat4 & a_modelView)
 {
@@ -64,8 +64,8 @@ void Camera::UpdateWorldViewProjection()
 	view = glm::lookAt(Pos, Target, up);
 	WorldViewProjectionMatrix = projection * view;
 
-	lightProjection = glm::ortho(-50.0f, 50.0f, -20.0f, 20.0f, light_near, light_far);
-	lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.2));
+	lightProjection = glm::ortho(-80.0f, 80.0f, -40.0f, 40.0f, light_near, light_far);
+	lightView = glm::lookAt(lightPos, glm::vec3(0.0, 1.0, 0.2), glm::vec3(0.0, 1.0, 0.2));
 	lightSpaceMatrix = lightProjection * lightView;
 }
 Camera * Camera::getInstance()
