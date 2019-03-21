@@ -33,9 +33,9 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	int width = mAppcontext->GetWindowWidth();
 	int height = mAppcontext->GetWindowHeight();
 
-	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, width, height);
+	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, width, height);
 
-	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
+	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
 
 	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
 

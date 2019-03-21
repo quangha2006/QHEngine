@@ -3,7 +3,7 @@
 #include <AppContext.h>
 #include <SkyBox.h>
 #include <Model.h>
-#define MaxBall 10
+#define MaxBall 4
 class BreakOut : public AppBase
 {
 private:

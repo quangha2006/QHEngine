@@ -5,7 +5,8 @@
 {
 	// main
 	//"Sanctuary_CPP"
-	"Basic_CPP"
+	"3DBreakOut"
+	//"Basic_CPP"
 	"EngineLib"
 	
 	//"native_app_glue"
@@ -22,9 +23,9 @@
 	//"poly2tri"
 	//"openal"
 	//"freetypelib"
-	"BulletCollision"
-	"BulletDynamics"
-	"LinearMath"
+	//"BulletCollision"
+	//"BulletDynamics"
+	//"LinearMath"
 }
 
 #include "__Common/__TargetConfigurations.bff"

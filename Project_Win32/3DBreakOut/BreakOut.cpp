@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "BreakOut.h"
 #include "Utils.h"
 #include "RenderManager.h"
@@ -116,7 +116,7 @@ void BreakOut::Update()
 					listcube[xxx].GetRigidBody()->setRollingFriction(0.);
 					listcube[xxx].GetRigidBody()->setSpinningFriction(0.);
 					listcube[xxx].GetRigidBody()->setRestitution(1.);
-					listcube[xxx].GetRigidBody()->applyForce(btVector3(pos_x * 10., pos_y  * -500., pos_z), btVector3(0.0, 0.0, 0.0));
+					listcube[xxx].GetRigidBody()->applyForce(btVector3(pos_x * 100., -pos_y  * 300., pos_z), btVector3(0.0, 0.0, 0.0));
 					xxx++;
 				}
 			}

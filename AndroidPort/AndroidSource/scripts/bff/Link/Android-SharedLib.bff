@@ -7,8 +7,9 @@
 
 	.GameStaticLibs = ""
 					+ " -Wl,--start-group"
-					+ " -lBasic_CPP"
+					//+ " -lBasic_CPP"
 					;+ " -lnative_app_glue"
+					+ " -l3DBreakOut"
               		+ " -lEngineLib"
 					;+ " -lSOIL"
 					+ " -lAssimp"

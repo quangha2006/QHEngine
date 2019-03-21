@@ -34,6 +34,7 @@
 									+ " -I$GameRoot$/External/openal/include"
 									+ " -I$GameRoot$/External/freetype-2.9.1/include"
 									+ " -I$GameRoot$/External/assimp-4.1.0/include"
+									+ " -I$GameRoot$/External/bullet3-2.88/src"
                   					+ " -I$Engine_Sources_Path$"
 				  					+ " -I$NDK_Root$/sources/android/native_app_glue"
 
