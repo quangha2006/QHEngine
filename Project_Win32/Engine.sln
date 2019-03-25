@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 14 for Windows Desktop
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{0A820982-59C6-4B6F-A0AB-6AE1D0478A9B}"
 EndProject
@@ -135,5 +135,8 @@ Global
 		{4F5D18A8-18B6-355F-B32C-09D0AF55D083} = {C33CBB08-9148-44FF-9F7C-9AC35389D4F8}
 		{4EEC0762-0137-3BD0-9B5A-4F28FD72A969} = {C33CBB08-9148-44FF-9F7C-9AC35389D4F8}
 		{C33CBB08-9148-44FF-9F7C-9AC35389D4F8} = {C1A50E42-2331-436B-8D68-52BA36A2935A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {149240A3-5CFC-476E-B4D4-9D6AA4F73D18}
 	EndGlobalSection
 EndGlobal

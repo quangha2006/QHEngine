@@ -83,14 +83,14 @@ void BreakOut::Init()
 
 	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	uvcircle.SetScale(glm::vec3(1.0));
-	uvcircle.SetPos(glm::vec3(0.0f, 1.f, 0.0f));
+	uvcircle.SetPos(glm::vec3(0.0f, 1.f, 10.0f));
 	uvcircle.CreateSphereShapePhysiceBody(1., 1.);
 	
 	uvcircle.GetRigidBody()->setFriction(0.);
 	uvcircle.GetRigidBody()->setRollingFriction(0.);
 	uvcircle.GetRigidBody()->setSpinningFriction(0.);
 	uvcircle.GetRigidBody()->setRestitution(1.);
-	uvcircle.GetRigidBody()->applyCentralForce(btVector3(6000., 0., 2000.));
+	uvcircle.GetRigidBody()->applyCentralForce(btVector3(1000., 0., -5000.));
 
 	mSoundCollistion.Init("Sound/Tink.wav");
 
