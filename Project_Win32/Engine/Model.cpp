@@ -362,7 +362,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 
 void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
 {
-	if (!m_initialized || !mCamera) return;
+	if (!m_initialized || !mCamera || !mIsVisible) return;
 	if (mode == RenderMode_Depth && mIsDrawDepthMap == false) return;
 
 	glEnable(GL_DEPTH_TEST);
@@ -488,7 +488,7 @@ void Model::SetTimeStampAnim(int64_t time)
 }
 void Model::UpdateAnimation(int64_t time)
 {
-	if (!m_initialized || !mCamera || !hasAnimation) return;
+	if (!m_initialized || !mCamera || !hasAnimation || !mIsVisible) return;
 
 	float RunningTime = 0.0f;
 
@@ -636,6 +636,16 @@ void Model::SetDrawMesh(int mesh)
 void Model::SetId(int id)
 {
 	m_Id = id;
+}
+
+void Model::SetVisible(bool isvisible)
+{
+	mIsVisible = isvisible;
+}
+
+bool Model::GetIsVisible()
+{
+	return mIsVisible;
 }
 
 int Model::GetId()
@@ -879,6 +889,7 @@ Model::Model()
 	m_meshdraw = -1;
 	mGammaCorrection = false;
 	isDynamic = false;
+	mIsVisible = true;
 	mFixedBoxShape = glm::vec3(0.);
 	ModelManager::getInstance()->AddModel(this);
 }

@@ -63,6 +63,7 @@ private:
 	float timeStampAnim;
 	bool mIsDrawDepthMap;
 	bool mGammaCorrection;
+	bool mIsVisible;
 	glm::vec3 mScale;
 	glm::vec3 mPos;
 	glm::vec3 mRotate;
@@ -107,6 +108,8 @@ public:
 	void SetCamera(Camera * camera);
 	void SetDrawMesh(int mesh);
 	void SetId(int id);
+	void SetVisible(bool isvisible);
+	bool GetIsVisible();
 	void Loading();
 	int GetId();
 	glm::mat4 GetWorld();

@@ -61,11 +61,11 @@ ALuint Sound::createBufferFromWave(char* data, BasicWAVEHeader header)
 
 	return buffer;
 }
-void Sound::Play()
+void Sound::Play(bool isforcePlay)
 {
 	int sourceState = AL_PLAYING;
 	alGetSourcei(source, AL_SOURCE_STATE, &sourceState);
-	if (sourceState != AL_PLAYING)
+	if (sourceState != AL_PLAYING || isforcePlay)
 		alSourcePlay(source);
 }
 void Sound::Init(string const &path)

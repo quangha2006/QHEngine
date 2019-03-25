@@ -128,8 +128,11 @@ void AppBase::Resize(int width, int height)
 	mContext->SetWindowSize(width, height);
 	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(width) / (float)(height), mCamera->View_near, mCamera->View_far);
 }
-void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
+
+void AppBase::GameTouchEvent(int eventId, int x, int y, int pointerId)
 {
+	if (OnGameTouchEvent(eventId, x, y, pointerId)) return;
+
 	static int touch_old_x = x;
 	static int touch_old_y = y;
 	static bool preesed = false;
@@ -178,9 +181,18 @@ void AppBase::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 	touch_old_x = x;
 	touch_old_y = y;
 }
-void AppBase::ZoomCamera(double xoffset, double yoffset)
+void AppBase::GameKeyPressed(int key, int scancode, int action, int mods)
 {
+	if (OnGameKeyPressed(key, scancode, action, mods)) return;
+}
+void AppBase::GameZoomCamera(double xoffset, double yoffset)
+{
+	if (OnGameZoomCamera(xoffset, yoffset)) return;
+
 	int offset = 20;
+#ifdef ANDROID
+	offset = 200;
+#endif
 	float dis_x = (mCamera->Pos.x - mCamera->Target.x) / offset;
 	float dis_y = (mCamera->Pos.y - mCamera->Target.y) / offset;
 	float dis_z = (mCamera->Pos.z - mCamera->Target.z) / offset;

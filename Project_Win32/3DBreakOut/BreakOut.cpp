@@ -7,8 +7,8 @@
 
 void BreakOut::Init()
 {
-	mCamera->Pos = glm::vec3(0.0f, 12.0f, 40.0f);
-	mCamera->Target = glm::vec3(0.0f, 0.0f, 5.0f);
+	mCamera->Pos = glm::vec3(0.0f, 65.0f, 50.0f);
+	mCamera->Target = glm::vec3(0.0f, 0.0f, 0.1f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	mCamera->lightPos = glm::vec3(15.0f, 10.5f, 15.0f);
 
@@ -18,111 +18,111 @@ void BreakOut::Init()
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	m_Streetenvironment.SetScale(glm::vec3(5.0, 1.0, 5.0));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(30.0, .1, 30.0), glm::vec3(0., 0.001, 0.));
+	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(40.0, .1, 40.0), glm::vec3(0., 0.001, 0.));
 	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
-	cube.Init("3DBreakOutGame/UVCircle2.dae");
-	cube.SetPos(glm::vec3(0.0f, 10.0f, 0.0f));
-	cube.SetCustomColor(glm::vec3(0.0f, 0.0f, 1.0f));
-	cube.SetRotate(45, glm::vec3(0.0, 1.0, 1.0));
-	cube.CreateBoxShapePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52));
+	cube.Init("3DBreakOutGame/cube_05_radius.dae");
+	cube.SetPos(glm::vec3(0., 0., 30));
+	cube.SetCustomColor(Utils::RandomColor());
+	cube.SetScale(glm::vec3(11., 2., 2.));
+	cube.CreateBoxShapePhysicsBody(0., glm::vec3(5.52, 2., 1.));
+	cube.GetRigidBody()->setFriction(0.);
+	cube.GetRigidBody()->setRollingFriction(0.);
+	cube.GetRigidBody()->setSpinningFriction(0.);
+	cube.GetRigidBody()->setRestitution(1.);
 
 	top.Init("3DBreakOutGame/cube_05_radius.dae");
-	top.SetPos(glm::vec3(0.0f, 0.8f, -30.0f));
+	top.SetPos(glm::vec3(0.0f, 0.8f, -35.0f));
 	top.SetScale(glm::vec3(70.0, 4.0, 1.0));
-	top.CreateBoxShapePhysicsBody(0.0f, glm::vec3(35., 20.52, 0.52));
+	top.CreateBoxShapePhysicsBody(0.0f, glm::vec3(35., 20.52, 5.52),glm::vec3(0.0, 0.0, -2.5));
 	top.GetRigidBody()->setFriction(0.0);
 	top.GetRigidBody()->setRestitution(1.);
 
 	botton.Init("3DBreakOutGame/cube_05_radius.dae");
-	botton.SetPos(glm::vec3(0.0f, 0.8f, 30.0f));
+	botton.SetPos(glm::vec3(0.0f, 0.8f, 35.0f));
 	botton.SetScale(glm::vec3(70.0, 4.0, 1.0));
-	botton.CreateBoxShapePhysicsBody(0.0f, glm::vec3(35., 20.52, 0.52));
+	botton.CreateBoxShapePhysicsBody(0.0f, glm::vec3(35., 20.52, 5.52), glm::vec3(0.0, 0.0, 2.5));
 	botton.GetRigidBody()->setFriction(0.0);
 	botton.GetRigidBody()->setRestitution(1.);
 
 	left.Init("3DBreakOutGame/cube_05_radius.dae");
-	left.SetPos(glm::vec3(-30.0f, 0.8f, 0.0f));
+	left.SetPos(glm::vec3(-35.0f, 0.8f, 0.0f));
 	left.SetScale(glm::vec3(1.0, 4.0, 70.0));
-	left.CreateBoxShapePhysicsBody(0.0f, glm::vec3(.52, 20.52, 35.));
+	left.CreateBoxShapePhysicsBody(0.0f, glm::vec3(5.52, 20.52, 35.), glm::vec3(-2.5, 0.0, 0.0));
 	left.GetRigidBody()->setFriction(0.0);
 	left.GetRigidBody()->setRestitution(1.);
 
 	right.Init("3DBreakOutGame/cube_05_radius.dae");
-	right.SetPos(glm::vec3(30.0f, 0.8f, 0.0f));
+	right.SetPos(glm::vec3(35.0f, 0.8f, 0.0f));
 	right.SetScale(glm::vec3(1.0, 4.0, 70.0));
-	right.CreateBoxShapePhysicsBody(0.0f, glm::vec3(.52, 20.52, 35.));
+	right.CreateBoxShapePhysicsBody(0.0f, glm::vec3(5.52, 20.52, 35.), glm::vec3(2.5, 0.0, 0.0));
 	right.GetRigidBody()->setFriction(0.0);
 	right.GetRigidBody()->setRestitution(1.);
-	//int xxx = 0;
-	//for (int k = 0; k < MaxBall; k++)
-	//{
-	//	for (int i = 0; i < MaxBall; i++)
-	//	{
-	//		for (int j = 0; j < MaxBall; j++)
-	//		{
-	//			float pos_x = 1.2 * i;
-	//			float pos_y = 2 + 1.2 * k;
-	//			float pos_z = 1.2 * j;
 
-	//			listcube[xxx].Init("3DBreakOutGame/UVCircle2.dae");
-	//			listcube[xxx].SetPos(glm::vec3(pos_x, pos_y, pos_z));
-	//			listcube[xxx].SetCustomColor(Utils::RandomColor());
-	//			//listcube[xxx].CreateBoxShapePhysicsBody(1.0f, glm::vec3(0.52, 0.52, 0.52), glm::vec3(0., 0., 0.));
-	//			listcube[xxx].CreateSphereShapePhysiceBody(1., 1.);
-	//			listcube[xxx].GetRigidBody()->setFriction(0.);
-	//			listcube[xxx].GetRigidBody()->setRollingFriction(0.);
-	//			listcube[xxx].GetRigidBody()->setSpinningFriction(0.);
-	//			listcube[xxx].GetRigidBody()->setRestitution(1.);
-	//			listcube[xxx].GetRigidBody()->applyForce(btVector3(pos_x * 10., pos_y  * -500., pos_z), btVector3(0.0, 0.0, 0.0));
-	//			xxx++;
-	//		}
-	//	}
-	//}
+	int xxx = 0;
+	for (int x = 0; x < 4; x++)
+	{
+		for (int z = 0; z < 5; z++)
+		{
+			float pos_x = 14. * x;
+			float pos_z = 4. * z;
+
+			listcube[xxx].Init("3DBreakOutGame/cube_05_radius.dae");
+			listcube[xxx].SetPos(glm::vec3(pos_x - 20, 0., pos_z - 25));
+			listcube[xxx].SetCustomColor(Utils::RandomColor());
+			listcube[xxx].SetScale(glm::vec3(11., 2., 2.));
+			listcube[xxx].CreateBoxShapePhysicsBody(0., glm::vec3(5.52, 2., 1.));
+			listcube[xxx].GetRigidBody()->setFriction(0.);
+			listcube[xxx].GetRigidBody()->setRollingFriction(0.);
+			listcube[xxx].GetRigidBody()->setSpinningFriction(0.);
+			listcube[xxx].GetRigidBody()->setRestitution(1.);
+			xxx++;
+		}
+	}
 
 	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	uvcircle.SetScale(glm::vec3(1.0));
-	uvcircle.SetPos(glm::vec3(0.0f, 200.5f, 0.0f));
+	uvcircle.SetPos(glm::vec3(0.0f, 1.f, 0.0f));
 	uvcircle.CreateSphereShapePhysiceBody(1., 1.);
 	
 	uvcircle.GetRigidBody()->setFriction(0.);
 	uvcircle.GetRigidBody()->setRollingFriction(0.);
 	uvcircle.GetRigidBody()->setSpinningFriction(0.);
 	uvcircle.GetRigidBody()->setRestitution(1.);
+	uvcircle.GetRigidBody()->applyCentralForce(btVector3(6000., 0., 2000.));
+
+	mSoundCollistion.Init("Sound/Tink.wav");
+
+	RenderManager::getInstance()->SetEnableBloom(false);
 }
 
 void BreakOut::Update()
 {
-	static bool firstUpdate = true;
-	if (firstUpdate)
+	for (int i = 0; i < 20; i++)
 	{
-		int xxx = 0;
-		for (int k = 0; k < MaxBall; k++)
+		if (!listcube[i].GetIsVisible())
 		{
-			for (int i = 0; i < MaxBall; i++)
-			{
-				for (int j = 0; j < MaxBall; j++)
-				{
-					float pos_x = 1.2 * i;
-					float pos_y = 2 + 1.2 * k;
-					float pos_z = 1.2 * j;
-
-					listcube[xxx] = cube;
-					listcube[xxx].SetPos(glm::vec3(pos_x, pos_y, pos_z));
-					listcube[xxx].SetCustomColor(Utils::RandomColor());
-					listcube[xxx].CreateSphereShapePhysiceBody(1., 1.);
-					listcube[xxx].GetRigidBody()->setFriction(0.);
-					listcube[xxx].GetRigidBody()->setRollingFriction(0.);
-					listcube[xxx].GetRigidBody()->setSpinningFriction(0.);
-					listcube[xxx].GetRigidBody()->setRestitution(1.);
-					listcube[xxx].GetRigidBody()->applyForce(btVector3(pos_x * 100., -pos_y  * 300., pos_z), btVector3(0.0, 0.0, 0.0));
-					xxx++;
-				}
-			}
+			listcube[i].GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 		}
 	}
-	firstUpdate = false;
+
+	btCollisionObject* colObjA = (btCollisionObject*)uvcircle.GetRigidBody();
+	btCollisionObject* colObjB;
+	for (int i = 0; i < 20; i++)
+	{
+		if (!listcube[i].GetIsVisible()) continue;
+
+		MyContactResultCallback result;
+		colObjB = (btCollisionObject*)listcube[i].GetRigidBody();
+		PhysicsSimulation::getInstance()->PhysicsStepCollision(colObjA, colObjB, result);
+		if (result.m_connected)
+		{
+			listcube[i].SetCustomColor(Utils::RandomColor());
+			mSoundCollistion.Play();
+			listcube[i].SetVisible(false);
+		}
+	}
 }
 
 void BreakOut::GetRequireScreenSize(int32_t & width, int32_t & height)
@@ -131,12 +131,12 @@ void BreakOut::GetRequireScreenSize(int32_t & width, int32_t & height)
 	height = 540;
 }
 
-void BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
+bool BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
-	if (action == 0) return;
+	if (action == 0) return true;
 	btRigidBody* uvcircle_RigidBody;
-	glm::mat4 lightmatrix;
+	btTransform trans;
 	switch (c)
 	{
 	case 'B':
@@ -151,16 +151,12 @@ void BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 	case 'H':
 		m_Streetenvironment.SetRotate(-2, glm::vec3(0., 0., 1.));
 		break;
+
 	case 'K':
-		//lightmatrix = glm::rotate(mCamera->lightSpaceMatrix, 1.0f, glm::vec3(0., 1., 0.));
-		//mCamera->lightPos = mCamera->ExtractCameraPos(lightmatrix);
-		PhysicsSimulation::getInstance()->SetGravity(btVector3(0., -20., 0.));
+		
 		break;
 	case 'L':
-		//lightmatrix = glm::rotate(mCamera->lightSpaceMatrix, -1.0f, glm::vec3(0., 1., 0.));
-		//mCamera->lightPos = mCamera->ExtractCameraPos(lightmatrix);
-		PhysicsSimulation::getInstance()->SetGravity(btVector3(0., 20., 0.));
-		mCamera->light_near--;
+		
 		break;
 	case 'D':
 		uvcircle_RigidBody = uvcircle.GetRigidBody();
@@ -177,9 +173,39 @@ void BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 	case 'W':
 		uvcircle_RigidBody = uvcircle.GetRigidBody();
 		uvcircle_RigidBody->applyForce(btVector3(-500., 0., -1000.0), btVector3(0.0, 0.0, 0.0));
-		
+
 		break;
 	}
+	switch (key)
+	{
+	case 262:
+		uvcircle_RigidBody = cube.GetRigidBody();
+		trans =  uvcircle_RigidBody->getWorldTransform();
+		trans.setOrigin(btVector3(trans.getOrigin().getX() - 4, trans.getOrigin().getY(), trans.getOrigin().getZ()));
+		uvcircle_RigidBody->setWorldTransform(trans);
+		break;
+	case 263:
+		uvcircle_RigidBody = cube.GetRigidBody();
+		trans = uvcircle_RigidBody->getWorldTransform();
+		trans.setOrigin(btVector3(trans.getOrigin().getX() + 4, trans.getOrigin().getY(), trans.getOrigin().getZ()));
+		uvcircle_RigidBody->setWorldTransform(trans);
+		break;
+	}
+	return true;
+}
+
+bool BreakOut::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
+{
+#ifdef ANDROID
+	if (eventId == 0)
+		RenderManager::getInstance()->SwitchBloomMode();
+#endif
+	return true;
+}
+
+bool BreakOut::OnGameZoomCamera(double xoffset, double yoffset)
+{
+	return true;
 }
 
 BreakOut::BreakOut()

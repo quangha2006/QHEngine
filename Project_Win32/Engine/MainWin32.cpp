@@ -100,12 +100,12 @@ static void mouse_button_callback(GLFWwindow* window, int button, int action, in
 		if (GLFW_PRESS == action)
 		{
 			lbutton_down = true;
-			app->OnGameTouchEvent(0, (int)xpos, (int)ypos, 0);
+			app->GameTouchEvent(0, (int)xpos, (int)ypos, 0);
 		}
 		else if (GLFW_RELEASE == action)
 		{
 			lbutton_down = false;
-			app->OnGameTouchEvent(2, (int)xpos, (int)ypos, 0);
+			app->GameTouchEvent(2, (int)xpos, (int)ypos, 0);
 		}
 	}
 }
@@ -113,7 +113,7 @@ void mouse_pos_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	if (app == NULL) return;
 	if (lbutton_down)
-		app->OnGameTouchEvent(1, (int)xpos, (int)ypos, 0);
+		app->GameTouchEvent(1, (int)xpos, (int)ypos, 0);
 }
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -123,13 +123,13 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void scroll_callback(GLFWwindow * window, double xoffset, double yoffset)
 {
-	app->ZoomCamera(xoffset, yoffset);
+	app->GameZoomCamera(xoffset, yoffset);
 }
 
 void keyboard_button_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
 	if (key!=256) // 256 = ESC key
-		app->OnGameKeyPressed(key, scancode, action, mods);
+		app->GameKeyPressed(key, scancode, action, mods);
 }
 void error_callback(int error, const char* description)
 {

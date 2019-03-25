@@ -42,7 +42,7 @@ private:
 	ALuint createBufferFromWave(char* data, BasicWAVEHeader header);
 
 public:
-	void Play();
+	void Play(bool isforcePlay = true);
 	void Init(string const &path);
 	void GetError();
 	string GetSourceState(ALuint source);

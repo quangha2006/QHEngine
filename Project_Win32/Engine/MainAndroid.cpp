@@ -73,12 +73,12 @@ void OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 	switch (numtouch)
 	{
 		case 1:
-			app->OnGameTouchEvent(eventId, currenttouchpoint[0].x, currenttouchpoint[0].y, 0);
+			app->GameTouchEvent(eventId, currenttouchpoint[0].x, currenttouchpoint[0].y, 0);
 			disold = 0.0f;
 			break;
 		case 2:
 			//LOGI("yoffset: %f", (float)yoffset);
-			app->ZoomCamera(0, yoffset);
+			app->GameZoomCamera(0, yoffset);
 			break;
 		default:
 			break;

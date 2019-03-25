@@ -4,25 +4,26 @@
 
 PhysicsSimulation * PhysicsSimulation::instance = NULL;
 float *GenVerticeData(const btVector3& halfExtents);
+
 void PhysicsSimulation::initPhysics()
 {
 	///-----initialization_start-----
 
 	///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
-	collisionConfiguration = new btDefaultCollisionConfiguration();
+	mCollisionConfiguration = new btDefaultCollisionConfiguration();
 
 	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
-	dispatcher = new btCollisionDispatcher(collisionConfiguration);
+	mDispatcher = new btCollisionDispatcher(mCollisionConfiguration);
 
 	///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
-	overlappingPairCache = new btDbvtBroadphase();
+	mOverlappingPairCache = new btDbvtBroadphase();
 
 	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
-	solver = new btSequentialImpulseConstraintSolver;
+	mSolver = new btSequentialImpulseConstraintSolver;
 
-	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
+	mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfiguration);
 
-	dynamicsWorld->setGravity(btVector3(0, -10.0, 0));
+	mDynamicsWorld->setGravity(btVector3(0, -100.0, 0));
 
 	initDebugPhysics();
 }
@@ -44,46 +45,46 @@ void PhysicsSimulation::initDebugPhysics()
 
 void PhysicsSimulation::exitPhysics()
 {
-	for (int i = dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+	for (int i = mDynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
-		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[i];
+		btCollisionObject* obj = mDynamicsWorld->getCollisionObjectArray()[i];
 		btRigidBody* body = btRigidBody::upcast(obj);
 		if (body && body->getMotionState())
 		{
 			delete body->getMotionState();
 		}
-		dynamicsWorld->removeCollisionObject(obj);
+		mDynamicsWorld->removeCollisionObject(obj);
 		delete obj;
 	}
 	//delete collision shapes
-	for (int j = 0; j < collisionShapes.size(); j++)
+	for (int j = 0; j < mCollisionShapes.size(); j++)
 	{
-		btCollisionShape* shape = collisionShapes[j];
-		collisionShapes[j] = 0;
+		btCollisionShape* shape = mCollisionShapes[j];
+		mCollisionShapes[j] = 0;
 		delete shape;
 	}
 
 	//delete dynamics world
-	delete dynamicsWorld;
+	delete mDynamicsWorld;
 
 	//delete solver
-	delete solver;
+	delete mSolver;
 
 	//delete broadphase
-	delete overlappingPairCache;
+	delete mOverlappingPairCache;
 
 	//delete dispatcher
-	delete dispatcher;
+	delete mDispatcher;
 
-	delete collisionConfiguration;
+	delete mCollisionConfiguration;
 
 	//next line is optional: it will be cleared by the destructor when the array goes out of scope
-	collisionShapes.clear();
+	mCollisionShapes.clear();
 }
 
 void PhysicsSimulation::updatePhysics()
 {
-	dynamicsWorld->stepSimulation(1.f / 60.f, 10);
+	mDynamicsWorld->stepSimulation(1.f / 60.f, 10);
 }
 
 void PhysicsSimulation::RenderPhysicsDebug()
@@ -93,9 +94,9 @@ void PhysicsSimulation::RenderPhysicsDebug()
 	//glEnable(GL_DEPTH_TEST);
 	glBindVertexArray(quadVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	for (int j = dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+	for (int j = mDynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
 	{
-		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[j];
+		btCollisionObject* obj = mDynamicsWorld->getCollisionObjectArray()[j];
 		btRigidBody* body = btRigidBody::upcast(obj);
 		btTransform trans;
 		if (body)
@@ -159,9 +160,14 @@ void PhysicsSimulation::RenderPhysicsDebug()
 	CheckGLError("RenderPhysicsDebug");
 }
 
+void PhysicsSimulation::PhysicsStepCollision(btCollisionObject* objA, btCollisionObject* objB, MyContactResultCallback &result)
+{
+	mDynamicsWorld->contactPairTest(objA, objB, result);
+}
+
 void PhysicsSimulation::SetGravity(btVector3 gravity)
 {
-	dynamicsWorld->setGravity(gravity);
+	mDynamicsWorld->setGravity(gravity);
 }
 
 btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape)
@@ -170,7 +176,7 @@ btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::v
 
 	//btCollisionShape* colShape = new btSphereShape(btScalar(5.));
 	btCollisionShape* colShape = new btBoxShape(btVector3(btScalar(boxshape.x), btScalar(boxshape.y), btScalar(boxshape.z)));
-	collisionShapes.push_back(colShape);
+	mCollisionShapes.push_back(colShape);
 
 	/// Create Dynamic Objects
 	btTransform startTransform;
@@ -200,7 +206,7 @@ btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::v
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
 	btRigidBody* body = new btRigidBody(rbInfo);
 
-	dynamicsWorld->addRigidBody(body);
+	mDynamicsWorld->addRigidBody(body);
 
 	return body;
 }
@@ -211,7 +217,7 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 	//btCompoundShape* colShape = new btCompoundShape();
 	//colShape->addChildShape(btTransform::getIdentity(), childShape);
 
-	collisionShapes.push_back(colShape);
+	mCollisionShapes.push_back(colShape);
 
 	/// Create Dynamic Objects
 	btTransform startTransform;
@@ -234,7 +240,7 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
 	btRigidBody* body = new btRigidBody(rbInfo);
 
-	dynamicsWorld->addRigidBody(body);
+	mDynamicsWorld->addRigidBody(body);
 
 	return body;
 }
