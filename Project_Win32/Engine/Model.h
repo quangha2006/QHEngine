@@ -111,6 +111,7 @@ public:
 	void SetVisible(bool isvisible);
 	bool GetIsVisible();
 	void Loading();
+	void Translate(glm::vec3 trans);
 	int GetId();
 	glm::mat4 GetWorld();
 	glm::vec3 GetScale();

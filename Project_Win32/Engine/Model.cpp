@@ -533,7 +533,6 @@ void Model::SyncPhysics()
 
 		mWorldTransform = glm::translate(mWorldTransform, - mFixedBoxShape / mScale);
 
-
 	}
 	else if (m_initialized)
 	{
@@ -545,6 +544,8 @@ void Model::UpdateWorldTransform()
 {
 	if (!m_initialized) return;
 
+	glm::mat4 rota = rotate(glm::mat4(), glm::radians(mAngle), mRotate);
+
 	mWorldTransform = glm::mat4();
 
 	mWorldTransform = glm::scale(mWorldTransform, mScale);
@@ -552,9 +553,24 @@ void Model::UpdateWorldTransform()
 	mWorldTransform = glm::translate(mWorldTransform, (mPos / mScale));
 
 	if (mAngle > 0.0f || mAngle < 0.0f)
-		mWorldTransform = rotate(mWorldTransform, glm::radians(mAngle), mRotate);
+		mWorldTransform *= rota;
+
+	
 
 	mWorldTransform = glm::translate(mWorldTransform, -mFixedBoxShape);
+}
+
+void Model::Translate(glm::vec3 trans)
+{
+	mPos += trans;
+
+	if (mRigidBody)
+	{
+		btTransform transform = mRigidBody->getWorldTransform();
+		btVector3 tr(mPos.x, mPos.y, mPos.z);
+		transform.setOrigin(tr);
+		mRigidBody->setWorldTransform(transform);
+	}
 }
 
 void Model::BoneTransform(float TimeInSeconds, vector<glm::mat4>& Transforms)

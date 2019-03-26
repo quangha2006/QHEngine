@@ -19,6 +19,7 @@ public:
 	bool OnGameKeyPressed(int key, int scancode, int action, int mods);
 	bool OnGameTouchEvent(int eventId, int x, int y, int pointerId);
 	bool OnGameZoomCamera(double xoffset, double yoffset);
+	void GameReset();
 	BreakOut();
 	~BreakOut();
 };

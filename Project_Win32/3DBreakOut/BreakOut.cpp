@@ -5,6 +5,8 @@
 #include "PhysicsSimulation.h"
 #include "QHMath.h"
 
+float moving = 0.;
+
 void BreakOut::Init()
 {
 	mCamera->Pos = glm::vec3(0.0f, 65.0f, 50.0f);
@@ -23,8 +25,8 @@ void BreakOut::Init()
 	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
 	cube.Init("3DBreakOutGame/cube_05_radius.dae");
-	cube.SetPos(glm::vec3(0., 0., 30));
-	cube.SetCustomColor(Utils::RandomColor());
+	cube.SetPos(glm::vec3(0., 2., 30.5));
+	cube.SetCustomColor(glm::vec3(1., 0., 0.));
 	cube.SetScale(glm::vec3(11., 2., 2.));
 	cube.CreateBoxShapePhysicsBody(0., glm::vec3(5.52, 2., 1.));
 	cube.GetRigidBody()->setFriction(0.);
@@ -69,7 +71,7 @@ void BreakOut::Init()
 			float pos_z = 4. * z;
 
 			listcube[xxx].Init("3DBreakOutGame/cube_05_radius.dae");
-			listcube[xxx].SetPos(glm::vec3(pos_x - 20, 0., pos_z - 25));
+			listcube[xxx].SetPos(glm::vec3(pos_x - 20, 2., pos_z - 25));
 			listcube[xxx].SetCustomColor(Utils::RandomColor());
 			listcube[xxx].SetScale(glm::vec3(11., 2., 2.));
 			listcube[xxx].CreateBoxShapePhysicsBody(0., glm::vec3(5.52, 2., 1.));
@@ -99,6 +101,34 @@ void BreakOut::Init()
 
 void BreakOut::Update()
 {
+
+	btCollisionObject* colObjA = (btCollisionObject*)cube.GetRigidBody();
+	btCollisionObject* colObjB;
+
+	// check collistion with botton bar
+	{
+		MyContactResultCallback result;
+		colObjB = (btCollisionObject*)left.GetRigidBody();
+		PhysicsSimulation::getInstance()->PhysicsStepCollision(colObjA, colObjB, result);
+		if (result.m_connected && moving == -1.)
+		{
+			moving = 0.0f;
+		}
+	}
+
+	// check collistion with botton bar
+	{
+		MyContactResultCallback result;
+		colObjB = (btCollisionObject*)right.GetRigidBody();
+		PhysicsSimulation::getInstance()->PhysicsStepCollision(colObjA, colObjB, result);
+		if (result.m_connected && moving == 1.)
+		{
+			moving = 0.0f;
+		}
+	}
+
+	cube.Translate(glm::vec3(moving, 0., 0.));
+
 	for (int i = 0; i < 20; i++)
 	{
 		if (!listcube[i].GetIsVisible())
@@ -107,8 +137,8 @@ void BreakOut::Update()
 		}
 	}
 
-	btCollisionObject* colObjA = (btCollisionObject*)uvcircle.GetRigidBody();
-	btCollisionObject* colObjB;
+	colObjA = (btCollisionObject*)uvcircle.GetRigidBody();
+
 	for (int i = 0; i < 20; i++)
 	{
 		if (!listcube[i].GetIsVisible()) continue;
@@ -123,6 +153,17 @@ void BreakOut::Update()
 			listcube[i].SetVisible(false);
 		}
 	}
+
+	// check collistion with botton bar
+	{
+		MyContactResultCallback result;
+		colObjB = (btCollisionObject*)botton.GetRigidBody();
+		PhysicsSimulation::getInstance()->PhysicsStepCollision(colObjA, colObjB, result);
+		if (result.m_connected)
+		{
+			uvcircle.GetRigidBody()->forceActivationState(DISABLE_SIMULATION);
+		}
+	}
 }
 
 void BreakOut::GetRequireScreenSize(int32_t & width, int32_t & height)
@@ -134,6 +175,20 @@ void BreakOut::GetRequireScreenSize(int32_t & width, int32_t & height)
 bool BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
+	//LOGI("%d\n", action);
+	switch (key)
+	{
+	case 263:
+		if (action == 1 || action == 2) moving = -1.0;
+		if (action == 0) moving = 0.0;
+
+		break;
+	case 262:
+		if (action == 1 || action == 2) moving = 1.0;
+		if (action == 0) moving = 0.0;
+		break;
+	}
+
 	if (action == 0) return true;
 	btRigidBody* uvcircle_RigidBody;
 	btTransform trans;
@@ -176,21 +231,7 @@ bool BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 
 		break;
 	}
-	switch (key)
-	{
-	case 262:
-		uvcircle_RigidBody = cube.GetRigidBody();
-		trans =  uvcircle_RigidBody->getWorldTransform();
-		trans.setOrigin(btVector3(trans.getOrigin().getX() - 4, trans.getOrigin().getY(), trans.getOrigin().getZ()));
-		uvcircle_RigidBody->setWorldTransform(trans);
-		break;
-	case 263:
-		uvcircle_RigidBody = cube.GetRigidBody();
-		trans = uvcircle_RigidBody->getWorldTransform();
-		trans.setOrigin(btVector3(trans.getOrigin().getX() + 4, trans.getOrigin().getY(), trans.getOrigin().getZ()));
-		uvcircle_RigidBody->setWorldTransform(trans);
-		break;
-	}
+
 	return true;
 }
 
@@ -200,12 +241,17 @@ bool BreakOut::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 	if (eventId == 0)
 		RenderManager::getInstance()->SwitchBloomMode();
 #endif
-	return true;
+	return false;
 }
 
 bool BreakOut::OnGameZoomCamera(double xoffset, double yoffset)
 {
-	return true;
+	return false;
+}
+
+void BreakOut::GameReset()
+{
+
 }
 
 BreakOut::BreakOut()

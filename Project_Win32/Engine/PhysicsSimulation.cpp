@@ -174,7 +174,6 @@ btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::v
 {
 	//create a dynamic rigidbody
 
-	//btCollisionShape* colShape = new btSphereShape(btScalar(5.));
 	btCollisionShape* colShape = new btBoxShape(btVector3(btScalar(boxshape.x), btScalar(boxshape.y), btScalar(boxshape.z)));
 	mCollisionShapes.push_back(colShape);
 
@@ -219,7 +218,7 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 
 	mCollisionShapes.push_back(colShape);
 
-	/// Create Dynamic Objects
+	// Create Dynamic Objects
 	btTransform startTransform;
 	startTransform.setIdentity();
 
@@ -259,11 +258,7 @@ PhysicsSimulation::PhysicsSimulation()
 
 PhysicsSimulation::~PhysicsSimulation()
 {
-	//if (vertices)
-	{
-		//delete[] vertices;
-		glDeleteBuffers(1, &quadVBO);
-	}
+	glDeleteBuffers(1, &quadVBO);
 }
 
 float *GenVerticeData(const btVector3& halfExtents)

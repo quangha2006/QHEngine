@@ -37,9 +37,9 @@ void Basic::Init()
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
 	mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
 	mSpider.SetScale(glm::vec3(0.05f));
-	mSpider.SetPos(glm::vec3(10.0f, 0.0f, 0.0f));
+	mSpider.SetPos(glm::vec3(0.0f, 2.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
-	mSpider.SetTimeStampAnim(0);
+	//mSpider.SetTimeStampAnim(0);
 	mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(0);
 	//saberclass.Init("test/untitled.obj", false, 3.0f);
@@ -75,68 +75,69 @@ void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 	width = 960;
 	height = 540;
 }
-void Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
+bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
 	LOGI("Key: %d = %c\n",key, c);
-	if (action == 0) return;
+	if (action == 0) return true;
 	switch (c)
 	{
 	case 'B':
 		RenderManager::getInstance()->SwitchBloomMode();
-		return;
+		return true;
 	case 'M':
 		RenderManager::getInstance()->SwitchShadowMapMode();
-		return;
+		return true;
 	case 'S': //num s
 		mCamera->Target.y -= 0.1;
-		return;
+		return true;
 	case 'W': //num w
 		mCamera->Target.y += 0.1;
-		return;
+		return true;
 	case 'A': //num a
 		mCamera->Target.x -= 0.1;
-		return;
+		return true;
 	case 'D': //num d
 		mCamera->Target.x += 0.1;
-		return;
+		return true;
 	case 262:
 		timestamp_for_lamp += 1;
-		return;
+		return true;
 	case 320: //num 0
 		mSpider.SetAnimPlay(0);
-		return;
+		return true;
 	case 321:
 		mSpider.SetAnimPlay(1);
-		return;
+		return true;
 	case 322:
 		mSpider.SetAnimPlay(2);
-		return;
+		return true;
 	case 323:
 		mSpider.SetAnimPlay(3);
-		return;
+		return true;
 	case 324:
 		mSpider.SetAnimPlay(4);
-		return;
+		return true;
 	case 325:
 		mSpider.SetAnimPlay(5);
-		return;
+		return true;
 	case 326:
 		mSpider.SetAnimPlay(6);
-		return;
+		return true;
 	case 327:
 		mSpider.SetAnimPlay(7);
-		return;
+		return true;
 	case 328:
 		mSpider.SetAnimPlay(8);
-		return;
+		return true;
 	case 329: // num 9
 		mSpider.SetAnimPlay(9);
-		return;
+		return true;
 
 	default:
 		break;
 	}
+	return true;
 }
 Basic::Basic()
 {
