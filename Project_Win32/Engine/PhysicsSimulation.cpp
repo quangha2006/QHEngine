@@ -89,9 +89,14 @@ void PhysicsSimulation::updatePhysics()
 
 void PhysicsSimulation::RenderPhysicsDebug()
 {
-	return;
+	if (!misRenderDebug)
+		return;
+
 	ShaderManager::getInstance()->setUseProgram("debugPhysics");
-	//glEnable(GL_DEPTH_TEST);
+
+	if (misEnableDepthTestDebug)
+		glEnable(GL_DEPTH_TEST);
+
 	glBindVertexArray(quadVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
 	for (int j = mDynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
@@ -155,7 +160,9 @@ void PhysicsSimulation::RenderPhysicsDebug()
 
 	
 	glBindVertexArray(0);
-	//glDisable(GL_DEPTH_TEST);
+
+	if (misEnableDepthTestDebug)
+		glDisable(GL_DEPTH_TEST);
 
 	CheckGLError("RenderPhysicsDebug");
 }
@@ -243,6 +250,26 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 
 	return body;
 }
+void PhysicsSimulation::SwitchDebugMode()
+{
+	if (misRenderDebug && misEnableDepthTestDebug)
+	{
+		misRenderDebug = !misRenderDebug;
+		misEnableDepthTestDebug = !misEnableDepthTestDebug;
+		return;
+	}
+	if (misRenderDebug && !misEnableDepthTestDebug)
+	{
+		misEnableDepthTestDebug = !misEnableDepthTestDebug;
+		return;
+	}
+	if (!misRenderDebug)
+	{
+		misRenderDebug = !misRenderDebug;
+		misEnableDepthTestDebug = false;
+		return;
+	}
+}
 
 PhysicsSimulation * PhysicsSimulation::getInstance()
 {
@@ -253,6 +280,8 @@ PhysicsSimulation * PhysicsSimulation::getInstance()
 
 PhysicsSimulation::PhysicsSimulation()
 {
+	misRenderDebug = false;
+	misEnableDepthTestDebug = true;
 }
 
 

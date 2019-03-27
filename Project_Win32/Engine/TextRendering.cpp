@@ -389,7 +389,7 @@ void TextRendering::Draw()
 
 	//QHEngine::DrawArrays(GL_TRIANGLES, 0, m_TextData.size()); // for debug to add num draw call and num triangles
 	glDrawArrays(GL_TRIANGLES, 0, fulltextdata.size());
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_BLEND);

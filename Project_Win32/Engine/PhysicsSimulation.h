@@ -33,6 +33,8 @@ private:
 	btAlignedObjectArray<btCollisionShape*> mCollisionShapes;
 	// debug
 	GLuint quadVAO, quadVBO;
+
+	bool misRenderDebug, misEnableDepthTestDebug;
 public:
 	void initPhysics();
 	void initDebugPhysics();
@@ -41,6 +43,7 @@ public:
 	void RenderPhysicsDebug();
 	void PhysicsStepCollision(btCollisionObject* objA, btCollisionObject* objB, MyContactResultCallback &result);
 	void SetGravity(btVector3 gravity);
+	void SwitchDebugMode();
 	btRigidBody* createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape);
 	btRigidBody* createSphereShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, float radius);
 	static PhysicsSimulation* getInstance();

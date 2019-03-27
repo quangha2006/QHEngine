@@ -133,7 +133,9 @@ void BreakOut::Update()
 	{
 		if (!listcube[i].GetIsVisible())
 		{
+			//LOGI("1 %d\n", listcube[i].GetRigidBody()->getCollisionFlags());
 			listcube[i].GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
+			//LOGI("2 %d\n",listcube[i].GetRigidBody()->getCollisionFlags());
 		}
 	}
 
@@ -207,11 +209,11 @@ bool BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		m_Streetenvironment.SetRotate(-2, glm::vec3(0., 0., 1.));
 		break;
 
-	case 'K':
-		
+	case 'R':
+		GameReset();
 		break;
 	case 'L':
-		
+		PhysicsSimulation::getInstance()->SwitchDebugMode();
 		break;
 	case 'D':
 		uvcircle_RigidBody = uvcircle.GetRigidBody();
@@ -251,7 +253,18 @@ bool BreakOut::OnGameZoomCamera(double xoffset, double yoffset)
 
 void BreakOut::GameReset()
 {
-
+	for (int i = 0; i < 20; i++)
+	{
+		listcube[i].SetVisible(true);
+		listcube[i].GetRigidBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
+	}
+	uvcircle.Translate(glm::vec3(0.0f, 0.0f, -10.0f));
+	uvcircle.GetRigidBody()->clearForces();
+	btVector3 zeroVector(0, 0, 0);
+	uvcircle.GetRigidBody()->setLinearVelocity(zeroVector);
+	uvcircle.GetRigidBody()->setAngularVelocity(zeroVector);
+	uvcircle.GetRigidBody()->forceActivationState(ACTIVE_TAG);
+	uvcircle.GetRigidBody()->applyCentralForce(btVector3(1000., 0., -5000.));
 }
 
 BreakOut::BreakOut()
