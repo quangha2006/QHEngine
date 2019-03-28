@@ -26,8 +26,11 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 #elif defined(ANDROID)
 	mContext = new EGLAppContext();
 #endif
-
+	
 	mContext->createWindow(width, height);
+
+	mContext->SwapInterval(1);
+
 	LOGI("\n=====================================================\n");
 	LOGI("GL Renderer  : %s\n", glGetString(GL_RENDERER));
 	LOGI("GL Version   : %s\n", glGetString(GL_VERSION));
@@ -49,6 +52,8 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	RenderManager::getInstance()->Init(mContext, mCamera);
 	RenderManager::getInstance()->SetSkyBox(&mSkyBox);
 	ModelManager::getInstance()->Init();
+
+	// Game init
 	Init();
 
 	text_FPS.setPos(0, 0);
@@ -104,16 +109,11 @@ void AppBase::rendering()
 	int frameTime = FrameRate::getInstance()->GetPrevFrameTime();
 	int cpuTime = FrameRate::getInstance()->GetPrevCpuTime();
 
-	std::string tmp_fps = Utils::toString("FPS: %.1f", fps);
-	std::string tmp_drawcall = Utils::toString("DrawCall: %d", numdrawcall);
-	std::string tmp_numtriangle = Utils::toString("numTriangle: %d", numTriangle);
-	std::string tmp_PrevFraTime = Utils::toString("PrevFrameTime: %d cpu: %d", frameTime, cpuTime);
-
-	text_FPS.setText(tmp_fps);
+	text_FPS.setText("FPS: %.1f", fps);
 	text_DrawCall.setPos(text_FPS.getEndPos());
-	text_DrawCall.setText(tmp_drawcall);
-	text_NumTriangle.setText(tmp_numtriangle);
-	text_FrameTime.setText(tmp_PrevFraTime);
+	text_DrawCall.setText("DrawCall: %d", numdrawcall);
+	text_NumTriangle.setText("numTriangle: %d", numTriangle);
+	text_FrameTime.setText("PrevFrameTime: %d cpu: %d", frameTime, cpuTime);
 
 	FrameRate::getInstance()->Counter();
 	Debugging::getInstance()->resetCount();

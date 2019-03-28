@@ -5,18 +5,12 @@ bool cmpf(float A, float B, float epsilon = 0.0001f)
 {
 	return (fabs(A - B) < epsilon);
 }
+
 void QHText::MakeTextData()
 {
 	m_textdata.clear();
 	if (m_text.size() > 0)
 		m_endPos = TextRendering::getInstance()->Add(m_text, m_pos.x, m_pos.y, m_scale, m_color, m_alpha, m_textdata);
-}
-
-void QHText::setText(std::string newText)
-{
-	if (m_text == newText) return;
-	m_text = newText;
-	MakeTextData();
 }
 
 void QHText::setPos(int pos_x, int pos_y)
@@ -129,3 +123,4 @@ QHText::~QHText()
 {
 	TextRendering::getInstance()->RemoveQHText(m_id);
 }
+

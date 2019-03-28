@@ -25,7 +25,6 @@ typedef struct {
 	uint16_t bitsPerSample;
 	uint8_t list[4];
 	uint32_t listSize;
-	//uint8_t xxx[26];
 }BasicWAVEHeader;
 
 class Sound
@@ -40,7 +39,7 @@ private:
 
 	char* readWAV(string const & filename, BasicWAVEHeader* header);
 	ALuint createBufferFromWave(char* data, BasicWAVEHeader header);
-
+	void PlayOnThread();
 public:
 	void Play(bool isforcePlay = true);
 	void Init(string const &path);

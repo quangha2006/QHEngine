@@ -8,10 +8,14 @@ bool EGLAppContext::createWindow(int32_t width, int32_t height)
 {
 	this->width = width;
 	this->height = height;
-	return true;
 
 	Initializee = true;
 	return true;
+}
+
+void EGLAppContext::SwapInterval(int interval)
+{
+	eglSwapInterval(eglGetCurrentDisplay(), interval);
 }
 
 AppSharedContext *EGLAppContext::CreateShareContext()

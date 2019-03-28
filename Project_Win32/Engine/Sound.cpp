@@ -1,5 +1,7 @@
 #include "Sound.h"
 #include "Utils.h"
+#include <stdlib.h>
+#include <thread>
 
 //WARNING: This Doesn't Check To See If These Pointers Are Valid
 char* Sound::readWAV(string const & filename, BasicWAVEHeader* header) {
@@ -61,12 +63,20 @@ ALuint Sound::createBufferFromWave(char* data, BasicWAVEHeader header)
 
 	return buffer;
 }
+void Sound::PlayOnThread()
+{
+	alSourcePlay(source);
+}
 void Sound::Play(bool isforcePlay)
 {
 	int sourceState = AL_PLAYING;
 	alGetSourcei(source, AL_SOURCE_STATE, &sourceState);
 	if (sourceState != AL_PLAYING || isforcePlay)
+	{
 		alSourcePlay(source);
+		//new thread(&Sound::PlayOnThread, this);
+	}
+
 }
 void Sound::Init(string const &path)
 {

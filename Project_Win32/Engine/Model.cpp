@@ -682,12 +682,24 @@ void Model::CreateBoxShapePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 
 	mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
-void Model::CreateSphereShapePhysiceBody(float mass, float radius, glm::vec3 fixedboxshape)
+void Model::CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fixedboxshape)
 {
 	isDynamic = (mass != 0.f);
 	mFixedBoxShape = fixedboxshape;
 	mRigidBody = PhysicsSimulation::getInstance()->createSphereShape(mass, mPos + fixedboxshape, mRotate, mAngle, radius);
 	mRigidBody->setActivationState(DISABLE_DEACTIVATION);
+}
+
+void Model::ClearForcesPhysics()
+{
+	if (mRigidBody)
+	{
+		btVector3 zeroVector(0, 0, 0);
+
+		mRigidBody->clearForces();
+		mRigidBody->setLinearVelocity(zeroVector);
+		mRigidBody->setAngularVelocity(zeroVector);
+	}
 }
 
 btRigidBody * Model::GetRigidBody()

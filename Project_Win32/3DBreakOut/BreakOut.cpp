@@ -86,9 +86,9 @@ void BreakOut::Init()
 	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	uvcircle.SetScale(glm::vec3(1.0));
 	uvcircle.SetPos(glm::vec3(0.0f, 1.f, 10.0f));
-	uvcircle.CreateSphereShapePhysiceBody(1., 1.);
+	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 	
-	uvcircle.GetRigidBody()->setFriction(0.);
+	//uvcircle.GetRigidBody()->setFriction(0.);
 	uvcircle.GetRigidBody()->setRollingFriction(0.);
 	uvcircle.GetRigidBody()->setSpinningFriction(0.);
 	uvcircle.GetRigidBody()->setRestitution(1.);
@@ -101,7 +101,6 @@ void BreakOut::Init()
 
 void BreakOut::Update()
 {
-
 	btCollisionObject* colObjA = (btCollisionObject*)cube.GetRigidBody();
 	btCollisionObject* colObjB;
 
@@ -133,9 +132,7 @@ void BreakOut::Update()
 	{
 		if (!listcube[i].GetIsVisible())
 		{
-			//LOGI("1 %d\n", listcube[i].GetRigidBody()->getCollisionFlags());
 			listcube[i].GetRigidBody()->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
-			//LOGI("2 %d\n",listcube[i].GetRigidBody()->getCollisionFlags());
 		}
 	}
 
@@ -166,6 +163,14 @@ void BreakOut::Update()
 			uvcircle.GetRigidBody()->forceActivationState(DISABLE_SIMULATION);
 		}
 	}
+	// cheat
+	glm::vec3 ballPos = uvcircle.GetPos();
+	glm::vec3 cubePos = cube.GetPos();
+
+	cubePos.x = ballPos.x;
+
+	cube.SetPos(cubePos);
+
 }
 
 void BreakOut::GetRequireScreenSize(int32_t & width, int32_t & height)
@@ -258,11 +263,10 @@ void BreakOut::GameReset()
 		listcube[i].SetVisible(true);
 		listcube[i].GetRigidBody()->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
 	}
+
+	uvcircle.ClearForcesPhysics();
+
 	uvcircle.Translate(glm::vec3(0.0f, 0.0f, -10.0f));
-	uvcircle.GetRigidBody()->clearForces();
-	btVector3 zeroVector(0, 0, 0);
-	uvcircle.GetRigidBody()->setLinearVelocity(zeroVector);
-	uvcircle.GetRigidBody()->setAngularVelocity(zeroVector);
 	uvcircle.GetRigidBody()->forceActivationState(ACTIVE_TAG);
 	uvcircle.GetRigidBody()->applyCentralForce(btVector3(1000., 0., -5000.));
 }

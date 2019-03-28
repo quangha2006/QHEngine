@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Utils.h"
 
 struct TextData {
 	glm::vec4 Position;
@@ -26,7 +27,6 @@ private:
 	void MakeTextData();
 public:
 	bool visible;
-	void setText(std::string newText);
 	void setPos(int pos_x, int pos_y);
 	void setPos(glm::ivec2 newPos);
 	void setColor(glm::vec3 newColor);
@@ -43,5 +43,19 @@ public:
 	int GetId();
 	QHText(std::string text = "", int pos_x = 0.0f, int pos_y = 0.0f, glm::vec3 color = glm::vec3(1.0f), float scale = 1.0f, float alpha = 1.0f);
 	~QHText();
+
+	template< typename... Args >
+	void setText(const char* format, Args... args);
 };
 
+template<typename ...Args>
+inline void QHText::setText(const char * format, Args ...args)
+{
+	std::string newText = Utils::toString(format, args...);
+
+	if (m_text == newText) return;
+
+	m_text = newText;
+
+	MakeTextData();
+}

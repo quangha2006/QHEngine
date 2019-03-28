@@ -39,8 +39,12 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 	}
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	glfwSwapInterval(1);
+	
 	return true; 
+}
+void GLFWContext::SwapInterval(int interval)
+{
+	glfwSwapInterval(interval);
 }
 AppSharedContext *GLFWContext::CreateShareContext()
 {

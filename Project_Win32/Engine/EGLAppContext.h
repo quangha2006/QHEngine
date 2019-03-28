@@ -30,6 +30,7 @@ public:
 	AppSharedContext *CreateShareContext();
 	void DestroyContext();
 	void SwapBuffers();
+	void SwapInterval(int interval);
 	EGLAppContext();
 	~EGLAppContext();
 };
