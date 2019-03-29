@@ -16,17 +16,17 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 {
 	mAppcontext = appcontext;
 
-	ShaderManager::getInstance()->Init("model_skinning", "Shaders/model_loading.vs", "Shaders/model_loading.fs", "#define SKINNED");
-	ShaderManager::getInstance()->Init("model", "Shaders/model_loading.vs", "Shaders/model_loading.fs");
-	ShaderManager::getInstance()->Init("debugShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
-	ShaderManager::getInstance()->Init("depthShader_skinning", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs", "#define SKINNED");
-	ShaderManager::getInstance()->Init("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
-	ShaderManager::getInstance()->Init("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
-	ShaderManager::getInstance()->Init("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs");
-	ShaderManager::getInstance()->Init("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define HORIZONTAL");
-	ShaderManager::getInstance()->Init("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define VERTICAL");
-	ShaderManager::getInstance()->Init("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
-	ShaderManager::getInstance()->Init("debugPhysics", "Shaders/DebugPhysics.vs", "Shaders/DebugPhysics.fs");
+	ShaderManager::getInstance()->LoadFromFile("model_skinning", "Shaders/model_loading.vs", "Shaders/model_loading.fs", "#define SKINNED");
+	ShaderManager::getInstance()->LoadFromFile("model", "Shaders/model_loading.vs", "Shaders/model_loading.fs");
+	ShaderManager::getInstance()->LoadFromFile("debugShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
+	ShaderManager::getInstance()->LoadFromFile("depthShader_skinning", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs", "#define SKINNED");
+	ShaderManager::getInstance()->LoadFromFile("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
+	ShaderManager::getInstance()->LoadFromFile("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
+	ShaderManager::getInstance()->LoadFromFile("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs");
+	ShaderManager::getInstance()->LoadFromFile("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define HORIZONTAL");
+	ShaderManager::getInstance()->LoadFromFile("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define VERTICAL");
+	ShaderManager::getInstance()->LoadFromFile("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
+	ShaderManager::getInstance()->LoadFromFile("debugPhysics", "Shaders/DebugPhysics.vs", "Shaders/DebugPhysics.fs");
 
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
 

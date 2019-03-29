@@ -31,7 +31,7 @@ void Mesh::setupMesh()
 
 void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::vec3 customColor)
 {
-	Shaderv2 * modelShader = ShaderManager::getInstance()->GetCurrentShader();
+	Shader * modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);

@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
+#include "Shader.h"
 using namespace std;
 struct Shaderv2
 {
@@ -35,7 +36,7 @@ class ShaderManager
 {
 private:
 	static ShaderManager *instance;
-	vector<Shaderv2*> Shader_list;
+	vector<Shader*> Shader_list;
 	GLuint Current_program;
 	GLuint Current_shader;
 	GLuint createProgram(const char* vtxSrc, const char* fragSrc, const char* definecode);
@@ -46,9 +47,10 @@ public:
 	bool setUseProgram(GLuint shaderProgram);
 	GLuint GetProgram(const char *shadername);
 	GLuint GetCurrentProgram();
-	Shaderv2 *GetShader(const char *shadername);
-	Shaderv2 *GetCurrentShader();
-	bool Init(const char* shadername,const char* fileVertexShader, const char* fileFragmentShader, const char* definecode = NULL);
+	Shader *GetShader(const char *shadername);
+	Shader *GetCurrentShader();
+	bool LoadFromFile(const char* shadername,const char* fileVertexShader, const char* fileFragmentShader, const char* definecode = NULL);
+	bool LoadFromString(const char* shadername, const char* fileVertexShader, const char* fileFragmentShader, const char* definecode = NULL);
 	void setBool(const std::string &name, bool value);
 	void setInt(const std::string &name, int value);
 	void setFloat(const std::string &name, float value[], int size);

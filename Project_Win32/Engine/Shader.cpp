@@ -1,16 +1,16 @@
 #include "Shader.h"
 #include "Logs.h"
+#include "Utils.h"
 
-
-bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFromString )
+bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFromString , const char* definecode)
 {
 	GLint linked = GL_FALSE;
-	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vtxSrc, isFromString);
+	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vtxSrc, isFromString, definecode);
 	if (!vertexShader)
 	{
 		return false;
 	}
-	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc, isFromString);
+	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc, isFromString, definecode);
 	if (!fragmentShader)
 	{
 		return false;
@@ -37,27 +37,24 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 			}
 		}
 		glDeleteProgram(program);
-		program = 0;
+		program = -1;
 		return false;
 	}
-	//LOGI("Create Program: %d\n", program);
+
 	return true;
 }
 
-GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromString )
+GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromString , const char* definecode)
 {
-	//LOGI("Create shader: %s\n", src);
 	char * shaderSrc = NULL;
 	std::string final_shaderSrc = "";
+
 	if (!isFromString)
 	{
-		std::string path_modif(src);
-#ifdef ANDROID
-		if (path_modif.find("../") == 0)
-		{
-			path_modif.replace(0, 3, "/sdcard/");
-		}
-#endif
+		std::string path_modif(Utils::getResourcesFolder() + src);
+
+		LOGI("Load shader: %s %s\n", path_modif.c_str(), (definecode != NULL ? definecode : " "));
+
 		FILE * pf = fopen(path_modif.c_str(), "rb");
 		if (pf == NULL)
 		{
@@ -81,11 +78,13 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 		
 	if (shaderSrc != NULL && strncmp(shaderSrc, "#version", 8) != 0)
 	{
-#ifdef ANDROID
-		final_shaderSrc = "#version 300 es\n";
-#else
-		final_shaderSrc = "#version 330\n";
-#endif
+		final_shaderSrc =  Utils::getDefineVersionShader();
+	}
+	if (definecode != NULL)
+	{
+		final_shaderSrc += '\n';
+		final_shaderSrc += definecode;
+		final_shaderSrc += '\n';
 	}
 	GLuint shader = glCreateShader(shaderType);
 
@@ -111,7 +110,7 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 			if (infoLog) {
 				glGetShaderInfoLog(shader, infoLogLen, NULL, infoLog);
 				LOGE("ERROR!\n");
-				LOGE("Could not compile %s shader:\n%s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
+				LOGE("Could not compile %s shader: %s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
 				free(infoLog);
 			}
 		}
@@ -122,13 +121,19 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 	return shader;
 }
 
-bool Shader::LoadShader(const char * fileVertexShader, const char * fileFragmentShader, bool isFromString )
+bool Shader::LoadShader(const char * fileVertexShader, const char * fileFragmentShader, bool isFromString , const char* definecode)
 {
-	if (!createProgram(fileVertexShader, fileFragmentShader, isFromString))
+	if (!createProgram(fileVertexShader, fileFragmentShader, isFromString, definecode))
 		return false;
+
 	position_Attribute = glGetAttribLocation(program, "aPos");
-	texCoord_Attribute = glGetAttribLocation(program, "aTexCoords");
+	normal_Attribute = glGetAttribLocation(program, "aNormal");
 	color_Attribute = glGetAttribLocation(program, "aColor");
+	TexCoord_Attribute = glGetAttribLocation(program, "aTexCoords");
+	Tangent_Attribute = glGetAttribLocation(program, "aTangent");
+	Bitangent_Attribute = glGetAttribLocation(program, "aBitangent");
+	Weights_Attribute = glGetAttribLocation(program, "sWeights");
+	IDs_Attribute = glGetAttribLocation(program, "sIDs");
 	m_initialized = true;
 	return true;
 }
@@ -148,7 +153,7 @@ GLint Shader::getPosAttribute()
 
 GLint Shader::getTexCoodAttribute()
 {
-	return texCoord_Attribute;
+	return TexCoord_Attribute;
 }
 
 GLint Shader::getColorAttribute()
@@ -168,9 +173,15 @@ void Shader::setMat4(const std::string & name, const glm::mat4 & mat)
 
 Shader::Shader()
 {
-	program = -1;
 	position_Attribute = -1;
+	normal_Attribute = -1;
 	color_Attribute = -1;
+	TexCoord_Attribute = -1;
+	Tangent_Attribute = -1;
+	Bitangent_Attribute = -1;
+	Weights_Attribute = -1;
+	IDs_Attribute = -1;
+	program = -1;
 	m_initialized = false;
 }
 

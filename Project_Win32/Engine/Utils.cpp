@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <ctime>
 
-//#include "package_utils.h"
 namespace Utils
 {
 	std::string getResourcesFolder()

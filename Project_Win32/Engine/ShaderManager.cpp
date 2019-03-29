@@ -102,7 +102,7 @@ GLuint ShaderManager::createShader(GLenum shaderType, const char * src, const ch
 		glDeleteShader(shader);
 		return 0;
 	}
-	//LOGI("DONE! (id: %d)\n", shader);
+
 	return shader;
 }
 
@@ -168,7 +168,7 @@ GLuint ShaderManager::GetCurrentProgram()
 	return Current_program;
 }
 
-Shaderv2 * ShaderManager::GetShader(const char * shadername)
+Shader * ShaderManager::GetShader(const char * shadername)
 {
 	int shader_list_size = Shader_list.size();
 	if (shader_list_size == 0 || !shadername) return nullptr;
@@ -182,28 +182,32 @@ Shaderv2 * ShaderManager::GetShader(const char * shadername)
 	return nullptr;
 }
 
-Shaderv2 * ShaderManager::GetCurrentShader()
+Shader * ShaderManager::GetCurrentShader()
 {
 	return Shader_list[Current_shader];
 }
 
-bool ShaderManager::Init(const char * shadername, const char * fileVertexShader, const char * fileFragmentShader, const char* definecode)
-{
-	LOGI("\n");
-	GLuint program = createProgram(fileVertexShader, fileFragmentShader, definecode);
-	if (program == 0)
+bool ShaderManager::LoadFromString(const char * shadername, const char * fileVertexShader, const char * fileFragmentShader, const char* definecode)
+{	
+	Shader *shader = new Shader();
+	if (!shader->LoadShader(fileVertexShader, fileFragmentShader, true, definecode))
 		return false;
-	Shaderv2 *shader = new Shaderv2();
+
 	shader->shaderName = string(shadername);
-	shader->program = program;
-	//finding location of uniforms / attributes
-	shader->position_Attribute = glGetAttribLocation(program, "aPos");
-	shader->TexCoord_Attribute = glGetAttribLocation(program, "aTexCoords");
-	shader->Weights_Attribute = glGetAttribLocation(program, "sWeights");
-	shader->IDs_Attribute = glGetAttribLocation(program, "sIDs");
-	shader->normal_Attribute = glGetAttribLocation(program, "aNormal");
-	shader->Tangent_Attribute = glGetAttribLocation(program, "aTangent");
-	shader->Bitangent_Attribute = glGetAttribLocation(program, "aBitangent");
+
+	Shader_list.push_back(shader);
+
+	return true;
+}
+
+bool ShaderManager::LoadFromFile(const char * shadername, const char * fileVertexShader, const char * fileFragmentShader, const char* definecode)
+{
+	Shader *shader = new Shader();
+	if (!shader->LoadShader(fileVertexShader, fileFragmentShader, false, definecode))
+		return false;
+
+	shader->shaderName = string(shadername);
+
 	Shader_list.push_back(shader);
 
 	return true;
