@@ -10,8 +10,6 @@
 
 void Mesh::setupMesh()
 {
-	//Shaderv2 * modelShader = ShaderManager::getInstance()->GetShader("basic");
-	//if (modelShader == nullptr) return;
 
 	// create buffers/arrays
 	glGenBuffers(1, &VBO);
@@ -56,7 +54,7 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 	if (modelShader->IDs_Attribute != -1)
 	{
 		glEnableVertexAttribArray(modelShader->IDs_Attribute);
-		//glVertexAttribIPointer(modelShader->IDs_Attribute, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, id)); //use for ivec4
+		//glVertexAttribIPointer(modelShader->IDs_Attribute, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, id)); //for ivec4
 		glVertexAttribPointer(modelShader->IDs_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, id));
 	}
 	// vertex normals
@@ -84,13 +82,13 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 	unsigned int specularNr = 1;
 	unsigned int normalNr = 1;
 	bool hasmaterial_texture_diffuse1 = false;
-	ShaderManager::getInstance()->setBool("useNormalMap", false);
-	ShaderManager::getInstance()->setBool("enableAlpha", isEnableAlpha);
-	ShaderManager::getInstance()->setMat4("Transform", mTransform);
+	ShaderSet::setBool("useNormalMap", false);
+	ShaderSet::setBool("enableAlpha", isEnableAlpha);
+	ShaderSet::setMat4("Transform", mTransform);
 	/*if (hasBone)
-		ShaderManager::getInstance()->setBool("useAnim", true);
+		ShaderSet::setBool("useAnim", true);
 	else
-		ShaderManager::getInstance()->setBool("useAnim", false);*/
+		ShaderSet::setBool("useAnim", false);*/
 	unsigned int i = 0;
 	for (; i < textures.size(); i++)
 	{
@@ -118,15 +116,15 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 		{
 			name = "texture_normal";
 			ss << normalNr++; // transfer unsigned int to stream
-			ShaderManager::getInstance()->setBool("useNormalMap", true);
+			ShaderSet::setBool("useNormalMap", true);
 		}
 		number = ss.str();
 		// now set the sampler to the correct texture unit
 		string Material = "material_";
 		string full_name = Material + name + number;
-		//int temp = glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), full_name.c_str());
+		//int temp = glGetUniformLocation(ShaderSet::GetCurrentProgram(), full_name.c_str());
 
-		ShaderManager::getInstance()->setInt(full_name.c_str(), i);
+		ShaderSet::setInt(full_name.c_str(), i);
 
 		// and finally bind the texture
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
@@ -136,34 +134,34 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 		GLuint depthmap = RenderManager::getInstance()->GetDepthMapId();
 		if (depthmap != -1)
 		{
-			ShaderManager::getInstance()->setBool("useShadowMap", true);
+			ShaderSet::setBool("useShadowMap", true);
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, depthmap);
-			ShaderManager::getInstance()->setInt("shadowMap", i);
+			ShaderSet::setInt("shadowMap", i);
 		}
 		else
-			ShaderManager::getInstance()->setBool("useShadowMap", false);
+			ShaderSet::setBool("useShadowMap", false);
 	}
 
-	ShaderManager::getInstance()->setFloat("material_transparent", material.transparent);
-	ShaderManager::getInstance()->setFloat("material_shininess", material.shininess);
-	ShaderManager::getInstance()->setVec3("material_color_ambient", material.ambient);
-	ShaderManager::getInstance()->setVec3("material_color_diffuse", material.diffuse);
-	ShaderManager::getInstance()->setVec3("material_color_specular", material.specular);
+	ShaderSet::setFloat("material_transparent", material.transparent);
+	ShaderSet::setFloat("material_shininess", material.shininess);
+	ShaderSet::setVec3("material_color_ambient", material.ambient);
+	ShaderSet::setVec3("material_color_diffuse", material.diffuse);
+	ShaderSet::setVec3("material_color_specular", material.specular);
 	if (material.shininess < 0.001f || !hasNormals)
-		ShaderManager::getInstance()->setBool("uselighting", false);
+		ShaderSet::setBool("uselighting", false);
 
 	if (!isEnableAlpha && mode == RenderMode_Depth)
-		ShaderManager::getInstance()->setBool("useTexture", false);
+		ShaderSet::setBool("useTexture", false);
 	else if (hasmaterial_texture_diffuse1)
-		ShaderManager::getInstance()->setBool("useTexture", true);
+		ShaderSet::setBool("useTexture", true);
 	else
-		ShaderManager::getInstance()->setBool("useTexture", false);
+		ShaderSet::setBool("useTexture", false);
 
 	if (useCustomColor)
 	{
-		ShaderManager::getInstance()->setBool("useTexture", false);
-		ShaderManager::getInstance()->setVec3("material_color_diffuse", customColor);
+		ShaderSet::setBool("useTexture", false);
+		ShaderSet::setVec3("material_color_diffuse", customColor);
 	}
 
 	if (isDrawPolygon)

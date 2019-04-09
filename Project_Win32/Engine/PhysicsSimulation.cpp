@@ -152,7 +152,7 @@ void PhysicsSimulation::RenderPhysicsDebug()
 		model = rotate(model, rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
 
 		glm::mat4 WorldViewProjectionMatrix = Camera::getInstance()->WorldViewProjectionMatrix * model;
-		ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
+		ShaderSet::setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
 		glDrawArrays(GL_LINES, 0, 24);
 
 		delete[]vertices;

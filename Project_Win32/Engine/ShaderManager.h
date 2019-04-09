@@ -8,30 +8,7 @@
 #include <string>
 #include "Shader.h"
 using namespace std;
-struct Shaderv2
-{
-	GLuint program;
-	GLint position_Attribute;
-	GLint normal_Attribute;
-	GLint color_Attribute;
-	GLint TexCoord_Attribute;
-	GLint Tangent_Attribute;
-	GLint Bitangent_Attribute;
-	GLint Weights_Attribute;
-	GLint IDs_Attribute;
-	string shaderName;
-	Shaderv2()
-	{
-		position_Attribute = -1;
-		normal_Attribute = -1;
-		color_Attribute = -1;
-		TexCoord_Attribute = -1;
-		Tangent_Attribute = -1;
-		Bitangent_Attribute = -1;
-		Weights_Attribute = -1;
-		IDs_Attribute = -1;
-	}
-};
+
 class ShaderManager
 {
 private:
@@ -39,8 +16,6 @@ private:
 	vector<Shader*> Shader_list;
 	GLuint Current_program;
 	GLuint Current_shader;
-	GLuint createProgram(const char* vtxSrc, const char* fragSrc, const char* definecode);
-	GLuint createShader(GLenum shaderType, const char* src, const char* definecode);
 public:
 	static ShaderManager *getInstance();
 	bool setUseProgram(const char *shadername);
@@ -51,6 +26,13 @@ public:
 	Shader *GetCurrentShader();
 	bool LoadFromFile(const char* shadername,const char* fileVertexShader, const char* fileFragmentShader, const char* definecode = NULL);
 	bool LoadFromString(const char* shadername, const char* fileVertexShader, const char* fileFragmentShader, const char* definecode = NULL);
+
+	ShaderManager();
+	~ShaderManager();
+};
+
+namespace ShaderSet
+{
 	void setBool(const std::string &name, bool value);
 	void setInt(const std::string &name, int value);
 	void setFloat(const std::string &name, float value[], int size);
@@ -65,7 +47,5 @@ public:
 	void setMat2(const std::string &name, const glm::mat2 &mat);
 	void setMat3(const std::string &name, const glm::mat3 &mat);
 	void setMat4(const std::string &name, const glm::mat4 &mat);
-	void setBoneMat4(const std::string &name, vector<glm::mat4> mat);
-	ShaderManager();
-	~ShaderManager();
-};
+	void setBoneMat4(const std::string &name,const vector<glm::mat4> &mat);
+}

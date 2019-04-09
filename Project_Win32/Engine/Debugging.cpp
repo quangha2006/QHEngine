@@ -48,7 +48,7 @@ void Debugging::DrawTex(GLuint TexId, const char *shadername)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TexId);	// use the color attachment texture as the texture of the quad plane
 
-	ShaderManager::getInstance()->setInt("depthMap", 0);
+	ShaderSet::setInt("depthMap", 0);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);

@@ -185,7 +185,6 @@ Shader::Shader()
 	m_initialized = false;
 }
 
-
 Shader::~Shader()
 {
 }

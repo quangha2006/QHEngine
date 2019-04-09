@@ -396,11 +396,11 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 			else
 				ShaderManager::getInstance()->setUseProgram("depthShader");
 
-			ShaderManager::getInstance()->setFloat("near_plane", mCamera->light_near);
-			ShaderManager::getInstance()->setFloat("far_plane", mCamera->light_far);
+			ShaderSet::setFloat("near_plane", mCamera->light_near);
+			ShaderSet::setFloat("far_plane", mCamera->light_far);
 
 			WorldViewLightSpaceMatrix = mCamera->lightSpaceMatrix * tmp_model;
-			ShaderManager::getInstance()->setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
+			ShaderSet::setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
 
 			break;
 		case RenderMode_Sence:
@@ -409,45 +409,46 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 			else
 				ShaderManager::getInstance()->setUseProgram("model");
 
-			ShaderManager::getInstance()->setFloat("pointlight_constant", 1.0f);
-			ShaderManager::getInstance()->setFloat("pointlight_linear", 0.0014f);
-			ShaderManager::getInstance()->setFloat("pointlight_quadratic", 0.000007f);
-			ShaderManager::getInstance()->setFloat("material_shininess", 18.0f);
-			ShaderManager::getInstance()->setVec3("light_position", mCamera->lightPos);
-			ShaderManager::getInstance()->setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
-			ShaderManager::getInstance()->setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
-			ShaderManager::getInstance()->setVec3("light_specular", 1.1f, 1.1f, 1.1f);
-			ShaderManager::getInstance()->setVec3("viewPos", mCamera->Pos);
-			ShaderManager::getInstance()->setVec3("color_pick", 0.0f, 0.0f, 0.0f);
-			ShaderManager::getInstance()->setBool("usenormalmap", false);
-			ShaderManager::getInstance()->setBool("usepointlight", this->isUsePointLight);
-			ShaderManager::getInstance()->setBool("GammaCorrection", mGammaCorrection);
+			ShaderSet::setFloat("pointlight_constant", 1.0f);
+			ShaderSet::setFloat("pointlight_linear", 0.0014f);
+			ShaderSet::setFloat("pointlight_quadratic", 0.000007f);
+			ShaderSet::setFloat("material_shininess", 18.0f);
+			ShaderSet::setVec3("light_position", mCamera->lightPos);
+			ShaderSet::setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
+			ShaderSet::setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
+			ShaderSet::setVec3("light_specular", 1.1f, 1.1f, 1.1f);
+			ShaderSet::setVec3("viewPos", mCamera->Pos);
+			ShaderSet::setVec3("color_pick", 0.0f, 0.0f, 0.0f);
+			ShaderSet::setBool("usenormalmap", false);
+			ShaderSet::setBool("usepointlight", this->isUsePointLight);
+			ShaderSet::setBool("GammaCorrection", mGammaCorrection);
 
 			model_inverse = glm::inverse(tmp_model);
 			model_inverse = glm::transpose(model_inverse);
-			ShaderManager::getInstance()->setMat4("world_inverse", model_inverse);
+			ShaderSet::setMat4("world_inverse", model_inverse);
 
-			ShaderManager::getInstance()->setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
-			ShaderManager::getInstance()->setMat4("world", tmp_model);
+			ShaderSet::setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
+			ShaderSet::setMat4("world", tmp_model);
 
 			WorldViewProjectionMatrix = mCamera->WorldViewProjectionMatrix * tmp_model;
-			ShaderManager::getInstance()->setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
+			ShaderSet::setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
 			break;
 	}
 	
 	//animation
 	if (hasAnimation && Transforms.size() > 0)
 	{
-		int m_boneLocation = glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), "gBones");
-		if (m_boneLocation >= 0)
-			glUniformMatrix4fv(m_boneLocation, Transforms.size(), GL_TRUE, glm::value_ptr(Transforms[0]));
+		//int m_boneLocation = glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), "gBones");
+		//if (m_boneLocation >= 0)
+			//glUniformMatrix4fv(m_boneLocation, Transforms.size(), GL_TRUE, glm::value_ptr(Transforms[0]));
+		ShaderSet::setBoneMat4("gBones", Transforms);
 	}
 
 	if (m_meshdraw > -1)
 	{
 		if (m_meshdraw < meshes.size())
 		{
-			ShaderManager::getInstance()->setBool("uselighting", uselighting);
+			ShaderSet::setBool("uselighting", uselighting);
 			meshes[m_meshdraw].Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}
@@ -455,7 +456,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	{
 		for (unsigned int i = 0; i < meshes.size(); i++)
 		{
-			ShaderManager::getInstance()->setBool("uselighting", uselighting);
+			ShaderSet::setBool("uselighting", uselighting);
 			meshes[i].Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}

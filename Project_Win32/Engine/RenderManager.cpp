@@ -1,7 +1,7 @@
 #include "RenderManager.h"
 #include "Debugging.h"
-RenderManager * RenderManager::instance = NULL;
 
+RenderManager * RenderManager::instance = NULL;
 
 RenderManager * RenderManager::getInstance()
 {
@@ -32,11 +32,11 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 
 	int width = mAppcontext->GetWindowWidth();
 	int height = mAppcontext->GetWindowHeight();
-
-	//mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, width, height);
-
+#ifdef WIN32
+	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR_MULTISAMPLED, width, height);
+#else // Android
 	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
-
+#endif
 	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
 
 	mBluringRT.Init(mAppcontext, RenderTargetType_COLOR_BLURRING, width, height);
@@ -151,11 +151,11 @@ void RenderManager::RenderFinal()
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, mBloom_bright);
 
-	ShaderManager::getInstance()->setInt("scene", 0);
-	ShaderManager::getInstance()->setInt("bloomBlur", 1);
-	ShaderManager::getInstance()->setInt("bloom", m_isEnableBloom);
-	ShaderManager::getInstance()->setFloat("exposure", 1.0f);
-	ShaderManager::getInstance()->setInt("GammaCorrection", mGammaCorrection);
+	ShaderSet::setInt("scene", 0);
+	ShaderSet::setInt("bloomBlur", 1);
+	ShaderSet::setInt("bloom", m_isEnableBloom);
+	ShaderSet::setFloat("exposure", 1.0f);
+	ShaderSet::setInt("GammaCorrection", mGammaCorrection);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
