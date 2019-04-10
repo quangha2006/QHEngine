@@ -57,9 +57,9 @@ void Debugging::DrawTex(GLuint TexId, const char *shadername)
 }
 
 Debugging::Debugging()
+	: numTriangle(0)
+	, numDrawCall(0)
 {
-	numTriangle = 0;
-	numDrawCall = 0;
 	quadVertices = new float[5 * 4]{
 		// positions   // texCoords
 		0.2f,  1.0f, 0.0f, 0.0f, 1.0f,

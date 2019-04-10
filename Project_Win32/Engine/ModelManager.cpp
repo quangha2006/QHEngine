@@ -63,8 +63,8 @@ void ModelManager::Loading()
 }
 
 ModelManager::ModelManager()
+	: mCurrentId(0)
 {
-	mCurrentId = 0;
 }
 
 

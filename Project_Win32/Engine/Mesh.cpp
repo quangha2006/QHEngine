@@ -12,15 +12,15 @@ void Mesh::setupMesh()
 {
 
 	// create buffers/arrays
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	glGenBuffers(1, &mVBO);
+	glGenBuffers(1, &mEBO);
 
 	// load data into vertex buffers
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(Vertex), &mVertices[0], GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(GLuint), &mIndices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -31,8 +31,8 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 {
 	Shader * modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	if (modelShader->position_Attribute != -1)
 	{
 		glEnableVertexAttribArray(modelShader->position_Attribute);
@@ -90,7 +90,7 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 	else
 		ShaderSet::setBool("useAnim", false);*/
 	unsigned int i = 0;
-	for (; i < textures.size(); i++)
+	for (; i < mTextures.size(); i++)
 	{
 		if (!isEnableAlpha && mode == RenderMode_Depth) break;
 
@@ -99,7 +99,7 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 		stringstream ss;
 		string number;
 		string name;
-		aiTextureType texturetype = textures[i].type;
+		aiTextureType texturetype = mTextures[i].type;
 		if (texturetype == aiTextureType_DIFFUSE)
 		{
 			name = "texture_diffuse";
@@ -127,7 +127,7 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 		ShaderSet::setInt(full_name.c_str(), i);
 
 		// and finally bind the texture
-		glBindTexture(GL_TEXTURE_2D, textures[i].id);
+		glBindTexture(GL_TEXTURE_2D, mTextures[i].id);
 	}
 	if (mode != RenderMode_Depth)
 	{
@@ -143,12 +143,12 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 			ShaderSet::setBool("useShadowMap", false);
 	}
 
-	ShaderSet::setFloat("material_transparent", material.transparent);
-	ShaderSet::setFloat("material_shininess", material.shininess);
-	ShaderSet::setVec3("material_color_ambient", material.ambient);
-	ShaderSet::setVec3("material_color_diffuse", material.diffuse);
-	ShaderSet::setVec3("material_color_specular", material.specular);
-	if (material.shininess < 0.001f || !hasNormals)
+	ShaderSet::setFloat("material_transparent", mMaterial.transparent);
+	ShaderSet::setFloat("material_shininess", mMaterial.shininess);
+	ShaderSet::setVec3("material_color_ambient", mMaterial.ambient);
+	ShaderSet::setVec3("material_color_diffuse", mMaterial.diffuse);
+	ShaderSet::setVec3("material_color_specular", mMaterial.specular);
+	if (mMaterial.shininess < 0.001f || !mHasNormals)
 		ShaderSet::setBool("uselighting", false);
 
 	if (!isEnableAlpha && mode == RenderMode_Depth)
@@ -164,56 +164,55 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::v
 		ShaderSet::setVec3("material_color_diffuse", customColor);
 	}
 
-	if (isDrawPolygon)
-		QHEngine::DrawElements(GL_LINE_LOOP, indices.size(), GL_UNSIGNED_INT, (void*)0);
+	if (mIsDrawPolygon)
+		QHEngine::DrawElements(GL_LINE_LOOP, mIndices.size(), GL_UNSIGNED_INT, (void*)0);
 	else
-		QHEngine::DrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);
+		QHEngine::DrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, (void*)0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	CheckGLError(meshName.c_str());
+	CheckGLError(mMeshName.c_str());
 }
 
 void Mesh::DeleteBuffer()
 {
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
+	glDeleteBuffers(1, &mVBO);
+	glDeleteBuffers(1, &mEBO);
 }
 
 void Mesh::SetUseLighting(bool isuse)
 {
-	this->hasNormals = isuse;
+	mHasNormals = isuse;
 }
 
 void Mesh::SetDrawPolygon(bool isdrawpolygon)
 {
-	isDrawPolygon = isdrawpolygon;
+	mIsDrawPolygon = isdrawpolygon;
 }
 
 int Mesh::GetNumVertex()
 {
-	return vertices.size();
+	return mVertices.size();
 }
 
 std::string Mesh::GetName()
 {
-	return meshName;
+	return mMeshName;
 }
 
 Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname, glm::mat4 nodeTransformation, bool hasnormals, bool hasbone)
+	: mIsDrawPolygon(false)
+	, mVertices(vertices)
+	, mIndices(indices)
+	, mTextures(textures)
+	, mMaterial(meterial)
+	, mMeshName(meshname)
+	, mHasNormals(hasnormals)
+	, mHasBone(hasbone)
+	, mTransform(nodeTransformation)
 {
-	this->vertices = vertices;
-	this->indices = indices;
-	this->textures = textures;
-	this->material = meterial;
-	this->meshName = meshname;
-	this->hasNormals = hasnormals;
-	this->hasBone = hasbone;
-	this->mTransform = nodeTransformation;
-	// now that we have all the required data, set the vertex buffers and its attribute pointers.
 	setupMesh();
-	isDrawPolygon = false;
 }
 Mesh::~Mesh()
 {

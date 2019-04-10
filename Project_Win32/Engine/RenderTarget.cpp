@@ -369,10 +369,10 @@ void RenderTarget::InitquadVAO()
 }
 
 RenderTarget::RenderTarget()
+	: m_initialized(false)
+	, quadVAO(0)
+	, m_isEnable(false)
 {
-	m_initialized = false;
-	quadVAO = 0;
-	m_isEnable = false;
 }
 
 RenderTarget::~RenderTarget()

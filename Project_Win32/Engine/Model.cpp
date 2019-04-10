@@ -892,34 +892,34 @@ glm::vec3 Model::GetRotate()
 	return mRotate;
 }
 Model::Model()
+	: gammaCorrection(false)
+	, m_initialized(false)
+	, useshadername("model")
+	, uselighting(true)
+	, useCustomColor(false)
+	, customColor(glm::vec3(1.0f))
+	, m_NumBones(0)
+	, m_pScene(NULL)
+	, hasAnimation(false)
+	, timeStampAnim(-1)
+	, mScale(glm::vec3(1.0f))
+	, mPos(glm::vec3(0.0f))
+	, mRotate( glm::vec3(0.0f))
+	, mAngle(0.0f)
+	, mWorldTransform(glm::mat4())
+	, animToPlay(0)
+	, isDrawPolygon(false)
+	, isUsePointLight(false)
+	, m_Id(-1)
+	, mSrcPath("")
+	, mIsDrawDepthMap(true)
+	, mCamera(Camera::getInstance())
+	, m_meshdraw(-1)
+	, mGammaCorrection(false)
+	, isDynamic(false)
+	, mIsVisible(true)
+	, mFixedBoxShape(glm::vec3(0.))
 {
-	gammaCorrection = false;
-	m_initialized = false;
-	useshadername = "model";
-	uselighting = true;
-	useCustomColor = false;
-	customColor = glm::vec3(1.0f);
-	m_NumBones = 0;
-	m_pScene = NULL;
-	hasAnimation = false;
-	timeStampAnim = -1;
-	mScale = glm::vec3(1.0f);
-	mPos = glm::vec3(0.0f);
-	mRotate = glm::vec3(0.0f);
-	mAngle = 0.0f;
-	mWorldTransform = glm::mat4();
-	animToPlay = 0;
-	isDrawPolygon = false;
-	isUsePointLight = false;
-	m_Id = -1;
-	mSrcPath = "";
-	mIsDrawDepthMap = true;
-	mCamera = Camera::getInstance();
-	m_meshdraw = -1;
-	mGammaCorrection = false;
-	isDynamic = false;
-	mIsVisible = true;
-	mFixedBoxShape = glm::vec3(0.);
 	ModelManager::getInstance()->AddModel(this);
 }
 Model::~Model()

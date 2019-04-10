@@ -397,12 +397,12 @@ void TextRendering::Draw()
 }
 
 TextRendering::TextRendering()
+	: program(0)
+	, screen_width(960)
+	, screen_height(540)
+	, m_initialized(false)
+	, currentLastId(0)
 {
-	program = 0;
-	screen_width = 960;
-	screen_height = 540;
-	m_initialized = false;
-	currentLastId = 0;
 }
 
 TextRendering::~TextRendering()

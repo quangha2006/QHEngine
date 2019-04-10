@@ -172,17 +172,17 @@ void Shader::setMat4(const std::string & name, const glm::mat4 & mat)
 }
 
 Shader::Shader()
+	: position_Attribute(-1)
+	, normal_Attribute(-1)
+	, color_Attribute(-1)
+	, TexCoord_Attribute(-1)
+	, Tangent_Attribute(-1)
+	, Bitangent_Attribute(-1)
+	, Weights_Attribute(-1)
+	, IDs_Attribute(-1)
+	, program(-1)
+	, m_initialized(false)
 {
-	position_Attribute = -1;
-	normal_Attribute = -1;
-	color_Attribute = -1;
-	TexCoord_Attribute = -1;
-	Tangent_Attribute = -1;
-	Bitangent_Attribute = -1;
-	Weights_Attribute = -1;
-	IDs_Attribute = -1;
-	program = -1;
-	m_initialized = false;
 }
 
 Shader::~Shader()

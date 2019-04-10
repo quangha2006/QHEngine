@@ -107,14 +107,14 @@ int QHText::GetId()
 }
 
 QHText::QHText(std::string text, int pos_x, int pos_y, glm::vec3 color, float scale, float alpha)
+	: m_text(text)
+	, m_color(color)
+	, m_pos(glm::vec2(pos_x, pos_y))
+	, m_alpha(alpha)
+	, m_scale(scale)
+	, visible(true)
 {
 	m_id = TextRendering::getInstance()->AddQHText(this);
-	m_text = text;
-	m_color = color;
-	m_pos = glm::vec2(pos_x, pos_y);
-	m_alpha = alpha;
-	m_scale = scale;
-	visible = true;
 	MakeTextData();
 }
 

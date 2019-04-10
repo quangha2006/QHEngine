@@ -219,8 +219,8 @@ void AppBase::GameZoomCamera(double xoffset, double yoffset)
 	}
 }
 AppBase::AppBase()
+	: mIsLoadingThreadFinish(false)
 {
-	mIsLoadingThreadFinish = false;
 }
 
 AppBase::~AppBase()

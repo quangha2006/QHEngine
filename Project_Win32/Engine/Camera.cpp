@@ -21,18 +21,18 @@ vec3 Camera::Right()
 }
 
 Camera::Camera()
+	: Pos(vec3(0.0f, 3.0f, 8.0f))
+	, Target(vec3(0.0f, 1.0f, 0.0f))
+	, up(vec3(0.0f, 1.0f, 0.0f))
+	, Front(vec3(0.0f, 0.0f, -1.0f))
+	, view(glm::mat4(0.0f))
+	, projection(glm::mat4(0.0f))
+	, zoom(45.0f)
+	, View_near(0.1f)
+	, View_far(100000.0f)
+	, light_near(-20.1f)
+	, light_far(80.0f)
 {
-	Pos = vec3(0.0f, 3.0f, 8.0f);
-	Target = vec3(0.0f, 1.0f, 0.0f);
-	up		= vec3(0.0f, 1.0f, 0.0f);
-	Front	= vec3(0.0f, 0.0f, -1.0f);
-	view = glm::mat4(0.0f);
-	projection = glm::mat4(0.0f);
-	zoom = 45.0f;
-	View_near = 0.1f;
-	View_far = 100000.0f;
-	light_near = -20.1f;
-	light_far = 80.0f;
 }
 vec3 Camera::ExtractCameraPos(const glm::mat4 & a_modelView)
 {

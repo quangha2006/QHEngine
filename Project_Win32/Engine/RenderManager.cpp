@@ -222,12 +222,12 @@ void RenderManager::InitquadVAO()
 
 
 RenderManager::RenderManager()
+	: mDepthMapTexId(-1)
+	, quadVAO(-1)
+	, m_isEnableShadowMap(true)
+	, m_isEnableBloom(true)
+	, mGammaCorrection(false)
 {
-	mDepthMapTexId = -1;
-	quadVAO = -1;
-	m_isEnableShadowMap = true;
-	m_isEnableBloom = true;
-	mGammaCorrection = false;
 }
 
 

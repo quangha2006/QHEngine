@@ -111,9 +111,10 @@ bool ShaderManager::LoadFromFile(const char * shadername, const char * fileVerte
 }
 
 ShaderManager::ShaderManager()
+	: Current_program(1)
+	, Current_shader(-1)
 {
-	Current_program = -1;
-	Current_shader = -1;
+	
 }
 
 

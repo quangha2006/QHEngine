@@ -85,13 +85,13 @@ void FrameRate::limitFPS()
 }
 
 FrameRate::FrameRate()
+	: currentFPS(0.0f)
+	, SKIP_TICKS(0)
+	, prevFrametime(0)
+	, m_begincputime(0)
+	, m_endcputime(0)
+	, m_prevCputime(0)
 {
-	currentFPS = 0.0f;
-	SKIP_TICKS = 0;
-	prevFrametime = 0;
-	m_begincputime = 0;
-	m_endcputime = 0;
-	m_prevCputime = 0;
 }
 
 FrameRate::~FrameRate()

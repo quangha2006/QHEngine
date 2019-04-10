@@ -279,9 +279,9 @@ PhysicsSimulation * PhysicsSimulation::getInstance()
 }
 
 PhysicsSimulation::PhysicsSimulation()
+	: misRenderDebug(false)
+	, misEnableDepthTestDebug(true)
 {
-	misRenderDebug = false;
-	misEnableDepthTestDebug = true;
 }
 
 

@@ -59,20 +59,21 @@ struct BoneInfo
 };
 class Mesh {
 private:
-	unsigned int VBO, EBO;
-	void setupMesh();
-	string meshName;
-	bool hasNormals;
-	bool hasBone;
-	bool isDrawPolygon;
+	unsigned int mVBO, mEBO;
+	string mMeshName;
+	bool mHasNormals;
+	bool mHasBone;
+	bool mIsDrawPolygon;
 	glm::mat4 mTransform;
-public:
 	/*  Mesh Data  */
-	vector<Vertex> vertices;
-	vector<GLuint> indices;
-	vector<Texture> textures;
-	Material material;
-	GLuint texture;
+	vector<Vertex> mVertices;
+	vector<GLuint> mIndices;
+	vector<Texture> mTextures;
+	Material mMaterial;
+	GLuint mTexture;
+
+	void setupMesh();
+public:
 
 	void Draw(RenderMode mode, bool isEnableAlpha = false, bool useCustomColor = false, glm::vec3 customColor = glm::vec3(0.0f,0.0f,0.0f));
 	void DeleteBuffer();

@@ -155,8 +155,10 @@ GLuint QHAxis::createShader(GLenum shaderType, const char *src)
 
 
 QHAxis::QHAxis()
+	: m_initialized(false)
+	, model(glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)))
+	
 {
-	m_initialized = false;
 	vertices_axis = new float[15 * 6]{
 		-10.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 		10.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
@@ -176,7 +178,6 @@ QHAxis::QHAxis()
 		0.3f, 0.0f,  10.0f, 0.0f, 0.0f, 1.0f,
 		-0.3f, 0.0f,  10.0f, 0.0f, 0.0f, 1.0f
 	};
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 QHAxis::~QHAxis()
