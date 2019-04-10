@@ -143,6 +143,7 @@ GLuint SkyBox::getTextureID()
 SkyBox::SkyBox()
 	: scale(900.0f)
 	, m_initialized(false)
+	, model(glm::mat4(1.0f))
 {
 	skyboxVertices = new GLfloat[108]{
 		// positions          
@@ -188,7 +189,6 @@ SkyBox::SkyBox()
 		-1.0f, -1.0f,  1.0f,
 		1.0f, -1.0f,  1.0f
 	};
-	model = glm::mat4(1.0f);
 	setScale(scale);
 }
 

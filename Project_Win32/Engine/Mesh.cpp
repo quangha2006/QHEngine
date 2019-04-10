@@ -27,7 +27,7 @@ void Mesh::setupMesh()
 
 }
 
-void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, glm::vec3 customColor)
+void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const glm::vec3 &customColor)
 {
 	Shader * modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
@@ -201,7 +201,14 @@ std::string Mesh::GetName()
 	return mMeshName;
 }
 
-Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures, Material meterial, string meshname, glm::mat4 nodeTransformation, bool hasnormals, bool hasbone)
+Mesh::Mesh(const vector<Vertex> &vertices
+	, const vector<GLuint> &indices
+	, const vector<Texture> &textures
+	, const Material &meterial
+	, const string &meshname
+	, const glm::mat4 &nodeTransformation
+	, bool hasnormals
+	, bool hasbone)
 	: mIsDrawPolygon(false)
 	, mVertices(vertices)
 	, mIndices(indices)

@@ -26,7 +26,7 @@ void Model::Init(string const & path, bool FlipUVs, bool enableAlpha, float fixe
 	mFlipUVs = FlipUVs;
 }
 
-void Model::Loading()
+void Model::Loading() //thread
 {
 	if (mSrcPath == "") return;
 
@@ -438,9 +438,6 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	//animation
 	if (hasAnimation && Transforms.size() > 0)
 	{
-		//int m_boneLocation = glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), "gBones");
-		//if (m_boneLocation >= 0)
-			//glUniformMatrix4fv(m_boneLocation, Transforms.size(), GL_TRUE, glm::value_ptr(Transforms[0]));
 		ShaderSet::setBoneMat4("gBones", Transforms);
 	}
 

@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 #include "QHText.h"
-
+#include "Shader.h"
 struct CharInfo {
 	GLuint Advance;
 	glm::uvec2 Size;
@@ -23,22 +23,21 @@ class TextRendering
 {
 private:
 	static TextRendering* instance;
-	GLuint program;
-	GLuint VAO, VBO;;
+	Shader mShader;
+	GLuint mVAO, mVBO;;
 
-	std::map<GLchar, CharInfo> m_CharInfo;
+	std::map<GLchar, CharInfo> mCharInfo;
 
-	std::vector<QHText*> m_ListQHText;
+	std::vector<QHText*> mListQHText;
 
-	GLint position_Attribute, color_Attribute, alpha_Attribute;
+	GLint mPositionAttribute, mColorAttribute, mAlphaAttribute, mProjectionUniform, mTextureUniform;
 
 	glm::mat4 projection;
 	GLuint m_TextureID;
 	GLuint quadVBO;
 	int screen_width, screen_height;
 	unsigned int m_Maxchar;
-	bool createProgram();
-	GLuint createShader(GLenum shaderType, const char * src);
+
 	TextRendering();
 	std::vector<TextData> fulltextdata;
 	bool m_initialized;

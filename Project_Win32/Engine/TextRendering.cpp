@@ -10,9 +10,43 @@
 #include "Utils.h"
 TextRendering * TextRendering::instance = NULL;
 
-bool TextRendering::createProgram()
+
+TextRendering * TextRendering::getInstance()
 {
-	GLint linked = GL_FALSE;
+	if (instance == NULL)
+	{
+		instance = new TextRendering();
+	}
+	return instance;
+}
+
+void TextRendering::UpdateScreenSize(int w, int h)
+{
+	projection = glm::ortho(0.0f, static_cast<GLfloat>(w), static_cast<GLfloat>(h), 0.0f);
+	screen_width = w;
+	screen_height = h;
+}
+
+int TextRendering::AddQHText(QHText *textneedrender)
+{
+	mListQHText.push_back(textneedrender);
+	return currentLastId++;
+}
+
+void TextRendering::RemoveQHText(int id)
+{
+	for (int i = 0; i < mListQHText.size(); i++)
+	{
+		if (mListQHText[i]->GetId() == id)
+		{
+			mListQHText.erase(mListQHText.begin() + i);
+			return;
+		}
+	}
+}
+
+bool TextRendering::Init(const char * font_path, int width, int height, unsigned int maxchar)
+{
 	char vtxSrc[] = {
 		"#version 100\n"
 		"attribute vec4 aPos;\n"
@@ -33,11 +67,6 @@ bool TextRendering::createProgram()
 		"}\n"
 	};
 
-	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vtxSrc);
-	if (!vertexShader)
-	{
-		return false;
-	}
 	char fragSrc[] = {
 		"#version 100\n"
 		"precision highp float;\n"
@@ -54,109 +83,14 @@ bool TextRendering::createProgram()
 		"	gl_FragColor = vec4(thetextColor, thealpha) * sampled;\n"
 		"}\n"
 	};
-	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc);
-	if (!fragmentShader)
+
+	if (mShader.LoadShader(vtxSrc, fragSrc, true))
 	{
-		return false;
-	}
-	program = glCreateProgram();
-	if (!program) {
-		return false;
-	}
-	glAttachShader(program, vertexShader);
-	glAttachShader(program, fragmentShader);
-
-	glLinkProgram(program);
-	glGetProgramiv(program, GL_LINK_STATUS, &linked);
-	if (!linked) {
-		LOGE("Could not link program\n");
-		GLint infoLogLen = 0;
-		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLen);
-		if (infoLogLen) {
-			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
-			if (infoLog) {
-				glGetProgramInfoLog(program, infoLogLen, NULL, infoLog);
-				LOGE("Could not link program:\n%s\n", infoLog);
-				free(infoLog);
-			}
-		}
-		glDeleteProgram(program);
-		program = 0;
-	}
-	return true;
-}
-
-GLuint TextRendering::createShader(GLenum shaderType, const char * src)
-{
-	GLuint shader = glCreateShader(shaderType);
-	if (shader == 0) {
-		return 0;
-	}
-	glShaderSource(shader, 1, &src, NULL);
-
-	GLint compiled = GL_FALSE;
-
-	glCompileShader(shader);
-
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
-	if (!compiled) {
-		GLint infoLogLen = 0;
-		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLen);
-		if (infoLogLen > 0) {
-			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
-			if (infoLog) {
-				glGetShaderInfoLog(shader, infoLogLen, NULL, infoLog);
-				LOGE("Could not compile %s shader:\n%s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
-				free(infoLog);
-			}
-		}
-		glDeleteShader(shader);
-		return 0;
-	}
-	return shader;
-}
-
-TextRendering * TextRendering::getInstance()
-{
-	if (instance == NULL)
-	{
-		instance = new TextRendering();
-	}
-	return instance;
-}
-
-void TextRendering::UpdateScreenSize(int w, int h)
-{
-	projection = glm::ortho(0.0f, static_cast<GLfloat>(w), static_cast<GLfloat>(h), 0.0f);
-	screen_width = w;
-	screen_height = h;
-}
-
-int TextRendering::AddQHText(QHText *textneedrender)
-{
-	m_ListQHText.push_back(textneedrender);
-	return currentLastId++;
-}
-
-void TextRendering::RemoveQHText(int id)
-{
-	for (int i = 0; i < m_ListQHText.size(); i++)
-	{
-		if (m_ListQHText[i]->GetId() == id)
-		{
-			m_ListQHText.erase(m_ListQHText.begin() + i);
-			return;
-		}
-	}
-}
-
-bool TextRendering::Init(const char * font_path, int width, int height, unsigned int maxchar)
-{
-	if (createProgram())
-	{
-		position_Attribute = glGetAttribLocation(program, "aPos");
-		color_Attribute = glGetAttribLocation(program, "textColor");
-		alpha_Attribute = glGetAttribLocation(program, "alpha");
+		mPositionAttribute = glGetAttribLocation(mShader.program, "aPos");
+		mColorAttribute = glGetAttribLocation(mShader.program, "textColor");
+		mAlphaAttribute = glGetAttribLocation(mShader.program, "alpha");
+		mProjectionUniform = glGetUniformLocation(mShader.program, "projection");
+		mTextureUniform = glGetUniformLocation(mShader.program, "texture");
 	}
 
 	UpdateScreenSize(width, height);
@@ -241,23 +175,27 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 		// Now store character for later use
 		CharInfo character = { Advance, Size, Bearing, Texcord };
 
-		m_CharInfo.insert(std::pair<GLchar, CharInfo>(c, character));
+		mCharInfo.insert(std::pair<GLchar, CharInfo>(c, character));
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 	// Destroy FreeType once we're finished
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glEnableVertexAttribArray(position_Attribute);
-	glVertexAttribPointer(position_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Position));
-	glEnableVertexAttribArray(color_Attribute);
-	glVertexAttribPointer(color_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Color));
-	glEnableVertexAttribArray(alpha_Attribute);
-	glVertexAttribPointer(alpha_Attribute, 1, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Alpha));
+	glGenVertexArrays(1, &mVAO);
+	glGenBuffers(1, &mVBO);
+	glBindVertexArray(mVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+
+	glEnableVertexAttribArray(mPositionAttribute);
+	glVertexAttribPointer(mPositionAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Position));
+
+	glEnableVertexAttribArray(mColorAttribute);
+	glVertexAttribPointer(mColorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Color));
+
+	glEnableVertexAttribArray(mAlphaAttribute);
+	glVertexAttribPointer(mAlphaAttribute, 1, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Alpha));
+
 	glBufferData(GL_ARRAY_BUFFER, m_Maxchar * 6 * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
 	glBindVertexArray(0);
 
@@ -285,12 +223,12 @@ glm::ivec2 TextRendering::Add(std::string text, int x, int y, float scale, glm::
 	int y_origin = y;
 	GLfloat xpos;
 	GLfloat ypos;
-	CharInfo Upper_ch = m_CharInfo['A'];
+	CharInfo Upper_ch = mCharInfo['A'];
 	std::string::const_iterator c;
 
 	for (c = text.begin(); c != text.end(); c++)
 	{
-		CharInfo ch = m_CharInfo[*c];
+		CharInfo ch = mCharInfo[*c];
 
 		xpos = x + ch.Bearing.x * scale;
 		if (xpos  + ch.Advance > this->screen_width)
@@ -324,7 +262,7 @@ glm::ivec2 TextRendering::Add(std::string text, int x, int y, float scale, glm::
 	}
 	// pos for next text
 	char text_end = text[text.length() - 1];
-	CharInfo ch = m_CharInfo[text_end];
+	CharInfo ch = mCharInfo[text_end];
 
 	if (xpos + ch.Advance * scale > this->screen_width)
 	{
@@ -354,23 +292,26 @@ glm::ivec2 TextRendering::Add(std::string text, int number, int x, int y, float 
 
 void TextRendering::Draw()
 {
-	if (program == 0 || !m_initialized || m_ListQHText.size() <= 0) return;
+	if (mShader.program == -1 || !m_initialized || mListQHText.size() <= 0) return;
 
 	glDisable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
-	glUseProgram(program);
-	glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-	glUniform1i(glGetUniformLocation(program, "texture"), 0);
-	glBindVertexArray(VAO);
+
+	glUseProgram(mShader.program);
+
+	glUniformMatrix4fv(mProjectionUniform, 1, GL_FALSE, glm::value_ptr(projection));
+	
+	glBindVertexArray(mVAO);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_TextureID);
+	glUniform1i(mTextureUniform, 0);
 	// Update content of VBO memory
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 	
 	fulltextdata.clear();
-	for (auto &ListQHText : m_ListQHText)
+	for (auto &ListQHText : mListQHText)
 	{
 		if (ListQHText->visible == false) continue;
 
@@ -397,15 +338,19 @@ void TextRendering::Draw()
 }
 
 TextRendering::TextRendering()
-	: program(0)
-	, screen_width(960)
+	: screen_width(960)
 	, screen_height(540)
 	, m_initialized(false)
 	, currentLastId(0)
+	, mPositionAttribute(-1)
+	, mColorAttribute(-1)
+	, mAlphaAttribute(-1)
+	, mProjectionUniform(-1)
+	, mTextureUniform(-1)
 {
 }
 
 TextRendering::~TextRendering()
 {
-	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &mVBO);
 }
