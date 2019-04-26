@@ -76,7 +76,7 @@ private:
 	btRigidBody* mRigidBody;
 	glm::vec3 mFixedBoxShape;
 	bool isDynamic;
-
+	bool isFirstSetupUniform;
 	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);

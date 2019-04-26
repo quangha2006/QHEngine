@@ -27,7 +27,7 @@ void Basic::Init()
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 
-	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
+	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetPos(glm::vec3(0.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
@@ -64,6 +64,7 @@ void Basic::Init()
 	axis.Init(mCamera);
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
+	RenderManager::getInstance()->SetEnableBloom(false);
 }
 
 void Basic::Update()
@@ -78,7 +79,7 @@ void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
-	LOGI("Key: %d = %c\n",key, c);
+	//LOGI("Key: %d = %c\n",key, c);
 	if (action == 0) return true;
 	switch (c)
 	{

@@ -298,7 +298,7 @@ void TextRendering::Draw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	glUseProgram(mShader.program);
+	mShader.use();
 
 	glUniformMatrix4fv(mProjectionUniform, 1, GL_FALSE, glm::value_ptr(projection));
 	
@@ -306,7 +306,7 @@ void TextRendering::Draw()
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_TextureID);
-	glUniform1i(mTextureUniform, 0);
+	//glUniform1i(mTextureUniform, 0);
 	// Update content of VBO memory
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 	

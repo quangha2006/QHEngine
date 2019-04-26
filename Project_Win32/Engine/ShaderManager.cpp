@@ -132,73 +132,70 @@ ShaderManager::~ShaderManager()
 	}
 }
 
-void ShaderSet::setBool(const std::string &name, bool value)
+
+// ------------------------------------------------------------------------
+void ShaderSet::setInt(const char* name, int value)
 {
-	glUniform1i(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), (int)value);
+	glUniform1i(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), value);
 }
 // ------------------------------------------------------------------------
-void ShaderSet::setInt(const std::string &name, int value)
+void ShaderSet::setFloat(const char* name, float value)
 {
-	glUniform1i(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), value);
+	glUniform1f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), value);
+}
+void ShaderSet::setFloat(const char* name, float value[], int size)
+{
+	glUniform1fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), size , &value[0]);
 }
 // ------------------------------------------------------------------------
-void ShaderSet::setFloat(const std::string &name, float value)
+void ShaderSet::setVec2(const char* name, const glm::vec2 *value, int size)
 {
-	glUniform1f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), value);
+	glUniform2fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), size, &value[0].x);
 }
-void ShaderSet::setFloat(const std::string &name, float value[], int size)
+void ShaderSet::setVec2(const char* name, const glm::vec2 &value)
 {
-	glUniform1fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), size , &value[0]);
+	glUniform2fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, &value[0]);
 }
-// ------------------------------------------------------------------------
-void ShaderSet::setVec2(const std::string &name, const glm::vec2 *value, int size)
+void ShaderSet::setVec2(const char* name, float x, float y)
 {
-	glUniform2fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), size, &value[0].x);
-}
-void ShaderSet::setVec2(const std::string &name, const glm::vec2 &value)
-{
-	glUniform2fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), 1, &value[0]);
-}
-void ShaderSet::setVec2(const std::string &name, float x, float y)
-{
-	glUniform2f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), x, y);
+	glUniform2f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), x, y);
 }
 // ------------------------------------------------------------------------
-void ShaderSet::setVec3(const std::string &name, const glm::vec3 &value)
+void ShaderSet::setVec3(const char* name, const glm::vec3 &value)
 {
-	glUniform3fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), 1, &value[0]);
+	glUniform3fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, &value[0]);
 }
-void ShaderSet::setVec3(const std::string &name, float x, float y, float z)
+void ShaderSet::setVec3(const char* name, float x, float y, float z)
 {
-	glUniform3f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), x, y, z);
-}
-// ------------------------------------------------------------------------
-void ShaderSet::setVec4(const std::string &name, const glm::vec4 &value)
-{
-	glUniform4fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), 1, &value[0]);
-}
-void ShaderSet::setVec4(const std::string &name, float x, float y, float z, float w)
-{
-	glUniform4f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), x, y, z, w);
+	glUniform3f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), x, y, z);
 }
 // ------------------------------------------------------------------------
-void ShaderSet::setMat2(const std::string &name, const glm::mat2 &mat)
+void ShaderSet::setVec4(const char* name, const glm::vec4 &value)
 {
-	glUniformMatrix2fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	glUniform4fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, &value[0]);
+}
+void ShaderSet::setVec4(const char* name, float x, float y, float z, float w)
+{
+	glUniform4f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), x, y, z, w);
 }
 // ------------------------------------------------------------------------
-void ShaderSet::setMat3(const std::string &name, const glm::mat3 &mat)
+void ShaderSet::setMat2(const char* name, const glm::mat2 &mat)
 {
-	glUniformMatrix3fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	glUniformMatrix2fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, GL_FALSE, &mat[0][0]);
 }
 // ------------------------------------------------------------------------
-void ShaderSet::setMat4(const std::string &name, const glm::mat4 &mat)
+void ShaderSet::setMat3(const char* name, const glm::mat3 &mat)
 {
-	glUniformMatrix4fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	glUniformMatrix3fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, GL_FALSE, &mat[0][0]);
 }
-void ShaderSet::setBoneMat4(const std::string &name, const vector<glm::mat4> &mat)
+// ------------------------------------------------------------------------
+void ShaderSet::setMat4(const char* name, const glm::mat4 &mat)
 {
-	int m_boneLocation = glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name.c_str());
+	glUniformMatrix4fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, GL_FALSE, &mat[0][0]);
+}
+void ShaderSet::setBoneMat4(const char* name, const vector<glm::mat4> &mat)
+{
+	int m_boneLocation = glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name);
 	if (m_boneLocation >= 0)
 		glUniformMatrix4fv(m_boneLocation, mat.size(), GL_TRUE, glm::value_ptr(mat[0][0]));
 }

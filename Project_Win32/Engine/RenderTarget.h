@@ -35,7 +35,7 @@ public:
 	int GetTextureId(int index);
 	void RenderDebug();
 	void Render(bool useDefaultShader = false);
-	GLuint MakeBloom(GLuint BriTexture, unsigned int amount = 6);
+	GLuint MakeBloom(GLuint BriTexture, unsigned int amount = 4);
 	RenderTarget();
 	~RenderTarget();
 };

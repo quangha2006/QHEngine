@@ -161,14 +161,14 @@ GLint Shader::getColorAttribute()
 	return color_Attribute;
 }
 
-void Shader::setInt(const std::string & name, int value)
+void Shader::setInt(const char* name, int value)
 {
-	glUniform1i(glGetUniformLocation(program, name.c_str()), value);
+	glUniform1i(glGetUniformLocation(program, name), value);
 }
 
-void Shader::setMat4(const std::string & name, const glm::mat4 & mat)
+void Shader::setMat4(const char* name, const glm::mat4 & mat)
 {
-	glUniformMatrix4fv(glGetUniformLocation(program, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_FALSE, &mat[0][0]);
 }
 
 Shader::Shader()

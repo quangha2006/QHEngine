@@ -408,20 +408,26 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 				ShaderManager::getInstance()->setUseProgram("model_skinning");
 			else
 				ShaderManager::getInstance()->setUseProgram("model");
+			if (!isFirstSetupUniform) {
+				ShaderSet::setFloat("pointlight_constant", 1.0f);
+				ShaderSet::setFloat("pointlight_linear", 0.0014f);
+				ShaderSet::setFloat("pointlight_quadratic", 0.000007f);
+				ShaderSet::setFloat("material_shininess", 18.0f);
+				ShaderSet::setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
+				ShaderSet::setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
+				ShaderSet::setVec3("light_specular", 1.1f, 1.1f, 1.1f);
+				ShaderSet::setVec3("color_pick", 0.0f, 0.0f, 0.0f);
+				ShaderSet::setBool("GammaCorrection", mGammaCorrection);
+				isFirstSetupUniform = true;
+			}
 
-			ShaderSet::setFloat("pointlight_constant", 1.0f);
-			ShaderSet::setFloat("pointlight_linear", 0.0014f);
-			ShaderSet::setFloat("pointlight_quadratic", 0.000007f);
-			ShaderSet::setFloat("material_shininess", 18.0f);
 			ShaderSet::setVec3("light_position", mCamera->lightPos);
-			ShaderSet::setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
-			ShaderSet::setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
-			ShaderSet::setVec3("light_specular", 1.1f, 1.1f, 1.1f);
+
 			ShaderSet::setVec3("viewPos", mCamera->Pos);
-			ShaderSet::setVec3("color_pick", 0.0f, 0.0f, 0.0f);
+
 			ShaderSet::setBool("usenormalmap", false);
 			ShaderSet::setBool("usepointlight", this->isUsePointLight);
-			ShaderSet::setBool("GammaCorrection", mGammaCorrection);
+
 
 			model_inverse = glm::inverse(tmp_model);
 			model_inverse = glm::transpose(model_inverse);
@@ -916,6 +922,7 @@ Model::Model()
 	, isDynamic(false)
 	, mIsVisible(true)
 	, mFixedBoxShape(glm::vec3(0.))
+	, isFirstSetupUniform(false)
 {
 	ModelManager::getInstance()->AddModel(this);
 }
