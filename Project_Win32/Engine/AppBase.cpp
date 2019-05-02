@@ -94,10 +94,10 @@ void AppBase::rendering()
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 	FrameRate::getInstance()->BeginCpuTime();
 	mCamera->UpdateWorldViewProjection();
-	
+	int frameTime = FrameRate::getInstance()->GetPrevFrameTime();
 	if (mIsLoadingThreadFinish)
 	{
-		Update();
+		Update(frameTime);
 		PhysicsSimulation::getInstance()->updatePhysics();
 		ModelManager::getInstance()->Update();
 		RenderManager::getInstance()->Render();
@@ -106,7 +106,6 @@ void AppBase::rendering()
 	int numTriangle = Debugging::getInstance()->getNumTriangle();
 	int numdrawcall = Debugging::getInstance()->getNumDrawCall();
 	float fps = FrameRate::getInstance()->GetFPS();
-	int frameTime = FrameRate::getInstance()->GetPrevFrameTime();
 	int cpuTime = FrameRate::getInstance()->GetPrevCpuTime();
 
 	text_FPS.setText("FPS: %.1f", fps);

@@ -99,7 +99,7 @@ void BreakOut::Init()
 	RenderManager::getInstance()->SetEnableBloom(false);
 }
 
-void BreakOut::Update()
+void BreakOut::Update(int delta)
 {
 	btCollisionObject* colObjA = (btCollisionObject*)cube.GetRigidBody();
 	btCollisionObject* colObjB;

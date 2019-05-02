@@ -13,7 +13,7 @@ private:
 	Sound mSoundCollistion;
 	Model listcube[4 * 5];
 public:
-	void Update();
+	void Update(int delta);
 	void Init();
 	void GetRequireScreenSize(int32_t &width, int32_t &height);
 	bool OnGameKeyPressed(int key, int scancode, int action, int mods);

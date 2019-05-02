@@ -67,7 +67,7 @@ void Basic::Init()
 	RenderManager::getInstance()->SetEnableBloom(false);
 }
 
-void Basic::Update()
+void Basic::Update(int delta)
 {
 	//mSpider.SetRotate(Timer::getMillisecond()/100,glm::vec3(1.0f, 0.0f, 0.0f));
 }

@@ -6,7 +6,7 @@
 #include "QHText.h"
 #include "QHAxis.h"
 #include "SkyBox.h"
-
+#include "Timer.h"
 class AppBase
 {
 protected:
@@ -23,7 +23,7 @@ public:
 	void GameTouchEvent(int eventId, int x, int y, int pointerId);
 	void GameKeyPressed(int key, int scancode, int action, int mods);
 	void GameZoomCamera(double xoffset, double yoffset);
-	virtual void Update() {}
+	virtual void Update(int delta) {}
 	virtual void Init() {}
 	virtual void GetRequireScreenSize(int32_t &width, int32_t &height) {}
 	virtual bool OnGameTouchEvent(int eventId, int x, int y, int pointerId) { return false; };
