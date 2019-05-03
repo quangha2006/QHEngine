@@ -1,5 +1,6 @@
 #include "RenderManager.h"
 #include "Debugging.h"
+#include "UserInterface.h"
 
 RenderManager * RenderManager::instance = NULL;
 
@@ -64,6 +65,8 @@ void RenderManager::Render()
 
 	//debug
 	//Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
+
+	UserInterface::getInstance()->Render();
 }
 
 void RenderManager::SetSkyBox(SkyBox * skybox)
