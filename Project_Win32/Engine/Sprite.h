@@ -10,6 +10,8 @@ private:
 	GLuint m_TextureID;
 	glm::vec2 mPos;
 public:
+	GLuint GetTexId();
+	glm::vec2 GetPos();
 	Sprite();
 	~Sprite();
 };

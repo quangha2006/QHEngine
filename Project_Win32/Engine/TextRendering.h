@@ -24,7 +24,7 @@ class TextRendering
 private:
 	static TextRendering* instance;
 	Shader mShader;
-	GLuint mVAO, mVBO;;
+	GLuint mVAO, mVBO;
 
 	std::map<GLchar, CharInfo> mCharInfo;
 

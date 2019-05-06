@@ -13,6 +13,8 @@ private:
 	Shader mShader;
 	glm::mat4 mProjection;
 	std::vector<Sprite*> mListUI;
+	GLuint mVAO, mVBO;
+	float mVertexData[4];
 public:
 	static UserInterface* getInstance();
 	bool Init(int width, int height);
