@@ -5,8 +5,8 @@
 {
 	// main
 	//"Sanctuary_CPP"
-	"3DBreakOut"
-	//"Basic_CPP"
+	//"3DBreakOut"
+	"Basic_CPP"
 	"EngineLib"
 	
 	//"native_app_glue"

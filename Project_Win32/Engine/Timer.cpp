@@ -82,22 +82,11 @@ namespace Timer
 	{
 #ifdef OS_ANDROID
 		struct timespec ts;
-		if (clock_gettime(CLOCK_MONOTONIC, &ts))
-		{
-			__android_log_print(ANDROID_LOG_INFO, "HDPhuoc", "Time initTSFAIL===================");
-		}
+		clock_gettime(CLOCK_MONOTONIC, &ts)
 
 		// Static So It'll Assign For The First Time.
 		static struct timespec initTS = ts;
 		int64_t temp = (double)((ts.tv_sec - initTS.tv_sec) * 1000000.0f) + (double)((ts.tv_nsec - initTS.tv_nsec) / 1000.0f);
-
-		__android_log_print(ANDROID_LOG_INFO, "HDPhuoc", "Time 0 initTS: %lld", initTS.tv_sec);
-		__android_log_print(ANDROID_LOG_INFO, "HDPhuoc", "Time 0 ts: %lld", ts.tv_sec);
-		__android_log_print(ANDROID_LOG_INFO, "HDPhuoc", "Time 1 initTS: %lld", initTS.tv_nsec);
-		__android_log_print(ANDROID_LOG_INFO, "HDPhuoc", "Time 1 ts: %lld", ts.tv_nsec);
-		__android_log_print(ANDROID_LOG_INFO, "HDPhuoc", "Time ts.tv_sec - initTS.tv_sec: %lld", ts.tv_sec - initTS.tv_sec);
-		__android_log_print(ANDROID_LOG_INFO, "HDPhuoc", "Time ts.tv_nsec - initTS.tv_nsec: %lld", ts.tv_nsec - initTS.tv_nsec);
-		__android_log_print(ANDROID_LOG_INFO, "HDPhuoc", "Time: %lld", temp);
 
 		// Convert Second And Nanosecond To Microseconds.
 		return static_cast<int64_t>((double)(ts.tv_sec - initTS.tv_sec) * 1000000.0f + (double)(ts.tv_nsec - initTS.tv_nsec) / 1000.0f);

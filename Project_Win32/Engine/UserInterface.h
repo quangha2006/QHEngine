@@ -17,8 +17,10 @@ private:
 	float mVertexData[4];
 public:
 	static UserInterface* getInstance();
+	static Sprite *CreateWithTexture(const char * path);
 	bool Init(int width, int height);
 	void Render();
+	void AddSprite(Sprite *sprite);
 	UserInterface();
 	~UserInterface();
 };

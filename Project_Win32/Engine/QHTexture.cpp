@@ -61,7 +61,7 @@ namespace QHTexture
 		CheckGLError("GenTextureId");
 		return textureID;
 	}
-	GLuint TextureFromFile(const char * path, const std::string & directory, GLuint textureID, bool gammaCorrection)
+	GLuint TextureFromFile(const char * path, const std::string & directory, int &width, int &height, GLuint textureID, bool gammaCorrection)
 	{
 		std::string fullpath = directory + '/' + std::string(path);
 		uint64_t time_begin = Timer::getMillisecond();
@@ -69,7 +69,7 @@ namespace QHTexture
 		if (texid == -1)
 			texid = GenTextureId();
 
-		int width, height, nrComponents;
+		int nrComponents;
 		unsigned char *data = stbi_load(fullpath.c_str(), &width, &height, &nrComponents, 0);
 		//unsigned char *data = SOIL_load_image(fullpath.c_str(), &width, &height, &nrComponents, 0);
 		if (data)

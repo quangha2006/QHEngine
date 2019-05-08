@@ -9,24 +9,17 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-//#include <SOIL.h>
 
-//enum TextureType
-//{
-//	TextureType_DIFFUSE,
-//	TextureType_SPECULAR,
-//	TextureType_NORMALS,
-//	TextureType_HEIGHT,
-//	TextureType_AMBIENT
-//};
 struct Texture {
 	unsigned int id;
+	int width;
+	int height;
 	aiTextureType type;
 	aiString path;
 };
 namespace QHTexture
 {
-	GLuint TextureFromFile(const char * path, const std::string & directory, GLuint textureID = -1, bool gammaCorrection = false);
+	GLuint TextureFromFile(const char * path, const std::string & directory, int &width, int &height, GLuint textureID = -1, bool gammaCorrection = false);
 	GLuint loadCubemap(const char * texturepath, std::vector<std::string> faces, bool gammaCorrection);
 	unsigned int GenTextureId();
 };

@@ -1,4 +1,5 @@
 #include "UserInterface.h"
+#include "Debugging.h"
 
 UserInterface * UserInterface::instance = NULL;
 
@@ -9,6 +10,15 @@ UserInterface * UserInterface::getInstance()
 		instance = new UserInterface();
 	}
 	return instance;
+}
+
+Sprite * UserInterface::CreateWithTexture(const char * path)
+{
+	Sprite *sprite = new Sprite;
+	if (!sprite->LoadTexture(path))
+		return nullptr;
+	sprite->SetPos(0, 0);
+	return sprite;
 }
 
 bool UserInterface::Init(int width, int height)
@@ -59,9 +69,9 @@ bool UserInterface::Init(int width, int height)
 	if (mShader.TexCoord_Attribute > -1)
 	{
 		glEnableVertexAttribArray(mShader.TexCoord_Attribute);
-		glVertexAttribPointer(mShader.TexCoord_Attribute, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)2);
+		glVertexAttribPointer(mShader.TexCoord_Attribute, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 	}
-	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(float), NULL, GL_DYNAMIC_DRAW); // max 200 characters
+	glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(float), NULL, GL_DYNAMIC_DRAW); // max 200 characters
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	return true;
@@ -79,12 +89,38 @@ void UserInterface::Render()
 	glBindVertexArray(mVAO);
 
 	glActiveTexture(GL_TEXTURE0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 	for (int i = 0; i < mListUI.size(); i++)
 	{
+		if (!mListUI[i]) continue;
+
 		GLuint texid = mListUI[i]->GetTexId();
 		glm::vec2 pos = mListUI[i]->GetPos();
+		int texwidth = mListUI[i]->getWidth();
+		int texheight = mListUI[i]->getHeight();
+		
+		float texData[16]{
+			// positions   // texCoords
+			pos.x,				pos.y,				0.0f, 1.0f,
+			pos.x,				pos.y + texheight,	0.0f, 0.0f,
+			pos.x + texwidth,	pos.y,				1.0f, 1.0f,
+			pos.x + texwidth,	pos.y + texheight,	1.0f, 0.0f
+		};
+
 		glBindTexture(GL_TEXTURE_2D, texid);
-		float texData[]{pos.x, pos.y, }
+		glBufferSubData(GL_ARRAY_BUFFER, 0, 16 * sizeof(float), texData);
+		QHEngine::DrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
+
+void UserInterface::AddSprite(Sprite * sprite)
+{
+	if (sprite)
+	{
+		mListUI.push_back(sprite);
 	}
 }
 

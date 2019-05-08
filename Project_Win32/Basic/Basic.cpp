@@ -37,7 +37,7 @@ void Basic::Init()
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
 	mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
 	mSpider.SetScale(glm::vec3(0.05f));
-	mSpider.SetPos(glm::vec3(0.0f, 2.0f, 0.0f));
+	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	//mSpider.SetTimeStampAnim(0);
 	mSpider.SetNeedRotate(true);
@@ -65,6 +65,10 @@ void Basic::Init()
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(false);
+
+	mbutton = UserInterface::CreateWithTexture("button/CloseNormal.png");
+	mbutton->SetPos(200, 200);
+	UserInterface::getInstance()->AddSprite(mbutton);
 }
 
 void Basic::Update(int delta)
@@ -140,6 +144,13 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 	}
 	return true;
 }
+
+bool Basic::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
+{
+	mbutton->SetPos(x, y);
+	return false;
+}
+
 Basic::Basic()
 {
 	timestamp_for_lamp = 0;
@@ -149,6 +160,7 @@ Basic::Basic()
 
 Basic::~Basic()
 {
+	delete mbutton;
 }
 AppBase* AppFactory()
 {

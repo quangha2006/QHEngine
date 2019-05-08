@@ -349,7 +349,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		if (!skip)
 		{   // if texture hasn't been loaded already, load it
 			Texture texture;
-			texture.id = QHTexture::TextureFromFile(str.C_Str(), this->directory, -1, mGammaCorrection);
+			texture.id = QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.width, texture.height ,-1, mGammaCorrection);
 			texture.type = type;
 			texture.path = str;
 			textures.push_back(texture);

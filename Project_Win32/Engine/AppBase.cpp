@@ -7,6 +7,7 @@
 #include "ModelManager.h"
 #include "RenderManager.h"
 #include "PhysicsSimulation.h"
+#include "UserInterface.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #if defined(_WINDOWS)
@@ -48,6 +49,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	GetRequireScreenSize(windowsWidth, windowsHeight);
 
 	TextRendering::getInstance()->Init("fonts/VBAMASH.TTF", windowsWidth, windowsHeight);
+	UserInterface::getInstance()->Init(windowsWidth, windowsHeight);
 	PhysicsSimulation::getInstance()->initPhysics();
 	RenderManager::getInstance()->Init(mContext, mCamera);
 	RenderManager::getInstance()->SetSkyBox(&mSkyBox);

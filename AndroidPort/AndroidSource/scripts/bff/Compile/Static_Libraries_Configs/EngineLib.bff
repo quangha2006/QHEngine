@@ -30,6 +30,8 @@
 	"$Engine_Sources_Path$/ModelManager.cpp"
 	"$Engine_Sources_Path$/RenderTarget.cpp"
 	"$Engine_Sources_Path$/PhysicsSimulation.cpp"
+	"$Engine_Sources_Path$/Sprite.cpp"
+	"$Engine_Sources_Path$/UserInterface.cpp"
 	}
 
 	.ExcludedUnitySources =
