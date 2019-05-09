@@ -132,6 +132,7 @@ void AppBase::Resize(int width, int height)
 
 void AppBase::GameTouchEvent(int eventId, int x, int y, int pointerId)
 {
+	if (UserInterface::getInstance()->OnTouchEvent(eventId, x, y, pointerId)) return;
 	if (OnGameTouchEvent(eventId, x, y, pointerId)) return;
 
 	static int touch_old_x = x;

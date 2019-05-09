@@ -21,6 +21,7 @@ public:
 	bool Init(int width, int height);
 	void Render();
 	void AddSprite(Sprite *sprite);
+	bool OnTouchEvent(int eventId, int x, int y, int pointerId);
 	UserInterface();
 	~UserInterface();
 };

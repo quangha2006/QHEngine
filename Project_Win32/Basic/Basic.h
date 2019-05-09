@@ -20,6 +20,7 @@ private:
 	QHAxis axis;
 	bool m_initialized;
 	Sprite *mbutton;
+	Sprite *mbtSwitchShadow;
 public:
 	void Update(int delta);
 	void Init();

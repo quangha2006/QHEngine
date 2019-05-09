@@ -9,6 +9,12 @@
 #include "Utils.h"
 #include "RenderManager.h"
 
+
+void Clickbutton()
+{
+	RenderManager::getInstance()->SwitchShadowMapMode();
+}
+
 void Basic::Init()
 {
 	mCamera->Pos = glm::vec3(5.0f, 5.0f, 20.0f);
@@ -67,8 +73,12 @@ void Basic::Init()
 	RenderManager::getInstance()->SetEnableBloom(false);
 
 	mbutton = UserInterface::CreateWithTexture("button/CloseNormal.png");
-	mbutton->SetPos(200, 200);
-	UserInterface::getInstance()->AddSprite(mbutton);
+	//mbutton->SetCallback(extiLog);
+	mbutton->SetPos(mContext->GetWindowWidth() - mbutton->getWidth(), mContext->GetWindowHeight() - mbutton->getHeight());
+
+	mbtSwitchShadow = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
+	mbtSwitchShadow->SetCallbackOnTouchBegan(Clickbutton);
+	mbtSwitchShadow->SetPos(0, 100);
 }
 
 void Basic::Update(int delta)
@@ -147,7 +157,7 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 
 bool Basic::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 {
-	mbutton->SetPos(x, y);
+	//mbutton->SetPos(x, y);
 	return false;
 }
 

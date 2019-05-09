@@ -18,6 +18,7 @@ Sprite * UserInterface::CreateWithTexture(const char * path)
 	if (!sprite->LoadTexture(path))
 		return nullptr;
 	sprite->SetPos(0, 0);
+	UserInterface::getInstance()->AddSprite(sprite);
 	return sprite;
 }
 
@@ -122,6 +123,16 @@ void UserInterface::AddSprite(Sprite * sprite)
 	{
 		mListUI.push_back(sprite);
 	}
+}
+
+bool UserInterface::OnTouchEvent(int eventId, int x, int y, int pointerId)
+{
+	for (int i = 0; i < mListUI.size(); i++)
+	{
+		if (mListUI[i]->OnTouchEvent(eventId, x, y, pointerId))
+			return true;
+	}
+	return false;
 }
 
 UserInterface::UserInterface()
