@@ -82,7 +82,7 @@ namespace Timer
 	{
 #ifdef OS_ANDROID
 		struct timespec ts;
-		clock_gettime(CLOCK_MONOTONIC, &ts)
+		clock_gettime(CLOCK_MONOTONIC, &ts);
 
 		// Static So It'll Assign For The First Time.
 		static struct timespec initTS = ts;

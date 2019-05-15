@@ -508,7 +508,7 @@ void Model::UpdateAnimation(int64_t time)
 }
 void Model::SyncPhysics()
 {
-	if (m_initialized && isDynamic && mRigidBody)
+	if (m_initialized && isDynamic && mRigidBody != nullptr)
 	{
 		btTransform trans = mRigidBody->getWorldTransform();;
 
@@ -568,7 +568,7 @@ void Model::Translate(glm::vec3 trans)
 {
 	mPos += trans;
 
-	if (mRigidBody)
+	if (mRigidBody != nullptr)
 	{
 		btTransform transform = mRigidBody->getWorldTransform();
 		btVector3 tr(mPos.x, mPos.y, mPos.z);
@@ -609,7 +609,7 @@ void Model::SetRotate(float angle, glm::vec3 rotate)
 
 	mRotate = rotate;
 
-	if (mRigidBody)
+	if (mRigidBody != nullptr)
 	{
 		btTransform transform = mRigidBody->getWorldTransform();
 		btQuaternion quater(btVector3(rotate.x, rotate.y, rotate.z), glm::radians(mAngle));
@@ -696,7 +696,7 @@ void Model::CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fix
 
 void Model::ClearForcesPhysics()
 {
-	if (mRigidBody)
+	if (mRigidBody != nullptr)
 	{
 		btVector3 zeroVector(0, 0, 0);
 
@@ -923,6 +923,7 @@ Model::Model()
 	, mIsVisible(true)
 	, mFixedBoxShape(glm::vec3(0.))
 	, isFirstSetupUniform(false)
+	, mRigidBody(nullptr)
 {
 	ModelManager::getInstance()->AddModel(this);
 }

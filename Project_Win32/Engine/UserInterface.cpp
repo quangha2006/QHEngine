@@ -46,14 +46,19 @@ bool UserInterface::Init(int width, int height)
 		"varying vec2 TexCoords;\n"
 		"\n"
 		"uniform sampler2D texture;\n"
+		"uniform float alpha;\n"
 		"\n"
 		"void main()\n"
 		"{\n"
-		"	gl_FragColor = texture2D(texture, TexCoords);\n"
+		"	vec4 color = texture2D(texture, TexCoords);"
+		"	gl_FragColor = vec4(color.rgb, color.a * alpha);\n"
 		"}\n"
 	};
 	if (!mShader.LoadShader(vtxSrc, fragSrc, true))
 		return false;
+
+	LOGI("UserInterface::Init(w = %d, h = %d)", width, height);
+
 	mProjection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f);
 
 	glGenVertexArrays(1, &mVAO);
@@ -86,7 +91,7 @@ void UserInterface::Render()
 
 	mShader.use();
 	glUniformMatrix4fv(glGetUniformLocation(mShader.program, "projection"), 1, GL_FALSE, glm::value_ptr(mProjection));
-
+	
 	glBindVertexArray(mVAO);
 
 	glActiveTexture(GL_TEXTURE0);
@@ -100,7 +105,8 @@ void UserInterface::Render()
 		glm::vec2 pos = mListUI[i]->GetPos();
 		int texwidth = mListUI[i]->getWidth();
 		int texheight = mListUI[i]->getHeight();
-		
+		float alpha = mListUI[i]->GetAlpha();
+
 		float texData[16]{
 			// positions   // texCoords
 			pos.x,				pos.y,				0.0f, 1.0f,
@@ -109,6 +115,7 @@ void UserInterface::Render()
 			pos.x + texwidth,	pos.y + texheight,	1.0f, 0.0f
 		};
 
+		glUniform1f(glGetUniformLocation(mShader.program, "alpha"), alpha);
 		glBindTexture(GL_TEXTURE_2D, texid);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, 16 * sizeof(float), texData);
 		QHEngine::DrawArrays(GL_TRIANGLE_STRIP, 0, 4);

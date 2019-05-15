@@ -79,6 +79,8 @@ void Basic::Init()
 	mbtSwitchShadow = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
 	mbtSwitchShadow->SetCallbackOnTouchBegan(Clickbutton);
 	mbtSwitchShadow->SetPos(0, 100);
+	mbtSwitchShadow->SetScale(2.0f);
+	mbtSwitchShadow->SetAlpha(0.5f);
 }
 
 void Basic::Update(int delta)

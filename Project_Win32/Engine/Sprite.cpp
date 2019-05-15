@@ -2,7 +2,7 @@
 
 bool Sprite::isTouchOnSprite(int x, int y)
 {
-	if (x >= mPos.x && x <= mPos.x + mTexture.width && y >= mPos.y && y <= mPos.y + mTexture.height)
+	if (x >= mPos.x && x <= mPos.x + mTexture.width  * mScale * mScaleX && y >= mPos.y && y <= mPos.y + mTexture.height * mScale * mScaleY)
 		return true;
 	return false;
 }
@@ -17,14 +17,28 @@ glm::vec2 Sprite::GetPos()
 	return mPos;
 }
 
+float Sprite::GetAlpha()
+{
+	return mAlpha;
+}
+
+void Sprite::SetScale(float scale)
+{
+	mScale = scale;
+}
+
+void Sprite::SetAlpha(float alpha)
+{
+	mAlpha = alpha;
+}
 int Sprite::getWidth()
 {
-	return mTexture.width;
+	return mTexture.width * mScale * mScaleX;
 }
 
 int Sprite::getHeight()
 {
-	return mTexture.height;
+	return mTexture.height * mScale * mScaleY;
 }
 
 void Sprite::SetCallbackOnTouchBegan(void (*callback)())
@@ -58,6 +72,10 @@ bool Sprite::OnTouchEvent(int eventId, int x, int y, int pointerId)
 }
 
 Sprite::Sprite()
+	: mScale(1.0f)
+	, mScaleX(1.0f)
+	, mScaleY(1.0f)
+	, mAlpha(1.0f)
 {
 	mCallbackTouchBegan = nullptr;
 }

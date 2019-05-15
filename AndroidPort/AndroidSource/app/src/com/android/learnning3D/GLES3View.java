@@ -18,6 +18,7 @@ public class GLES3View extends GLSurfaceView{
 
     static int widthPixels = 0;
     static int heightPixels = 0;
+    float scaleSurfaceView = 0.8f;
     static GLSurfaceView glSurfaceView = null;
     public GLES3View(Context context) {
     
@@ -27,7 +28,7 @@ public class GLES3View extends GLSurfaceView{
 
         widthPixels = metrics.widthPixels;
         heightPixels = metrics.heightPixels;
-        this.getHolder().setFixedSize((int)(widthPixels*0.8),(int)(heightPixels*0.8));
+        this.getHolder().setFixedSize((int)(widthPixels * scaleSurfaceView),(int)(heightPixels * scaleSurfaceView));
         setEGLConfigChooser(new MyConfigChooser());
 
         final ActivityManager activityManager = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
@@ -63,7 +64,7 @@ public class GLES3View extends GLSurfaceView{
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
             {
-                GLES3JNILib.OnGameTouchEvent(0, event.getX(pointerIndex), event.getY(pointerIndex), pointerId);
+                GLES3JNILib.OnGameTouchEvent(0, event.getX(pointerIndex) * scaleSurfaceView, event.getY(pointerIndex) * scaleSurfaceView, pointerId);
                 retCode = true;
                 break;
             }
@@ -71,7 +72,7 @@ public class GLES3View extends GLSurfaceView{
             {
                 for (int size = event.getPointerCount(), i = 0; i < size; i++)
                 {
-                    GLES3JNILib.OnGameTouchEvent(1, event.getX(i), event.getY(i), event.getPointerId(i));
+                    GLES3JNILib.OnGameTouchEvent(1, event.getX(i) * scaleSurfaceView, event.getY(i) * scaleSurfaceView, event.getPointerId(i));
                 }
 
                 retCode = true;
@@ -80,13 +81,13 @@ public class GLES3View extends GLSurfaceView{
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
             {
-                GLES3JNILib.OnGameTouchEvent(2, event.getX(pointerIndex), event.getY(pointerIndex), pointerId);
+                GLES3JNILib.OnGameTouchEvent(2, event.getX(pointerIndex) * scaleSurfaceView, event.getY(pointerIndex) * scaleSurfaceView, pointerId);
                 retCode = true;
                 break;
             }
             case MotionEvent.ACTION_CANCEL:
             {
-                GLES3JNILib.OnGameTouchEvent(3, event.getX(pointerIndex), event.getY(pointerIndex), pointerId);
+                GLES3JNILib.OnGameTouchEvent(3, event.getX(pointerIndex) * scaleSurfaceView, event.getY(pointerIndex) * scaleSurfaceView, pointerId);
                 retCode = true;
                 break;
             }

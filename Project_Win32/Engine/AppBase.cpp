@@ -132,7 +132,13 @@ void AppBase::Resize(int width, int height)
 
 void AppBase::GameTouchEvent(int eventId, int x, int y, int pointerId)
 {
-	if (UserInterface::getInstance()->OnTouchEvent(eventId, x, y, pointerId)) return;
+	int windowsWidth = 960, windowsHeight = 540;
+	GetRequireScreenSize(windowsWidth, windowsHeight);
+
+	float UI_scaleX = (float)windowsWidth / (float)mContext->GetWindowWidth();
+	float UI_scaleY = (float)windowsHeight / (float)mContext->GetWindowHeight();
+
+	if (UserInterface::getInstance()->OnTouchEvent(eventId, x * UI_scaleX, y * UI_scaleY, pointerId)) return;
 	if (OnGameTouchEvent(eventId, x, y, pointerId)) return;
 
 	static int touch_old_x = x;
