@@ -15,6 +15,7 @@ private:
 	std::vector<Sprite*> mListUI;
 	GLuint mVAO, mVBO;
 	float mVertexData[4];
+	int mWindowsWidth, mWindowsHeight;
 public:
 	static UserInterface* getInstance();
 	static Sprite *CreateWithTexture(const char * path);

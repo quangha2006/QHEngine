@@ -9,7 +9,8 @@
 #include "Sound.h"
 #include "QHAxis.h"
 #include "UserInterface.h"
-//#include <thread>
+#include "QHText.h"
+
 
 class Basic : public AppBase
 {
@@ -19,8 +20,10 @@ private:
 	Sound soundIntro;
 	QHAxis axis;
 	bool m_initialized;
-	Sprite *mbutton;
-	Sprite *mbtSwitchShadow;
+	//Sprite *mbutton;
+	Sprite *mbtSwitchShadow, *mbtSwitchBloom;
+	QHText mShadowLabel, mBloomLabel;
+	glm::vec2 mDesignResolutionSize;
 public:
 	void Update(int delta);
 	void Init();

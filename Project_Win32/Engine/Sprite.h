@@ -16,6 +16,7 @@ private:
 	bool isTouchOnSprite(int x, int y);
 	std::string mLabel;
 	float mAlpha;
+	bool mIsGray;
 public:
 	GLuint GetTexId();
 	glm::vec2 GetPos();
@@ -26,7 +27,8 @@ public:
 	bool LoadTexture(const char *path);
 	void SetPos(int x, int y);
 	void SetScale(float scale);
-	void SetLabel(const char * label);
+	void SetGrayOut(bool isgrayout);
+	bool IsGrayOut();
 	void SetAlpha(float alpha);
 	bool OnTouchEvent(int eventId, int x, int y, int pointerId);
 	Sprite();

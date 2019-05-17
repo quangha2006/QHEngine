@@ -10,9 +10,14 @@
 #include "RenderManager.h"
 
 
-void Clickbutton()
+void ClickbuttonShadow()
 {
 	RenderManager::getInstance()->SwitchShadowMapMode();
+}
+
+void ClickbuttonBloom()
+{
+	RenderManager::getInstance()->SwitchBloomMode();
 }
 
 void Basic::Init()
@@ -72,20 +77,35 @@ void Basic::Init()
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(false);
 
-	mbutton = UserInterface::CreateWithTexture("button/CloseNormal.png");
-	//mbutton->SetCallback(extiLog);
-	mbutton->SetPos(mContext->GetWindowWidth() - mbutton->getWidth(), mContext->GetWindowHeight() - mbutton->getHeight());
+	mShadowLabel.setText("Shadow:   %s", RenderManager::getInstance()->IsEnableShadow() ? "ON" : "OFF");
+	mShadowLabel.setScale(0.5f);
+	mShadowLabel.setPos(5, 540 - 30);
 
 	mbtSwitchShadow = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
-	mbtSwitchShadow->SetCallbackOnTouchBegan(Clickbutton);
-	mbtSwitchShadow->SetPos(0, 100);
-	mbtSwitchShadow->SetScale(2.0f);
-	mbtSwitchShadow->SetAlpha(0.5f);
+	mbtSwitchShadow->SetCallbackOnTouchBegan(ClickbuttonShadow);
+	mbtSwitchShadow->SetScale(1.2f);
+	mbtSwitchShadow->SetPos(100, 540 - mbtSwitchShadow->getHeight() - 8);
+	
+	mBloomLabel.setText("Bloom:   %s", RenderManager::getInstance()->IsEnableBloom() ? "ON" : "OFF");
+	mBloomLabel.setScale(0.5f);
+	mBloomLabel.setPos(170, 540 - 30);
+
+	mbtSwitchBloom = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
+	mbtSwitchBloom->SetCallbackOnTouchBegan(ClickbuttonBloom);
+	mbtSwitchBloom->SetScale(1.2f);
+	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchShadow->getHeight() - 8);
 }
 
 void Basic::Update(int delta)
 {
-	//mSpider.SetRotate(Timer::getMillisecond()/100,glm::vec3(1.0f, 0.0f, 0.0f));
+	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
+	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
+
+	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
+	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
+
+	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
+	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
@@ -172,7 +192,8 @@ Basic::Basic()
 
 Basic::~Basic()
 {
-	delete mbutton;
+	delete mbtSwitchShadow;
+	delete mbtSwitchBloom;
 }
 AppBase* AppFactory()
 {

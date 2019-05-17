@@ -1,5 +1,6 @@
 #include "UserInterface.h"
 #include "Debugging.h"
+#include "RenderManager.h"
 
 UserInterface * UserInterface::instance = NULL;
 
@@ -47,20 +48,24 @@ bool UserInterface::Init(int width, int height)
 		"\n"
 		"uniform sampler2D texture;\n"
 		"uniform float alpha;\n"
+		"uniform bool isGray;\n"
 		"\n"
 		"void main()\n"
 		"{\n"
-		"	vec4 color = texture2D(texture, TexCoords);"
+		"	vec4 color = texture2D(texture, TexCoords);\n"
+		"	if (isGray == true)\n"
+		"	{\n"
+		"		color.rgb = vec3((color.r + color.g + color.b) / 3.);\n"
+		"	}\n"
 		"	gl_FragColor = vec4(color.rgb, color.a * alpha);\n"
 		"}\n"
 	};
 	if (!mShader.LoadShader(vtxSrc, fragSrc, true))
 		return false;
 
-	LOGI("UserInterface::Init(w = %d, h = %d)", width, height);
-
 	mProjection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f);
-
+	mWindowsWidth = width;
+	mWindowsHeight = height;
 	glGenVertexArrays(1, &mVAO);
 	glGenBuffers(1, &mVBO);
 	glBindVertexArray(mVAO);
@@ -106,6 +111,7 @@ void UserInterface::Render()
 		int texwidth = mListUI[i]->getWidth();
 		int texheight = mListUI[i]->getHeight();
 		float alpha = mListUI[i]->GetAlpha();
+		bool isGrayOut = mListUI[i]->IsGrayOut();
 
 		float texData[16]{
 			// positions   // texCoords
@@ -116,6 +122,7 @@ void UserInterface::Render()
 		};
 
 		glUniform1f(glGetUniformLocation(mShader.program, "alpha"), alpha);
+		glUniform1f(glGetUniformLocation(mShader.program, "isGray"), isGrayOut);
 		glBindTexture(GL_TEXTURE_2D, texid);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, 16 * sizeof(float), texData);
 		QHEngine::DrawArrays(GL_TRIANGLE_STRIP, 0, 4);

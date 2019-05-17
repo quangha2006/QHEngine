@@ -2,7 +2,12 @@
 
 bool Sprite::isTouchOnSprite(int x, int y)
 {
-	if (x >= mPos.x && x <= mPos.x + mTexture.width  * mScale * mScaleX && y >= mPos.y && y <= mPos.y + mTexture.height * mScale * mScaleY)
+	int x1 = mPos.x;
+	int x2 = mPos.x + (float)mTexture.width  * mScale * mScaleX;
+	int y1 = mPos.y;
+	int y2 = mPos.y + (float)mTexture.height * mScale * mScaleY;
+
+	if (x >= x1 && x <= x2 && y >= y1 && y <= y2)
 		return true;
 	return false;
 }
@@ -27,6 +32,16 @@ void Sprite::SetScale(float scale)
 	mScale = scale;
 }
 
+void Sprite::SetGrayOut(bool isgrayout)
+{
+	mIsGray = isgrayout;
+}
+
+bool Sprite::IsGrayOut()
+{
+	return mIsGray;
+}
+
 void Sprite::SetAlpha(float alpha)
 {
 	mAlpha = alpha;
@@ -49,6 +64,7 @@ void Sprite::SetCallbackOnTouchBegan(void (*callback)())
 bool Sprite::LoadTexture(const char * path)
 {
 	mTexture.id = QHTexture::TextureFromFile(path, Utils::getResourcesFolder(), mTexture.width, mTexture.height);
+	mLabel = std::string(path);
 	if (mTexture.id == -1)
 		return false;
 	return true;
@@ -76,6 +92,7 @@ Sprite::Sprite()
 	, mScaleX(1.0f)
 	, mScaleY(1.0f)
 	, mAlpha(1.0f)
+	, mIsGray(false)
 {
 	mCallbackTouchBegan = nullptr;
 }

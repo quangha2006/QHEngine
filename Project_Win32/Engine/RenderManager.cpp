@@ -94,6 +94,16 @@ void RenderManager::SwitchShadowMapMode()
 	m_isEnableShadowMap = !m_isEnableShadowMap;
 }
 
+bool RenderManager::IsEnableShadow()
+{
+	return m_isEnableShadowMap;
+}
+
+bool RenderManager::IsEnableBloom()
+{
+	return m_isEnableBloom;
+}
+
 bool RenderManager::isEnablemGammaCorrection()
 {
 	return mGammaCorrection;
@@ -168,6 +178,12 @@ void RenderManager::RenderFinal()
 GLuint RenderManager::GetDepthMapId()
 {
 	return mDepthMapTexId;
+}
+
+void RenderManager::GetGLViewport(int & width, int & height)
+{
+	width = mAppcontext->GetWindowWidth();
+	height = mAppcontext->GetWindowHeight();
 }
 
 void RenderManager::InitDefaultShader()

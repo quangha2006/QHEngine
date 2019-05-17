@@ -38,8 +38,11 @@ public:
 	void SetEnableBloom(bool is_enable);
 	void SwitchBloomMode();
 	void SwitchShadowMapMode();
+	bool IsEnableShadow();
+	bool IsEnableBloom();
 	bool isEnablemGammaCorrection();
 	GLuint GetDepthMapId();
+	void GetGLViewport(int &width, int &height);
 	RenderManager();
 	~RenderManager();
 };
