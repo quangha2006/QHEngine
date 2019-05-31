@@ -43,11 +43,11 @@ void Basic::Init()
 	mMerce.SetPos(glm::vec3(0.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	//mSpider.Init("aboy/model.dae", true, true);
+	mSpider.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
 	//mSpider.Init("Simple.dae", true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
-	mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	mSpider.SetScale(glm::vec3(0.05f));
+	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
+	//mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	//mSpider.SetTimeStampAnim(0);
@@ -94,6 +94,11 @@ void Basic::Init()
 	mbtSwitchBloom->SetCallbackOnTouchBegan(ClickbuttonBloom);
 	mbtSwitchBloom->SetScale(1.2f);
 	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchShadow->getHeight() - 8);
+
+	aiQuaternion RotationQ(aiVector3D(-0.1822674f, 0.97930199f, 0.0880127f), -82.067001f);
+	aiMatrix3x3 tmpmat3 = RotationQ.GetMatrix();
+	glm::mat4 RotationM = glm::mat4(glm::make_mat3(&tmpmat3.a1));
+	Utils::PrintMat4(RotationM);
 }
 
 void Basic::Update(int delta)

@@ -9,7 +9,7 @@ bool cmpf(float A, float B, float epsilon = 0.0001f)
 void QHText::MakeTextData()
 {
 	m_textdata.clear();
-	if (m_text.size() > 0)
+	if (m_textLen > 0)
 		m_endPos = TextRendering::getInstance()->Add(m_text, m_pos.x, m_pos.y, m_scale, m_color, m_alpha, m_textdata);
 }
 
@@ -106,21 +106,31 @@ int QHText::GetId()
 	return m_id;
 }
 
-QHText::QHText(std::string text, int pos_x, int pos_y, glm::vec3 color, float scale, float alpha)
-	: m_text(text)
+QHText::QHText(const char * text, int pos_x, int pos_y, glm::vec3 color, float scale, float alpha)
+	: m_text(nullptr)
+	, m_textLen(0)
 	, m_color(color)
 	, m_pos(glm::vec2(pos_x, pos_y))
 	, m_alpha(alpha)
 	, m_scale(scale)
 	, visible(true)
 {
+	m_textLen = strlen(text);
+	if (m_textLen > 0)
+	{
+		m_text = (char*)malloc((m_textLen + 1) * sizeof(char));
+		strcpy(m_text, text);
+		m_text[m_textLen] = '\0';
+	}
 	m_id = TextRendering::getInstance()->AddQHText(this);
 	MakeTextData();
 }
 
-
 QHText::~QHText()
 {
 	TextRendering::getInstance()->RemoveQHText(m_id);
+
+	if (m_text != nullptr)
+		free(m_text);
 }
 

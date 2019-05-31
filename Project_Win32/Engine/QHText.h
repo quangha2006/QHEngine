@@ -17,7 +17,8 @@ class QHText
 {
 private:
 	std::vector<TextData> m_textdata;
-	std::string m_text;
+	char *m_text;
+	unsigned int m_textLen;
 	glm::vec3 m_color;
 	glm::ivec2 m_pos;
 	glm::ivec2 m_endPos;
@@ -41,21 +42,29 @@ public:
 	std::vector<TextData> getTextData();
 	void UpdateId(int newid);
 	int GetId();
-	QHText(std::string text = "", int pos_x = 0.0f, int pos_y = 0.0f, glm::vec3 color = glm::vec3(1.0f), float scale = 1.0f, float alpha = 1.0f);
+	QHText(const char * text = "", int pos_x = 0.0f, int pos_y = 0.0f, glm::vec3 color = glm::vec3(1.0f), float scale = 1.0f, float alpha = 1.0f);
 	~QHText();
 
 	template< typename... Args >
-	void setText(const char* format, Args... args);
+	void setText(const char * format, Args... args);
 };
 
 template<typename ...Args>
 inline void QHText::setText(const char * format, Args ...args)
 {
 	std::string newText = Utils::toString(format, args...);
+	
+	if (m_text != nullptr && strcmp(m_text, newText.c_str()) == 0) return;
+	unsigned int newTextLen = newText.length();
+	if (m_textLen != newTextLen)
+	{
+		m_textLen = newTextLen;
 
-	if (m_text == newText) return;
+		m_text = (char*)realloc(m_text, (m_textLen + 1) * sizeof(char));
+	}
 
-	m_text = newText;
+	strcpy(m_text, newText.c_str());
+	m_text[m_textLen] = '\0';
 
 	MakeTextData();
 }

@@ -3,14 +3,31 @@
 #include <cstdlib>
 #include <ctime>
 
+bool dirExists(const std::string& dirName_in)
+{
+	DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
+	if (ftyp == INVALID_FILE_ATTRIBUTES)
+		return false;  //something is wrong with your path!
+
+	if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
+		return true;   // this is a directory!
+
+	return false;    // this is not a directory!
+}
+
 namespace Utils
 {
+
 	std::string getResourcesFolder()
 	{
+		std::string str;
 #if defined(_WINDOWS)
-		std::string str("../../Resources/");
+		if (dirExists("./Resources"))
+			str = "./Resources/";
+		else
+			str = "../../Resources/";
 #else defined(ANDROID)
-		std::string str("/sdcard/Android/data/com.android.learnning3D/files/");
+		str = "/sdcard/Android/data/com.android.learnning3D/files/";
 #endif
 		return std::move(str);
 	}

@@ -216,9 +216,10 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	return true;
 }
 
-glm::ivec2 TextRendering::Add(std::string text, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &textdata)
+glm::ivec2 TextRendering::Add(const char * text, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &textdata)
 {
-	if (text.length() <= 0) return glm::ivec2(x, y);
+	unsigned int text_len = strlen(text);
+	if (text_len <= 0) return glm::ivec2(x, y);
 	int x_origin = x;
 	int y_origin = y;
 	GLfloat xpos;
@@ -226,9 +227,9 @@ glm::ivec2 TextRendering::Add(std::string text, int x, int y, float scale, glm::
 	CharInfo Upper_ch = mCharInfo['A'];
 	std::string::const_iterator c;
 
-	for (c = text.begin(); c != text.end(); c++)
+	for (unsigned int i = 0; i < text_len ; i++)
 	{
-		CharInfo ch = mCharInfo[*c];
+		CharInfo ch = mCharInfo[text[i]];
 
 		xpos = x + ch.Bearing.x * scale;
 		if (xpos  + ch.Advance > this->screen_width)
@@ -261,7 +262,7 @@ glm::ivec2 TextRendering::Add(std::string text, int x, int y, float scale, glm::
 		x += (ch.Advance) * scale;
 	}
 	// pos for next text
-	char text_end = text[text.length() - 1];
+	char text_end = text[text[text_len - 1]];
 	CharInfo ch = mCharInfo[text_end];
 
 	if (xpos + ch.Advance * scale > this->screen_width)
@@ -272,22 +273,6 @@ glm::ivec2 TextRendering::Add(std::string text, int x, int y, float scale, glm::
 	else
 		xpos += ch.Advance * scale;
 	return glm::ivec2(xpos, ypos);
-}
-
-glm::ivec2 TextRendering::Add(std::string text, float number, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &m_TextData)
-{
-	char aaa[50];
-	sprintf(aaa, "%.1f", number);
-	std::string str = text + std::string(aaa);
-	return Add(str, x, y, scale, color, alpha, m_TextData);
-}
-
-glm::ivec2 TextRendering::Add(std::string text, int number, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &m_TextData)
-{
-	char aaa[50];
-	sprintf(aaa, "%d", number);
-	std::string str = text + std::string(aaa);
-	return Add(str, x, y, scale, color, alpha, m_TextData);
 }
 
 void TextRendering::Draw()
