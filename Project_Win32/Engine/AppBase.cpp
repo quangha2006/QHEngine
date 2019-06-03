@@ -83,11 +83,14 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 
 void AppBase::LoadingThread(AppSharedContext * shared_context)
 {
+	int64_t tbegin = Timer::getMillisecond();
 	shared_context->MakeContextCurrent();
 	ModelManager::getInstance()->Loading();
+	int64_t tloadingtime = Timer::getMillisecond() - tbegin;
+	OnGameLoadingThreadFinished((int)tloadingtime);
 	shared_context->DestroyContext();
-	mIsLoadingThreadFinish = true;
 	delete(shared_context);
+	mIsLoadingThreadFinish = true;
 }
 
 void AppBase::rendering()

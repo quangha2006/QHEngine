@@ -31,6 +31,7 @@ public:
 	virtual bool OnGameZoomCamera(double xoffset, double yoffset) { return false; };
 	virtual AppContext* GetContext() { return mContext; }
 	virtual void Resize(int width, int height);
+	virtual void OnGameLoadingThreadFinished(int loadingtimeinms) {};
 	AppBase();
 	~AppBase();
 };

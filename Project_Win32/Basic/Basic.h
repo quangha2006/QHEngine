@@ -30,6 +30,7 @@ public:
 	void GetRequireScreenSize(int32_t &width, int32_t &height);
 	bool OnGameKeyPressed(int key, int scancode, int action, int mods);
 	bool OnGameTouchEvent(int eventId, int x, int y, int pointerId);
+	void OnGameLoadingThreadFinished(int loadingtimeinms);
 	Basic();
 	~Basic();
 };

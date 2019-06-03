@@ -80,6 +80,7 @@ void Basic::Init()
 	mShadowLabel.setText("Shadow:   %s", RenderManager::getInstance()->IsEnableShadow() ? "ON" : "OFF");
 	mShadowLabel.setScale(0.5f);
 	mShadowLabel.setPos(5, 540 - 30);
+	mShadowLabel.setVisible(false);
 
 	mbtSwitchShadow = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
 	mbtSwitchShadow->SetCallbackOnTouchBegan(ClickbuttonShadow);
@@ -89,6 +90,7 @@ void Basic::Init()
 	mBloomLabel.setText("Bloom:   %s", RenderManager::getInstance()->IsEnableBloom() ? "ON" : "OFF");
 	mBloomLabel.setScale(0.5f);
 	mBloomLabel.setPos(170, 540 - 30);
+	mBloomLabel.setVisible(false);
 
 	mbtSwitchBloom = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
 	mbtSwitchBloom->SetCallbackOnTouchBegan(ClickbuttonBloom);
@@ -186,6 +188,12 @@ bool Basic::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 {
 	//mbutton->SetPos(x, y);
 	return false;
+}
+
+void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
+{
+	mShadowLabel.setVisible(true);
+	mBloomLabel.setVisible(true);
 }
 
 Basic::Basic()

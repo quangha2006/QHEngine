@@ -25,17 +25,19 @@ private:
 	float m_alpha;
 	float m_scale;
 	int m_id;
+	bool m_isVisible;
 	void MakeTextData();
 public:
-	bool visible;
 	void setPos(int pos_x, int pos_y);
 	void setPos(glm::ivec2 newPos);
 	void setColor(glm::vec3 newColor);
 	void setAlpha(float newAlpha);
 	void setScale(float newScale);
+	void setVisible(bool isvisible);
 	glm::vec3 getColor(glm::vec3 newColor);
 	float getAlpha(float newAlpha);
 	float getScale(float newScale);
+	bool getIsVisible();
 	glm::ivec2 getEndPos();
 	int getEndPos_x();
 	int getEndPos_y();

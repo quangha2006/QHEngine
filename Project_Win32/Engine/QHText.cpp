@@ -61,6 +61,11 @@ void QHText::setScale(float newScale)
 	MakeTextData();
 }
 
+void QHText::setVisible(bool isvisible)
+{
+	m_isVisible = isvisible;
+}
+
 glm::vec3 QHText::getColor(glm::vec3 newColor)
 {
 	return m_color;
@@ -74,6 +79,11 @@ GLfloat QHText::getAlpha(float newAlpha)
 GLfloat QHText::getScale(float newScale)
 {
 	return m_scale;
+}
+
+bool QHText::getIsVisible()
+{
+	return m_isVisible;
 }
 
 glm::ivec2 QHText::getEndPos()
@@ -113,7 +123,7 @@ QHText::QHText(const char * text, int pos_x, int pos_y, glm::vec3 color, float s
 	, m_pos(glm::vec2(pos_x, pos_y))
 	, m_alpha(alpha)
 	, m_scale(scale)
-	, visible(true)
+	, m_isVisible(true)
 {
 	m_textLen = strlen(text);
 	if (m_textLen > 0)

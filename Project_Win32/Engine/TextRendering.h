@@ -48,7 +48,7 @@ public:
 	int AddQHText(QHText *textneedrender);
 	void RemoveQHText(int id);
 	bool Init(const char * font_path, int width, int height, unsigned int maxchar = 100);
-	glm::ivec2 Add(const char * text, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &m_TextData);
+	glm::ivec2 CreateTextData(const char * text, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &m_TextData);
 	void Draw();
 	~TextRendering();
 };

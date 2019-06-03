@@ -17,28 +17,35 @@ bool dirExists(const std::string& dirName_in)
 
 namespace Utils
 {
-
+#if defined(_WINDOWS)
 	std::string getResourcesFolder()
 	{
-		std::string str;
-#if defined(_WINDOWS)
-		if (dirExists("./Resources"))
-			str = "./Resources/";
-		else
+		std::string str("./Resources");
+
+		if (!dirExists(str))
 			str = "../../Resources/";
-#else defined(ANDROID)
-		str = "/sdcard/Android/data/com.android.learnning3D/files/";
-#endif
+
 		return std::move(str);
 	}
 	std::string getDefineVersionShader()
 	{
-#ifdef ANDROID
-		return "#version 300 es\n";	//300 es
-#else
-		return "#version 330\n";
-#endif
+		std::string shaderversion("#version 330\n");
+
+		return std::move(shaderversion);
 	}
+#else // defined(_WINDOWS)
+	std::string getResourcesFolder()
+	{
+		std::string str("/sdcard/Android/data/com.android.learnning3D/files/"); // Need call java to get package name
+	}
+	std::string getDefineVersionShader()
+	{
+		std::string shaderversion("#version 300 es\n");
+
+		return std::move(shaderversion);
+	}
+#endif
+
 	void PrintMat4(glm::mat4 mat4)
 	{
 		LOGI("\n");

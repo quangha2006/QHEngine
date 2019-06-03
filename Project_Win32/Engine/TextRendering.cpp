@@ -216,7 +216,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	return true;
 }
 
-glm::ivec2 TextRendering::Add(const char * text, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &textdata)
+glm::ivec2 TextRendering::CreateTextData(const char * text, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &textdata)
 {
 	unsigned int text_len = strlen(text);
 	if (text_len <= 0) return glm::ivec2(x, y);
@@ -298,7 +298,7 @@ void TextRendering::Draw()
 	fulltextdata.clear();
 	for (auto &ListQHText : mListQHText)
 	{
-		if (ListQHText->visible == false) continue;
+		if (ListQHText->getIsVisible() == false) continue;
 
 		vector<TextData> tmp = ListQHText->getTextData();
 		if (tmp.size() > 0)
