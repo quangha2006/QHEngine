@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
+#if defined(_WINDOWS)
 bool dirExists(const std::string& dirName_in)
 {
 	DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
@@ -14,6 +15,7 @@ bool dirExists(const std::string& dirName_in)
 
 	return false;    // this is not a directory!
 }
+#endif
 
 namespace Utils
 {

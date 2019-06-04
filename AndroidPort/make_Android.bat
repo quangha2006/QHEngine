@@ -1,6 +1,9 @@
 @echo OFF
 setlocal EnableExtensions EnableDelayedExpansion
 set CUR_MPATH=%~dp0
+set PRECOMPILEDLIB_PATH=%CUR_MPATH%\precompiledLib\release\armeabi-v7a
+set UNZIP_ZIP_TOOL=%CUR_MPATH%\..\Tools\7-Zip\7z.exe
+set LIST_LIB_PRE=libAssimp.zip
 REM set ANDROID_HOME=F:\Android\android-sdk
 :START
 cls
@@ -53,6 +56,7 @@ goto END
   popd
 goto END
 ) else if %DO_JOB%==3 (
+  call:ExtractPrecompiledLib
   pushd AndroidSource\scripts\
   call:CleanOldSoFile
   call build_native_java_install.bat Release
@@ -111,6 +115,16 @@ goto END
 	)
 	popd
 	goto:eof
+:ExtractPrecompiledLib
+  pushd %PRECOMPILEDLIB_PATH%
+  for %%a in (%LIST_LIB_PRE%) do (
+    if not exist "libAssimp.a" (
+      echo Unzip: %%a
+      call %UNZIP_ZIP_TOOL% x %%a 
+    )
+  )
+  popd
+  goto:eof
 :END
 cd %CUR_MPATH%
 pause

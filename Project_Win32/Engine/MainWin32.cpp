@@ -74,18 +74,14 @@ void PlatformLog(int logType, const char* fmt, ...)
 		break;
 	case 2: SetConsoleTextAttribute(hConsole, 12); //red
 		break;
-	default:
-		SetConsoleTextAttribute(hConsole, 7); //white
+	default:SetConsoleTextAttribute(hConsole, 7); //white
 	}
 	
-	const int length = 10240;
-	char buffer[length];
+	char buffer[1024] = {0};
 	va_list ap;
-
 	va_start(ap, fmt);
-	vsnprintf_s(buffer, sizeof(buffer), fmt, ap);
-	OutputDebugString(buffer); // need change "Character set" to not set if error
-	//OutputDebugString("\n");  // Or change to OutputDebugStringA
+	vsnprintf_s(buffer, sizeof(buffer) - 1, fmt, ap);
+	OutputDebugString(buffer);
 	fprintf(stdout, "%s", buffer);
 	va_end(ap);
 }

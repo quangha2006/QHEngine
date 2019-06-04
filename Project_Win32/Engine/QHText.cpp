@@ -10,7 +10,7 @@ void QHText::MakeTextData()
 {
 	m_textdata.clear();
 	if (m_textLen > 0)
-		m_endPos = TextRendering::getInstance()->Add(m_text, m_pos.x, m_pos.y, m_scale, m_color, m_alpha, m_textdata);
+		m_endPos = TextRendering::getInstance()->CreateTextData(m_text, m_pos.x, m_pos.y, m_scale, m_color, m_alpha, m_textdata);
 }
 
 void QHText::setPos(int pos_x, int pos_y)
