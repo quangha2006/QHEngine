@@ -15,7 +15,7 @@ namespace Utils
 
 		char* buf = nullptr;
 		buf = new char[length + 1];
-		std::snprintf(buf, length, format, args...);
+		std::snprintf(buf, length + 1, format, args...);
 		return buf;
 	}
 	std::string getResourcesFolder();

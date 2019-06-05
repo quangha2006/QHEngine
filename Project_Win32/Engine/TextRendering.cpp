@@ -219,7 +219,9 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 glm::ivec2 TextRendering::CreateTextData(const char * text, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &textdata)
 {
 	unsigned int text_len = strlen(text);
+
 	if (text_len <= 0) return glm::ivec2(x, y);
+
 	int x_origin = x;
 	int y_origin = y;
 	GLfloat xpos;
@@ -262,7 +264,7 @@ glm::ivec2 TextRendering::CreateTextData(const char * text, int x, int y, float 
 		x += (ch.Advance) * scale;
 	}
 	// pos for next text
-	char text_end = text[text[text_len - 1]];
+	char text_end = text[text_len - 1];
 	CharInfo ch = mCharInfo[text_end];
 
 	if (xpos + ch.Advance * scale > this->screen_width)

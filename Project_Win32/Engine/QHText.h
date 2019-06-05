@@ -54,10 +54,16 @@ public:
 template<typename ...Args>
 inline void QHText::setText(const char * format, Args ...args)
 {
-	std::string newText = Utils::toString(format, args...);
+	char * newText = Utils::toString(format, args...);
 	
-	if (m_text != nullptr && strcmp(m_text, newText.c_str()) == 0) return;
-	unsigned int newTextLen = newText.length();
+	if (newText == nullptr) return;
+
+	if (m_text != nullptr && strcmp(m_text, newText) == 0)
+	{
+		delete[] newText;
+		return;
+	}
+	unsigned int newTextLen = strlen(newText);
 	if (m_textLen != newTextLen)
 	{
 		m_textLen = newTextLen;
@@ -65,8 +71,9 @@ inline void QHText::setText(const char * format, Args ...args)
 		m_text = (char*)realloc(m_text, (m_textLen + 1) * sizeof(char));
 	}
 
-	strcpy(m_text, newText.c_str());
+	strcpy(m_text, newText);
 	m_text[m_textLen] = '\0';
 
 	MakeTextData();
+	delete[] newText;
 }
