@@ -196,7 +196,7 @@ int Mesh::GetNumVertex()
 	return mVertices.size();
 }
 
-std::string Mesh::GetName()
+const std::string &Mesh::GetName()
 {
 	return mMeshName;
 }

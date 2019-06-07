@@ -120,6 +120,12 @@ public class GLES3View extends GLSurfaceView{
             GLES3JNILib.InitWithNativeWindow(glSurfaceView.getHolder().getSurface());
         }
     }
+    public static String getExternalStorage()
+	{
+        String fullPath = "/sdcard/Android/data/com.android.learnning3D/files/";
+        
+		return fullPath;
+	}
 }
 class MyConfigChooser implements GLSurfaceView.EGLConfigChooser {
     @Override

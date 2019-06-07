@@ -78,7 +78,7 @@ public:
 	void SetUseLighting(bool isuse);
 	void SetDrawPolygon(bool isdrawpolygon);
 	int GetNumVertex();
-	std::string GetName();
+	const std::string &GetName();
 
 	void Draw(RenderMode mode
 		, bool isEnableAlpha = false

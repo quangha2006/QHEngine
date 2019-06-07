@@ -2,6 +2,7 @@
 #include "Timer.h"
 #include <cstdlib>
 #include <ctime>
+#include "package_utils.h"
 
 #if defined(_WINDOWS)
 bool dirExists(const std::string& dirName_in)
@@ -22,33 +23,32 @@ namespace Utils
 #if defined(_WINDOWS)
 	std::string getResourcesFolder()
 	{
-		std::string str("./Resources");
+		std::string str_path("./Resources");
 
-		if (!dirExists(str))
-			str = "../../Resources/";
+		if (!dirExists(str_path))
+			str_path = "../../Resources/";
 
-		return std::move(str);
+		return str_path;
 	}
 	std::string getDefineVersionShader()
 	{
-		std::string shaderversion("#version 330\n");
-
-		return std::move(shaderversion);
+		return "#version 330\n";
 	}
 #else // defined(_WINDOWS)
 	std::string getResourcesFolder()
 	{
-		std::string str("/sdcard/Android/data/com.android.learnning3D/files/"); // Need call java to get package name
+		//std::string str_path("/sdcard/Android/data/com.android.learnning3D/files/"); // Need call java to get package name
+		std::string str_path = acp_utils::getExternalStoragePublicDirectory();
+		LOGI("getExternalStoragePublicDirectory: %s", str_path.c_str());
+		return str_path;
 	}
 	std::string getDefineVersionShader()
 	{
-		std::string shaderversion("#version 300 es\n");
-
-		return std::move(shaderversion);
+		return "#version 300 es\n";
 	}
 #endif
 
-	void PrintMat4(glm::mat4 mat4)
+	void PrintMat4(glm::mat4 &mat4)
 	{
 		LOGI("\n");
 		LOGI("\n%f, %f, %f, %f", mat4[0][0], mat4[0][1], mat4[0][2], mat4[0][3]);
