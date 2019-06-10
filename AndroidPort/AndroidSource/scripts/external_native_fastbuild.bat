@@ -30,7 +30,7 @@ set DO_CLEAN_LINK=FALSE
 REM !FAST_BUILD_TOOL! -cachewrite -cacheread -dist -summary All-Compile-!architecture!-!build_type! -clean // Note: Add -dist to enable distributed
 	echo 1^) --- COMPILE ---
 	pushd !FAST_BUILD_COMPILE!
-	!FAST_BUILD_TOOL! -cachewrite -cacheread -dist -summary All-Compile-!architecture!-!build_type! -clean
+	"!FAST_BUILD_TOOL!" -cachewrite -cacheread -dist -summary All-Compile-!architecture!-!build_type! -clean
 	popd
 
 	rem Check if COMPILE step is OK
@@ -47,7 +47,7 @@ REM !FAST_BUILD_TOOL! -cachewrite -cacheread -dist -summary All-Compile-!archite
 	echo.
 	echo 2^) --- LINK ---
 	pushd !FAST_BUILD_LINK!
-	!FAST_BUILD_TOOL! -clean !SO_LIB_FILE!-SharedLib-!architecture!-!build_type! Strip-!SO_LIB_FILE!-!architecture!-!build_type!
+	"!FAST_BUILD_TOOL!" -clean !SO_LIB_FILE!-SharedLib-!architecture!-!build_type! Strip-!SO_LIB_FILE!-!architecture!-!build_type!
 	popd
 
 	REM echo.
@@ -88,7 +88,7 @@ goto:eof
 
 	rem -------------- COPY UNSTRIPPED LIB --------------
 	if not exist "!jniLibs_path!\!architectures!" (
-		rem echo jniLibs_path !jniLibs_path!\%1
+		rem echo jniLibs_path "!jniLibs_path!\%1"
 		mkdir "!jniLibs_path!\!architectures!"
 	)
 	copy "!FAST_BUILD_GENERATED!\!architecture!\!build_type!\SharedLibs\lib!SO_LIB_FILE!.so" "!jniLibs_path!\!architectures!\lib!SO_LIB_FILE!.so" > nul
@@ -99,8 +99,8 @@ goto:eof
 		goto:eof
 		exit !errorlevel!
 	) else (
-		echo Copied: !FAST_BUILD_GENERATED!\!architecture!\!build_type!\SharedLibs\lib!SO_LIB_FILE!.so
-		echo     To: !jniLibs_path!\!architectures!\lib!SO_LIB_FILE!.so
+		echo Copied: "!FAST_BUILD_GENERATED!\!architecture!\!build_type!\SharedLibs\lib!SO_LIB_FILE!.so"
+		echo     To: "!jniLibs_path!\!architectures!\lib!SO_LIB_FILE!.so"
 	)
 
 goto:eof
