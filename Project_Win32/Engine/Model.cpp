@@ -370,7 +370,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	glEnable(GL_BLEND);
 
 	//UpdateWorldTransform();
-	//Utils::PrintMat4(mWorldTransform);
+
 	glm::mat4 WorldViewLightSpaceMatrix;
 	glm::mat4 WorldViewProjectionMatrix;
 	glm::mat4 model_inverse;

@@ -96,11 +96,6 @@ void Basic::Init()
 	mbtSwitchBloom->SetCallbackOnTouchBegan(ClickbuttonBloom);
 	mbtSwitchBloom->SetScale(1.2f);
 	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchShadow->getHeight() - 8);
-
-	aiQuaternion RotationQ(aiVector3D(-0.1822674f, 0.97930199f, 0.0880127f), -82.067001f);
-	aiMatrix3x3 tmpmat3 = RotationQ.GetMatrix();
-	glm::mat4 RotationM = glm::mat4(glm::make_mat3(&tmpmat3.a1));
-	Utils::PrintMat4(RotationM);
 }
 
 void Basic::Update(int delta)

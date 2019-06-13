@@ -2,7 +2,10 @@
 #include "Timer.h"
 #include <cstdlib>
 #include <ctime>
+
+#if defined(ANDROID)
 #include "package_utils.h"
+#endif
 
 #if defined(_WINDOWS)
 bool dirExists(const std::string& dirName_in)
@@ -23,7 +26,7 @@ namespace Utils
 #if defined(_WINDOWS)
 	std::string getResourcesFolder()
 	{
-		std::string str_path("./Resources");
+		std::string str_path("./Resources/");
 
 		if (!dirExists(str_path))
 			str_path = "../../Resources/";
@@ -34,12 +37,10 @@ namespace Utils
 	{
 		return "#version 330\n";
 	}
-#else // defined(_WINDOWS)
+#elif defined(ANDROID) // defined(_WINDOWS)
 	std::string getResourcesFolder()
 	{
-		//std::string str_path("/sdcard/Android/data/com.android.learnning3D/files/"); // Need call java to get package name
-		std::string str_path = acp_utils::getExternalStoragePublicDirectory();
-		LOGI("getExternalStoragePublicDirectory: %s", str_path.c_str());
+		static std::string str_path = acp_utils::PackageUtils::getExternalStoragePublicDirectory();
 		return str_path;
 	}
 	std::string getDefineVersionShader()

@@ -1,10 +1,23 @@
 #include <jni.h>
 
 #include <string>
-#include <map>
-#include <vector>
+#include "ScopeGetEnv.h"
 
 namespace acp_utils
 {
-	static std::string getExternalStoragePublicDirectory();
+	class PackageUtils
+	{
+	private:
+		static JavaVM* s_pVM;
+		static jclass  s_LoadedJavaClass;
+	public:
+		static void SetJavaVM(JavaVM*);
+		static void LoadClasses();
+		static JavaVM*	GetJavaVm();
+		static std::string getExternalStoragePublicDirectory();
+
+		static void DestroyJavaVM();
+		static void DeleteGlobalJavaClass();
+	};
+	JavaVM* GetVM();
 }
