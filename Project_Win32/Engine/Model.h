@@ -83,13 +83,13 @@ private:
 	uint FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	uint FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, glm::mat4 &ParentTransform);
-	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const string NodeName);
+	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const string &NodeName);
 	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
 	void UpdateWorldTransform();
 	void SetWorld(glm::mat4 world = glm::mat4());
 
 public:
-	void Init(string const &path, bool FlipUVs = false, bool enableAlpha = true, float fixedModel = 1.0f);
+	void Init(const string &path, bool FlipUVs = false, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderMode mode, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
 	void SetUseLighting(bool UseLighting);
 	void SetisUsePointLight(bool UsePointLight);

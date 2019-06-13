@@ -120,7 +120,7 @@ goto END
   for %%a in (%LIST_LIB_PRE%) do (
     if not exist "libAssimp.a" (
       echo Unzip: %%a
-      call %UNZIP_ZIP_TOOL% x %%a 
+      call "%UNZIP_ZIP_TOOL%" x %%a 
     )
   )
   popd

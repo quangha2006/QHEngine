@@ -63,11 +63,11 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	text_FPS.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 	text_FPS.setText("FPS: 60.0");
 
-	text_DrawCall.setPos(text_FPS.getEndPos());
+	text_DrawCall.setPos(100, 0);
 	text_DrawCall.setScale(0.5f);
 	text_DrawCall.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
-	text_NumTriangle.setPos(265,0);
+	text_NumTriangle.setPos(250, 0);
 	text_NumTriangle.setScale(0.5f);
 	text_NumTriangle.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -114,7 +114,6 @@ void AppBase::rendering()
 	int cpuTime = FrameRate::getInstance()->GetPrevCpuTime();
 
 	text_FPS.setText("FPS: %.1f", fps);
-	text_DrawCall.setPos(text_FPS.getEndPos());
 	text_DrawCall.setText("DrawCall: %d", numdrawcall);
 	text_NumTriangle.setText("numTriangle: %d", numTriangle);
 	text_FrameTime.setText("PrevFrameTime: %d cpu: %d", frameTime, cpuTime);

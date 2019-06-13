@@ -14,7 +14,7 @@
 #endif
 #include "AppContext.h"
 
-void Model::Init(string const & path, bool FlipUVs, bool enableAlpha, float fixedModel)
+void Model::Init(const string &path, bool FlipUVs, bool enableAlpha, float fixedModel)
 {
 	if (m_initialized)
 	{
@@ -370,7 +370,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	glEnable(GL_BLEND);
 
 	//UpdateWorldTransform();
-	//Utils::PrintMat4(mWorldTransform);
+
 	glm::mat4 WorldViewLightSpaceMatrix;
 	glm::mat4 WorldViewProjectionMatrix;
 	glm::mat4 model_inverse;
@@ -770,7 +770,7 @@ void Model::ReadNodeHeirarchy(float AnimationTime, const aiNode * pNode, glm::ma
 		ReadNodeHeirarchy(AnimationTime, pNode->mChildren[i], GlobalTransformation);
 	}
 }
-const aiNodeAnim * Model::FindNodeAnim(const aiAnimation * pAnimation, const string NodeName)
+const aiNodeAnim * Model::FindNodeAnim(const aiAnimation * pAnimation, const string &NodeName)
 {
 	for (uint i = 0; i < pAnimation->mNumChannels; i++) {
 		const aiNodeAnim* pNodeAnim = pAnimation->mChannels[i];

@@ -4,12 +4,13 @@
 #include <string>
 #include <iostream>
 //Audio
-#include <AL/al.h>
-#include <AL/alc.h>
+//#include <AL/al.h>
+//#include <AL/alc.h>
 #define BACKEND "alut"
 #define NUM_BUFFERS 3
 #define BUFFER_SIZE 4096
 using namespace std;
+typedef unsigned int ALuint;
 typedef struct {
 	/* RIFF Chunk Descriptor */
 	uint8_t  riff[4];//'RIFF'
@@ -30,8 +31,8 @@ typedef struct {
 class Sound
 {
 private:
-	ALCdevice *device = NULL;
-	ALCcontext *context = NULL;
+	//ALCdevice *device = NULL;
+	//ALCcontext *context = NULL;
 	uint8_t  data[4];//'data'
 	uint32_t dataSize[1];
 	ALuint buffer;

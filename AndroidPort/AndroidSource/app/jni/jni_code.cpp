@@ -2,6 +2,7 @@
 #include <android/log.h>
 #include <android/native_window.h> // requires ndk r5 or newer
 #include <android/native_window_jni.h> // requires ndk r5 or newer
+#include "package_utils.h"
 #define LOG_TAG "QHEngine"
 #define LOG_INFO(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define LOG_ERROR(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
@@ -54,4 +55,21 @@ JNIEXPORT void JNICALL
 Java_com_android_learnning3D_GLES3JNILib_OnGameTouchEvent(JNIEnv* env, jobject obj, jint eventId, jfloat x, jfloat y, jint pointerId)
 {
 		OnGameTouchEvent(eventId, x, y, pointerId);
+}
+
+/* Automatically called by JNI. */
+JNIEXPORT jint JNICALL 
+JNI_OnLoad(JavaVM *vm, void *reserved)
+{
+	acp_utils::PackageUtils::SetJavaVM(vm);
+
+	acp_utils::PackageUtils::LoadClasses();
+
+	return JNI_VERSION_1_6;
+}
+JNIEXPORT void JNICALL
+JNI_OnUnload(JavaVM *vm, void *reserved)
+{
+	acp_utils::PackageUtils::DeleteGlobalJavaClass();
+	acp_utils::PackageUtils::DestroyJavaVM();
 }

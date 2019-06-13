@@ -33,11 +33,15 @@ namespace Timer
 
 	std::string getCalendar(const char* format)
 	{
-		std::string currentTime_str;
 		SYSTEMTIME time;
 		GetLocalTime(&time);
-		currentTime_str = Utils::toString(format, time.wDay, time.wMonth, time.wYear, time.wHour, time.wMinute, time.wSecond);//, time.wMilliseconds);
+
+		char * currentTime = Utils::toString(format, time.wDay, time.wMonth, time.wYear, time.wHour, time.wMinute, time.wSecond);//, time.wMilliseconds);
 		
+		std::string currentTime_str(currentTime);
+
+		delete[]currentTime;
+
 		return currentTime_str;
 	}
 
@@ -70,14 +74,15 @@ namespace Timer
 	}
 	std::string getCalendar(const char* format)
 	{
-		std::string currentTime_str;
+		
 
 		timespec time;
 		clock_gettime(CLOCK_REALTIME, &time);
 		struct tm now;
 		localtime_r(&(time.tv_sec), &now);
-		currentTime_str = Utils::toString(format, now.tm_mday, now.tm_mon + 1, now.tm_year + 1900, now.tm_hour, now.tm_min, now.tm_sec);
-
+		char * currentTime = Utils::toString(format, now.tm_mday, now.tm_mon + 1, now.tm_year + 1900, now.tm_hour, now.tm_min, now.tm_sec);
+		std::string currentTime_str(currentTime);
+		delete[] currentTime;
 		return currentTime_str;
 	}
 	int64_t GetTicksPerSecond()

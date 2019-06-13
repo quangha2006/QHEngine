@@ -5,6 +5,7 @@
 	.PROJECT_SourceFiles =
 	{
 	"$jni_Path$/jni_code.cpp"
+	"$jni_Path$/package_utils.cpp"
     "$Engine_Sources_Path$/AppBase.cpp"
 	"$Engine_Sources_Path$/AppContext.cpp"
 	"$Engine_Sources_Path$/Camera.cpp"
@@ -65,6 +66,7 @@
 									+ " -I$GameRoot$/External/assimp-4.1.0/include"
 									+ " -I$GameRoot$/External/bullet3-2.88/src"
                   					+ " -I$Engine_Sources_Path$"
+									+ " -I$jni_Path$"
 
 		.PROJECT_CompilerFlags = ""
 									+ " -fexceptions"

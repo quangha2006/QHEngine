@@ -21,7 +21,7 @@
 					+ " -lirrXML"
 					+ " -lpoly2tri"
 					+ " -lfreetypelib"
-    			  	+ " -lopenal"
+    			  	;+ " -lopenal"
 					+ " -lBulletCollision"
 					+ " -lBulletDynamics"
 					+ " -lLinearMath"

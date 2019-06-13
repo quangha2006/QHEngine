@@ -15,11 +15,11 @@ namespace Utils
 
 		char* buf = nullptr;
 		buf = new char[length + 1];
-		std::snprintf(buf, length, format, args...);
+		std::snprintf(buf, length + 1, format, args...);
 		return buf;
 	}
 	std::string getResourcesFolder();
 	std::string getDefineVersionShader();
-	void PrintMat4(glm::mat4 mat4);
+	void PrintMat4(glm::mat4 &mat4);
 	glm::vec3 RandomColor();
 }
