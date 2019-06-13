@@ -40,7 +40,7 @@ namespace Utils
 #elif defined(ANDROID) // defined(_WINDOWS)
 	std::string getResourcesFolder()
 	{
-		static std::string str_path = acp_utils::PackageUtils::getExternalStoragePublicDirectory();
+		static std::string str_path = acp_utils::PackageUtils::getExternalStoragePublicDirectory() + '/';
 		return str_path;
 	}
 	std::string getDefineVersionShader()

@@ -2,7 +2,6 @@ package com.android.learnning3D;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
-import android.view.Surface;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,13 +15,16 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class GLES3View extends GLSurfaceView{
 
-    static int widthPixels = 0;
-    static int heightPixels = 0;
-    float scaleSurfaceView = 0.8f;
-    static GLSurfaceView glSurfaceView = null;
+    private static GLES3View mInstance  = null;
+    static int widthPixels                  = 0;
+    static int heightPixels                 = 0;
+    float scaleSurfaceView                  = 0.8f;
+
     public GLES3View(Context context) {
     
         super(context);
+
+        mInstance = this;
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
 
@@ -42,10 +44,17 @@ public class GLES3View extends GLSurfaceView{
         else {
             setEGLContextClientVersion(2);
         }
-        glSurfaceView = this;
+
         setPreserveEGLContextOnPause(true);
         setRenderer(new Renderer());
 
+    }
+
+    public static Context getAppContext() {
+        return mInstance.getContext();
+    }
+    public static synchronized GLES3View getInstance() {
+        return mInstance;
     }
     public boolean onTouchEvent(MotionEvent event)
     {
@@ -91,11 +100,6 @@ public class GLES3View extends GLSurfaceView{
                 retCode = true;
                 break;
             }
-            default:
-            {
-                retCode = false;
-                break;
-            }
         }
         return retCode;
     }
@@ -117,20 +121,18 @@ public class GLES3View extends GLSurfaceView{
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-            GLES3JNILib.InitWithNativeWindow(glSurfaceView.getHolder().getSurface());
+            GLES3JNILib.InitWithNativeWindow(getInstance().getHolder().getSurface());
         }
     }
     public static String getExternalStorage()
 	{
-        String fullPath = "/sdcard/Android/data/com.android.learnning3D/files/";
-        
-		return fullPath;
+        return getAppContext().getExternalFilesDir(null).getPath();
 	}
 }
 class MyConfigChooser implements GLSurfaceView.EGLConfigChooser {
     @Override
     public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) {
-        int attribs[] = {
+        int[] attribs = {
             EGL10.EGL_LEVEL, 0,
             EGL10.EGL_RENDERABLE_TYPE, 4,  // EGL_OPENGL_ES2_BIT
             EGL10.EGL_COLOR_BUFFER_TYPE, EGL10.EGL_RGB_BUFFER,
