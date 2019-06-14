@@ -38,7 +38,27 @@ namespace acp_utils
 
 		s_LoadedJavaClass = reinterpret_cast<jclass>(pEnv->NewGlobalRef(localClass));
 	}
+	void PackageUtils::ExitApplication(bool restart)
+	{
+		JNIEnv* pEnv = NULL;
+		ScopeGetEnv sta(pEnv);
 
+		jmethodID exitApp = pEnv->GetStaticMethodID(s_LoadedJavaClass, "ExitApplication", "(Z)V");
+		pEnv->CallStaticVoidMethod(s_LoadedJavaClass, exitApp, restart);
+	}
+	void PackageUtils::ShowToastMessage(const char* key, int duration)
+	{
+		JNIEnv* pEnv = NULL;
+		ScopeGetEnv sta(pEnv);
+
+		jstring jkey = pEnv->NewStringUTF(key);
+			
+		jmethodID showToastMessageID = pEnv->GetStaticMethodID(s_LoadedJavaClass, "ShowToastMessage", "(Ljava/lang/String;I)V");
+		pEnv->CallStaticVoidMethod(s_LoadedJavaClass, showToastMessageID, jkey, duration);
+		
+		pEnv->DeleteLocalRef(jkey);
+		
+	}
 	void PackageUtils::DestroyJavaVM()
 	{
 		s_pVM->DestroyJavaVM();

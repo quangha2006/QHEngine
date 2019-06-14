@@ -16,10 +16,11 @@ import javax.microedition.khronos.opengles.GL10;
 public class GLES3View extends GLSurfaceView{
 
     private static GLES3View mInstance  = null;
+    private boolean m_bRestartApplicationOnExit = false;
     static int widthPixels                  = 0;
     static int heightPixels                 = 0;
     float scaleSurfaceView                  = 0.8f;
-
+    
     public GLES3View(Context context) {
     
         super(context);
@@ -127,6 +128,73 @@ public class GLES3View extends GLSurfaceView{
     public static String getExternalStorage()
 	{
         return getAppContext().getExternalFilesDir(null).getPath();
+	}
+    public static void ExitApplication(boolean restart)
+	{
+        m_bRestartApplicationOnExit = restart;
+		
+		 runOnUiThread(
+			new Runnable() 
+			{
+				public void run() 
+				{
+					finish();	
+				}
+			}
+		);
+	}
+    public boolean onPause()
+    {
+        KillApplication();
+    }
+    private void KillApplication() 
+	{
+		// if(m_bRestartApplicationOnExit) 
+		// {
+		// 	AlarmManager mgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+			
+		// 	PendingIntent RESTART_INTENT = PendingIntent.getActivity( this, 0, new Intent(this.getIntent()),  Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			
+		// 	mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 900, RESTART_INTENT);
+		// }
+		// if(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
+		// {
+		// 	int pid = android.os.Process.myPid();
+		// 	android.os.Process.killProcess(pid); 
+		// }
+		// else
+		// {
+		// 	System.exit(0);
+		// }
+	}
+    private static Toast showToastMessage = null;
+	public static void ShowToastMessage(final String lang,final int duration)
+	{
+		if(getAppContext() == null)
+			return;
+		new Thread(new Runnable() { public void run() 
+		{	
+			runOnUiThread(new Runnable() { public void run()
+			{
+				try{
+					if(showToastMessage == null)
+					{
+						showToastMessage = Toast.makeText(getAppContext(), lang, duration);
+					}
+					showToastMessage.setText(lang);
+					showToastMessage.setDuration(duration);
+					android.view.View toastView = showToastMessage.getView();
+					if(toastView != null)
+					{
+						if(toastView.isShown())
+						{
+							return;
+						}
+					}
+					showToastMessage.show();
+				}catch(Exception e){};
+			}});
+		}}).start();
 	}
 }
 class MyConfigChooser implements GLSurfaceView.EGLConfigChooser {
