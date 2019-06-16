@@ -1,4 +1,5 @@
 package com.android.learnning3D;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.KeyEvent;
 import android.util.DisplayMetrics;
+import android.widget.Toast;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -16,7 +18,6 @@ import javax.microedition.khronos.opengles.GL10;
 public class GLES3View extends GLSurfaceView{
 
     private static GLES3View mInstance  = null;
-    private boolean m_bRestartApplicationOnExit = false;
     static int widthPixels                  = 0;
     static int heightPixels                 = 0;
     float scaleSurfaceView                  = 0.8f;
@@ -131,19 +132,21 @@ public class GLES3View extends GLSurfaceView{
 	}
     public static void ExitApplication(boolean restart)
 	{
-        m_bRestartApplicationOnExit = restart;
-		
-		 runOnUiThread(
+        //m_bRestartApplicationOnExit = restart;
+        //restart: not implement yet
+        Activity activity = (Activity)getAppContext();
+        activity.runOnUiThread(
 			new Runnable() 
 			{
 				public void run() 
 				{
-					finish();	
+                    Activity activity = (Activity)getAppContext();
+                    activity.finish();
 				}
 			}
 		);
 	}
-    public boolean onPause()
+    public void onPause()
     {
         KillApplication();
     }
@@ -172,9 +175,10 @@ public class GLES3View extends GLSurfaceView{
 	{
 		if(getAppContext() == null)
 			return;
+        final Activity activity = (Activity)getAppContext();
 		new Thread(new Runnable() { public void run() 
-		{	
-			runOnUiThread(new Runnable() { public void run()
+		{
+            activity.runOnUiThread(new Runnable() { public void run()
 			{
 				try{
 					if(showToastMessage == null)
