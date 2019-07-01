@@ -5,13 +5,13 @@
 bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFromString , const char* definecode)
 {
 	GLint linked = GL_FALSE;
-	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vtxSrc, isFromString, definecode);
-	if (!vertexShader)
+	mVertexShader = createShader(GL_VERTEX_SHADER, vtxSrc, isFromString, definecode);
+	if (!mVertexShader)
 	{
 		return false;
 	}
-	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc, isFromString, definecode);
-	if (!fragmentShader)
+	mFragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc, isFromString, definecode);
+	if (!mFragmentShader)
 	{
 		return false;
 	}
@@ -19,8 +19,8 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 	if (!program) {
 		return false;
 	}
-	glAttachShader(program, vertexShader);
-	glAttachShader(program, fragmentShader);
+	glAttachShader(program, mVertexShader);
+	glAttachShader(program, mFragmentShader);
 
 	glLinkProgram(program);
 	glGetProgramiv(program, GL_LINK_STATUS, &linked);
@@ -181,10 +181,20 @@ Shader::Shader()
 	, Weights_Attribute(-1)
 	, IDs_Attribute(-1)
 	, program(-1)
+	, mVertexShader(-1)
+	, mFragmentShader(-1)
 	, m_initialized(false)
 {
 }
 
 Shader::~Shader()
 {
+	if (mVertexShader != -1)
+		glDeleteShader(mVertexShader);
+
+	if (mFragmentShader != -1)
+		glDeleteShader(mFragmentShader);
+
+	if (program != -1)
+		glDeleteProgram(program);
 }

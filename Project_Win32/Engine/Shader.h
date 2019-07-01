@@ -12,6 +12,8 @@ class Shader
 private:
 	GLuint createShader(GLenum shaderType, const char* src, bool isFromString = false, const char* definecode = NULL);
 	std::map<char*, int> uniformLocations;
+	GLuint mVertexShader;
+	GLuint mFragmentShader;
 public:
 	GLuint program;
 	GLint position_Attribute;
