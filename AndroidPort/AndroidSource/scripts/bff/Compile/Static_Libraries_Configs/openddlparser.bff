@@ -4,11 +4,11 @@
 
 	.PROJECT_SourceFiles =
 	{
-		"$ExternalLibs_Path$/AssimpLib/contrib/openddlparser/code/DDLNode.cpp"
-		"$ExternalLibs_Path$/AssimpLib/contrib/openddlparser/code/OpenDDLCommon.cpp"
-		"$ExternalLibs_Path$/AssimpLib/contrib/openddlparser/code/OpenDDLExport.cpp"
-		"$ExternalLibs_Path$/AssimpLib/contrib/openddlparser/code/OpenDDLParser.cpp"
-		"$ExternalLibs_Path$/AssimpLib/contrib/openddlparser/code/Value.cpp"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/openddlparser/code/DDLNode.cpp"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/openddlparser/code/OpenDDLCommon.cpp"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/openddlparser/code/OpenDDLExport.cpp"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/openddlparser/code/OpenDDLParser.cpp"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/openddlparser/code/Value.cpp"
 	}
 
 	.ExcludedUnitySources =
@@ -35,10 +35,10 @@
 									+ " -DPLATFORM_ANDROID"
 									+ " -DASSIMP_BUILD_NO_C4D_IMPORTER"
 		.PROJECT_IncludePaths = ""
-									+ " -I$ExternalLibs_Path$/AssimpLib/include"
-									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/openddlparser/include"
-									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/rapidjson/include"
-									+ " -I$ExternalLibs_Path$/AssimpLib"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/include"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/contrib/openddlparser/include"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/contrib/rapidjson/include"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0"
 
 		.PROJECT_CompilerFlags = ""
 									+ " -fexceptions"

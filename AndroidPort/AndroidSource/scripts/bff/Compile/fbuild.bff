@@ -13,19 +13,19 @@
 	// lib
   	
 	//"SOIL"
-	//"zlibstatic"
-	//"Assimp"
+	"Assimp"
+	"zlibstatic"
+	"irrXML"
 	//"openddlparser"
 	//"unzip"
 	//"ConvertUTF"
 	//"clipper"
-	//"irrXML"
 	//"poly2tri"
 	//"openal"
 	//"freetypelib"
-	//"BulletCollision"
-	//"BulletDynamics"
-	//"LinearMath"
+	"BulletCollision"
+	"BulletDynamics"
+	"LinearMath"
 }
 
 #include "__Common/__TargetConfigurations.bff"

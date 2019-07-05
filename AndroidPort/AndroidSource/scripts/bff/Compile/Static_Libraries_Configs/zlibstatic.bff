@@ -4,21 +4,21 @@
 
 	.PROJECT_SourceFiles =
 	{
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/adler32.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/compress.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/crc32.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/deflate.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/gzclose.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/gzlib.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/gzread.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/gzwrite.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/infback.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/inffast.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/inflate.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/inftrees.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/trees.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/uncompr.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/zlib/zutil.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/adler32.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/compress.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/crc32.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/deflate.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/gzclose.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/gzlib.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/gzread.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/gzwrite.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/infback.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/inffast.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/inflate.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/inftrees.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/trees.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/uncompr.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib/zutil.c"
 	}
 
 	.ExcludedUnitySources =
@@ -40,7 +40,7 @@
 		.PROJECT_Defines = ""
 									+ " -DVOX_INTERNAL_CODE"
 		.PROJECT_IncludePaths = ""
-									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/zlib"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/contrib/zlib"
 		.PROJECT_CompilerFlags = ""
 									+ " -ffast-math"
 	]

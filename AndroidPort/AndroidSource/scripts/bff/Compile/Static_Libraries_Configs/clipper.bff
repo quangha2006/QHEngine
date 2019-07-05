@@ -4,7 +4,7 @@
 
 	.PROJECT_SourceFiles =
 	{
-		"$ExternalLibs_Path$/AssimpLib/contrib/clipper/clipper.cpp"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/clipper/clipper.cpp"
 	}
 
 	.ExcludedUnitySources =
@@ -31,7 +31,7 @@
 									+ " -DPLATFORM_ANDROID"
 									+ " -DASSIMP_BUILD_NO_C4D_IMPORTER"
 		.PROJECT_IncludePaths = ""
-									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/clipper"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/contrib/clipper"
 
 		.PROJECT_CompilerFlags = ""
 									+ " -fexceptions"

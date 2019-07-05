@@ -30,7 +30,6 @@
 									+ " -I$Game_Sources_Path$/Basic"
                   					+ " -I$GameRoot$/Include"
 				  					+ " -I$GameRoot$/External"
-									+ " -I$GameRoot$/External/SOIL/src"
 									+ " -I$GameRoot$/External/openal/include"
 									+ " -I$GameRoot$/External/freetype-2.9.1/include"
 									+ " -I$GameRoot$/External/assimp-4.1.0/include"

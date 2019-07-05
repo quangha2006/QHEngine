@@ -23,9 +23,11 @@
 							+ " -DGAME_ANDROID"
 							+ " -D__ANDROID_API__=21"
 	.IncludePaths = ""
-							+ ' -I$NDK_Root$\sources\android\support\include'
+							//+ ' -I$NDK_Root$\sources\android\support\include'
+							+ ' -I$LLVMSysroot$\usr\include'
+							//+ ' -I$LLVMSysroot$\usr\include\c++\v1'
 							+ ' -I$NDK_Root$\sources\cxx-stl\llvm-libc++\include'
-							+ ' -I$NDK_Root$\sysroot\usr\include'
+							//+ ' -I$NDK_Root$\sysroot\usr\include'
 	.CompileFlags = ""
 							+ " -ffunction-sections"
 							+ " -funwind-tables"
@@ -47,7 +49,7 @@
 	.CompileFlags_C = ""
 	.Precompiled_SearchPaths = ""
 	.LinkerExecutable = ""
-							+ "$NDK_Root$/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe"
+							+ "$NDKToolchainClangRoot$\clang++.exe"
 ]
 
 // *************************************************************************************** //
@@ -65,20 +67,20 @@
 							+ " -mfpu=neon"
 							+ " -mtune=krait"
 							+ " -mstackrealign"
-							+ " -fPIC"
+							+ " -fpic"
 							+ " -fstack-protector-strong"
 							+ " -g"
 							+ " -marm"
 							+ " -march=armv7-a"
 							+ " -mfloat-abi=softfp"
 	.Librarian = ""
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$NDK_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar.exe"
+							+ "$NDKToolchainClangRoot$\arm-linux-androideabi-ar.exe"
 
 	.ObjectCopyExecutable = ""
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$NDK_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-objcopy.exe"
+							+ "$NDKToolchainClangRoot$\arm-linux-androideabi-objcopy.exe"
 
 	.StripExecutable = ""
-							+ "$NDK_Root$/toolchains/arm-linux-androideabi-$NDK_ToolchainVersion$/prebuilt/windows-x86_64/bin/arm-linux-androideabi-strip.exe"
+							+ "$NDKToolchainClangRoot$\arm-linux-androideabi-strip.exe"
 ]
 
 // *************************************************************************************** //
@@ -93,7 +95,7 @@
 							+ " -DNDEBUG"
 							+ " -DNDK_DEBUG=0"
 	.IncludePaths + ""
-							+ ' -I$NDK_Root$\sysroot\usr\include\arm-linux-androideabi'
+							+ ' -I$LLVMSysroot$\usr\include\arm-linux-androideabi'
 	.CompileFlags + ""
 							+ " -w"
 							+ " -Ofast"
@@ -116,7 +118,7 @@
 							+ " -D_DEBUG"
 							+ " -DDEBUG"
 	.IncludePaths + ""
-							+ ' -I$NDK_Root$\sysroot\usr\include\arm-linux-androideabi'
+							+ ' -I$LLVMSysroot$\usr\include\arm-linux-androideabi'
 
 	.CompileFlags + ""
 							+ " -O0"

@@ -4,8 +4,8 @@
 
 	.PROJECT_SourceFiles =
 	{
-		"$ExternalLibs_Path$/AssimpLib/contrib/unzip/ioapi.c"
-		"$ExternalLibs_Path$/AssimpLib/contrib/unzip/unzip.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/unzip/ioapi.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/unzip/unzip.c"
 	}
 
 	.ExcludedUnitySources =
@@ -32,7 +32,7 @@
 									+ " -DPLATFORM_ANDROID"
 									+ " -DASSIMP_BUILD_NO_C4D_IMPORTER"
 		.PROJECT_IncludePaths = ""
-									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/unzip"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/contrib/unzip"
 
 		.PROJECT_CompilerFlags = ""
 									+ " -fexceptions"

@@ -4,7 +4,7 @@
 
 	.PROJECT_SourceFiles =
 	{
-		"$ExternalLibs_Path$/AssimpLib/contrib/irrXML/irrXML.cpp"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/irrXML/irrXML.cpp"
 	}
 
 	.ExcludedUnitySources =
@@ -31,8 +31,8 @@
 									+ " -DPLATFORM_ANDROID"
 									+ " -DASSIMP_BUILD_NO_C4D_IMPORTER"
 		.PROJECT_IncludePaths = ""
-									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/irrXML"
-									+ " -I$ExternalLibs_Path$/AssimpLib/include"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/contrib/irrXML"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/include"
 
 		.PROJECT_CompilerFlags = ""
 									+ " -fexceptions"

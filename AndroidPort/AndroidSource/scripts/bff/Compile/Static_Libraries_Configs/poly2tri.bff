@@ -4,11 +4,11 @@
 
 	.PROJECT_SourceFiles =
 	{
-		"$ExternalLibs_Path$/AssimpLib/contrib/poly2tri/poly2tri/common/shapes.cc"
-		"$ExternalLibs_Path$/AssimpLib/contrib/poly2tri/poly2tri/sweep/advancing_front.cc"
-		"$ExternalLibs_Path$/AssimpLib/contrib/poly2tri/poly2tri/sweep/cdt.cc"
-		"$ExternalLibs_Path$/AssimpLib/contrib/poly2tri/poly2tri/sweep/sweep.cc"
-		"$ExternalLibs_Path$/AssimpLib/contrib/poly2tri/poly2tri/sweep/sweep_context.cc"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/poly2tri/poly2tri/common/shapes.cc"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/poly2tri/poly2tri/sweep/advancing_front.cc"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/poly2tri/poly2tri/sweep/cdt.cc"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/poly2tri/poly2tri/sweep/sweep.cc"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/poly2tri/poly2tri/sweep/sweep_context.cc"
 	}
 
 	.ExcludedUnitySources =
@@ -35,8 +35,8 @@
 									+ " -DPLATFORM_ANDROID"
 									+ " -DASSIMP_BUILD_NO_C4D_IMPORTER"
 		.PROJECT_IncludePaths = ""
-									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/poly2tri/poly2tri"
-									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/poly2tri/poly2tri/common"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/contrib/poly2tri/poly2tri"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/contrib/poly2tri/poly2tri/common"
 
 		.PROJECT_CompilerFlags = ""
 									+ " -fexceptions"

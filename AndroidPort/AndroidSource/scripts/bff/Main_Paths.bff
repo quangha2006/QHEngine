@@ -1,7 +1,7 @@
 .CompilePath = "."
 .NDK_ToolchainVersion = "4.9"
 .NDK_PlatformVersion = "android-21"
-.NDK_Root = "F:\Android\android-ndk-r18b"
+.NDK_Root = "Y:\android-ndk-r19c"
 .GameRoot = "$CompilePath$\..\..\..\..\..\Project_Win32"
 .ExternalLibs_Path = "$GameRoot$\External"
 .generated_Path = "$CompilePath$\..\..\..\..\generated"
@@ -10,5 +10,9 @@
 .Game_Sources_Path = "$GameRoot$"
 .Engine_Sources_Path = "$GameRoot$\Engine"
 .STL_LibPath_Clang = "$NDK_Root$\sources\cxx-stl\llvm-libc++"
-.Linker_RPath_ARM = "$NDK_Root$\platforms\$NDK_PlatformVersion$\arch-arm\usr\lib"
+.NDKToolchains = '$NDK_Root$\toolchains'
+.NDKToolchainClangRoot = '$NDKToolchains$\llvm\prebuilt\windows-x86_64\bin'
+.LLVMToolChainRoot = '$NDKToolchains$\llvm\prebuilt\windows-x86_64'
+.LLVMSysroot = '$LLVMToolChainRoot$\sysroot'
+.Linker_RPath_ARM = "$LLVMSysroot$\usr\lib\arm-linux-androideabi\21\"
 .Linker_RPath_x86 = "$NDK_Root$\platforms\$NDK_PlatformVersion$\arch-x86\usr\lib"

@@ -4,7 +4,7 @@
 
 	.PROJECT_SourceFiles =
 	{
-		"$ExternalLibs_Path$/AssimpLib/contrib/ConvertUTF/ConvertUTF.c"
+		"$ExternalLibs_Path$/assimp-4.1.0/contrib/ConvertUTF/ConvertUTF.c"
 	}
 
 	.ExcludedUnitySources =
@@ -31,7 +31,7 @@
 									+ " -DPLATFORM_ANDROID"
 									+ " -DASSIMP_BUILD_NO_C4D_IMPORTER"
 		.PROJECT_IncludePaths = ""
-									+ " -I$ExternalLibs_Path$/AssimpLib/contrib/ConvertUTF"
+									+ " -I$ExternalLibs_Path$/assimp-4.1.0/contrib/ConvertUTF"
 
 		.PROJECT_CompilerFlags = ""
 									+ " -fexceptions"
