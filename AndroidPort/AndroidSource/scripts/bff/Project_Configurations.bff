@@ -23,11 +23,8 @@
 							+ " -DGAME_ANDROID"
 							+ " -D__ANDROID_API__=21"
 	.IncludePaths = ""
-							//+ ' -I$NDK_Root$\sources\android\support\include'
 							+ ' -I$LLVMSysroot$\usr\include'
-							//+ ' -I$LLVMSysroot$\usr\include\c++\v1'
-							+ ' -I$NDK_Root$\sources\cxx-stl\llvm-libc++\include'
-							//+ ' -I$NDK_Root$\sysroot\usr\include'
+
 	.CompileFlags = ""
 							+ " -ffunction-sections"
 							+ " -funwind-tables"
@@ -44,6 +41,7 @@
 							+ " -freciprocal-math"
 							+ " -funroll-loops"
 							+ " -ffast-math"
+							+ " -stdlib=libc++"
 							+ " -fexceptions"
 	.CompileFlags_CPP = ""
 	.CompileFlags_C = ""
@@ -62,8 +60,10 @@
 	.Defines + ""
 							+ " -D__ARM_NEON__"
 							+ " -D__ARM_ARCH_7__"
+	.IncludePaths + ""
+							+ ' -I$LLVMSysroot$\usr\include\arm-linux-androideabi'
 	.CompileFlags + ""
-							+ " -target armv7-none-linux-androideabi"
+							+ " -target armv7-none-linux-androideabi21"
 							+ " -mfpu=neon"
 							+ " -mtune=krait"
 							+ " -mstackrealign"
@@ -94,8 +94,6 @@
 							+ " -DANDROID_RELEASE"
 							+ " -DNDEBUG"
 							+ " -DNDK_DEBUG=0"
-	.IncludePaths + ""
-							+ ' -I$LLVMSysroot$\usr\include\arm-linux-androideabi'
 	.CompileFlags + ""
 							+ " -w"
 							+ " -Ofast"
@@ -117,9 +115,6 @@
 	.Defines + ""
 							+ " -D_DEBUG"
 							+ " -DDEBUG"
-	.IncludePaths + ""
-							+ ' -I$LLVMSysroot$\usr\include\arm-linux-androideabi'
-
 	.CompileFlags + ""
 							+ " -O0"
 

@@ -11,18 +11,12 @@
 	
 	//"native_app_glue"
 	// lib
-  	
-	//"SOIL"
+
 	"Assimp"
 	"zlibstatic"
 	"irrXML"
-	//"openddlparser"
-	//"unzip"
-	//"ConvertUTF"
-	//"clipper"
-	//"poly2tri"
 	//"openal"
-	//"freetypelib"
+	"freetypelib"
 	"BulletCollision"
 	"BulletDynamics"
 	"LinearMath"
