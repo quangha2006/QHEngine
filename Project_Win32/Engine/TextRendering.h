@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __TEXTRENDERING_H__
+#define __TEXTRENDERING_H__
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 // GLM
@@ -53,3 +55,4 @@ public:
 	~TextRendering();
 };
 
+#endif //!__TEXTRENDERING_H__

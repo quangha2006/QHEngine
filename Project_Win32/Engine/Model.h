@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __MODEL_H__
+#define __MODEL_H__
+
 #include "Mesh.h"
 #include "Shader.h"
 #include "Camera.h"
@@ -125,3 +127,4 @@ public:
 	Model();
 	~Model();
 };
+#endif // !__MODEL_H__

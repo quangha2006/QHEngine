@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __DEBUGGING_H__
+#define __DEBUGGING_H__
+
 #include "stdafx.h"
 
 class Debugging
@@ -25,3 +27,4 @@ namespace QHEngine
 	void DrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices);
 	void DrawArrays(GLenum mode, GLint first, GLsizei count);
 };
+#endif // !__DEBUGGING_H__

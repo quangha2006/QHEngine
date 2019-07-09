@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __MESH_H__
+#define __MESH_H__
+
 #include <assimp/Importer.hpp>
 
 #include <glm/glm.hpp>
@@ -95,3 +97,4 @@ public:
 		,bool hasbone = false);
 	~Mesh();
 };
+#endif //!__MESH_H__

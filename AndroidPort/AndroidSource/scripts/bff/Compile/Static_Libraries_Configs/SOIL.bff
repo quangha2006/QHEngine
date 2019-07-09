@@ -1,6 +1,6 @@
 {
 	.PROJECT_Name = "SOIL"
-	#include "../__Common/__STD_ANDROID_CPP.bff"
+	#include "../__Common/__STD_CPP.bff"
 
 	.PROJECT_SourceFiles =
 	{

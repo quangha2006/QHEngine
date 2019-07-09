@@ -1,3 +1,4 @@
+#pragma once
 #include "Basic.h"
 #include "Logs.h"
 #include "TextRendering.h"

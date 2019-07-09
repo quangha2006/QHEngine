@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __QHMATH_H__
+#define __QHMATH_H__
+
 #include "stdafx.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -12,3 +14,5 @@ namespace QHMath
 	glm::mat4 AiToGLMMat4(const aiMatrix4x4 &in_mat);
 	glm::mat4 Combinetransformations(const glm::mat4 &a, const glm::mat4 &b);
 }
+
+#endif //!__QHMATH_H__

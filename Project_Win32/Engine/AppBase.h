@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __APP_BASE_H__
+#define __APP_BASE_H__
+
 #include <cstdint>
 #include "AppContext.h"
 #include "Camera.h"
@@ -7,6 +9,7 @@
 #include "QHAxis.h"
 #include "SkyBox.h"
 #include "Timer.h"
+
 class AppBase
 {
 protected:
@@ -36,3 +39,4 @@ public:
 	~AppBase();
 };
 extern AppBase* AppFactory();
+#endif //__APP_BASE_H__

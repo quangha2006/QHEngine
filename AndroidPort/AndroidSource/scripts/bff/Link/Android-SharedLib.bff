@@ -1,15 +1,12 @@
 {
 	.EntryPointSymbolsLibs =
 	{
-		"libEngineLib.a"
-		;"libnative_app_glue.a"
+		"libBasic_CPP.a"
 	}
 
 	.GameStaticLibs = ""
 					+ " -Wl,--start-group"
-					+ " -lBasic_CPP"
-					;+ " -lnative_app_glue"
-					;+ " -l3DBreakOut"
+					+ " -ljni"
               		+ " -lEngineLib"
 					+ " -lAssimp"
 					+ " -lzlibstatic"
@@ -23,41 +20,28 @@
 					+ " -lGLESv3"
 					+ " -llog"
 					+ " -landroid"
-					+ " -landroid_support"
 					+ " -lOpenSLES"
 					+ " -lEGL"
-					+ " -lc++_static"
-					+ " -lc++abi"
-					+ " -lstdc++"
-					+ " -static-libstdc++"
 
 	.ARM_LinkValues =
 	[
 		Using(.ARM_Config)
 		.SystemLibs + ""
 
-		.LinkerFlags = ""
+		.LinkerFlags		= " -Qunused-arguments -Wl,--gc-sections -fno-addrsig -stdlib=libc++ -static-libstdc++"
 							+ " -Wl,--build-id"
-							+ " -no-canonical-prefixes"
-							+ " -Wl,--fix-cortex-a8"
-							+ " -Wl,--no-undefined"
-							+ " -Wl,-z,noexecstack"
+							+ " -Wl,--no-undefined -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a"
+							+ " -Wl,--build-id --warn-shared-textrel -Wl,--fatal-warnings -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now"
+							+ " --target=armv7a-none-linux-androideabi$NATIVE_API_LEVEL$"
+							+ " -marm -march=armv7-a -mtune=krait -mfpu=neon-fp16 -Wl,--exclude-libs,libunwind.a"
 							+ " -Wl,-rpath-link=$Linker_RPath_ARM$"
 							+ " --sysroot=$LLVMSysroot$"
-							+ " -L$Linker_RPath_ARM$"
 							+ " -L$LLVMSysroot$\usr\lib\arm-linux-androideabi\$NATIVE_API_LEVEL$"
 							+ " -L$LLVMSysroot$\usr\lib\arm-linux-androideabi"
-							+ " -gcc-toolchain $LLVMToolChainRoot$"
-							+ " -target armv7a-none-linux-androideabi$NATIVE_API_LEVEL$ -marm -march=armv7-a -mtune=krait -mfpu=neon-fp16 -landroid_support -lunwind -latomic"
-							+ " -Wl,-z,relro"
-							+ " -Wl,-z,now"
-							+ " -W1,-fuse-ld=lld.exe"
-							+ " -W1,-threads"
+							+ " -fuse-ld=lld -Wl,--no-threads"
+
 		.NDK_SearchPaths = ""
-							+ " -L$Linker_RPath_ARM$"
-							+ " -L$LLVMSysroot$\usr\lib\arm-linux-androideabi\$NATIVE_API_LEVEL$"
-							+ " -L$LLVMSysroot$\usr\lib\arm-linux-androideabi"
-							+ " -gcc-toolchain $LLVMToolChainRoot$"
+
 	]
 
 	.x86_LinkValues =
@@ -75,10 +59,11 @@
 							+ " -Wl,-rpath-link=$Linker_RPath_x86$"
 							+ " --sysroot=$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-x86"
 							+ " -no-canonical-prefixes"
+
 		.NDK_SearchPaths = ""
-							+ " -L$Linker_RPath_x86$"
-							+ " -L$NDK_Root$/toolchains/llvm/prebuilt/windows-x86_64/lib/clang/3.6/lib/linux"
-							+ " -L$NDK_Root$/sources/cxx-stl/llvm-libc++/libs/x86"
+							;+ " -L$Linker_RPath_x86$"
+							;+ " -L$NDK_Root$/toolchains/llvm/prebuilt/windows-x86_64/lib/clang/3.6/lib/linux"
+							;+ " -L$NDK_Root$/sources/cxx-stl/llvm-libc++/libs/x86"
 	]
 
 	#include "__Link_Common/__LinkTargets.bff"

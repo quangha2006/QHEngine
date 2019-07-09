@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __UTILS_H__
+#define __UTILS_H__
+
 #include "stdafx.h"
 #include <iostream>
 #include <cassert>
@@ -23,3 +25,5 @@ namespace Utils
 	void PrintMat4(glm::mat4 &mat4);
 	glm::vec3 RandomColor();
 }
+
+#endif //!__UTILS_H__

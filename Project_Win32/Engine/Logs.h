@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __LOG_H__
+#define __LOG_H__
+
 #include <iostream>
 #if defined(_WINDOWS)
 #include <Windows.h>
@@ -18,3 +20,4 @@ extern void PlatformLog(int logType, const char* fmt, ...);
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 #endif
+#endif // !__LOG_H__

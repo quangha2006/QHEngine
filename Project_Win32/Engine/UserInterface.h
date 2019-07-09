@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __USERINTERFACE_H__
+#define __USERINTERFACE_H__
+
 #include "Shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -26,3 +28,5 @@ public:
 	UserInterface();
 	~UserInterface();
 };
+
+#endif //!__USERINTERFACE_H__

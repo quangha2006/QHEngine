@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __QHTEXT_H__
+#define __QHTEXT_H__
+
 #include "stdafx.h"
 #include <vector>
 // GLM
@@ -77,3 +79,4 @@ inline void QHText::setText(const char * format, Args ...args)
 	MakeTextData();
 	delete[] newText;
 }
+#endif //!__QHTEXT_H__

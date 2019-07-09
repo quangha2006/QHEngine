@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __SOUND_H__
+#define __SOUND_H__
+
 #include "stdafx.h"
 #include <inttypes.h>
 #include <string>
@@ -50,3 +52,4 @@ public:
 	~Sound();
 };
 
+#endif //!__SOUND_H__

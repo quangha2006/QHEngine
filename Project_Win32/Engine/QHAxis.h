@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __QHAXIS_H__
+#define __QHAXIS_H__
+
 #include "stdafx.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -25,3 +27,4 @@ public:
 	~QHAxis();
 };
 
+#endif // !__QHAXIS_H__

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __RENDERTARGET_H__
+#define __RENDERTARGET_H__
+
 #include "stdafx.h"
 #include <AppContext.h>
 #include <Shader.h>
@@ -40,3 +42,4 @@ public:
 	~RenderTarget();
 };
 
+#endif //!__RENDERTARGET_H__

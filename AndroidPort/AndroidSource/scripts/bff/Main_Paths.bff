@@ -10,10 +10,9 @@
 .jni_Path = "$GameRoot$\..\AndroidPort\AndroidSource\app\jni"
 .Game_Sources_Path = "$GameRoot$"
 .Engine_Sources_Path = "$GameRoot$\Engine"
-.STL_LibPath_Clang = "$NDK_Root$\sources\cxx-stl\llvm-libc++"
 .NDKToolchains = '$NDK_Root$\toolchains'
 .NDKToolchainClangRoot = '$NDKToolchains$\llvm\prebuilt\windows-x86_64\bin'
 .LLVMToolChainRoot = '$NDKToolchains$\llvm\prebuilt\windows-x86_64'
 .LLVMSysroot = '$LLVMToolChainRoot$\sysroot'
-.Linker_RPath_ARM = "$LLVMSysroot$\usr\lib\arm-linux-androideabi\21\"
+.Linker_RPath_ARM = "$LLVMSysroot$\usr\lib\arm-linux-androideabi\$NATIVE_API_LEVEL$\"
 .Linker_RPath_x86 = "$NDK_Root$\platforms\$NDK_PlatformVersion$\arch-x86\usr\lib"

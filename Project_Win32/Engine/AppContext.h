@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __APPCONTEXT_H__
+#define __APPCONTEXT_H__
 #include <cstdint>
 
 #if defined(_WINDOWS)
@@ -50,3 +51,4 @@ public:
 	AppContext(); 
 	~AppContext();
 };
+#endif //__APPCONTEXT_H__

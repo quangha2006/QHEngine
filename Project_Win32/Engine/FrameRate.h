@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __FRAMERATE_H__
+#define __FRAMERATE_H__
+
 #include "Timer.h"
 class FrameRate
 {
@@ -23,3 +25,4 @@ public:
 	void setLimitFPS(unsigned int fps);
 	~FrameRate();
 };
+#endif // !__FRAMERATE_H__

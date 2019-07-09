@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __MODELMANAGER_H__
+#define __MODELMANAGER_H__
+
 #include "Model.h"
 #include <vector>
 
@@ -19,3 +21,4 @@ public:
 	ModelManager();
 	~ModelManager();
 };
+#endif // !__MODELMANAGER_H__

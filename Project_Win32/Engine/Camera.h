@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
+
 #include <glm/glm.hpp>
 using namespace glm;
 class Camera
@@ -37,3 +39,4 @@ public:
 	Camera();
 	~Camera();
 };
+#endif __CAMERA_H__

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __TGA_H__
+#define __TGA_H__
+
 #include "stdafx.h"
 #include <stdio.h>
 #include <assert.h>
@@ -56,3 +58,5 @@ namespace TGA
 
 	void FlipVertical(TextureData &texture);
 }
+
+#endif //!__TGA_H__

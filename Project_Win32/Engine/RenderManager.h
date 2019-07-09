@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __RENDERMANAGER_H__
+#define __RENDERMANAGER_H__
+
 #include <iostream>
 #include "Model.h"
 #include "ModelManager.h"
@@ -46,3 +48,4 @@ public:
 	RenderManager();
 	~RenderManager();
 };
+#endif //!__RENDERMANAGER_H__

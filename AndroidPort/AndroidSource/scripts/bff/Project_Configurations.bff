@@ -14,40 +14,25 @@
 // Release; Debug
 .Base_Config =
 [
-	.Defines = ""
-							+ " -D__ANDROID__"
+	.Defines 				= " -D__ANDROID__"
 							+ " -DOS_ANDROID"
 							+ " -DANDROID"
 							+ " -D_ANDROID"
 							+ " -DANDROID_NDK"
 							+ " -DGAME_ANDROID"
-							+ " -D__ANDROID_API__=21"
-	.IncludePaths = ""
-							+ ' -I$LLVMSysroot$\usr\include'
 
-	.CompileFlags = ""
-							+ " -ffunction-sections"
-							+ " -funwind-tables"
-							+ " -no-canonical-prefixes"
-							+ " -fomit-frame-pointer"
-							+ " -fno-strict-aliasing"
-							+ " -Wno-psabi"
-							+ " -Wno-write-strings"
-							+ " -fsigned-char"
-							+ " -fvisibility=hidden"
-							+ " -pipe"
-							+ " -ftree-vectorize"
-							+ " -fassociative-math"
-							+ " -freciprocal-math"
-							+ " -funroll-loops"
-							+ " -ffast-math"
-							+ " -stdlib=libc++"
-							+ " -fexceptions"
-	.CompileFlags_CPP = ""
-	.CompileFlags_C = ""
-	.Precompiled_SearchPaths = ""
-	.LinkerExecutable = ""
-							+ "$NDKToolchainClangRoot$\clang++.exe"
+	.IncludePaths 			= " -I$LLVMSysroot$\usr\include"
+
+	.CompileFlags 			= " -Wno-everything -fvisibility=hidden -fPIC"
+							+ " -ffunction-sections -fdata-sections -funwind-tables -fasynchronous-unwind-tables -fstack-protector -no-canonical-prefixes -Wno-write-strings"
+							+ " -fstrict-aliasing -fsigned-char -finline-functions -finline-hint-functions -fvectorize -ftree-vectorize"
+							+ " -funroll-loops -freroll-loops -fno-exceptions -pipe -g -Wa,--noexecstack -fno-addrsig"
+							+ " -fcolor-diagnostics -fdiagnostics-fixit-info"
+							
+	.CompileFlags_CPP 		= " -Werror=implicit-function-declaration -std=c++11 -stdlib=libc++" ;cheat to build zlib
+	.CompileFlags_C 		= " -std=c11"
+	.Precompiled_SearchPaths= ""
+	.LinkerExecutable 		= "$NDKToolchainClangRoot$\clang++.exe"
 ]
 
 // *************************************************************************************** //
@@ -56,31 +41,21 @@
 .ARM_Config =
 [
 	Using(.Base_Config)
-	.PlatformName = "ARM"
-	.Defines + ""
-							+ " -D__ARM_NEON__"
+	.PlatformName			= "ARM"
+	.Defines				+ " -D__ARM_NEON__"
 							+ " -D__ARM_ARCH_7__"
-	.IncludePaths + ""
-							+ ' -I$LLVMSysroot$\usr\include\arm-linux-androideabi'
-	.CompileFlags + ""
-							+ " -target armv7-none-linux-androideabi21"
-							+ " -mfpu=neon"
-							+ " -mtune=krait"
-							+ " -mstackrealign"
-							+ " -fpic"
-							+ " -fstack-protector-strong"
-							+ " -g"
-							+ " -marm"
-							+ " -march=armv7-a"
-							+ " -mfloat-abi=softfp"
-	.Librarian = ""
-							+ "$NDKToolchainClangRoot$\arm-linux-androideabi-ar.exe"
+							+ " -D__clang__"
+							+ " -D__ANDROID_API__=21"
 
-	.ObjectCopyExecutable = ""
-							+ "$NDKToolchainClangRoot$\arm-linux-androideabi-objcopy.exe"
+	.IncludePaths			+ " -I$LLVMSysroot$\usr\include\arm-linux-androideabi"
 
-	.StripExecutable = ""
-							+ "$NDKToolchainClangRoot$\arm-linux-androideabi-strip.exe"
+	.CompileFlags			+ " --target=armv7-none-linux-androideabi$NATIVE_API_LEVEL$"
+							+ " -marm -march=armv7-a -mtune=krait -mfpu=neon-fp16 -mfloat-abi=softfp"
+							+ " -fomit-frame-pointer"
+
+	.Librarian				= "$NDKToolchainClangRoot$\arm-linux-androideabi-ar.exe"
+	.ObjectCopyExecutable 	= "$NDKToolchainClangRoot$\arm-linux-androideabi-objcopy.exe"
+	.StripExecutable		= "$NDKToolchainClangRoot$\arm-linux-androideabi-strip.exe"
 ]
 
 // *************************************************************************************** //
@@ -89,20 +64,18 @@
 .ARM_Release_Config =
 [
 	Using(.ARM_Config)
-	.ConfigName = "Release"
-	.Defines + ""
-							+ " -DANDROID_RELEASE"
+	.ConfigName				= "Release"
+	.Defines				+ " -DANDROID_RELEASE"
 							+ " -DNDEBUG"
 							+ " -DNDK_DEBUG=0"
-	.CompileFlags + ""
-							+ " -w"
-							+ " -Ofast"
+
+	.CompileFlags			+ " -Ofast -ffast-math"
 							
-	.Precompiled_SearchPaths + ""
-							+ " -L$precompiled_search_Paths$/release/armeabi-v7a"
-	.Output_Objects = "$OutputPath$\$PlatformName$\$ConfigName$\Objects"
-	.Output_StaticLibs = "$OutputPath$\$PlatformName$\$ConfigName$\StaticLibs"
-	.Output_SharedLibs = "$OutputPath$\$PlatformName$\$ConfigName$\SharedLibs"
+	.Precompiled_SearchPaths+ " -L$precompiled_search_Paths$/$ConfigName$/armeabi-v7a"
+	
+	.Output_Objects			= "$OutputPath$\$PlatformName$\$ConfigName$\Objects"
+	.Output_StaticLibs		= "$OutputPath$\$PlatformName$\$ConfigName$\StaticLibs"
+	.Output_SharedLibs		= "$OutputPath$\$PlatformName$\$ConfigName$\SharedLibs"
 ]
 
 // *************************************************************************************** //
@@ -111,15 +84,14 @@
 .ARM_Debug_Config =
 [
 	Using(.ARM_Config)
-	.ConfigName = "Debug"
-	.Defines + ""
-							+ " -D_DEBUG"
+	.ConfigName				= "Debug"
+	.Defines				+ " -D_DEBUG"
 							+ " -DDEBUG"
-	.CompileFlags + ""
-							+ " -O0"
 
-	.Precompiled_SearchPaths + ""
-							+ " -L$precompiled_search_Paths$/debug/armeabi-v7a"
+	.CompileFlags			+ " -O0"
+
+	.Precompiled_SearchPaths+ " -L$precompiled_search_Paths$/$ConfigName$/armeabi-v7a"
+
 	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"
 	.Output_StaticLibs = "$OutputPath$/$PlatformName$/$ConfigName$/StaticLibs"
 	.Output_SharedLibs = "$OutputPath$/$PlatformName$/$ConfigName$/SharedLibs"

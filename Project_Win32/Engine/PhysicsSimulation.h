@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PHYSICSSIMULATION_H__
+#define __PHYSICSSIMULATION_H__
+
 #include "stdafx.h"
 #include "btBulletDynamicsCommon.h"
 #include <glm/glm.hpp>
@@ -50,4 +52,4 @@ public:
 	PhysicsSimulation();
 	~PhysicsSimulation();
 };
-
+#endif // !__PHYSICSSIMULATION_H__

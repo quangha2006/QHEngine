@@ -21,7 +21,6 @@
 			// " $OutputPath$/$PlatformName$/$ConfigName$/StaticLibs/libAndroid_CPP.a $OutputPath$/$PlatformName$/$ConfigName$/StaticLibs/libAndroid_C.a" 
 			// with all the variables replaced to the values they hold
 			// .EntryPointLibsList will be surrounded by -Wl,--whole-archive  and  -Wl,--no-whole-archive to mark that this lib has to be solved entirely :: used as an EntryPoint
-
 			.Linker 				    = "$LinkerExecutable$"
 			.LinkerOutput 			    = "$Output_SharedLibs$/Unstripped/$UnstrippedLibName$"		// Debug config will output the final .so file directly (no dsym or debug used)
 
@@ -35,15 +34,14 @@
 			
 			// LinkerOptions will construct the final link command, all the arguments are paseed to ld/g++
 			.LinkerOptions 			    = " -Wl,-soname,$UnstrippedLibName$"
+										+ " $LinkerFlags$"
 									    + " -shared"
-									    + " $LinkerFlags$"
 									    + " %1"		// the value of %1 is expanded from .Libraries, which can list .o files to be used as "entry point". in this case the -whole-archive method is used instead
 
 									    // entry point to link to
-									    + " -Wl,--whole-archive $EntryPointLibsList$ -Wl,--no-whole-archive"
+									    + " -Wl,--whole-archive $GameStaticLibs$ -Wl,--no-whole-archive"
 
 									    // libs + system objects to resolve the symbols
-									    + "	$GameStaticLibs$"
 									    + " $SystemLibs$"
 
 									    // where to search for the libs

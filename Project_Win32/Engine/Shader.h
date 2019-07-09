@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __SHADER_H__
+#define __SHADER_H__
+
 #include <iostream>
 #include <string>
 #include <map>
@@ -39,3 +41,4 @@ public:
 	~Shader();
 };
 
+#endif //!__SHADER_H__

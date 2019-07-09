@@ -8,18 +8,18 @@
 	//"3DBreakOut"
 	"Basic_CPP"
 	"EngineLib"
-	
+	"jni"
 	//"native_app_glue"
 	// lib
 
-	"Assimp"
-	"zlibstatic"
-	"irrXML"
+	//"Assimp"
+	//"zlibstatic"
+	//"irrXML"
 	//"openal"
-	"freetypelib"
-	"BulletCollision"
-	"BulletDynamics"
-	"LinearMath"
+	//"freetypelib"
+	//"BulletCollision"
+	//"BulletDynamics"
+	//"LinearMath"
 }
 
 #include "__Common/__TargetConfigurations.bff"

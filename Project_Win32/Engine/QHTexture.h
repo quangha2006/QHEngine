@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __QHTEXTURE_H__
+#define __QHTEXTURE_H__
+
 #include "stdafx.h"
 #include <string>
 #include <fstream>
@@ -24,3 +26,4 @@ namespace QHTexture
 	unsigned int GenTextureId();
 };
 
+#endif //!__QHTEXTURE_H__

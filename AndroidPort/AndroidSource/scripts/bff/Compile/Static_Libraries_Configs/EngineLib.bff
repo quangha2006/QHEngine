@@ -4,8 +4,6 @@
 
 	.PROJECT_SourceFiles =
 	{
-	"$jni_Path$/jni_code.cpp"
-	"$jni_Path$/package_utils.cpp"
     "$Engine_Sources_Path$/AppBase.cpp"
 	"$Engine_Sources_Path$/AppContext.cpp"
 	"$Engine_Sources_Path$/Camera.cpp"

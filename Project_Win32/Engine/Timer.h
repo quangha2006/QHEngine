@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __TIMER_H__
+#define __TIMER_H__
+
 #include <iostream>
 
 namespace Timer
@@ -9,3 +11,5 @@ namespace Timer
 	int64_t GetTicksPerSecond();
 	int64_t GetTicks();
 }
+
+#endif //!__TIMER_H__

@@ -1,3 +1,6 @@
+#ifndef __PACKAGE_UTILS_H__
+#define __PACKAGE_UTILS_H__
+
 #include <jni.h>
 
 #include <string>
@@ -22,3 +25,4 @@ namespace acp_utils
 	};
 	JavaVM* GetVM();
 }
+#endif //__PACKAGE_UTILS_H__

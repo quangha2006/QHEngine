@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __SPRITE_H__
+#define __SPRITE_H__
+
 #include "stdafx.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -34,3 +36,5 @@ public:
 	Sprite();
 	~Sprite();
 };
+
+#endif //!__SPRITE_H__

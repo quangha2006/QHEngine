@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __SHADERMANAGER_H__
+#define __SHADERMANAGER_H__
+
 #include "stdafx.h"
 #include <vector>
 // OpenGL Mathematics
@@ -53,3 +55,4 @@ inline void setBool(const char* name, bool value)
 		glUniform1i(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), (int)value);
 	}
 }
+#endif //!__SHADERMANAGER_H__
