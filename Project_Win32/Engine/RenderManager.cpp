@@ -59,7 +59,7 @@ void RenderManager::Render()
 
 	mSenceTexId = RenderSence();
 
-	mBloom_bright =  PostProcessBloom(mSenceTexId);
+	mBloomId =  PostProcessBloom(mSenceTexId);
 
 	RenderFinal();
 
@@ -162,11 +162,11 @@ void RenderManager::RenderFinal()
 	glBindTexture(GL_TEXTURE_2D, mSenceTexId);
 
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, mBloom_bright);
+	glBindTexture(GL_TEXTURE_2D, mBloomId);
 
-	ShaderSet::setInt("scene", 0);
-	ShaderSet::setInt("bloomBlur", 1);
-	ShaderSet::setInt("bloom", m_isEnableBloom);
+	ShaderSet::setInt("txScene", 0);
+	ShaderSet::setInt("txBloomBlur", 1);
+	ShaderSet::setInt("isEnablebloom", m_isEnableBloom);
 	ShaderSet::setFloat("exposure", 1.0f);
 	ShaderSet::setInt("GammaCorrection", mGammaCorrection);
 

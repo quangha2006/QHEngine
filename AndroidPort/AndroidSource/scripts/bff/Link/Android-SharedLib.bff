@@ -33,7 +33,7 @@
 							+ " -Wl,--no-undefined -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a"
 							+ " -Wl,--build-id --warn-shared-textrel -Wl,--fatal-warnings -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now"
 							+ " --target=armv7a-none-linux-androideabi$NATIVE_API_LEVEL$"
-							+ " -marm -march=armv7-a -mtune=krait -mfpu=neon-fp16 -Wl,--exclude-libs,libunwind.a"
+							+ " -mtune=krait -mfpu=neon-fp16 -Wl,--exclude-libs,libunwind.a"
 							+ " -Wl,-rpath-link=$Linker_RPath_ARM$"
 							+ " --sysroot=$LLVMSysroot$"
 							+ " -L$LLVMSysroot$\usr\lib\arm-linux-androideabi\$NATIVE_API_LEVEL$"

@@ -14,7 +14,7 @@ class RenderManager
 private:
 	static RenderManager* instance;
 	RenderTarget mShadowRT, mSenceRT, mBrightnessRT, mBluringRT;
-	GLuint mDepthMapTexId, mSenceTexId, mBloom_bright;
+	GLuint mDepthMapTexId, mSenceTexId, mBloomId;
 	SkyBox *mSkybox;
 	AppContext * mAppcontext;
 

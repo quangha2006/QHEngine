@@ -50,7 +50,7 @@
 	.IncludePaths			+ " -I$LLVMSysroot$\usr\include\arm-linux-androideabi"
 
 	.CompileFlags			+ " --target=armv7-none-linux-androideabi$NATIVE_API_LEVEL$"
-							+ " -marm -march=armv7-a -mtune=krait -mfpu=neon-fp16 -mfloat-abi=softfp"
+							+ " -mtune=krait -mfpu=neon-fp16 -mfloat-abi=softfp"
 							+ " -fomit-frame-pointer"
 
 	.Librarian				= "$NDKToolchainClangRoot$\arm-linux-androideabi-ar.exe"

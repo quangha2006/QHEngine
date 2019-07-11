@@ -3,20 +3,20 @@ out vec4 FragColor;
 
 in vec2 TexCoords;
 
-uniform sampler2D scene;
-uniform sampler2D bloomBlur;
-uniform bool bloom;
+uniform sampler2D txScene;
+uniform sampler2D txBloomBlur;
+uniform bool isEnablebloom;
 uniform bool GammaCorrection;
 uniform float exposure;
 
 void main()
 {             
     const float gamma = 2.2;
-    vec3 hdrColor = texture(scene, TexCoords).rgb;      
+    vec3 hdrColor = texture(txScene, TexCoords).rgb;      
     vec3 bloomColor;
-    if(bloom == true)
+    if(isEnablebloom == true)
 	{
-		bloomColor = texture(bloomBlur, TexCoords).rgb;
+		bloomColor = texture(txBloomBlur, TexCoords).rgb;
 		hdrColor += bloomColor;
 	}
     if(GammaCorrection == true)    
