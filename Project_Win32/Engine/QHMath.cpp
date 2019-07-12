@@ -25,4 +25,9 @@ namespace QHMath
 		}
 		return result;
 	}
+
+	bool compareFloat(float A, float B, float epsilon)
+	{
+		return (fabs(A - B) < epsilon);
+	}
 }

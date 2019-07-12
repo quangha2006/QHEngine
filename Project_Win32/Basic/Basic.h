@@ -31,6 +31,8 @@ public:
 	bool OnGameKeyPressed(int key, int scancode, int action, int mods);
 	bool OnGameTouchEvent(int eventId, int x, int y, int pointerId);
 	void OnGameLoadingThreadFinished(int loadingtimeinms);
+	void ClickbuttonShadow();
+	void ClickbuttonBloom();
 	Basic();
 	~Basic();
 };

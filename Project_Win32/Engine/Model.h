@@ -29,7 +29,7 @@ using namespace std;
 class Model
 {
 private:
-	vector<Mesh> meshes;
+	vector<Mesh> mMeshes;
 	vector<Texture> textures_loaded;
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
 	Mesh processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 nodeTransformation);
@@ -42,7 +42,7 @@ private:
 	vector<BoneInfo> m_BoneInfo;
 	vector<glm::mat4> Transforms;
 	glm::mat4 m_GlobalInverseTransform;
-	GLint m_NumBones;
+	GLuint m_NumBones;
 	bool hasAnimation;
 	int animToPlay;
 	int mNumAnimations;
@@ -62,7 +62,7 @@ private:
 	string mSrcPath;
 	bool mFlipUVs;
 	float mFixedModel;
-	float timeStampAnim;
+	int64_t mtimeStampAnim;
 	bool mIsDrawDepthMap;
 	bool mGammaCorrection;
 	bool mIsVisible;
@@ -79,14 +79,14 @@ private:
 	glm::vec3 mFixedBoxShape;
 	bool isDynamic;
 	bool isFirstSetupUniform;
-	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
-	uint FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
-	uint FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
-	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, glm::mat4 &ParentTransform);
+	uint FindScaling(double AnimationTime, const aiNodeAnim* pNodeAnim);
+	void CalcInterpolatedRotation(aiQuaternion& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
+	void CalcInterpolatedPosition(aiVector3D& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
+	uint FindRotation(double AnimationTime, const aiNodeAnim* pNodeAnim);
+	uint FindPosition(double AnimationTime, const aiNodeAnim* pNodeAnim);
+	void ReadNodeHeirarchy(double AnimationTime, const aiNode* pNode, glm::mat4 &ParentTransform);
 	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const string &NodeName);
-	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+	void CalcInterpolatedScaling(aiVector3D& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
 	void UpdateWorldTransform();
 	void SetWorld(glm::mat4 world = glm::mat4());
 
@@ -98,9 +98,9 @@ public:
 	void DisableLightingForMesh(int numMesh);
 	void SetCustomColor(glm::vec3 color);
 	void SetTimeStampAnim(int64_t time);
-	void UpdateAnimation(int64_t time = -1.0f);
+	void UpdateAnimation();
 	void SyncPhysics();
-	void BoneTransform(float TimeInSeconds, vector<glm::mat4> &Transforms);
+	void BoneTransform(int64_t TimeInSeconds, vector<glm::mat4> &Transforms);
 	void SetScale(glm::vec3 scale);
 	void SetPos(glm::vec3 pos);
 	void SetRotate(float angle, glm::vec3 rotate);

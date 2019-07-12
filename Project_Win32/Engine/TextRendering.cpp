@@ -35,7 +35,7 @@ int TextRendering::AddQHText(QHText *textneedrender)
 
 void TextRendering::RemoveQHText(int id)
 {
-	for (int i = 0; i < mListQHText.size(); i++)
+	for (unsigned int i = 0; i < mListQHText.size(); i++)
 	{
 		if (mListQHText[i]->GetId() == id)
 		{
@@ -224,8 +224,8 @@ glm::ivec2 TextRendering::CreateTextData(const char * text, int x, int y, float 
 
 	int x_origin = x;
 	int y_origin = y;
-	GLfloat xpos;
-	GLfloat ypos;
+	float xpos;
+	float ypos;
 	CharInfo Upper_ch = mCharInfo['A'];
 	std::string::const_iterator c;
 
@@ -238,7 +238,7 @@ glm::ivec2 TextRendering::CreateTextData(const char * text, int x, int y, float 
 		{
 			xpos = x_origin + ch.Bearing.x * scale;
 			x = x_origin;
-			y += (Upper_ch.Size.y) * scale;
+			y += (int)(Upper_ch.Size.y * scale);
 		}
 		ypos = y + (Upper_ch.Size.y - ch.Bearing.y) * scale;
 		GLfloat w = ch.Size.x * scale;
@@ -261,7 +261,7 @@ glm::ivec2 TextRendering::CreateTextData(const char * text, int x, int y, float 
 		textdata.push_back(pos5);
 		textdata.push_back(pos6);
 
-		x += (ch.Advance) * scale;
+		x += (int)(ch.Advance * scale);
 	}
 	// pos for next text
 	char text_end = text[text_len - 1];
@@ -269,7 +269,7 @@ glm::ivec2 TextRendering::CreateTextData(const char * text, int x, int y, float 
 
 	if (xpos + ch.Advance * scale > this->screen_width)
 	{
-		xpos = x_origin;
+		xpos = (float)x_origin;
 		ypos += ch.Size.y * scale;
 	}
 	else

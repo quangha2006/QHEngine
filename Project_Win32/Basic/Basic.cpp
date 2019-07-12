@@ -11,14 +11,20 @@
 #include "RenderManager.h"
 
 
-void ClickbuttonShadow()
+void Basic::ClickbuttonShadow()
 {
 	RenderManager::getInstance()->SwitchShadowMapMode();
+	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
+	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
+	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
 }
 
-void ClickbuttonBloom()
+void Basic::ClickbuttonBloom()
 {
 	RenderManager::getInstance()->SwitchBloomMode();
+	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
+	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
+	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
 }
 
 void Basic::Init()
@@ -78,37 +84,34 @@ void Basic::Init()
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(false);
 
-	mShadowLabel.setText("Shadow:   %s", RenderManager::getInstance()->IsEnableShadow() ? "ON" : "OFF");
+	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
+	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
 	mShadowLabel.setScale(0.5f);
 	mShadowLabel.setPos(5, 540 - 30);
 	mShadowLabel.setVisible(false);
 
 	mbtSwitchShadow = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
-	mbtSwitchShadow->SetCallbackOnTouchBegan(ClickbuttonShadow);
+	mbtSwitchShadow->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonShadow, this));
 	mbtSwitchShadow->SetScale(1.2f);
 	mbtSwitchShadow->SetPos(100, 540 - mbtSwitchShadow->getHeight() - 8);
+	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
 	
-	mBloomLabel.setText("Bloom:   %s", RenderManager::getInstance()->IsEnableBloom() ? "ON" : "OFF");
+	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
+	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
 	mBloomLabel.setScale(0.5f);
 	mBloomLabel.setPos(170, 540 - 30);
 	mBloomLabel.setVisible(false);
 
 	mbtSwitchBloom = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
-	mbtSwitchBloom->SetCallbackOnTouchBegan(ClickbuttonBloom);
+	mbtSwitchBloom->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloom, this));
 	mbtSwitchBloom->SetScale(1.2f);
 	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchShadow->getHeight() - 8);
+	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
 }
 
 void Basic::Update(int delta)
 {
-	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
-	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
 
-	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
-	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
-
-	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
-	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
@@ -129,19 +132,19 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		RenderManager::getInstance()->SwitchShadowMapMode();
 		return true;
 	case 'S': //num s
-		mCamera->Target.y -= 0.1;
+		mCamera->Target.y -= 0.1f;
 		return true;
 	case 'W': //num w
-		mCamera->Target.y += 0.1;
+		mCamera->Target.y += 0.1f;
 		return true;
 	case 'A': //num a
-		mCamera->Target.x -= 0.1;
+		mCamera->Target.x -= 0.1f;
 		return true;
 	case 'D': //num d
-		mCamera->Target.x += 0.1;
+		mCamera->Target.x += 0.1f;
 		return true;
 	case 262:
-		timestamp_for_lamp += 1;
+		timestamp_for_lamp += 1.f;
 		return true;
 	case 320: //num 0
 		mSpider.SetAnimPlay(0);

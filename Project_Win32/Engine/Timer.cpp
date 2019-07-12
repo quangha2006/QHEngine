@@ -21,13 +21,13 @@ namespace Timer
 		LARGE_INTEGER ticks;
 		QueryPerformanceCounter(&ticks);
 
-		return ((ticks.QuadPart / double(GetTicksPerSecond())) * 1000);
+		return (int64_t)((ticks.QuadPart / double(GetTicksPerSecond())) * 1000);
 	}
 
 	void sleep(uint64_t sleep_time)
 	{
 		timeBeginPeriod(1); // Need add winmm.lib
-		Sleep(sleep_time);
+		Sleep((DWORD)sleep_time);
 		timeEndPeriod(1);
 	}
 

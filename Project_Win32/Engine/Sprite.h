@@ -7,6 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "QHTexture.h"
 #include "Utils.h"
+#include <functional>
 
 class Sprite
 {
@@ -14,7 +15,7 @@ private:
 	Texture mTexture;
 	glm::vec2 mPos;
 	float mScale, mScaleX, mScaleY;
-	void (*mCallbackTouchBegan)();
+	std::function<void()> mCallbackTouchBegan;
 	bool isTouchOnSprite(int x, int y);
 	std::string mLabel;
 	float mAlpha;
@@ -25,7 +26,10 @@ public:
 	float GetAlpha();
 	int getWidth();
 	int getHeight();
-	void SetCallbackOnTouchBegan(void(*callback)());
+	/**
+	example: SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonShadow, this));
+	**/
+	void SetCallbackOnTouchBegan(std::function<void()> callback);
 	bool LoadTexture(const char *path);
 	void SetPos(int x, int y);
 	void SetScale(float scale);

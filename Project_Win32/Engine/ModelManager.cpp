@@ -23,7 +23,7 @@ void ModelManager::AddModel(Model * model)
 
 void ModelManager::RemoveModel(int id)
 {
-	for (int i = 0; i < mListModel.size(); i++)
+	for (unsigned int i = 0; i < mListModel.size(); i++)
 	{
 		if (mListModel[i]->GetId() == id)
 		{
@@ -35,7 +35,7 @@ void ModelManager::RemoveModel(int id)
 
 void ModelManager::Update()
 {
-	for (int i = 0; i < mListModel.size(); i++)
+	for (unsigned int i = 0; i < mListModel.size(); i++)
 	{
 		mListModel[i]->SyncPhysics();
 		mListModel[i]->UpdateAnimation();
@@ -44,7 +44,7 @@ void ModelManager::Update()
 
 void ModelManager::Render(RenderMode mode)
 {
-	for (int i = 0; i < mListModel.size(); i++)
+	for (unsigned int i = 0; i < mListModel.size(); i++)
 	{
 		mListModel[i]->Render(mode);
 	}
@@ -56,7 +56,7 @@ void ModelManager::Init()
 
 void ModelManager::Loading()
 {
-	for (int i = 0; i < mListModel.size(); i++)
+	for (unsigned int i = 0; i < mListModel.size(); i++)
 	{
 		mListModel[i]->Loading();
 	}

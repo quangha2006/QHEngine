@@ -49,7 +49,7 @@ namespace TGA
 			GLuint datasize = bytesPerPixel * texture.width * texture.height;
 			GLuint bytesPerRow = bytesPerPixel * texture.width;
 			GLubyte * buffer = (GLubyte *)malloc(datasize);
-			for (int i = 0; i < texture.height; i++)
+			for (unsigned int i = 0; i < texture.height; i++)
 			{
 				memcpy(&buffer[(texture.height - i - 1) * bytesPerRow], &(texture.imageData[i * bytesPerRow]), bytesPerRow);
 			}
@@ -111,7 +111,6 @@ namespace TGA
 
 	bool LoadUncompressedTGA(TextureData &texture, const char * filename, FILE * fTGA)
 	{
-		TGAHeader tgaheader;     // Used To Store Our File Header
 		Image tga;                 // Used To Store File Information
 		// Attempt To Read Next 6 Bytes
 		int header = fread(tga.header, sizeof(tga.header), 1, fTGA);
@@ -187,7 +186,6 @@ namespace TGA
 
 	bool LoadCompressedTGA(TextureData &texture, const char * filename, FILE * fTGA) // Load COMPRESSED TGAs
 	{
-		TGAHeader tgaheader;     // Used To Store Our File Header
 		Image tga;                 // Used To Store File Information
 		if (fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)					// Attempt to read header
 		{

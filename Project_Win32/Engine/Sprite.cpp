@@ -1,11 +1,12 @@
 #include "Sprite.h"
+#include <iostream>
 
 bool Sprite::isTouchOnSprite(int x, int y)
 {
-	int x1 = mPos.x;
-	int x2 = mPos.x + (float)mTexture.width  * mScale * mScaleX;
-	int y1 = mPos.y;
-	int y2 = mPos.y + (float)mTexture.height * mScale * mScaleY;
+	int x1 = int(mPos.x);
+	int x2 = int(mPos.x + (float)mTexture.width  * mScale * mScaleX);
+	int y1 = int(mPos.y);
+	int y2 = int(mPos.y + (float)mTexture.height * mScale * mScaleY);
 
 	if (x >= x1 && x <= x2 && y >= y1 && y <= y2)
 		return true;
@@ -48,15 +49,15 @@ void Sprite::SetAlpha(float alpha)
 }
 int Sprite::getWidth()
 {
-	return mTexture.width * mScale * mScaleX;
+	return int(mTexture.width * mScale * mScaleX);
 }
 
 int Sprite::getHeight()
 {
-	return mTexture.height * mScale * mScaleY;
+	return int(mTexture.height * mScale * mScaleY);
 }
 
-void Sprite::SetCallbackOnTouchBegan(void (*callback)())
+void Sprite::SetCallbackOnTouchBegan(std::function<void()> callback)
 {
 	mCallbackTouchBegan = callback;
 }
@@ -80,7 +81,7 @@ bool Sprite::OnTouchEvent(int eventId, int x, int y, int pointerId)
 	if (isTouchOnSprite(x,y)) //check is touch on sprite
 	{
 		if (mCallbackTouchBegan !=nullptr && eventId == 0)
-			(*mCallbackTouchBegan)();
+			(mCallbackTouchBegan)();
 
 		return true;
 	}

@@ -59,11 +59,11 @@ namespace Utils
 	}
 	glm::vec3 RandomColor()
 	{
-		float r = 0.1;
-		float g = 0.1;
-		float b = 0.1;
+		float r = 0.1f;
+		float g = 0.1f;
+		float b = 0.1f;
 
-		srand(Timer::GetTicks());
+		srand((unsigned int)Timer::GetTicks());
 
 		r = (float)((rand() % 100) + 1) / 100.0f;
 

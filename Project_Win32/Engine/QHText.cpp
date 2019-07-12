@@ -1,10 +1,6 @@
 #include "QHText.h"
 #include "TextRendering.h"
-
-bool cmpf(float A, float B, float epsilon = 0.0001f)
-{
-	return (fabs(A - B) < epsilon);
-}
+#include "QHMath.h"
 
 void QHText::MakeTextData()
 {
@@ -15,7 +11,7 @@ void QHText::MakeTextData()
 
 void QHText::setPos(int pos_x, int pos_y)
 {
-	if (cmpf(m_pos.x , pos_x) && cmpf(m_pos.y , pos_y)) return;
+	if (m_pos.x == pos_x && m_pos.y == pos_y) return;
 	m_pos.x = pos_x;
 	m_pos.y = pos_y;
 	MakeTextData();
@@ -34,7 +30,7 @@ void QHText::setColor(glm::vec3 newColor)
 		return;
 
 	m_color = newColor;
-	for (int i = 0; i < m_textdata.size(); i++)
+	for (unsigned int i = 0; i < m_textdata.size(); i++)
 	{
 		m_textdata[i].Color = newColor;
 	}
@@ -42,11 +38,11 @@ void QHText::setColor(glm::vec3 newColor)
 
 void QHText::setAlpha(float newAlpha)
 {
-	if (cmpf(m_alpha , newAlpha))
+	if (QHMath::compareFloat(m_alpha , newAlpha))
 		return;
 
 	m_alpha = newAlpha;
-	for (int i = 0; i < m_textdata.size(); i++)
+	for (unsigned int i = 0; i < m_textdata.size(); i++)
 	{
 		m_textdata[i].Alpha = newAlpha;
 	}
@@ -54,7 +50,7 @@ void QHText::setAlpha(float newAlpha)
 
 void QHText::setScale(float newScale)
 {
-	if (cmpf(m_scale , newScale))
+	if (QHMath::compareFloat(m_scale , newScale))
 		return;
 
 	m_scale = newScale;

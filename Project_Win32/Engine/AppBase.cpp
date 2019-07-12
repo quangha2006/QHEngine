@@ -140,7 +140,9 @@ void AppBase::GameTouchEvent(int eventId, int x, int y, int pointerId)
 	float UI_scaleX = (float)windowsWidth / (float)mContext->GetWindowWidth();
 	float UI_scaleY = (float)windowsHeight / (float)mContext->GetWindowHeight();
 
-	if (UserInterface::getInstance()->OnTouchEvent(eventId, x * UI_scaleX, y * UI_scaleY, pointerId)) return;
+	if (UserInterface::getInstance()->OnTouchEvent(eventId, (int)(x * UI_scaleX), (int)(y * UI_scaleY), pointerId)) 
+		return;
+
 	if (OnGameTouchEvent(eventId, x, y, pointerId)) return;
 
 	static int touch_old_x = x;
@@ -171,8 +173,8 @@ void AppBase::GameTouchEvent(int eventId, int x, int y, int pointerId)
 	//glm::mat4::
 	mCamera->Pos = mCamera->ExtractCameraPos(mCamera->view);
 
-	mCamera->Pos.y += ((y - touch_old_y)*0.1);
-	mCamera->Target.y += ((y - touch_old_y)*0.1);
+	mCamera->Pos.y += ((y - touch_old_y)*0.1f);
+	mCamera->Target.y += ((y - touch_old_y)*0.1f);
 	//if ((mCamera->Pos.y > 0.5) && (mCamera->Pos.y < 80))
 	//{
 	//	if (mCamera->Pos.x > 0)

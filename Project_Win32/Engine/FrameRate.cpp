@@ -41,11 +41,11 @@ void FrameRate::Counter()
 
 	if (total_deltatime + 2 * deltatime >= 1000)
 	{
-		float abc = 1000 - (total_deltatime + deltatime);
-		if (deltatime != 0 && abc > 0.01f )
-			currentFPS = framesPerSecond + abc / (float)deltatime;
+		int abc = 1000 - (total_deltatime + deltatime);
+		if (deltatime != 0 && abc > 0 )
+			currentFPS = framesPerSecond + (float)abc / (float)deltatime;
 		else
-			currentFPS = framesPerSecond;
+			currentFPS = (float)framesPerSecond;
 		total_deltatime = 0;
 		framesPerSecond = 1;
 	}

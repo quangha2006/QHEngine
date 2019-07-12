@@ -102,7 +102,7 @@ void UserInterface::Render()
 	glActiveTexture(GL_TEXTURE0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	for (int i = 0; i < mListUI.size(); i++)
+	for (unsigned int i = 0; i < mListUI.size(); i++)
 	{
 		if (!mListUI[i]) continue;
 
@@ -141,7 +141,7 @@ void UserInterface::AddSprite(Sprite * sprite)
 
 bool UserInterface::OnTouchEvent(int eventId, int x, int y, int pointerId)
 {
-	for (int i = 0; i < mListUI.size(); i++)
+	for (unsigned int i = 0; i < mListUI.size(); i++)
 	{
 		if (mListUI[i]->OnTouchEvent(eventId, x, y, pointerId))
 			return true;
