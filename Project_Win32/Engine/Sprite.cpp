@@ -47,14 +47,25 @@ void Sprite::SetAlpha(float alpha)
 {
 	mAlpha = alpha;
 }
-int Sprite::getWidth()
+
+void Sprite::SetRotate(float angle)
+{
+	mAngleRotate = angle;
+}
+
+int Sprite::GetWidth()
 {
 	return int(mTexture.width * mScale * mScaleX);
 }
 
-int Sprite::getHeight()
+int Sprite::GetHeight()
 {
 	return int(mTexture.height * mScale * mScaleY);
+}
+
+float Sprite::GetRotateAngle()
+{
+	return mAngleRotate;
 }
 
 void Sprite::SetCallbackOnTouchBegan(std::function<void()> callback)
@@ -94,6 +105,7 @@ Sprite::Sprite()
 	, mScaleY(1.0f)
 	, mAlpha(1.0f)
 	, mIsGray(false)
+	, mAngleRotate(0.0f)
 {
 	mCallbackTouchBegan = nullptr;
 }

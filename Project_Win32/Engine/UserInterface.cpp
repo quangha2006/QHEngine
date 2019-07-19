@@ -95,7 +95,7 @@ void UserInterface::Render()
 	glEnable(GL_BLEND);
 
 	mShader.use();
-	glUniformMatrix4fv(glGetUniformLocation(mShader.program, "projection"), 1, GL_FALSE, glm::value_ptr(mProjection));
+	
 	
 	glBindVertexArray(mVAO);
 
@@ -105,11 +105,13 @@ void UserInterface::Render()
 	for (unsigned int i = 0; i < mListUI.size(); i++)
 	{
 		if (!mListUI[i]) continue;
-
+		
+		glm::mat4 projection = mProjection;
 		GLuint texid = mListUI[i]->GetTexId();
 		glm::vec2 pos = mListUI[i]->GetPos();
-		int texwidth = mListUI[i]->getWidth();
-		int texheight = mListUI[i]->getHeight();
+		float angle = mListUI[i]->GetRotateAngle();
+		int texwidth = mListUI[i]->GetWidth();
+		int texheight = mListUI[i]->GetHeight();
 		float alpha = mListUI[i]->GetAlpha();
 		bool isGrayOut = mListUI[i]->IsGrayOut();
 
@@ -121,8 +123,11 @@ void UserInterface::Render()
 			pos.x + texwidth,	pos.y + texheight,	1.0f, 0.0f
 		};
 
+		projection = glm::rotate(projection, glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
+
 		glUniform1f(glGetUniformLocation(mShader.program, "alpha"), alpha);
 		glUniform1f(glGetUniformLocation(mShader.program, "isGray"), isGrayOut);
+		glUniformMatrix4fv(glGetUniformLocation(mShader.program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 		glBindTexture(GL_TEXTURE_2D, texid);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, 16 * sizeof(float), texData);
 		QHEngine::DrawArrays(GL_TRIANGLE_STRIP, 0, 4);

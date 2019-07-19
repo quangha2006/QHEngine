@@ -14,6 +14,7 @@ class Sprite
 private:
 	Texture mTexture;
 	glm::vec2 mPos;
+	float mAngleRotate;
 	float mScale, mScaleX, mScaleY;
 	std::function<void()> mCallbackTouchBegan;
 	bool isTouchOnSprite(int x, int y);
@@ -24,14 +25,16 @@ public:
 	GLuint GetTexId();
 	glm::vec2 GetPos();
 	float GetAlpha();
-	int getWidth();
-	int getHeight();
+	float GetRotateAngle();
+	int GetWidth();
+	int GetHeight();
 	/**
 	example: SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonShadow, this));
 	**/
 	void SetCallbackOnTouchBegan(std::function<void()> callback);
 	bool LoadTexture(const char *path);
 	void SetPos(int x, int y);
+	void SetRotate(float angle);
 	void SetScale(float scale);
 	void SetGrayOut(bool isgrayout);
 	bool IsGrayOut();

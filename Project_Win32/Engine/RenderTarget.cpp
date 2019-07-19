@@ -268,10 +268,10 @@ void RenderTarget::Render(bool useDefaultShader)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 }
-GLuint RenderTarget::MakeBloom(GLuint BriTexture, unsigned int amount)
+GLuint RenderTarget::MakeBloom(GLuint BriTexture, unsigned int amount) // amount default = 4
 {
 	bool horizontal = true, first_iteration = true;
-	//unsigned int amount = 10;
+
 	for (unsigned int i = 0; i < amount; i++)
 	{
 		if (horizontal)

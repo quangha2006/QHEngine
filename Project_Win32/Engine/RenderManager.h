@@ -22,6 +22,7 @@ private:
 	GLuint quadVAO, quadVBO;
 	bool m_isEnableShadowMap, m_isEnableBloom;
 	bool mGammaCorrection;
+	unsigned int mAmountBlurBloom;
 	GLuint RenderDepthMap();
 	GLuint RenderSence();
 	GLuint PostProcessBloom(GLuint textsrc);
@@ -38,6 +39,7 @@ public:
 	void SetSkyBox(SkyBox *skybox);
 	void SetEnableShadowMap(bool is_enable);
 	void SetEnableBloom(bool is_enable);
+	void SetAmountBloom(int amount);
 	void SwitchBloomMode();
 	void SwitchShadowMapMode();
 	bool IsEnableShadow();
@@ -45,6 +47,7 @@ public:
 	bool isEnablemGammaCorrection();
 	GLuint GetDepthMapId();
 	void GetGLViewport(int &width, int &height);
+	int GetAmountBloom();
 	RenderManager();
 	~RenderManager();
 };

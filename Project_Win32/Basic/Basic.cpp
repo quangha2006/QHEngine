@@ -93,7 +93,7 @@ void Basic::Init()
 	mbtSwitchShadow = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
 	mbtSwitchShadow->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonShadow, this));
 	mbtSwitchShadow->SetScale(1.2f);
-	mbtSwitchShadow->SetPos(100, 540 - mbtSwitchShadow->getHeight() - 8);
+	mbtSwitchShadow->SetPos(100, 540 - mbtSwitchShadow->GetHeight() - 8);
 	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
 	
 	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
@@ -101,12 +101,13 @@ void Basic::Init()
 	mBloomLabel.setScale(0.5f);
 	mBloomLabel.setPos(170, 540 - 30);
 	mBloomLabel.setVisible(false);
-
+	
 	mbtSwitchBloom = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
 	mbtSwitchBloom->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloom, this));
 	mbtSwitchBloom->SetScale(1.2f);
-	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchShadow->getHeight() - 8);
+	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchShadow->GetHeight() - 8);
 	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
+	mbtSwitchBloom->SetRotate(-10.0f);
 }
 
 void Basic::Update(int delta)

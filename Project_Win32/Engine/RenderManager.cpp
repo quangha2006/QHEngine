@@ -84,6 +84,12 @@ void RenderManager::SetEnableBloom(bool is_enable)
 	m_isEnableBloom = is_enable;
 }
 
+void RenderManager::SetAmountBloom(int amount)
+{
+	if (amount > 0)
+		mAmountBlurBloom = amount;
+}
+
 void RenderManager::SwitchBloomMode()
 {
 	m_isEnableBloom = !m_isEnableBloom;
@@ -147,7 +153,7 @@ GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 	mSenceRT.Render();
 	GLuint brightnessRT = mBrightnessRT.Disable();
 
-	return mBluringRT.MakeBloom(brightnessRT);
+	return mBluringRT.MakeBloom(brightnessRT, mAmountBlurBloom);
 }
 
 void RenderManager::RenderFinal()
@@ -184,6 +190,11 @@ void RenderManager::GetGLViewport(int & width, int & height)
 {
 	width = mAppcontext->GetWindowWidth();
 	height = mAppcontext->GetWindowHeight();
+}
+
+int RenderManager::GetAmountBloom()
+{
+	return mAmountBlurBloom;
 }
 
 void RenderManager::InitDefaultShader()
@@ -246,6 +257,7 @@ RenderManager::RenderManager()
 	, m_isEnableShadowMap(true)
 	, m_isEnableBloom(true)
 	, mGammaCorrection(false)
+	, mAmountBlurBloom(4)
 {
 }
 
