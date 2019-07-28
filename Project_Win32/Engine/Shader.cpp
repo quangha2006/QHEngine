@@ -189,12 +189,12 @@ Shader::Shader()
 
 Shader::~Shader()
 {
+	if (program != -1)
+		glDeleteProgram(program);
+
 	if (mVertexShader != -1)
 		glDeleteShader(mVertexShader);
 
 	if (mFragmentShader != -1)
 		glDeleteShader(mFragmentShader);
-
-	if (program != -1)
-		glDeleteProgram(program);
 }

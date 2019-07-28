@@ -1,50 +1,51 @@
 #include "QHAxis.h"
-
 #include "stdafx.h"
-#include "QHAxis.h"
-
 
 bool QHAxis::Init(Camera *camera)
 {
 	if (createProgram())
 	{
-		position_Attribute = glGetAttribLocation(program, "aPos");
-		color_Attribute = glGetAttribLocation(program, "aColor");
-		WorldViewProjectionMatrix_Uniform = glGetUniformLocation(program, "WorldViewProjectionMatrix");
+		mPosition_attribute = glGetAttribLocation(mProgram, "aPos");
+		mColor_attribute = glGetAttribLocation(mProgram, "aColor");
+		mWorldView_uniform = glGetUniformLocation(mProgram, "WorldViewProjectionMatrix");
+
+		glGenBuffers(1, &mVBO_Id);
+		glBindBuffer(GL_ARRAY_BUFFER, mVBO_Id);
+		glBufferData(GL_ARRAY_BUFFER, 15 * 6 * sizeof(float), vertices_axis, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		mCamera = camera;
+		m_initialized = true;
 	}
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glGenBuffers(1, &vboId);
-	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-	glBufferData(GL_ARRAY_BUFFER, 15 * 6 * sizeof(float), vertices_axis, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	this->camera = camera;
-	m_initialized = true;
 	return true;
 }
 
 void QHAxis::Draw()
 {
-	if (!m_initialized || program == 0) return;
+	if (!m_initialized) return;
+
 	glEnable(GL_DEPTH_TEST);
-	glUseProgram(program);
+	glUseProgram(mProgram);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vboId);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO_Id);
 
-	if (position_Attribute != -1)
+	if (mPosition_attribute != -1)
 	{
-		glEnableVertexAttribArray(position_Attribute);
-		glVertexAttribPointer(position_Attribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
+		glEnableVertexAttribArray(mPosition_attribute);
+		glVertexAttribPointer(mPosition_attribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
 	}
 
-	if (color_Attribute != -1)
+	if (mColor_attribute != -1)
 	{
-		glEnableVertexAttribArray(color_Attribute);
-		glVertexAttribPointer(color_Attribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(mColor_attribute);
+		glVertexAttribPointer(mColor_attribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	}
 
-	glm::mat4 lookat_tmp = camera->WorldViewProjectionMatrix * model;
+	if (mWorldView_uniform != -1)
+	{
+		glm::mat4 lookat_tmp = mCamera->WorldViewProjectionMatrix * model;
 
-	glUniformMatrix4fv(WorldViewProjectionMatrix_Uniform, 1, GL_FALSE, &lookat_tmp[0][0]);
+		glUniformMatrix4fv(mWorldView_uniform, 1, GL_FALSE, &lookat_tmp[0][0]);
+	}
 
 	glDrawArrays(GL_LINES, 0, 2);
 	glDrawArrays(GL_TRIANGLES, 2, 3);
@@ -76,8 +77,8 @@ bool QHAxis::createProgram()
 		"}\n"
 	};
 
-	vertexShader = createShader(GL_VERTEX_SHADER, vtxSrc);
-	if (!vertexShader)
+	mVertexShader = createShader(GL_VERTEX_SHADER, vtxSrc);
+	if (mVertexShader == -1)
 	{
 		return false;
 	}
@@ -91,42 +92,43 @@ bool QHAxis::createProgram()
 		"	gl_FragColor = vec4(thecolor, 1.0);\n"
 		"}\n"
 	};
-	fragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc);
-	if (!fragmentShader)
+	mFragmentShader = createShader(GL_FRAGMENT_SHADER, fragSrc);
+	if (mFragmentShader == -1)
 	{
 		return false;
 	}
-	program = glCreateProgram();
-	if (!program) {
+	mProgram = glCreateProgram();
+	if (mProgram == -1) {
 		return false;
 	}
-	glAttachShader(program, vertexShader);
-	glAttachShader(program, fragmentShader);
+	glAttachShader(mProgram, mVertexShader);
+	glAttachShader(mProgram, mFragmentShader);
 
-	glLinkProgram(program);
-	glGetProgramiv(program, GL_LINK_STATUS, &linked);
+	glLinkProgram(mProgram);
+	glGetProgramiv(mProgram, GL_LINK_STATUS, &linked);
 	if (!linked) {
 		LOGI("Could not link program\n");
 		GLint infoLogLen = 0;
-		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLen);
+		glGetProgramiv(mProgram, GL_INFO_LOG_LENGTH, &infoLogLen);
 		if (infoLogLen) {
 			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
 			if (infoLog) {
-				glGetProgramInfoLog(program, infoLogLen, NULL, infoLog);
+				glGetProgramInfoLog(mProgram, infoLogLen, NULL, infoLog);
 				LOGI("Could not link program:\n%s\n", infoLog);
 				free(infoLog);
 			}
 		}
-		glDeleteProgram(program);
-		program = 0;
+		glDeleteProgram(mProgram);
+		mProgram = -1;
+		return false;
 	}
 	return true;
 }
 
-GLuint QHAxis::createShader(GLenum shaderType, const char *src)
+GLint QHAxis::createShader(GLenum shaderType, const char *src)
 {
-	GLuint shader = glCreateShader(shaderType);
-	if (shader == 0) {
+	GLint shader = glCreateShader(shaderType);
+	if (shader == -1) {
 		return 0;
 	}
 	glShaderSource(shader, 1, &src, NULL);
@@ -157,7 +159,14 @@ GLuint QHAxis::createShader(GLenum shaderType, const char *src)
 QHAxis::QHAxis()
 	: m_initialized(false)
 	, model(glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)))
-	
+	, mProgram(-1)
+	, mVertexShader(-1)
+	, mFragmentShader(-1)
+	, mPosition_attribute(-1)
+	, mColor_attribute(-1)
+	, mWorldView_uniform(-1)
+	, mVBO_Id(0)
+	, mCamera(nullptr)
 {
 	vertices_axis = new float[15 * 6]{
 		-10.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
@@ -183,5 +192,5 @@ QHAxis::QHAxis()
 QHAxis::~QHAxis()
 {
 	delete[] vertices_axis;
-	glDeleteBuffers(1, &vboId);
+	glDeleteBuffers(1, &mVBO_Id);
 }

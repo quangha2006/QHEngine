@@ -9,17 +9,16 @@
 class QHAxis
 {
 private:
-	GLuint program, vertexShader, fragmentShader;
-	GLuint vboId;
+	GLint mProgram, mVertexShader, mFragmentShader;
+	GLuint mVBO_Id;
 	float *vertices_axis;
-	Camera *camera;
+	Camera *mCamera;
 	glm::mat4 model;
-	GLint position_Attribute;
-	GLint color_Attribute;
-	GLint WorldViewProjectionMatrix_Uniform;
-	bool createProgram();
-	GLuint createShader(GLenum shaderType, const char * src);
+	GLint mPosition_attribute, mColor_attribute, mWorldView_uniform;
 	bool m_initialized;
+
+	bool createProgram();
+	GLint createShader(GLenum shaderType, const char * src);
 public:
 	void Draw();
 	bool Init(Camera *camera);
