@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "com.android.learnning3D"
+        applicationId "com.android.QHEngine"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
@@ -35,14 +35,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "armeabi-v7a", "arm64-v8a"
             }
         }
         debug {
             debuggable true
             signingConfig signingConfigs.release
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "armeabi-v7a", "arm64-v8a"
             }
         }
     }

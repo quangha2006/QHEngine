@@ -59,12 +59,13 @@ public class MainActivity extends Activity {
         }
     }
     private boolean checkIfAlreadyhavePermission() {
-        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
+        //int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        //if (result == PackageManager.PERMISSION_GRANTED) {
+        //    return true;
+        //} else {
+        //    return false;
+        //}
     }
     private void requestForSpecificPermission() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
