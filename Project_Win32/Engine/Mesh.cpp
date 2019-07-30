@@ -129,10 +129,10 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const 
 		// and finally bind the texture
 		glBindTexture(GL_TEXTURE_2D, mTextures[i].id);
 	}
-	if (mode != RenderMode_Depth)
+	if (mode == RenderMode_Sence)
 	{
 		GLuint depthmap = RenderManager::getInstance()->GetDepthMapId();
-		if (depthmap != -1)
+		if (depthmap != 0)
 		{
 			ShaderSet::setBool("useShadowMap", true);
 			glActiveTexture(GL_TEXTURE0 + i);

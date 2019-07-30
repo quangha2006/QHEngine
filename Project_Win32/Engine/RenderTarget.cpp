@@ -208,7 +208,7 @@ GLuint RenderTarget::Disable()
 {
 	if (!m_initialized || !m_isEnable)
 	{
-		return -1;
+		return 0;
 	}
 
 	m_isEnable = false;
@@ -232,7 +232,7 @@ GLuint RenderTarget::Disable()
 		return m_TexId[0];
 }
 
-int RenderTarget::GetTextureId(int index)
+GLuint RenderTarget::GetTextureId(int index)
 {
 	return m_TexId[index];
 }

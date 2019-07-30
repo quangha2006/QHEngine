@@ -13,7 +13,7 @@
 #include <assimp/postprocess.h>
 
 struct Texture {
-	unsigned int id;
+	GLuint id;
 	int width;
 	int height;
 	aiTextureType type;
@@ -21,7 +21,7 @@ struct Texture {
 };
 namespace QHTexture
 {
-	GLuint TextureFromFile(const char * path, const std::string & directory, int &width, int &height, GLuint textureID = -1, bool gammaCorrection = false);
+	GLuint TextureFromFile(const char * path, const std::string & directory, int &width, int &height, GLuint textureID = 0, bool gammaCorrection = false);
 	GLuint loadCubemap(const char * texturepath, std::vector<std::string> faces, bool gammaCorrection);
 	unsigned int GenTextureId();
 };

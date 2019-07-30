@@ -724,6 +724,13 @@ static al_string alcCaptureDeviceList;
 static ALCchar *alcDefaultAllDevicesSpecifier;
 static ALCchar *alcCaptureDefaultDeviceSpecifier;
 
+//QH: add
+#ifdef __ANDROID__
+
+static JavaVM *gJavaVM;
+static pthread_key_t gJVMThreadKey;
+#endif
+
 /* Default context extensions */
 static const ALchar alExtList[] =
     "AL_EXT_ALAW AL_EXT_BFORMAT AL_EXT_DOUBLE AL_EXT_EXPONENT_DISTANCE "
@@ -1146,7 +1153,7 @@ static void alc_initconfig(void)
 }
 #define DO_INITCONFIG() alcall_once(&alc_config_once, alc_initconfig)
 
-#ifdef __ANDROID__
+#ifdef __ANDROID__REM
 #include <jni.h>
 
 static JavaVM *gJavaVM;

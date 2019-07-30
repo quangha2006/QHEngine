@@ -42,16 +42,18 @@ void Model::Loading() //thread
 		return;
 	}
 
-	// read file via ASSIMP
+	unsigned int assimpFlag = aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices;
 	if (mFlipUVs)
-		m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
-	else
-		m_pScene = importer.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);
+		assimpFlag |= aiProcess_FlipUVs;;
 
+	// read file via ASSIMP
+	m_pScene = importer.ReadFile(path_modif, assimpFlag);
+	
 	if ((path_modif.find_last_of(".dae") == (path_modif.length() - 1)) || (path_modif.find_last_of(".md5mesh") == (path_modif.length() - 1)))
 		needRotate = true;
 	else
 		needRotate = false;
+
 	uint64_t time_loadmodel = Timer::getMillisecond();
 	LOGI("Load Model time : %.3fs\n\n", ((int)(time_loadmodel - time_ms_begin)) / 1000.0f);
 	// check for errors
@@ -349,7 +351,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		if (!skip)
 		{   // if texture hasn't been loaded already, load it
 			Texture texture;
-			texture.id = QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.width, texture.height ,-1, mGammaCorrection);
+			texture.id = QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.width, texture.height);
 			texture.type = type;
 			texture.path = str;
 			textures.push_back(texture);

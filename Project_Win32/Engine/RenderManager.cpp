@@ -118,7 +118,7 @@ bool RenderManager::isEnablemGammaCorrection()
 GLuint RenderManager::RenderDepthMap()
 {
 	if (!m_isEnableShadowMap)
-		return -1;
+		return 0;
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	mShadowRT.Enable();
@@ -146,7 +146,7 @@ GLuint RenderManager::RenderSence()
 GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 {
 	if (!m_isEnableBloom)
-		return -1;
+		return 0;
 
 	mBrightnessRT.Enable();
 	ShaderManager::getInstance()->setUseProgram("Brightness");
@@ -167,8 +167,11 @@ void RenderManager::RenderFinal()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mSenceTexId);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, mBloomId);
+	if (m_isEnableBloom)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, mBloomId);
+	}
 
 	ShaderSet::setInt("txScene", 0);
 	ShaderSet::setInt("txBloomBlur", 1);
@@ -252,8 +255,8 @@ void RenderManager::InitquadVAO()
 
 
 RenderManager::RenderManager()
-	: mDepthMapTexId(-1)
-	, quadVAO(-1)
+	: mDepthMapTexId(0)
+	, quadVAO(0)
 	, m_isEnableShadowMap(true)
 	, m_isEnableBloom(true)
 	, mGammaCorrection(false)

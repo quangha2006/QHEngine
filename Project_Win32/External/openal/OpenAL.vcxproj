@@ -54,7 +54,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)common;$(ProjectDir)openal;$(ProjectDir)OpenAL32\Include;$(ProjectDir)Alc;E:\Program Files\Microsoft DirectX SDK (June 2010)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)common;$(ProjectDir)openal;$(ProjectDir)OpenAL32\Include;$(ProjectDir)Alc;$(SolutionDir)..\AndroidPort\AndroidSource\app\jni;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>Default</CompileAs>
@@ -100,7 +100,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)common;$(ProjectDir)openal;$(ProjectDir)OpenAL32\Include;$(ProjectDir)Alc;E:\Program Files\Microsoft DirectX SDK (June 2010)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(ProjectDir)common;$(ProjectDir)openal;$(ProjectDir)OpenAL32\Include;$(ProjectDir)Alc;$(SolutionDir)..\AndroidPort\AndroidSource\app\jni;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsC</CompileAs>
       <DisableSpecificWarnings>4098</DisableSpecificWarnings>

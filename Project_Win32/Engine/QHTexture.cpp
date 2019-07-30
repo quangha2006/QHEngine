@@ -2,6 +2,7 @@
 #include "Timer.h"
 #include "TGA.h"
 #include "Utils.h"
+#include "Logs.h"
 //#include <SOIL.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -66,7 +67,7 @@ namespace QHTexture
 		std::string fullpath = directory + '/' + std::string(path);
 		uint64_t time_begin = Timer::getMillisecond();
 		GLuint texid = textureID;
-		if (texid == -1)
+		if (texid == 0)
 			texid = GenTextureId();
 
 		int nrComponents;
@@ -108,7 +109,7 @@ namespace QHTexture
 		{
 			LOGE("Texture failed to load at path: %s", path);
 			stbi_image_free(data);
-			return -1;
+			return 0;
 		}
 
 		uint64_t time_end = Timer::getMillisecond();
@@ -117,7 +118,7 @@ namespace QHTexture
 	}
 	GLuint loadCubemap(const char * texturepath, std::vector<std::string> faces, bool gammaCorrection)
 	{
-		GLuint textureID;
+		GLuint textureID = 0;
 		glGenTextures(1, &textureID);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 

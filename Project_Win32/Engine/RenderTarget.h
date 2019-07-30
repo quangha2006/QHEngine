@@ -34,7 +34,7 @@ public:
 	bool Init(AppContext * appcontext, RenderTargetType type, int texBufferWidth = 1024, int texBufferHeight = 1024);
 	void Enable(const char* shadername = NULL);
 	GLuint Disable();
-	int GetTextureId(int index);
+	GLuint GetTextureId(int index);
 	void RenderDebug();
 	void Render(bool useDefaultShader = false);
 	GLuint MakeBloom(GLuint BriTexture, unsigned int amount = 4);
