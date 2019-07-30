@@ -24,8 +24,8 @@ uniform mat4 lightSpaceMatrix; //shadow
 uniform mat4 gBones[64];
 void main()
 {
-	highp vec4 PosL = vec4(aPos, 1.0);
-	vec4 NormalL = vec4(aNormal, 0.0);
+	highp vec4 PosL = vec4(aPos, 1.0f);
+	vec4 NormalL = vec4(aNormal, 0.0f);
 	temp = sWeights;
 
 	#ifdef SKINNED
@@ -38,12 +38,12 @@ void main()
 		index = int(sIDs[3]);
 		BoneTransform += gBones[index] * sWeights[3];
 
-		PosL    = BoneTransform * vec4(aPos, 1.0);
+		PosL    = BoneTransform * vec4(aPos, 1.0f);
 
-		NormalL = BoneTransform * vec4(aNormal, 0.0);
+		NormalL = BoneTransform * vec4(aNormal, 0.0f);
 	#else
-		PosL    = Transform * vec4(aPos, 1.0);
-		NormalL = Transform * vec4(aNormal, 0.0);
+		PosL    = Transform * vec4(aPos, 1.0f);
+		NormalL = Transform * vec4(aNormal, 0.0f);
 	#endif
 
     gl_Position = WorldViewProjectionMatrix * PosL;
@@ -51,10 +51,10 @@ void main()
 	FragPos = vec3(world * PosL);
 	Normal = mat3(world_inverse) * NormalL.xyz; 
     TexCoords = aTexCoords; 
-	FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
+	FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0f);
 
-	vec3 T = normalize(vec3(world * vec4(aTangent,   0.0)));
-	vec3 B = normalize(vec3(world * vec4(aBitangent, 0.0)));
+	vec3 T = normalize(vec3(world * vec4(aTangent,   0.0f)));
+	vec3 B = normalize(vec3(world * vec4(aBitangent, 0.0f)));
 	vec3 N = normalize(vec3(world * NormalL));
 	TBN = mat3(T, B, N);
 }
