@@ -25,13 +25,13 @@ void main()
 
 	if (enableAlpha == true)
 	{
-		if(depthValue.a < 0.5)
+		if(depthValue.a < 0.5f)
 			discard;
 	}
  
-	float z = depthValue.r * 2.0 - 1.0; // Back to NDC
+	float z = depthValue.r * 2.0f - 1.0f; // Back to NDC
 
-    FragColor = vec4(vec3((2.0 * near_plane * far_plane) / (far_plane + near_plane - z * (far_plane - near_plane)) / far_plane), depthValue.a);
+    FragColor = vec4(vec3((2.0f * near_plane * far_plane) / (far_plane + near_plane - z * (far_plane - near_plane)) / far_plane), depthValue.a);
 	
 	//FragColor = vec4(texture2D(material_texture_diffuse1, TexCoords).rgb, 1.0);
 }

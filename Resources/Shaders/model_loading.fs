@@ -46,7 +46,7 @@ layout (location = 0) out vec4 FragColor;
 void main()
 {   
 	vec4 color, color_ambient, color_specular, color_diffuse;
-	float shadow;
+	float shadow = 0.f;
 	vec3 lighting;
 	//highp vec4 masksTexture = texture2D(material_texture_diffuse2,TexCoords);
 	if (useTexture == true)
@@ -60,11 +60,11 @@ void main()
 	{
 		color = vec4(material_color_diffuse, material_transparent);
 		color_ambient = color;
-		color_specular = vec4(material_color_specular,1.0);
-		color_diffuse = vec4(material_color_diffuse,1.0);
+		color_specular = vec4(material_color_specular,1.f);
+		color_diffuse = vec4(material_color_diffuse,1.f);
 	}
 	//color_diffuse.rgb = mix(color_diffuse.rgb, color_diffuse.rgb * 3.0 * (pow(vec3(1.0, 0.0, 0.0), vec3(.4545))), masksTexture.r);
-	if ((enableAlpha == true) && (color.a < 0.5))
+	if ((enableAlpha == true) && (color.a < 0.5f))
 	{
 		discard;
 	}
@@ -79,7 +79,7 @@ void main()
 		vec3 projCoords = FragPosLightSpace.xyz / FragPosLightSpace.w;
 
 		// transform to [0,1] range
-		projCoords = projCoords * 0.5 + 0.5;
+		projCoords = projCoords * 0.5f + 0.5f;
 
 		// get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
 		float closestDepth = texture(shadowMap, projCoords.xy).r;
@@ -87,10 +87,10 @@ void main()
 		// get depth of current fragment from light's perspective
 		float currentDepth = projCoords.z;
 
-		highp float bias = 0.002;//0.001*tan(acos(dot(Normal, lightDir))); //max(0.002 * (1.0 - dot(Normal, lightDir)), 0.005); //0.001
+		highp float bias = 0.002f;//0.001*tan(acos(dot(Normal, lightDir))); //max(0.002 * (1.0 - dot(Normal, lightDir)), 0.005); //0.001
 		//bias = clamp(bias, 0, 0.01);
 
-		shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+		shadow = currentDepth - bias > closestDepth  ? 1.0f : 0.0f;
 
 		ivec2 texsize = textureSize(shadowMap, 0);
 
@@ -101,17 +101,15 @@ void main()
 			for(int n = -1; n <= 1; ++n)
 			{
 				float pcfDepth = texture(shadowMap, projCoords.xy + vec2(float(m), float(n)) * texelSize).r; 
-				shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;        
+				shadow += currentDepth - bias > pcfDepth  ? 1.0f : 0.0f;        
 			}    
 		}
-		shadow /= 10.0;
+		shadow /= 10.0f;
 
-		if(projCoords.z > 1.0)
-			shadow = 0.0;
-	
-	}
-		// END calculate shadow
-
+		if(projCoords.z > 1.0f)
+			shadow = 0.0f;
+	} // END calculate shadow
+		
 	if (uselighting == false)
 	{	
 		if (enableAlpha == true)
@@ -127,21 +125,21 @@ void main()
 	vec3 norm;
 	if (useNormalMap == true)
 	{
-		norm = normalize( TBN * (normalize(texture(material_texture_normal1, TexCoords).rgb * 2.0 - 1.0)));
+		norm = normalize( TBN * (normalize(texture(material_texture_normal1, TexCoords).rgb * 2.0f - 1.0f)));
 	}
 	else
 	{
 		norm = normalize(Normal);
 	}
    
-    float diff = max(dot(norm, lightDir), 0.0);
+    float diff = max(dot(norm, lightDir), 0.0f);
 
 	vec3 diffuse = light_diffuse * diff * color_diffuse.rgb;  
 
 	 // specular
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);  
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material_shininess);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0f), material_shininess);
 
 	vec3 specular = light_specular * spec * color_specular.rgb;  
 
@@ -159,7 +157,7 @@ void main()
 	if (uselighting == true)
 	{
 		// Total lighting + shadow
-		lighting = ambient + (diffuse + specular) * (1.0 - shadow) + color_pick;
+		lighting = ambient + (diffuse + specular) * (1.0f - shadow) + color_pick;
 	}
 	else
 	{

@@ -14,7 +14,7 @@ uniform mat4 gBones[64];
 
 void main()
 {
-	highp vec4 PosL = vec4(aPos, 1.0);
+	highp vec4 PosL = vec4(aPos, 1.0f);
 	#ifdef SKINNED
 		int index = int(sIDs[0]);
 		mat4 BoneTransform	= gBones[index] * sWeights[0];
@@ -25,9 +25,9 @@ void main()
 		index = int(sIDs[3]);
 		BoneTransform += gBones[index] * sWeights[3];
 
-		PosL   = BoneTransform * vec4(aPos, 1.0);
+		PosL   = BoneTransform * vec4(aPos, 1.0f);
 	#else
-		PosL    = Transform * vec4(aPos, 1.0);
+		PosL    = Transform * vec4(aPos, 1.0f);
 	#endif
 	
     gl_Position =  WorldViewLightSpaceMatrix * PosL;
