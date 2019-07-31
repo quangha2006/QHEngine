@@ -70,9 +70,10 @@ private:
 	/*  Mesh Data  */
 	vector<Vertex> mVertices;
 	vector<GLuint> mIndices;
+	Vertex* m_ar_vertices;
+	GLuint* m_ar_indices;
 	vector<Texture> mTextures;
 	Material mMaterial;
-	GLuint mTexture;
 
 	void setupMesh();
 public:
@@ -89,6 +90,8 @@ public:
 
 	Mesh(const vector<Vertex> &vertices
 		,const vector<GLuint> &indices
+		,Vertex *ar_vertices
+		,GLuint *ar_indices
 		,const vector<Texture> &textures
 		,const Material &material
 		,const string &meshname

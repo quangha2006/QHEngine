@@ -29,10 +29,10 @@ using namespace std;
 class Model
 {
 private:
-	vector<Mesh> mMeshes;
+	vector<Mesh*> mMeshes;
 	vector<Texture> textures_loaded;
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
-	Mesh processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 nodeTransformation);
+	Mesh *processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 nodeTransformation);
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);
 
 	/*==== Animation ====*/

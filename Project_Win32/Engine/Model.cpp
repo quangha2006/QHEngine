@@ -85,7 +85,7 @@ void Model::Loading() //thread
 	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 	{
-		LOGI("  %d: %s\n", i, mMeshes[i].GetName().c_str());
+		LOGI("  %d: %s\n", i, mMeshes[i]->GetName().c_str());
 	}
 
 	uint64_t time_ms_end = Timer::getMillisecond();
@@ -104,23 +104,29 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	currentNodeTransformation = glm::transpose(currentNodeTransformation);
 	glm::mat4 Transformation = QHMath::Combinetransformations(nodeTransformation, currentNodeTransformation);
 
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	unsigned int num_meshes = node->mNumMeshes;
+	unsigned int current_mesh_size = mMeshes.size();
+
+	// re-allocate vector mMeshes
+	unsigned int new_size = current_mesh_size + num_meshes;
+	mMeshes.reserve(new_size);
+
+	for (unsigned int i = 0; i < num_meshes; i++)
 	{
 		// the node object only contains indices to index the actual objects in the scene. 
 		// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		Mesh meshIndex = processMesh(mesh, scene, Transformation);
+		Mesh *meshIndex = processMesh(mesh, scene, Transformation);
 		mMeshes.push_back(meshIndex);
 	}
 	// after we've processed all of the meshes (if any) we then recursively process each of the children nodes
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		processNode(node->mChildren[i], scene, Transformation);
-		//break;
 	}
 }
 
-Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTransformation)
+Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTransformation)
 {
 	unsigned char WEIGHTS_PER_VERTEX = 4;
 	int boneArraysSize = mesh->mNumVertices * WEIGHTS_PER_VERTEX;
@@ -341,7 +347,7 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTran
 	mesh_material.shininess = shininess;
 	mesh_material.transparent = transparent;
 	
-	return Mesh(vertices, indices, textures, mesh_material, string(mesh->mName.C_Str()), nodeTransformation, hasnormals, hasbone);
+	return new Mesh(vertices, indices, ar_vertices, ar_indices, textures, mesh_material, string(mesh->mName.C_Str()), nodeTransformation, hasnormals, hasbone);
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type)
@@ -470,7 +476,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 		if (m_meshdraw < (int)mMeshes.size())
 		{
 			ShaderSet::setBool("uselighting", uselighting);
-			mMeshes[m_meshdraw].Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
+			mMeshes[m_meshdraw]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}
 	else
@@ -478,7 +484,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 		for (unsigned int i = 0; i < mMeshes.size(); i++)
 		{
 			ShaderSet::setBool("uselighting", uselighting);
-			mMeshes[i].Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
+			mMeshes[i]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}
 
@@ -497,7 +503,7 @@ void Model::SetisUsePointLight(bool UsePointLight)
 void Model::DisableLightingForMesh(int numMesh)
 {
 	if (numMesh >= 0 && numMesh < (int)mMeshes.size())
-		mMeshes[numMesh].SetUseLighting(false);
+		mMeshes[numMesh]->SetUseLighting(false);
 }
 void Model::SetCustomColor(glm::vec3 color)
 {
@@ -650,7 +656,7 @@ void Model::SetDrawPolygon(bool isdrawpolygon)
 
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 	{
-		mMeshes[i].SetDrawPolygon(isDrawPolygon);
+		mMeshes[i]->SetDrawPolygon(isDrawPolygon);
 	}
 }
 void Model::SetNeedRotate(bool isNeedRotate)
@@ -947,8 +953,11 @@ Model::~Model()
 	ModelManager::getInstance()->RemoveModel(m_Id);
 
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
-		mMeshes[i].DeleteBuffer();
-
+	{
+		mMeshes[i]->DeleteBuffer();
+		delete mMeshes[i];
+	}
+	
 	for (unsigned int i = 0; i < textures_loaded.size(); i++)
 		glDeleteTextures(1, &textures_loaded[i].id);
 }

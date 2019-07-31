@@ -24,7 +24,6 @@ void Mesh::setupMesh()
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 }
 
 void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const glm::vec3 &customColor)
@@ -203,6 +202,8 @@ const std::string &Mesh::GetName()
 
 Mesh::Mesh(const vector<Vertex> &vertices
 	, const vector<GLuint> &indices
+	, Vertex* ar_vertices
+	, GLuint* ar_indices
 	, const vector<Texture> &textures
 	, const Material &meterial
 	, const string &meshname
@@ -212,15 +213,24 @@ Mesh::Mesh(const vector<Vertex> &vertices
 	: mIsDrawPolygon(false)
 	, mVertices(vertices)
 	, mIndices(indices)
+	, m_ar_vertices(nullptr)
+	, m_ar_indices(nullptr)
 	, mTextures(textures)
 	, mMaterial(meterial)
 	, mMeshName(meshname)
 	, mHasNormals(hasnormals)
 	, mHasBone(hasbone)
 	, mTransform(nodeTransformation)
+	, mVBO(0)
+	, mEBO(0)
 {
+	m_ar_vertices = ar_vertices;
+	m_ar_indices = ar_indices;
 	setupMesh();
 }
 Mesh::~Mesh()
 {
+	//delete[] m_ar_vertices;
+	//delete[] m_ar_indices;
+	LOGE("Remove Mesh\n");
 }
