@@ -121,26 +121,26 @@ GLuint RenderManager::RenderDepthMap()
 		return 0;
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	mShadowRT.Enable();
+	mShadowRT.BeginRender();
 
 	ModelManager::getInstance()->Render(RenderMode_Depth);
 	glDisable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
-	return mShadowRT.Disable();
+	return mShadowRT.EndRender();
 }
 
 GLuint RenderManager::RenderSence()
 {
 	Camera *mCamera = Camera::getInstance();
 
-	mSenceRT.Enable();
+	mSenceRT.BeginRender();
 
 	mSkybox->Draw(mCamera);
 
 	ModelManager::getInstance()->Render(RenderMode_Sence);
 	axis.Draw();
 	PhysicsSimulation::getInstance()->RenderPhysicsDebug();
-	return mSenceRT.Disable();
+	return mSenceRT.EndRender();
 }
 
 GLuint RenderManager::PostProcessBloom(GLuint textsrc)
@@ -148,10 +148,10 @@ GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 	if (!m_isEnableBloom)
 		return 0;
 
-	mBrightnessRT.Enable();
+	mBrightnessRT.BeginRender();
 	ShaderManager::getInstance()->setUseProgram("Brightness");
 	mSenceRT.Render();
-	GLuint brightnessRT = mBrightnessRT.Disable();
+	GLuint brightnessRT = mBrightnessRT.EndRender();
 
 	return mBluringRT.MakeBloom(brightnessRT, mAmountBlurBloom);
 }

@@ -32,8 +32,8 @@ private:
 	GLuint quadVAO, quadVBO;
 public:
 	bool Init(AppContext * appcontext, RenderTargetType type, int texBufferWidth = 1024, int texBufferHeight = 1024);
-	void Enable(const char* shadername = NULL);
-	GLuint Disable();
+	void BeginRender(const char* shadername = NULL);
+	GLuint EndRender();
 	GLuint GetTextureId(int index);
 	void RenderDebug();
 	void Render(bool useDefaultShader = false);

@@ -131,8 +131,10 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTran
 	vector<GLuint> indices;
 	vector<Texture> textures;
 	vector<float> boneWeights(boneArraysSize, 0.0f);
-	
-	
+	// Convert to array
+	Vertex *ar_vertices = new Vertex[mesh->mNumVertices];
+	GLuint *ar_indices;
+	unsigned int numIndices = 0;
 	// Walk through each of the mesh's vertices
 	if (!mesh->HasNormals())
 		LOGW("WARNING!!!: Mesh has no normal => disable lighting for this mesh\n");
@@ -196,17 +198,31 @@ Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTran
 		//	//aiColor4D test = mesh->;
 		//}
 		vertices.push_back(vertex);
+
+		// Convert to array
+		ar_vertices[i] = vertex;
 	}
+	//Count numIndices
+	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	{
+		numIndices += mesh->mFaces[i].mNumIndices;
+	}
+	ar_indices = new GLuint[numIndices];
 	// now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
+	unsigned int index_Indices = 0;
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 		// retrieve all indices of the face and store them in the indices vector
 		for (unsigned int j = 0; j < face.mNumIndices; j++)
+		{
 			indices.push_back(face.mIndices[j]);
+			ar_indices[index_Indices] = face.mIndices[j];
+			index_Indices++;
+		}
 	}
 	// process Bones https://realitymultiplied.wordpress.com/2016/07/23/assimp-skeletal-animation-tutorial-2-loading-up-the-bone-data/
-
+	LOGI("Mesh: NumVer = %d, NumIndices = %d\n", vertices.size(), indices.size());
 	if (scene->HasAnimations())
 	{
 		if (mesh->mNumBones > 0)

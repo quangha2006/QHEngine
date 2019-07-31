@@ -184,7 +184,7 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 	return true;
 }
 
-void RenderTarget::Enable(const char* shadername)
+void RenderTarget::BeginRender(const char* shadername)
 {
 	if (!m_initialized)
 	{
@@ -204,7 +204,7 @@ void RenderTarget::Enable(const char* shadername)
 	glEnable(GL_DEPTH_TEST);
 }
 
-GLuint RenderTarget::Disable()
+GLuint RenderTarget::EndRender()
 {
 	if (!m_initialized || !m_isEnable)
 	{
@@ -221,8 +221,8 @@ GLuint RenderTarget::Disable()
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	//glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
+	//glClear(GL_COLOR_BUFFER_BIT);
 	glDisable(GL_DEPTH_TEST);
 	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 
