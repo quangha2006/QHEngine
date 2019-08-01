@@ -61,41 +61,30 @@ struct BoneInfo
 };
 class Mesh {
 private:
-	unsigned int mVBO, mEBO;
 	string mMeshName;
 	bool mHasNormals;
 	bool mHasBone;
 	bool mIsDrawPolygon;
 	glm::mat4 mTransform;
-	/*  Mesh Data  */
-	vector<Vertex> mVertices;
-	vector<GLuint> mIndices;
-	unsigned int mIndice_index;
-	unsigned int mSize_index;
-	Vertex* m_ar_vertices;
-	GLuint* m_ar_indices;
+
+	unsigned int mIndices_index;
+	unsigned int mIndices_size;
+
 	vector<Texture> mTextures;
 	Material mMaterial;
 
-	void setupMesh();
 public:
-	void DeleteBuffer();
 	void SetUseLighting(bool isuse);
 	void SetDrawPolygon(bool isdrawpolygon);
-	int GetNumVertex();
 	const std::string &GetName();
-	unsigned int GetIndiceIndex();
-	unsigned int GetIndiceSize();
+	unsigned int GetIndicesIndex();
+	unsigned int GetIndicesSize();
 	void Draw(RenderMode mode
 		, bool isEnableAlpha = false
 		, bool useCustomColor = false
 		, const glm::vec3 &customColor = glm::vec3(0.0f, 0.0f, 0.0f));
 
-	Mesh(const vector<Vertex> &vertices
-		,const vector<GLuint> &indices
-		,Vertex *ar_vertices
-		,GLuint *ar_indices
-		,unsigned int index_begin
+	Mesh(unsigned int index_begin
 		,unsigned int index_size
 		,const vector<Texture> &textures
 		,const Material &material

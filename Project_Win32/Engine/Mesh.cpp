@@ -8,74 +8,9 @@
 #include <assimp/postprocess.h>
 //#include "Globals.h"
 
-void Mesh::setupMesh()
-{
-
-	// create buffers/arrays
-	glGenBuffers(1, &mVBO);
-	glGenBuffers(1, &mEBO);
-
-	// load data into vertex buffers
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(Vertex), &mVertices[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(GLuint), &mIndices[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
 
 void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const glm::vec3 &customColor)
 {
-	Shader * modelShader = ShaderManager::getInstance()->GetCurrentShader();
-
-	//glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-	if (modelShader->position_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->position_Attribute);
-		glVertexAttribPointer(modelShader->position_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-	}
-	// vertex texture coords
-	if (modelShader->TexCoord_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->TexCoord_Attribute);
-		glVertexAttribPointer(modelShader->TexCoord_Attribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
-	}
-	// s_vWeights
-	if (modelShader->Weights_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->Weights_Attribute);
-		glVertexAttribPointer(modelShader->Weights_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, weight));
-	}
-	// s_vIDs;
-	if (modelShader->IDs_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->IDs_Attribute);
-		//glVertexAttribIPointer(modelShader->IDs_Attribute, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, id)); //for ivec4
-		glVertexAttribPointer(modelShader->IDs_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, id));
-	}
-	// vertex normals
-	if (modelShader->normal_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->normal_Attribute);
-		glVertexAttribPointer(modelShader->normal_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-	}
-	// vertex tangent
-	if (modelShader->Tangent_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->Tangent_Attribute);
-		glVertexAttribPointer(modelShader->Tangent_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
-	}
-	// vertex bitangent
-	if (modelShader->Bitangent_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->Bitangent_Attribute);
-		glVertexAttribPointer(modelShader->Bitangent_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
-	}
-
-
 	// bind appropriate textures
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
@@ -163,22 +98,12 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const 
 		ShaderSet::setVec3("material_color_diffuse", customColor);
 	}
 
-	//if (mIsDrawPolygon)
-		//QHEngine::DrawElements(GL_LINE_LOOP, mSize_index, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndice_index));
-	//else
-		//QHEngine::DrawElements(GL_TRIANGLES, mSize_index, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndice_index));
-	QHEngine::DrawElements(GL_TRIANGLES, mSize_index, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndice_index));
-
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	if (mIsDrawPolygon)
+		QHEngine::DrawElements(GL_LINE_LOOP, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndices_index));
+	else
+		QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndices_index));
 
 	CheckGLError(mMeshName.c_str());
-}
-
-void Mesh::DeleteBuffer()
-{
-	glDeleteBuffers(1, &mVBO);
-	glDeleteBuffers(1, &mEBO);
 }
 
 void Mesh::SetUseLighting(bool isuse)
@@ -191,32 +116,23 @@ void Mesh::SetDrawPolygon(bool isdrawpolygon)
 	mIsDrawPolygon = isdrawpolygon;
 }
 
-int Mesh::GetNumVertex()
-{
-	return mVertices.size();
-}
-
 const std::string &Mesh::GetName()
 {
 	return mMeshName;
 }
 
-unsigned int Mesh::GetIndiceIndex()
+unsigned int Mesh::GetIndicesIndex()
 {
-	return mIndice_index;
+	return mIndices_index;
 }
 
-unsigned int Mesh::GetIndiceSize()
+unsigned int Mesh::GetIndicesSize()
 {
-	return mSize_index;
+	return mIndices_size;
 }
 
-Mesh::Mesh(const vector<Vertex> &vertices
-	, const vector<GLuint> &indices
-	, Vertex* ar_vertices
-	, GLuint* ar_indices
-	, unsigned int index_begin
-	, unsigned int index_size
+Mesh::Mesh(unsigned int indices_index
+	, unsigned int indices_size
 	, const vector<Texture> &textures
 	, const Material &meterial
 	, const string &meshname
@@ -224,29 +140,18 @@ Mesh::Mesh(const vector<Vertex> &vertices
 	, bool hasnormals
 	, bool hasbone)
 	: mIsDrawPolygon(false)
-	, mVertices(vertices)
-	, mIndices(indices)
-	, mIndice_index(index_begin)
-	, mSize_index(index_size)
-	, m_ar_vertices(nullptr)
-	, m_ar_indices(nullptr)
+	, mIndices_index(indices_index)
+	, mIndices_size(indices_size)
 	, mTextures(textures)
 	, mMaterial(meterial)
 	, mMeshName(meshname)
 	, mHasNormals(hasnormals)
 	, mHasBone(hasbone)
 	, mTransform(nodeTransformation)
-	, mVBO(0)
-	, mEBO(0)
 {
-	LOGI("From Mesh: mVertices.size %d,  mIndices.size %d, mSize_index %d, mSize_index %d\n", mVertices.size(), mIndices.size(), mIndice_index, mSize_index);
-	m_ar_vertices = ar_vertices;
-	m_ar_indices = ar_indices;
-	//setupMesh();
+
 }
 Mesh::~Mesh()
 {
-	//delete[] m_ar_vertices;
-	//delete[] m_ar_indices;
-	LOGE("Remove Mesh\n");
+
 }
