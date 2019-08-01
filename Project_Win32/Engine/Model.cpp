@@ -86,11 +86,28 @@ void Model::Loading() //thread
 	for (unsigned int i = 0; i < mMeshes.size(); i++)
 	{
 		LOGI("  %d: %s\n", i, mMeshes[i]->GetName().c_str());
+		LOGI("Indices index: %d, Size: %d \n", mMeshes[i]->GetIndiceIndex(), mMeshes[i]->GetIndiceSize());
 	}
 
 	uint64_t time_ms_end = Timer::getMillisecond();
 
 	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
+	
+	// create buffers/arrays
+	glGenBuffers(1, &mVBO);
+	glGenBuffers(1, &mEBO);
+
+	// load data into vertex buffers
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBufferData(GL_ARRAY_BUFFER, mVertices_total.size() * sizeof(Vertex), &mVertices_total[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices_total.size() * sizeof(GLuint), &mIndices_total[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	LOGI("Create Buffer: mVertices_total.size = %d, mIndices_total = %d mVBO = %d, mEBO = %d\n", mVertices_total.size(), mIndices_total.size(), mVBO, mEBO);
 
 	m_initialized = true;
 }
@@ -140,6 +157,10 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	// Convert to array
 	Vertex *ar_vertices = new Vertex[mesh->mNumVertices];
 	GLuint *ar_indices;
+
+	unsigned int indices_index_prev_mesh = mVertices_total.size();
+	//unsigned int total_Vertices_prev_size = 
+	unsigned int indices_index = mIndices_total.size();
 	unsigned int numIndices = 0;
 	// Walk through each of the mesh's vertices
 	if (!mesh->HasNormals())
@@ -207,6 +228,9 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 
 		// Convert to array
 		ar_vertices[i] = vertex;
+
+		//new
+		mVertices_total.push_back(vertex);
 	}
 	//Count numIndices
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
@@ -222,13 +246,16 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 		// retrieve all indices of the face and store them in the indices vector
 		for (unsigned int j = 0; j < face.mNumIndices; j++)
 		{
+			unsigned int indice_value = face.mIndices[j] + indices_index_prev_mesh;
+			mIndices_total.push_back(indice_value);
+
 			indices.push_back(face.mIndices[j]);
 			ar_indices[index_Indices] = face.mIndices[j];
 			index_Indices++;
 		}
 	}
 	// process Bones https://realitymultiplied.wordpress.com/2016/07/23/assimp-skeletal-animation-tutorial-2-loading-up-the-bone-data/
-	LOGI("Mesh: NumVer = %d, NumIndices = %d\n", vertices.size(), indices.size());
+	
 	if (scene->HasAnimations())
 	{
 		if (mesh->mNumBones > 0)
@@ -267,18 +294,30 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 						case 0:
 							vertices.at(weight.mVertexId).id.x = (float)BoneIndex;
 							vertices.at(weight.mVertexId).weight.x = weight.mWeight;
+
+							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).id.x = (float)BoneIndex;
+							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).weight.x = weight.mWeight;
 							break;
 						case 1:
 							vertices.at(weight.mVertexId).id.y = (float)BoneIndex;
 							vertices.at(weight.mVertexId).weight.y = weight.mWeight;
+
+							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).id.y = (float)BoneIndex;
+							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).weight.y = weight.mWeight;
 							break;
 						case 2:
 							vertices.at(weight.mVertexId).id.z = (float)BoneIndex;
 							vertices.at(weight.mVertexId).weight.z = weight.mWeight;
+
+							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).id.z = (float)BoneIndex;
+							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).weight.z = weight.mWeight;
 							break;
 						case 3:
 							vertices.at(weight.mVertexId).id.w = (float)BoneIndex;
 							vertices.at(weight.mVertexId).weight.w = weight.mWeight;
+
+							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).id.w = (float)BoneIndex;
+							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).weight.w = weight.mWeight;
 							break;
 						}
 						break;
@@ -347,7 +386,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	mesh_material.shininess = shininess;
 	mesh_material.transparent = transparent;
 	
-	return new Mesh(vertices, indices, ar_vertices, ar_indices, textures, mesh_material, string(mesh->mName.C_Str()), nodeTransformation, hasnormals, hasbone);
+	return new Mesh(vertices, indices, ar_vertices, ar_indices, indices_index, numIndices, textures, mesh_material, string(mesh->mName.C_Str()), nodeTransformation, hasnormals, hasbone);
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type)
@@ -355,7 +394,6 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	vector<Texture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
-		//abc = true;
 		aiString str;
 		mat->GetTexture(type, i, &str);
 		if (str.length <= 0) continue;
@@ -465,6 +503,9 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 			break;
 	}
 	
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+
 	//animation
 	if (hasAnimation && Transforms.size() > 0)
 	{
@@ -490,6 +531,8 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void Model::SetUseLighting(bool UseLighting)

@@ -70,6 +70,8 @@ private:
 	/*  Mesh Data  */
 	vector<Vertex> mVertices;
 	vector<GLuint> mIndices;
+	unsigned int mIndice_index;
+	unsigned int mSize_index;
 	Vertex* m_ar_vertices;
 	GLuint* m_ar_indices;
 	vector<Texture> mTextures;
@@ -82,7 +84,8 @@ public:
 	void SetDrawPolygon(bool isdrawpolygon);
 	int GetNumVertex();
 	const std::string &GetName();
-
+	unsigned int GetIndiceIndex();
+	unsigned int GetIndiceSize();
 	void Draw(RenderMode mode
 		, bool isEnableAlpha = false
 		, bool useCustomColor = false
@@ -92,6 +95,8 @@ public:
 		,const vector<GLuint> &indices
 		,Vertex *ar_vertices
 		,GLuint *ar_indices
+		,unsigned int index_begin
+		,unsigned int index_size
 		,const vector<Texture> &textures
 		,const Material &material
 		,const string &meshname

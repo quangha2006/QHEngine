@@ -29,8 +29,11 @@ using namespace std;
 class Model
 {
 private:
+	unsigned int mVBO, mEBO;
 	vector<Mesh*> mMeshes;
 	vector<Texture> textures_loaded;
+	vector<Vertex> mVertices_total;
+	vector<GLuint> mIndices_total;
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
 	Mesh *processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 nodeTransformation);
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);

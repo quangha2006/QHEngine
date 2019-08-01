@@ -30,8 +30,8 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const 
 {
 	Shader * modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+	//glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	if (modelShader->position_Attribute != -1)
 	{
 		glEnableVertexAttribArray(modelShader->position_Attribute);
@@ -163,13 +163,14 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const 
 		ShaderSet::setVec3("material_color_diffuse", customColor);
 	}
 
-	if (mIsDrawPolygon)
-		QHEngine::DrawElements(GL_LINE_LOOP, mIndices.size(), GL_UNSIGNED_INT, (void*)0);
-	else
-		QHEngine::DrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, (void*)0);
+	//if (mIsDrawPolygon)
+		//QHEngine::DrawElements(GL_LINE_LOOP, mSize_index, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndice_index));
+	//else
+		//QHEngine::DrawElements(GL_TRIANGLES, mSize_index, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndice_index));
+	QHEngine::DrawElements(GL_TRIANGLES, mSize_index, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndice_index));
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	CheckGLError(mMeshName.c_str());
 }
@@ -200,10 +201,22 @@ const std::string &Mesh::GetName()
 	return mMeshName;
 }
 
+unsigned int Mesh::GetIndiceIndex()
+{
+	return mIndice_index;
+}
+
+unsigned int Mesh::GetIndiceSize()
+{
+	return mSize_index;
+}
+
 Mesh::Mesh(const vector<Vertex> &vertices
 	, const vector<GLuint> &indices
 	, Vertex* ar_vertices
 	, GLuint* ar_indices
+	, unsigned int index_begin
+	, unsigned int index_size
 	, const vector<Texture> &textures
 	, const Material &meterial
 	, const string &meshname
@@ -213,6 +226,8 @@ Mesh::Mesh(const vector<Vertex> &vertices
 	: mIsDrawPolygon(false)
 	, mVertices(vertices)
 	, mIndices(indices)
+	, mIndice_index(index_begin)
+	, mSize_index(index_size)
 	, m_ar_vertices(nullptr)
 	, m_ar_indices(nullptr)
 	, mTextures(textures)
@@ -224,9 +239,10 @@ Mesh::Mesh(const vector<Vertex> &vertices
 	, mVBO(0)
 	, mEBO(0)
 {
+	LOGI("From Mesh: mVertices.size %d,  mIndices.size %d, mSize_index %d, mSize_index %d\n", mVertices.size(), mIndices.size(), mIndice_index, mSize_index);
 	m_ar_vertices = ar_vertices;
 	m_ar_indices = ar_indices;
-	setupMesh();
+	//setupMesh();
 }
 Mesh::~Mesh()
 {
