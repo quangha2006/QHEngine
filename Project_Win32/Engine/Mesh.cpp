@@ -12,9 +12,9 @@
 void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const glm::vec3 &customColor)
 {
 	// bind appropriate textures
-	unsigned int diffuseNr = 1;
-	unsigned int specularNr = 1;
-	unsigned int normalNr = 1;
+	GLuint diffuseNr = 1;
+	GLuint specularNr = 1;
+	GLuint normalNr = 1;
 	bool hasmaterial_texture_diffuse1 = false;
 	ShaderSet::setBool("useNormalMap", false);
 	ShaderSet::setBool("enableAlpha", isEnableAlpha);
@@ -99,9 +99,9 @@ void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const 
 	}
 
 	if (mIsDrawPolygon)
-		QHEngine::DrawElements(GL_LINE_LOOP, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndices_index));
+		QHEngine::DrawElements(GL_LINE_LOOP, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
 	else
-		QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(unsigned int) * mIndices_index));
+		QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
 
 	CheckGLError(mMeshName.c_str());
 }
@@ -121,18 +121,18 @@ const std::string &Mesh::GetName()
 	return mMeshName;
 }
 
-unsigned int Mesh::GetIndicesIndex()
+GLuint Mesh::GetIndicesIndex()
 {
 	return mIndices_index;
 }
 
-unsigned int Mesh::GetIndicesSize()
+GLuint Mesh::GetIndicesSize()
 {
 	return mIndices_size;
 }
 
-Mesh::Mesh(unsigned int indices_index
-	, unsigned int indices_size
+Mesh::Mesh(GLuint indices_index
+	, GLuint indices_size
 	, const vector<Texture> &textures
 	, const Material &meterial
 	, const string &meshname

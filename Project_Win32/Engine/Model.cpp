@@ -36,19 +36,13 @@ void Model::Loading() //thread
 	LOGW("\n======================================================\n");
 
 	LOGI("\nLoad Model: %s\n", path_modif.c_str());
-	if (ShaderManager::getInstance()->GetProgram(useshadername.c_str()) == 0)
-	{
-		LOGE("ERROR! modelShader is invalid!\n");
-		return;
-	}
 
 	unsigned int assimpFlag = aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices;
 	if (mFlipUVs)
 		assimpFlag |= aiProcess_FlipUVs;;
 
-	// read file via ASSIMP
-	m_pScene = importer.ReadFile(path_modif, assimpFlag);
-	
+	m_pScene = mImporter.ReadFile(path_modif, assimpFlag);
+
 	if ((path_modif.find_last_of(".dae") == (path_modif.length() - 1)) || (path_modif.find_last_of(".md5mesh") == (path_modif.length() - 1)))
 		needRotate = true;
 	else
@@ -59,15 +53,25 @@ void Model::Loading() //thread
 	// check for errors
 	if (!m_pScene || /*m_pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||*/ !m_pScene->mRootNode) // if is Not Zero
 	{
-		LOGE("ERROR::ASSIMP:: %s\n", importer.GetErrorString());
+		LOGE("ERROR::ASSIMP:: %s\n", mImporter.GetErrorString());
 		return;
 	}
 	// retrieve the directory path of the filepath
-	directory = path_modif.substr(0, path_modif.find_last_of('/'));
+	mDirectory = path_modif.substr(0, path_modif.find_last_of('/'));
 	// process ASSIMP's root node recursively
 	aiMatrix4x4 tmp = m_pScene->mRootNode->mTransformation;
 	glm::mat4 NodeTransformation = QHMath::AiToGLMMat4(tmp);
 	NodeTransformation = glm::transpose(NodeTransformation);
+
+	GLuint numvertices = 0;
+	GLuint numindices = 0;
+
+	Pre_processNode(m_pScene->mRootNode, m_pScene, numvertices, numindices);
+
+	mVertices = new Vertex[numvertices];
+	mIndices = new GLuint[numindices];
+
+
 	processNode(m_pScene->mRootNode, m_pScene, NodeTransformation);
 
 	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
@@ -78,36 +82,55 @@ void Model::Loading() //thread
 	if (m_pScene->HasAnimations())
 	{
 		hasAnimation = true;
-		Transforms.resize(m_NumBones);
+		mTransforms.resize(m_NumBones);
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
 	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
-
-	uint64_t time_ms_end = Timer::getMillisecond();
-
-	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
-	
+	LOGI("Vertices Count: %d\n", mNumVertices);
+	LOGI("Indices Count: %d\n", mNumIndices);
 	// create buffers/arrays
 	glGenBuffers(1, &mVBO);
 	glGenBuffers(1, &mEBO);
 
 	// load data into vertex buffers
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBufferData(GL_ARRAY_BUFFER, mVertices_total.size() * sizeof(Vertex), &mVertices_total[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices_total.size() * sizeof(GLuint), &mIndices_total[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	uint64_t time_ms_end = Timer::getMillisecond();
+
+	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
+
 	m_initialized = true;
 }
-
+void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numvertices, GLuint &numindices)
+{
+	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	{
+		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+		Pre_processMesh(mesh, scene, numvertices, numindices);
+	}
+	for (unsigned int i = 0; i < node->mNumChildren; i++)
+	{
+		Pre_processNode(node->mChildren[i], scene, numvertices, numindices);
+	}
+}
+void Model::Pre_processMesh(aiMesh * mesh, const aiScene * scene, GLuint &numvertices, GLuint &numindices)
+{
+	numvertices += mesh->mNumVertices;
+	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	{
+		numindices += mesh->mFaces[i].mNumIndices;
+	}
+}
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
 {
-
 	// process each mesh located at the current node
 	aiMatrix4x4 tmp = node->mTransformation;
 	glm::mat4 currentNodeTransformation = QHMath::AiToGLMMat4(tmp);
@@ -120,7 +143,7 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	// re-allocate vector mMeshes
 	unsigned int new_size = current_mesh_size + num_meshes;
 	mMeshes.reserve(new_size);
-
+	LOGW("\nLoad New Node\n");
 	for (unsigned int i = 0; i < num_meshes; i++)
 	{
 		// the node object only contains indices to index the actual objects in the scene. 
@@ -147,13 +170,12 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	vector<Texture> textures;
 	vector<float> boneWeights(boneArraysSize, 0.0f);
 
-	unsigned int indices_index_prev_mesh = mVertices_total.size();
+	unsigned int numvertices_prev_mesh = mNumVertices;
 
-	unsigned int indices_index = mIndices_total.size();
+	unsigned int indices_index = mNumIndices;
 
 	unsigned int numvertices = mesh->mNumVertices;
 
-	mVertices_total.reserve(mVertices_total.size() + numvertices);
 	// Walk through each of the mesh's vertices
 	if (!mesh->HasNormals())
 		LOGW("WARNING!!!: Mesh has no normal => disable lighting for this mesh\n");
@@ -166,15 +188,15 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 		vector.x = pPos->x;
 		vector.y = pPos->y;
 		vector.z = pPos->z;
-		
-		vertex.Position = vector;
+
+		vertex.Position = nodeTransformation * glm::vec4(vector, 1.0f);
 		// normals
 		if (mesh->HasNormals())
 		{
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
-			vertex.Normal = vector;
+			vertex.Normal = nodeTransformation * glm::vec4(vector, 1.0f);
 			hasnormals = true;
 		}
 		else
@@ -214,7 +236,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 			vertex.Bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
 		}
 
-		mVertices_total.push_back(vertex);
+		mVertices[mNumVertices++] = vertex;
 	}
 
 
@@ -225,16 +247,14 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 		numIndices += mesh->mFaces[i].mNumIndices;
 	}
 
-	mIndices_total.reserve(mIndices_total.size() + numIndices);
-
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 		for (unsigned int j = 0; j < face.mNumIndices; j++)
 		{
-			unsigned int indice_value = face.mIndices[j] + indices_index_prev_mesh;
-			mIndices_total.push_back(indice_value);
-
+			unsigned int indice_value = face.mIndices[j] + numvertices_prev_mesh;
+			//mIndices_total.push_back(indice_value);
+			mIndices[mNumIndices++] = indice_value;
 		}
 	}
 	// process Bones https://realitymultiplied.wordpress.com/2016/07/23/assimp-skeletal-animation-tutorial-2-loading-up-the-bone-data/
@@ -271,24 +291,23 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 					if (boneWeights.at(vertexStart + k) == 0.0f)
 					{
 						boneWeights.at(vertexStart + k) = weight.mWeight;
-						//boneIDs.at(vertexStart + k) = BoneIndex;
 						switch(k)
 						{
 						case 0:
-							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).id.x = (float)BoneIndex;
-							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).weight.x = weight.mWeight;
+							mVertices[weight.mVertexId + numvertices_prev_mesh].id.x = (float)BoneIndex;
+							mVertices[weight.mVertexId + numvertices_prev_mesh].weight.x = weight.mWeight;
 							break;
 						case 1:
-							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).id.y = (float)BoneIndex;
-							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).weight.y = weight.mWeight;
+							mVertices[weight.mVertexId + numvertices_prev_mesh].id.y = (float)BoneIndex;
+							mVertices[weight.mVertexId + numvertices_prev_mesh].weight.y = weight.mWeight;
 							break;
 						case 2:
-							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).id.z = (float)BoneIndex;
-							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).weight.z = weight.mWeight;
+							mVertices[weight.mVertexId + numvertices_prev_mesh].id.z = (float)BoneIndex;
+							mVertices[weight.mVertexId + numvertices_prev_mesh].weight.z = weight.mWeight;
 							break;
 						case 3:
-							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).id.w = (float)BoneIndex;
-							mVertices_total.at(weight.mVertexId + indices_index_prev_mesh).weight.w = weight.mWeight;
+							mVertices[weight.mVertexId + numvertices_prev_mesh].id.w = (float)BoneIndex;
+							mVertices[weight.mVertexId + numvertices_prev_mesh].weight.w = weight.mWeight;
 							break;
 						}
 						break;
@@ -300,6 +319,9 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	}
 	// process materials
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+	LOGI("Mesh Tran: \n");
+	Utils::PrintMat4(nodeTransformation);
+	LOGI("MaterialIndex: %d\n", mesh->mMaterialIndex);
 	// we assume a convention for sampler names in the shaders. Each diffuse texture should be named
 	// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER. 
 	// Same applies to other texture as the following list summarizes:
@@ -382,7 +404,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		if (!skip)
 		{   // if texture hasn't been loaded already, load it
 			Texture texture;
-			texture.id = QHTexture::TextureFromFile(str.C_Str(), this->directory, texture.width, texture.height);
+			texture.id = QHTexture::TextureFromFile(str.C_Str(), mDirectory, texture.width, texture.height);
 			texture.type = type;
 			texture.path = str;
 			textures.push_back(texture);
@@ -401,8 +423,6 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
-
-	//UpdateWorldTransform();
 
 	glm::mat4 WorldViewLightSpaceMatrix;
 	glm::mat4 WorldViewProjectionMatrix;
@@ -523,9 +543,9 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	}
 
 	//animation
-	if (hasAnimation && Transforms.size() > 0)
+	if (hasAnimation && mTransforms.size() > 0)
 	{
-		ShaderSet::setBoneMat4("gBones", Transforms);
+		ShaderSet::setBoneMat4("gBones", mTransforms);
 	}
 
 	if (m_meshdraw > -1)
@@ -584,7 +604,7 @@ void Model::UpdateAnimation()
 	else
 		RunningTime = mtimeStampAnim;
 
-	BoneTransform(RunningTime, Transforms);
+	BoneTransform(RunningTime, mTransforms);
 }
 void Model::SyncPhysics()
 {
@@ -803,6 +823,8 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 
 	const aiNodeAnim* pNodeAnim = FindNodeAnim(pAnimation, NodeName);
 
+	glm::mat4 GlobalTransformation;
+
 	if (pNodeAnim) {
 		// Interpolate scaling and generate scaling transformation matrix
 		aiVector3D Scaling;
@@ -835,9 +857,10 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 		glm::mat4 tmp1 = QHMath::Combinetransformations(TranslationM, RotationM);
 		glm::mat4 tmp2 = QHMath::Combinetransformations(tmp1, ScalingM);
 		NodeTransformation = tmp2;
+		GlobalTransformation = QHMath::Combinetransformations(ParentTransform, NodeTransformation);
 	}
 
-	glm::mat4 GlobalTransformation = QHMath::Combinetransformations(ParentTransform, NodeTransformation);
+	//glm::mat4 GlobalTransformation = QHMath::Combinetransformations(ParentTransform, NodeTransformation);
 
 	if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
 		uint BoneIndex = m_BoneMapping[NodeName];
@@ -977,7 +1000,6 @@ glm::vec3 Model::GetRotate()
 Model::Model()
 	: gammaCorrection(false)
 	, m_initialized(false)
-	, useshadername("model")
 	, uselighting(true)
 	, useCustomColor(false)
 	, customColor(glm::vec3(1.0f))
@@ -1004,6 +1026,10 @@ Model::Model()
 	, mFixedBoxShape(glm::vec3(0.))
 	, isFirstSetupUniform(false)
 	, mRigidBody(nullptr)
+	, mVertices(nullptr)
+	, mIndices(nullptr)
+	, mNumVertices(0)
+	, mNumIndices(0)
 {
 	ModelManager::getInstance()->AddModel(this);
 }
@@ -1022,8 +1048,7 @@ Model::~Model()
 	glDeleteBuffers(1, &mVBO);
 	glDeleteBuffers(1, &mEBO);
 
-	//for (unsigned int i = 0; i < mVertices_total.size(); i++)
-	//{
-	//	delete mVertices_total[i];
-	//}
+	delete[] mVertices;
+	
+	delete[] mIndices;
 }

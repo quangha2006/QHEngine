@@ -42,8 +42,8 @@ void main()
 
 		NormalL = BoneTransform * vec4(aNormal, 0.0f);
 	#else
-		PosL    = Transform * vec4(aPos, 1.0f);
-		NormalL = Transform * vec4(aNormal, 0.0f);
+		PosL    =  vec4(aPos, 1.0f);
+		NormalL =  vec4(aNormal, 0.0f);
 	#endif
 
     gl_Position = WorldViewProjectionMatrix * PosL;

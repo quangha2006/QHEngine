@@ -29,28 +29,34 @@ using namespace std;
 class Model
 {
 private:
-	unsigned int mVBO, mEBO;
+	GLuint mVBO, mEBO;
 	vector<Mesh*> mMeshes;
 	vector<Texture> textures_loaded;
-	vector<Vertex> mVertices_total;
-	vector<GLuint> mIndices_total;
+
+	Vertex* mVertices;
+	GLuint* mIndices;
+	GLuint mNumVertices;
+	GLuint mNumIndices;
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
 	Mesh *processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 nodeTransformation);
+
+	void Pre_processNode(aiNode *node, const aiScene *scene, GLuint &numvertices, GLuint &numindices);
+	void Pre_processMesh(aiMesh *mesh, const aiScene *scene, GLuint &numvertices, GLuint &numindices);
+
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);
 
 	/*==== Animation ====*/
-	Assimp::Importer importer, importer_anim;
-	const aiScene* m_pScene, *m_pScene_anim;
+	Assimp::Importer mImporter;
+	const aiScene* m_pScene;
 	map<string, uint> m_BoneMapping;
 	vector<BoneInfo> m_BoneInfo;
-	vector<glm::mat4> Transforms;
+	vector<glm::mat4> mTransforms;
 	glm::mat4 m_GlobalInverseTransform;
 	GLuint m_NumBones;
 	bool hasAnimation;
 	int animToPlay;
 	int mNumAnimations;
 
-	string useshadername;
 	Camera *mCamera;
 	bool m_initialized;
 	bool mIsEnableAlpha;
@@ -61,7 +67,7 @@ private:
 	bool useCustomColor;
 	bool needRotate;
 	bool gammaCorrection;
-	string directory;
+	string mDirectory;
 	string mSrcPath;
 	bool mFlipUVs;
 	float mFixedModel;

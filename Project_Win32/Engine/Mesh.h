@@ -67,8 +67,8 @@ private:
 	bool mIsDrawPolygon;
 	glm::mat4 mTransform;
 
-	unsigned int mIndices_index;
-	unsigned int mIndices_size;
+	GLuint mIndices_index;
+	GLuint mIndices_size;
 
 	vector<Texture> mTextures;
 	Material mMaterial;
@@ -77,15 +77,15 @@ public:
 	void SetUseLighting(bool isuse);
 	void SetDrawPolygon(bool isdrawpolygon);
 	const std::string &GetName();
-	unsigned int GetIndicesIndex();
-	unsigned int GetIndicesSize();
+	GLuint GetIndicesIndex();
+	GLuint GetIndicesSize();
 	void Draw(RenderMode mode
 		, bool isEnableAlpha = false
 		, bool useCustomColor = false
 		, const glm::vec3 &customColor = glm::vec3(0.0f, 0.0f, 0.0f));
 
-	Mesh(unsigned int index_begin
-		,unsigned int index_size
+	Mesh(GLuint index_begin
+		,GLuint index_size
 		,const vector<Texture> &textures
 		,const Material &material
 		,const string &meshname

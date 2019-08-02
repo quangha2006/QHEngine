@@ -14,16 +14,16 @@
 
 struct Texture {
 	GLuint id;
-	int width;
-	int height;
+	GLint width;
+	GLint height;
 	aiTextureType type;
 	aiString path;
 };
 namespace QHTexture
 {
-	GLuint TextureFromFile(const char * path, const std::string & directory, int &width, int &height, GLuint textureID = 0, bool gammaCorrection = false);
+	GLuint TextureFromFile(const char * path, const std::string & directory, GLint &width, GLint &height, GLuint textureID = 0, bool gammaCorrection = false);
 	GLuint loadCubemap(const char * texturepath, std::vector<std::string> faces, bool gammaCorrection);
-	unsigned int GenTextureId();
+	GLuint GenTextureId();
 };
 
 #endif //!__QHTEXTURE_H__

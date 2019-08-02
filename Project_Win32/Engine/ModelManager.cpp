@@ -1,5 +1,5 @@
 #include "ModelManager.h"
-
+#include "Timer.h"
 
 ModelManager * ModelManager::instance = NULL;
 

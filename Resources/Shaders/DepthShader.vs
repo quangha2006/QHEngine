@@ -27,7 +27,7 @@ void main()
 
 		PosL   = BoneTransform * vec4(aPos, 1.0f);
 	#else
-		PosL    = Transform * vec4(aPos, 1.0f);
+		PosL    = vec4(aPos, 1.0f);
 	#endif
 	
     gl_Position =  WorldViewLightSpaceMatrix * PosL;
