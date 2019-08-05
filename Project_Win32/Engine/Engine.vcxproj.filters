@@ -120,6 +120,9 @@
     <ClCompile Include="AppContext.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="QHMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -213,6 +216,9 @@
       <Filter>Android</Filter>
     </ClInclude>
     <ClInclude Include="RenderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QHMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

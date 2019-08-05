@@ -71,8 +71,9 @@ void Model::Loading() //thread
 	mVertices = new Vertex[numvertices];
 	mIndices = new GLuint[numindices];
 
-
 	processNode(m_pScene->mRootNode, m_pScene, NodeTransformation);
+
+	processMaterial(m_pScene);
 
 	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
@@ -129,6 +130,56 @@ void Model::Pre_processMesh(aiMesh * mesh, const aiScene * scene, GLuint &numver
 		numindices += mesh->mFaces[i].mNumIndices;
 	}
 }
+void Model::processMaterial(const aiScene * scene)
+{
+	if (!scene->HasMaterials())
+		return;
+
+	unsigned int nummaterial = scene->mNumMaterials;
+
+	mMaterial.reserve(nummaterial);
+
+	for (unsigned int i = 0; i < nummaterial; i++)
+	{
+		aiMaterial* aimaterial = scene->mMaterials[i];
+
+		aiColor3D ka_color(0.0f, 0.0f, 0.0f);
+		aiColor3D kd_color(0.0f, 0.0f, 0.0f);
+		aiColor3D ks_color(0.0f, 0.0f, 0.0f);
+		float transparent = 1.0f;
+		float shininess = 1.0f;
+
+		aimaterial->Get(AI_MATKEY_COLOR_AMBIENT, ka_color);
+		aimaterial->Get(AI_MATKEY_COLOR_DIFFUSE, kd_color);
+		aimaterial->Get(AI_MATKEY_COLOR_SPECULAR, ks_color);
+		aimaterial->Get(AI_MATKEY_OPACITY, transparent);
+		aimaterial->Get(AI_MATKEY_SHININESS, shininess);
+
+		QHMaterial material;
+		// 1. diffuse maps
+		vector<Texture> diffuseMaps = loadMaterialTextures(aimaterial, aiTextureType_DIFFUSE);
+		material.mTextures.insert(material.mTextures.end(), diffuseMaps.begin(), diffuseMaps.end());
+		// 2. specular maps
+		vector<Texture> specularMaps = loadMaterialTextures(aimaterial, aiTextureType_SPECULAR);
+		material.mTextures.insert(material.mTextures.end(), specularMaps.begin(), specularMaps.end());
+		// 3. normal maps
+		std::vector<Texture> normalMaps = loadMaterialTextures(aimaterial, aiTextureType_NORMALS);
+		material.mTextures.insert(material.mTextures.end(), normalMaps.begin(), normalMaps.end());
+		std::vector<Texture> heightMaps = loadMaterialTextures(aimaterial, aiTextureType_HEIGHT);
+		material.mTextures.insert(material.mTextures.end(), heightMaps.begin(), heightMaps.end());
+		// 4. height maps
+		std::vector<Texture> ambientMaps = loadMaterialTextures(aimaterial, aiTextureType_AMBIENT);
+		material.mTextures.insert(material.mTextures.end(), ambientMaps.begin(), ambientMaps.end());
+
+		
+		material.mAmbient = glm::vec3(ka_color.r, ka_color.g, ka_color.b);
+		material.mDiffuse = glm::vec3(kd_color.r, kd_color.g, kd_color.b);
+		material.mSpecular = glm::vec3(ks_color.r, ks_color.g, ks_color.b);
+		material.mShininess = shininess;
+		material.mTransparent = transparent;
+		material.mHasNormals = true;
+	}
+}
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
 {
 	// process each mesh located at the current node
@@ -143,7 +194,7 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	// re-allocate vector mMeshes
 	unsigned int new_size = current_mesh_size + num_meshes;
 	mMeshes.reserve(new_size);
-	LOGW("\nLoad New Node\n");
+	//LOGW("\nLoad New Node\n");
 	for (unsigned int i = 0; i < num_meshes; i++)
 	{
 		// the node object only contains indices to index the actual objects in the scene. 
@@ -165,7 +216,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	int boneArraysSize = mesh->mNumVertices * WEIGHTS_PER_VERTEX;
 	bool hasnormals = false;
 	bool hasbone = false;
-
+	bool hasanim = scene->HasAnimations();
 	// data to fill
 	vector<Texture> textures;
 	vector<float> boneWeights(boneArraysSize, 0.0f);
@@ -179,6 +230,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	// Walk through each of the mesh's vertices
 	if (!mesh->HasNormals())
 		LOGW("WARNING!!!: Mesh has no normal => disable lighting for this mesh\n");
+
 	for (unsigned int i = 0; i < numvertices; i++)
 	{
 		Vertex vertex;
@@ -188,15 +240,20 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 		vector.x = pPos->x;
 		vector.y = pPos->y;
 		vector.z = pPos->z;
-
-		vertex.Position = nodeTransformation * glm::vec4(vector, 1.0f);
+		if (hasanim)
+			vertex.Position = vector;
+		else
+			vertex.Position = nodeTransformation * glm::vec4(vector, 1.0f);
 		// normals
 		if (mesh->HasNormals())
 		{
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
-			vertex.Normal = nodeTransformation * glm::vec4(vector, 1.0f);
+			if (hasanim)
+				vertex.Normal = vector;
+			else
+				vertex.Normal = nodeTransformation * glm::vec4(vector, 1.0f);
 			hasnormals = true;
 		}
 		else
@@ -253,13 +310,12 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 		for (unsigned int j = 0; j < face.mNumIndices; j++)
 		{
 			unsigned int indice_value = face.mIndices[j] + numvertices_prev_mesh;
-			//mIndices_total.push_back(indice_value);
 			mIndices[mNumIndices++] = indice_value;
 		}
 	}
 	// process Bones https://realitymultiplied.wordpress.com/2016/07/23/assimp-skeletal-animation-tutorial-2-loading-up-the-bone-data/
 	
-	if (scene->HasAnimations())
+	if (hasanim)
 	{
 		if (mesh->mNumBones > 0)
 			hasbone = true;
@@ -318,10 +374,10 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 		}
 	}
 	// process materials
-	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-	LOGI("Mesh Tran: \n");
-	Utils::PrintMat4(nodeTransformation);
-	LOGI("MaterialIndex: %d\n", mesh->mMaterialIndex);
+	//aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+	//LOGI("Mesh Tran: \n");
+	//Utils::PrintMat4(nodeTransformation);
+	//LOGI("MaterialIndex: %d\n", mesh->mMaterialIndex);
 	// we assume a convention for sampler names in the shaders. Each diffuse texture should be named
 	// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER. 
 	// Same applies to other texture as the following list summarizes:
@@ -330,32 +386,32 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	// normal: texture_normalN
 
 	// 1. diffuse maps
-	vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE);
-	textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-	// 2. specular maps
-	vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR);
-	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-	// 3. normal maps
-	std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS);
-	textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-	std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_HEIGHT);
-	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
-	// 4. height maps
-	std::vector<Texture> ambientMaps = loadMaterialTextures(material, aiTextureType_AMBIENT);
-	textures.insert(textures.end(), ambientMaps.begin(), ambientMaps.end());
+	//vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE);
+	//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+	//// 2. specular maps
+	//vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR);
+	//textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+	//// 3. normal maps
+	//std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS);
+	//textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+	//std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_HEIGHT);
+	//textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+	//// 4. height maps
+	//std::vector<Texture> ambientMaps = loadMaterialTextures(material, aiTextureType_AMBIENT);
+	//textures.insert(textures.end(), ambientMaps.begin(), ambientMaps.end());
 
 	// Get material color
-	aiColor3D ka_color(0.0f, 0.0f, 0.0f);
+	/*aiColor3D ka_color(0.0f, 0.0f, 0.0f);
 	aiReturn result_get_color = material->Get(AI_MATKEY_COLOR_AMBIENT, ka_color);
 	if (result_get_color == aiReturn_FAILURE)
 	{
-		//LOGI("Get AMBIENT failed!\n");
+		LOGI("Get AMBIENT failed!\n");
 	}
 	aiColor3D kd_color(0.0f, 0.0f, 0.0f);
 	result_get_color = material->Get(AI_MATKEY_COLOR_DIFFUSE, kd_color);
 	if (result_get_color == aiReturn_FAILURE)
 	{
-		//LOGI("Get DIFFUSE failed!\n");
+		LOGI("Get DIFFUSE failed!\n");
 	}
 
 	aiColor3D ks_color(0.0f, 0.0f, 0.0f);
@@ -363,7 +419,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	
 	if (result_get_color == aiReturn_FAILURE)
 	{
-		//LOGI("Get SPECULAR failed!\n");
+		LOGI("Get SPECULAR failed!\n");
 	}
 
 	float transparent = 1.0f;
@@ -377,9 +433,9 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	mesh_material.diffuse = glm::vec3(kd_color.r, kd_color.g, kd_color.b);
 	mesh_material.specular = glm::vec3(ks_color.r, ks_color.g, ks_color.b);
 	mesh_material.shininess = shininess;
-	mesh_material.transparent = transparent;
+	mesh_material.transparent = transparent;*/
 	
-	return new Mesh(indices_index, numIndices, textures, mesh_material, string(mesh->mName.C_Str()), nodeTransformation, hasnormals, hasbone);
+	return new Mesh(indices_index, numIndices, mesh->mMaterialIndex, string(mesh->mName.C_Str()), nodeTransformation, hasnormals, hasbone);
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type)
@@ -553,6 +609,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 		if (m_meshdraw < (int)mMeshes.size())
 		{
 			ShaderSet::setBool("uselighting", uselighting);
+			mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
 			mMeshes[m_meshdraw]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}
@@ -561,6 +618,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 		for (unsigned int i = 0; i < mMeshes.size(); i++)
 		{
 			ShaderSet::setBool("uselighting", uselighting);
+			mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
 			mMeshes[i]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}
@@ -823,7 +881,7 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 
 	const aiNodeAnim* pNodeAnim = FindNodeAnim(pAnimation, NodeName);
 
-	glm::mat4 GlobalTransformation;
+	glm::mat4 GlobalTransformation = QHMath::Combinetransformations(ParentTransform, NodeTransformation);
 
 	if (pNodeAnim) {
 		// Interpolate scaling and generate scaling transformation matrix
@@ -859,8 +917,6 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 		NodeTransformation = tmp2;
 		GlobalTransformation = QHMath::Combinetransformations(ParentTransform, NodeTransformation);
 	}
-
-	//glm::mat4 GlobalTransformation = QHMath::Combinetransformations(ParentTransform, NodeTransformation);
 
 	if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
 		uint BoneIndex = m_BoneMapping[NodeName];

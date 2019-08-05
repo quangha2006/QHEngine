@@ -7,6 +7,7 @@
 #include "TGA.h"
 #include "ShaderManager.h"
 #include "PhysicsSimulation.h"
+#include "QHMaterial.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -32,6 +33,7 @@ private:
 	GLuint mVBO, mEBO;
 	vector<Mesh*> mMeshes;
 	vector<Texture> textures_loaded;
+	vector<QHMaterial> mMaterial;
 
 	Vertex* mVertices;
 	GLuint* mIndices;
@@ -42,6 +44,8 @@ private:
 
 	void Pre_processNode(aiNode *node, const aiScene *scene, GLuint &numvertices, GLuint &numindices);
 	void Pre_processMesh(aiMesh *mesh, const aiScene *scene, GLuint &numvertices, GLuint &numindices);
+
+	void processMaterial(const aiScene* scene);
 
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);
 

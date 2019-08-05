@@ -125,6 +125,7 @@
     <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="PhysicsSimulation.cpp" />
     <ClCompile Include="QHAxis.cpp" />
+    <ClCompile Include="QHMaterial.cpp" />
     <ClCompile Include="QHMath.cpp" />
     <ClCompile Include="QHText.cpp" />
     <ClCompile Include="QHTexture.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="PhysicsSimulation.h" />
     <ClInclude Include="QHAxis.h" />
+    <ClInclude Include="QHMaterial.h" />
     <ClInclude Include="QHMath.h" />
     <ClInclude Include="QHText.h" />
     <ClInclude Include="QHTexture.h" />

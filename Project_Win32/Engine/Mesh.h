@@ -70,8 +70,7 @@ private:
 	GLuint mIndices_index;
 	GLuint mIndices_size;
 
-	vector<Texture> mTextures;
-	Material mMaterial;
+	GLuint mMaterial_Id;
 
 public:
 	void SetUseLighting(bool isuse);
@@ -79,6 +78,7 @@ public:
 	const std::string &GetName();
 	GLuint GetIndicesIndex();
 	GLuint GetIndicesSize();
+	GLuint GetMaterialId();
 	void Draw(RenderMode mode
 		, bool isEnableAlpha = false
 		, bool useCustomColor = false
@@ -86,8 +86,7 @@ public:
 
 	Mesh(GLuint index_begin
 		,GLuint index_size
-		,const vector<Texture> &textures
-		,const Material &material
+		,GLuint material_id
 		,const string &meshname
 		,const glm::mat4 &nodeTransformation
 		,bool hasnormals = false
