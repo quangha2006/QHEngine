@@ -73,9 +73,19 @@ void Model::Loading() //thread
 
 	processNode(m_pScene->mRootNode, m_pScene, NodeTransformation);
 
+	uint64_t time_processNode = Timer::getMillisecond();
+	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
+	LOGI("Vertices Count: %d\n", mNumVertices);
+	LOGI("Indices Count: %d\n", mNumIndices);
+	LOGI("ProcessNode time : %.3fs\n\n", ((int)(time_processNode - time_loadmodel)) / 1000.0f);
+
 	processMaterial(m_pScene);
 
+	uint64_t time_processMaterial = Timer::getMillisecond();
 	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
+	LOGI("ProcessMaterial time : %.3fs\n\n", ((int)(time_processMaterial - time_processNode)) / 1000.0f);
+
+	
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
 
 	m_GlobalInverseTransform = glm::inverse(QHMath::AiToGLMMat4(m_pScene->mRootNode->mTransformation));
@@ -87,9 +97,7 @@ void Model::Loading() //thread
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
-	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
-	LOGI("Vertices Count: %d\n", mNumVertices);
-	LOGI("Indices Count: %d\n", mNumIndices);
+	
 	// create buffers/arrays
 	glGenBuffers(1, &mVBO);
 	glGenBuffers(1, &mEBO);
@@ -178,6 +186,7 @@ void Model::processMaterial(const aiScene * scene)
 		material.mShininess = shininess;
 		material.mTransparent = transparent;
 		material.mHasNormals = true;
+		mMaterial.push_back(material);
 	}
 }
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
@@ -618,7 +627,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 		for (unsigned int i = 0; i < mMeshes.size(); i++)
 		{
 			ShaderSet::setBool("uselighting", uselighting);
-			mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
+			mMaterial[mMeshes[i]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
 			mMeshes[i]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
 		}
 	}
