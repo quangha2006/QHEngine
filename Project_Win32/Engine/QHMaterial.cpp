@@ -1,6 +1,7 @@
 #include "QHMaterial.h"
 #include "ShaderManager.h"
 #include "RenderManager.h"
+#include "Debugging.h"
 
 void QHMaterial::Apply(RenderMode mode, bool isEnableAlpha)
 {
@@ -79,8 +80,18 @@ void QHMaterial::Apply(RenderMode mode, bool isEnableAlpha)
 		ShaderSet::setBool("useTexture", false);
 }
 
+void QHMaterial::Draw()
+{
+	ShaderSet::setBool("useNormalMap", mHasNormals); // temp
+	ShaderSet::setBool("enableAlpha", true); //temp
+
+	QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
+}
+
 QHMaterial::QHMaterial()
 	: mHasNormals(true)
+	, mIndices_index(0)
+	, mIndices_size(0)
 {
 }
 

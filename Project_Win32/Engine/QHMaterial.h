@@ -20,6 +20,7 @@ public:
 	GLuint mIndices_size;
 	std::vector<Texture> mTextures;
 	void Apply(RenderMode mode, bool isEnableAlpha = false);
+	void Draw();
 	QHMaterial();
 	~QHMaterial();
 };

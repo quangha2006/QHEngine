@@ -98,10 +98,13 @@ void Model::Loading() //thread
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
-	
+	SetupMaterialMesh();
+
 	// create buffers/arrays
 	glGenBuffers(1, &mVBO);
 	glGenBuffers(1, &mEBO);
+	glGenBuffers(1, &mVBO_material);
+	glGenBuffers(1, &mEBO_material);
 
 	// load data into vertex buffers
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
@@ -109,6 +112,12 @@ void Model::Loading() //thread
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
+	glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices_marterial, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices_marterial, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -193,15 +202,34 @@ void Model::processMaterial(const aiScene * scene)
 }
 void Model::SetupMaterialMesh()
 {
+	mVertices_marterial = new Vertex[mNumVertices];
+	mIndices_marterial = new GLuint[mNumIndices];
+	GLuint last_vertex_index = 0;
+	GLuint last_indices_index = 0;
 	for (GLuint i = 0; i < mMaterial.size(); i++)
 	{
+		mMaterial[i].mIndices_index = last_indices_index;
+
 		for (GLuint j = 0; j < mMeshes.size(); j++)
 		{
 			if (mMeshes[j]->GetMaterialId() == i)
 			{
+				GLuint numvertex = 0;
+				GLuint numindices = 0;
+				Vertex* vertex = mMeshes[j]->GetVertex(numvertex);
+				GLuint* indices = mMeshes[j]->GetIndices(numindices);
 
+				std::memcpy(&mVertices_marterial[last_vertex_index], vertex, numvertex);
+
+				for (GLuint k = 0; k < numindices; k++)
+				{
+					mIndices_marterial[k + last_indices_index] = indices[k] + last_vertex_index;
+				}
+				last_vertex_index += numvertex;
+				last_indices_index += numindices;
 			}
 		}
+		mMaterial[i].mIndices_size = last_indices_index - mMaterial[i].mIndices_index;
 	}
 }
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
@@ -441,6 +469,8 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	if (!m_initialized || !mCamera || !mIsVisible || mVBO == 0 || mEBO == 0) return;
 	if (mode == RenderMode_Depth && mIsDrawDepthMap == false) return;
 
+	bool render_model_mode = true;
+
 	glEnable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
@@ -515,8 +545,17 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 			break;
 	}
 	
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+	if (render_model_mode)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+	}
+	else
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+	}
+
 
 	Shader* modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
@@ -569,25 +608,36 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 		ShaderSet::setBoneMat4("gBones", mTransforms);
 	}
 
-	if (m_meshdraw > -1)
+	if (render_model_mode)
 	{
-		if (m_meshdraw < (int)mMeshes.size())
+		for (GLuint i = 0; i < mMaterial.size(); i++)
 		{
-			ShaderSet::setBool("uselighting", uselighting);
-			mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
-			mMeshes[m_meshdraw]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
+			mMaterial[i].Apply(mode, mIsEnableAlpha);
+			mMaterial[i].Draw();
 		}
 	}
 	else
 	{
-		for (unsigned int i = 0; i < mMeshes.size(); i++)
+		if (m_meshdraw > -1)
 		{
-			ShaderSet::setBool("uselighting", uselighting);
-			mMaterial[mMeshes[i]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
-			mMeshes[i]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
+			if (m_meshdraw < (int)mMeshes.size())
+			{
+				ShaderSet::setBool("uselighting", uselighting);
+				mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
+				mMeshes[m_meshdraw]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
+			}
+		}
+		else
+		{
+			for (unsigned int i = 0; i < mMeshes.size(); i++)
+			{
+				ShaderSet::setBool("uselighting", uselighting);
+				mMaterial[mMeshes[i]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
+				mMeshes[i]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
+			}
 		}
 	}
-
+	
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -1049,6 +1099,8 @@ Model::Model()
 	, mRigidBody(nullptr)
 	, mVertices(nullptr)
 	, mIndices(nullptr)
+	, mVertices_marterial(nullptr)
+	, mIndices_marterial(nullptr)
 	, mNumVertices(0)
 	, mNumIndices(0)
 {
@@ -1068,8 +1120,15 @@ Model::~Model()
 
 	glDeleteBuffers(1, &mVBO);
 	glDeleteBuffers(1, &mEBO);
+	if (mVertices != nullptr)
+		delete[] mVertices;
 
-	delete[] mVertices;
-	
-	delete[] mIndices;
+	if (mIndices != nullptr)
+		delete[] mIndices;
+
+	if (mVertices_marterial != nullptr)
+		delete[] mVertices_marterial;
+
+	if (mIndices_marterial != nullptr)
+		delete[] mIndices_marterial;
 }

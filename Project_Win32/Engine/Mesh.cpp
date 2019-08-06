@@ -11,7 +11,7 @@
 
 void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const glm::vec3 &customColor)
 {
-	ShaderSet::setBool("useNormalMap", false);
+	ShaderSet::setBool("useNormalMap", mHasNormals);
 	ShaderSet::setBool("enableAlpha", isEnableAlpha);
 	ShaderSet::setMat4("Transform", mTransform);
 

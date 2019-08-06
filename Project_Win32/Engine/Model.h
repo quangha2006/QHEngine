@@ -31,6 +31,7 @@ class Model
 {
 private:
 	GLuint mVBO, mEBO;
+	GLuint mVBO_material, mEBO_material;
 	vector<Mesh*> mMeshes;
 	vector<Texture> textures_loaded;
 	vector<QHMaterial> mMaterial;

@@ -41,16 +41,16 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
+	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 
-	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
+	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetPos(glm::vec3(0.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	mSpider.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
+	//mSpider.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
 	//mSpider.Init("Simple.dae", true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
