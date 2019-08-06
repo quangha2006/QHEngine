@@ -39,6 +39,30 @@ void Mesh::SetDrawPolygon(bool isdrawpolygon)
 	mIsDrawPolygon = isdrawpolygon;
 }
 
+void Mesh::SetVertex(Vertex * vertex, GLuint numvertex)
+{
+	mVertex = vertex;
+	mNumVertex = numvertex;
+}
+
+void Mesh::SetIndices(GLuint * indices, GLuint numindices)
+{
+	mIndices = indices;
+	mNumIndices = numindices;
+}
+
+Vertex * Mesh::GetVertex(GLuint & numvertex)
+{
+	numvertex = mNumVertex;
+	return mVertex;
+}
+
+GLuint * Mesh::GetIndices(GLuint & numindices)
+{
+	numindices = mNumIndices;
+	return mIndices;
+}
+
 const std::string &Mesh::GetName()
 {
 	return mMeshName;
@@ -74,10 +98,18 @@ Mesh::Mesh(GLuint indices_index
 	, mHasNormals(hasnormals)
 	, mHasBone(hasbone)
 	, mTransform(nodeTransformation)
+	, mVertex(nullptr)
+	, mNumVertex(0)
+	, mIndices(nullptr)
+	, mNumIndices(0)
 {
 
 }
 Mesh::~Mesh()
 {
+	if (mVertex != nullptr)
+		delete[] mVertex;
 
+	if (mIndices != nullptr)
+		delete[] mIndices;
 }

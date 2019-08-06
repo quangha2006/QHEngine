@@ -65,11 +65,12 @@ void Model::Loading() //thread
 
 	GLuint numvertices = 0;
 	GLuint numindices = 0;
-
-	Pre_processNode(m_pScene->mRootNode, m_pScene, numvertices, numindices);
+	GLuint nummeshes = 0;
+	Pre_processNode(m_pScene->mRootNode, m_pScene, numvertices, numindices, nummeshes);
 
 	mVertices = new Vertex[numvertices];
 	mIndices = new GLuint[numindices];
+	mMeshes.reserve(nummeshes);
 
 	processNode(m_pScene->mRootNode, m_pScene, NodeTransformation);
 
@@ -118,8 +119,9 @@ void Model::Loading() //thread
 
 	m_initialized = true;
 }
-void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numvertices, GLuint &numindices)
+void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh)
 {
+	nummesh += node->mNumMeshes;
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -127,7 +129,7 @@ void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numver
 	}
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		Pre_processNode(node->mChildren[i], scene, numvertices, numindices);
+		Pre_processNode(node->mChildren[i], scene, numvertices, numindices, nummesh);
 	}
 }
 void Model::Pre_processMesh(aiMesh * mesh, const aiScene * scene, GLuint &numvertices, GLuint &numindices)
@@ -189,6 +191,19 @@ void Model::processMaterial(const aiScene * scene)
 		mMaterial.push_back(material);
 	}
 }
+void Model::SetupMaterialMesh()
+{
+	for (GLuint i = 0; i < mMaterial.size(); i++)
+	{
+		for (GLuint j = 0; j < mMeshes.size(); j++)
+		{
+			if (mMeshes[j]->GetMaterialId() == i)
+			{
+
+			}
+		}
+	}
+}
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
 {
 	// process each mesh located at the current node
@@ -197,14 +212,7 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	currentNodeTransformation = glm::transpose(currentNodeTransformation);
 	glm::mat4 Transformation = QHMath::Combinetransformations(nodeTransformation, currentNodeTransformation);
 
-	unsigned int num_meshes = node->mNumMeshes;
-	unsigned int current_mesh_size = mMeshes.size();
-
-	// re-allocate vector mMeshes
-	unsigned int new_size = current_mesh_size + num_meshes;
-	mMeshes.reserve(new_size);
-	//LOGW("\nLoad New Node\n");
-	for (unsigned int i = 0; i < num_meshes; i++)
+	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		// the node object only contains indices to index the actual objects in the scene. 
 		// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
@@ -305,23 +313,6 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 		mVertices[mNumVertices++] = vertex;
 	}
 
-
-	unsigned int numIndices = 0;
-
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-	{
-		numIndices += mesh->mFaces[i].mNumIndices;
-	}
-
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-	{
-		aiFace face = mesh->mFaces[i];
-		for (unsigned int j = 0; j < face.mNumIndices; j++)
-		{
-			unsigned int indice_value = face.mIndices[j] + numvertices_prev_mesh;
-			mIndices[mNumIndices++] = indice_value;
-		}
-	}
 	// process Bones https://realitymultiplied.wordpress.com/2016/07/23/assimp-skeletal-animation-tutorial-2-loading-up-the-bone-data/
 	
 	if (hasanim)
@@ -382,69 +373,34 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 
 		}
 	}
-	// process materials
-	//aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-	//LOGI("Mesh Tran: \n");
-	//Utils::PrintMat4(nodeTransformation);
-	//LOGI("MaterialIndex: %d\n", mesh->mMaterialIndex);
-	// we assume a convention for sampler names in the shaders. Each diffuse texture should be named
-	// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER. 
-	// Same applies to other texture as the following list summarizes:
-	// diffuse: texture_diffuseN
-	// specular: texture_specularN
-	// normal: texture_normalN
+	Vertex *verCurrentMesh = new Vertex[numvertices];
+	//clone vertex => import to each mesh
+	std::memcpy(verCurrentMesh, &mVertices[numvertices_prev_mesh], sizeof(Vertex) * numvertices);
+	// process Indices
+	unsigned int numIndices = 0; // for this mesh
 
-	// 1. diffuse maps
-	//vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE);
-	//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-	//// 2. specular maps
-	//vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR);
-	//textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-	//// 3. normal maps
-	//std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS);
-	//textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-	//std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_HEIGHT);
-	//textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
-	//// 4. height maps
-	//std::vector<Texture> ambientMaps = loadMaterialTextures(material, aiTextureType_AMBIENT);
-	//textures.insert(textures.end(), ambientMaps.begin(), ambientMaps.end());
-
-	// Get material color
-	/*aiColor3D ka_color(0.0f, 0.0f, 0.0f);
-	aiReturn result_get_color = material->Get(AI_MATKEY_COLOR_AMBIENT, ka_color);
-	if (result_get_color == aiReturn_FAILURE)
+	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
-		LOGI("Get AMBIENT failed!\n");
+		numIndices += mesh->mFaces[i].mNumIndices;
 	}
-	aiColor3D kd_color(0.0f, 0.0f, 0.0f);
-	result_get_color = material->Get(AI_MATKEY_COLOR_DIFFUSE, kd_color);
-	if (result_get_color == aiReturn_FAILURE)
+	GLuint *indicesCurrentMesh = new GLuint[numIndices];
+	GLuint currentindex = 0;
+	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
-		LOGI("Get DIFFUSE failed!\n");
+		aiFace face = mesh->mFaces[i];
+		for (unsigned int j = 0; j < face.mNumIndices; j++)
+		{
+			mIndices[mNumIndices++] = face.mIndices[j] + numvertices_prev_mesh;
+			indicesCurrentMesh[currentindex++] = face.mIndices[j];
+		}
 	}
 
-	aiColor3D ks_color(0.0f, 0.0f, 0.0f);
-	result_get_color = material->Get(AI_MATKEY_COLOR_SPECULAR, ks_color);
+	Mesh *mesh_current = new Mesh(indices_index, numIndices, mesh->mMaterialIndex, string(mesh->mName.C_Str()), nodeTransformation, hasnormals, hasbone);
 	
-	if (result_get_color == aiReturn_FAILURE)
-	{
-		LOGI("Get SPECULAR failed!\n");
-	}
+	mesh_current->SetVertex(verCurrentMesh, numvertices);
+	mesh_current->SetIndices(indicesCurrentMesh, numIndices);
 
-	float transparent = 1.0f;
-	material->Get(AI_MATKEY_OPACITY, transparent);
-
-	float shininess = 1.0f;
-	material->Get(AI_MATKEY_SHININESS, shininess);
-
-	Material mesh_material;
-	mesh_material.ambient = glm::vec3(ka_color.r, ka_color.g, ka_color.b);
-	mesh_material.diffuse = glm::vec3(kd_color.r, kd_color.g, kd_color.b);
-	mesh_material.specular = glm::vec3(ks_color.r, ks_color.g, ks_color.b);
-	mesh_material.shininess = shininess;
-	mesh_material.transparent = transparent;*/
-	
-	return new Mesh(indices_index, numIndices, mesh->mMaterialIndex, string(mesh->mName.C_Str()), nodeTransformation, hasnormals, hasbone);
+	return mesh_current;
 }
 
 vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type)
@@ -1074,7 +1030,7 @@ Model::Model()
 	, mtimeStampAnim(-1)
 	, mScale(glm::vec3(1.0f))
 	, mPos(glm::vec3(0.0f))
-	, mRotate( glm::vec3(0.0f))
+	, mRotate(glm::vec3(0.0f))
 	, mAngle(0.0f)
 	, mWorldTransform(glm::mat4())
 	, animToPlay(0)

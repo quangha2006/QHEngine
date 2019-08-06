@@ -39,13 +39,18 @@ private:
 	GLuint* mIndices;
 	GLuint mNumVertices;
 	GLuint mNumIndices;
+	
+	Vertex* mVertices_marterial;
+	GLuint* mIndices_marterial;
+
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
 	Mesh *processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 nodeTransformation);
 
-	void Pre_processNode(aiNode *node, const aiScene *scene, GLuint &numvertices, GLuint &numindices);
+	void Pre_processNode(aiNode *node, const aiScene *scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh);
 	void Pre_processMesh(aiMesh *mesh, const aiScene *scene, GLuint &numvertices, GLuint &numindices);
 
 	void processMaterial(const aiScene* scene);
+	void SetupMaterialMesh();
 
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);
 

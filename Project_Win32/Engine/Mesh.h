@@ -72,9 +72,18 @@ private:
 
 	GLuint mMaterial_Id;
 
+	Vertex *mVertex;
+	GLuint mNumVertex;
+
+	GLuint *mIndices;
+	GLuint mNumIndices;
 public:
 	void SetUseLighting(bool isuse);
 	void SetDrawPolygon(bool isdrawpolygon);
+	void SetVertex(Vertex * vertex, GLuint numvertex);
+	void SetIndices(GLuint *indices, GLuint numindices);
+	Vertex *GetVertex(GLuint &numvertex);
+	GLuint *GetIndices(GLuint &numindices);
 	const std::string &GetName();
 	GLuint GetIndicesIndex();
 	GLuint GetIndicesSize();

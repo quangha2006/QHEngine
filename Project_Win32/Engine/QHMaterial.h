@@ -16,6 +16,8 @@ public:
 	float mShininess;
 	float mTransparent;
 	bool mHasNormals;
+	GLuint mIndices_index;
+	GLuint mIndices_size;
 	std::vector<Texture> mTextures;
 	void Apply(RenderMode mode, bool isEnableAlpha = false);
 	QHMaterial();
