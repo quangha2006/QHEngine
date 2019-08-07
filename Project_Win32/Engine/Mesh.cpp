@@ -9,12 +9,8 @@
 //#include "Globals.h"
 
 
-void Mesh::Draw(RenderMode mode, bool isEnableAlpha, bool useCustomColor, const glm::vec3 &customColor)
+void Mesh::Draw(RenderMode mode, bool useCustomColor, const glm::vec3 &customColor)
 {
-	ShaderSet::setBool("useNormalMap", mHasNormals);
-	ShaderSet::setBool("enableAlpha", isEnableAlpha);
-	ShaderSet::setMat4("Transform", mTransform);
-
 	if (useCustomColor)
 	{
 		ShaderSet::setBool("useTexture", false);
@@ -87,7 +83,6 @@ Mesh::Mesh(GLuint indices_index
 	, GLuint indices_size
 	, GLuint material_id
 	, const string &meshname
-	, const glm::mat4 &nodeTransformation
 	, bool hasnormals
 	, bool hasbone)
 	: mIsDrawPolygon(false)
@@ -97,7 +92,6 @@ Mesh::Mesh(GLuint indices_index
 	, mMeshName(meshname)
 	, mHasNormals(hasnormals)
 	, mHasBone(hasbone)
-	, mTransform(nodeTransformation)
 	, mVertex(nullptr)
 	, mNumVertex(0)
 	, mIndices(nullptr)

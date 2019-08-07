@@ -31,6 +31,7 @@
 	"$Engine_Sources_Path$/PhysicsSimulation.cpp"
 	"$Engine_Sources_Path$/Sprite.cpp"
 	"$Engine_Sources_Path$/UserInterface.cpp"
+	"$Engine_Sources_Path$/QHMaterial.cpp"
 	}
 
 	.ExcludedUnitySources =

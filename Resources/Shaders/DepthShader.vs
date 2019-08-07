@@ -9,7 +9,6 @@ in vec3 aBitangent;
 
 out vec2 TexCoords;
 uniform mat4 WorldViewLightSpaceMatrix;
-uniform mat4 Transform;
 uniform mat4 gBones[64];
 
 void main()

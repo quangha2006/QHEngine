@@ -34,23 +34,23 @@ void Basic::Init()
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	mCamera->lightPos = glm::vec3(8.2f, 10.0f, 9.0f);
 
-	//mNanosuit.Init("nanosuit/nanosuit.obj", true, false);
-	//mNanosuit.SetScale(glm::vec3(0.4f));
-	//mNanosuit.SetTranslate(glm::vec3(9.0f, 3.0f, 0.0f));
-	//mNanosuit.SetDrawPolygon(true);
+	mNanosuit.Init("nanosuit/nanosuit.obj", true, false);
+	mNanosuit.SetScale(glm::vec3(0.4f));
+	mNanosuit.SetPos(glm::vec3(9.0f, 0.0f, 0.0f));
+	mNanosuit.SetDrawPolygon(true);
 
 	mSkyBox.Init("SkyBox");
 
-	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 
-	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
+	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetPos(glm::vec3(0.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	//mSpider.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
+	mSpider.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
 	//mSpider.Init("Simple.dae", true);
 	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);

@@ -11,6 +11,8 @@ void QHMaterial::Apply(RenderMode mode, bool isEnableAlpha)
 	bool hasmaterial_texture_diffuse1 = false;
 	unsigned int texture_actived = 0;
 
+	ShaderSet::setBool("useNormalMap", false);
+
 	for (; texture_actived < mTextures.size(); texture_actived++)
 	{
 		if (!isEnableAlpha && mode == RenderMode_Depth) break;
@@ -82,8 +84,7 @@ void QHMaterial::Apply(RenderMode mode, bool isEnableAlpha)
 
 void QHMaterial::Draw()
 {
-	ShaderSet::setBool("useNormalMap", mHasNormals); // temp
-	ShaderSet::setBool("enableAlpha", true); //temp
+	if (mIndices_size <= 0) return;
 
 	QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
 }

@@ -19,7 +19,6 @@ out vec4 temp;
 uniform mat4 world;
 uniform mat4 world_inverse;
 uniform mat4 WorldViewProjectionMatrix;
-uniform mat4 Transform;
 uniform mat4 lightSpaceMatrix; //shadow
 uniform mat4 gBones[64];
 void main()

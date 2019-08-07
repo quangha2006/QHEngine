@@ -117,10 +117,10 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AppContext.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="QHMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AppContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

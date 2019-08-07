@@ -65,7 +65,6 @@ private:
 	bool mHasNormals;
 	bool mHasBone;
 	bool mIsDrawPolygon;
-	glm::mat4 mTransform;
 
 	GLuint mIndices_index;
 	GLuint mIndices_size;
@@ -89,7 +88,6 @@ public:
 	GLuint GetIndicesSize();
 	GLuint GetMaterialId();
 	void Draw(RenderMode mode
-		, bool isEnableAlpha = false
 		, bool useCustomColor = false
 		, const glm::vec3 &customColor = glm::vec3(0.0f, 0.0f, 0.0f));
 
@@ -97,7 +95,6 @@ public:
 		,GLuint index_size
 		,GLuint material_id
 		,const string &meshname
-		,const glm::mat4 &nodeTransformation
 		,bool hasnormals = false
 		,bool hasbone = false);
 	~Mesh();

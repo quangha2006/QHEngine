@@ -219,7 +219,7 @@ void Model::SetupMaterialMesh()
 				Vertex* vertex = mMeshes[j]->GetVertex(numvertex);
 				GLuint* indices = mMeshes[j]->GetIndices(numindices);
 
-				std::memcpy(&mVertices_marterial[last_vertex_index], vertex, numvertex);
+				std::memcpy(&mVertices_marterial[last_vertex_index], vertex, sizeof(Vertex) * numvertex);
 
 				for (GLuint k = 0; k < numindices; k++)
 				{
@@ -423,7 +423,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 		}
 	}
 
-	Mesh *mesh_current = new Mesh(indices_index, numIndices, mesh->mMaterialIndex, string(mesh->mName.C_Str()), nodeTransformation, hasnormals, hasbone);
+	Mesh *mesh_current = new Mesh(indices_index, numIndices, mesh->mMaterialIndex, string(mesh->mName.C_Str()), hasnormals, hasbone);
 	
 	mesh_current->SetVertex(verCurrentMesh, numvertices);
 	mesh_current->SetIndices(indicesCurrentMesh, numIndices);
@@ -529,9 +529,8 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 
 			ShaderSet::setVec3("viewPos", mCamera->Pos);
 
-			ShaderSet::setBool("usenormalmap", false);
 			ShaderSet::setBool("usepointlight", this->isUsePointLight);
-
+			ShaderSet::setBool("enableAlpha", mIsEnableAlpha); //temp
 
 			model_inverse = glm::inverse(tmp_model);
 			model_inverse = glm::transpose(model_inverse);
@@ -612,6 +611,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 	{
 		for (GLuint i = 0; i < mMaterial.size(); i++)
 		{
+			ShaderSet::setBool("uselighting", uselighting);
 			mMaterial[i].Apply(mode, mIsEnableAlpha);
 			mMaterial[i].Draw();
 		}
@@ -624,7 +624,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 			{
 				ShaderSet::setBool("uselighting", uselighting);
 				mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
-				mMeshes[m_meshdraw]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
+				mMeshes[m_meshdraw]->Draw(mode, useCustomColor, customColor);
 			}
 		}
 		else
@@ -633,7 +633,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 			{
 				ShaderSet::setBool("uselighting", uselighting);
 				mMaterial[mMeshes[i]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
-				mMeshes[i]->Draw(mode, mIsEnableAlpha, useCustomColor, customColor);
+				mMeshes[i]->Draw(mode, useCustomColor, customColor);
 			}
 		}
 	}
