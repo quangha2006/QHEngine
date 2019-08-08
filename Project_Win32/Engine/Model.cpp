@@ -100,7 +100,7 @@ void Model::Loading() //thread
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
 
-	SetupMaterialMesh(false);
+	SetupMaterialMesh();
 
 	// create buffers/arrays
 	glGenBuffers(1, &mVBO);
@@ -202,16 +202,15 @@ void Model::processMaterial(const aiScene * scene)
 		mMaterial.push_back(material);
 	}
 }
-void Model::SetupMaterialMesh(bool isDuffDeviceOn)
+void Model::SetupMaterialMesh()
 {
 	uint64_t time_begin = Timer::getMillisecond();
-	GLuint loopcout = 0;
+
 	mVertices_marterial = new Vertex[mNumVertices];
 	mIndices_marterial = new GLuint[mNumIndices];
-
-	GLuint *to = mIndices_marterial; // Duff device!
 	GLuint last_vertex_index = 0;
 	GLuint last_indices_index = 0;
+
 	for (GLuint i = 0; i < mMaterial.size(); i++)
 	{
 		mMaterial[i].mIndices_index = last_indices_index;
@@ -227,35 +226,11 @@ void Model::SetupMaterialMesh(bool isDuffDeviceOn)
 				if (numindices == 0 || numvertex == 0) continue;
 				std::memcpy(&mVertices_marterial[last_vertex_index], vertex, sizeof(Vertex) * numvertex);
 
-				if (!isDuffDeviceOn)
+				for (GLuint k = 0; k < numindices; k++)
 				{
-					for (GLuint k = 0; k < numindices; k++)
-					{
-						mIndices_marterial[k + last_indices_index] = indices[k] + last_vertex_index;
-						loopcout++;
-					}
+					mIndices_marterial[k + last_indices_index] = indices[k] + last_vertex_index;
 				}
-				else
-				{
-					// Duff device! (google it) (may be slow than for loop)
-					GLuint *from = indices;
-					GLuint count = numindices;
-					int n = (count + 7) / 8;
-					switch (count % 8) {
-					case 0:	do {
-						*to++ = (*from++) + last_vertex_index;
-					case 7: *to++ = (*from++) + last_vertex_index;
-					case 6: *to++ = (*from++) + last_vertex_index;
-					case 5: *to++ = (*from++) + last_vertex_index;
-					case 4: *to++ = (*from++) + last_vertex_index;
-					case 3: *to++ = (*from++) + last_vertex_index;
-					case 2: *to++ = (*from++) + last_vertex_index;
-					case 1: *to++ = (*from++) + last_vertex_index;
-						loopcout++;
-					} while (--n > 0);
-					}
-				}
-				
+					
 				last_vertex_index += numvertex;
 				last_indices_index += numindices;
 			}
@@ -264,7 +239,7 @@ void Model::SetupMaterialMesh(bool isDuffDeviceOn)
 	}
 
 	uint64_t time_end = Timer::getMillisecond(); 
-	LOGI("SetupMaterialMesh time Duff device(%s): %dms, loop count: %d \n\n", isDuffDeviceOn ? "True":"false", ((int)(time_end - time_begin)), loopcout);
+	LOGI("SetupMaterialMesh time: %dms \n\n", ((int)(time_end - time_begin)));
 }
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
 {

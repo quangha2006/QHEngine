@@ -51,7 +51,7 @@ private:
 	void Pre_processMesh(aiMesh *mesh, const aiScene *scene, GLuint &numvertices, GLuint &numindices);
 
 	void processMaterial(const aiScene* scene);
-	void SetupMaterialMesh(bool isDuffDeviceOn = true);
+	void SetupMaterialMesh();
 
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);
 
