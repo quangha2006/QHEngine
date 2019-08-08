@@ -19,7 +19,7 @@ public:
 	GLuint mIndices_index;
 	GLuint mIndices_size;
 	std::vector<Texture> mTextures;
-	void Apply(RenderMode mode, bool isEnableAlpha = false);
+	void Apply(RenderTargetType RT_Type, bool isEnableAlpha = false);
 	void Draw();
 	QHMaterial();
 	~QHMaterial();

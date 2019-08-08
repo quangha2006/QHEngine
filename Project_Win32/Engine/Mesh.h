@@ -5,27 +5,16 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <QHTexture.h>
-#include <Shader.h>
+#include "QHTexture.h"
+#include "Shader.h"
+#include "RenderTarget.h"
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <vector>
 #include <map>
-using namespace std;
-enum RenderMode
-{
-	RenderMode_Depth,
-	RenderMode_Sence
-};
-/**
-glm::vec3 Position;		// position
-glm::vec3 Normal;		// normal
-glm::vec2 TexCoords;	// texCoords
-glm::vec3 Tangent;		// tangent
-glm::vec3 Bitangent;	// bitangent
-**/
+
 struct Vertex {
 	glm::vec3 Position;
 	glm::vec3 Normal;
@@ -61,7 +50,7 @@ struct BoneInfo
 };
 class Mesh {
 private:
-	string mMeshName;
+	std::string mMeshName;
 	bool mHasNormals;
 	bool mHasBone;
 	bool mIsDrawPolygon;
@@ -87,14 +76,14 @@ public:
 	GLuint GetIndicesIndex();
 	GLuint GetIndicesSize();
 	GLuint GetMaterialId();
-	void Draw(RenderMode mode
+	void Draw(RenderTargetType RT_Type
 		, bool useCustomColor = false
 		, const glm::vec3 &customColor = glm::vec3(0.0f, 0.0f, 0.0f));
 
 	Mesh(GLuint index_begin
 		,GLuint index_size
 		,GLuint material_id
-		,const string &meshname
+		,const std::string &meshname
 		,bool hasnormals = false
 		,bool hasbone = false);
 	~Mesh();

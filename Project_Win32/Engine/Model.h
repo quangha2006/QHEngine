@@ -51,7 +51,7 @@ private:
 	void Pre_processMesh(aiMesh *mesh, const aiScene *scene, GLuint &numvertices, GLuint &numindices);
 
 	void processMaterial(const aiScene* scene);
-	void SetupMaterialMesh();
+	void SetupMaterialMesh(bool isDuffDeviceOn = true);
 
 	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);
 
@@ -111,7 +111,7 @@ private:
 
 public:
 	void Init(const string &path, bool FlipUVs = false, bool enableAlpha = true, float fixedModel = 1.0f);
-	void Render(RenderMode mode, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
+	void Render(RenderTargetType RT_Type, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
 	void SetUseLighting(bool UseLighting);
 	void SetisUsePointLight(bool UsePointLight);
 	void DisableLightingForMesh(int numMesh);

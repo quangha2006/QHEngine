@@ -3,7 +3,7 @@
 #include "RenderManager.h"
 #include "Debugging.h"
 
-void QHMaterial::Apply(RenderMode mode, bool isEnableAlpha)
+void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 {
 	GLuint diffuseNr = 1;
 	GLuint specularNr = 1;
@@ -15,7 +15,7 @@ void QHMaterial::Apply(RenderMode mode, bool isEnableAlpha)
 
 	for (; texture_actived < mTextures.size(); texture_actived++)
 	{
-		if (!isEnableAlpha && mode == RenderMode_Depth) break;
+		if (!isEnableAlpha && RT_Type == RenderTargetType_DEPTH) break;
 
 		glActiveTexture(GL_TEXTURE0 + texture_actived); // active proper texture unit before binding
 										  // retrieve texture number (the N in diffuse_textureN)
@@ -52,7 +52,7 @@ void QHMaterial::Apply(RenderMode mode, bool isEnableAlpha)
 		// and finally bind the texture
 		glBindTexture(GL_TEXTURE_2D, mTextures[texture_actived].id);
 	}
-	if (mode == RenderMode_Sence)
+	if (RT_Type == RenderTargetType_COLOR)
 	{
 		GLuint depthmap = RenderManager::getInstance()->GetDepthMapId();
 		if (depthmap != 0)
@@ -74,7 +74,7 @@ void QHMaterial::Apply(RenderMode mode, bool isEnableAlpha)
 	if (mShininess < 0.001f || !mHasNormals)
 		ShaderSet::setBool("uselighting", false);
 
-	if (!isEnableAlpha && mode == RenderMode_Depth)
+	if (!isEnableAlpha && RT_Type == RenderTargetType_DEPTH)
 		ShaderSet::setBool("useTexture", false);
 	else if (hasmaterial_texture_diffuse1)
 		ShaderSet::setBool("useTexture", true);

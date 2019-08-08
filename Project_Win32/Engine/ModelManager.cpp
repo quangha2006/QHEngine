@@ -42,11 +42,11 @@ void ModelManager::Update()
 	}
 }
 
-void ModelManager::Render(RenderMode mode)
+void ModelManager::Render(RenderTargetType RT_Type)
 {
 	for (unsigned int i = 0; i < mListModel.size(); i++)
 	{
-		mListModel[i]->Render(mode);
+		mListModel[i]->Render(RT_Type);
 	}
 }
 

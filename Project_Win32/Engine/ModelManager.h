@@ -15,7 +15,7 @@ public:
 	void AddModel(Model* model);
 	void RemoveModel(int id);
 	void Update();
-	void Render(RenderMode mode);
+	void Render(RenderTargetType RT_Type);
 	void Init();
 	void Loading();
 	ModelManager();

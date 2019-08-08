@@ -9,7 +9,7 @@
 //#include "Globals.h"
 
 
-void Mesh::Draw(RenderMode mode, bool useCustomColor, const glm::vec3 &customColor)
+void Mesh::Draw(RenderTargetType RT_Type, bool useCustomColor, const glm::vec3 &customColor)
 {
 	if (useCustomColor)
 	{
@@ -82,7 +82,7 @@ GLuint Mesh::GetMaterialId()
 Mesh::Mesh(GLuint indices_index
 	, GLuint indices_size
 	, GLuint material_id
-	, const string &meshname
+	, const std::string &meshname
 	, bool hasnormals
 	, bool hasbone)
 	: mIsDrawPolygon(false)

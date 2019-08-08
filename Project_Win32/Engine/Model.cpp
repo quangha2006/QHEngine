@@ -6,6 +6,7 @@
 #include "ModelManager.h"
 #include "Debugging.h"
 #include "QHMath.h"
+#include "RenderTarget.h"
 #include <SOIL.h>
 #include <thread>
 #include <Logs.h>
@@ -98,7 +99,8 @@ void Model::Loading() //thread
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
-	SetupMaterialMesh();
+
+	SetupMaterialMesh(false);
 
 	// create buffers/arrays
 	glGenBuffers(1, &mVBO);
@@ -200,10 +202,14 @@ void Model::processMaterial(const aiScene * scene)
 		mMaterial.push_back(material);
 	}
 }
-void Model::SetupMaterialMesh()
+void Model::SetupMaterialMesh(bool isDuffDeviceOn)
 {
+	uint64_t time_begin = Timer::getMillisecond();
+	GLuint loopcout = 0;
 	mVertices_marterial = new Vertex[mNumVertices];
 	mIndices_marterial = new GLuint[mNumIndices];
+
+	GLuint *to = mIndices_marterial; // Duff device!
 	GLuint last_vertex_index = 0;
 	GLuint last_indices_index = 0;
 	for (GLuint i = 0; i < mMaterial.size(); i++)
@@ -218,19 +224,47 @@ void Model::SetupMaterialMesh()
 				GLuint numindices = 0;
 				Vertex* vertex = mMeshes[j]->GetVertex(numvertex);
 				GLuint* indices = mMeshes[j]->GetIndices(numindices);
-
+				if (numindices == 0 || numvertex == 0) continue;
 				std::memcpy(&mVertices_marterial[last_vertex_index], vertex, sizeof(Vertex) * numvertex);
 
-				for (GLuint k = 0; k < numindices; k++)
+				if (!isDuffDeviceOn)
 				{
-					mIndices_marterial[k + last_indices_index] = indices[k] + last_vertex_index;
+					for (GLuint k = 0; k < numindices; k++)
+					{
+						mIndices_marterial[k + last_indices_index] = indices[k] + last_vertex_index;
+						loopcout++;
+					}
 				}
+				else
+				{
+					// Duff device! (google it) (may be slow than for loop)
+					GLuint *from = indices;
+					GLuint count = numindices;
+					int n = (count + 7) / 8;
+					switch (count % 8) {
+					case 0:	do {
+						*to++ = (*from++) + last_vertex_index;
+					case 7: *to++ = (*from++) + last_vertex_index;
+					case 6: *to++ = (*from++) + last_vertex_index;
+					case 5: *to++ = (*from++) + last_vertex_index;
+					case 4: *to++ = (*from++) + last_vertex_index;
+					case 3: *to++ = (*from++) + last_vertex_index;
+					case 2: *to++ = (*from++) + last_vertex_index;
+					case 1: *to++ = (*from++) + last_vertex_index;
+						loopcout++;
+					} while (--n > 0);
+					}
+				}
+				
 				last_vertex_index += numvertex;
 				last_indices_index += numindices;
 			}
 		}
 		mMaterial[i].mIndices_size = last_indices_index - mMaterial[i].mIndices_index;
 	}
+
+	uint64_t time_end = Timer::getMillisecond(); 
+	LOGI("SetupMaterialMesh time Duff device(%s): %dms, loop count: %d \n\n", isDuffDeviceOn ? "True":"false", ((int)(time_end - time_begin)), loopcout);
 }
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
 {
@@ -464,10 +498,10 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 	return textures;
 }
 
-void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
+void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
 {
 	if (!m_initialized || !mCamera || !mIsVisible || mVBO == 0 || mEBO == 0) return;
-	if (mode == RenderMode_Depth && mIsDrawDepthMap == false) return;
+	if (RT_Type == RenderTargetType_DEPTH && mIsDrawDepthMap == false) return;
 
 	bool render_model_mode = true;
 
@@ -492,9 +526,9 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 		tmp_model = glm::rotate(tmp_model, glm::radians(270.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	}
 
-	switch (mode)
+	switch (RT_Type)
 	{
-		case RenderMode_Depth:
+		case RenderTargetType_DEPTH:
 			if (hasAnimation)
 				ShaderManager::getInstance()->setUseProgram("depthShader_skinning");
 			else
@@ -507,7 +541,7 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 			ShaderSet::setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
 
 			break;
-		case RenderMode_Sence:
+		case RenderTargetType_COLOR:
 			if (hasAnimation)
 				ShaderManager::getInstance()->setUseProgram("model_skinning");
 			else
@@ -607,35 +641,43 @@ void Model::Render(RenderMode mode, bool isTranslate, glm::vec3 translate, bool 
 		ShaderSet::setBoneMat4("gBones", mTransforms);
 	}
 
-	if (render_model_mode)
+	switch (RT_Type)
 	{
-		for (GLuint i = 0; i < mMaterial.size(); i++)
+	case RenderTargetType_DEPTH:
+		QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, (void*)0);
+		break;
+	case RenderTargetType_COLOR:
+		if (render_model_mode)
 		{
-			ShaderSet::setBool("uselighting", uselighting);
-			mMaterial[i].Apply(mode, mIsEnableAlpha);
-			mMaterial[i].Draw();
-		}
-	}
-	else
-	{
-		if (m_meshdraw > -1)
-		{
-			if (m_meshdraw < (int)mMeshes.size())
+			for (GLuint i = 0; i < mMaterial.size(); i++)
 			{
 				ShaderSet::setBool("uselighting", uselighting);
-				mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
-				mMeshes[m_meshdraw]->Draw(mode, useCustomColor, customColor);
+				mMaterial[i].Apply(RT_Type, mIsEnableAlpha);
+				mMaterial[i].Draw();
 			}
 		}
 		else
 		{
-			for (unsigned int i = 0; i < mMeshes.size(); i++)
+			if (m_meshdraw > -1)
 			{
-				ShaderSet::setBool("uselighting", uselighting);
-				mMaterial[mMeshes[i]->GetMaterialId()].Apply(mode, mIsEnableAlpha);
-				mMeshes[i]->Draw(mode, useCustomColor, customColor);
+				if (m_meshdraw < (int)mMeshes.size())
+				{
+					ShaderSet::setBool("uselighting", uselighting);
+					mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(RT_Type, mIsEnableAlpha);
+					mMeshes[m_meshdraw]->Draw(RT_Type, useCustomColor, customColor);
+				}
+			}
+			else
+			{
+				for (unsigned int i = 0; i < mMeshes.size(); i++)
+				{
+					ShaderSet::setBool("uselighting", uselighting);
+					mMaterial[mMeshes[i]->GetMaterialId()].Apply(RT_Type, mIsEnableAlpha);
+					mMeshes[i]->Draw(RT_Type, useCustomColor, customColor);
+				}
 			}
 		}
+		break;
 	}
 	
 	glDisable(GL_DEPTH_TEST);

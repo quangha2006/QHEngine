@@ -124,7 +124,7 @@ GLuint RenderManager::RenderDepthMap()
 	glCullFace(GL_BACK);
 	mShadowRT.BeginRender();
 
-	ModelManager::getInstance()->Render(RenderMode_Depth);
+	ModelManager::getInstance()->Render(RenderTargetType_DEPTH);
 	glDisable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
 	return mShadowRT.EndRender();
@@ -138,7 +138,7 @@ GLuint RenderManager::RenderSence()
 
 	mSkybox->Draw(mCamera);
 
-	ModelManager::getInstance()->Render(RenderMode_Sence);
+	ModelManager::getInstance()->Render(RenderTargetType_COLOR);
 	axis.Draw();
 	PhysicsSimulation::getInstance()->RenderPhysicsDebug();
 	return mSenceRT.EndRender();
