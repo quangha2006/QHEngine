@@ -44,38 +44,38 @@ void Basic::Init()
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
+	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, .1, 48.0), glm::vec3(0., 0.001, 0.));
+	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
+	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
-	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
+	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetPos(glm::vec3(0.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	mSpider.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
-	//mSpider.Init("Simple.dae", true);
-	//mSpider.Init("boblampclean/boblampclean.md5mesh", true);
-	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	//mSpider.SetScale(glm::vec3(0.05f));
-	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
+	mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
+	mAstroBoy.SetPos(glm::vec3(-1.0f, 0.0f, 0.0f));
+
+	mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
+	mSpider.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
+	mSpider.SetScale(glm::vec3(0.05f));
+	mSpider.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(0);
 	//mSpider.SetTimeStampAnim(0);
 	mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(0);
-	//saberclass.Init("test/untitled.obj", false, 3.0f);
-	//saberclass.SetTranslate(glm::vec3(0.0f, 3.0f, -20.0f));
-	//mGallacticCruiser.Init("GallacticCruiser/Class II Gallactic Cruiser.obj", false, 0.1f);
-	//mGallacticCruiser.SetTranslate(glm::vec3(-10.0f, -3.0f, 0.0f));
 
-	//mMonster_1.Init("boblampclean/boblampclean.md5mesh", true);
-	//mMonster_1.Init("/astroBoy/AnimSimple.dae", true);
-	//mMonster_1.Init("aboy/model.dae", true);
-	//mMonster_1.SetRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-	mMonster_1.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
-	mMonster_1.SetScale(glm::vec3(0.2f));
-	mMonster_1.SetNeedRotate(true);
+	mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
+	mBoblampclean.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
+	mBoblampclean.SetPos(glm::vec3(3.5f, 0.0f, 0.0f));
+	mBoblampclean.SetScale(glm::vec3(0.1f));
+	mBoblampclean.SetNeedRotate(true);
+	mBoblampclean.SetUseLighting(false);
 
 	uvcircle.Init("3DBreakOutGame/UVCircle.dae");
-	uvcircle.SetScale(glm::vec3(3.0));
-	uvcircle.SetPos(glm::vec3(0.0f, 0.0f, 10.0f));
+	uvcircle.SetScale(glm::vec3(1.0));
+	uvcircle.SetPos(glm::vec3(0.0f, 5.0f, 10.0f));
 
 	//soundIntro.Init("Sound/chuabaogio.wav");
 	//soundIntro.Play();
@@ -108,6 +108,7 @@ void Basic::Init()
 	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchShadow->GetHeight() - 8);
 	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
 	//mbtSwitchBloom->SetRotate(-10.0f);
+
 }
 
 void Basic::Update(int delta)

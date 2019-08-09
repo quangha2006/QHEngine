@@ -15,7 +15,7 @@
 class Basic : public AppBase
 {
 private:
-	Model mNanosuit, m_Streetenvironment, mMerce, mSpider, saberclass, mGallacticCruiser, mMonster_1, uvcircle;
+	Model mNanosuit, m_Streetenvironment, mMerce, mSpider, mBoblampclean, uvcircle, mAstroBoy;
 	float timestamp_for_lamp;
 	Sound soundIntro;
 	QHAxis axis;
