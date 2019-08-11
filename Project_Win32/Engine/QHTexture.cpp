@@ -113,7 +113,7 @@ namespace QHTexture
 		}
 
 		uint64_t time_end = Timer::getMillisecond();
-		LOGI("Load texture: %3dms %s\n", (int)(time_end - time_begin), fullpath.c_str());
+		LOGI("Load texture: %3ums %s\n", (unsigned int)(time_end - time_begin), fullpath.c_str());
 		return texid;
 	}
 	GLuint loadCubemap(const char * texturepath, std::vector<std::string> faces, bool gammaCorrection)

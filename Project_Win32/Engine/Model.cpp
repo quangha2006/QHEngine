@@ -50,7 +50,7 @@ void Model::Loading() //thread
 		needRotate = false;
 
 	uint64_t time_loadmodel = Timer::getMillisecond();
-	LOGI("Load Model time : %.3fs\n\n", ((int)(time_loadmodel - time_ms_begin)) / 1000.0f);
+	LOGI("Load Model time : %ums\n\n", (unsigned int)(time_loadmodel - time_ms_begin));
 	// check for errors
 	if (!m_pScene || /*m_pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||*/ !m_pScene->mRootNode) // if is Not Zero
 	{
@@ -79,13 +79,13 @@ void Model::Loading() //thread
 	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
 	LOGI("Vertices Count: %d\n", mNumVertices);
 	LOGI("Indices Count: %d\n", mNumIndices);
-	LOGI("ProcessNode time : %.3fs\n\n", ((int)(time_processNode - time_loadmodel)) / 1000.0f);
+	LOGI("ProcessNode time : %ums\n\n", (unsigned int)(time_processNode - time_loadmodel));
 
 	processMaterial(m_pScene);
 
 	uint64_t time_processMaterial = Timer::getMillisecond();
 	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
-	LOGI("ProcessMaterial time : %.3fs\n\n", ((int)(time_processMaterial - time_processNode)) / 1000.0f);
+	LOGI("ProcessMaterial time : %ums\n\n", (unsigned int)(time_processMaterial - time_processNode));
 
 	
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
@@ -126,7 +126,7 @@ void Model::Loading() //thread
 
 	uint64_t time_ms_end = Timer::getMillisecond();
 
-	LOGI("Total Loading time : %.3fs\n", ((int)(time_ms_end - time_ms_begin)) / 1000.0f);
+	LOGI("Total Loading time : %ums\n", (unsigned int)(time_ms_end - time_ms_begin));
 
 	m_initialized = true;
 }
@@ -208,6 +208,7 @@ void Model::SetupMaterialMesh()
 
 	mVertices_marterial = new Vertex[mNumVertices];
 	mIndices_marterial = new GLuint[mNumIndices];
+	GLuint* indices_ptr = mIndices_marterial;
 	GLuint last_vertex_index = 0;
 	GLuint last_indices_index = 0;
 
@@ -222,17 +223,23 @@ void Model::SetupMaterialMesh()
 				GLuint numvertex = 0;
 				GLuint numindices = 0;
 				Vertex* vertex = mMeshes[j]->GetVertex(numvertex);
-				GLuint* indices = mMeshes[j]->GetIndices(numindices);
+				GLuint* indices_mesh_ptr = mMeshes[j]->GetIndices(numindices);
 				if (numindices == 0 || numvertex == 0) continue;
 				std::memcpy(&mVertices_marterial[last_vertex_index], vertex, sizeof(Vertex) * numvertex);
 
-				for (GLuint k = 0; k < numindices; k++)
-				{
-					mIndices_marterial[k + last_indices_index] = indices[k] + last_vertex_index;
-				}
-					
-				last_vertex_index += numvertex;
+				//for (GLuint k = 0; k < numindices; k++)
+				//{
+					//mIndices_marterial[k + last_indices_index] = indices[k] + last_vertex_index;
+				//}
+				
 				last_indices_index += numindices;
+
+				do {
+					*indices_ptr++ = *indices_mesh_ptr++ + last_vertex_index;
+				} while (--numindices > 0);
+
+				last_vertex_index += numvertex;
+				
 			}
 		}
 		mMaterial[i].mIndices_size = last_indices_index - mMaterial[i].mIndices_index;

@@ -208,10 +208,6 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 		1.0f,  0.2f, 0.0f, 1.0f, 0.0f
 	};
 
-	glGenBuffers(1, &quadVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	glBufferData(GL_ARRAY_BUFFER, 4 * 5 * sizeof(float), quadVertices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	m_initialized = true;
 	return true;
 }

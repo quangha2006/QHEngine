@@ -36,7 +36,6 @@ private:
 
 	glm::mat4 projection;
 	GLuint m_TextureID;
-	GLuint quadVBO;
 	int screen_width, screen_height;
 	unsigned int m_Maxchar;
 
