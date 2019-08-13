@@ -186,6 +186,8 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\Shaders\BasicFS.fs" />
+    <None Include="..\..\Resources\Shaders\BasicVS.vs" />
     <None Include="..\..\Resources\Shaders\bloom_final.fs" />
     <None Include="..\..\Resources\Shaders\blur.fs" />
     <None Include="..\..\Resources\Shaders\brightness.fs" />

@@ -256,5 +256,11 @@
     <None Include="..\..\Resources\Shaders\DebugPhysics.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\..\Resources\Shaders\BasicVS.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\BasicFS.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

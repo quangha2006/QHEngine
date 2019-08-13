@@ -487,10 +487,6 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 
 	bool render_model_mode = true;
 
-	glEnable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-
 	glm::mat4 WorldViewLightSpaceMatrix;
 	glm::mat4 WorldViewProjectionMatrix;
 	glm::mat4 model_inverse;
@@ -535,8 +531,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 				ShaderSet::setFloat("material_shininess", 18.0f);
 				ShaderSet::setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
 				ShaderSet::setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
-				ShaderSet::setVec3("light_specular", 1.1f, 1.1f, 1.1f);
-				ShaderSet::setVec3("color_pick", 0.0f, 0.0f, 0.0f);
+				ShaderSet::setVec3("light_specular", 1.f, 1.f, 1.f);
 				ShaderSet::setBool("GammaCorrection", mGammaCorrection);
 				isFirstSetupUniform = true;
 			}
@@ -662,8 +657,6 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 		break;
 	}
 	
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_BLEND);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

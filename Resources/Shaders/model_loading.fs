@@ -34,8 +34,6 @@ uniform vec3 viewPos;
 uniform bool enableAlpha;
 uniform bool useTexture;
 uniform bool useNormalMap;
-uniform bool isPicking;
-uniform vec3 color_pick;
 uniform bool uselighting;
 uniform bool usepointlight;
 uniform bool useShadowMap;
@@ -113,9 +111,9 @@ void main()
 	if (uselighting == false)
 	{	
 		if (enableAlpha == true)
-			FragColor = vec4(color.rgb + color_pick, color.a);
+			FragColor = vec4(color.rgb, color.a);
 		else
-			FragColor = vec4(color.rgb + color_pick, material_transparent);
+			FragColor = vec4(color.rgb, material_transparent);
 		return;
 	}
 
@@ -157,12 +155,12 @@ void main()
 	if (uselighting == true)
 	{
 		// Total lighting + shadow
-		lighting = ambient + (diffuse + specular) * (1.0f - shadow) + color_pick;
+		lighting = ambient + (diffuse + specular) * (1.0f - shadow);
 	}
 	else
 	{
 		// Total lighting + not shadow
-		lighting = ambient + (diffuse + specular) + color_pick;
+		lighting = ambient + diffuse + specular;
 	}
 	if (useTexture == false && GammaCorrection == true)
 	{

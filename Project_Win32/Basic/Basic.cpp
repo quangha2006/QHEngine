@@ -11,22 +11,6 @@
 #include "RenderManager.h"
 
 
-void Basic::ClickbuttonShadow()
-{
-	RenderManager::getInstance()->SwitchShadowMapMode();
-	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
-	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
-	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
-}
-
-void Basic::ClickbuttonBloom()
-{
-	RenderManager::getInstance()->SwitchBloomMode();
-	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
-	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
-	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
-}
-
 void Basic::Init()
 {
 	mCamera->Pos = glm::vec3(5.0f, 5.0f, 20.0f);
@@ -105,10 +89,25 @@ void Basic::Init()
 	mbtSwitchBloom = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
 	mbtSwitchBloom->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloom, this));
 	mbtSwitchBloom->SetScale(1.2f);
-	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchShadow->GetHeight() - 8);
+	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchBloom->GetHeight() - 8);
 	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
-	//mbtSwitchBloom->SetRotate(-10.0f);
+	
+	int bloomamount = RenderManager::getInstance()->GetAmountBloom();
 
+	mBloomAmountLabel.setText("Bloom Amount:       %d", bloomamount);
+	mBloomAmountLabel.setScale(0.5f);
+	mBloomAmountLabel.setPos(330, 540 - 30);
+	mBloomAmountLabel.setVisible(false);
+
+	mbtBloomAmount1 = UserInterface::CreateWithTexture("button/button_right.png");
+	mbtBloomAmount1->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloomAmountRight, this));
+	mbtBloomAmount1->SetScale(0.017f);
+	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, 540 - mbtSwitchBloom->GetHeight() - 8);
+
+	mbtBloomAmount2 = UserInterface::CreateWithTexture("button/button_left.png");
+	mbtBloomAmount2->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloomAmountLeft, this));
+	mbtBloomAmount2->SetScale(0.017f);
+	mbtBloomAmount2->SetPos(490, 540 - mbtSwitchBloom->GetHeight() - 8);
 }
 
 void Basic::Update(int delta)
@@ -195,8 +194,43 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 {
 	mShadowLabel.setVisible(true);
 	mBloomLabel.setVisible(true);
+	mBloomAmountLabel.setVisible(true);
 }
 
+void Basic::ClickbuttonBloomAmountLeft()
+{
+	int bloomamount = RenderManager::getInstance()->GetAmountBloom();
+	if (bloomamount >= 2)
+		bloomamount -= 2;
+	RenderManager::getInstance()->SetAmountBloom(bloomamount);
+	mBloomAmountLabel.setText("Bloom Amount:       %d", RenderManager::getInstance()->GetAmountBloom());
+	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, 540 - mbtSwitchBloom->GetHeight() - 8);
+}
+
+void Basic::ClickbuttonBloomAmountRight()
+{
+	int bloomamount = RenderManager::getInstance()->GetAmountBloom();
+	bloomamount += 2;
+	RenderManager::getInstance()->SetAmountBloom(bloomamount);
+	mBloomAmountLabel.setText("Bloom Amount:       %d", RenderManager::getInstance()->GetAmountBloom());
+	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, 540 - mbtSwitchBloom->GetHeight() - 8);
+}
+
+void Basic::ClickbuttonShadow()
+{
+	RenderManager::getInstance()->SwitchShadowMapMode();
+	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
+	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
+	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
+}
+
+void Basic::ClickbuttonBloom()
+{
+	RenderManager::getInstance()->SwitchBloomMode();
+	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
+	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
+	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
+}
 Basic::Basic()
 {
 	timestamp_for_lamp = 0;

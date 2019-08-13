@@ -307,7 +307,7 @@ void TextRendering::Draw()
 	{
 		glBufferData(GL_ARRAY_BUFFER, fulltextdata.size() * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
 		m_Maxchar = fulltextdata.size() / 6;
-		LOGW("Increase m_Maxchar: %d", m_Maxchar);
+		LOGW("Increase m_Maxchar: %d\n", m_Maxchar);
 	}
 	glBufferSubData(GL_ARRAY_BUFFER, 0, fulltextdata.size() * sizeof(TextData), &fulltextdata[0]); // Be sure to use glBufferSubData and not glBufferData
 

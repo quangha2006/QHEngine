@@ -21,8 +21,8 @@ private:
 	QHAxis axis;
 	bool m_initialized;
 	//Sprite *mbutton;
-	Sprite *mbtSwitchShadow, *mbtSwitchBloom;
-	QHText mShadowLabel, mBloomLabel;
+	Sprite *mbtSwitchShadow, *mbtSwitchBloom, *mbtBloomAmount1, *mbtBloomAmount2;
+	QHText mShadowLabel, mBloomLabel, mBloomAmountLabel;
 	glm::vec2 mDesignResolutionSize;
 public:
 	void Update(int delta);
@@ -33,6 +33,8 @@ public:
 	void OnGameLoadingThreadFinished(int loadingtimeinms);
 	void ClickbuttonShadow();
 	void ClickbuttonBloom();
+	void ClickbuttonBloomAmountLeft();
+	void ClickbuttonBloomAmountRight();
 	Basic();
 	~Basic();
 };

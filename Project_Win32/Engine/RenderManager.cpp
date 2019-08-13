@@ -66,6 +66,7 @@ void RenderManager::Render()
 	//debug
 	//Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
 	//Debugging::getInstance()->DrawTex(mBloomId, "debugShader");
+	//Debugging::getInstance()->DrawTex(mBrightnessRT.GetTextureId(0), "debugShader");
 
 	UserInterface::getInstance()->Render();
 }
@@ -122,16 +123,26 @@ GLuint RenderManager::RenderDepthMap()
 		return 0;
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
+	//glFrontFace(GL_CW);
 	mShadowRT.BeginRender();
 
 	ModelManager::getInstance()->Render(RenderTargetType_DEPTH);
-	glDisable(GL_CULL_FACE);
+	//glDisable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
 	return mShadowRT.EndRender();
 }
 
 GLuint RenderManager::RenderSence()
 {
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDepthFunc(GL_LESS);
+
 	Camera *mCamera = Camera::getInstance();
 
 	mSenceRT.BeginRender();
@@ -149,16 +160,24 @@ GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 	if (!m_isEnableBloom)
 		return 0;
 
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+
 	mBrightnessRT.BeginRender();
 	ShaderManager::getInstance()->setUseProgram("Brightness");
 	mSenceRT.Render();
 	GLuint brightnessRT = mBrightnessRT.EndRender();
 
-	return mBluringRT.MakeBloom(brightnessRT, mAmountBlurBloom);
+	GLuint blurbloomRT = mBluringRT.MakeBloom(brightnessRT, mAmountBlurBloom);
+
+	return blurbloomRT;
 }
 
 void RenderManager::RenderFinal()
 {
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
 
 	ShaderManager::getInstance()->setUseProgram("bloom_Final");
 	//m_default_shader.use();

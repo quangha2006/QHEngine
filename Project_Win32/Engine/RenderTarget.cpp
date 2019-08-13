@@ -271,13 +271,15 @@ void RenderTarget::Render(bool useDefaultShader)
 GLuint RenderTarget::MakeBloom(GLuint BriTexture, unsigned int amount) // amount default = 4
 {
 	bool horizontal = true, first_iteration = true;
-
+	glm::vec2 tex_offset = glm::vec2(1.0f / (float)m_texBufferWidth, 1.0f / (float)m_texBufferHeight);
 	for (unsigned int i = 0; i < amount; i++)
 	{
 		if (horizontal)
 			ShaderManager::getInstance()->setUseProgram("Blur_Horizontal");
 		else
 			ShaderManager::getInstance()->setUseProgram("Blur_Vertical");
+
+		ShaderSet::setVec2("tex_offset", tex_offset);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[horizontal]);
 

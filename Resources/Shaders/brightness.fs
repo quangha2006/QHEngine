@@ -7,7 +7,6 @@ uniform sampler2D scene;
 
 void main()
 {             
-
     vec3 Color = texture(scene, TexCoords).rgb;      
 	float brightness = dot(Color, vec3(0.2126f, 0.7152f, 0.0722f));
     if(brightness > 1.0f)

@@ -55,7 +55,7 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 	if (RT_Type == RenderTargetType_COLOR)
 	{
 		GLuint depthmap = RenderManager::getInstance()->GetDepthMapId();
-		if (depthmap != 0)
+		if (depthmap > 0)
 		{
 			ShaderSet::setBool("useShadowMap", true);
 			glActiveTexture(GL_TEXTURE0 + texture_actived);
@@ -80,6 +80,7 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 		ShaderSet::setBool("useTexture", true);
 	else
 		ShaderSet::setBool("useTexture", false);
+
 }
 
 void QHMaterial::Draw()
