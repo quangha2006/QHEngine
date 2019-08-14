@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- BEGIN_INCLUDE(manifest) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.learnning3D"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.android.QHEngine">
 
     <!-- This .apk has no Java code itself, so set hasCode to false. -->
+    <uses-feature android:glEsVersion="0x00030000" android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="false"
         android:fullBackupContent="false"
@@ -27,10 +30,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-feature android:glEsVersion="0x00030000" android:required="true" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>
     <!-- END_INCLUDE(manifest) -->

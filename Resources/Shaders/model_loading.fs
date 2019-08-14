@@ -1,7 +1,6 @@
 precision highp float;
 
 uniform sampler2D material_texture_diffuse1;
-uniform sampler2D material_texture_diffuse2;
 uniform sampler2D material_texture_specular1;
 uniform sampler2D material_texture_normal1;
 uniform sampler2D shadowMap;
@@ -32,7 +31,6 @@ in vec4 temp;
 
 uniform vec3 viewPos;
 uniform bool enableAlpha;
-uniform bool useTexture;
 uniform bool useNormalMap;
 uniform bool uselighting;
 uniform bool usepointlight;
@@ -43,25 +41,22 @@ layout (location = 0) out vec4 FragColor;
 
 void main()
 {   
-	vec4 color, color_ambient, color_specular, color_diffuse;
-	float shadow = 0.f;
-	vec3 lighting;
-	//highp vec4 masksTexture = texture2D(material_texture_diffuse2,TexCoords);
-	if (useTexture == true)
+	vec4 color = vec4(material_color_diffuse, material_transparent);
+	if (material_color_diffuse.r < 0.f)
 	{
 		color = texture(material_texture_diffuse1, TexCoords);
-		color_ambient = color;
-		color_specular = texture(material_texture_specular1, TexCoords);
-		color_diffuse = color;
 	}
-	else
+	vec4 color_diffuse = vec4(color.rgb,1.f);
+	vec4 color_ambient = color;
+
+	vec4 color_specular = vec4(material_color_specular,1.f);
+	if (material_color_specular.r < 0.f)
 	{
-		color = vec4(material_color_diffuse, material_transparent);
-		color_ambient = color;
-		color_specular = vec4(material_color_specular,1.f);
-		color_diffuse = vec4(material_color_diffuse,1.f);
+		color_specular = texture(material_texture_specular1, TexCoords);
 	}
-	//color_diffuse.rgb = mix(color_diffuse.rgb, color_diffuse.rgb * 3.0 * (pow(vec3(1.0, 0.0, 0.0), vec3(.4545))), masksTexture.r);
+	float shadow = 0.f;
+	vec3 lighting;
+
 	if ((enableAlpha == true) && (color.a < 0.5f))
 	{
 		discard;
@@ -162,7 +157,7 @@ void main()
 		// Total lighting + not shadow
 		lighting = ambient + diffuse + specular;
 	}
-	if (useTexture == false && GammaCorrection == true)
+	if (GammaCorrection == true)
 	{
 		lighting = pow(lighting, vec3(2.2));
 	}
@@ -170,6 +165,4 @@ void main()
 		FragColor = vec4(lighting, color.a);
 	else
 		FragColor = vec4(lighting, material_transparent);
-
-	//FragColor = vec4(temp.xyz, 1.0);
 }

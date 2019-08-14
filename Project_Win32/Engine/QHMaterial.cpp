@@ -8,7 +8,6 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 	GLuint diffuseNr = 1;
 	GLuint specularNr = 1;
 	GLuint normalNr = 1;
-	bool hasmaterial_texture_diffuse1 = false;
 	unsigned int texture_actived = 0;
 
 	ShaderSet::setBool("useNormalMap", false);
@@ -27,13 +26,11 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 		{
 			name = "texture_diffuse";
 			ss << diffuseNr++; // transfer unsigned int to stream
-			hasmaterial_texture_diffuse1 = true;
 		}
 		else if (texturetype == aiTextureType_SPECULAR)
 		{
 			name = "texture_specular";
 			ss << specularNr++; // transfer unsigned int to stream
-			hasmaterial_texture_diffuse1 = true;
 		}
 		else if (texturetype == aiTextureType_NORMALS || texturetype == aiTextureType_HEIGHT)
 		{
@@ -76,11 +73,6 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 
 	if (!isEnableAlpha && RT_Type == RenderTargetType_DEPTH)
 		ShaderSet::setBool("useTexture", false);
-	else if (hasmaterial_texture_diffuse1)
-		ShaderSet::setBool("useTexture", true);
-	else
-		ShaderSet::setBool("useTexture", false);
-
 }
 
 void QHMaterial::Draw()

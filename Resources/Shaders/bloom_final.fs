@@ -22,7 +22,7 @@ void main()
     if(GammaCorrection == true)    
     {
 	// tone mapping
-		//hdrColor = vec3(1.0) - exp(-hdrColor * exposure);
+		hdrColor = vec3(1.0) - exp(-hdrColor * exposure);
 	
 	// also gamma correct while we're at it       
 		hdrColor = pow(hdrColor, vec3(1.0f / gamma));

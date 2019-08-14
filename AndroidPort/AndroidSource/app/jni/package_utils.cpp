@@ -34,7 +34,7 @@ namespace acp_utils
 
 		ScopeGetEnv sta(pEnv);
 
-		jclass localClass = pEnv->FindClass("com/android/learnning3D/GLES3View");
+		jclass localClass = pEnv->FindClass("com/android/QHEngine/GLES3View");
 
 		s_LoadedJavaClass = reinterpret_cast<jclass>(pEnv->NewGlobalRef(localClass));
 	}

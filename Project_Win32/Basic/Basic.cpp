@@ -45,7 +45,7 @@ void Basic::Init()
 	mSpider.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
-	mSpider.SetAnimPlay(0);
+	mSpider.SetAnimPlay(2);
 	//mSpider.SetTimeStampAnim(0);
 	mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(0);

@@ -1,4 +1,4 @@
-package com.android.learnning3D;
+package com.android.QHEngine;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.KeyEvent;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
+import android.view.WindowManager;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -21,13 +22,13 @@ public class GLES3View extends GLSurfaceView{
     static int widthPixels                  = 0;
     static int heightPixels                 = 0;
     float scaleSurfaceView                  = 0.8f;
-    
+    //static Activity activity                = null;
     public GLES3View(Context context) {
     
         super(context);
 
         mInstance = this;
-
+        //activity = (Activity)context;
         DisplayMetrics metrics = getResources().getDisplayMetrics();
 
         widthPixels = metrics.widthPixels;
@@ -49,6 +50,7 @@ public class GLES3View extends GLSurfaceView{
 
         setPreserveEGLContextOnPause(true);
         setRenderer(new Renderer());
+
 
     }
 
@@ -113,6 +115,7 @@ public class GLES3View extends GLSurfaceView{
         }
         return false;
     }
+    
     private static class Renderer implements GLSurfaceView.Renderer {
         public void onDrawFrame(GL10 gl) {
             GLES3JNILib.Update((long)0);

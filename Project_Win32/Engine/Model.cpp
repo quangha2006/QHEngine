@@ -166,7 +166,7 @@ void Model::processMaterial(const aiScene * scene)
 
 		aiColor3D ka_color(0.0f, 0.0f, 0.0f);
 		aiColor3D kd_color(0.0f, 0.0f, 0.0f);
-		aiColor3D ks_color(0.0f, 0.0f, 0.0f);
+		aiColor3D ks_color(0.5f, 0.5f, 0.5f);
 		float transparent = 1.0f;
 		float shininess = 1.0f;
 
@@ -178,10 +178,10 @@ void Model::processMaterial(const aiScene * scene)
 
 		QHMaterial material;
 		// 1. diffuse maps
-		vector<Texture> diffuseMaps = loadMaterialTextures(aimaterial, aiTextureType_DIFFUSE);
+		std::vector<Texture> diffuseMaps = loadMaterialTextures(aimaterial, aiTextureType_DIFFUSE);
 		material.mTextures.insert(material.mTextures.end(), diffuseMaps.begin(), diffuseMaps.end());
 		// 2. specular maps
-		vector<Texture> specularMaps = loadMaterialTextures(aimaterial, aiTextureType_SPECULAR);
+		std::vector<Texture> specularMaps = loadMaterialTextures(aimaterial, aiTextureType_SPECULAR);
 		material.mTextures.insert(material.mTextures.end(), specularMaps.begin(), specularMaps.end());
 		// 3. normal maps
 		std::vector<Texture> normalMaps = loadMaterialTextures(aimaterial, aiTextureType_NORMALS);
@@ -192,7 +192,27 @@ void Model::processMaterial(const aiScene * scene)
 		std::vector<Texture> ambientMaps = loadMaterialTextures(aimaterial, aiTextureType_AMBIENT);
 		material.mTextures.insert(material.mTextures.end(), ambientMaps.begin(), ambientMaps.end());
 
-		
+		if (diffuseMaps.size() > 1)
+			LOGW("Num MaterialTexture DIFFUSE = %d\n", diffuseMaps.size());
+
+		if (specularMaps.size() > 1)
+			LOGW("Num MaterialTexture SPECULAR = %d\n", specularMaps.size());
+
+		if (normalMaps.size() > 1)
+			LOGW("Num MaterialTexture NORMALS = %d\n", normalMaps.size());
+
+		if (heightMaps.size() > 1)
+			LOGW("Num MaterialTexture HEIGHT = %d\n", heightMaps.size());
+
+		if (ambientMaps.size() > 1)
+			LOGW("Num MaterialTexture AMBIENT = %d\n", ambientMaps.size());
+
+		if (diffuseMaps.size() > 0)
+			kd_color.r = -1;
+
+		if (specularMaps.size() > 0)
+			ks_color.r = -1;
+
 		material.mAmbient = glm::vec3(ka_color.r, ka_color.g, ka_color.b);
 		material.mDiffuse = glm::vec3(kd_color.r, kd_color.g, kd_color.b);
 		material.mSpecular = glm::vec3(ks_color.r, ks_color.g, ks_color.b);
@@ -770,10 +790,11 @@ void Model::Translate(glm::vec3 trans)
 void Model::BoneTransform(int64_t TimeInSeconds, vector<glm::mat4>& Transforms)
 {
 	glm::mat4 Identity = glm::mat4();
-
+	if (animToPlay >= mNumAnimations) 
+		animToPlay = 0;
 	double mTicksPerSecond = m_pScene->mAnimations[animToPlay]->mTicksPerSecond;
 	double mDuration = m_pScene->mAnimations[animToPlay]->mDuration;
-	
+
 	float TicksPerSecond = (float)(mTicksPerSecond != 0 ? mTicksPerSecond : 25.0f);
 	double TimeInTicks = ((double)TimeInSeconds / 1000.0) * TicksPerSecond;
 	double AnimationTime = fmod(TimeInTicks, mDuration);
@@ -813,7 +834,7 @@ void Model::SetWorld(glm::mat4 world)
 }
 void Model::SetAnimPlay(int anim)
 {
-	if (anim >= 0 && anim < mNumAnimations)
+	if (anim >= 0)
 		animToPlay = anim;
 }
 void Model::SetDrawPolygon(bool isdrawpolygon)
