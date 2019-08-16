@@ -18,7 +18,7 @@ void Basic::Init()
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	mCamera->lightPos = glm::vec3(8.2f, 10.0f, 9.0f);
 
-	mNanosuit.Init("nanosuit/nanosuit.obj", true, false);
+	//mNanosuit.Init("nanosuit/nanosuit.obj", true, false);
 	mNanosuit.SetScale(glm::vec3(0.4f));
 	mNanosuit.SetPos(glm::vec3(9.0f, 0.0f, 0.0f));
 	mNanosuit.SetDrawPolygon(true);
@@ -33,15 +33,16 @@ void Basic::Init()
 	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
+	//mMerce.Init("Curious skeleton.gltf", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetPos(glm::vec3(0.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
 	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
 	mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	mAstroBoy.SetPos(glm::vec3(-1.0f, 0.0f, 0.0f));
+	mAstroBoy.SetPos(glm::vec3(-7.0f, 0.0f, 0.0f));
 
-	mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
+	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
 	mSpider.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
@@ -50,23 +51,20 @@ void Basic::Init()
 	mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(0);
 
-	mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
+	//mBoblampclean.Init("Woman/WomanAnim.fbx", true);
 	mBoblampclean.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	mBoblampclean.SetPos(glm::vec3(3.5f, 0.0f, 0.0f));
+	mBoblampclean.SetPos(glm::vec3(5.f, 0.0f, 0.0f));
 	mBoblampclean.SetScale(glm::vec3(0.1f));
 	mBoblampclean.SetNeedRotate(true);
 	mBoblampclean.SetUseLighting(false);
 
-	uvcircle.Init("3DBreakOutGame/UVCircle.dae");
+	//uvcircle.Init("3DBreakOutGame/UVCircle.dae");
 	uvcircle.SetScale(glm::vec3(1.0));
 	uvcircle.SetPos(glm::vec3(0.0f, 5.0f, 10.0f));
 
 	//soundIntro.Init("Sound/chuabaogio.wav");
 	//soundIntro.Play();
-	axis.Init(mCamera);
-	m_initialized = true;
-	//RenderManager::getInstance()->SetEnableShadowMap(false);
-	RenderManager::getInstance()->SetEnableBloom(false);
+	
 
 	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
 	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
@@ -108,6 +106,11 @@ void Basic::Init()
 	mbtBloomAmount2->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloomAmountLeft, this));
 	mbtBloomAmount2->SetScale(0.017f);
 	mbtBloomAmount2->SetPos(490, 540 - mbtSwitchBloom->GetHeight() - 8);
+
+	axis.Init(mCamera);
+	m_initialized = true;
+	//RenderManager::getInstance()->SetEnableShadowMap(false);
+	RenderManager::getInstance()->SetEnableBloom(true);
 }
 
 void Basic::Update(int delta)

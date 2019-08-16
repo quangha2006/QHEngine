@@ -4,6 +4,7 @@
 #include <ShaderManager.h>
 #include <stb_image.h>
 #include "QHTexture.h"
+#include "RenderManager.h"
 
 void SkyBox::Init(const char * texturepath)
 {
@@ -29,10 +30,16 @@ void SkyBox::Init(const char * texturepath)
 	"varying vec3 TexCoords;\n"
 	"\n"
 	"uniform samplerCube skybox;\n"
+	"uniform bool GammaCorrection;\n"
 	"\n"
 	"void main()\n"
 	"{\n"
-	"	gl_FragColor = textureCube(skybox, TexCoords);\n"
+	"	vec4 color = textureCube(skybox, TexCoords);\n"
+	"if (GammaCorrection == true)\n"
+	"{\n"
+	"	color.rgb = pow(color.rgb, vec3(2.2));\n"
+	"}\n"
+	"	gl_FragColor = color;\n"
 	"}\n"
 	};
 
@@ -82,7 +89,7 @@ void SkyBox::Draw(Camera *camera)
 	glm::mat4 lookat_tmp = camera->WorldViewProjectionMatrix * model;
 
 	mShader.setMat4("WorldViewProjectionMatrix", lookat_tmp);
-
+	mShader.setInt("GammaCorrection",RenderManager::getInstance()->isEnablemGammaCorrection());
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	glDepthMask(GL_TRUE);

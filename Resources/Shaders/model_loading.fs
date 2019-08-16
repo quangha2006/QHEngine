@@ -46,6 +46,7 @@ void main()
 	{
 		color = texture(material_texture_diffuse1, TexCoords);
 	}
+
 	vec4 color_diffuse = vec4(color.rgb,1.f);
 	vec4 color_ambient = color;
 
@@ -105,6 +106,10 @@ void main()
 		
 	if (uselighting == false)
 	{	
+		if (GammaCorrection == true)
+		{
+			color.rgb = pow(color.rgb, vec3(2.2));
+		}
 		if (enableAlpha == true)
 			FragColor = vec4(color.rgb, color.a);
 		else

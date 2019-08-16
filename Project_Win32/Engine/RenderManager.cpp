@@ -38,9 +38,9 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 #else // Android
 	mSenceRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
 #endif
-	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, width, height);
+	mBrightnessRT.Init(mAppcontext, RenderTargetType_COLOR, width/2, height/2);
 
-	mBluringRT.Init(mAppcontext, RenderTargetType_COLOR_BLURRING, width, height);
+	mBluringRT.Init(mAppcontext, RenderTargetType_COLOR_BLURRING, width/2, height/2);
 
 	InitquadVAO();
 	InitDefaultShader();
@@ -66,6 +66,7 @@ void RenderManager::Render()
 	//debug
 	//Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
 	//Debugging::getInstance()->DrawTex(mBloomId, "debugShader");
+	//Debugging::getInstance()->DrawTex(mSenceTexId, "debugShader");
 	//Debugging::getInstance()->DrawTex(mBrightnessRT.GetTextureId(0), "debugShader");
 
 	UserInterface::getInstance()->Render();
@@ -137,7 +138,8 @@ GLuint RenderManager::RenderDepthMap()
 
 GLuint RenderManager::RenderSence()
 {
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
+	glDisable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -279,8 +281,8 @@ RenderManager::RenderManager()
 	, quadVAO(0)
 	, m_isEnableShadowMap(true)
 	, m_isEnableBloom(true)
-	, mGammaCorrection(false)
-	, mAmountBlurBloom(4)
+	, mGammaCorrection(true)
+	, mAmountBlurBloom(2)
 {
 }
 

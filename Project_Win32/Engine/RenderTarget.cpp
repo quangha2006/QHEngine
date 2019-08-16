@@ -201,7 +201,7 @@ void RenderTarget::BeginRender(const char* shadername)
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
 	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 }
 
 GLuint RenderTarget::EndRender()
@@ -223,7 +223,7 @@ GLuint RenderTarget::EndRender()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	//glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 	//glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 
 	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)
@@ -272,6 +272,7 @@ GLuint RenderTarget::MakeBloom(GLuint BriTexture, unsigned int amount) // amount
 {
 	bool horizontal = true, first_iteration = true;
 	glm::vec2 tex_offset = glm::vec2(1.0f / (float)m_texBufferWidth, 1.0f / (float)m_texBufferHeight);
+	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
 	for (unsigned int i = 0; i < amount; i++)
 	{
 		if (horizontal)
@@ -294,7 +295,7 @@ GLuint RenderTarget::MakeBloom(GLuint BriTexture, unsigned int amount) // amount
 		if (first_iteration)
 			first_iteration = false;
 	}
-
+	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	return m_TexId[!horizontal];
 
