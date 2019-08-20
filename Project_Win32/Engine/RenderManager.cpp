@@ -23,7 +23,7 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	ShaderManager::getInstance()->LoadFromFile("depthShader_skinning", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs", "#define SKINNED");
 	ShaderManager::getInstance()->LoadFromFile("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	ShaderManager::getInstance()->LoadFromFile("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
-	ShaderManager::getInstance()->LoadFromFile("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs");
+	ShaderManager::getInstance()->LoadFromFile("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs", "#define DOWNFILTER");
 	ShaderManager::getInstance()->LoadFromFile("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define HORIZONTAL");
 	ShaderManager::getInstance()->LoadFromFile("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define VERTICAL");
 	ShaderManager::getInstance()->LoadFromFile("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
@@ -67,7 +67,7 @@ void RenderManager::Render()
 	//Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
 	//Debugging::getInstance()->DrawTex(mBloomId, "debugShader");
 	//Debugging::getInstance()->DrawTex(mSenceTexId, "debugShader");
-	//Debugging::getInstance()->DrawTex(mBrightnessRT.GetTextureId(0), "debugShader");
+	Debugging::getInstance()->DrawTex(mBrightnessRT.GetTextureId(0), "debugShader");
 
 	UserInterface::getInstance()->Render();
 }
@@ -167,6 +167,8 @@ GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 
 	mBrightnessRT.BeginRender();
 	ShaderManager::getInstance()->setUseProgram("Brightness");
+	glm::vec2 tex_offset = glm::vec2(1.0f/ (float)mSenceRT.GetWidth(), 1.0f / (float)mSenceRT.GetHeight());
+	ShaderSet::setVec2("u_TexelOffsets", tex_offset);
 	mSenceRT.Render();
 	GLuint brightnessRT = mBrightnessRT.EndRender();
 

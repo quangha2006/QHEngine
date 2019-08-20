@@ -10,7 +10,6 @@ enum RenderTargetType
 	RenderTargetType_DEPTH,
 	RenderTargetType_COLOR,
 	RenderTargetType_COLOR_MULTISAMPLED,
-	RenderTargetType_COLOR_BRIGHTNESS,
 	RenderTargetType_COLOR_BLURRING
 };
 
@@ -35,6 +34,8 @@ public:
 	void BeginRender(const char* shadername = NULL);
 	GLuint EndRender();
 	GLuint GetTextureId(int index);
+	GLuint GetWidth();
+	GLuint GetHeight();
 	void RenderDebug();
 	void Render(bool useDefaultShader = false);
 	GLuint MakeBloom(GLuint BriTexture, unsigned int amount = 4);

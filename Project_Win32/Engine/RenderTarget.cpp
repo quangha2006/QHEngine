@@ -122,41 +122,7 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 			LOGE("ERROR!! RenderTargetType_COLOR_MULTISAMPLED screenTexture is not complete!\n");
 #endif
 		break;
-	case RenderTargetType_COLOR_BRIGHTNESS:
-		LOGI("Create RenderTargetType_COLOR_BRIGHTNESS: %d, %d\n", texWidth, texHeight);
-		// configure MSAA framebuffer
-		glGenFramebuffers(1, &m_FBOId[0]);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
-		glGenTextures(2, m_TexId);
-		for (unsigned int i = 0; i < 2; i++)
-		{
-			glBindTexture(GL_TEXTURE_2D, m_TexId[i]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, m_texBufferWidth, m_texBufferHeight, 0, GL_RGBA, GL_FLOAT, NULL);
-
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_TexId[i], 0);
-		}
-		glGenRenderbuffers(1, &m_rboDepth);
-		glBindRenderbuffer(GL_RENDERBUFFER, m_rboDepth);
-
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, m_texBufferWidth, m_texBufferHeight);
-		// attach buffers
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rboDepth);
-
-
-		glDrawBuffers(2, attachments);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-
-		if (Status != GL_FRAMEBUFFER_COMPLETE)
-			LOGE("ERROR!! RenderTargetType_COLOR_BRIGHTNESS is not complete!\n");
-		break;
+	
 	case RenderTargetType_COLOR_BLURRING:
 		LOGI("Create RenderTargetType_COLOR_BLURRING!\n");
 		glGenFramebuffers(2, m_FBOId);
@@ -237,6 +203,16 @@ GLuint RenderTarget::GetTextureId(int index)
 	return m_TexId[index];
 }
 
+GLuint RenderTarget::GetWidth()
+{
+	return m_texBufferWidth;
+}
+
+GLuint RenderTarget::GetHeight()
+{
+	return m_texBufferHeight;
+}
+
 void RenderTarget::RenderDebug()
 {
 	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)
@@ -272,6 +248,7 @@ GLuint RenderTarget::MakeBloom(GLuint BriTexture, unsigned int amount) // amount
 {
 	bool horizontal = true, first_iteration = true;
 	glm::vec2 tex_offset = glm::vec2(1.0f / (float)m_texBufferWidth, 1.0f / (float)m_texBufferHeight);
+	//glm::vec2 tex_offset = glm::vec2(1.0f / (float)m_appcontext->GetWindowWidth(), 1.0f / (float)m_appcontext->GetWindowHeight());
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
 	for (unsigned int i = 0; i < amount; i++)
 	{
