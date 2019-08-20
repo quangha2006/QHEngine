@@ -86,7 +86,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib;$(SolutionDir)BIN;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engined.lib;glfw3d.lib;glew32sd.lib;opengl32.lib;OpenAL32.lib;assimpd.lib;zlibstaticd.lib;freetype-2.9.1d.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;BulletDynamics_Debug.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.lib;glfw3.lib;glew32s.lib;opengl32.lib;OpenAL32.lib;assimp.lib;zlibstatic.lib;freetype-2.9.1.lib;BulletCollision.lib;LinearMath.lib;BulletDynamics.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
