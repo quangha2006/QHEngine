@@ -791,7 +791,7 @@ void Model::BoneTransform(int64_t TimeInSeconds, vector<glm::mat4>& Transforms)
 {
 	glm::mat4 Identity = glm::mat4();
 	if (animToPlay >= mNumAnimations) 
-		animToPlay = 0;
+		animToPlay = mNumAnimations -1;
 	double mTicksPerSecond = m_pScene->mAnimations[animToPlay]->mTicksPerSecond;
 	double mDuration = m_pScene->mAnimations[animToPlay]->mDuration;
 
@@ -834,7 +834,7 @@ void Model::SetWorld(glm::mat4 world)
 }
 void Model::SetAnimPlay(int anim)
 {
-	if (anim >= 0)
+	if (anim >= 0 && (anim < mNumAnimations && mNumAnimations != -1))
 		animToPlay = anim;
 }
 void Model::SetDrawPolygon(bool isdrawpolygon)
@@ -877,6 +877,20 @@ void Model::SetVisible(bool isvisible)
 bool Model::GetIsVisible()
 {
 	return mIsVisible;
+}
+
+int Model::GetAnimPlay()
+{
+	return animToPlay;
+}
+
+std::string Model::GetAnimNamePlaying()
+{
+	if (!m_pScene->HasAnimations() || animToPlay < 0 || animToPlay >= m_pScene->mNumAnimations) return "";
+
+	aiString animName = m_pScene->mAnimations[animToPlay]->mName;
+	
+	return std::string(animName.C_Str());
 }
 
 int Model::GetId()
@@ -1115,6 +1129,7 @@ Model::Model()
 	, m_NumBones(0)
 	, m_pScene(NULL)
 	, hasAnimation(false)
+	, mNumAnimations(-1)
 	, mtimeStampAnim(-1)
 	, mScale(glm::vec3(1.0f))
 	, mPos(glm::vec3(0.0f))

@@ -4,7 +4,7 @@
 #include "Shader.h"
 #include "Model.h"
 #include "Camera.h"
-#include "ShaderManager.h""
+#include "ShaderManager.h"
 #include "SkyBox.h"
 #include "Sound.h"
 #include "QHAxis.h"
@@ -14,7 +14,7 @@
 class GameDemo : public AppBase
 {
 private:
-
+	Model m_Streetenvironment, mSpider;
 public:
 	void Update(int delta);
 	void Init();

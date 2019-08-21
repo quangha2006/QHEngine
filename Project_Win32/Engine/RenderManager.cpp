@@ -67,7 +67,7 @@ void RenderManager::Render()
 	//Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
 	//Debugging::getInstance()->DrawTex(mBloomId, "debugShader");
 	//Debugging::getInstance()->DrawTex(mSenceTexId, "debugShader");
-	Debugging::getInstance()->DrawTex(mBrightnessRT.GetTextureId(0), "debugShader");
+	//Debugging::getInstance()->DrawTex(mBrightnessRT.GetTextureId(0), "debugShader");
 
 	UserInterface::getInstance()->Render();
 }

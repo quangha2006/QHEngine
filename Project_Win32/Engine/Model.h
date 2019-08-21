@@ -131,6 +131,8 @@ public:
 	void SetId(int id);
 	void SetVisible(bool isvisible);
 	bool GetIsVisible();
+	int GetAnimPlay();
+	std::string GetAnimNamePlaying();
 	void Loading();
 	void Translate(glm::vec3 trans);
 	int GetId();

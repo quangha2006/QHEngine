@@ -238,7 +238,6 @@ Basic::Basic()
 {
 	timestamp_for_lamp = 0;
 	m_initialized = false;
-	mCamera = Camera::getInstance();
 }
 
 Basic::~Basic()
