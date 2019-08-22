@@ -57,6 +57,33 @@ namespace Utils
 		LOGI("\n%f, %f, %f, %f", mat4[2][0], mat4[2][1], mat4[2][2], mat4[2][3]);
 		LOGI("\n%f, %f, %f, %f\n", mat4[3][0], mat4[3][1], mat4[3][2], mat4[3][3]);
 	}
+	void PrintGLEXTENSIONS()
+	{
+		GLint n = 0;
+		glGetIntegerv(GL_NUM_EXTENSIONS, &n);
+		//PFNGLGETSTRINGIPROC glGetStringi = 0;
+		//glGetStringi = (PFNGLGETSTRINGIPROC)wglGetProcAddress("glGetStringi");
+
+		for (GLint i = 0; i < n; i++)
+		{
+			const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, i);
+			LOGI("Ext %d: %s\n", i, extension);
+		}
+	}
+	bool IsExtensionSupported(const char *name)
+	{
+		GLint n = 0;
+		glGetIntegerv(GL_NUM_EXTENSIONS, &n);
+		for (GLint i = 0; i < n; i++)
+		{
+			const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, i);
+			if (strstr(extension, name))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	glm::vec3 RandomColor()
 	{
 		float r = 0.1f;

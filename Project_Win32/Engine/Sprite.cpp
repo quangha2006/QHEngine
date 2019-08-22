@@ -75,7 +75,7 @@ void Sprite::SetCallbackOnTouchBegan(std::function<void()> callback)
 
 bool Sprite::LoadTexture(const char * path)
 {
-	mTexture.id = QHTexture::TextureFromFile(path, Utils::getResourcesFolder(), mTexture.width, mTexture.height);
+	mTexture = QHTexture::TextureFromFile(path, Utils::getResourcesFolder());
 	mLabel = std::string(path);
 	if (mTexture.id == 0)
 		return false;

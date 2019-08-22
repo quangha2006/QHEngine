@@ -479,7 +479,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		bool skip = false;
 		for (unsigned int j = 0; j < textures_loaded.size(); j++)
 		{
-			if (std::strcmp(textures_loaded[j].path.C_Str(), str.C_Str()) == 0)
+			if (std::strcmp(textures_loaded[j].path.c_str(), str.C_Str()) == 0)
 			{
 				textures.push_back(textures_loaded[j]);
 				skip = true; // a texture with the same filepath has already been loaded, continue to next one. (optimization)
@@ -488,10 +488,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type
 		}
 		if (!skip)
 		{   // if texture hasn't been loaded already, load it
-			Texture texture;
-			texture.id = QHTexture::TextureFromFile(str.C_Str(), mDirectory, texture.width, texture.height);
-			texture.type = type;
-			texture.path = str;
+			Texture texture = QHTexture::TextureFromFile(str.C_Str(), mDirectory, type, 0, false);
 			textures.push_back(texture);
 			textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
 		}
