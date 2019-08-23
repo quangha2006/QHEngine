@@ -26,6 +26,7 @@ public:
 	GLint Bitangent_Attribute;
 	GLint Weights_Attribute;
 	GLint IDs_Attribute;
+
 	std::string shaderName;
 
 	bool m_initialized;

@@ -35,21 +35,23 @@ void Basic::Init()
 	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	//mMerce.Init("Curious skeleton.gltf", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	mMerce.SetPos(glm::vec3(0.0f, 1.2f, 1.2f));
+	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
 	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
 	mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	mAstroBoy.SetPos(glm::vec3(7.0f, 0.0f, 0.0f));
+	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
 
-	mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	mSpider.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	mSpider.SetScale(glm::vec3(0.05f));
-	mSpider.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
+	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
+	mSpider.Init("tree/1_3_Tree.dae", false);
+	mSpider.SetRotate(180.0, glm::vec3(1.0f, .0f, .0f));
+	//mSpider.SetScale(glm::vec3(0.004f));
+	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(1);
 	//mSpider.SetTimeStampAnim(0);
-	mSpider.SetNeedRotate(true);
+	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(0);
+	
 
 	//mBoblampclean.Init("Woman/WomanAnim.fbx", true);
 	mBoblampclean.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));

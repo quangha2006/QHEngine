@@ -16,6 +16,8 @@ void Mesh::Draw(RenderTargetType RT_Type, bool useCustomColor, const glm::vec3 &
 		ShaderSet::setBool("useTexture", false);
 		ShaderSet::setVec3("material_color_diffuse", customColor);
 	}
+	
+	//ShaderSet::setMat4("localTransform",mLocalTransformation);
 
 	if (mIsDrawPolygon)
 		QHEngine::DrawElements(GL_LINE_LOOP, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
@@ -45,6 +47,11 @@ void Mesh::SetIndices(GLuint * indices, GLuint numindices)
 {
 	mIndices = indices;
 	mNumIndices = numindices;
+}
+
+void Mesh::SetLocalTransformation(glm::mat4 transformation)
+{
+	mLocalTransformation = transformation;
 }
 
 Vertex * Mesh::GetVertex(GLuint & numvertex)

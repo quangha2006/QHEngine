@@ -86,7 +86,6 @@ namespace QHTexture
 		bool ETC2FORMAT = false;
 		bool tryLoadAgain = true;
 		static bool isSupportETC2 = Utils::IsExtensionSupported("ETC");
-		LOGI("isSupportETC2: %d\n", isSupportETC2);
 		if (isSupportETC2)
 		{
 			std::string newPath = ReplacePathETC(fullpath);

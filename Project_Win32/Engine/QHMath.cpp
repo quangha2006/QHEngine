@@ -14,7 +14,7 @@ namespace QHMath
 	}
 	glm::mat4 Combinetransformations(const glm::mat4 &a, const glm::mat4 &b)
 	{
-		glm::mat4 result(0.0f);
+		glm::mat4 result = glm::mat4();
 		for (unsigned int i = 0; i < 4; i++) {
 			for (unsigned int j = 0; j < 4; j++) {
 				result[i][j] = a[i][0] * b[0][j] +

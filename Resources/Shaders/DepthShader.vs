@@ -6,10 +6,12 @@ in vec4 sIDs;
 in vec3 aNormal;
 in vec3 aTangent;
 in vec3 aBitangent;
+in float atransformId;
 
 out vec2 TexCoords;
 uniform mat4 WorldViewLightSpaceMatrix;
 uniform mat4 gBones[64];
+
 
 void main()
 {
@@ -25,8 +27,6 @@ void main()
 		BoneTransform += gBones[index] * sWeights[3];
 
 		PosL   = BoneTransform * vec4(aPos, 1.0f);
-	#else
-		PosL    = vec4(aPos, 1.0f);
 	#endif
 	
     gl_Position =  WorldViewLightSpaceMatrix * PosL;

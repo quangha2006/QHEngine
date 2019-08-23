@@ -45,7 +45,7 @@ private:
 	GLuint* mIndices_marterial;
 
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
-	Mesh *processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 nodeTransformation);
+	Mesh *processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 localTransform);
 
 	void Pre_processNode(aiNode *node, const aiScene *scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh);
 	void Pre_processMesh(aiMesh *mesh, const aiScene *scene, GLuint &numvertices, GLuint &numindices);

@@ -27,7 +27,7 @@ in vec2 TexCoords;
 in vec3 Normal;
 in mat3 TBN;
 in vec4 FragPosLightSpace;
-in vec4 temp;
+in vec4 Color;
 
 uniform vec3 viewPos;
 uniform bool enableAlpha;
@@ -41,7 +41,8 @@ layout (location = 0) out vec4 FragColor;
 
 void main()
 {   
-	vec4 color = vec4(material_color_diffuse, material_transparent);
+	vec4 color = Color;//vec4(material_color_diffuse, material_transparent);
+	//color.a = material_transparent;
 	if (material_color_diffuse.r < 0.f)
 	{
 		color = texture(material_texture_diffuse1, TexCoords);
@@ -58,7 +59,8 @@ void main()
 	float shadow = 0.f;
 	vec3 lighting;
 
-	if ((enableAlpha == true) && (color.a < 0.5f))
+	//if ((enableAlpha == true) && (color.a < 0.3f))
+	if (color.a < 0.1f)
 	{
 		discard;
 	}

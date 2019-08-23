@@ -7,6 +7,7 @@
 #include "Debugging.h"
 #include "QHMath.h"
 #include "RenderTarget.h"
+#include "QHMaterial.h"
 #include <SOIL.h>
 #include <thread>
 #include <Logs.h>
@@ -64,6 +65,12 @@ void Model::Loading() //thread
 	glm::mat4 NodeTransformation = QHMath::AiToGLMMat4(tmp);
 	NodeTransformation = glm::transpose(NodeTransformation);
 
+	processMaterial(m_pScene);
+
+	uint64_t time_processMaterial = Timer::getMillisecond();
+	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
+	LOGI("ProcessMaterial time : %ums\n\n", (unsigned int)(time_processMaterial - time_loadmodel));
+
 	GLuint numvertices = 0;
 	GLuint numindices = 0;
 	GLuint nummeshes = 0;
@@ -79,14 +86,8 @@ void Model::Loading() //thread
 	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
 	LOGI("Vertices Count: %d\n", mNumVertices);
 	LOGI("Indices Count: %d\n", mNumIndices);
-	LOGI("ProcessNode time : %ums\n\n", (unsigned int)(time_processNode - time_loadmodel));
 
-	processMaterial(m_pScene);
-
-	uint64_t time_processMaterial = Timer::getMillisecond();
-	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
-	LOGI("ProcessMaterial time : %ums\n\n", (unsigned int)(time_processMaterial - time_processNode));
-
+	LOGI("ProcessNode time : %ums\n\n", (unsigned int)(time_processNode - time_processMaterial));
 	
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
 
@@ -270,28 +271,25 @@ void Model::SetupMaterialMesh()
 }
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
 {
-	// process each mesh located at the current node
 	aiMatrix4x4 tmp = node->mTransformation;
 	glm::mat4 currentNodeTransformation = QHMath::AiToGLMMat4(tmp);
 	currentNodeTransformation = glm::transpose(currentNodeTransformation);
-	glm::mat4 Transformation = QHMath::Combinetransformations(nodeTransformation, currentNodeTransformation);
+	glm::mat4 Transformation = QHMath::Combinetransformations(currentNodeTransformation, nodeTransformation);
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
-		// the node object only contains indices to index the actual objects in the scene. 
-		// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		Mesh *meshIndex = processMesh(mesh, scene, Transformation);
 		mMeshes.push_back(meshIndex);
 	}
-	// after we've processed all of the meshes (if any) we then recursively process each of the children nodes
+
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		processNode(node->mChildren[i], scene, Transformation);
 	}
 }
 
-Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTransformation)
+Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTransform)
 {
 	unsigned char WEIGHTS_PER_VERTEX = 4;
 	int boneArraysSize = mesh->mNumVertices * WEIGHTS_PER_VERTEX;
@@ -317,15 +315,19 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 		Vertex vertex;
 		glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
 						  // positions
-		const aiVector3D* pPos = &(mesh->mVertices[i]);
-		vector.x = pPos->x;
-		vector.y = pPos->y;
-		vector.z = pPos->z;
-		if (hasanim)
-			vertex.Position = vector;
-		else
-			vertex.Position = nodeTransformation * glm::vec4(vector, 1.0f);
-		// normals
+		if (mesh->HasPositions())
+		{
+			const aiVector3D* pPos = &(mesh->mVertices[i]);
+
+			vector.x = pPos->x;
+			vector.y = pPos->y;
+			vector.z = pPos->z;
+			if (hasanim)
+				vertex.Position = vector;
+			else
+				vertex.Position = localTransform * glm::vec4(vector, 1.0f);
+		}
+
 		if (mesh->HasNormals())
 		{
 			vector.x = mesh->mNormals[i].x;
@@ -334,15 +336,12 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 			if (hasanim)
 				vertex.Normal = vector;
 			else
-				vertex.Normal = nodeTransformation * glm::vec4(vector, 1.0f);
+				vertex.Normal = localTransform * glm::vec4(vector, 0.0f);
 			hasnormals = true;
 		}
-		else
-		{
-			vertex.Normal = glm::vec3(1.0f, 1.0f, 1.0f);
-		}
+
 		// texture coordinates
-		if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
+		if (mesh->HasTextureCoords(0)) // does the mesh contain texture coordinates?
 		{
 			glm::vec2 vec;
 			// a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't 
@@ -352,8 +351,6 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 			vertex.TexCoords = vec;
 
 		}
-		else
-			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
 
 		if (mesh->HasTangentsAndBitangents())
 		{
@@ -368,10 +365,25 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 			vector.z = mesh->mBitangents[i].z;
 			vertex.Bitangent = vector;
 		}
+
+		if (mesh->HasVertexColors(0))
+		{
+			const aiColor4D* color = &(mesh->mColors[0][i]);
+			vertex.Color.r = color->r;
+			vertex.Color.g = color->g;
+			vertex.Color.b = color->b;
+			vertex.Color.a = color->a;
+		}
 		else
 		{
-			vertex.Tangent = glm::vec3(0.0f, 0.0f, 0.0f);
-			vertex.Bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
+			// Get Color from Materials
+			QHMaterial material = mMaterial[mesh->mMaterialIndex];
+			vec3 color = material.mDiffuse;
+			
+			vertex.Color.r = material.mDiffuse.x;
+			vertex.Color.g = material.mDiffuse.y;
+			vertex.Color.b = material.mDiffuse.z;
+			vertex.Color.a = material.mTransparent;
 		}
 
 		mVertices[mNumVertices++] = vertex;
@@ -463,7 +475,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 nodeTra
 	
 	mesh_current->SetVertex(verCurrentMesh, numvertices);
 	mesh_current->SetIndices(indicesCurrentMesh, numIndices);
-
+	mesh_current->SetLocalTransformation(localTransform);
 	return mesh_current;
 }
 
@@ -502,7 +514,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 	if (!m_initialized || !mCamera || !mIsVisible || mVBO == 0 || mEBO == 0) return;
 	if (RT_Type == RenderTargetType_DEPTH && mIsDrawDepthMap == false) return;
 
-	bool render_model_mode = true;
+	bool render_model_mode = true; // True: Render Material, False: Render Mesh
 
 	glm::mat4 WorldViewLightSpaceMatrix;
 	glm::mat4 WorldViewProjectionMatrix;
@@ -589,7 +601,12 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 	if (modelShader->position_Attribute != -1)
 	{
 		glEnableVertexAttribArray(modelShader->position_Attribute);
-		glVertexAttribPointer(modelShader->position_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+		glVertexAttribPointer(modelShader->position_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
+	}
+	if (modelShader->color_Attribute != -1)
+	{
+		glEnableVertexAttribArray(modelShader->color_Attribute);
+		glVertexAttribPointer(modelShader->color_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
 	}
 	// vertex texture coords
 	if (modelShader->TexCoord_Attribute != -1)
@@ -634,7 +651,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 	{
 		ShaderSet::setBoneMat4("gBones", mTransforms);
 	}
-
+	
 	switch (RT_Type)
 	{
 	case RenderTargetType_DEPTH:

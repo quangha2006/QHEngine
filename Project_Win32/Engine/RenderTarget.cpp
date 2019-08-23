@@ -160,14 +160,11 @@ void RenderTarget::BeginRender(const char* shadername)
 
 	m_isEnable = true;
 
-	//if (shadername != NULL)
-	//	ShaderManager::getInstance()->setUseProgram(shadername);
-
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[0]);
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
 	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glEnable(GL_DEPTH_TEST);
+
 }
 
 GLuint RenderTarget::EndRender()
@@ -187,9 +184,7 @@ GLuint RenderTarget::EndRender()
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	//glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
-	//glClear(GL_COLOR_BUFFER_BIT);
-	//glDisable(GL_DEPTH_TEST);
+
 	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 
 	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)

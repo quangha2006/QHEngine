@@ -17,6 +17,7 @@
 
 struct Vertex {
 	glm::vec3 Position;
+	glm::vec4 Color;
 	glm::vec3 Normal;
 	glm::vec2 TexCoords;
 	glm::vec3 Tangent;
@@ -25,6 +26,12 @@ struct Vertex {
 	glm::vec4 id;
 	Vertex()
 	{
+		Position = glm::vec3(0.0f, 0.0f, 0.0f);
+		Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+		Normal = glm::vec3(1.0f, 1.0f, 1.0f);
+		TexCoords = glm::vec2(0.0f, 0.0f);
+		Tangent = glm::vec3(0.0f, 0.0f, 0.0f);
+		Bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
 		weight = glm::vec4(0.0f);
 		id = glm::vec4(0.0f);
 	}
@@ -65,11 +72,13 @@ private:
 
 	GLuint *mIndices;
 	GLuint mNumIndices;
+	glm::mat4 mLocalTransformation;
 public:
 	void SetUseLighting(bool isuse);
 	void SetDrawPolygon(bool isdrawpolygon);
 	void SetVertex(Vertex * vertex, GLuint numvertex);
 	void SetIndices(GLuint *indices, GLuint numindices);
+	void SetLocalTransformation(glm::mat4 transformation);
 	Vertex *GetVertex(GLuint &numvertex);
 	GLuint *GetIndices(GLuint &numindices);
 	const std::string &GetName();
