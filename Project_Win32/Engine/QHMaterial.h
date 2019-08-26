@@ -16,6 +16,7 @@ public:
 	float mShininess;
 	float mTransparent;
 	bool mHasNormals;
+	bool mIsBackFace;
 	GLuint mIndices_index;
 	GLuint mIndices_size;
 	std::vector<Texture> mTextures;

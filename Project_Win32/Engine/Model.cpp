@@ -164,18 +164,24 @@ void Model::processMaterial(const aiScene * scene)
 	for (unsigned int i = 0; i < nummaterial; i++)
 	{
 		aiMaterial* aimaterial = scene->mMaterials[i];
-
+		
 		aiColor3D ka_color(0.0f, 0.0f, 0.0f);
 		aiColor3D kd_color(0.0f, 0.0f, 0.0f);
 		aiColor3D ks_color(0.5f, 0.5f, 0.5f);
 		float transparent = 1.0f;
 		float shininess = 1.0f;
+		float shininess_strength = 1.0f;
+		bool isbackface = false;
 
 		aimaterial->Get(AI_MATKEY_COLOR_AMBIENT, ka_color);
 		aimaterial->Get(AI_MATKEY_COLOR_DIFFUSE, kd_color);
 		aimaterial->Get(AI_MATKEY_COLOR_SPECULAR, ks_color);
 		aimaterial->Get(AI_MATKEY_OPACITY, transparent);
 		aimaterial->Get(AI_MATKEY_SHININESS, shininess);
+		aimaterial->Get(AI_MATKEY_TWOSIDED, isbackface);
+		aimaterial->Get(AI_MATKEY_SHININESS_STRENGTH, shininess_strength);
+
+		LOGI("shininess_strength: %f\n", shininess_strength);
 
 		QHMaterial material;
 		// 1. diffuse maps
@@ -219,6 +225,7 @@ void Model::processMaterial(const aiScene * scene)
 		material.mSpecular = glm::vec3(ks_color.r, ks_color.g, ks_color.b);
 		material.mShininess = shininess;
 		material.mTransparent = transparent;
+		material.mIsBackFace = isbackface;
 		material.mHasNormals = true;
 		mMaterial.push_back(material);
 	}
@@ -275,14 +282,14 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	glm::mat4 currentNodeTransformation = QHMath::AiToGLMMat4(tmp);
 	currentNodeTransformation = glm::transpose(currentNodeTransformation);
 	glm::mat4 Transformation = QHMath::Combinetransformations(currentNodeTransformation, nodeTransformation);
-
+	
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		Mesh *meshIndex = processMesh(mesh, scene, Transformation);
 		mMeshes.push_back(meshIndex);
 	}
-
+	
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		processNode(node->mChildren[i], scene, Transformation);
@@ -322,7 +329,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 			vector.x = pPos->x;
 			vector.y = pPos->y;
 			vector.z = pPos->z;
-			if (hasanim)
+			if (mesh->HasBones())
 				vertex.Position = vector;
 			else
 				vertex.Position = localTransform * glm::vec4(vector, 1.0f);
@@ -333,7 +340,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
-			if (hasanim)
+			if (mesh->HasBones())
 				vertex.Normal = vector;
 			else
 				vertex.Normal = localTransform * glm::vec4(vector, 0.0f);
@@ -391,10 +398,9 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 
 	// process Bones https://realitymultiplied.wordpress.com/2016/07/23/assimp-skeletal-animation-tutorial-2-loading-up-the-bone-data/
 	
-	if (hasanim)
+	if (mesh->HasBones())
 	{
-		if (mesh->mNumBones > 0)
-			hasbone = true;
+		hasbone = true;
 		for (unsigned int i = 0; i < mesh->mNumBones; i++)
 		{
 			aiBone* aiBone = mesh->mBones[i]; //CREATING A POINTER TO THE CURRENT BONE

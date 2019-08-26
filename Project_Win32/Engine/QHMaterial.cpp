@@ -74,6 +74,10 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 
 	if (!isEnableAlpha && RT_Type == RenderTargetType_DEPTH)
 		ShaderSet::setBool("useTexture", false);
+	if (mIsBackFace)
+		glCullFace(GL_FRONT);
+	else
+		glCullFace(GL_BACK);
 }
 
 void QHMaterial::Draw()

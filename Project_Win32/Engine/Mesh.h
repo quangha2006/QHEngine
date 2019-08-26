@@ -33,7 +33,7 @@ struct Vertex {
 		Tangent = glm::vec3(0.0f, 0.0f, 0.0f);
 		Bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
 		weight = glm::vec4(0.0f);
-		id = glm::vec4(0.0f);
+		id = glm::vec4(-1.0f);
 	}
 };
 struct Material {

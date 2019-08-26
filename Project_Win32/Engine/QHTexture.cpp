@@ -17,16 +17,16 @@ namespace QHTexture
 		CheckGLError("GenTextureId");
 		return textureID;
 	}
-	std::string ReplacePathETC(const std::string &path)
+	std::string ReplacePathETC(std::string currentPath, int mipmap)
 	{
-		std::string currentPath(path);
+		std::string expand = Utils::toString("_mip_%d.pkm", mipmap);
 		int index = currentPath.find_last_of('/');
 		currentPath.insert(index + 1, "ETC2/");
 		index = currentPath.find_last_of('.');
 		if (index > -1)
-			currentPath.replace(index, currentPath.length() - 1, "_mip_0.pkm");
+			currentPath.replace(index, currentPath.length() - 1, expand);
 		else
-			currentPath += "_mip_0.pkm";
+			currentPath += expand;
 		return currentPath;
 	}
 	unsigned char *loadPKMData(const char *filename, int &width, int &height, GLsizei &imgsize, GLenum &internalFormat, GLenum &dataFormat)
@@ -36,7 +36,7 @@ namespace QHTexture
 		unsigned char* tempHeader = NULL;
 		unsigned char* tempTextureData = NULL;
 		unsigned int   fileSize = 0;
-		unsigned int   dataSize = 0;
+		int   dataSize = 0;
 
 		FILE *file = fopen(filename, "rb");
 		if (file == NULL)
@@ -47,27 +47,35 @@ namespace QHTexture
 		fseek(file, 0, SEEK_END);
 		fileSize = ftell(file);
 		fseek(file, 0, SEEK_SET);
-		LOGI("FileSize: %d\n", fileSize);
+		//LOGI("FileSize: %d\n", fileSize);
 		dataSize = fileSize - sizeOfETCHeader;
 		tempHeader = new unsigned char[sizeOfETCHeader];
 		tempTextureData = new unsigned char[dataSize];
 
 		size_t read = fread(tempHeader, sizeof(unsigned char), sizeOfETCHeader, file);
-		LOGI("File Header Size: %d\n", read);
+		//LOGI("File Header Size: %d\n", read);
 		if (read != sizeOfETCHeader) LOGE("Failed to read header PKM file: %s\n", filename);
 		
 		read = fread(tempTextureData, sizeof(unsigned char), dataSize, file);
-		LOGI("File Data Size: %d\n", read);
+		//LOGI("File Data Size: %d\n", read);
 		if (read != dataSize) LOGE("Failed to read data PKM file: %s\n", filename);
 		fclose(file);
 
 		ETC2Header tempEtcHeader(tempHeader);
 		width = ((tempEtcHeader.widthMSB << 8) | tempEtcHeader.widthLSB);
 		height = ((tempEtcHeader.heightMSB << 8) | tempEtcHeader.heightLSB);
-		imgsize = dataSize;
+		imgsize = [](unsigned char paddedWidthMSB, unsigned char paddedWidthLSB, unsigned char paddedHeightMSB, unsigned char paddedHeightLSB)-> GLsizei {
+			unsigned short a = (paddedWidthMSB << 8) | paddedWidthLSB;
+			unsigned short b = (paddedHeightMSB << 8) | paddedHeightLSB;
+			return (GLsizei)(a * b);
+		} (tempEtcHeader.paddedWidthMSB, tempEtcHeader.paddedWidthLSB, tempEtcHeader.paddedHeightMSB, tempEtcHeader.paddedHeightLSB);
+
+		if (read < imgsize)
+			LOGE("Failed to read data PKM file: Read = %u, imgsize = %d", read, imgsize);
+
 		internalFormat = GL_COMPRESSED_RGBA8_ETC2_EAC;
 		dataFormat = GL_RGBA;
-		LOGI("File Size: %d %d\n", width, height);
+		delete[] tempHeader;
 		return tempTextureData;
 	}
 	
@@ -85,23 +93,37 @@ namespace QHTexture
 		unsigned char *data = NULL;
 		bool ETC2FORMAT = false;
 		bool tryLoadAgain = true;
-		static bool isSupportETC2 = Utils::IsExtensionSupported("ETC");
+		static bool isSupportETC2(true);//Utils::IsExtensionSupported("ETC");
 		if (isSupportETC2)
 		{
-			std::string newPath = ReplacePathETC(fullpath);
-			data = loadPKMData(newPath.c_str(), width, height, imgsize, internalFormat, dataFormat);
-			if (data)
+			std::string ETCPath;
+			int mipmap = 0;
+			do {
+				ETCPath = ReplacePathETC(fullpath, mipmap);
+				data = loadPKMData(ETCPath.c_str(), width, height, imgsize, internalFormat, dataFormat);
+				if (data)
+				{
+					if (textureID == 0 && mipmap == 0)
+						textureID = GenTextureId();
+					if (mipmap == 0)
+						glBindTexture(GL_TEXTURE_2D, textureID);
+					glCompressedTexImage2D(GL_TEXTURE_2D, mipmap, internalFormat, width, height, 0, imgsize, data);
+					
+					CheckGLError("Gen ETC2 Texture");
+					delete data;
+					mipmap++;
+				}
+				else
+					break;
+			} while (mipmap <= 10);
+
+			if (mipmap > 0)
 			{
-				if (textureID == 0)
-					textureID = GenTextureId();
-				glBindTexture(GL_TEXTURE_2D, textureID);
-				glCompressedTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, imgsize, data);
 				uint64_t time_end = Timer::getMillisecond();
-				LOGI("Load ETC2 texture: %3ums %s\n", (unsigned int)(time_end - time_begin), newPath.c_str());
-				CheckGLError("Gen ETC2 Texture");
-				delete data;
+				LOGI("Load ETC2 texture: %3ums, total mipmap = %2d, %s\n", (unsigned int)(time_end - time_begin), mipmap, ETCPath.c_str());
 				tryLoadAgain = false;
 			}
+				
 		}
 		if (tryLoadAgain)
 		{

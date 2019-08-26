@@ -41,5 +41,6 @@ void main()
 	result += texture(image, TexCoords + vec2(0.0f, tex_offset.y * 4.0f)).rgb * weight[4];
 	result += texture(image, TexCoords - vec2(0.0f, tex_offset.y * 4.0f)).rgb * weight[4];
 #endif
+	result = clamp(result, vec3(0.0f), vec3(1.0f));
     FragColor = vec4(result, 1.0f);
 }

@@ -17,16 +17,19 @@ void main()
 {
 	highp vec4 PosL = vec4(aPos, 1.0f);
 	#ifdef SKINNED
-		int index = int(sIDs[0]);
-		mat4 BoneTransform	= gBones[index] * sWeights[0];
-		index = int(sIDs[1]);
-		BoneTransform += gBones[index] * sWeights[1];
-		index = int(sIDs[2]);
-		BoneTransform += gBones[index] * sWeights[2];
-		index = int(sIDs[3]);
-		BoneTransform += gBones[index] * sWeights[3];
+		int index = int(sIDs.x);
+		if (index > -1)
+		{
+			mat4 BoneTransform	= gBones[index] * sWeights[0];
+			index = int(sIDs.y);
+			BoneTransform += gBones[index] * sWeights[1];
+			index = int(sIDs.z);
+			BoneTransform += gBones[index] * sWeights[2];
+			index = int(sIDs.w);
+			BoneTransform += gBones[index] * sWeights[3];
 
-		PosL   = BoneTransform * vec4(aPos, 1.0f);
+			PosL   = BoneTransform * vec4(aPos, 1.0f);
+		}
 	#endif
 	
     gl_Position =  WorldViewLightSpaceMatrix * PosL;
