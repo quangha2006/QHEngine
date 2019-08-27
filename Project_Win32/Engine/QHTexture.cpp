@@ -122,6 +122,7 @@ namespace QHTexture
 				uint64_t time_end = Timer::getMillisecond();
 				LOGI("Load ETC2 texture: %3ums, total mipmap = %2d, %s\n", (unsigned int)(time_end - time_begin), mipmap, ETCPath.c_str());
 				tryLoadAgain = false;
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, mipmap - 1);
 			}
 				
 		}

@@ -24,7 +24,7 @@ void main()
 	
 	luminance = dot(temp1.rgb,vec3(0.2126f, 0.7152f, 0.0722f));
 
-	FragColor = vec4(temp1.rgb*(luminance-0.25), temp1.a);
+	FragColor = vec4(temp1.rgb*(luminance-0.25), 1.0f);
 #else
     vec3 Color = texture(scene, TexCoords).rgb;      
 	float brightness = dot(Color, vec3(0.2126f, 0.7152f, 0.0722f));

@@ -59,8 +59,7 @@ void main()
 	float shadow = 0.f;
 	vec3 lighting;
 
-	//if ((enableAlpha == true) && (color.a < 0.3f))
-	if (color.a < 0.1f)
+	if ((enableAlpha == true) && (color.a < 0.2f))
 	{
 		discard;
 	}
@@ -83,7 +82,8 @@ void main()
 		// get depth of current fragment from light's perspective
 		float currentDepth = projCoords.z;
 
-		highp float bias = 0.002f;//0.001*tan(acos(dot(Normal, lightDir))); //max(0.002 * (1.0 - dot(Normal, lightDir)), 0.005); //0.001
+		//highp float bias = 0.002f;
+		highp float bias = 0.002*tan(acos(dot(Normal, lightDir))); //max(0.002 * (1.0 - dot(Normal, lightDir)), 0.005); //0.001
 		//bias = clamp(bias, 0, 0.01);
 
 		shadow = currentDepth - bias > closestDepth  ? 1.0f : 0.0f;

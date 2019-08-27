@@ -13,7 +13,7 @@
 
 void Basic::Init()
 {
-	mCamera->Pos = glm::vec3(5.0f, 5.0f, 20.0f);
+	mCamera->Pos = glm::vec3(0.0f, 5.0f, 20.0f);
 	mCamera->Target = glm::vec3(0.0f, 1.0f, 0.0f);
 	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
 	mCamera->lightPos = glm::vec3(8.2f, 10.0f, 9.0f);
@@ -25,7 +25,7 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, false);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, .1, 48.0), glm::vec3(0., 0.001, 0.));
@@ -33,21 +33,23 @@ void Basic::Init()
 	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
 	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
-	//mMerce.Init("Curious skeleton.gltf", true);
+	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true, true);
-	mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
+	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
+	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
+	mAstroBoy.SetScale(glm::vec3(50.0f));
 	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	mSpider.Init("tree/1_3_Tree.dae", false);
-	mSpider.SetRotate(180.0, glm::vec3(1.0f, .0f, .0f));
+	mSpider.Init("tree/1_3_Tree.dae", true, true);
+	//mSpider.Init("Demo/Box2.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
 	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(1);
+	mSpider.SetRotate(95.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
 	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(0);
@@ -56,12 +58,11 @@ void Basic::Init()
 	//mBoblampclean.Init("Woman/WomanAnim.fbx", true);
 	mBoblampclean.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	mBoblampclean.SetPos(glm::vec3(5.f, 0.0f, 0.0f));
-	mBoblampclean.SetScale(glm::vec3(0.1f));
-	mBoblampclean.SetNeedRotate(true);
+	//mBoblampclean.SetScale(glm::vec3(0.1f));
 	mBoblampclean.SetUseLighting(false);
 
-	//uvcircle.Init("3DBreakOutGame/UVCircle.dae");
-	uvcircle.SetScale(glm::vec3(1.0));
+	//uvcircle.Init("Demo/TextureTest/TextureTest.dae",true);
+	//uvcircle.SetScale(glm::vec3(1.0));
 	uvcircle.SetPos(glm::vec3(0.0f, 5.0f, 10.0f));
 
 	//soundIntro.Init("Sound/chuabaogio.wav");

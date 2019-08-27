@@ -11,6 +11,7 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 	unsigned int texture_actived = 0;
 
 	ShaderSet::setBool("useNormalMap", false);
+	ShaderSet::setBool("enableAlpha", isEnableAlpha);
 
 	for (; texture_actived < mTextures.size(); texture_actived++)
 	{

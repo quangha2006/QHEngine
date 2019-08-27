@@ -45,11 +45,6 @@ void Model::Loading() //thread
 
 	m_pScene = mImporter.ReadFile(path_modif, assimpFlag);
 
-	if ((path_modif.find_last_of(".dae") == (path_modif.length() - 1)) || (path_modif.find_last_of(".md5mesh") == (path_modif.length() - 1)))
-		needRotate = true;
-	else
-		needRotate = false;
-
 	uint64_t time_loadmodel = Timer::getMillisecond();
 	LOGI("Load Model time : %ums\n\n", (unsigned int)(time_loadmodel - time_ms_begin));
 	// check for errors
@@ -61,9 +56,8 @@ void Model::Loading() //thread
 	// retrieve the directory path of the filepath
 	mDirectory = path_modif.substr(0, path_modif.find_last_of('/'));
 	// process ASSIMP's root node recursively
-	aiMatrix4x4 tmp = m_pScene->mRootNode->mTransformation;
-	glm::mat4 NodeTransformation = QHMath::AiToGLMMat4(tmp);
-	NodeTransformation = glm::transpose(NodeTransformation);
+	
+	//m_GlobalInverseTransform = glm::inverse(QHMath::AiToGLMMat4(m_pScene->mRootNode->mTransformation));
 
 	processMaterial(m_pScene);
 
@@ -80,7 +74,7 @@ void Model::Loading() //thread
 	mIndices = new GLuint[numindices];
 	mMeshes.reserve(nummeshes);
 
-	processNode(m_pScene->mRootNode, m_pScene, NodeTransformation);
+	processNode(m_pScene->mRootNode, m_pScene, glm::mat4());
 
 	uint64_t time_processNode = Timer::getMillisecond();
 	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
@@ -91,7 +85,7 @@ void Model::Loading() //thread
 	
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
 
-	m_GlobalInverseTransform = glm::inverse(QHMath::AiToGLMMat4(m_pScene->mRootNode->mTransformation));
+	
 
 	if (m_pScene->HasAnimations())
 	{
@@ -181,7 +175,6 @@ void Model::processMaterial(const aiScene * scene)
 		aimaterial->Get(AI_MATKEY_TWOSIDED, isbackface);
 		aimaterial->Get(AI_MATKEY_SHININESS_STRENGTH, shininess_strength);
 
-		LOGI("shininess_strength: %f\n", shininess_strength);
 
 		QHMaterial material;
 		// 1. diffuse maps
@@ -281,8 +274,8 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	aiMatrix4x4 tmp = node->mTransformation;
 	glm::mat4 currentNodeTransformation = QHMath::AiToGLMMat4(tmp);
 	currentNodeTransformation = glm::transpose(currentNodeTransformation);
-	glm::mat4 Transformation = QHMath::Combinetransformations(currentNodeTransformation, nodeTransformation);
-	
+	glm::mat4 Transformation = QHMath::CombineMat4(currentNodeTransformation, nodeTransformation);
+
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -533,12 +526,6 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 	if (isRotate)
 		tmp_model = glm::rotate(tmp_model, glm::radians(angle), axis);
 
-	if (needRotate)
-	{
-		tmp_model = glm::rotate(tmp_model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		tmp_model = glm::rotate(tmp_model, glm::radians(270.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	}
-
 	switch (RT_Type)
 	{
 		case RenderTargetType_DEPTH:
@@ -576,7 +563,6 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 			ShaderSet::setVec3("viewPos", mCamera->Pos);
 
 			ShaderSet::setBool("usepointlight", this->isUsePointLight);
-			ShaderSet::setBool("enableAlpha", mIsEnableAlpha); //temp
 
 			model_inverse = glm::inverse(tmp_model);
 			model_inverse = glm::transpose(model_inverse);
@@ -869,10 +855,6 @@ void Model::SetDrawPolygon(bool isdrawpolygon)
 		mMeshes[i]->SetDrawPolygon(isDrawPolygon);
 	}
 }
-void Model::SetNeedRotate(bool isNeedRotate)
-{
-	this->needRotate = isNeedRotate;
-}
 
 void Model::SetCamera(Camera * camera)
 {
@@ -962,13 +944,11 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 
 	const aiAnimation* pAnimation = m_pScene->mAnimations[animToPlay];
 
-	aiMatrix4x4 tmp = pNode->mTransformation;
+	aiMatrix4x4 localTransForm = pNode->mTransformation;
 
-	glm::mat4 NodeTransformation = QHMath::AiToGLMMat4(tmp);
+	glm::mat4 NodeTransformation = QHMath::AiToGLMMat4(localTransForm);
 
 	const aiNodeAnim* pNodeAnim = FindNodeAnim(pAnimation, NodeName);
-
-	glm::mat4 GlobalTransformation = QHMath::Combinetransformations(ParentTransform, NodeTransformation);
 
 	if (pNodeAnim) {
 		// Interpolate scaling and generate scaling transformation matrix
@@ -976,8 +956,7 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 		CalcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
 		glm::mat4 ScalingM = glm::mat4();
 		ScalingM = glm::scale(ScalingM, glm::vec3(Scaling.x, Scaling.y, Scaling.z));
-		//InitScaleTransform(ScalingM, Scaling.x, Scaling.y, Scaling.z);
-
+		
 		// Interpolate rotation and generate rotation transformation matrix
 		aiQuaternion RotationQ;
 		CalcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);
@@ -987,11 +966,10 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 		RotationM[1][3] = 0.0f; 
 		RotationM[2][3] = 0.0f; 
 		RotationM[3][0] = 0.0f; RotationM[3][1] = 0.0f; RotationM[3][2] = 0.0f; RotationM[3][3] = 1.0f;
-		
+
 		// Interpolate translation and generate translation transformation matrix
 		aiVector3D Translation;
 		CalcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
-
 		//InitTranslationTransform
 		glm::mat4 TranslationM = glm::mat4();
 		TranslationM[0][3] = Translation.x;
@@ -999,16 +977,16 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 		TranslationM[2][3] = Translation.z;
 
 		// Combine the above transformations
-		glm::mat4 tmp1 = QHMath::Combinetransformations(TranslationM, RotationM);
-		glm::mat4 tmp2 = QHMath::Combinetransformations(tmp1, ScalingM);
-		NodeTransformation = tmp2;
-		GlobalTransformation = QHMath::Combinetransformations(ParentTransform, NodeTransformation);
+		// TranslationM * RotationM * ScalingM
+		glm::mat4 tmp1 = QHMath::CombineMat4(TranslationM, RotationM);
+		NodeTransformation = QHMath::CombineMat4(tmp1, ScalingM);
 	}
+
+	glm::mat4 GlobalTransformation = QHMath::CombineMat4(ParentTransform, NodeTransformation);
 
 	if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
 		uint BoneIndex = m_BoneMapping[NodeName];
-		glm::mat4 tmp3 = QHMath::Combinetransformations(m_GlobalInverseTransform, GlobalTransformation);
-		glm::mat4 tmp4 = QHMath::Combinetransformations(tmp3, m_BoneInfo[BoneIndex].BoneOffset);
+		glm::mat4 tmp4 = QHMath::CombineMat4(GlobalTransformation, m_BoneInfo[BoneIndex].BoneOffset);
 		m_BoneInfo[BoneIndex].FinalTransformation = tmp4;
 	}
 
@@ -1025,7 +1003,6 @@ const aiNodeAnim * Model::FindNodeAnim(const aiAnimation * pAnimation, const str
 			return pNodeAnim;
 		}
 	}
-
 	return NULL;
 }
 void Model::CalcInterpolatedScaling(aiVector3D & Out, double AnimationTime, const aiNodeAnim * pNodeAnim)
@@ -1056,9 +1033,7 @@ uint Model::FindScaling(double AnimationTime, const aiNodeAnim * pNodeAnim)
 			return i;
 		}
 	}
-
 	//assert(0);
-
 	return 0;
 }
 void Model::CalcInterpolatedRotation(aiQuaternion & Out, double AnimationTime, const aiNodeAnim * pNodeAnim)

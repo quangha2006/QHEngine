@@ -57,6 +57,10 @@ namespace Utils
 		LOGI("\n%f, %f, %f, %f", mat4[2][0], mat4[2][1], mat4[2][2], mat4[2][3]);
 		LOGI("\n%f, %f, %f, %f\n", mat4[3][0], mat4[3][1], mat4[3][2], mat4[3][3]);
 	}
+	//void PrintVec3(aiVec)
+	//{
+
+	//}
 	void PrintGLEXTENSIONS()
 	{
 		GLint n = 0;

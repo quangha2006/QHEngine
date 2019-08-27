@@ -75,7 +75,6 @@ private:
 	bool isUsePointLight;
 	glm::vec3 customColor;
 	bool useCustomColor;
-	bool needRotate;
 	bool gammaCorrection;
 	string mDirectory;
 	string mSrcPath;
@@ -110,7 +109,7 @@ private:
 	void SetWorld(glm::mat4 world = glm::mat4());
 
 public:
-	void Init(const string &path, bool FlipUVs = false, bool enableAlpha = true, float fixedModel = 1.0f);
+	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
 	void SetUseLighting(bool UseLighting);
 	void SetisUsePointLight(bool UsePointLight);
@@ -125,7 +124,6 @@ public:
 	void SetRotate(float angle, glm::vec3 rotate);
 	void SetAnimPlay(int anim);
 	void SetDrawPolygon(bool isdrawpolygon);
-	void SetNeedRotate(bool isNeedRotate);
 	void SetCamera(Camera * camera);
 	void SetDrawMesh(int mesh);
 	void SetId(int id);

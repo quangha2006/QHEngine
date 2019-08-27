@@ -12,7 +12,7 @@ namespace QHMath
 
 		return tmp;
 	}
-	glm::mat4 Combinetransformations(const glm::mat4 &a, const glm::mat4 &b)
+	glm::mat4 CombineMat4(const glm::mat4 &a, const glm::mat4 &b)
 	{
 		glm::mat4 result = glm::mat4();
 		for (unsigned int i = 0; i < 4; i++) {

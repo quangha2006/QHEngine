@@ -40,7 +40,7 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 		program = -1;
 		return false;
 	}
-
+	LOGI("CreateProgram: %u\n", program);
 	return true;
 }
 
