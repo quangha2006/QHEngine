@@ -38,18 +38,18 @@ void Basic::Init()
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
+	//mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	mAstroBoy.SetScale(glm::vec3(50.0f));
 	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
 	mSpider.Init("tree/1_3_Tree.dae", true, true);
-	//mSpider.Init("Demo/Box2.dae", true);
+	//mSpider.Init("Demo/BoxAnim.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
 	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(1);
-	mSpider.SetRotate(95.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	//mSpider.SetRotate(95.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
 	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(0);
@@ -192,7 +192,6 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 
 bool Basic::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 {
-	//mbutton->SetPos(x, y);
 	return false;
 }
 

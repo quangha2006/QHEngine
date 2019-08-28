@@ -3,6 +3,36 @@
 #include "RenderManager.h"
 #include "Debugging.h"
 
+vector<Texture> loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::string &currentDirectory)
+{
+	vector<Texture> textures;
+	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+	{
+		aiString str;
+		mat->GetTexture(type, i, &str);
+		if (str.length <= 0) continue;
+		// check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
+		bool skip = false;
+		//for (unsigned int j = 0; j < textures_loaded.size(); j++)
+		//{
+		//	if (std::strcmp(textures_loaded[j].path.c_str(), str.C_Str()) == 0)
+		//	{
+		//		textures.push_back(textures_loaded[j]);
+		//		skip = true; // a texture with the same filepath has already been loaded, continue to next one. (optimization)
+		//		break;
+		//	}
+		//}
+		if (!skip)
+		{   // if texture hasn't been loaded already, load it
+			Texture texture = QHTexture::TextureFromFile(str.C_Str(), currentDirectory, type, 0, false);
+			textures.push_back(texture);
+			//textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+		}
+	}
+
+	return textures;
+}
+
 void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 {
 	GLuint diffuseNr = 1;
@@ -88,11 +118,76 @@ void QHMaterial::Draw()
 	QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
 }
 
-QHMaterial::QHMaterial()
+bool QHMaterial::isTransparent()
+{
+	if (mTransparent < 0.9f)
+		return true;
+	return false;
+}
+
+QHMaterial::QHMaterial(aiMaterial* aimaterial, std::string &currentDirectory)
 	: mHasNormals(true)
 	, mIndices_index(0)
 	, mIndices_size(0)
 {
+	aiColor3D ka_color(0.0f, 0.0f, 0.0f);
+	aiColor3D kd_color(0.0f, 0.0f, 0.0f);
+	aiColor3D ks_color(0.5f, 0.5f, 0.5f);
+	float transparent = 1.0f;
+	float shininess = 1.0f;
+	float shininess_strength = 1.0f;
+	bool isbackface = false;
+
+	aimaterial->Get(AI_MATKEY_COLOR_AMBIENT, ka_color);
+	aimaterial->Get(AI_MATKEY_COLOR_DIFFUSE, kd_color);
+	aimaterial->Get(AI_MATKEY_COLOR_SPECULAR, ks_color);
+	aimaterial->Get(AI_MATKEY_OPACITY, transparent);
+	aimaterial->Get(AI_MATKEY_SHININESS, shininess);
+	aimaterial->Get(AI_MATKEY_TWOSIDED, isbackface);
+	aimaterial->Get(AI_MATKEY_SHININESS_STRENGTH, shininess_strength);
+
+	// 1. diffuse maps
+	std::vector<Texture> diffuseMaps = loadMaterialTextures(aimaterial, aiTextureType_DIFFUSE, currentDirectory);
+	mTextures.insert(mTextures.end(), diffuseMaps.begin(), diffuseMaps.end());
+	// 2. specular maps
+	std::vector<Texture> specularMaps = loadMaterialTextures(aimaterial, aiTextureType_SPECULAR, currentDirectory);
+	mTextures.insert(mTextures.end(), specularMaps.begin(), specularMaps.end());
+	// 3. normal maps
+	std::vector<Texture> normalMaps = loadMaterialTextures(aimaterial, aiTextureType_NORMALS, currentDirectory);
+	mTextures.insert(mTextures.end(), normalMaps.begin(), normalMaps.end());
+	std::vector<Texture> heightMaps = loadMaterialTextures(aimaterial, aiTextureType_HEIGHT, currentDirectory);
+	mTextures.insert(mTextures.end(), heightMaps.begin(), heightMaps.end());
+	// 4. height maps
+	std::vector<Texture> ambientMaps = loadMaterialTextures(aimaterial, aiTextureType_AMBIENT, currentDirectory);
+	mTextures.insert(mTextures.end(), ambientMaps.begin(), ambientMaps.end());
+
+	if (diffuseMaps.size() > 1)
+		LOGW("Num MaterialTexture DIFFUSE = %d\n", diffuseMaps.size());
+
+	if (specularMaps.size() > 1)
+		LOGW("Num MaterialTexture SPECULAR = %d\n", specularMaps.size());
+
+	if (normalMaps.size() > 1)
+		LOGW("Num MaterialTexture NORMALS = %d\n", normalMaps.size());
+
+	if (heightMaps.size() > 1)
+		LOGW("Num MaterialTexture HEIGHT = %d\n", heightMaps.size());
+
+	if (ambientMaps.size() > 1)
+		LOGW("Num MaterialTexture AMBIENT = %d\n", ambientMaps.size());
+
+	if (diffuseMaps.size() > 0)
+		kd_color.r = -1;
+
+	if (specularMaps.size() > 0)
+		ks_color.r = -1;
+
+	mAmbient = glm::vec3(ka_color.r, ka_color.g, ka_color.b);
+	mDiffuse = glm::vec3(kd_color.r, kd_color.g, kd_color.b);
+	mSpecular = glm::vec3(ks_color.r, ks_color.g, ks_color.b);
+	mShininess = shininess;
+	mTransparent = transparent;
+	mIsBackFace = isbackface;
 }
 
 

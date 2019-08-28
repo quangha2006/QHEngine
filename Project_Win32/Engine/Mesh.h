@@ -85,6 +85,7 @@ public:
 	GLuint GetIndicesIndex();
 	GLuint GetIndicesSize();
 	GLuint GetMaterialId();
+	void SetMaterialId(GLuint newid);
 	void Draw(RenderTargetType RT_Type
 		, bool useCustomColor = false
 		, const glm::vec3 &customColor = glm::vec3(0.0f, 0.0f, 0.0f));

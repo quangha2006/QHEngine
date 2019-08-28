@@ -86,6 +86,11 @@ GLuint Mesh::GetMaterialId()
 	return mMaterial_Id;
 }
 
+void Mesh::SetMaterialId(GLuint newid)
+{
+	mMaterial_Id = newid;
+}
+
 Mesh::Mesh(GLuint indices_index
 	, GLuint indices_size
 	, GLuint material_id

@@ -39,7 +39,7 @@ void Model::Loading() //thread
 
 	LOGI("\nLoad Model: %s\n", path_modif.c_str());
 
-	unsigned int assimpFlag = aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices;
+	unsigned int assimpFlag = aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices | aiProcess_GenNormals;
 	if (mFlipUVs)
 		assimpFlag |= aiProcess_FlipUVs;;
 
@@ -56,8 +56,6 @@ void Model::Loading() //thread
 	// retrieve the directory path of the filepath
 	mDirectory = path_modif.substr(0, path_modif.find_last_of('/'));
 	// process ASSIMP's root node recursively
-	
-	//m_GlobalInverseTransform = glm::inverse(QHMath::AiToGLMMat4(m_pScene->mRootNode->mTransformation));
 
 	processMaterial(m_pScene);
 
@@ -84,8 +82,6 @@ void Model::Loading() //thread
 	LOGI("ProcessNode time : %ums\n\n", (unsigned int)(time_processNode - time_processMaterial));
 	
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
-
-	
 
 	if (m_pScene->HasAnimations())
 	{
@@ -158,68 +154,9 @@ void Model::processMaterial(const aiScene * scene)
 	for (unsigned int i = 0; i < nummaterial; i++)
 	{
 		aiMaterial* aimaterial = scene->mMaterials[i];
-		
-		aiColor3D ka_color(0.0f, 0.0f, 0.0f);
-		aiColor3D kd_color(0.0f, 0.0f, 0.0f);
-		aiColor3D ks_color(0.5f, 0.5f, 0.5f);
-		float transparent = 1.0f;
-		float shininess = 1.0f;
-		float shininess_strength = 1.0f;
-		bool isbackface = false;
 
-		aimaterial->Get(AI_MATKEY_COLOR_AMBIENT, ka_color);
-		aimaterial->Get(AI_MATKEY_COLOR_DIFFUSE, kd_color);
-		aimaterial->Get(AI_MATKEY_COLOR_SPECULAR, ks_color);
-		aimaterial->Get(AI_MATKEY_OPACITY, transparent);
-		aimaterial->Get(AI_MATKEY_SHININESS, shininess);
-		aimaterial->Get(AI_MATKEY_TWOSIDED, isbackface);
-		aimaterial->Get(AI_MATKEY_SHININESS_STRENGTH, shininess_strength);
+		QHMaterial material(aimaterial, mDirectory);
 
-
-		QHMaterial material;
-		// 1. diffuse maps
-		std::vector<Texture> diffuseMaps = loadMaterialTextures(aimaterial, aiTextureType_DIFFUSE);
-		material.mTextures.insert(material.mTextures.end(), diffuseMaps.begin(), diffuseMaps.end());
-		// 2. specular maps
-		std::vector<Texture> specularMaps = loadMaterialTextures(aimaterial, aiTextureType_SPECULAR);
-		material.mTextures.insert(material.mTextures.end(), specularMaps.begin(), specularMaps.end());
-		// 3. normal maps
-		std::vector<Texture> normalMaps = loadMaterialTextures(aimaterial, aiTextureType_NORMALS);
-		material.mTextures.insert(material.mTextures.end(), normalMaps.begin(), normalMaps.end());
-		std::vector<Texture> heightMaps = loadMaterialTextures(aimaterial, aiTextureType_HEIGHT);
-		material.mTextures.insert(material.mTextures.end(), heightMaps.begin(), heightMaps.end());
-		// 4. height maps
-		std::vector<Texture> ambientMaps = loadMaterialTextures(aimaterial, aiTextureType_AMBIENT);
-		material.mTextures.insert(material.mTextures.end(), ambientMaps.begin(), ambientMaps.end());
-
-		if (diffuseMaps.size() > 1)
-			LOGW("Num MaterialTexture DIFFUSE = %d\n", diffuseMaps.size());
-
-		if (specularMaps.size() > 1)
-			LOGW("Num MaterialTexture SPECULAR = %d\n", specularMaps.size());
-
-		if (normalMaps.size() > 1)
-			LOGW("Num MaterialTexture NORMALS = %d\n", normalMaps.size());
-
-		if (heightMaps.size() > 1)
-			LOGW("Num MaterialTexture HEIGHT = %d\n", heightMaps.size());
-
-		if (ambientMaps.size() > 1)
-			LOGW("Num MaterialTexture AMBIENT = %d\n", ambientMaps.size());
-
-		if (diffuseMaps.size() > 0)
-			kd_color.r = -1;
-
-		if (specularMaps.size() > 0)
-			ks_color.r = -1;
-
-		material.mAmbient = glm::vec3(ka_color.r, ka_color.g, ka_color.b);
-		material.mDiffuse = glm::vec3(kd_color.r, kd_color.g, kd_color.b);
-		material.mSpecular = glm::vec3(ks_color.r, ks_color.g, ks_color.b);
-		material.mShininess = shininess;
-		material.mTransparent = transparent;
-		material.mIsBackFace = isbackface;
-		material.mHasNormals = true;
 		mMaterial.push_back(material);
 	}
 }
@@ -265,7 +202,30 @@ void Model::SetupMaterialMesh()
 		}
 		mMaterial[i].mIndices_size = last_indices_index - mMaterial[i].mIndices_index;
 	}
+	// sort transparent
 
+	unsigned int j = mMaterial.size() - 1;
+	unsigned int i = 0;
+	while (i < j)
+	{
+		if (mMaterial[i].isTransparent())
+		{
+			std::swap(mMaterial[i], mMaterial[j]);
+			// also swap material id in mesh
+			for (unsigned int k = 0; k < mMeshes.size(); k++)
+			{
+				if (mMeshes[k]->GetMaterialId() == i)
+					mMeshes[k]->SetMaterialId(j);
+				if (mMeshes[k]->GetMaterialId() == j)
+					mMeshes[k]->SetMaterialId(i);
+			}
+			--j;
+		}
+		else
+		{
+			++i;
+		}
+	}
 	uint64_t time_end = Timer::getMillisecond(); 
 	LOGI("SetupMaterialMesh time: %dms \n\n", ((int)(time_end - time_begin)));
 }
@@ -293,9 +253,13 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 {
 	unsigned char WEIGHTS_PER_VERTEX = 4;
 	int boneArraysSize = mesh->mNumVertices * WEIGHTS_PER_VERTEX;
-	bool hasnormals = false;
-	bool hasbone = false;
-	bool hasanim = scene->HasAnimations();
+
+	bool hasBones = mesh->HasBones();
+	bool hasPos = mesh->HasPositions();
+	bool hasNormals = mesh->HasNormals();
+	bool hasTextureCoords0 = mesh->HasTextureCoords(0);
+	bool hasTangentsAndBitangents = mesh->HasTangentsAndBitangents();
+	bool hasVertexColors0 = mesh->HasVertexColors(0);
 	// data to fill
 	vector<Texture> textures;
 	vector<float> boneWeights(boneArraysSize, 0.0f);
@@ -307,7 +271,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 	unsigned int numvertices = mesh->mNumVertices;
 
 	// Walk through each of the mesh's vertices
-	if (!mesh->HasNormals())
+	if (!hasNormals)
 		LOGW("WARNING!!!: Mesh has no normal => disable lighting for this mesh\n");
 
 	for (unsigned int i = 0; i < numvertices; i++)
@@ -315,33 +279,32 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 		Vertex vertex;
 		glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
 						  // positions
-		if (mesh->HasPositions())
+		if (hasPos)
 		{
 			const aiVector3D* pPos = &(mesh->mVertices[i]);
 
 			vector.x = pPos->x;
 			vector.y = pPos->y;
 			vector.z = pPos->z;
-			if (mesh->HasBones())
+			if (hasBones)
 				vertex.Position = vector;
 			else
 				vertex.Position = localTransform * glm::vec4(vector, 1.0f);
 		}
 
-		if (mesh->HasNormals())
+		if (hasNormals)
 		{
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
-			if (mesh->HasBones())
+			if (hasBones)
 				vertex.Normal = vector;
 			else
 				vertex.Normal = localTransform * glm::vec4(vector, 0.0f);
-			hasnormals = true;
 		}
 
 		// texture coordinates
-		if (mesh->HasTextureCoords(0)) // does the mesh contain texture coordinates?
+		if (hasTextureCoords0) // does the mesh contain texture coordinates?
 		{
 			glm::vec2 vec;
 			// a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't 
@@ -352,7 +315,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 
 		}
 
-		if (mesh->HasTangentsAndBitangents())
+		if (hasTangentsAndBitangents)
 		{
 			// tangent
 			vector.x = mesh->mTangents[i].x;
@@ -366,7 +329,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 			vertex.Bitangent = vector;
 		}
 
-		if (mesh->HasVertexColors(0))
+		if (hasVertexColors0)
 		{
 			const aiColor4D* color = &(mesh->mColors[0][i]);
 			vertex.Color.r = color->r;
@@ -391,9 +354,8 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 
 	// process Bones https://realitymultiplied.wordpress.com/2016/07/23/assimp-skeletal-animation-tutorial-2-loading-up-the-bone-data/
 	
-	if (mesh->HasBones())
+	if (hasBones)
 	{
-		hasbone = true;
 		for (unsigned int i = 0; i < mesh->mNumBones; i++)
 		{
 			aiBone* aiBone = mesh->mBones[i]; //CREATING A POINTER TO THE CURRENT BONE
@@ -470,42 +432,12 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 		}
 	}
 
-	Mesh *mesh_current = new Mesh(indices_index, numIndices, mesh->mMaterialIndex, string(mesh->mName.C_Str()), hasnormals, hasbone);
+	Mesh *mesh_current = new Mesh(indices_index, numIndices, mesh->mMaterialIndex, string(mesh->mName.C_Str()), hasNormals, hasBones);
 	
 	mesh_current->SetVertex(verCurrentMesh, numvertices);
 	mesh_current->SetIndices(indicesCurrentMesh, numIndices);
 	mesh_current->SetLocalTransformation(localTransform);
 	return mesh_current;
-}
-
-vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type)
-{
-	vector<Texture> textures;
-	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
-	{
-		aiString str;
-		mat->GetTexture(type, i, &str);
-		if (str.length <= 0) continue;
-		// check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
-		bool skip = false;
-		for (unsigned int j = 0; j < textures_loaded.size(); j++)
-		{
-			if (std::strcmp(textures_loaded[j].path.c_str(), str.C_Str()) == 0)
-			{
-				textures.push_back(textures_loaded[j]);
-				skip = true; // a texture with the same filepath has already been loaded, continue to next one. (optimization)
-				break;
-			}
-		}
-		if (!skip)
-		{   // if texture hasn't been loaded already, load it
-			Texture texture = QHTexture::TextureFromFile(str.C_Str(), mDirectory, type, 0, false);
-			textures.push_back(texture);
-			textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
-		}
-	}
-
-	return textures;
 }
 
 void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
@@ -650,7 +582,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 		QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, (void*)0);
 		break;
 	case RenderTargetType_COLOR:
-		if (render_model_mode)
+		if (mRenderMode == RenderMode::RenderMode_Material)
 		{
 			for (GLuint i = 0; i < mMaterial.size(); i++)
 			{
@@ -661,7 +593,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 		}
 		else
 		{
-			if (m_meshdraw > -1)
+			if (m_meshdraw > -1) // Draw custom mesh
 			{
 				if (m_meshdraw < (int)mMeshes.size())
 				{
@@ -1151,6 +1083,7 @@ Model::Model()
 	, mIndices_marterial(nullptr)
 	, mNumVertices(0)
 	, mNumIndices(0)
+	, mRenderMode(RenderMode::RenderMode_Material)
 {
 	ModelManager::getInstance()->AddModel(this);
 }

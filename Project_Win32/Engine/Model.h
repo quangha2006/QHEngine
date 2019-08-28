@@ -26,6 +26,11 @@
 #include <thread>
 
 using namespace std;
+enum RenderMode
+{
+	RenderMode_Material,
+	RenderMode_Mesh
+};
 
 class Model
 {
@@ -52,8 +57,6 @@ private:
 
 	void processMaterial(const aiScene* scene);
 	void SetupMaterialMesh();
-
-	vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type);
 
 	/*==== Animation ====*/
 	Assimp::Importer mImporter;
@@ -92,6 +95,7 @@ private:
 
 	int m_Id;
 	int m_meshdraw;
+	RenderMode mRenderMode;
 
 	btRigidBody* mRigidBody;
 	glm::vec3 mFixedBoxShape;

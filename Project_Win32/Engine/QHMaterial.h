@@ -4,6 +4,9 @@
 #include <vector>
 #include "QHTexture.h"
 #include "Mesh.h"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 class QHMaterial
 {
@@ -22,7 +25,7 @@ public:
 	std::vector<Texture> mTextures;
 	void Apply(RenderTargetType RT_Type, bool isEnableAlpha = false);
 	void Draw();
-	QHMaterial();
+	bool isTransparent();
+	QHMaterial(aiMaterial* aimaterial, std::string &currentDirectory);
 	~QHMaterial();
 };
-
