@@ -281,11 +281,11 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 						  // positions
 		if (hasPos)
 		{
-			const aiVector3D* pPos = &(mesh->mVertices[i]);
+			const aiVector3D &pPos = mesh->mVertices[i];
 
-			vector.x = pPos->x;
-			vector.y = pPos->y;
-			vector.z = pPos->z;
+			vector.x = pPos.x;
+			vector.y = pPos.y;
+			vector.z = pPos.z;
 			if (hasBones)
 				vertex.Position = vector;
 			else
@@ -294,9 +294,10 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 
 		if (hasNormals)
 		{
-			vector.x = mesh->mNormals[i].x;
-			vector.y = mesh->mNormals[i].y;
-			vector.z = mesh->mNormals[i].z;
+			const aiVector3D &pNor = mesh->mNormals[i];
+			vector.x = pNor.x;
+			vector.y = pNor.y;
+			vector.z = pNor.z;
 			if (hasBones)
 				vertex.Normal = vector;
 			else
@@ -331,16 +332,16 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 
 		if (hasVertexColors0)
 		{
-			const aiColor4D* color = &(mesh->mColors[0][i]);
-			vertex.Color.r = color->r;
-			vertex.Color.g = color->g;
-			vertex.Color.b = color->b;
-			vertex.Color.a = color->a;
+			const aiColor4D &color = mesh->mColors[0][i];
+			vertex.Color.r = color.r;
+			vertex.Color.g = color.g;
+			vertex.Color.b = color.b;
+			vertex.Color.a = color.a;
 		}
 		else
 		{
 			// Get Color from Materials
-			QHMaterial material = mMaterial[mesh->mMaterialIndex];
+			const QHMaterial &material = mMaterial[mesh->mMaterialIndex];
 			vec3 color = material.mDiffuse;
 			
 			vertex.Color.r = material.mDiffuse.x;
