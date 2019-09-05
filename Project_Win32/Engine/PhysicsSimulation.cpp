@@ -2,6 +2,7 @@
 #include "ShaderManager.h"
 #include "Camera.h"
 
+
 PhysicsSimulation * PhysicsSimulation::instance = NULL;
 float *GenVerticeData(const btVector3& halfExtents);
 
@@ -26,6 +27,9 @@ void PhysicsSimulation::initPhysics()
 	mDynamicsWorld->setGravity(btVector3(0, -100.0, 0));
 
 	initDebugPhysics();
+
+	debugDraw.setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+	mDynamicsWorld->setDebugDrawer(&debugDraw);
 }
 
 void PhysicsSimulation::initDebugPhysics()
@@ -89,6 +93,10 @@ void PhysicsSimulation::updatePhysics()
 
 void PhysicsSimulation::RenderPhysicsDebug()
 {
+	glDisable(GL_DEPTH_TEST);
+	mDynamicsWorld->debugDrawWorld();
+	return;
+
 	if (!misRenderDebug)
 		return;
 

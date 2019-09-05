@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "btBulletDynamicsCommon.h"
+#include "GLDebugDrawer.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -37,6 +38,8 @@ private:
 	GLuint quadVAO, quadVBO;
 
 	bool misRenderDebug, misEnableDepthTestDebug;
+
+	GLDebugDrawer debugDraw;
 public:
 	void initPhysics();
 	void initDebugPhysics();

@@ -114,6 +114,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="FrameRate.cpp" />
+    <ClCompile Include="GLDebugDrawer.cpp" />
     <ClCompile Include="GLFWContext.cpp" />
     <ClCompile Include="MainAndroid.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -160,6 +161,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="FrameRate.h" />
+    <ClInclude Include="GLDebugDrawer.h" />
     <ClInclude Include="GLFWContext.h" />
     <ClInclude Include="Logs.h" />
     <ClInclude Include="Mesh.h" />
