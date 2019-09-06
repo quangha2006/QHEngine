@@ -1,9 +1,16 @@
 #pragma once
 #include "LinearMath\btIDebugDraw.h"
 #include "stdafx.h"
+#include "Shader.h"
 
 class GLDebugDrawer : public btIDebugDraw
 {
+private:
+	Shader linesShader;
+	GLint lines_ModelViewMatrix = 0;
+	GLint lines_ProjectionMatrix = 0;
+	GLint lines_position = 0;
+	GLint lines_colour = 0;
 	int m_debugMode;
 public:
 
@@ -17,7 +24,7 @@ public:
 
 	virtual void   setDebugMode(int debugMode);
 
-	virtual int      getDebugMode() const { return m_debugMode; }
+	virtual int    getDebugMode() const { return m_debugMode; }
 	GLDebugDrawer();
 	~GLDebugDrawer();
 };

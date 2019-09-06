@@ -146,6 +146,7 @@ public:
 	void CreateBoxShapePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape = glm::vec3(0.));
 	void CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fixedboxshape = glm::vec3(0.));
 	void ClearForcesPhysics();
+	void registerShape(float mass);
 	btRigidBody* GetRigidBody();
 	Model();
 	~Model();

@@ -866,6 +866,11 @@ void Model::ClearForcesPhysics()
 	}
 }
 
+void Model::registerShape(float mass)
+{
+	mRigidBody = PhysicsSimulation::getInstance()->registerShape(NULL,0,NULL,0);
+}
+
 btRigidBody * Model::GetRigidBody()
 {
 	return mRigidBody;

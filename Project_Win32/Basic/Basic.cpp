@@ -9,7 +9,7 @@
 #include "SkyBox.h"
 #include "Utils.h"
 #include "RenderManager.h"
-
+#include "PhysicsSimulation.h"
 
 void Basic::Init()
 {
@@ -25,14 +25,14 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, .1, 48.0), glm::vec3(0., 0.001, 0.));
+	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
 	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
-	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
+	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
@@ -44,7 +44,7 @@ void Basic::Init()
 	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	mSpider.Init("tree/1_3_Tree.dae", true, true);
+	mSpider.Init("bHieu/1_2_Tree.dae", true, true);
 	//mSpider.Init("Demo/BoxAnim.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
 	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -61,10 +61,16 @@ void Basic::Init()
 	//mBoblampclean.SetScale(glm::vec3(0.1f));
 	mBoblampclean.SetUseLighting(false);
 
-	//uvcircle.Init("Demo/TextureTest/TextureTest.dae",true);
-	//uvcircle.SetScale(glm::vec3(1.0));
-	uvcircle.SetPos(glm::vec3(0.0f, 5.0f, 10.0f));
+	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	uvcircle.SetScale(glm::vec3(1.0));
+	uvcircle.SetPos(glm::vec3(0.0f, 10.f, 10.0f));
+	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
+	uvcircle.GetRigidBody()->setFriction(0.);
+	//uvcircle.GetRigidBody()->setRollingFriction(1.);
+	//uvcircle.GetRigidBody()->setSpinningFriction(1.);
+	uvcircle.GetRigidBody()->setRestitution(1.0);
+	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
 	//soundIntro.Init("Sound/chuabaogio.wav");
 	//soundIntro.Play();
 	
@@ -114,6 +120,7 @@ void Basic::Init()
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
+	//PhysicsSimulation::getInstance()->SetGravity(btVector3(0.0f, -1.8f, 0.0f));
 }
 
 void Basic::Update(int delta)

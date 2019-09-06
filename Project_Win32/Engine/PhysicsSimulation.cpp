@@ -2,9 +2,7 @@
 #include "ShaderManager.h"
 #include "Camera.h"
 
-
 PhysicsSimulation * PhysicsSimulation::instance = NULL;
-float *GenVerticeData(const btVector3& halfExtents);
 
 void PhysicsSimulation::initPhysics()
 {
@@ -26,25 +24,8 @@ void PhysicsSimulation::initPhysics()
 
 	mDynamicsWorld->setGravity(btVector3(0, -100.0, 0));
 
-	initDebugPhysics();
-
 	debugDraw.setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 	mDynamicsWorld->setDebugDrawer(&debugDraw);
-}
-
-void PhysicsSimulation::initDebugPhysics()
-{
-	glBindVertexArray(0);
-	glGenVertexArrays(1, &quadVAO);
-	glGenBuffers(1, &quadVBO);
-	glBindVertexArray(quadVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	glBufferData(GL_ARRAY_BUFFER, 12 * 6 * sizeof(float), NULL, GL_DYNAMIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	CheckGLError("initDebugPhysics");
 }
 
 void PhysicsSimulation::exitPhysics()
@@ -93,86 +74,7 @@ void PhysicsSimulation::updatePhysics()
 
 void PhysicsSimulation::RenderPhysicsDebug()
 {
-	glDisable(GL_DEPTH_TEST);
 	mDynamicsWorld->debugDrawWorld();
-	return;
-
-	if (!misRenderDebug)
-		return;
-
-	ShaderManager::getInstance()->setUseProgram("debugPhysics");
-
-	if (misEnableDepthTestDebug)
-		glEnable(GL_DEPTH_TEST);
-
-	glBindVertexArray(quadVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	for (int j = mDynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
-	{
-		btCollisionObject* obj = mDynamicsWorld->getCollisionObjectArray()[j];
-		btRigidBody* body = btRigidBody::upcast(obj);
-		btTransform trans;
-		if (body)
-		{
-			trans = body->getWorldTransform();
-		}
-		else
-		{
-			trans = obj->getWorldTransform();
-		}
-
-		float trans_x = float(trans.getOrigin().getX());
-		float trans_y = float(trans.getOrigin().getY());
-		float trans_z = float(trans.getOrigin().getZ());
-
-		btVector3 halfextents(btScalar(1.0), btScalar(1.0), btScalar(1.0));
-
-		int type = obj->getCollisionShape()->getShapeType();
-		if (type == BOX_SHAPE_PROXYTYPE)
-		{
-			btBoxShape* colShape = static_cast<btBoxShape*> (obj->getCollisionShape());
-			halfextents = colShape->getHalfExtentsWithoutMargin();
-		}
-		else if (type == SPHERE_SHAPE_PROXYTYPE)
-		{
-			btSphereShape* colShape = static_cast<btSphereShape*> (obj->getCollisionShape());
-			btScalar radius = colShape->getRadius();
-			halfextents = btVector3(radius, radius, radius);
-		}
-
-		float *vertices = GenVerticeData(halfextents);
-
-		glBufferSubData(GL_ARRAY_BUFFER, 0, 12 * 6 * sizeof(float), vertices);
-
-		btQuaternion rotation = trans.getRotation();
-		float x = float(trans.getOrigin().getX());
-		float y = float(trans.getOrigin().getY());
-		float z = float(trans.getOrigin().getZ());
-
-		btScalar angle = rotation.getAngle();
-		btScalar ro_x = rotation.getAxis().getX();
-		btScalar ro_y = rotation.getAxis().getY();
-		btScalar ro_z = rotation.getAxis().getZ();
-
-
-		glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(trans_x, trans_y, trans_z));
-
-		model = rotate(model, rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
-
-		glm::mat4 WorldViewProjectionMatrix = Camera::getInstance()->WorldViewProjectionMatrix * model;
-		ShaderSet::setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
-		glDrawArrays(GL_LINES, 0, 24);
-
-		delete[]vertices;
-	}
-
-	
-	glBindVertexArray(0);
-
-	if (misEnableDepthTestDebug)
-		glDisable(GL_DEPTH_TEST);
-
-	CheckGLError("RenderPhysicsDebug");
 }
 
 void PhysicsSimulation::PhysicsStepCollision(btCollisionObject* objA, btCollisionObject* objB, MyContactResultCallback &result)
@@ -258,25 +160,14 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 
 	return body;
 }
-void PhysicsSimulation::SwitchDebugMode()
+btRigidBody * PhysicsSimulation::registerShape(const float* vertices, int numvertices, const int* indices, int numIndices)
 {
-	if (misRenderDebug && misEnableDepthTestDebug)
-	{
-		misRenderDebug = !misRenderDebug;
-		misEnableDepthTestDebug = !misEnableDepthTestDebug;
-		return;
-	}
-	if (misRenderDebug && !misEnableDepthTestDebug)
-	{
-		misEnableDepthTestDebug = !misEnableDepthTestDebug;
-		return;
-	}
-	if (!misRenderDebug)
-	{
-		misRenderDebug = !misRenderDebug;
-		misEnableDepthTestDebug = false;
-		return;
-	}
+	return nullptr;
+}
+void PhysicsSimulation::SetDebugMode(int debugMode)
+{
+	mDebugDrawModes = debugMode;
+	debugDraw.setDebugMode(debugMode);
 }
 
 PhysicsSimulation * PhysicsSimulation::getInstance()
@@ -287,56 +178,11 @@ PhysicsSimulation * PhysicsSimulation::getInstance()
 }
 
 PhysicsSimulation::PhysicsSimulation()
-	: misRenderDebug(false)
-	, misEnableDepthTestDebug(true)
+	: mDebugDrawModes(0)
 {
 }
 
 
 PhysicsSimulation::~PhysicsSimulation()
 {
-	glDeleteBuffers(1, &quadVBO);
-}
-
-float *GenVerticeData(const btVector3& halfExtents)
-{
-	float x = halfExtents.getX();
-	float y = halfExtents.getY();
-	float z = halfExtents.getZ();
-
-	// -x, y, z, //1
-	//	x, y, z, //2
-	//	x,-y, z, //3
-	// -x, -y, z, //4
-	// -x,  y,-z, //5
-	//	x, y, -z, //6
-	//	x, -y, -z, //7
-	// -x, -y, -z, //8
-	float *vertices = new float[12 * 6]{
-		-x, y, z,
-		 x, y, z,
-		 x, y, z,
-		 x,-y, z,
-		 x,-y, z,
-		-x,-y, z,
-		-x,-y, z,
-		-x, y, z,
-		-x, y, z,
-		-x, y,-z,
-		 x, y, z,
-		 x, y,-z,
-		 x,-y, z,
-		 x,-y,-z,
-		-x,-y, z,
-		-x,-y,-z,
-		-x, y,-z,
-		 x, y,-z,
-		 x, y,-z,
-		 x,-y,-z,
-		 x,-y,-z,
-		-x,-y,-z,
-		-x,-y,-z,
-		-x, y,-z
-	};
-	return vertices;
 }

@@ -160,16 +160,16 @@ void BreakOut::Update(int delta)
 		PhysicsSimulation::getInstance()->PhysicsStepCollision(colObjA, colObjB, result);
 		if (result.m_connected)
 		{
-			uvcircle.GetRigidBody()->forceActivationState(DISABLE_SIMULATION);
+			//uvcircle.GetRigidBody()->forceActivationState(DISABLE_SIMULATION);
 		}
 	}
 	// cheat
-	glm::vec3 ballPos = uvcircle.GetPos();
-	glm::vec3 cubePos = cube.GetPos();
+	//glm::vec3 ballPos = uvcircle.GetPos();
+	//glm::vec3 cubePos = cube.GetPos();
 
-	cubePos.x = ballPos.x;
+	//cubePos.x = ballPos.x;
 
-	cube.SetPos(cubePos);
+	//cube.SetPos(cubePos);
 
 }
 
@@ -218,7 +218,7 @@ bool BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		GameReset();
 		break;
 	case 'L':
-		PhysicsSimulation::getInstance()->SwitchDebugMode();
+		//PhysicsSimulation::getInstance()->SwitchDebugMode();
 		break;
 	case 'D':
 		uvcircle_RigidBody = uvcircle.GetRigidBody();
