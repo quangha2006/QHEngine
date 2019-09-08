@@ -675,7 +675,7 @@ void Model::SyncPhysics()
 
 		
 		mPos = glm::vec3(x, y, z);
-
+		
 		mWorldTransform = glm::mat4();
 
 		mWorldTransform = glm::scale(mWorldTransform, mScale);
@@ -868,7 +868,9 @@ void Model::ClearForcesPhysics()
 
 void Model::registerShape(float mass)
 {
-	mRigidBody = PhysicsSimulation::getInstance()->registerShape(NULL,0,NULL,0);
+	isDynamic = (mass != 0.f);
+	mRigidBody = PhysicsSimulation::getInstance()->registerShape(mVertices, mNumVertices);
+	mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
 btRigidBody * Model::GetRigidBody()

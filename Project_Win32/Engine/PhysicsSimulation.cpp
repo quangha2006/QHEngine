@@ -160,9 +160,55 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 
 	return body;
 }
-btRigidBody * PhysicsSimulation::registerShape(const float* vertices, int numvertices, const int* indices, int numIndices)
+btRigidBody * PhysicsSimulation::registerShape(const Vertex* vertices, unsigned int numvertice)
 {
-	return nullptr;
+	if (!vertices || numvertice <= 0) return NULL;
+	btScalar* verticesData = new btScalar[numvertice * 3];
+	unsigned int count = 0;
+	/*while (count < numvertice)
+	{
+		unsigned int index = count * 3;
+		verticesData[index]		= vertices[count].Position.x;
+		verticesData[index + 1] = vertices[count].Position.y;
+		verticesData[index + 2] = vertices[count].Position.z;
+		LOGI("%f %f %f\n", vertices[count].Position.x, vertices[count].Position.y, vertices[count].Position.z);
+		++count;
+	}
+	btConvexHullShape* shape = new btConvexHullShape(verticesData, numvertice, sizeof(btScalar) * 3);*/
+	
+	//New code
+	btConvexHullShape* shape = new btConvexHullShape();
+
+	for (auto i = 0; i < numvertice; i++)
+		shape->addPoint(btVector3(vertices[i].Position.x, vertices[i].Position.y, vertices[i].Position.z));
+	//LOGI("shape->getNumVertices: %d\n",shape->getNumVertices());
+	shape->optimizeConvexHull();
+
+	mCollisionShapes.push_back(shape);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+
+	btScalar mass(1.f);
+	
+	bool isDynamic = (mass != 0.f);
+	
+	btVector3 localInertia(0, 0, 0);
+
+	if (isDynamic)
+		shape->calculateLocalInertia(mass, localInertia);
+	float pos[3] = { 0, 10, 10};
+	btVector3 position(pos[0], pos[1], pos[2]);
+	startTransform.setOrigin(position);
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, shape, localInertia);
+	btRigidBody* body = new btRigidBody(rbInfo);
+
+	mDynamicsWorld->addRigidBody(body);
+
+	delete[] verticesData;
+	return body;
 }
 void PhysicsSimulation::SetDebugMode(int debugMode)
 {

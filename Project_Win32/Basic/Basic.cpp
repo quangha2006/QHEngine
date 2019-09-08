@@ -25,7 +25,7 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
@@ -48,6 +48,7 @@ void Basic::Init()
 	//mSpider.Init("Demo/BoxAnim.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
 	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+	//mSpider.SetScale(glm::vec3(0.04f));
 	mSpider.SetAnimPlay(1);
 	//mSpider.SetRotate(95.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
@@ -62,14 +63,16 @@ void Basic::Init()
 	mBoblampclean.SetUseLighting(false);
 
 	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
-	uvcircle.SetScale(glm::vec3(1.0));
+	uvcircle.SetScale(glm::vec3(0.1));
 	uvcircle.SetPos(glm::vec3(0.0f, 10.f, 10.0f));
-	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
-	uvcircle.GetRigidBody()->setFriction(0.);
+	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
+	//uvcircle.registerShape(1.);
+
+	//uvcircle.GetRigidBody()->setFriction(0.);
 	//uvcircle.GetRigidBody()->setRollingFriction(1.);
 	//uvcircle.GetRigidBody()->setSpinningFriction(1.);
-	uvcircle.GetRigidBody()->setRestitution(1.0);
+	//uvcircle.GetRigidBody()->setRestitution(1.0);
 	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
 	//soundIntro.Init("Sound/chuabaogio.wav");
 	//soundIntro.Play();
@@ -207,6 +210,14 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mShadowLabel.setVisible(true);
 	mBloomLabel.setVisible(true);
 	mBloomAmountLabel.setVisible(true);
+
+	uvcircle.registerShape(1.);
+	//uvcircle.GetRigidBody()->setFriction(0.);
+	//uvcircle.GetRigidBody()->setRollingFriction(1.);
+	//uvcircle.GetRigidBody()->setSpinningFriction(1.);
+	//uvcircle.GetRigidBody()->setRestitution(1.0);
+
+	mSpider.registerShape(1.);
 }
 
 void Basic::ClickbuttonBloomAmountLeft()

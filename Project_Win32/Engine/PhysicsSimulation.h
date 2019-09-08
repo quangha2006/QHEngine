@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Mesh.h"
 
 struct MyContactResultCallback : public btCollisionWorld::ContactResultCallback
 {
@@ -69,7 +70,7 @@ public:
 	void SetDebugMode(int debugMode);
 	btRigidBody* createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape);
 	btRigidBody* createSphereShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, float radius);
-	btRigidBody* registerShape(const float* vertices, int numvertices, const int* indices, int numIndices);
+	btRigidBody* registerShape(const Vertex* vertices, unsigned  int numvertice);
 	static PhysicsSimulation* getInstance();
 	PhysicsSimulation();
 	~PhysicsSimulation();
