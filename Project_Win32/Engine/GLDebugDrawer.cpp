@@ -40,7 +40,7 @@ void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const
 	if (m_debugMode > 0)
 	{
 		linesShader.use();
-		glm::mat4 projectionMatrix = Camera::getInstance()->WorldViewProjectionMatrix;
+		glm::mat4 projectionMatrix = Camera::getInstance()->GetWorldViewProjectionMatrix();
 		glm::mat4 modelViewMatrix = glm::mat4();
 		glUniformMatrix4fv(lines_ProjectionMatrix, 1, false, &projectionMatrix[0][0]);
 		glUniformMatrix4fv(lines_ModelViewMatrix, 1, false, &modelViewMatrix[0][0]);

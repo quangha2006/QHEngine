@@ -42,7 +42,7 @@ void QHAxis::Draw()
 
 	if (mWorldView_uniform != -1)
 	{
-		glm::mat4 lookat_tmp = mCamera->WorldViewProjectionMatrix * model;
+		glm::mat4 lookat_tmp = mCamera->GetWorldViewProjectionMatrix() * model;
 
 		glUniformMatrix4fv(mWorldView_uniform, 1, GL_FALSE, &lookat_tmp[0][0]);
 	}

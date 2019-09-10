@@ -86,7 +86,7 @@ void SkyBox::Draw(Camera *camera)
 
 	mShader.setInt("skybox", 0);
 
-	glm::mat4 lookat_tmp = camera->WorldViewProjectionMatrix * model;
+	glm::mat4 lookat_tmp = camera->GetWorldViewProjectionMatrix() * model;
 
 	mShader.setMat4("WorldViewProjectionMatrix", lookat_tmp);
 	mShader.setInt("GammaCorrection",RenderManager::getInstance()->isEnablemGammaCorrection());

@@ -11,12 +11,14 @@
 #include "RenderManager.h"
 #include "PhysicsSimulation.h"
 
+const int Screen_width = 960;
+const int Screen_height = 540;
+
 void Basic::Init()
 {
-	mCamera->Pos = glm::vec3(0.0f, 5.0f, 20.0f);
-	mCamera->Target = glm::vec3(0.0f, 1.0f, 0.0f);
-	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
-	mCamera->lightPos = glm::vec3(8.2f, 10.0f, 9.0f);
+	mCamera->SetPos(0.0f, 5.0f, 20.0f);
+	mCamera->SetTarget(0.0f, 1.0f, 0.0f);
+	mCamera->SetLightPos(8.2f, 10.0f, 9.0f);
 
 	//mNanosuit.Init("nanosuit/nanosuit.obj", true, false);
 	mNanosuit.SetScale(glm::vec3(0.4f));
@@ -29,8 +31,8 @@ void Basic::Init()
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
-	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
-	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
+	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
+	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
@@ -48,7 +50,7 @@ void Basic::Init()
 	//mSpider.Init("Demo/BoxAnim.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
 	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
-	//mSpider.SetScale(glm::vec3(0.04f));
+	//mSpider.SetScale(glm::vec3(2.0f));
 	mSpider.SetAnimPlay(1);
 	//mSpider.SetRotate(95.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
@@ -63,16 +65,16 @@ void Basic::Init()
 	mBoblampclean.SetUseLighting(false);
 
 	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
-	uvcircle.SetScale(glm::vec3(0.1));
+	//uvcircle.SetScale(glm::vec3(0.1));
 	uvcircle.SetPos(glm::vec3(0.0f, 10.f, 10.0f));
 
-	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
+	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 	//uvcircle.registerShape(1.);
 
-	//uvcircle.GetRigidBody()->setFriction(0.);
+	//uvcircle.GetRigidBody()->setFriction(1.);
 	//uvcircle.GetRigidBody()->setRollingFriction(1.);
 	//uvcircle.GetRigidBody()->setSpinningFriction(1.);
-	//uvcircle.GetRigidBody()->setRestitution(1.0);
+	//uvcircle.GetRigidBody()->setRestitution(1.);
 	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
 	//soundIntro.Init("Sound/chuabaogio.wav");
 	//soundIntro.Play();
@@ -81,43 +83,43 @@ void Basic::Init()
 	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
 	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
 	mShadowLabel.setScale(0.5f);
-	mShadowLabel.setPos(5, 540 - 30);
+	mShadowLabel.setPos(5, Screen_height - 30);
 	mShadowLabel.setVisible(false);
 
 	mbtSwitchShadow = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
 	mbtSwitchShadow->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonShadow, this));
 	mbtSwitchShadow->SetScale(1.2f);
-	mbtSwitchShadow->SetPos(100, 540 - mbtSwitchShadow->GetHeight() - 8);
+	mbtSwitchShadow->SetPos(100, Screen_height - mbtSwitchShadow->GetHeight() - 8);
 	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
 	
 	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
 	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
 	mBloomLabel.setScale(0.5f);
-	mBloomLabel.setPos(170, 540 - 30);
+	mBloomLabel.setPos(170, Screen_height - 30);
 	mBloomLabel.setVisible(false);
 	
 	mbtSwitchBloom = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
 	mbtSwitchBloom->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloom, this));
 	mbtSwitchBloom->SetScale(1.2f);
-	mbtSwitchBloom->SetPos(250, 540 - mbtSwitchBloom->GetHeight() - 8);
+	mbtSwitchBloom->SetPos(250, Screen_height - mbtSwitchBloom->GetHeight() - 8);
 	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
 	
 	int bloomamount = RenderManager::getInstance()->GetAmountBloom();
 
 	mBloomAmountLabel.setText("Bloom Amount:       %d", bloomamount);
 	mBloomAmountLabel.setScale(0.5f);
-	mBloomAmountLabel.setPos(330, 540 - 30);
+	mBloomAmountLabel.setPos(330, Screen_height - 30);
 	mBloomAmountLabel.setVisible(false);
 
 	mbtBloomAmount1 = UserInterface::CreateWithTexture("button/button_right.png");
 	mbtBloomAmount1->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloomAmountRight, this));
 	mbtBloomAmount1->SetScale(0.017f);
-	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, 540 - mbtSwitchBloom->GetHeight() - 8);
+	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, Screen_height - mbtSwitchBloom->GetHeight() - 8);
 
 	mbtBloomAmount2 = UserInterface::CreateWithTexture("button/button_left.png");
 	mbtBloomAmount2->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloomAmountLeft, this));
 	mbtBloomAmount2->SetScale(0.017f);
-	mbtBloomAmount2->SetPos(490, 540 - mbtSwitchBloom->GetHeight() - 8);
+	mbtBloomAmount2->SetPos(490, Screen_height - mbtSwitchBloom->GetHeight() - 8);
 
 	axis.Init(mCamera);
 	m_initialized = true;
@@ -132,13 +134,15 @@ void Basic::Update(int delta)
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
-	width = 960;
-	height = 540;
+	width = Screen_width;
+	height = Screen_height;
 }
 bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
 	//LOGI("Key: %d = %c\n",key, c);
+	static glm::mat4 camera_projection = glm::mat4();
+	glm::mat4 tmp;
 	if (action == 0) return true;
 	switch (c)
 	{
@@ -149,16 +153,18 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		RenderManager::getInstance()->SwitchShadowMapMode();
 		return true;
 	case 'S': //num s
-		mCamera->Target.y -= 0.1f;
+		//camera_projection = glm::rotate(camera_projection, glm::radians(-0.5f), glm::vec3(0.f, 1.f,0.f));
+		//tmp = Camera::getInstance()->WorldViewProjectionMatrix * camera_projection;
+		//Camera::getInstance()->WorldViewProjectionMatrix = tmp;
 		return true;
 	case 'W': //num w
-		mCamera->Target.y += 0.1f;
+		//mCamera->Target.y += 0.1f;
 		return true;
 	case 'A': //num a
-		mCamera->Target.x -= 0.1f;
+		//mCamera->Target.x -= 0.1f;
 		return true;
 	case 'D': //num d
-		mCamera->Target.x += 0.1f;
+		//mCamera->Target.x += 0.1f;
 		return true;
 	case 262:
 		timestamp_for_lamp += 1.f;
@@ -211,10 +217,10 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mBloomLabel.setVisible(true);
 	mBloomAmountLabel.setVisible(true);
 
-	uvcircle.registerShape(1.);
+	//uvcircle.registerShape(1.);
 	//uvcircle.GetRigidBody()->setFriction(0.);
-	//uvcircle.GetRigidBody()->setRollingFriction(1.);
-	//uvcircle.GetRigidBody()->setSpinningFriction(1.);
+	//uvcircle.GetRigidBody()->setRollingFriction(0.1f);
+	//uvcircle.GetRigidBody()->setSpinningFriction(0.1f);
 	//uvcircle.GetRigidBody()->setRestitution(1.0);
 
 	mSpider.registerShape(1.);

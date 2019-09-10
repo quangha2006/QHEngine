@@ -165,23 +165,24 @@ btRigidBody * PhysicsSimulation::registerShape(const Vertex* vertices, unsigned 
 	if (!vertices || numvertice <= 0) return NULL;
 	btScalar* verticesData = new btScalar[numvertice * 3];
 	unsigned int count = 0;
-	/*while (count < numvertice)
+	while (count < numvertice)
 	{
 		unsigned int index = count * 3;
 		verticesData[index]		= vertices[count].Position.x;
 		verticesData[index + 1] = vertices[count].Position.y;
 		verticesData[index + 2] = vertices[count].Position.z;
-		LOGI("%f %f %f\n", vertices[count].Position.x, vertices[count].Position.y, vertices[count].Position.z);
+		//LOGI("%f %f %f\n", vertices[count].Position.x, vertices[count].Position.y, vertices[count].Position.z);
 		++count;
 	}
-	btConvexHullShape* shape = new btConvexHullShape(verticesData, numvertice, sizeof(btScalar) * 3);*/
+	btConvexHullShape* shape = new btConvexHullShape(verticesData, numvertice, sizeof(btScalar) * 3);
 	
 	//New code
-	btConvexHullShape* shape = new btConvexHullShape();
+	//btConvexHullShape* shape = new btConvexHullShape();
 
-	for (auto i = 0; i < numvertice; i++)
-		shape->addPoint(btVector3(vertices[i].Position.x, vertices[i].Position.y, vertices[i].Position.z));
+	//for (auto i = 0; i < numvertice; i++)
+		//shape->addPoint(btVector3(vertices[i].Position.x, vertices[i].Position.y, vertices[i].Position.z));
 	//LOGI("shape->getNumVertices: %d\n",shape->getNumVertices());
+
 	shape->optimizeConvexHull();
 
 	mCollisionShapes.push_back(shape);

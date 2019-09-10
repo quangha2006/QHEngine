@@ -31,6 +31,7 @@
 #define FALSE 0
 #define PLATFORM "OPENGLES"
 #endif
+
 inline
 GLenum CheckGLError(const char *calling_location)
 {

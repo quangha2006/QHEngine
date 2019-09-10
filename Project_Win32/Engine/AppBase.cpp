@@ -40,7 +40,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	LOGI("=====================================================\n");
 
 	mCamera = Camera::getInstance();
-	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(width) / (float)(height), mCamera->View_near, mCamera->View_far);
+	mCamera->UpdateProjection(width, height);
 	FrameRate::getInstance(); //Init
 
 	//FrameRate::getInstance()->setLimitFPS(30);
@@ -129,7 +129,7 @@ void AppBase::Resize(int width, int height)
 	LOGI("set glViewport: %d, %d", width, height);
 	glViewport(0, 0, width, height);
 	mContext->SetWindowSize(width, height);
-	mCamera->projection = glm::perspective(glm::radians(mCamera->zoom), (float)(width) / (float)(height), mCamera->View_near, mCamera->View_far);
+	mCamera->UpdateProjection(width, height);
 }
 
 void AppBase::GameTouchEvent(int eventId, int x, int y, int pointerId)
@@ -164,31 +164,24 @@ void AppBase::GameTouchEvent(int eventId, int x, int y, int pointerId)
 	}
 	if (!preesed) return;
 	
-	mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(x - touch_old_x)), glm::vec3(0.0f, 5.0f, 0.0f));
+	glm::mat4 cameraView = mCamera->GetView();
+	cameraView = glm::rotate(cameraView, glm::radians((float)(x - touch_old_x)), glm::vec3(0.0f, 5.0f, 0.0f));
 
-	//mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(y - touch_old_y)), glm::vec3(1.0f, 0.0f, 1.0f));
-	//mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(y - touch_old_y)), glm::vec3(0.0f, 0.0f, 1.0f));
+	mCamera->SetView(cameraView);
 
-	//mCamera->view = glm::rotate(mCamera->view, glm::radians((float)(y - touch_old_y)), glm::vec3(0.0f, mCamera->Pos.y, mCamera->Pos.z));
-	//glm::mat4::
-	mCamera->Pos = mCamera->ExtractCameraPos(mCamera->view);
+	float posx, posy, posz;
+	mCamera->GetPos(posx, posy, posz);
 
-	mCamera->Pos.y += ((y - touch_old_y)*0.1f);
-	mCamera->Target.y += ((y - touch_old_y)*0.1f);
-	//if ((mCamera->Pos.y > 0.5) && (mCamera->Pos.y < 80))
-	//{
-	//	if (mCamera->Pos.x > 0)
-	//		mCamera->Pos.x -= ((y - touch_old_y)*0.3);
-	//	else
-	//		mCamera->Pos.x += ((y - touch_old_y)*0.3);
-	//	if (mCamera->Pos.z > 0)
-	//		mCamera->Pos.z -= ((y - touch_old_y)*0.3);
-	//	else
-	//		mCamera->Pos.z += ((y - touch_old_y)*0.3);
-	//}
+	posy += ((y - touch_old_y)*0.1f);
 
-	//if (mCamera->Pos.y > 60) mCamera->Pos.y = 60;
-	//if (mCamera->Pos.y < 0.5) mCamera->Pos.y = 0.5;
+	mCamera->SetPos(posx, posy, posz);
+
+	float tarx, tary, tarz;
+
+	mCamera->GetTarget(tarx, tary, tarz);
+	tary += ((y - touch_old_y)*0.1f);
+	mCamera->SetTarget(tarx, tary, tarz);
+
 
 	touch_old_x = x;
 	touch_old_y = y;
@@ -205,15 +198,21 @@ void AppBase::GameZoomCamera(double xoffset, double yoffset)
 #ifdef ANDROID
 	offset = 200;
 #endif
-	float dis_x = (mCamera->Pos.x - mCamera->Target.x) / offset;
-	float dis_y = (mCamera->Pos.y - mCamera->Target.y) / offset;
-	float dis_z = (mCamera->Pos.z - mCamera->Target.z) / offset;
+
+	vec3 dis = (mCamera->GetPos() - mCamera->GetTarget()) / (float)offset;
+	//float dis_x = (mCamera->Pos.x - mCamera->Target.x) / offset;
+	//float dis_y = (mCamera->Pos.y - mCamera->Target.y) / offset;
+	//float dis_z = (mCamera->Pos.z - mCamera->Target.z) / offset;
 
 	if (yoffset > 0.0f)
 	{
-		mCamera->Pos.x -= dis_x;
-		mCamera->Pos.y -= dis_y;
-		mCamera->Pos.z -= dis_z;
+		glm::vec3 newPos = mCamera->GetPos() - dis;
+
+		mCamera->SetPos(newPos);
+
+		//mCamera->Pos.x -= dis_x;
+		//mCamera->Pos.y -= dis_y;
+		//mCamera->Pos.z -= dis_z;
 
 		//mCamera->Target.x -= dis_x;
 		//mCamera->Target.y -= dis_y;
@@ -221,9 +220,13 @@ void AppBase::GameZoomCamera(double xoffset, double yoffset)
 	}
 	else
 	{
-		mCamera->Pos.x += dis_x;
-		mCamera->Pos.y += dis_y;
-		mCamera->Pos.z += dis_z;
+		glm::vec3 newPos = mCamera->GetPos() + dis;
+
+		mCamera->SetPos(newPos);
+
+		//mCamera->Pos.x += dis_x;
+		//mCamera->Pos.y += dis_y;
+		//mCamera->Pos.z += dis_z;
 
 		//mCamera->Target.x += dis_x;
 		//mCamera->Target.y += dis_y;

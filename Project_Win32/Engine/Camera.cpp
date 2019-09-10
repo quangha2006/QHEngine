@@ -5,9 +5,114 @@
 
 Camera * Camera::instance = NULL;
 
+void Camera::SetPos(float posX, float posY, float posZ)
+{
+	mPos = vec3(posX, posY, posZ);
+	UpdateView();
+}
+
+void Camera::SetPos(vec3 pos)
+{
+	mPos = pos;
+	UpdateView();
+}
+
+void Camera::SetTarget(float targetX, float targetY, float targetZ)
+{
+	mTarget = glm::vec3(targetX, targetY, targetZ);
+	UpdateView();
+}
+
+void Camera::SetTarget(vec3 target)
+{
+	mTarget = target;
+	UpdateView();
+}
+
+void Camera::SetLightPos(float lightposX, float lightposY, float lightposZ)
+{
+	mLightPos = vec3(lightposX, lightposY, lightposZ);
+
+	lightView = glm::lookAt(mLightPos, glm::vec3(0.0, 1.0, 0.2), glm::vec3(0.0, 1.0, 0.2));
+	lightProjection = glm::ortho(-80.0f, 80.0f, -40.0f, 40.0f, mLight_near, mLight_far);
+	lightSpaceMatrix = lightProjection * lightView;
+}
+
+void Camera::SetView(mat4 view)
+{
+	mView = view;
+	mPos = ExtractCameraPos(mView);
+}
+
+void Camera::SetProjection(mat4 projection)
+{
+	mProjection = projection;
+}
+
+float Camera::GetZoom()
+{
+	return mZoom;
+}
+
+float Camera::GetViewNear()
+{
+	return mView_near;
+}
+
+float Camera::GetViewFar()
+{
+	return mView_far;
+}
+
+float Camera::GetLightNear()
+{
+	return mLight_near;
+}
+
+float Camera::GetLightFar()
+{
+	return mLight_far;
+}
+
+void Camera::GetLightPos(float & posX, float & posY, float & posZ)
+{
+	posX = mLightPos.x;
+	posY = mLightPos.y;
+	posZ = mLightPos.z;
+}
+
+vec3 Camera::GetLightPos()
+{
+	return mLightPos;
+}
+
+void Camera::GetPos(float & posX, float & posY, float & posZ)
+{
+	posX = mPos.x;
+	posY = mPos.y;
+	posZ = mPos.z;
+}
+
+vec3 Camera::GetPos()
+{
+	return mPos;
+}
+
+void Camera::GetTarget(float & targetX, float & targetY, float & targetZ)
+{
+	targetX = mTarget.x;
+	targetY = mTarget.y;
+	targetZ = mTarget.z;
+}
+
+vec3 Camera::GetTarget()
+{
+	return mTarget;
+}
+
 vec3 Camera::Direction()
 {
-	return normalize(Pos - Target);
+	return normalize(mPos - mTarget);
 }
 
 vec3 Camera::Up()
@@ -17,21 +122,21 @@ vec3 Camera::Up()
 
 vec3 Camera::Right()
 {
-	return normalize(cross(up, Direction()));
+	return normalize(cross(mUp, Direction()));
 }
 
 Camera::Camera()
-	: Pos(vec3(0.0f, 3.0f, 8.0f))
-	, Target(vec3(0.0f, 1.0f, 0.0f))
-	, up(vec3(0.0f, 1.0f, 0.0f))
-	, Front(vec3(0.0f, 0.0f, -1.0f))
-	, view(glm::mat4(0.0f))
-	, projection(glm::mat4(0.0f))
-	, zoom(45.0f)
-	, View_near(0.1f)
-	, View_far(100000.0f)
-	, light_near(-20.1f)
-	, light_far(80.0f)
+	: mPos(vec3(0.0f, 3.0f, 8.0f))
+	, mTarget(vec3(0.0f, 1.0f, 0.0f))
+	, mUp(vec3(0.0f, 1.0f, 0.0f))
+	, mFront(vec3(0.0f, 0.0f, -1.0f))
+	, mView(glm::mat4(0.0f))
+	, mProjection(glm::mat4(0.0f))
+	, mZoom(45.0f)
+	, mView_near(0.1f)
+	, mView_far(100000.0f)
+	, mLight_near(-20.1f)
+	, mLight_far(80.0f)
 {
 }
 vec3 Camera::ExtractCameraPos(const glm::mat4 & a_modelView)
@@ -61,12 +166,15 @@ vec3 Camera::ExtractCameraPos(const glm::mat4 & a_modelView)
 
 void Camera::UpdateWorldViewProjection()
 {
-	view = glm::lookAt(Pos, Target, up);
-	WorldViewProjectionMatrix = projection * view;
-
-	lightProjection = glm::ortho(-80.0f, 80.0f, -40.0f, 40.0f, light_near, light_far);
-	lightView = glm::lookAt(lightPos, glm::vec3(0.0, 1.0, 0.2), glm::vec3(0.0, 1.0, 0.2));
-	lightSpaceMatrix = lightProjection * lightView;
+	mWorldViewProjectionMatrix = mProjection * mView;
+}
+void Camera::UpdateView()
+{
+	mView = glm::lookAt(mPos, mTarget, mUp);
+}
+void Camera::UpdateProjection(int width, int height)
+{
+	mProjection = glm::perspective(glm::radians(mZoom), (float)(width) / (float)(height), mView_near, mView_far);
 }
 Camera * Camera::getInstance()
 {

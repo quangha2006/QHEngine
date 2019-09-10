@@ -233,9 +233,10 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 {
 	aiMatrix4x4 tmp = node->mTransformation;
 	glm::mat4 currentNodeTransformation = QHMath::AiToGLMMat4(tmp);
-	currentNodeTransformation = glm::transpose(currentNodeTransformation);
-	glm::mat4 Transformation = QHMath::CombineMat4(currentNodeTransformation, nodeTransformation);
-
+	//currentNodeTransformation = glm::transpose(currentNodeTransformation);
+	//glm::mat4 Transformation = QHMath::CombineMat4(currentNodeTransformation, nodeTransformation);
+	glm::mat4 Transformation = QHMath::CombineMat4(nodeTransformation, currentNodeTransformation);
+	
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -289,7 +290,8 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 			if (hasBones)
 				vertex.Position = vector;
 			else
-				vertex.Position = localTransform * glm::vec4(vector, 1.0f);
+				//vertex.Position = localTransform * glm::vec4(vector, 1.0f);
+				vertex.Position = glm::vec4(vector, 1.0f) * localTransform;
 		}
 
 		if (hasNormals)
@@ -301,7 +303,8 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 			if (hasBones)
 				vertex.Normal = vector;
 			else
-				vertex.Normal = localTransform * glm::vec4(vector, 0.0f);
+				//vertex.Normal = localTransform * glm::vec4(vector, 0.0f);
+				vertex.Normal =  glm::vec4(vector, 0.0f) * localTransform;
 		}
 
 		// texture coordinates
@@ -467,8 +470,8 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 			else
 				ShaderManager::getInstance()->setUseProgram("depthShader");
 
-			ShaderSet::setFloat("near_plane", mCamera->light_near);
-			ShaderSet::setFloat("far_plane", mCamera->light_far);
+			ShaderSet::setFloat("near_plane", mCamera->GetLightNear());
+			ShaderSet::setFloat("far_plane", mCamera->GetLightFar());
 
 			WorldViewLightSpaceMatrix = mCamera->lightSpaceMatrix * tmp_model;
 			ShaderSet::setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
@@ -491,9 +494,9 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 				isFirstSetupUniform = true;
 			}
 
-			ShaderSet::setVec3("light_position", mCamera->lightPos);
+			ShaderSet::setVec3("light_position", mCamera->GetLightPos());
 
-			ShaderSet::setVec3("viewPos", mCamera->Pos);
+			ShaderSet::setVec3("viewPos", mCamera->GetPos());
 
 			ShaderSet::setBool("usepointlight", this->isUsePointLight);
 
@@ -504,7 +507,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 			ShaderSet::setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
 			ShaderSet::setMat4("world", tmp_model);
 
-			WorldViewProjectionMatrix = mCamera->WorldViewProjectionMatrix * tmp_model;
+			WorldViewProjectionMatrix = mCamera->GetWorldViewProjectionMatrix() * tmp_model;
 			ShaderSet::setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
 			break;
 	}
