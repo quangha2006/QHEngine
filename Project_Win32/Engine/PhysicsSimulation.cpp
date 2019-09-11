@@ -24,7 +24,7 @@ void PhysicsSimulation::initPhysics()
 
 	mDynamicsWorld->setGravity(btVector3(0, -100.0, 0));
 
-	debugDraw.setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+	//debugDraw.setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 	mDynamicsWorld->setDebugDrawer(&debugDraw);
 }
 
@@ -215,6 +215,26 @@ void PhysicsSimulation::SetDebugMode(int debugMode)
 {
 	mDebugDrawModes = debugMode;
 	debugDraw.setDebugMode(debugMode);
+}
+
+int PhysicsSimulation::SwitchDebugMode()
+{
+	int currentDBG = mDebugDrawModes;
+	switch (currentDBG)
+	{
+	case btIDebugDraw::DBG_NoDebug:
+		mDebugDrawModes = btIDebugDraw::DBG_DrawWireframe;
+		break;
+	case btIDebugDraw::DBG_DrawWireframe:
+		mDebugDrawModes = btIDebugDraw::DBG_DrawWireframe;
+		mDebugDrawModes |= btIDebugDraw::DBG_DrawAabb;
+		break;
+	default:
+		mDebugDrawModes = btIDebugDraw::DBG_NoDebug;
+	}
+	debugDraw.setDebugMode(mDebugDrawModes);
+
+	return mDebugDrawModes;
 }
 
 PhysicsSimulation * PhysicsSimulation::getInstance()

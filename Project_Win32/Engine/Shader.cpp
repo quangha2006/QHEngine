@@ -26,12 +26,12 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 	glGetProgramiv(program, GL_LINK_STATUS, &linked);
 	if (!linked) {
 		LOGE("Could not link program\n");
-		GLint infoLogLen = 0;
+		GLint infoLogLen = 0, CharsWritten = 0;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLen);
 		if (infoLogLen) {
 			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
 			if (infoLog) {
-				glGetProgramInfoLog(program, infoLogLen, NULL, infoLog);
+				glGetProgramInfoLog(program, infoLogLen, &CharsWritten, infoLog);
 				LOGE("Could not link program:\n%s\n", infoLog);
 				free(infoLog);
 			}
@@ -40,6 +40,11 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 		program = -1;
 		return false;
 	}
+	//if (mVertexShader != 0)
+		//glDeleteShader(mVertexShader);
+
+	//if (mFragmentShader != 0)
+		//glDeleteShader(mFragmentShader);
 	LOGI("CreateProgram: %u\n", program);
 	return true;
 }
@@ -181,8 +186,8 @@ Shader::Shader()
 	, Weights_Attribute(-1)
 	, IDs_Attribute(-1)
 	, program(-1)
-	, mVertexShader(-1)
-	, mFragmentShader(-1)
+	, mVertexShader(0)
+	, mFragmentShader(0)
 	, m_initialized(false)
 {
 }
@@ -192,9 +197,9 @@ Shader::~Shader()
 	if (program != -1)
 		glDeleteProgram(program);
 
-	if (mVertexShader != -1)
+	if (mVertexShader != 0)
 		glDeleteShader(mVertexShader);
 
-	if (mFragmentShader != -1)
+	if (mFragmentShader != 0)
 		glDeleteShader(mFragmentShader);
 }

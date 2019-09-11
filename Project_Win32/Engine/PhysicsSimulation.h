@@ -68,6 +68,7 @@ public:
 		DBG_MAX_DEBUG_DRAW_MODE
 	**/
 	void SetDebugMode(int debugMode);
+	int SwitchDebugMode();
 	btRigidBody* createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape);
 	btRigidBody* createSphereShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, float radius);
 	btRigidBody* registerShape(const Vertex* vertices, unsigned  int numvertice);

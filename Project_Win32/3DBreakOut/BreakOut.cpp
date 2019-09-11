@@ -9,10 +9,9 @@ float moving = 0.;
 
 void BreakOut::Init()
 {
-	mCamera->Pos = glm::vec3(0.0f, 65.0f, 50.0f);
-	mCamera->Target = glm::vec3(0.0f, 0.0f, 0.1f);
-	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
-	mCamera->lightPos = glm::vec3(15.0f, 10.5f, 15.0f);
+	mCamera->SetPos(0.0f, 65.0f, 50.0f);
+	mCamera->SetTarget(0.0f, 0.0f, 0.1);
+	mCamera->SetLightPos(15.0f, 10.5f, 15.0f);
 
 	mSkyBox.Init("SkyBox");
 
@@ -207,6 +206,9 @@ bool BreakOut::OnGameKeyPressed(int key, int scancode, int action, int mods)
 	case 'M':
 		RenderManager::getInstance()->SwitchShadowMapMode();
 		break;
+	case 'P':
+		PhysicsSimulation::getInstance()->SwitchDebugMode();
+		return true;
 	case 'U':
 		m_Streetenvironment.SetRotate(2, glm::vec3(0., 0., 1.));
 		break;
