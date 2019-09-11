@@ -5,20 +5,18 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Camera.h"
+#include "Shader.h"
 
 class QHAxis
 {
 private:
-	GLint mProgram, mVertexShader, mFragmentShader;
 	GLuint mVBO_Id;
 	float *vertices_axis;
 	Camera *mCamera;
 	glm::mat4 model;
-	GLint mPosition_attribute, mColor_attribute, mWorldView_uniform;
+	GLint  mWorldView_uniform;
 	bool m_initialized;
-
-	bool createProgram();
-	GLint createShader(GLenum shaderType, const char * src);
+	Shader mShader;
 public:
 	void Draw();
 	bool Init(Camera *camera);

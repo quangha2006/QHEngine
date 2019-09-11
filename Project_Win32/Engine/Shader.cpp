@@ -40,11 +40,12 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 		program = -1;
 		return false;
 	}
-	//if (mVertexShader != 0)
-		//glDeleteShader(mVertexShader);
+	glDetachShader(program, mVertexShader);
+	glDetachShader(program, mFragmentShader);
 
-	//if (mFragmentShader != 0)
-		//glDeleteShader(mFragmentShader);
+	glDeleteShader(mVertexShader);
+	glDeleteShader(mFragmentShader);
+
 	LOGI("CreateProgram: %u\n", program);
 	return true;
 }
@@ -64,15 +65,20 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 		if (pf == NULL)
 		{
 			LOGE("Could not open: %s \n", path_modif.c_str());
-			return false;
+			return 0;
 		}
 		fseek(pf, 0, SEEK_END);
 		long size = ftell(pf);
 		fseek(pf, 0, SEEK_SET);
 
 		shaderSrc = new char[size + 1];
-		fread(shaderSrc, sizeof(char), size, pf);
-		shaderSrc[size] = 0;
+		size_t result = fread(shaderSrc, 1, size, pf);
+		if (result != size)
+		{
+			LOGE("Reading Error!\n");
+			return 0;
+		}
+		shaderSrc[size] = '\0';
 		fclose(pf);
 	}
 	else
@@ -185,7 +191,7 @@ Shader::Shader()
 	, Bitangent_Attribute(-1)
 	, Weights_Attribute(-1)
 	, IDs_Attribute(-1)
-	, program(-1)
+	, program(0)
 	, mVertexShader(0)
 	, mFragmentShader(0)
 	, m_initialized(false)
@@ -194,12 +200,6 @@ Shader::Shader()
 
 Shader::~Shader()
 {
-	if (program != -1)
+	if (program != 0)
 		glDeleteProgram(program);
-
-	if (mVertexShader != 0)
-		glDeleteShader(mVertexShader);
-
-	if (mFragmentShader != 0)
-		glDeleteShader(mFragmentShader);
 }
