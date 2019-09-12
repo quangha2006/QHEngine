@@ -449,8 +449,6 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 	if (!m_initialized || !mCamera || !mIsVisible || mVBO == 0 || mEBO == 0) return;
 	if (RT_Type == RenderTargetType_DEPTH && mIsDrawDepthMap == false) return;
 
-	bool render_model_mode = true; // True: Render Material, False: Render Mesh
-
 	glm::mat4 WorldViewLightSpaceMatrix;
 	glm::mat4 WorldViewProjectionMatrix;
 	glm::mat4 model_inverse;
@@ -512,16 +510,17 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 			break;
 	}
 	
-	if (render_model_mode)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
-	}
-	else
+	if (m_meshdraw > -1)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	}
+	else
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+	}
+
 
 
 	Shader* modelShader = ShaderManager::getInstance()->GetCurrentShader();
@@ -586,7 +585,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 		QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, (void*)0);
 		break;
 	case RenderTargetType_COLOR:
-		if (mRenderMode == RenderMode::RenderMode_Material)
+		/*if (mRenderMode == RenderMode::RenderMode_Material)
 		{
 			for (GLuint i = 0; i < mMaterial.size(); i++)
 			{
@@ -596,7 +595,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 			}
 		}
 		else
-		{
+		{*/
 			if (m_meshdraw > -1) // Draw custom mesh
 			{
 				if (m_meshdraw < (int)mMeshes.size())
@@ -608,14 +607,20 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 			}
 			else
 			{
-				for (unsigned int i = 0; i < mMeshes.size(); i++)
+				/*for (unsigned int i = 0; i < mMeshes.size(); i++)
 				{
 					ShaderSet::setBool("uselighting", uselighting);
 					mMaterial[mMeshes[i]->GetMaterialId()].Apply(RT_Type, mIsEnableAlpha);
 					mMeshes[i]->Draw(RT_Type, useCustomColor, customColor);
+				}*/
+				for (GLuint i = 0; i < mMaterial.size(); i++)
+				{
+					ShaderSet::setBool("uselighting", uselighting);
+					mMaterial[i].Apply(RT_Type, mIsEnableAlpha);
+					mMaterial[i].Draw();
 				}
 			}
-		}
+		//}
 		break;
 	}
 	
@@ -1097,7 +1102,7 @@ Model::Model()
 	, mIndices_marterial(nullptr)
 	, mNumVertices(0)
 	, mNumIndices(0)
-	, mRenderMode(RenderMode::RenderMode_Material)
+	, mRenderMode(RenderMode::RenderMode_Mesh)
 {
 	ModelManager::getInstance()->AddModel(this);
 }
