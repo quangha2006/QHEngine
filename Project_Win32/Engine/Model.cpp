@@ -454,12 +454,6 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 	glm::mat4 model_inverse;
 	glm::mat4 tmp_model = mWorldTransform;
 
-	if (isTranslate)
-		tmp_model = glm::translate(tmp_model, translate);
-
-	if (isRotate)
-		tmp_model = glm::rotate(tmp_model, glm::radians(angle), axis);
-
 	switch (RT_Type)
 	{
 		case RenderTargetType_DEPTH:
@@ -669,31 +663,12 @@ void Model::SyncPhysics()
 	{
 		btTransform trans = mRigidBody->getWorldTransform();;
 
-		//mRigidBody->getWorldTransform(trans);
-		//mRigidBody->set
-		btQuaternion rotation = trans.getRotation();
-		float x = float(trans.getOrigin().getX());
-		float y = float(trans.getOrigin().getY());
-		float z = float(trans.getOrigin().getZ());
+		btScalar matrix[16];
+		trans.getOpenGLMatrix(matrix);
 
-		btScalar angle = rotation.getAngle();
-		btScalar ro_x = rotation.getAxis().getX();
-		btScalar ro_y = rotation.getAxis().getY();
-		btScalar ro_z = rotation.getAxis().getZ();
+		glm::mat4 glm_mat4 = glm::make_mat4(matrix);
 
-		
-		mPos = glm::vec3(x, y, z);
-		
-		mWorldTransform = glm::mat4();
-
-		mWorldTransform = glm::scale(mWorldTransform, mScale);
-
-		mWorldTransform = glm::translate(mWorldTransform, mPos / mScale);
-
-		mWorldTransform = rotate(mWorldTransform, rotation.getAngle(), vec3(ro_x, ro_y, ro_z));
-
-		mWorldTransform = glm::translate(mWorldTransform, - mFixedBoxShape / mScale);
-
+		mWorldTransform = glm_mat4;
 	}
 	else if (m_initialized)
 	{
@@ -715,8 +690,6 @@ void Model::UpdateWorldTransform()
 
 	if (mAngle > 0.0f || mAngle < 0.0f)
 		mWorldTransform *= rota;
-
-	
 
 	mWorldTransform = glm::translate(mWorldTransform, -mFixedBoxShape);
 }
@@ -867,7 +840,7 @@ void Model::CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fix
 void Model::registerShape(float mass)
 {
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->registerShape(mVertices, mNumVertices);
+	mRigidBody = PhysicsSimulation::getInstance()->registerShape(mVertices, mNumVertices, mPos , mRotate, mAngle);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }

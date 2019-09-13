@@ -7,6 +7,7 @@ class GLDebugDrawer : public btIDebugDraw
 {
 private:
 	Shader linesShader;
+	GLuint mVAO, mVBO;
 	GLint lines_ModelViewMatrix = 0;
 	GLint lines_ProjectionMatrix = 0;
 	GLint lines_position = 0;

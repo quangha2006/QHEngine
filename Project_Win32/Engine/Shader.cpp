@@ -154,7 +154,7 @@ void Shader::use()
 	if (m_initialized)
 		glUseProgram(program);
 	else
-		LOGE("ERROR! Cannot set UseProgram!");
+		LOGE("ERROR! Cannot set UseProgram!\n");
 }
 
 GLint Shader::getPosAttribute()

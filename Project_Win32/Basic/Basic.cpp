@@ -27,7 +27,7 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
@@ -46,16 +46,16 @@ void Basic::Init()
 	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	mSpider.Init("bHieu/1_2_Tree.dae", true, true);
+	mSpider.Init("bHieu/1_2_Tree.dae", true);
 	//mSpider.Init("Demo/BoxAnim.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
-	mSpider.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
-	//mSpider.SetScale(glm::vec3(2.0f));
+	mSpider.SetPos(glm::vec3(0.0f, 0.5f, 0.0f));
+	//mSpider.SetScale(glm::vec3(3.0f));
 	mSpider.SetAnimPlay(1);
 	//mSpider.SetRotate(95.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
 	//mSpider.SetNeedRotate(true);
-	//mSpider.SetDrawMesh(0);
+	//mSpider.SetDrawMesh(9);
 	
 
 	//mBoblampclean.Init("Woman/WomanAnim.fbx", true);
@@ -64,16 +64,16 @@ void Basic::Init()
 	//mBoblampclean.SetScale(glm::vec3(0.1f));
 	mBoblampclean.SetUseLighting(false);
 
-	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(0.1));
 	uvcircle.SetPos(glm::vec3(0.0f, 10.f, 10.0f));
 
-	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
+	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 	//uvcircle.registerShape(1.);
 
-	uvcircle.GetRigidBody()->setFriction(1.);
-	uvcircle.GetRigidBody()->setRollingFriction(1.);
-	uvcircle.GetRigidBody()->setSpinningFriction(1.);
+	//uvcircle.GetRigidBody()->setFriction(1.);
+	//uvcircle.GetRigidBody()->setRollingFriction(1.);
+	//uvcircle.GetRigidBody()->setSpinningFriction(1.);
 	//uvcircle.GetRigidBody()->setRestitution(1.);
 	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
 	//soundIntro.Init("Sound/chuabaogio.wav");
@@ -125,7 +125,7 @@ void Basic::Init()
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
-	PhysicsSimulation::getInstance()->SwitchDebugMode();
+	//PhysicsSimulation::getInstance()->SwitchDebugMode();
 }
 
 void Basic::Update(int delta)

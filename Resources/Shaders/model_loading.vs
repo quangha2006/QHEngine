@@ -50,7 +50,7 @@ void main()
     gl_Position = WorldViewProjectionMatrix * PosL;
 
 	FragPos = vec3(world * PosL);
-	Normal = mat3(world_inverse) * NormalL.xyz; 
+	Normal = (world_inverse * NormalL).xyz; 
     TexCoords = aTexCoords; 
 	FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0f);
 	Color = aColor;
@@ -59,4 +59,5 @@ void main()
 	vec3 B = normalize(vec3(world * vec4(aBitangent, 0.0f)));
 	vec3 N = normalize(vec3(world * NormalL));
 	TBN = mat3(T, B, N);
+	we = sWeights;
 }

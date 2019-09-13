@@ -160,7 +160,7 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 
 	return body;
 }
-btRigidBody * PhysicsSimulation::registerShape(const Vertex* vertices, unsigned int numvertice)
+btRigidBody * PhysicsSimulation::registerShape(const Vertex* vertices, unsigned int numvertice, glm::vec3 pos, glm::vec3 rotate, float angle)
 {
 	if (!vertices || numvertice <= 0) return NULL;
 	btScalar* verticesData = new btScalar[numvertice * 3];
@@ -198,8 +198,8 @@ btRigidBody * PhysicsSimulation::registerShape(const Vertex* vertices, unsigned 
 
 	if (isDynamic)
 		shape->calculateLocalInertia(mass, localInertia);
-	float pos[3] = { 0, 10, 10};
-	btVector3 position(pos[0], pos[1], pos[2]);
+	//float pos[3] = { pos.x, pos.y, pos.z};
+	btVector3 position(pos.x, pos.y, pos.z);
 	startTransform.setOrigin(position);
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 

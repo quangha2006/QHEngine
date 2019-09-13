@@ -28,6 +28,7 @@ in vec3 Normal;
 in mat3 TBN;
 in vec4 FragPosLightSpace;
 in vec4 Color;
+in vec4 we;
 
 uniform vec3 viewPos;
 uniform bool enableAlpha;
@@ -172,4 +173,6 @@ void main()
 		FragColor = vec4(lighting, color.a);
 	else
 		FragColor = vec4(lighting, material_transparent);
+
+	//FragColor = vec4(we.rgb,1.0f);
 }

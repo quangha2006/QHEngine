@@ -184,8 +184,10 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 
 	glGenVertexArrays(1, &mVAO);
 	glGenBuffers(1, &mVBO);
+	
 	glBindVertexArray(mVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBufferData(GL_ARRAY_BUFFER, m_Maxchar * 6 * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
 
 	glEnableVertexAttribArray(mPositionAttribute);
 	glVertexAttribPointer(mPositionAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Position));
@@ -196,7 +198,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	glEnableVertexAttribArray(mAlphaAttribute);
 	glVertexAttribPointer(mAlphaAttribute, 1, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Alpha));
 
-	glBufferData(GL_ARRAY_BUFFER, m_Maxchar * 6 * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
+	
 	glBindVertexArray(0);
 
 	// For debug
