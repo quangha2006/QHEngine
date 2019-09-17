@@ -46,7 +46,7 @@ void Basic::Init()
 	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	mSpider.Init("bHieu/1_2_Tree.dae", true);
+	mSpider.Init("bHieu/3_1_WomanAnim.dae", true);
 	//mSpider.Init("Demo/BoxAnim.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
 	mSpider.SetPos(glm::vec3(0.0f, 0.5f, 0.0f));
@@ -226,7 +226,7 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	//uvcircle.GetRigidBody()->setSpinningFriction(0.1f);
 	//uvcircle.GetRigidBody()->setRestitution(1.0);
 
-	mSpider.registerShape(1.);
+	//mSpider.registerShape(1.);
 }
 
 void Basic::ClickbuttonBloomAmountLeft()

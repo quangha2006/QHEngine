@@ -31,20 +31,19 @@ void main()
 
 	#ifdef SKINNED
 		int index = int(sIDs.x);
-		if (index > -1)
-		{
-			mat4 BoneTransform	= gBones[index] * sWeights[0];
-			index = int(sIDs.y);
-			BoneTransform += gBones[index] * sWeights[1];
-			index = int(sIDs.z);
-			BoneTransform += gBones[index] * sWeights[2];
-			index = int(sIDs.w);
-			BoneTransform += gBones[index] * sWeights[3];
 
-			PosL    = BoneTransform * vec4(aPos, 1.0f);
+		mat4 BoneTransform	= gBones[index] * sWeights[0];
+		index = int(sIDs.y);
+		BoneTransform += gBones[index] * sWeights[1];
+		index = int(sIDs.z);
+		BoneTransform += gBones[index] * sWeights[2];
+		index = int(sIDs.w);
+		BoneTransform += gBones[index] * sWeights[3];
 
-			NormalL = BoneTransform * vec4(aNormal, 0.0f);
-		}
+		PosL    = BoneTransform * vec4(aPos, 1.0f);
+
+		NormalL = BoneTransform * vec4(aNormal, 0.0f);
+
 	#endif
 
     gl_Position = WorldViewProjectionMatrix * PosL;

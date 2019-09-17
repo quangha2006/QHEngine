@@ -252,9 +252,6 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 
 Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTransform)
 {
-	unsigned char WEIGHTS_PER_VERTEX = 4;
-	int boneArraysSize = mesh->mNumVertices * WEIGHTS_PER_VERTEX;
-
 	bool hasBones = mesh->HasBones();
 	bool hasPos = mesh->HasPositions();
 	bool hasNormals = mesh->HasNormals();
@@ -263,7 +260,6 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 	bool hasVertexColors0 = mesh->HasVertexColors(0);
 	// data to fill
 	vector<Texture> textures;
-	vector<float> boneWeights(boneArraysSize, 0.0f);
 
 	unsigned int numvertices_prev_mesh = mNumVertices;
 
@@ -382,36 +378,31 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 			for (unsigned int j = 0; j < aiBone->mNumWeights; j++)
 			{
 				aiVertexWeight weight = aiBone->mWeights[j];
-				unsigned int vertexStart = weight.mVertexId * WEIGHTS_PER_VERTEX;
-				for (unsigned char k = 0; k < WEIGHTS_PER_VERTEX; k++)
+				if (QHMath::compareFloat(mVertices[weight.mVertexId + numvertices_prev_mesh].weight.x, 0.0f))
 				{
-					if (boneWeights.at(vertexStart + k) == 0.0f)
-					{
-						boneWeights.at(vertexStart + k) = weight.mWeight;
-						switch(k)
-						{
-						case 0:
-							mVertices[weight.mVertexId + numvertices_prev_mesh].id.x = (float)BoneIndex;
-							mVertices[weight.mVertexId + numvertices_prev_mesh].weight.x = weight.mWeight;
-							break;
-						case 1:
-							mVertices[weight.mVertexId + numvertices_prev_mesh].id.y = (float)BoneIndex;
-							mVertices[weight.mVertexId + numvertices_prev_mesh].weight.y = weight.mWeight;
-							break;
-						case 2:
-							mVertices[weight.mVertexId + numvertices_prev_mesh].id.z = (float)BoneIndex;
-							mVertices[weight.mVertexId + numvertices_prev_mesh].weight.z = weight.mWeight;
-							break;
-						case 3:
-							mVertices[weight.mVertexId + numvertices_prev_mesh].id.w = (float)BoneIndex;
-							mVertices[weight.mVertexId + numvertices_prev_mesh].weight.w = weight.mWeight;
-							break;
-						}
-						break;
-					}
+					mVertices[weight.mVertexId + numvertices_prev_mesh].id.x = (float)BoneIndex;
+					mVertices[weight.mVertexId + numvertices_prev_mesh].weight.x = weight.mWeight;
+					continue;
+				}
+				if (QHMath::compareFloat(mVertices[weight.mVertexId + numvertices_prev_mesh].weight.y, 0.0f))
+				{
+					mVertices[weight.mVertexId + numvertices_prev_mesh].id.y = (float)BoneIndex;
+					mVertices[weight.mVertexId + numvertices_prev_mesh].weight.y = weight.mWeight;
+					continue;
+				}
+				if (QHMath::compareFloat(mVertices[weight.mVertexId + numvertices_prev_mesh].weight.z, 0.0f))
+				{
+					mVertices[weight.mVertexId + numvertices_prev_mesh].id.z = (float)BoneIndex;
+					mVertices[weight.mVertexId + numvertices_prev_mesh].weight.z = weight.mWeight;
+					continue;
+				}
+				if (QHMath::compareFloat(mVertices[weight.mVertexId + numvertices_prev_mesh].weight.w, 0.0f))
+				{
+					mVertices[weight.mVertexId + numvertices_prev_mesh].id.w = (float)BoneIndex;
+					mVertices[weight.mVertexId + numvertices_prev_mesh].weight.w = weight.mWeight;
+					continue;
 				}
 			}
-
 		}
 	}
 	Vertex *verCurrentMesh = new Vertex[numvertices];
