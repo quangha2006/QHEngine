@@ -173,6 +173,7 @@
     <ClInclude Include="QHMath.h" />
     <ClInclude Include="QHText.h" />
     <ClInclude Include="QHTexture.h" />
+    <ClInclude Include="QHVertex.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Shader.h" />

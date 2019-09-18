@@ -8,6 +8,7 @@
 #include "ShaderManager.h"
 #include "PhysicsSimulation.h"
 #include "QHMaterial.h"
+#include "QHVertex.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -124,6 +125,7 @@ public:
 	void SyncPhysics();
 	void BoneTransform(int64_t TimeInSeconds, vector<glm::mat4> &Transforms);
 	void SetScale(glm::vec3 scale);
+	void SetScale(float scale);
 	void SetPos(glm::vec3 pos);
 	void SetRotate(float angle, glm::vec3 rotate);
 	void SetAnimPlay(int anim);
@@ -146,7 +148,8 @@ public:
 	void CreateBoxShapePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape = glm::vec3(0.));
 	void CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fixedboxshape = glm::vec3(0.));
 	void ClearForcesPhysics();
-	void registerShape(float mass);
+	void registerShape(float mass, bool isOptimize = true);
+	void registerShapeTriangle(float mass, bool isOptimize = true);
 	btRigidBody* GetRigidBody();
 	Model();
 	~Model();

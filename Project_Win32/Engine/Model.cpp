@@ -659,7 +659,7 @@ void Model::SyncPhysics()
 
 		glm::mat4 glm_mat4 = glm::make_mat4(matrix);
 
-		mWorldTransform = glm_mat4;
+		mWorldTransform = glm_mat4 * glm::scale(glm::mat4(), mScale);
 	}
 	else if (m_initialized)
 	{
@@ -719,6 +719,10 @@ void Model::BoneTransform(int64_t TimeInSeconds, vector<glm::mat4>& Transforms)
 void Model::SetScale(glm::vec3 scale)
 {
 	mScale = scale;
+}
+void Model::SetScale(float scale)
+{
+	mScale = glm::vec3(scale);
 }
 void Model::SetPos(glm::vec3 pos)
 {
@@ -828,12 +832,25 @@ void Model::CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fix
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
-void Model::registerShape(float mass)
+void Model::registerShape(float mass, bool isOptimize)
 {
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->registerShape(mVertices, mNumVertices, mPos , mRotate, mAngle);
+	mRigidBody = PhysicsSimulation::getInstance()->registerShape(mass, mVertices, mNumVertices, mPos , mRotate, mAngle, mScale, isOptimize);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
+}
+
+void Model::registerShapeTriangle(float mass, bool isOptimize)
+{
+	//isDynamic = (mass != 0.f);
+	//mRigidBody = PhysicsSimulation::getInstance()->registerShapeTriangle(mass, mVertices, mNumVertices, mIndices, mNumIndices, mPos, mRotate, mAngle, mScale);
+	//if (isDynamic)
+		//mRigidBody->setActivationState(DISABLE_DEACTIVATION);
+
+	for (unsigned int i = 0; i < mMeshes.size(); i++)
+	{
+		mMeshes[i]->registerShapeTriangle(mass);
+	}
 }
 
 void Model::ClearForcesPhysics()

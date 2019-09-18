@@ -28,9 +28,9 @@ void Basic::Init()
 	mSkyBox.Init("SkyBox");
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
-	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.5f));
+	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
+	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
@@ -49,10 +49,10 @@ void Basic::Init()
 	mSpider.Init("bHieu/3_1_WomanAnim.dae", true);
 	//mSpider.Init("Demo/BoxAnim.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
-	mSpider.SetPos(glm::vec3(0.0f, 0.5f, 0.0f));
-	//mSpider.SetScale(glm::vec3(3.0f));
+	mSpider.SetPos(glm::vec3(1.8f, 5.5f, -.5f));
+	mSpider.SetScale(glm::vec3(5.0f));
 	mSpider.SetAnimPlay(1);
-	//mSpider.SetRotate(95.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	mSpider.SetRotate(50.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
 	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(9);
@@ -64,9 +64,9 @@ void Basic::Init()
 	//mBoblampclean.SetScale(glm::vec3(0.1f));
 	mBoblampclean.SetUseLighting(false);
 
-	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(0.1));
-	uvcircle.SetPos(glm::vec3(0.0f, 10.f, 10.0f));
+	uvcircle.SetPos(glm::vec3(0.1f, 10.f, 0.5f));
 
 	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 	//uvcircle.registerShape(1.);
@@ -125,7 +125,7 @@ void Basic::Init()
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
-	//PhysicsSimulation::getInstance()->SwitchDebugMode();
+	PhysicsSimulation::getInstance()->SwitchDebugMode();
 }
 
 void Basic::Update(int delta)
@@ -141,6 +141,7 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
 	//LOGI("Key: %d = %c\n",key, c);
+
 	static glm::mat4 camera_projection = glm::mat4();
 	glm::mat4 tmp;
 	if (action == 0) return true;
@@ -156,12 +157,10 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		PhysicsSimulation::getInstance()->SwitchDebugMode();
 		return true;
 	case 'S': //num s
-		//camera_projection = glm::rotate(camera_projection, glm::radians(-0.5f), glm::vec3(0.f, 1.f,0.f));
-		//tmp = Camera::getInstance()->WorldViewProjectionMatrix * camera_projection;
-		//Camera::getInstance()->WorldViewProjectionMatrix = tmp;
+		m_Streetenvironment.SetRotate(1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 		return true;
 	case 'W': //num w
-		//mCamera->Target.y += 0.1f;
+		m_Streetenvironment.SetRotate(-1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 		return true;
 	case 'A': //num a
 		//mCamera->Target.x -= 0.1f;
@@ -220,13 +219,19 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mBloomLabel.setVisible(true);
 	mBloomAmountLabel.setVisible(true);
 
-	//uvcircle.registerShape(1.);
-	//uvcircle.GetRigidBody()->setFriction(0.);
-	//uvcircle.GetRigidBody()->setRollingFriction(0.1f);
-	//uvcircle.GetRigidBody()->setSpinningFriction(0.1f);
-	//uvcircle.GetRigidBody()->setRestitution(1.0);
+	m_Streetenvironment.registerShapeTriangle(0.);
 
-	//mSpider.registerShape(1.);
+	uvcircle.registerShape(1.);
+	uvcircle.GetRigidBody()->setFriction(1.);
+	uvcircle.GetRigidBody()->setRollingFriction(1.0f);
+	uvcircle.GetRigidBody()->setSpinningFriction(1.0f);
+	uvcircle.GetRigidBody()->setRestitution(0.0);
+
+	mSpider.registerShape(1.);
+	mSpider.GetRigidBody()->setFriction(0.);
+	mSpider.GetRigidBody()->setRollingFriction(0.1f);
+	mSpider.GetRigidBody()->setSpinningFriction(0.1f);
+	mSpider.GetRigidBody()->setRestitution(0.0);
 }
 
 void Basic::ClickbuttonBloomAmountLeft()

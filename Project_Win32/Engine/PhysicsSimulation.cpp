@@ -91,7 +91,7 @@ btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::v
 {
 	//create a dynamic rigidbody
 
-	btCollisionShape* colShape = new btBoxShape(btVector3(btScalar(boxshape.x), btScalar(boxshape.y), btScalar(boxshape.z)));
+	btCollisionShape* colShape = new btBoxShape(btVector3(boxshape.x, boxshape.y, boxshape.z));
 	mCollisionShapes.push_back(colShape);
 
 	/// Create Dynamic Objects
@@ -129,7 +129,7 @@ btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::v
 
 btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, float radius)
 {
-	btCollisionShape* colShape = new btSphereShape(btScalar(radius));
+	btCollisionShape* colShape = new btSphereShape(radius);
 	//btCompoundShape* colShape = new btCompoundShape();
 	//colShape->addChildShape(btTransform::getIdentity(), childShape);
 
@@ -139,7 +139,11 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 	btTransform startTransform;
 	startTransform.setIdentity();
 
-	startTransform.setRotation(btQuaternion(btVector3(1, 1, 1), SIMD_PI / 10.));
+	if (angle != 0.0f)
+	{
+		btQuaternion startQuater(btVector3(rotate.x, rotate.y, rotate.z), glm::radians(angle));
+		startTransform.setRotation(startQuater);
+	}
 
 	//rigidbody is dynamic if and only if mass is non zero, otherwise static
 	bool isDynamic = (mass != 0.f);
@@ -148,7 +152,7 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 	if (isDynamic)
 		colShape->calculateLocalInertia(mass, localInertia);
 
-	startTransform.setOrigin(btVector3(btScalar(pos.x), btScalar(pos.y), btScalar(pos.z)));
+	startTransform.setOrigin(btVector3(pos.x, pos.y, pos.z));
 
 	//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
 
@@ -160,7 +164,7 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 
 	return body;
 }
-btRigidBody * PhysicsSimulation::registerShape(const Vertex* vertices, unsigned int numvertice, glm::vec3 pos, glm::vec3 rotate, float angle)
+btRigidBody * PhysicsSimulation::registerShape(float mass, const Vertex* vertices, unsigned int numvertice, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale, bool isOptimize)
 {
 	if (!vertices || numvertice <= 0) return NULL;
 	btScalar* verticesData = new btScalar[numvertice * 3];
@@ -168,47 +172,97 @@ btRigidBody * PhysicsSimulation::registerShape(const Vertex* vertices, unsigned 
 	while (count < numvertice)
 	{
 		unsigned int index = count * 3;
-		verticesData[index]		= vertices[count].Position.x;
-		verticesData[index + 1] = vertices[count].Position.y;
-		verticesData[index + 2] = vertices[count].Position.z;
-		//LOGI("%f %f %f\n", vertices[count].Position.x, vertices[count].Position.y, vertices[count].Position.z);
+		verticesData[index]		= vertices[count].Position.x * scale.x;
+		verticesData[index + 1] = vertices[count].Position.y * scale.y;
+		verticesData[index + 2] = vertices[count].Position.z * scale.z;
 		++count;
 	}
 	btConvexHullShape* shape = new btConvexHullShape(verticesData, numvertice, sizeof(btScalar) * 3);
-	
-	//New code
-	//btConvexHullShape* shape = new btConvexHullShape();
 
-	//for (auto i = 0; i < numvertice; i++)
-		//shape->addPoint(btVector3(vertices[i].Position.x, vertices[i].Position.y, vertices[i].Position.z));
-	//LOGI("shape->getNumVertices: %d\n",shape->getNumVertices());
-
-	shape->optimizeConvexHull();
+	if (isOptimize)
+		shape->optimizeConvexHull();
 
 	mCollisionShapes.push_back(shape);
 
 	btTransform startTransform;
 	startTransform.setIdentity();
-
-	btScalar mass(1.f);
 	
+
 	bool isDynamic = (mass != 0.f);
 	
 	btVector3 localInertia(0, 0, 0);
 
 	if (isDynamic)
 		shape->calculateLocalInertia(mass, localInertia);
-	//float pos[3] = { pos.x, pos.y, pos.z};
+
 	btVector3 position(pos.x, pos.y, pos.z);
 	startTransform.setOrigin(position);
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
+	if (angle != 0.0f)
+	{
+		btQuaternion startQuater(btVector3(rotate.x, rotate.y, rotate.z), glm::radians(angle));
+		startTransform.setRotation(startQuater);
+	}
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+	
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, shape, localInertia);
 	btRigidBody* body = new btRigidBody(rbInfo);
 
 	mDynamicsWorld->addRigidBody(body);
 
 	delete[] verticesData;
+	return body;
+}
+btRigidBody * PhysicsSimulation::registerShapeTriangle(float mass, const Vertex * vertices, unsigned int numvertice, GLuint * indices, GLuint numIndices, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale)
+{
+	if (!vertices || numvertice <= 0 || !indices || numIndices <= 0) return NULL;
+
+	btTriangleMesh* meshInterface = new btTriangleMesh();
+
+	for (int i = 0; i < numIndices / 3; i++)
+	{
+		glm::vec3 v0 = vertices[indices[i * 3]].Position * scale;
+		glm::vec3 v1 = vertices[indices[i * 3 + 1]].Position * scale;
+		glm::vec3 v2 = vertices[indices[i * 3 + 2]].Position * scale;
+
+		meshInterface->addTriangle(btVector3(v0.x, v0.y, v0.z),
+			btVector3(v1.x, v1.y, v1.z),
+			btVector3(v2.x, v2.y, v2.z));
+	}
+
+	btCompoundShape* compound = new btCompoundShape();
+
+	btConvexShape* hull = new btConvexTriangleMeshShape(meshInterface);
+
+	mCollisionShapes.push_back(hull);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+
+	if (angle != 0.0f)
+	{
+		btQuaternion startQuater(btVector3(rotate.x, rotate.y, rotate.z), glm::radians(angle));
+		startTransform.setRotation(startQuater);
+	}
+
+	bool isDynamic = (mass != 0.f);
+
+	btVector3 localInertia(0, 0, 0);
+
+	if (isDynamic)
+		hull->calculateLocalInertia(mass, localInertia);
+
+	btVector3 position(pos.x, pos.y, pos.z);
+	startTransform.setOrigin(position);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, hull, localInertia);
+	btRigidBody* body = new btRigidBody(rbInfo);
+
+	mDynamicsWorld->addRigidBody(body);
+
 	return body;
 }
 void PhysicsSimulation::SetDebugMode(int debugMode)
