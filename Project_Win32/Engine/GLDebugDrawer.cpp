@@ -53,15 +53,18 @@ GLDebugDrawer::GLDebugDrawer()
 
 void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color)
 {
-	std::vector<float> tmpdata{ from.getX(),	from.getY(),	from.getZ(),	color.getX(),	color.getY(),	color.getZ(),
-						to.getX(),		to.getY(),		to.getZ() ,		color.getX(),	color.getY(),	color.getZ() };
+	if (m_debugMode > 0)
+	{
+		std::vector<float> tmpdata{ from.getX(),	from.getY(),	from.getZ(),	color.getX(),	color.getY(),	color.getZ(),
+				to.getX(),		to.getY(),		to.getZ() ,		color.getX(),	color.getY(),	color.getZ() };
 
-	mVertexData.insert(mVertexData.end(), tmpdata.begin(), tmpdata.end());
+		mVertexData.insert(mVertexData.end(), tmpdata.begin(), tmpdata.end());
+	}
 }
 
 void GLDebugDrawer::flushLines()
 {
-	if (m_debugMode > 0)
+	if (m_debugMode > 0 && mVertexData.size() > 0)
 	{
 		linesShader.use();
 		glBindBuffer(GL_ARRAY_BUFFER, mVBO);

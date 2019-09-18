@@ -40,7 +40,7 @@ void Basic::Init()
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	//mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
+	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	mAstroBoy.SetScale(glm::vec3(50.0f));
 	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
@@ -49,20 +49,19 @@ void Basic::Init()
 	mSpider.Init("bHieu/3_1_WomanAnim.dae", true);
 	//mSpider.Init("Demo/BoxAnim.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
-	mSpider.SetPos(glm::vec3(1.8f, 5.5f, -.5f));
+	//mSpider.SetPos(glm::vec3(1.8f, 5.5f, -.5f));
 	mSpider.SetScale(glm::vec3(5.0f));
-	mSpider.SetAnimPlay(1);
-	mSpider.SetRotate(50.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+	//mSpider.SetAnimPlay(1);
+	//mSpider.SetRotate(50.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
 	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(9);
 	
 
-	//mBoblampclean.Init("Woman/WomanAnim.fbx", true);
-	mBoblampclean.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
+	mBoblampclean.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", true);
 	mBoblampclean.SetPos(glm::vec3(5.f, 0.0f, 0.0f));
-	//mBoblampclean.SetScale(glm::vec3(0.1f));
-	mBoblampclean.SetUseLighting(false);
+	mBoblampclean.SetScale(glm::vec3(0.05f));
+	mBoblampclean.SetDrawMesh(1);
 
 	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(0.1));
@@ -219,9 +218,9 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mBloomLabel.setVisible(true);
 	mBloomAmountLabel.setVisible(true);
 
-	m_Streetenvironment.registerShapeTriangle(0.);
+	//m_Streetenvironment.registerShapeTriangle(0.);
 
-	uvcircle.registerShape(1.);
+	/*uvcircle.registerShape(1.);
 	uvcircle.GetRigidBody()->setFriction(1.);
 	uvcircle.GetRigidBody()->setRollingFriction(1.0f);
 	uvcircle.GetRigidBody()->setSpinningFriction(1.0f);
@@ -231,7 +230,7 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mSpider.GetRigidBody()->setFriction(0.);
 	mSpider.GetRigidBody()->setRollingFriction(0.1f);
 	mSpider.GetRigidBody()->setSpinningFriction(0.1f);
-	mSpider.GetRigidBody()->setRestitution(0.0);
+	mSpider.GetRigidBody()->setRestitution(0.0);*/
 }
 
 void Basic::ClickbuttonBloomAmountLeft()

@@ -506,8 +506,6 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
 	}
 
-
-
 	Shader* modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
 	if (modelShader->position_Attribute != -1)
@@ -884,7 +882,7 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 
 	if (pNodeAnim) {
 		// Interpolate scaling and generate scaling transformation matrix
-		aiVector3D Scaling;
+		aiVector3D Scaling(1.0f);
 		CalcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
 		glm::mat4 ScalingM = glm::mat4();
 		ScalingM = glm::scale(ScalingM, glm::vec3(Scaling.x, Scaling.y, Scaling.z));
@@ -900,7 +898,7 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 		RotationM[3][0] = 0.0f; RotationM[3][1] = 0.0f; RotationM[3][2] = 0.0f; RotationM[3][3] = 1.0f;
 
 		// Interpolate translation and generate translation transformation matrix
-		aiVector3D Translation;
+		aiVector3D Translation(0.0f);
 		CalcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
 		//InitTranslationTransform
 		glm::mat4 TranslationM = glm::mat4();
@@ -939,6 +937,11 @@ const aiNodeAnim * Model::FindNodeAnim(const aiAnimation * pAnimation, const str
 }
 void Model::CalcInterpolatedScaling(aiVector3D & Out, double AnimationTime, const aiNodeAnim * pNodeAnim)
 {
+	if (pNodeAnim->mNumScalingKeys == 0)
+	{
+		return;
+	}
+
 	if (pNodeAnim->mNumScalingKeys == 1) {
 		Out = pNodeAnim->mScalingKeys[0].mValue;
 		return;
@@ -949,7 +952,7 @@ void Model::CalcInterpolatedScaling(aiVector3D & Out, double AnimationTime, cons
 	assert(NextScalingIndex < pNodeAnim->mNumScalingKeys);
 	double DeltaTime = pNodeAnim->mScalingKeys[NextScalingIndex].mTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime;
 	double Factor = (AnimationTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime) / DeltaTime;
-	//assert(Factor >= 0.0f && Factor <= 1.0f);
+	assert(Factor >= 0.0f && Factor <= 1.0f);
 	const aiVector3D& Start = pNodeAnim->mScalingKeys[ScalingIndex].mValue;
 	const aiVector3D& End = pNodeAnim->mScalingKeys[NextScalingIndex].mValue;
 	aiVector3D Delta = End - Start;
@@ -965,12 +968,16 @@ uint Model::FindScaling(double AnimationTime, const aiNodeAnim * pNodeAnim)
 			return i;
 		}
 	}
-	//assert(0);
+	assert(0);
 	return 0;
 }
 void Model::CalcInterpolatedRotation(aiQuaternion & Out, double AnimationTime, const aiNodeAnim * pNodeAnim)
 {
-	// we need at least two values to interpolate...
+	if (pNodeAnim->mNumRotationKeys == 0)
+	{
+		return;
+	}
+
 	if (pNodeAnim->mNumRotationKeys == 1) {
 		Out = pNodeAnim->mRotationKeys[0].mValue;
 		return;
@@ -981,7 +988,7 @@ void Model::CalcInterpolatedRotation(aiQuaternion & Out, double AnimationTime, c
 	assert(NextRotationIndex < pNodeAnim->mNumRotationKeys);
 	double DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim->mRotationKeys[RotationIndex].mTime;
 	double Factor = (AnimationTime - pNodeAnim->mRotationKeys[RotationIndex].mTime) / DeltaTime;
-	//assert(Factor >= 0.0f && Factor <= 1.0f);
+	assert(Factor >= 0.0f && Factor <= 1.0f);
 	const aiQuaternion& StartRotationQ = pNodeAnim->mRotationKeys[RotationIndex].mValue;
 	const aiQuaternion& EndRotationQ = pNodeAnim->mRotationKeys[NextRotationIndex].mValue;
 	aiQuaternion::Interpolate(Out, StartRotationQ, EndRotationQ, (float)Factor); //ai_real = float
@@ -989,6 +996,10 @@ void Model::CalcInterpolatedRotation(aiQuaternion & Out, double AnimationTime, c
 }
 void Model::CalcInterpolatedPosition(aiVector3D & Out, double AnimationTime, const aiNodeAnim * pNodeAnim)
 {
+	if (pNodeAnim->mNumPositionKeys == 0) {
+		return;
+	}
+
 	if (pNodeAnim->mNumPositionKeys == 1) {
 		Out = pNodeAnim->mPositionKeys[0].mValue;
 		return;
@@ -999,7 +1010,7 @@ void Model::CalcInterpolatedPosition(aiVector3D & Out, double AnimationTime, con
 	assert(NextPositionIndex < pNodeAnim->mNumPositionKeys);
 	double DeltaTime = pNodeAnim->mPositionKeys[NextPositionIndex].mTime - pNodeAnim->mPositionKeys[PositionIndex].mTime;
 	double Factor = (AnimationTime - pNodeAnim->mPositionKeys[PositionIndex].mTime) / DeltaTime;
-	//assert(Factor >= 0.0f && Factor <= 1.0f);
+	assert(Factor >= 0.0f && Factor <= 1.0f);
 	const aiVector3D& Start = pNodeAnim->mPositionKeys[PositionIndex].mValue;
 	const aiVector3D& End = pNodeAnim->mPositionKeys[NextPositionIndex].mValue;
 	aiVector3D Delta = End - Start;
@@ -1015,8 +1026,7 @@ uint Model::FindRotation(double AnimationTime, const aiNodeAnim * pNodeAnim)
 		}
 	}
 
-	//assert(0);
-
+	assert(0);
 	return 0;
 }
 uint Model::FindPosition(double AnimationTime, const aiNodeAnim * pNodeAnim)
@@ -1027,8 +1037,7 @@ uint Model::FindPosition(double AnimationTime, const aiNodeAnim * pNodeAnim)
 		}
 	}
 
-	//assert(0);
-
+	assert(0);
 	return 0;
 }
 glm::mat4 Model::GetWorld()
