@@ -70,6 +70,7 @@ private:
 	bool hasAnimation;
 	int animToPlay;
 	int mNumAnimations;
+	float mAnimationTime_begin, mAnimationTime_end;
 
 	Camera *mCamera;
 	bool m_initialized;
@@ -136,6 +137,10 @@ public:
 	void SetVisible(bool isvisible);
 	bool GetIsVisible();
 	int GetAnimPlay();
+	/**
+	FULL Anim Time from 0.0 to 1.0
+	**/
+	void SetPlayAnimTime(float timeBegin, float timeEnd);
 	std::string GetAnimNamePlaying();
 	void Loading();
 	void Translate(glm::vec3 trans);
@@ -148,8 +153,9 @@ public:
 	void CreateBoxShapePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape = glm::vec3(0.));
 	void CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fixedboxshape = glm::vec3(0.));
 	void ClearForcesPhysics();
-	void registerShape(float mass, bool isOptimize = true);
-	void registerShapeTriangle(float mass, bool isOptimize = true);
+	void CreateConvexHullShapePhysicsBody(float mass, bool isOptimize = true);
+	void CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize = true);
+
 	btRigidBody* GetRigidBody();
 	Model();
 	~Model();

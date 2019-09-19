@@ -10,7 +10,7 @@
 
 namespace Utils
 {
-	template< typename... Args > char * toString(const char* format, Args... args)
+	template< typename... Args > std::string toString(const char* format, Args... args)
 	{
 		int length = std::snprintf(nullptr, 0, format, args...);
 		assert(length >= 0);
@@ -18,7 +18,9 @@ namespace Utils
 		char* buf = nullptr;
 		buf = new char[length + 1];
 		std::snprintf(buf, length + 1, format, args...);
-		return buf;
+		std::string tmp(buf);
+		delete[]buf;
+		return tmp;
 	}
 	std::string getResourcesFolder();
 	std::string getDefineVersionShader();

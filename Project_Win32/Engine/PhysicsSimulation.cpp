@@ -24,7 +24,7 @@ void PhysicsSimulation::initPhysics()
 
 	mDynamicsWorld->setGravity(btVector3(0, -100.0, 0));
 
-	//debugDraw.setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+	debugDraw.setDebugMode(btIDebugDraw::DBG_DrawFeaturesText);
 	mDynamicsWorld->setDebugDrawer(&debugDraw);
 }
 
@@ -164,7 +164,7 @@ btRigidBody * PhysicsSimulation::createSphereShape(float mass, glm::vec3 pos, gl
 
 	return body;
 }
-btRigidBody * PhysicsSimulation::registerShape(float mass, const Vertex* vertices, unsigned int numvertice, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale, bool isOptimize)
+btRigidBody * PhysicsSimulation::createConvexHullShape(float mass, const Vertex* vertices, unsigned int numvertice, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale, bool isOptimize)
 {
 	if (!vertices || numvertice <= 0) return NULL;
 	btScalar* verticesData = new btScalar[numvertice * 3];
@@ -214,7 +214,7 @@ btRigidBody * PhysicsSimulation::registerShape(float mass, const Vertex* vertice
 	delete[] verticesData;
 	return body;
 }
-btRigidBody * PhysicsSimulation::registerShapeTriangle(float mass, const Vertex * vertices, unsigned int numvertice, GLuint * indices, GLuint numIndices, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale)
+btRigidBody * PhysicsSimulation::createConvexTriangleMeshShape(float mass, const Vertex * vertices, unsigned int numvertice, GLuint * indices, GLuint numIndices, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale)
 {
 	if (!vertices || numvertice <= 0 || !indices || numIndices <= 0) return NULL;
 

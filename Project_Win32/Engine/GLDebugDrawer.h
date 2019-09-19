@@ -24,7 +24,7 @@ public:
 
 	virtual void   reportErrorWarning(const char* warningString);
 
-	virtual void   draw3dText(const btVector3& location, const char* textString) {};
+	virtual void   draw3dText(const btVector3& location, const char* textString);
 
 	virtual void flushLines();
 

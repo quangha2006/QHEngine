@@ -82,7 +82,7 @@ void Model::Loading() //thread
 	LOGI("ProcessNode time : %ums\n\n", (unsigned int)(time_processNode - time_processMaterial));
 	
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
-
+	
 	if (m_pScene->HasAnimations())
 	{
 		hasAnimation = true;
@@ -90,8 +90,12 @@ void Model::Loading() //thread
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
-
+	
 	SetupMaterialMesh();
+
+	aiMemoryInfo meminfo;
+	mImporter.GetMemoryRequirements(meminfo);
+	LOGI("MemoryRequirements: %uKB\n", meminfo.total / 1024);
 
 	// create buffers/arrays
 	glGenBuffers(1, &mVBO);
@@ -696,24 +700,6 @@ void Model::Translate(glm::vec3 trans)
 	}
 }
 
-void Model::BoneTransform(int64_t TimeInSeconds, vector<glm::mat4>& Transforms)
-{
-	glm::mat4 Identity = glm::mat4();
-	if (animToPlay >= mNumAnimations) 
-		animToPlay = mNumAnimations -1;
-	double mTicksPerSecond = m_pScene->mAnimations[animToPlay]->mTicksPerSecond;
-	double mDuration = m_pScene->mAnimations[animToPlay]->mDuration;
-
-	float TicksPerSecond = (float)(mTicksPerSecond != 0 ? mTicksPerSecond : 25.0f);
-	double TimeInTicks = ((double)TimeInSeconds / 1000.0) * TicksPerSecond;
-	double AnimationTime = fmod(TimeInTicks, mDuration);
-
-	ReadNodeHeirarchy(AnimationTime, m_pScene->mRootNode, Identity);
-
-	for (uint i = 0; i < m_NumBones; i++) {
-		Transforms[i] = m_BoneInfo[i].FinalTransformation;
-	}
-}
 void Model::SetScale(glm::vec3 scale)
 {
 	mScale = scale;
@@ -830,25 +816,24 @@ void Model::CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fix
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
-void Model::registerShape(float mass, bool isOptimize)
+void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 {
+	if (mNumVertices <= 0) return;
+
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->registerShape(mass, mVertices, mNumVertices, mPos , mRotate, mAngle, mScale, isOptimize);
+	mRigidBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, mVertices, mNumVertices, mPos , mRotate, mAngle, mScale, isOptimize);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
-void Model::registerShapeTriangle(float mass, bool isOptimize)
+void Model::CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize)
 {
-	//isDynamic = (mass != 0.f);
-	//mRigidBody = PhysicsSimulation::getInstance()->registerShapeTriangle(mass, mVertices, mNumVertices, mIndices, mNumIndices, mPos, mRotate, mAngle, mScale);
-	//if (isDynamic)
-		//mRigidBody->setActivationState(DISABLE_DEACTIVATION);
+	if (mNumVertices <= 0) return;
 
-	for (unsigned int i = 0; i < mMeshes.size(); i++)
-	{
-		mMeshes[i]->registerShapeTriangle(mass);
-	}
+	isDynamic = (mass != 0.f);
+	mRigidBody = PhysicsSimulation::getInstance()->createConvexTriangleMeshShape(mass, mVertices, mNumVertices, mIndices, mNumIndices, mPos, mRotate, mAngle, mScale);
+	if (isDynamic)
+		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
 void Model::ClearForcesPhysics()
@@ -866,6 +851,34 @@ void Model::ClearForcesPhysics()
 btRigidBody * Model::GetRigidBody()
 {
 	return mRigidBody;
+}
+
+void Model::SetPlayAnimTime(float timeBegin, float timeEnd)
+{
+	QHMath::Clamp(timeBegin, 0.0f, 1.0f);
+	QHMath::Clamp(timeEnd, 0.0f, 1.0f);
+
+	mAnimationTime_begin = timeBegin;
+	mAnimationTime_end = timeEnd;
+}
+
+void Model::BoneTransform(int64_t TimeInSeconds, vector<glm::mat4>& Transforms)
+{
+	glm::mat4 Identity = glm::mat4();
+	if (animToPlay >= mNumAnimations)
+		animToPlay = mNumAnimations - 1;
+	double mTicksPerSecond = m_pScene->mAnimations[animToPlay]->mTicksPerSecond;
+	double mDuration = m_pScene->mAnimations[animToPlay]->mDuration * mAnimationTime_end - m_pScene->mAnimations[animToPlay]->mDuration * mAnimationTime_begin;
+
+	float TicksPerSecond = (float)(mTicksPerSecond != 0 ? mTicksPerSecond : 25.0f);
+	double TimeInTicks = ((double)TimeInSeconds / 1000.0) * TicksPerSecond;
+	double AnimationTime = fmod(TimeInTicks, mDuration) + m_pScene->mAnimations[animToPlay]->mDuration * mAnimationTime_begin;
+	assert(AnimationTime >= 0.0);
+	ReadNodeHeirarchy(AnimationTime, m_pScene->mRootNode, Identity);
+
+	for (uint i = 0; i < m_NumBones; i++) {
+		Transforms[i] = m_BoneInfo[i].FinalTransformation;
+	}
 }
 
 void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::mat4 & ParentTransform)
@@ -994,6 +1007,21 @@ void Model::CalcInterpolatedRotation(aiQuaternion & Out, double AnimationTime, c
 	aiQuaternion::Interpolate(Out, StartRotationQ, EndRotationQ, (float)Factor); //ai_real = float
 	Out = Out.Normalize();
 }
+
+uint Model::FindRotation(double AnimationTime, const aiNodeAnim * pNodeAnim)
+{
+	assert(pNodeAnim->mNumRotationKeys > 0);
+
+	for (uint i = 0; i < pNodeAnim->mNumRotationKeys - 1; i++) {
+		if (AnimationTime < pNodeAnim->mRotationKeys[i + 1].mTime) {
+			return i;
+		}
+	}
+
+	assert(0);
+	return 0;
+}
+
 void Model::CalcInterpolatedPosition(aiVector3D & Out, double AnimationTime, const aiNodeAnim * pNodeAnim)
 {
 	if (pNodeAnim->mNumPositionKeys == 0) {
@@ -1016,19 +1044,7 @@ void Model::CalcInterpolatedPosition(aiVector3D & Out, double AnimationTime, con
 	aiVector3D Delta = End - Start;
 	Out = Start + (float)Factor * Delta;
 }
-uint Model::FindRotation(double AnimationTime, const aiNodeAnim * pNodeAnim)
-{
-	assert(pNodeAnim->mNumRotationKeys > 0);
 
-	for (uint i = 0; i < pNodeAnim->mNumRotationKeys - 1; i++) {
-		if (AnimationTime < pNodeAnim->mRotationKeys[i + 1].mTime) {
-			return i;
-		}
-	}
-
-	assert(0);
-	return 0;
-}
 uint Model::FindPosition(double AnimationTime, const aiNodeAnim * pNodeAnim)
 {
 	for (uint i = 0; i < pNodeAnim->mNumPositionKeys - 1; i++) {
@@ -1067,6 +1083,8 @@ Model::Model()
 	, hasAnimation(false)
 	, mNumAnimations(-1)
 	, mtimeStampAnim(-1)
+	, mAnimationTime_begin(0.0f)
+	, mAnimationTime_end(1.0f)
 	, mScale(glm::vec3(1.0f))
 	, mPos(glm::vec3(0.0f))
 	, mRotate(glm::vec3(0.0f))

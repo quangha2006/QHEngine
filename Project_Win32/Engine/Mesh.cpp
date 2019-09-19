@@ -94,7 +94,7 @@ void Mesh::SetMaterialId(GLuint newid)
 void Mesh::registerShapeTriangle(float mass, bool isOptimize)
 {
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->registerShapeTriangle(mass, mVertex, mNumVertex, mIndices, mNumIndices, glm::vec3(0.0f), glm::vec3(0.0f), 0.0f, glm::vec3(1.0f));
+	mRigidBody = PhysicsSimulation::getInstance()->createConvexTriangleMeshShape(mass, mVertex, mNumVertex, mIndices, mNumIndices, glm::vec3(0.0f), glm::vec3(0.0f), 0.0f, glm::vec3(1.0f));
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 	mRigidBody->setFriction(0.0);

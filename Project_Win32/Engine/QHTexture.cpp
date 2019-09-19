@@ -111,7 +111,7 @@ namespace QHTexture
 					glCompressedTexImage2D(GL_TEXTURE_2D, mipmap, internalFormat, width, height, 0, imgsize, data);
 					PrevLoad = ETCPath;
 					CheckGLError("Gen ETC2 Texture");
-					delete data;
+					delete[] data;
 					mipmap++;
 				}
 				else
@@ -218,7 +218,6 @@ namespace QHTexture
 			else
 			{
 				std::cout << "Cubemap texture failed to load at path: " << fullPath << std::endl;
-				stbi_image_free(data);
 			}
 		}
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

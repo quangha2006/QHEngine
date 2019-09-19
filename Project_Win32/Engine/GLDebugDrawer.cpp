@@ -105,6 +105,11 @@ void GLDebugDrawer::reportErrorWarning(const char * warningString)
 	LOGW("PhysicsSimulation reportErrorWarning: %s\n", warningString);
 }
 
+void GLDebugDrawer::draw3dText(const btVector3 & location, const char * textString)
+{
+	LOGI("location: %f, %f, %f String: %s\n", location.getX(), location.getY(), location.getZ(), textString);
+}
+
 
 GLDebugDrawer::~GLDebugDrawer()
 {
