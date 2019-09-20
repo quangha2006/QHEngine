@@ -39,7 +39,7 @@ private:
 	// debug
 	int mDebugDrawModes;
 	GLDebugDrawer debugDraw;
-
+	btRigidBody* createRigidBody(float mass, const btTransform& startTransform, btCollisionShape* shape);
 public:
 	void initPhysics();
 	void exitPhysics();
@@ -73,6 +73,7 @@ public:
 	btRigidBody* createSphereShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, float radius);
 	btRigidBody* createConvexHullShape(float mass, const Vertex* vertices, unsigned  int numvertice, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale, bool isOptimize = true);
 	btRigidBody* createConvexTriangleMeshShape(float mass, const Vertex* vertices, unsigned  int numvertice, GLuint* indices, GLuint numIndices, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale);
+	btRigidBody* createTriangleMeshShape(float mass, const Vertex* vertices, unsigned  int numvertice, GLuint* indices, GLuint numIndices, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale);
 	static PhysicsSimulation* getInstance();
 	PhysicsSimulation();
 	~PhysicsSimulation();

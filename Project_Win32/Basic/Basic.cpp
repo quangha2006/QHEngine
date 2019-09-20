@@ -28,11 +28,11 @@ void Basic::Init()
 	mSkyBox.Init("SkyBox");
 
 	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
-	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.03f, 0.0f));
+	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.3f, 0.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
-	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
-	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
+	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
+	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
@@ -40,17 +40,18 @@ void Basic::Init()
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	//mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
+	//mAstroBoy.Init("bHieu/3_1_WomanAnim.dae", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	mAstroBoy.SetScale(glm::vec3(50.0f));
+	mAstroBoy.SetScale(glm::vec3(5.0f));
 	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
+	mAstroBoy.SetPlayAnimTime(0.f, .33f);
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	mSpider.Init("bHieu/3_1_WomanAnim.dae", true);
+	//mSpider.Init("bHieu/1_2_Tree.dae", true);
 	//mSpider.Init("Demo/BoxAnim.dae", true);
 	//mSpider.SetScale(glm::vec3(0.004f));
-	//mSpider.SetPos(glm::vec3(1.8f, 5.5f, -.5f));
-	mSpider.SetScale(glm::vec3(5.0f));
+	mSpider.SetPos(glm::vec3(1.8f, 35.5f, -.5f));
+	//mSpider.SetScale(glm::vec3(5.0f));
 	//mSpider.SetAnimPlay(1);
 	//mSpider.SetRotate(50.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
@@ -66,14 +67,14 @@ void Basic::Init()
 
 	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(0.1));
-	uvcircle.SetPos(glm::vec3(0.1f, 10.f, 0.5f));
+	uvcircle.SetPos(glm::vec3(0.1f, 50.f, 0.5f));
 
 	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
 	uvcircle.GetRigidBody()->setFriction(1.);
-	//uvcircle.GetRigidBody()->setRollingFriction(1.);
-	//uvcircle.GetRigidBody()->setSpinningFriction(1.);
-	//uvcircle.GetRigidBody()->setRestitution(1.);
+	uvcircle.GetRigidBody()->setRollingFriction(1.);
+	uvcircle.GetRigidBody()->setSpinningFriction(1.);
+	uvcircle.GetRigidBody()->setRestitution(1.);
 	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
 	//soundIntro.Init("Sound/chuabaogio.wav");
 	//soundIntro.Play();
@@ -124,7 +125,8 @@ void Basic::Init()
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
-	//PhysicsSimulation::getInstance()->SwitchDebugMode();
+	PhysicsSimulation::getInstance()->SwitchDebugMode();
+	PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
 }
 
 void Basic::Update(int delta)
@@ -219,18 +221,18 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mBloomAmountLabel.setVisible(true);
 
 	//m_Streetenvironment.registerShapeTriangle(0.);
+	//m_Streetenvironment.CreateConvexTriangleShapePhysicsBody(0.);
+	/*uvcircle.registerShape(1.);*/
+	//uvcircle.GetRigidBody()->setFriction(0.);
+	//uvcircle.GetRigidBody()->setRollingFriction(1.0f);
+	//uvcircle.GetRigidBody()->setSpinningFriction(1.0f);
+	//uvcircle.GetRigidBody()->setRestitution(0.0);
 
-	/*uvcircle.registerShape(1.);
-	uvcircle.GetRigidBody()->setFriction(1.);
-	uvcircle.GetRigidBody()->setRollingFriction(1.0f);
-	uvcircle.GetRigidBody()->setSpinningFriction(1.0f);
-	uvcircle.GetRigidBody()->setRestitution(0.0);*/
-
-	mSpider.CreateConvexHullShapePhysicsBody(1.);
+	/*mSpider.CreateConvexHullShapePhysicsBody(1., false);
 	mSpider.GetRigidBody()->setFriction(0.);
 	mSpider.GetRigidBody()->setRollingFriction(0.1f);
 	mSpider.GetRigidBody()->setSpinningFriction(0.1f);
-	mSpider.GetRigidBody()->setRestitution(0.0);
+	mSpider.GetRigidBody()->setRestitution(0.0);*/
 }
 
 void Basic::ClickbuttonBloomAmountLeft()
