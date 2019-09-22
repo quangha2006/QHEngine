@@ -178,11 +178,12 @@ void PhysicsSimulation::SetGravity(btVector3 gravity)
 	mDynamicsWorld->setGravity(gravity);
 }
 
-btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape)
+btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape, glm::vec3 localScaling)
 {
 	//create a dynamic rigidbody
 
 	btCollisionShape* colShape = new btBoxShape(btVector3(boxshape.x, boxshape.y, boxshape.z));
+	colShape->setLocalScaling(btVector3(localScaling.x, localScaling.y, localScaling.z));
 	mCollisionShapes.push_back(colShape);
 
 	/// Create Dynamic Objects
@@ -194,13 +195,14 @@ btRigidBody* PhysicsSimulation::createBoxShape(float mass, glm::vec3 pos, glm::v
 	bool isDynamic = (mass != 0.f);
 	
 	btVector3 localInertia(0, 0, 0);
+
 	if (isDynamic)
 	{
 		colShape->calculateLocalInertia(mass, localInertia);
 	}
 
 	startTransform.setOrigin(btVector3(pos.x, pos.y, pos.z));
-
+	
 	if (angle != 0.0f)
 	{
 		btQuaternion startQuater(btVector3(rotate.x, rotate.y, rotate.z), glm::radians(angle));

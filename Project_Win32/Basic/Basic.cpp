@@ -27,12 +27,16 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.3f, 0.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
 	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
+
+	PhysicsSimulation::getInstance()->createBoxShape(1.0f, glm::vec3(-1.2f, 5.0f, 0.0f), glm::vec3(0.f), 0.0f, glm::vec3(1), glm::vec3(2.0f));
+	PhysicsSimulation::getInstance()->createBoxShape(1.0f, glm::vec3(3.0f, 5.0f, 0.0f), glm::vec3(0.f), 0.0f, glm::vec3(2));
+
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
@@ -65,7 +69,7 @@ void Basic::Init()
 	mBoblampclean.SetScale(glm::vec3(0.05f));
 	mBoblampclean.SetDrawMesh(1);
 
-	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(0.1));
 	uvcircle.SetPos(glm::vec3(0.1f, 50.f, 0.5f));
 
@@ -80,53 +84,17 @@ void Basic::Init()
 	//soundIntro.Play();
 	
 
-	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
-	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
-	mShadowLabel.setScale(0.5f);
-	mShadowLabel.setPos(5, Screen_height - 30);
-	mShadowLabel.setVisible(false);
 
-	mbtSwitchShadow = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
-	mbtSwitchShadow->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonShadow, this));
-	mbtSwitchShadow->SetScale(1.2f);
-	mbtSwitchShadow->SetPos(100, Screen_height - mbtSwitchShadow->GetHeight() - 8);
-	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
 	
-	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
-	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
-	mBloomLabel.setScale(0.5f);
-	mBloomLabel.setPos(170, Screen_height - 30);
-	mBloomLabel.setVisible(false);
-	
-	mbtSwitchBloom = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
-	mbtSwitchBloom->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloom, this));
-	mbtSwitchBloom->SetScale(1.2f);
-	mbtSwitchBloom->SetPos(250, Screen_height - mbtSwitchBloom->GetHeight() - 8);
-	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
-	
-	int bloomamount = RenderManager::getInstance()->GetAmountBloom();
-
-	mBloomAmountLabel.setText("Bloom Amount:       %d", bloomamount);
-	mBloomAmountLabel.setScale(0.5f);
-	mBloomAmountLabel.setPos(330, Screen_height - 30);
-	mBloomAmountLabel.setVisible(false);
-
-	mbtBloomAmount1 = UserInterface::CreateWithTexture("button/button_right.png");
-	mbtBloomAmount1->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloomAmountRight, this));
-	mbtBloomAmount1->SetScale(0.017f);
-	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, Screen_height - mbtSwitchBloom->GetHeight() - 8);
-
-	mbtBloomAmount2 = UserInterface::CreateWithTexture("button/button_left.png");
-	mbtBloomAmount2->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloomAmountLeft, this));
-	mbtBloomAmount2->SetScale(0.017f);
-	mbtBloomAmount2->SetPos(490, Screen_height - mbtSwitchBloom->GetHeight() - 8);
 
 	axis.Init(mCamera);
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
 	PhysicsSimulation::getInstance()->SwitchDebugMode();
-	PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
+	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
+
+	Init2D();
 }
 
 void Basic::Update(int delta)
@@ -268,6 +236,50 @@ void Basic::ClickbuttonBloom()
 	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
 	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
 	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
+}
+
+void Basic::Init2D()
+{
+	bool isEnableShadow = RenderManager::getInstance()->IsEnableShadow();
+	mShadowLabel.setText("Shadow:   %s", isEnableShadow ? "ON" : "OFF");
+	mShadowLabel.setScale(0.5f);
+	mShadowLabel.setPos(5, Screen_height - 30);
+	mShadowLabel.setVisible(false);
+
+	mbtSwitchShadow = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
+	mbtSwitchShadow->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonShadow, this));
+	mbtSwitchShadow->SetScale(1.2f);
+	mbtSwitchShadow->SetPos(100, Screen_height - mbtSwitchShadow->GetHeight() - 8);
+	mbtSwitchShadow->SetGrayOut(!isEnableShadow);
+
+	bool isEnableBloom = RenderManager::getInstance()->IsEnableBloom();
+	mBloomLabel.setText("Bloom:   %s", isEnableBloom ? "ON" : "OFF");
+	mBloomLabel.setScale(0.5f);
+	mBloomLabel.setPos(170, Screen_height - 30);
+	mBloomLabel.setVisible(false);
+
+	mbtSwitchBloom = UserInterface::CreateWithTexture("button/buttons_PNG126.png");
+	mbtSwitchBloom->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloom, this));
+	mbtSwitchBloom->SetScale(1.2f);
+	mbtSwitchBloom->SetPos(250, Screen_height - mbtSwitchBloom->GetHeight() - 8);
+	mbtSwitchBloom->SetGrayOut(!isEnableBloom);
+
+	int bloomamount = RenderManager::getInstance()->GetAmountBloom();
+
+	mBloomAmountLabel.setText("Bloom Amount:       %d", bloomamount);
+	mBloomAmountLabel.setScale(0.5f);
+	mBloomAmountLabel.setPos(330, Screen_height - 30);
+	mBloomAmountLabel.setVisible(false);
+
+	mbtBloomAmount1 = UserInterface::CreateWithTexture("button/button_right.png");
+	mbtBloomAmount1->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloomAmountRight, this));
+	mbtBloomAmount1->SetScale(0.017f);
+	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, Screen_height - mbtSwitchBloom->GetHeight() - 8);
+
+	mbtBloomAmount2 = UserInterface::CreateWithTexture("button/button_left.png");
+	mbtBloomAmount2->SetCallbackOnTouchBegan(std::bind(&Basic::ClickbuttonBloomAmountLeft, this));
+	mbtBloomAmount2->SetScale(0.017f);
+	mbtBloomAmount2->SetPos(490, Screen_height - mbtSwitchBloom->GetHeight() - 8);
 }
 Basic::Basic()
 {

@@ -69,7 +69,7 @@ public:
 	**/
 	void SetDebugMode(int debugMode);
 	int SwitchDebugMode();
-	btRigidBody* createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape);
+	btRigidBody* createBoxShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 boxshape, glm::vec3 localScaling = glm::vec3(1.0f));
 	btRigidBody* createSphereShape(float mass, glm::vec3 pos, glm::vec3 rotate, float angle, float radius);
 	btRigidBody* createConvexHullShape(float mass, const Vertex* vertices, unsigned  int numvertice, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale, bool isOptimize = true);
 	btRigidBody* createConvexTriangleMeshShape(float mass, const Vertex* vertices, unsigned  int numvertice, GLuint* indices, GLuint numIndices, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale);
