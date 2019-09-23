@@ -62,8 +62,20 @@ void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const
 	}
 }
 
+void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & fromColor, const btVector3 & toColor)
+{
+	if (m_debugMode > 0)
+	{
+		std::vector<float> tmpdata{ from.getX(),	from.getY(),	from.getZ(),	fromColor.getX(),	fromColor.getY(),	fromColor.getZ(),
+				to.getX(),		to.getY(),		to.getZ() ,		toColor.getX(),	toColor.getY(),	toColor.getZ() };
+
+		mVertexData.insert(mVertexData.end(), tmpdata.begin(), tmpdata.end());
+	}
+}
+
 void GLDebugDrawer::flushLines()
 {
+	glDisable(GL_DEPTH_TEST);
 	if (m_debugMode > 0 && mVertexData.size() > 0)
 	{
 		linesShader.use();

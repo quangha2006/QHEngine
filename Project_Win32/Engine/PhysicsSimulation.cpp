@@ -385,6 +385,35 @@ btRigidBody * PhysicsSimulation::createTriangleMeshShape(float mass, const Verte
 	}
 	return NULL;
 }
+btRigidBody * PhysicsSimulation::createCapsuleShape(float mass, float radius, float height, glm::vec3 localScaling, glm::vec3 position, glm::vec3 positionOffset)
+{
+	float scale = 1.0f;
+	btCapsuleShape* CapsulecolShape = new btCapsuleShape(radius , height - 2 * radius);
+	//btCapsuleShape* CapsulecolShape = new btCapsuleShape(radius , height);
+	float originHeight = height - 2 * radius;
+	float ExspecHeight = height * localScaling.y - 2 * radius;
+
+	CapsulecolShape->setLocalScaling(btVector3(localScaling.x, ExspecHeight / originHeight, localScaling.z));
+
+	btCollisionShape* colShape = CapsulecolShape;
+
+	btTransform offset;
+	offset.setIdentity();
+	offset.setOrigin(btVector3(positionOffset.x, positionOffset.y, positionOffset.z));
+
+	btTransform transform;
+	transform.setIdentity();
+	transform.setOrigin(scale * btVector3(position.x, position.y, position.z));
+
+	bool isDynamic = (mass != 0.f);
+
+	btVector3 localInertia(0, 0, 0);
+
+	if (isDynamic)
+		colShape->calculateLocalInertia(mass, localInertia);
+
+	return createRigidBody(mass, transform, colShape);
+}
 void PhysicsSimulation::SetDebugMode(int debugMode)
 {
 	mDebugDrawModes = debugMode;

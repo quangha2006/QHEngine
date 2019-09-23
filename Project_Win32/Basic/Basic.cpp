@@ -31,12 +31,24 @@ void Basic::Init()
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.3f, 0.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
-	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
-	m_Streetenvironment.GetRigidBody()->setRestitution(1.);
+	//m_Streetenvironment.GetRigidBody()->setFriction(1.0);
+	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
-	PhysicsSimulation::getInstance()->createBoxShape(1.0f, glm::vec3(-1.2f, 5.0f, 0.0f), glm::vec3(0.f), 0.0f, glm::vec3(1), glm::vec3(2.0f));
-	PhysicsSimulation::getInstance()->createBoxShape(1.0f, glm::vec3(3.0f, 5.0f, 0.0f), glm::vec3(0.f), 0.0f, glm::vec3(2));
-
+	btRigidBody* body = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(-1.2f, 16.0f, 0.0f), glm::vec3(1.f), 0.0f, glm::vec3(1), glm::vec3(1.0, 4.0f, 1.0f));
+	//body->setFriction(0.0);
+	//body->setRestitution(1.);
+	//btRigidBody* body1 = PhysicsSimulation::getInstance()->createBoxShape(1.0f, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.f), 0.0f, glm::vec3(8));
+	//body1->setFriction(0.0);
+	//body1->setRestitution(1.);
+	//btRigidBody* body2 = PhysicsSimulation::getInstance()->createCapsuleShape(2.f, 16.0f, 1.0f, glm::vec3(0.0f, 16.0f, 0.0f));
+	//body2->setFriction(1.0);
+	//body2->setRestitution(1.);
+	//body2->setRollingFriction(.5f);
+	//btRigidBody* body3 = PhysicsSimulation::getInstance()->createCapsuleShape(1.f, 1.0f, 2.0f, glm::vec3(4.0f, 16.0, 0));
+	//body3->getCollisionShape();
+	//body3->setFriction(1.0);
+	//body3->setRestitution(1.);
+	//body3->setRollingFriction(1.0f);
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
@@ -69,11 +81,12 @@ void Basic::Init()
 	mBoblampclean.SetScale(glm::vec3(0.05f));
 	mBoblampclean.SetDrawMesh(1);
 
-	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
-	//uvcircle.SetScale(glm::vec3(0.1));
-	uvcircle.SetPos(glm::vec3(0.1f, 50.f, 0.5f));
+	uvcircle.Init("3DBreakOutGame/cube3.dae");
+	uvcircle.SetScale(glm::vec3(1.0, 0.5f, 1.0f));
+	uvcircle.SetPos(glm::vec3(0.1f, 5.f, 5.5f));
 
-	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
+	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
+	uvcircle.CreateCapsuleShape(0.,1., 16.);
 
 	uvcircle.GetRigidBody()->setFriction(1.);
 	uvcircle.GetRigidBody()->setRollingFriction(1.);
@@ -110,7 +123,7 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
 	//LOGI("Key: %d = %c\n",key, c);
-
+	glm::vec3 curent = uvcircle.GetScale();
 	static glm::mat4 camera_projection = glm::mat4();
 	glm::mat4 tmp;
 	if (action == 0) return true;
@@ -132,10 +145,10 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		m_Streetenvironment.SetRotate(-1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 		return true;
 	case 'A': //num a
-		//mCamera->Target.x -= 0.1f;
+		uvcircle.SetScale(glm::vec3(1.0, ++(curent.y), 1.0));
 		return true;
 	case 'D': //num d
-		//mCamera->Target.x += 0.1f;
+		uvcircle.SetScale(glm::vec3(1.0, --(curent.y), 1.0));
 		return true;
 	case 262:
 		timestamp_for_lamp += 1.f;

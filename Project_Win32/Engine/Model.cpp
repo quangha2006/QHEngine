@@ -836,6 +836,16 @@ void Model::CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
+void Model::CreateCapsuleShape(float mass, float radius, float height)
+{
+	//if (mNumVertices <= 0) return;
+
+	isDynamic = (mass != 0.f);
+	mRigidBody = PhysicsSimulation::getInstance()->createCapsuleShape(mass, radius, height, mScale, mPos);
+	if (isDynamic)
+		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
+}
+
 void Model::ClearForcesPhysics()
 {
 	if (mRigidBody != nullptr)
