@@ -360,30 +360,42 @@ btRigidBody * PhysicsSimulation::createTriangleMeshShape(float mass, const Verte
 	btTransform trans;
 	trans.setIdentity();
 
-	for (int i = 0; i < 8; i++)
+	float *LandscapeVtx = new float[numvertice * 3];
+
+	for (unsigned int i = 0; i < numvertice; i++)
 	{
-		btTriangleIndexVertexArray* meshInterface = new btTriangleIndexVertexArray();
-		btIndexedMesh part;
-
-		part.m_vertexBase = (const unsigned char*)LandscapeVtx[i];
-		part.m_vertexStride = sizeof(btScalar) * 3;
-		part.m_numVertices = LandscapeVtxCount[i];
-		part.m_triangleIndexBase = (const unsigned char*)LandscapeIdx[i];
-		part.m_triangleIndexStride = sizeof(short) * 3;
-		part.m_numTriangles = LandscapeIdxCount[i] / 3;
-		part.m_indexType = PHY_SHORT;
-
-		meshInterface->addIndexedMesh(part, PHY_SHORT);
-
-		bool useQuantizedAabbCompression = true;
-		btBvhTriangleMeshShape* trimeshShape = new btBvhTriangleMeshShape(meshInterface, useQuantizedAabbCompression);
-		btVector3 localInertia(0, 0, 0);
-		trans.setOrigin(btVector3(0, -25, 0));
-		btRigidBody* body = createRigidBody(0, trans, trimeshShape);
-		body->setFriction(0.0);
-		body->setRestitution(1.);
+		LandscapeVtx[i * 3] = vertices[i].Position.x;
+		LandscapeVtx[i * 3 + 1] = vertices[i].Position.y;
+		LandscapeVtx[i * 3 + 2] = vertices[i].Position.z;
 	}
-	return NULL;
+
+	//Convert Vertex to array
+
+	btTriangleIndexVertexArray* meshInterface = new btTriangleIndexVertexArray();
+	btIndexedMesh part;
+
+	part.m_vertexBase = (const unsigned char*)LandscapeVtx;
+	part.m_vertexStride = sizeof(btScalar) * 3;
+	part.m_numVertices = numvertice;
+	part.m_triangleIndexBase = (const unsigned char*)indices;
+	part.m_triangleIndexStride = sizeof(GLuint) * 3;
+	part.m_numTriangles = numIndices / 3;
+	part.m_indexType = PHY_INTEGER;
+	meshInterface->addIndexedMesh(part, PHY_INTEGER);
+
+	bool useQuantizedAabbCompression = true;
+	btBvhTriangleMeshShape* trimeshShape = new btBvhTriangleMeshShape(meshInterface, useQuantizedAabbCompression);
+	btVector3 localInertia(0, 0, 0);
+
+	trans.setOrigin(btVector3(pos.x, pos.y, pos.z));
+
+	trimeshShape->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
+
+	btRigidBody* body = createRigidBody(mass, trans, trimeshShape);
+
+	//delete[]LandscapeVtx;
+
+	return body;
 }
 btRigidBody * PhysicsSimulation::createCapsuleShape(float mass, float radius, float height, glm::vec3 localScaling, glm::vec3 position, glm::vec3 positionOffset)
 {

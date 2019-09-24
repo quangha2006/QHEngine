@@ -155,6 +155,7 @@ public:
 	void ClearForcesPhysics();
 	void CreateConvexHullShapePhysicsBody(float mass, bool isOptimize = true);
 	void CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize = true);
+	void CreateTriangleMeshShape(float mass);
 	void CreateCapsuleShape(float mass, float radius, float height);
 
 	btRigidBody* GetRigidBody();

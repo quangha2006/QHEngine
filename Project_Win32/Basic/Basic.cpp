@@ -18,7 +18,7 @@ void Basic::Init()
 {
 	mCamera->SetPos(0.0f, 15.0f, 40.0f);
 	mCamera->SetTarget(0.0f, 5.0f, 0.0f);
-	mCamera->SetLightPos(8.2f, 10.0f, 9.0f);
+	mCamera->SetLightPos(0.2f, 40.0f, 1.0f);
 
 	//mNanosuit.Init("nanosuit/nanosuit.obj", true, false);
 	mNanosuit.SetScale(glm::vec3(0.4f));
@@ -27,14 +27,15 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
-	m_Streetenvironment.SetPos(glm::vec3(0.0f, -0.3f, 0.0f));
+	m_Streetenvironment.Init("GameDemo/terrain.dae", true, true);
+	m_Streetenvironment.SetPos(glm::vec3(0.0f, -20.5f, 0.0f));
+	m_Streetenvironment.SetScale(glm::vec3(40.0f,20.0f,40.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.5, 0.));
-	//m_Streetenvironment.GetRigidBody()->setFriction(1.0);
+	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
+	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
-	btRigidBody* body = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(-1.2f, 16.0f, 0.0f), glm::vec3(1.f), 0.0f, glm::vec3(1), glm::vec3(1.0, 4.0f, 1.0f));
+	//btRigidBody* body = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(-1.2f, 16.0f, 0.0f), glm::vec3(1.f), 0.0f, glm::vec3(1), glm::vec3(1.0, 4.0f, 1.0f));
 	//body->setFriction(0.0);
 	//body->setRestitution(1.);
 	//btRigidBody* body1 = PhysicsSimulation::getInstance()->createBoxShape(1.0f, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.f), 0.0f, glm::vec3(8));
@@ -56,11 +57,13 @@ void Basic::Init()
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	//mAstroBoy.Init("bHieu/3_1_WomanAnim.dae", true);
+	mAstroBoy.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	mAstroBoy.SetScale(glm::vec3(5.0f));
+	mAstroBoy.SetScale(glm::vec3(0.1f));
 	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
-	mAstroBoy.SetPlayAnimTime(0.f, .33f);
+	mAstroBoy.SetDrawMesh(1);
+	mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
+	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
 	//mSpider.Init("bHieu/1_2_Tree.dae", true);
@@ -81,24 +84,17 @@ void Basic::Init()
 	mBoblampclean.SetScale(glm::vec3(0.05f));
 	mBoblampclean.SetDrawMesh(1);
 
-	uvcircle.Init("3DBreakOutGame/cube3.dae");
-	uvcircle.SetScale(glm::vec3(1.0, 0.5f, 1.0f));
+	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	//uvcircle.SetScale(glm::vec3(1.0, 0.5f, 1.0f));
 	uvcircle.SetPos(glm::vec3(0.1f, 5.f, 5.5f));
 
-	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
-	uvcircle.CreateCapsuleShape(0.,1., 16.);
+	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
 	uvcircle.GetRigidBody()->setFriction(1.);
 	uvcircle.GetRigidBody()->setRollingFriction(1.);
 	uvcircle.GetRigidBody()->setSpinningFriction(1.);
 	uvcircle.GetRigidBody()->setRestitution(1.);
 	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
-	//soundIntro.Init("Sound/chuabaogio.wav");
-	//soundIntro.Play();
-	
-
-
-	
 
 	axis.Init(mCamera);
 	m_initialized = true;
@@ -112,7 +108,13 @@ void Basic::Init()
 
 void Basic::Update(int delta)
 {
-
+	
+	//glm::mat4 trans = uvcircle.GetWorld();
+	//Utils::PrintMat4(trans);
+	//glm::vec3 circlePos = glm::vec3(trans[3][0], trans[3][1], trans[3][2]);
+	//mCamera->SetTarget(circlePos);
+	//mCamera->SetPos(circlePos.x + 50, circlePos.y + 30, circlePos.z + 50);
+	//LOGI("%f, %f, %f\n", circlePos.z, circlePos.y, circlePos.z);
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
@@ -201,8 +203,9 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mBloomLabel.setVisible(true);
 	mBloomAmountLabel.setVisible(true);
 
-	//m_Streetenvironment.registerShapeTriangle(0.);
-	//m_Streetenvironment.CreateConvexTriangleShapePhysicsBody(0.);
+	m_Streetenvironment.CreateTriangleMeshShape(0.);
+	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
+
 	/*uvcircle.registerShape(1.);*/
 	//uvcircle.GetRigidBody()->setFriction(0.);
 	//uvcircle.GetRigidBody()->setRollingFriction(1.0f);
