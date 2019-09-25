@@ -24,7 +24,6 @@ private:
 	std::string mMeshName;
 	bool mHasNormals;
 	bool mHasBone;
-	bool mIsDrawPolygon;
 
 	GLuint mIndices_index;
 	GLuint mIndices_size;
@@ -43,7 +42,6 @@ private:
 
 public:
 	void SetUseLighting(bool isuse);
-	void SetDrawPolygon(bool isdrawpolygon);
 	void SetVertex(Vertex * vertex, GLuint numvertex);
 	void SetIndices(GLuint *indices, GLuint numindices);
 	void SetLocalTransformation(glm::mat4 transformation);
@@ -56,6 +54,7 @@ public:
 	void SetMaterialId(GLuint newid);
 	void registerShapeTriangle(float mass, bool isOptimize = true);
 	void Draw(RenderTargetType RT_Type
+		, bool isDrawWireFrame
 		, bool useCustomColor = false
 		, const glm::vec3 &customColor = glm::vec3(0.0f, 0.0f, 0.0f));
 

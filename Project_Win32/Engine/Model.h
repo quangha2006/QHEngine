@@ -14,6 +14,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <assimp/Importer.hpp>
+#include <assimp/Exporter.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
@@ -49,12 +50,12 @@ private:
 	
 	Vertex* mVertices_marterial;
 	GLuint* mIndices_marterial;
-
+	bool mIsDrawWireFrame;
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
-	Mesh *processMesh(aiMesh *mesh, const aiScene *scene, glm::mat4 localTransform);
+	Mesh *processMesh(aiMesh *mesh, glm::mat4 localTransform);
 
 	void Pre_processNode(aiNode *node, const aiScene *scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh);
-	void Pre_processMesh(aiMesh *mesh, const aiScene *scene, GLuint &numvertices, GLuint &numindices);
+	void Pre_processMesh(aiMesh *mesh, GLuint &numvertices, GLuint &numindices);
 
 	void processMaterial(const aiScene* scene);
 	void SetupMaterialMesh();
@@ -117,6 +118,7 @@ private:
 public:
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
+	void SetRenderMode(RenderMode render_mode);
 	void SetUseLighting(bool UseLighting);
 	void SetisUsePointLight(bool UsePointLight);
 	void DisableLightingForMesh(int numMesh);
@@ -130,7 +132,7 @@ public:
 	void SetPos(glm::vec3 pos);
 	void SetRotate(float angle, glm::vec3 rotate);
 	void SetAnimPlay(int anim);
-	void SetDrawPolygon(bool isdrawpolygon);
+	void SetDrawWireFrame(bool isdrawpolygon);
 	void SetCamera(Camera * camera);
 	void SetDrawMesh(int mesh);
 	void SetId(int id);

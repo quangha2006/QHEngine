@@ -18,19 +18,20 @@ void Basic::Init()
 {
 	mCamera->SetPos(0.0f, 15.0f, 40.0f);
 	mCamera->SetTarget(0.0f, 5.0f, 0.0f);
-	mCamera->SetLightPos(0.2f, 40.0f, 1.0f);
+	mCamera->SetLightPos(0.2f, 80.0f, 1.0f);
 
 	//mNanosuit.Init("nanosuit/nanosuit.obj", true, false);
 	mNanosuit.SetScale(glm::vec3(0.4f));
 	mNanosuit.SetPos(glm::vec3(9.0f, 0.0f, 0.0f));
-	mNanosuit.SetDrawPolygon(true);
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("GameDemo/terrain.dae", true, true);
+	m_Streetenvironment.Init("GameDemo/PCcrasher.dae", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -20.5f, 0.0f));
-	m_Streetenvironment.SetScale(glm::vec3(40.0f,20.0f,40.0f));
+	m_Streetenvironment.SetScale(glm::vec3(40.0f,40.0f,40.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
+	m_Streetenvironment.SetDrawWireFrame(true);
+	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Mesh);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
@@ -57,12 +58,13 @@ void Basic::Init()
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	mAstroBoy.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", true);
+	mAstroBoy.Init("bountyhunter/bountyhunter/export_from_max/test2.FBX", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	mAstroBoy.SetScale(glm::vec3(0.1f));
-	mAstroBoy.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
-	mAstroBoy.SetDrawMesh(1);
-	mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
+	mAstroBoy.SetPos(glm::vec3(0.0f, 1.0f, 0.0f));
+	mAstroBoy.SetDrawMesh(0);
+	//mAstroBoy.SetDrawWireFrame(true);
+	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
@@ -84,7 +86,7 @@ void Basic::Init()
 	mBoblampclean.SetScale(glm::vec3(0.05f));
 	mBoblampclean.SetDrawMesh(1);
 
-	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(1.0, 0.5f, 1.0f));
 	uvcircle.SetPos(glm::vec3(0.1f, 5.f, 5.5f));
 
@@ -100,7 +102,7 @@ void Basic::Init()
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
-	PhysicsSimulation::getInstance()->SwitchDebugMode();
+	//PhysicsSimulation::getInstance()->SwitchDebugMode();
 	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
 
 	Init2D();
@@ -203,8 +205,8 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mBloomLabel.setVisible(true);
 	mBloomAmountLabel.setVisible(true);
 
-	m_Streetenvironment.CreateTriangleMeshShape(0.);
-	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
+	//m_Streetenvironment.CreateTriangleMeshShape(0.);
+	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 
 	/*uvcircle.registerShape(1.);*/
 	//uvcircle.GetRigidBody()->setFriction(0.);

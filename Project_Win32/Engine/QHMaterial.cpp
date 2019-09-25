@@ -33,8 +33,9 @@ vector<Texture> loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::
 	return textures;
 }
 
-void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
+void QHMaterial::Apply(RenderTargetType RT_Type, bool isDrawWireFrame, bool isEnableAlpha)
 {
+
 	GLuint diffuseNr = 1;
 	GLuint specularNr = 1;
 	GLuint normalNr = 1;
@@ -109,13 +110,24 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isEnableAlpha)
 		glCullFace(GL_FRONT);
 	else
 		glCullFace(GL_BACK);
+
+	if (isDrawWireFrame)
+	{
+		ShaderSet::setBool("useTexture", false);
+		return;
+	}
 }
 
-void QHMaterial::Draw()
+void QHMaterial::Draw(bool isDrawWireFrame)
 {
 	if (mIndices_size <= 0) return;
+	if (isDrawWireFrame)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
+
+	if (isDrawWireFrame)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 bool QHMaterial::isTransparent()

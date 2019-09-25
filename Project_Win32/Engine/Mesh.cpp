@@ -9,7 +9,7 @@
 //#include "Globals.h"
 
 
-void Mesh::Draw(RenderTargetType RT_Type, bool useCustomColor, const glm::vec3 &customColor)
+void Mesh::Draw(RenderTargetType RT_Type, bool isDrawWireFrame, bool useCustomColor, const glm::vec3 &customColor)
 {
 	if (useCustomColor)
 	{
@@ -19,10 +19,13 @@ void Mesh::Draw(RenderTargetType RT_Type, bool useCustomColor, const glm::vec3 &
 	
 	//ShaderSet::setMat4("localTransform",mLocalTransformation);
 
-	if (mIsDrawPolygon)
-		QHEngine::DrawElements(GL_LINE_LOOP, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
-	else
-		QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
+	if (isDrawWireFrame)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
+
+	if (isDrawWireFrame)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	CheckGLError(mMeshName.c_str());
 }
@@ -30,11 +33,6 @@ void Mesh::Draw(RenderTargetType RT_Type, bool useCustomColor, const glm::vec3 &
 void Mesh::SetUseLighting(bool isuse)
 {
 	mHasNormals = isuse;
-}
-
-void Mesh::SetDrawPolygon(bool isdrawpolygon)
-{
-	mIsDrawPolygon = isdrawpolygon;
 }
 
 void Mesh::SetVertex(Vertex * vertex, GLuint numvertex)
@@ -107,8 +105,7 @@ Mesh::Mesh(GLuint indices_index
 	, const std::string &meshname
 	, bool hasnormals
 	, bool hasbone)
-	: mIsDrawPolygon(false)
-	, mIndices_index(indices_index)
+	: mIndices_index(indices_index)
 	, mIndices_size(indices_size)
 	, mMaterial_Id(material_id)
 	, mMeshName(meshname)

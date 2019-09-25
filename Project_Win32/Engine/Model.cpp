@@ -39,7 +39,7 @@ void Model::Loading() //thread
 
 	LOGI("\nLoad Model: %s\n", path_modif.c_str());
 
-	unsigned int assimpFlag = aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices | aiProcess_GenNormals;
+	unsigned int assimpFlag = aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices | aiProcess_GenSmoothNormals;
 	if (mFlipUVs)
 		assimpFlag |= aiProcess_FlipUVs;;
 
@@ -68,21 +68,24 @@ void Model::Loading() //thread
 	GLuint nummeshes = 0;
 	Pre_processNode(m_pScene->mRootNode, m_pScene, numvertices, numindices, nummeshes);
 
+	LOGI("Mesh Count: %u/%u\n", nummeshes, m_pScene->mNumMeshes);
+	LOGI("Vertices Count: %u totalMemory allocate: %u KB\n", numvertices, (sizeof(Vertex) * numvertices) / 1024);
+	LOGI("Indices Count: %u\n", numindices);
+
 	mVertices = new Vertex[numvertices];
 	mIndices = new GLuint[numindices];
+
 	mMeshes.reserve(nummeshes);
 
 	processNode(m_pScene->mRootNode, m_pScene, glm::mat4());
 
 	uint64_t time_processNode = Timer::getMillisecond();
-	LOGI("Mesh Count: %d\n", m_pScene->mNumMeshes);
-	LOGI("Vertices Count: %d\n", mNumVertices);
-	LOGI("Indices Count: %d\n", mNumIndices);
+
 
 	LOGI("ProcessNode time : %ums\n\n", (unsigned int)(time_processNode - time_processMaterial));
-	
+
 	LOGI("HasAnimations: %s\n", m_pScene->HasAnimations() ? "True" : "False");
-	
+
 	if (m_pScene->HasAnimations())
 	{
 		hasAnimation = true;
@@ -90,7 +93,7 @@ void Model::Loading() //thread
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
-	
+
 	SetupMaterialMesh();
 
 	aiMemoryInfo meminfo;
@@ -131,14 +134,14 @@ void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numver
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		Pre_processMesh(mesh, scene, numvertices, numindices);
+		Pre_processMesh(mesh, numvertices, numindices);
 	}
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		Pre_processNode(node->mChildren[i], scene, numvertices, numindices, nummesh);
 	}
 }
-void Model::Pre_processMesh(aiMesh * mesh, const aiScene * scene, GLuint &numvertices, GLuint &numindices)
+void Model::Pre_processMesh(aiMesh * mesh, GLuint &numvertices, GLuint &numindices)
 {
 	numvertices += mesh->mNumVertices;
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
@@ -189,11 +192,6 @@ void Model::SetupMaterialMesh()
 				if (numindices == 0 || numvertex == 0) continue;
 				std::memcpy(&mVertices_marterial[last_vertex_index], vertex, sizeof(Vertex) * numvertex);
 
-				//for (GLuint k = 0; k < numindices; k++)
-				//{
-					//mIndices_marterial[k + last_indices_index] = indices[k] + last_vertex_index;
-				//}
-				
 				last_indices_index += numindices;
 
 				do {
@@ -201,7 +199,7 @@ void Model::SetupMaterialMesh()
 				} while (--numindices > 0);
 
 				last_vertex_index += numvertex;
-				
+
 			}
 		}
 		mMaterial[i].mIndices_size = last_indices_index - mMaterial[i].mIndices_index;
@@ -230,7 +228,7 @@ void Model::SetupMaterialMesh()
 			++i;
 		}
 	}
-	uint64_t time_end = Timer::getMillisecond(); 
+	uint64_t time_end = Timer::getMillisecond();
 	LOGI("SetupMaterialMesh time: %dms \n\n", ((int)(time_end - time_begin)));
 }
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
@@ -240,21 +238,21 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	//currentNodeTransformation = glm::transpose(currentNodeTransformation);
 	//glm::mat4 Transformation = QHMath::CombineMat4(currentNodeTransformation, nodeTransformation);
 	glm::mat4 Transformation = QHMath::CombineMat4(nodeTransformation, currentNodeTransformation);
-	
+
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		Mesh *meshIndex = processMesh(mesh, scene, Transformation);
+		Mesh *meshIndex = processMesh(mesh, Transformation);
 		mMeshes.push_back(meshIndex);
 	}
-	
+
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		processNode(node->mChildren[i], scene, Transformation);
 	}
 }
 
-Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTransform)
+Mesh *Model::processMesh(aiMesh * mesh, glm::mat4 localTransform)
 {
 	bool hasBones = mesh->HasBones();
 	bool hasPos = mesh->HasPositions();
@@ -304,7 +302,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 				vertex.Normal = vector;
 			else
 				//vertex.Normal = localTransform * glm::vec4(vector, 0.0f);
-				vertex.Normal =  glm::vec4(vector, 0.0f) * localTransform;
+				vertex.Normal = glm::vec4(vector, 0.0f) * localTransform;
 		}
 
 		// texture coordinates
@@ -346,7 +344,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 			// Get Color from Materials
 			const QHMaterial &material = mMaterial[mesh->mMaterialIndex];
 			vec3 color = material.mDiffuse;
-			
+
 			vertex.Color.r = material.mDiffuse.x;
 			vertex.Color.g = material.mDiffuse.y;
 			vertex.Color.b = material.mDiffuse.z;
@@ -357,7 +355,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 	}
 
 	// process Bones https://realitymultiplied.wordpress.com/2016/07/23/assimp-skeletal-animation-tutorial-2-loading-up-the-bone-data/
-	
+
 	if (hasBones)
 	{
 		for (unsigned int i = 0; i < mesh->mNumBones; i++)
@@ -365,7 +363,7 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 			aiBone* aiBone = mesh->mBones[i]; //CREATING A POINTER TO THE CURRENT BONE
 			GLint BoneIndex = i;
 			std::string b_name = aiBone->mName.data;
-			
+
 			if (m_BoneMapping.find(b_name) == m_BoneMapping.end())
 			{
 				BoneIndex = m_NumBones;
@@ -409,33 +407,60 @@ Mesh *Model::processMesh(aiMesh * mesh, const aiScene * scene, glm::mat4 localTr
 			}
 		}
 	}
-	Vertex *verCurrentMesh = new Vertex[numvertices];
-	//clone vertex => import to each mesh
-	std::memcpy(verCurrentMesh, &mVertices[numvertices_prev_mesh], sizeof(Vertex) * numvertices);
+
+
+
+
+	Vertex *vertexCurrentMesh = NULL;
+	GLuint numvertex_CurrentMesh = 0;
+	try {
+		vertexCurrentMesh = new Vertex[numvertices];
+
+		//clone vertex => import to each mesh
+		std::memcpy(vertexCurrentMesh, &mVertices[numvertices_prev_mesh], sizeof(Vertex) * numvertices);
+
+		numvertex_CurrentMesh = numvertices;
+	}
+	catch (const std::bad_alloc&) {
+		LOGE("Bad allocation to store vertex: %ubyte\n", numvertices * sizeof(Vertex));
+	}
 	// process Indices
-	unsigned int numIndices = 0; // for this mesh
+	GLuint numIndices = 0; // for this mesh
+	GLuint *indices_CurrentMesh = NULL;
+	GLuint numindices_CurrentMesh = 0;
+	GLuint currentindex = 0;
 
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
 		numIndices += mesh->mFaces[i].mNumIndices;
 	}
-	GLuint *indicesCurrentMesh = new GLuint[numIndices];
-	GLuint currentindex = 0;
+
+	try {
+		indices_CurrentMesh = new GLuint[numIndices];
+		numindices_CurrentMesh = numIndices;
+	}
+	catch (const std::bad_alloc&)
+	{
+		LOGE("Bad allocation to store indices: %ubyte\n", numIndices * sizeof(GLuint));
+	}
+
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 		for (unsigned int j = 0; j < face.mNumIndices; j++)
 		{
 			mIndices[mNumIndices++] = face.mIndices[j] + numvertices_prev_mesh;
-			indicesCurrentMesh[currentindex++] = face.mIndices[j];
+			if (indices_CurrentMesh)
+				indices_CurrentMesh[currentindex++] = face.mIndices[j];
 		}
 	}
 
 	Mesh *mesh_current = new Mesh(indices_index, numIndices, mesh->mMaterialIndex, string(mesh->mName.C_Str()), hasNormals, hasBones);
-	
-	mesh_current->SetVertex(verCurrentMesh, numvertices);
-	mesh_current->SetIndices(indicesCurrentMesh, numIndices);
+
+	mesh_current->SetVertex(vertexCurrentMesh, numvertex_CurrentMesh);
+	mesh_current->SetIndices(indices_CurrentMesh, numindices_CurrentMesh);
 	mesh_current->SetLocalTransformation(localTransform);
+
 	return mesh_current;
 }
 
@@ -451,63 +476,72 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 
 	switch (RT_Type)
 	{
-		case RenderTargetType_DEPTH:
-			if (hasAnimation)
-				ShaderManager::getInstance()->setUseProgram("depthShader_skinning");
-			else
-				ShaderManager::getInstance()->setUseProgram("depthShader");
+	case RenderTargetType_DEPTH:
+		if (hasAnimation)
+			ShaderManager::getInstance()->setUseProgram("depthShader_skinning");
+		else
+			ShaderManager::getInstance()->setUseProgram("depthShader");
 
-			ShaderSet::setFloat("near_plane", mCamera->GetLightNear());
-			ShaderSet::setFloat("far_plane", mCamera->GetLightFar());
+		ShaderSet::setFloat("near_plane", mCamera->GetLightNear());
+		ShaderSet::setFloat("far_plane", mCamera->GetLightFar());
 
-			WorldViewLightSpaceMatrix = mCamera->lightSpaceMatrix * tmp_model;
-			ShaderSet::setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
+		WorldViewLightSpaceMatrix = mCamera->lightSpaceMatrix * tmp_model;
+		ShaderSet::setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
 
-			break;
-		case RenderTargetType_COLOR:
-			if (hasAnimation)
-				ShaderManager::getInstance()->setUseProgram("model_skinning");
-			else
-				ShaderManager::getInstance()->setUseProgram("model");
-			if (!isFirstSetupUniform) {
-				ShaderSet::setFloat("pointlight_constant", 1.0f);
-				ShaderSet::setFloat("pointlight_linear", 0.0014f);
-				ShaderSet::setFloat("pointlight_quadratic", 0.000007f);
-				ShaderSet::setFloat("material_shininess", 18.0f);
-				ShaderSet::setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
-				ShaderSet::setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
-				ShaderSet::setVec3("light_specular", 1.f, 1.f, 1.f);
-				ShaderSet::setBool("GammaCorrection", mGammaCorrection);
-				isFirstSetupUniform = true;
-			}
-
-			ShaderSet::setVec3("light_position", mCamera->GetLightPos());
-
-			ShaderSet::setVec3("viewPos", mCamera->GetPos());
-
-			ShaderSet::setBool("usepointlight", this->isUsePointLight);
-
-			model_inverse = glm::inverse(tmp_model);
-			model_inverse = glm::transpose(model_inverse);
-			ShaderSet::setMat4("world_inverse", model_inverse);
-
-			ShaderSet::setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
-			ShaderSet::setMat4("world", tmp_model);
-
-			WorldViewProjectionMatrix = mCamera->GetWorldViewProjectionMatrix() * tmp_model;
-			ShaderSet::setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
-			break;
-	}
-	
-	if (m_meshdraw > -1)
-	{
 		glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-	}
-	else
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+
+		break;
+	case RenderTargetType_COLOR:
+		if (hasAnimation)
+			ShaderManager::getInstance()->setUseProgram("model_skinning");
+		else
+			ShaderManager::getInstance()->setUseProgram("model");
+		if (!isFirstSetupUniform) {
+			ShaderSet::setFloat("pointlight_constant", 1.0f);
+			ShaderSet::setFloat("pointlight_linear", 0.0014f);
+			ShaderSet::setFloat("pointlight_quadratic", 0.000007f);
+			ShaderSet::setFloat("material_shininess", 18.0f);
+			ShaderSet::setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
+			ShaderSet::setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
+			ShaderSet::setVec3("light_specular", 1.f, 1.f, 1.f);
+			ShaderSet::setBool("GammaCorrection", mGammaCorrection);
+			isFirstSetupUniform = true;
+		}
+
+		ShaderSet::setVec3("light_position", mCamera->GetLightPos());
+
+		ShaderSet::setVec3("viewPos", mCamera->GetPos());
+
+		ShaderSet::setBool("usepointlight", this->isUsePointLight);
+
+		model_inverse = glm::inverse(tmp_model);
+		model_inverse = glm::transpose(model_inverse);
+		ShaderSet::setMat4("world_inverse", model_inverse);
+
+		ShaderSet::setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
+		ShaderSet::setMat4("world", tmp_model);
+
+		WorldViewProjectionMatrix = mCamera->GetWorldViewProjectionMatrix() * tmp_model;
+		ShaderSet::setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
+
+		if (m_meshdraw > -1) // Draw custom mesh
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+		}
+		else
+			if (mRenderMode == RenderMode::RenderMode_Mesh)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+			}
+			else if (mRenderMode == RenderMode::RenderMode_Material)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+			}
+		break;
 	}
 
 	Shader* modelShader = ShaderManager::getInstance()->GetCurrentShader();
@@ -565,54 +599,55 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 	{
 		ShaderSet::setBoneMat4("gBones", mTransforms);
 	}
-	
+
 	switch (RT_Type)
 	{
 	case RenderTargetType_DEPTH:
+
 		QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, (void*)0);
+
 		break;
 	case RenderTargetType_COLOR:
-		/*if (mRenderMode == RenderMode::RenderMode_Material)
+		if (m_meshdraw > -1) // Draw custom mesh
 		{
-			for (GLuint i = 0; i < mMaterial.size(); i++)
+			if (m_meshdraw < (int)mMeshes.size())
 			{
 				ShaderSet::setBool("uselighting", uselighting);
-				mMaterial[i].Apply(RT_Type, mIsEnableAlpha);
-				mMaterial[i].Draw();
+				mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(RT_Type, mIsEnableAlpha);
+				mMeshes[m_meshdraw]->Draw(RT_Type, mIsDrawWireFrame ,useCustomColor, customColor);
 			}
 		}
 		else
-		{*/
-			if (m_meshdraw > -1) // Draw custom mesh
+		{
+			if (mRenderMode == RenderMode::RenderMode_Mesh)
 			{
-				if (m_meshdraw < (int)mMeshes.size())
-				{
-					ShaderSet::setBool("uselighting", uselighting);
-					mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(RT_Type, mIsEnableAlpha);
-					mMeshes[m_meshdraw]->Draw(RT_Type, useCustomColor, customColor);
-				}
-			}
-			else
-			{
-				/*for (unsigned int i = 0; i < mMeshes.size(); i++)
+				for (unsigned int i = 0; i < mMeshes.size(); i++)
 				{
 					ShaderSet::setBool("uselighting", uselighting);
 					mMaterial[mMeshes[i]->GetMaterialId()].Apply(RT_Type, mIsEnableAlpha);
-					mMeshes[i]->Draw(RT_Type, useCustomColor, customColor);
-				}*/
+					mMeshes[i]->Draw(RT_Type, mIsDrawWireFrame,useCustomColor, customColor);
+				}
+			}
+			else if (mRenderMode == RenderMode::RenderMode_Material)
+			{
 				for (GLuint i = 0; i < mMaterial.size(); i++)
 				{
 					ShaderSet::setBool("uselighting", uselighting);
 					mMaterial[i].Apply(RT_Type, mIsEnableAlpha);
-					mMaterial[i].Draw();
+					mMaterial[i].Draw(mIsDrawWireFrame);
 				}
 			}
-		//}
+		}
 		break;
 	}
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void Model::SetRenderMode(RenderMode render_mode)
+{
+	mRenderMode = render_mode;
 }
 
 void Model::SetUseLighting(bool UseLighting)
@@ -736,17 +771,9 @@ void Model::SetAnimPlay(int anim)
 	if (anim >= 0 && (anim < mNumAnimations && mNumAnimations != -1))
 		animToPlay = anim;
 }
-void Model::SetDrawPolygon(bool isdrawpolygon)
+void Model::SetDrawWireFrame(bool isDrawWireFrame)
 {
-	if (isdrawpolygon == isDrawPolygon)
-		return;
-
-	isDrawPolygon = isdrawpolygon;
-
-	for (unsigned int i = 0; i < mMeshes.size(); i++)
-	{
-		mMeshes[i]->SetDrawPolygon(isDrawPolygon);
-	}
+	mIsDrawWireFrame = isDrawWireFrame;
 }
 
 void Model::SetCamera(Camera * camera)
@@ -784,7 +811,7 @@ std::string Model::GetAnimNamePlaying()
 	if (!m_pScene->HasAnimations() || animToPlay < 0 || animToPlay >= m_pScene->mNumAnimations) return "";
 
 	aiString animName = m_pScene->mAnimations[animToPlay]->mName;
-	
+
 	return std::string(animName.C_Str());
 }
 
@@ -821,7 +848,7 @@ void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 	if (mNumVertices <= 0) return;
 
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, mVertices, mNumVertices, mPos , mRotate, mAngle, mScale, isOptimize);
+	mRigidBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, mVertices, mNumVertices, mPos, mRotate, mAngle, mScale, isOptimize);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
@@ -919,15 +946,15 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 		CalcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
 		glm::mat4 ScalingM = glm::mat4();
 		ScalingM = glm::scale(ScalingM, glm::vec3(Scaling.x, Scaling.y, Scaling.z));
-		
+
 		// Interpolate rotation and generate rotation transformation matrix
 		aiQuaternion RotationQ;
 		CalcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);
 		aiMatrix3x3 tmpmat3 = RotationQ.GetMatrix();
 		glm::mat4 RotationM = glm::mat4(glm::make_mat3(&tmpmat3.a1));
-		RotationM[0][3] = 0.0f; 
-		RotationM[1][3] = 0.0f; 
-		RotationM[2][3] = 0.0f; 
+		RotationM[0][3] = 0.0f;
+		RotationM[1][3] = 0.0f;
+		RotationM[2][3] = 0.0f;
 		RotationM[3][0] = 0.0f; RotationM[3][1] = 0.0f; RotationM[3][2] = 0.0f; RotationM[3][3] = 1.0f;
 
 		// Interpolate translation and generate translation transformation matrix
@@ -1072,7 +1099,6 @@ uint Model::FindPosition(double AnimationTime, const aiNodeAnim * pNodeAnim)
 			return i;
 		}
 	}
-
 	assert(0);
 	return 0;
 }
@@ -1130,7 +1156,8 @@ Model::Model()
 	, mIndices_marterial(nullptr)
 	, mNumVertices(0)
 	, mNumIndices(0)
-	, mRenderMode(RenderMode::RenderMode_Mesh)
+	, mRenderMode(RenderMode::RenderMode_Material)
+	, mIsDrawWireFrame(false)
 {
 	ModelManager::getInstance()->AddModel(this);
 }
@@ -1142,7 +1169,7 @@ Model::~Model()
 	{
 		delete mMeshes[i];
 	}
-	
+
 	for (unsigned int i = 0; i < textures_loaded.size(); i++)
 		glDeleteTextures(1, &textures_loaded[i].id);
 
