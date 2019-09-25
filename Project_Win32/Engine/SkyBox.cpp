@@ -60,7 +60,7 @@ void SkyBox::Init(const char * texturepath)
 	glGenBuffers(1, &VBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(GLfloat), &skyboxVertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(GLfloat), skyboxVertices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	m_initialized = true;
@@ -71,8 +71,9 @@ void SkyBox::Draw(Camera *camera)
 	if (!m_initialized) return;
 	GLint currentid = ShaderManager::getInstance()->GetCurrentProgram();
 	mShader.use();
-	glDisable(GL_DEPTH_TEST);
-	glDepthMask(GL_FALSE);
+	//glDisable(GL_DEPTH_TEST);
+	//glDepthMask(GL_FALSE);
+	glDepthFunc(GL_LEQUAL);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
 	if (mShader.getPosAttribute() >= 0)
@@ -85,24 +86,19 @@ void SkyBox::Draw(Camera *camera)
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
 	mShader.setInt("skybox", 0);
+	glm::mat4 projection = camera->GetProjection();
+	glm::mat4 view = glm::mat4(glm::mat3(camera->GetView())); // remove translation from the view matrix
 
-	glm::mat4 lookat_tmp = camera->GetWorldViewProjectionMatrix() * model;
-
-	mShader.setMat4("WorldViewProjectionMatrix", lookat_tmp);
+	mShader.setMat4("WorldViewProjectionMatrix", projection * view);
 	mShader.setInt("GammaCorrection",RenderManager::getInstance()->isEnablemGammaCorrection());
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	glDepthMask(GL_TRUE);
-	glEnable(GL_DEPTH_TEST);
+	//glDepthMask(GL_TRUE);
+	//glEnable(GL_DEPTH_TEST);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	if (currentid != -1)
 		ShaderManager::getInstance()->setUseProgram(currentid);
-}
-
-void SkyBox::setScale(float scale)
-{
-	this->scale = scale;
-	this->model = glm::scale(model, glm::vec3(scale));
+	glDepthFunc(GL_LESS);
 }
 
 GLuint SkyBox::loadCubemap(const char * texturepath, std::vector<std::string> faces)
@@ -148,9 +144,8 @@ GLuint SkyBox::getTextureID()
 }
 
 SkyBox::SkyBox()
-	: scale(900.0f)
-	, m_initialized(false)
-	, model(glm::mat4(1.0f))
+	: m_initialized(false)
+	, mProjection(glm::mat4(1.0f))
 {
 	skyboxVertices = new GLfloat[108]{
 		// positions          
@@ -196,7 +191,6 @@ SkyBox::SkyBox()
 		-1.0f, -1.0f,  1.0f,
 		1.0f, -1.0f,  1.0f
 	};
-	setScale(scale);
 }
 
 

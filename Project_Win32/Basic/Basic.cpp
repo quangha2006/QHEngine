@@ -11,14 +11,14 @@
 #include "RenderManager.h"
 #include "PhysicsSimulation.h"
 
-const int Screen_width = 960;
-const int Screen_height = 540;
+const int Screen_width = 1280;
+const int Screen_height = 720;
 
 void Basic::Init()
 {
 	mCamera->SetPos(0.0f, 15.0f, 40.0f);
 	mCamera->SetTarget(0.0f, 5.0f, 0.0f);
-	mCamera->SetLightPos(0.2f, 80.0f, 1.0f);
+	mCamera->SetLightPos(2000.2f, 200.0f, 1.0f);
 
 	//mNanosuit.Init("nanosuit/nanosuit.obj", true, false);
 	mNanosuit.SetScale(glm::vec3(0.4f));
@@ -29,28 +29,12 @@ void Basic::Init()
 	m_Streetenvironment.Init("GameDemo/PCcrasher.dae", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -20.5f, 0.0f));
 	m_Streetenvironment.SetScale(glm::vec3(40.0f,40.0f,40.0f));
-	m_Streetenvironment.SetIsDrawDepthMap(false);
+	m_Streetenvironment.SetIsDrawDepthMap(true);
 	m_Streetenvironment.SetDrawWireFrame(true);
 	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Mesh);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
-
-	//btRigidBody* body = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(-1.2f, 16.0f, 0.0f), glm::vec3(1.f), 0.0f, glm::vec3(1), glm::vec3(1.0, 4.0f, 1.0f));
-	//body->setFriction(0.0);
-	//body->setRestitution(1.);
-	//btRigidBody* body1 = PhysicsSimulation::getInstance()->createBoxShape(1.0f, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.f), 0.0f, glm::vec3(8));
-	//body1->setFriction(0.0);
-	//body1->setRestitution(1.);
-	//btRigidBody* body2 = PhysicsSimulation::getInstance()->createCapsuleShape(2.f, 16.0f, 1.0f, glm::vec3(0.0f, 16.0f, 0.0f));
-	//body2->setFriction(1.0);
-	//body2->setRestitution(1.);
-	//body2->setRollingFriction(.5f);
-	//btRigidBody* body3 = PhysicsSimulation::getInstance()->createCapsuleShape(1.f, 1.0f, 2.0f, glm::vec3(4.0f, 16.0, 0));
-	//body3->getCollisionShape();
-	//body3->setFriction(1.0);
-	//body3->setRestitution(1.);
-	//body3->setRollingFriction(1.0f);
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
@@ -58,7 +42,7 @@ void Basic::Init()
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 
-	mAstroBoy.Init("bountyhunter/bountyhunter/export_from_max/test2.FBX", true);
+	//mAstroBoy.Init("bountyhunter/bountyhunter/export_from_max/test2.FBX", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	mAstroBoy.SetScale(glm::vec3(0.1f));
 	mAstroBoy.SetPos(glm::vec3(0.0f, 1.0f, 0.0f));
@@ -128,7 +112,9 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 	char c = (char)key;
 	//LOGI("Key: %d = %c\n",key, c);
 	glm::vec3 curent = uvcircle.GetScale();
-	static glm::mat4 camera_projection = glm::mat4();
+	glm::mat4 cameraView = mCamera->GetView();
+	
+	
 	glm::mat4 tmp;
 	if (action == 0) return true;
 	switch (c)
@@ -143,10 +129,12 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		PhysicsSimulation::getInstance()->SwitchDebugMode();
 		return true;
 	case 'S': //num s
-		m_Streetenvironment.SetRotate(1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+		cameraView = glm::rotate(cameraView, glm::radians(1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		mCamera->SetView(cameraView);
 		return true;
 	case 'W': //num w
-		m_Streetenvironment.SetRotate(-1.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+		cameraView = glm::rotate(cameraView, glm::radians(-1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		mCamera->SetView(cameraView);
 		return true;
 	case 'A': //num a
 		uvcircle.SetScale(glm::vec3(1.0, ++(curent.y), 1.0));

@@ -13,7 +13,7 @@ private:
 	GLfloat *skyboxVertices;
 	GLuint VBO;
 	float scale;
-	glm::mat4 model;
+	glm::mat4 mProjection;
 
 	unsigned int loadCubemap(const char * texturepath, std::vector<std::string> faces);
 	GLuint getTextureID();
