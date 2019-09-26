@@ -16,88 +16,38 @@ const int Screen_height = 720;
 
 void Basic::Init()
 {
-	mCamera->SetPos(0.0f, 1.0f, 40.0f);
+	mCamera->SetPos(0.0f, 10.0f, 10.0f);
 	mCamera->SetTarget(0.0f, 5.0f, 0.0f);
-	mCamera->SetLightPos(20.2f, 2000.0f, 1.0f);
+	mCamera->SetLightPos(20.2f, 20.0f, 1.0f);
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("GameDemo/terrain.dae", true, true);
-	m_Streetenvironment.SetPos(glm::vec3(0.0f, -50.5f, 0.0f));
-	m_Streetenvironment.SetScale(glm::vec3(100.0f,50.0f,100.0f));
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	m_Streetenvironment.SetPos(glm::vec3(0.0f, 0.5f, 0.0f));
+	//m_Streetenvironment.SetScale(glm::vec3(100.0f,50.0f,100.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(true);
-	m_Streetenvironment.SetDrawWireFrame(true);
+	//m_Streetenvironment.SetDrawWireFrame(true);
 	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Mesh);
-	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
+	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
-	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
-	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
-	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
-	mMerce.SetScale(glm::vec3(2.5f));
-
-	//mAstroBoy.Init("bountyhunter/bountyhunter/export_from_max/test2.FBX", true);
-	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	mAstroBoy.SetScale(glm::vec3(0.1f));
-	mAstroBoy.SetPos(glm::vec3(0.0f, 1.0f, 0.0f));
-	mAstroBoy.SetDrawMesh(0);
-	//mAstroBoy.SetDrawWireFrame(true);
-	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
-	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
-
-	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	//mSpider.Init("bHieu/1_2_Tree.dae", true);
-	//mSpider.Init("Demo/BoxAnim.dae", true);
-	//mSpider.SetScale(glm::vec3(0.004f));
-	mSpider.SetPos(glm::vec3(1.8f, 35.5f, -.5f));
-	//mSpider.SetScale(glm::vec3(5.0f));
-	//mSpider.SetAnimPlay(1);
-	//mSpider.SetRotate(50.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	//mSpider.SetTimeStampAnim(0);
-	//mSpider.SetNeedRotate(true);
-	//mSpider.SetDrawMesh(9);
-	//mSpider.SetPlayAnimTime(0.0f, 0.33f);
-	mSpider.SetPlayAnimTime(0.66f, 1.f);
-
-	mBoblampclean.Init("bountyhunter/bountyhunter/Test/source.dae", true);
-	mBoblampclean.SetPos(glm::vec3(5.f, 0.0f, 0.0f));
-	mBoblampclean.SetScale(glm::vec3(0.05f));
-	mBoblampclean.SetDrawMesh(1);
-	mBoblampclean.SetDrawWireFrame(true);
-	mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
-	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
-	//uvcircle.SetScale(glm::vec3(1.0, 0.5f, 1.0f));
-	uvcircle.SetPos(glm::vec3(0.1f, 5.f, 5.5f));
-
-	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
-
-	uvcircle.GetRigidBody()->setFriction(1.);
-	uvcircle.GetRigidBody()->setRollingFriction(1.);
-	uvcircle.GetRigidBody()->setSpinningFriction(1.);
-	uvcircle.GetRigidBody()->setRestitution(1.);
-	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
+	//ModelTest.Init("bountyhunter/bountyhunter/export_from_max/bountyhunter_run_01.FBX", true);
+	ModelTest.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", true);
+	ModelTest.SetPos(glm::vec3(0.f, 10.0f, 0.0f));
+	//ModelTest.SetScale(glm::vec3(0.02f));
+	//ModelTest.SetDrawMesh(1);
+	ModelTest.SetDrawWireFrame(false);
+	ModelTest.CreateBoxShapePhysicsBody(1.0, glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(0.0f, -3.0f, 0.0f));
 
 	axis.Init(mCamera);
 	m_initialized = true;
-	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
-	//PhysicsSimulation::getInstance()->SwitchDebugMode();
-	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
-
 	Init2D();
 }
 
 void Basic::Update(int delta)
 {
-	
-	glm::mat4 trans = mBoblampclean.GetWorld();
-	//Utils::PrintMat4(trans);
-	glm::vec3 circlePos = glm::vec3(trans[3][0], trans[3][1] + 5, trans[3][2]);
-	mCamera->SetTarget(circlePos);
-	//mCamera->SetPos(circlePos.x + 50, circlePos.y + 30, circlePos.z + 50);
-
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
@@ -108,7 +58,6 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
 	//LOGI("Key: %d = %c\n",key, c);
-	glm::vec3 curent = uvcircle.GetScale();
 	glm::mat4 cameraView = mCamera->GetView();
 	
 	
@@ -134,43 +83,41 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		mCamera->SetView(cameraView);
 		return true;
 	case 'A': //num a
-		uvcircle.SetScale(glm::vec3(1.0, ++(curent.y), 1.0));
 		return true;
 	case 'D': //num d
-		uvcircle.SetScale(glm::vec3(1.0, --(curent.y), 1.0));
+
 		return true;
 	case 262:
-		timestamp_for_lamp += 1.f;
 		return true;
 	case 320: //num 0
-		mSpider.SetAnimPlay(0);
+
 		return true;
 	case 321:
-		mSpider.SetAnimPlay(1);
+
 		return true;
 	case 322:
-		mSpider.SetAnimPlay(2);
+
 		return true;
 	case 323:
-		mSpider.SetAnimPlay(3);
+
 		return true;
 	case 324:
-		mSpider.SetAnimPlay(4);
+
 		return true;
 	case 325:
-		mSpider.SetAnimPlay(5);
+
 		return true;
 	case 326:
-		mSpider.SetAnimPlay(6);
+
 		return true;
 	case 327:
-		mSpider.SetAnimPlay(7);
+
 		return true;
 	case 328:
-		mSpider.SetAnimPlay(8);
+
 		return true;
 	case 329: // num 9
-		mSpider.SetAnimPlay(9);
+
 		return true;
 
 	default:
@@ -189,21 +136,6 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mShadowLabel.setVisible(true);
 	mBloomLabel.setVisible(true);
 	mBloomAmountLabel.setVisible(true);
-
-	m_Streetenvironment.CreateTriangleMeshShape(0.);
-	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
-
-	/*uvcircle.registerShape(1.);*/
-	//uvcircle.GetRigidBody()->setFriction(0.);
-	//uvcircle.GetRigidBody()->setRollingFriction(1.0f);
-	//uvcircle.GetRigidBody()->setSpinningFriction(1.0f);
-	//uvcircle.GetRigidBody()->setRestitution(0.0);
-
-	/*mSpider.CreateConvexHullShapePhysicsBody(1., false);
-	mSpider.GetRigidBody()->setFriction(0.);
-	mSpider.GetRigidBody()->setRollingFriction(0.1f);
-	mSpider.GetRigidBody()->setSpinningFriction(0.1f);
-	mSpider.GetRigidBody()->setRestitution(0.0);*/
 }
 
 void Basic::ClickbuttonBloomAmountLeft()
@@ -286,7 +218,6 @@ void Basic::Init2D()
 }
 Basic::Basic()
 {
-	timestamp_for_lamp = 0;
 	m_initialized = false;
 }
 

@@ -14,7 +14,7 @@ struct Vertex {
 	Vertex()
 	{
 		Position = glm::vec3(0.0f, 0.0f, 0.0f);
-		Color = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+		Color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		Normal = glm::vec3(1.0f, 1.0f, 1.0f);
 		TexCoords = glm::vec2(0.0f, 0.0f);
 		Tangent = glm::vec3(0.0f, 0.0f, 0.0f);

@@ -376,7 +376,6 @@ Mesh *Model::processMesh(aiMesh * mesh, glm::mat4 localTransform)
 			}
 			else
 				BoneIndex = m_BoneMapping[b_name];
-
 			for (unsigned int j = 0; j < aiBone->mNumWeights; j++)
 			{
 				aiVertexWeight weight = aiBone->mWeights[j];
@@ -404,6 +403,7 @@ Mesh *Model::processMesh(aiMesh * mesh, glm::mat4 localTransform)
 					mVertices[weight.mVertexId + numvertices_prev_mesh].weight.w = weight.mWeight;
 					continue;
 				}
+				LOGW("Vertex at %u have more than 4 weight\n", weight.mVertexId + numvertices_prev_mesh);
 			}
 		}
 	}
@@ -604,7 +604,15 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 	{
 	case RenderTargetType_DEPTH:
 
-		QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, (void*)0);
+		if (m_meshdraw > -1)
+		{
+			if (m_meshdraw < (int)mMeshes.size())
+			{
+				mMeshes[m_meshdraw]->Draw(RT_Type, mIsDrawWireFrame, useCustomColor, customColor);
+			}
+		}
+		else
+			QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, (void*)0);
 
 		break;
 	case RenderTargetType_COLOR:
@@ -696,7 +704,10 @@ void Model::SyncPhysics()
 
 		glm::mat4 glm_mat4 = glm::make_mat4(matrix);
 
+		glm_mat4 = glm::translate(glm_mat4, mFixedBoxShape);
+
 		mWorldTransform = glm_mat4 * glm::scale(glm::mat4(), mScale);
+
 	}
 	else if (m_initialized)
 	{
@@ -1012,7 +1023,8 @@ void Model::CalcInterpolatedScaling(aiVector3D & Out, double AnimationTime, cons
 	assert(NextScalingIndex < pNodeAnim->mNumScalingKeys);
 	double DeltaTime = pNodeAnim->mScalingKeys[NextScalingIndex].mTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime;
 	double Factor = (AnimationTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime) / DeltaTime;
-	assert(Factor >= 0.0f && Factor <= 1.0f);
+	//assert(Factor >= 0.0f && Factor <= 1.0f);
+	QHMath::Clamp(Factor, 0.0, 1.0);
 	const aiVector3D& Start = pNodeAnim->mScalingKeys[ScalingIndex].mValue;
 	const aiVector3D& End = pNodeAnim->mScalingKeys[NextScalingIndex].mValue;
 	aiVector3D Delta = End - Start;
@@ -1022,14 +1034,13 @@ void Model::CalcInterpolatedScaling(aiVector3D & Out, double AnimationTime, cons
 uint Model::FindScaling(double AnimationTime, const aiNodeAnim * pNodeAnim)
 {
 	assert(pNodeAnim->mNumScalingKeys > 0);
-
-	for (uint i = 0; i < pNodeAnim->mNumScalingKeys - 1; i++) {
+	uint i = 0;
+	for (; i < pNodeAnim->mNumScalingKeys - 1; i++) {
 		if (AnimationTime < pNodeAnim->mScalingKeys[i + 1].mTime) {
 			return i;
 		}
 	}
-	assert(0);
-	return 0;
+	return i-1;
 }
 void Model::CalcInterpolatedRotation(aiQuaternion & Out, double AnimationTime, const aiNodeAnim * pNodeAnim)
 {
@@ -1048,7 +1059,8 @@ void Model::CalcInterpolatedRotation(aiQuaternion & Out, double AnimationTime, c
 	assert(NextRotationIndex < pNodeAnim->mNumRotationKeys);
 	double DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim->mRotationKeys[RotationIndex].mTime;
 	double Factor = (AnimationTime - pNodeAnim->mRotationKeys[RotationIndex].mTime) / DeltaTime;
-	assert(Factor >= 0.0f && Factor <= 1.0f);
+	//assert(Factor >= 0.0f && Factor <= 1.0f);
+	QHMath::Clamp(Factor, 0.0, 1.0);
 	const aiQuaternion& StartRotationQ = pNodeAnim->mRotationKeys[RotationIndex].mValue;
 	const aiQuaternion& EndRotationQ = pNodeAnim->mRotationKeys[NextRotationIndex].mValue;
 	aiQuaternion::Interpolate(Out, StartRotationQ, EndRotationQ, (float)Factor); //ai_real = float
@@ -1057,16 +1069,13 @@ void Model::CalcInterpolatedRotation(aiQuaternion & Out, double AnimationTime, c
 
 uint Model::FindRotation(double AnimationTime, const aiNodeAnim * pNodeAnim)
 {
-	assert(pNodeAnim->mNumRotationKeys > 0);
-
-	for (uint i = 0; i < pNodeAnim->mNumRotationKeys - 1; i++) {
+	uint i = 0;
+	for (; i < pNodeAnim->mNumRotationKeys - 1; i++) {
 		if (AnimationTime < pNodeAnim->mRotationKeys[i + 1].mTime) {
 			return i;
 		}
 	}
-
-	assert(0);
-	return 0;
+	return i-1;
 }
 
 void Model::CalcInterpolatedPosition(aiVector3D & Out, double AnimationTime, const aiNodeAnim * pNodeAnim)
@@ -1085,7 +1094,8 @@ void Model::CalcInterpolatedPosition(aiVector3D & Out, double AnimationTime, con
 	assert(NextPositionIndex < pNodeAnim->mNumPositionKeys);
 	double DeltaTime = pNodeAnim->mPositionKeys[NextPositionIndex].mTime - pNodeAnim->mPositionKeys[PositionIndex].mTime;
 	double Factor = (AnimationTime - pNodeAnim->mPositionKeys[PositionIndex].mTime) / DeltaTime;
-	assert(Factor >= 0.0f && Factor <= 1.0f);
+	//assert(Factor >= 0.0f && Factor <= 1.0f); 
+	QHMath::Clamp(Factor, 0.0, 1.0);
 	const aiVector3D& Start = pNodeAnim->mPositionKeys[PositionIndex].mValue;
 	const aiVector3D& End = pNodeAnim->mPositionKeys[NextPositionIndex].mValue;
 	aiVector3D Delta = End - Start;
@@ -1094,13 +1104,14 @@ void Model::CalcInterpolatedPosition(aiVector3D & Out, double AnimationTime, con
 
 uint Model::FindPosition(double AnimationTime, const aiNodeAnim * pNodeAnim)
 {
-	for (uint i = 0; i < pNodeAnim->mNumPositionKeys - 1; i++) {
+	uint i = 0;
+	for (; i < pNodeAnim->mNumPositionKeys - 1; i++) {
 		if (AnimationTime < pNodeAnim->mPositionKeys[i + 1].mTime) {
 			return i;
 		}
 	}
-	assert(0);
-	return 0;
+	//assert(0);
+	return i-1;
 }
 glm::mat4 Model::GetWorld()
 {

@@ -8,7 +8,6 @@
 #include <assimp/postprocess.h>
 //#include "Globals.h"
 
-
 void Mesh::Draw(RenderTargetType RT_Type, bool isDrawWireFrame, bool useCustomColor, const glm::vec3 &customColor)
 {
 	if (useCustomColor)
