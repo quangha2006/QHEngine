@@ -16,17 +16,17 @@ const int Screen_height = 720;
 
 void Basic::Init()
 {
-	mCamera->SetPos(0.0f, 1.0f, 40.0f);
+	mCamera->SetPos(0.0f, 50.0f, 620.0f);
 	mCamera->SetTarget(0.0f, 5.0f, 0.0f);
 	mCamera->SetLightPos(20.2f, 2000.0f, 1.0f);
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("GameDemo/terrain.dae", true, true);
-	m_Streetenvironment.SetPos(glm::vec3(0.0f, -50.5f, 0.0f));
-	m_Streetenvironment.SetScale(glm::vec3(100.0f,50.0f,100.0f));
+	m_Streetenvironment.Init("GameDemo/PCcrasher.dae", true, true);
+	m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
+	m_Streetenvironment.SetScale(glm::vec3(100.0f,100.0f,100.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(true);
-	m_Streetenvironment.SetDrawWireFrame(true);
+	m_Streetenvironment.SetDrawWireFrame(false);
 	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Mesh);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
@@ -61,14 +61,14 @@ void Basic::Init()
 	//mSpider.SetPlayAnimTime(0.0f, 0.33f);
 	mSpider.SetPlayAnimTime(0.66f, 1.f);
 
-	mBoblampclean.Init("bountyhunter/bountyhunter/Test/source.dae", true);
+	//mBoblampclean.Init("bountyhunter/bountyhunter/Test/source.dae", true);
 	mBoblampclean.SetPos(glm::vec3(5.f, 0.0f, 0.0f));
 	mBoblampclean.SetScale(glm::vec3(0.05f));
 	mBoblampclean.SetDrawMesh(1);
 	mBoblampclean.SetDrawWireFrame(true);
-	mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
+	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
 	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
-	//uvcircle.SetScale(glm::vec3(1.0, 0.5f, 1.0f));
+	uvcircle.SetScale(glm::vec3(1.0, 0.5f, 1.0f));
 	uvcircle.SetPos(glm::vec3(0.1f, 5.f, 5.5f));
 
 	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
@@ -92,10 +92,10 @@ void Basic::Init()
 void Basic::Update(int delta)
 {
 	
-	glm::mat4 trans = mBoblampclean.GetWorld();
-	//Utils::PrintMat4(trans);
-	glm::vec3 circlePos = glm::vec3(trans[3][0], trans[3][1] + 5, trans[3][2]);
-	mCamera->SetTarget(circlePos);
+	//glm::mat4 trans = mBoblampclean.GetWorld();
+	////Utils::PrintMat4(trans);
+	//glm::vec3 circlePos = glm::vec3(trans[3][0], trans[3][1] + 5, trans[3][2]);
+	//mCamera->SetTarget(circlePos);
 	//mCamera->SetPos(circlePos.x + 50, circlePos.y + 30, circlePos.z + 50);
 
 }

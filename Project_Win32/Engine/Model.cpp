@@ -130,10 +130,12 @@ void Model::Loading() //thread
 }
 void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh)
 {
+	LOGI("Node\n");
 	nummesh += node->mNumMeshes;
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+		LOGI("   MeshID: %u numVer: %u\n", node->mMeshes[i], mesh->mNumVertices);
 		Pre_processMesh(mesh, numvertices, numindices);
 	}
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
@@ -238,7 +240,7 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	//currentNodeTransformation = glm::transpose(currentNodeTransformation);
 	//glm::mat4 Transformation = QHMath::CombineMat4(currentNodeTransformation, nodeTransformation);
 	glm::mat4 Transformation = QHMath::CombineMat4(nodeTransformation, currentNodeTransformation);
-
+	
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -260,9 +262,8 @@ Mesh *Model::processMesh(aiMesh * mesh, glm::mat4 localTransform)
 	bool hasTextureCoords0 = mesh->HasTextureCoords(0);
 	bool hasTangentsAndBitangents = mesh->HasTangentsAndBitangents();
 	bool hasVertexColors0 = mesh->HasVertexColors(0);
-	// data to fill
-	vector<Texture> textures;
 
+	// data to fill
 	unsigned int numvertices_prev_mesh = mNumVertices;
 
 	unsigned int indices_index = mNumIndices;
@@ -407,9 +408,6 @@ Mesh *Model::processMesh(aiMesh * mesh, glm::mat4 localTransform)
 			}
 		}
 	}
-
-
-
 
 	Vertex *vertexCurrentMesh = NULL;
 	GLuint numvertex_CurrentMesh = 0;

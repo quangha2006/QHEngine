@@ -63,7 +63,7 @@ private:
 	/*==== Animation ====*/
 	Assimp::Importer mImporter;
 	const aiScene* m_pScene;
-	map<string, uint> m_BoneMapping;
+	map<string, unsigned int> m_BoneMapping;
 	vector<BoneInfo> m_BoneInfo;
 	vector<glm::mat4> mTransforms;
 	glm::mat4 m_GlobalInverseTransform;

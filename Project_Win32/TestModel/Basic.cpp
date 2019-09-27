@@ -22,7 +22,7 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	m_Streetenvironment.Init("GameDemo/PCcrasher.fbx", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, 0.5f, 0.0f));
 	//m_Streetenvironment.SetScale(glm::vec3(100.0f,50.0f,100.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(true);
@@ -35,8 +35,8 @@ void Basic::Init()
 	//ModelTest.Init("bountyhunter/bountyhunter/export_from_max/bountyhunter_run_01.FBX", true);
 	ModelTest.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", true);
 	ModelTest.SetPos(glm::vec3(0.f, 10.0f, 0.0f));
-	//ModelTest.SetScale(glm::vec3(0.02f));
-	//ModelTest.SetDrawMesh(1);
+	ModelTest.SetScale(glm::vec3(0.02f));
+	ModelTest.SetDrawMesh(3);
 	ModelTest.SetDrawWireFrame(false);
 	ModelTest.CreateBoxShapePhysicsBody(1.0, glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(0.0f, -3.0f, 0.0f));
 
