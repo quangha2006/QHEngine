@@ -1,12 +1,13 @@
 precision highp float;
-in vec3 aPos;
-in vec2 aTexCoords;
-in vec4 sWeights;
-in vec4 sIDs;
-in vec3 aNormal;
-in vec3 aTangent;
-in vec3 aBitangent;
-in float atransformId;
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec4 aColor;
+layout (location = 2) in vec2 aTexCoords;
+layout (location = 3) in vec4 sWeights;
+layout (location = 4) in vec4 sIDs;
+layout (location = 5) in vec3 aNormal;
+layout (location = 6) in vec3 aTangent;
+layout (location = 7) in vec3 aBitangent;
+layout (location = 8) in mat4 aInstanceMatrix;
 
 out vec2 TexCoords;
 uniform mat4 WorldViewLightSpaceMatrix;
@@ -31,7 +32,7 @@ void main()
 
 	#endif
 	
-    gl_Position =  WorldViewLightSpaceMatrix * PosL;
+    gl_Position =  WorldViewLightSpaceMatrix * aInstanceMatrix * PosL;
 
 	TexCoords = aTexCoords;
 }

@@ -63,6 +63,14 @@ void Model::Loading() //thread
 	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
 	LOGI("ProcessMaterial time : %ums\n\n", (unsigned int)(time_processMaterial - time_loadmodel));
 
+	mQHMeshes.reserve(m_pScene->mNumMeshes);
+	for (int i = 0; i < m_pScene->mNumMeshes; i++)
+	{
+		QHMesh SceneMesh(m_pScene->mMeshes[i], m_BoneMapping, m_BoneInfo);
+		mQHMeshes.push_back(SceneMesh);
+
+	}
+
 	GLuint numvertices = 0;
 	GLuint numindices = 0;
 	GLuint nummeshes = 0;
@@ -72,8 +80,8 @@ void Model::Loading() //thread
 	LOGI("Vertices Count: %u totalMemory allocate: %u KB\n", numvertices, (sizeof(Vertex) * numvertices) / 1024);
 	LOGI("Indices Count: %u\n", numindices);
 
-	mVertices = new Vertex[numvertices];
-	mIndices = new GLuint[numindices];
+	//mVertices = new Vertex[numvertices];
+	//mIndices = new GLuint[numindices];
 
 	mMeshes.reserve(nummeshes);
 
@@ -94,7 +102,8 @@ void Model::Loading() //thread
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
 
-	SetupMaterialMesh();
+	if (mRenderMode == RenderMode_Material)
+		SetupMaterialMesh();
 
 	aiMemoryInfo meminfo;
 	mImporter.GetMemoryRequirements(meminfo);
@@ -107,17 +116,29 @@ void Model::Loading() //thread
 	glGenBuffers(1, &mEBO_material);
 
 	// load data into vertex buffers
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices, GL_STATIC_DRAW);
+	if (mNumVertices > 0)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+		glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices, GL_STATIC_DRAW);
+	}
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices, GL_STATIC_DRAW);
+	if (mNumIndices > 0)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices, GL_STATIC_DRAW);
+	}
 
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
-	glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices_marterial, GL_STATIC_DRAW);
+	if (mNumVertices > 0)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
+		glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices_marterial, GL_STATIC_DRAW);
+	}
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices_marterial, GL_STATIC_DRAW);
+	if (mNumIndices > 0)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices_marterial, GL_STATIC_DRAW);
+	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -130,12 +151,12 @@ void Model::Loading() //thread
 }
 void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh)
 {
-	LOGI("Node\n");
+	//LOGI("Node\n");
 	nummesh += node->mNumMeshes;
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		LOGI("   MeshID: %u numVer: %u\n", node->mMeshes[i], mesh->mNumVertices);
+		//LOGI("   MeshID: %u numVer: %u\n", node->mMeshes[i], mesh->mNumVertices);
 		Pre_processMesh(mesh, numvertices, numindices);
 	}
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
@@ -237,15 +258,18 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 {
 	aiMatrix4x4 tmp = node->mTransformation;
 	glm::mat4 currentNodeTransformation = QHMath::AiToGLMMat4(tmp);
-	//currentNodeTransformation = glm::transpose(currentNodeTransformation);
-	//glm::mat4 Transformation = QHMath::CombineMat4(currentNodeTransformation, nodeTransformation);
-	glm::mat4 Transformation = QHMath::CombineMat4(nodeTransformation, currentNodeTransformation);
+	currentNodeTransformation = glm::transpose(currentNodeTransformation);
+	glm::mat4 Transformation = QHMath::CombineMat4(currentNodeTransformation, nodeTransformation);
+	//glm::mat4 Transformation = QHMath::CombineMat4(nodeTransformation, currentNodeTransformation);
 	
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		Mesh *meshIndex = processMesh(mesh, Transformation);
-		mMeshes.push_back(meshIndex);
+		//Mesh *meshIndex = processMesh(mesh, Transformation);
+		//mMeshes.push_back(meshIndex);
+
+		unsigned int meshIndexNode = node->mMeshes[i];
+		mQHMeshes[meshIndexNode].AddInstanceMatrix(Transformation);
 	}
 
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
@@ -289,8 +313,8 @@ Mesh *Model::processMesh(aiMesh * mesh, glm::mat4 localTransform)
 			if (hasBones)
 				vertex.Position = vector;
 			else
-				//vertex.Position = localTransform * glm::vec4(vector, 1.0f);
-				vertex.Position = glm::vec4(vector, 1.0f) * localTransform;
+				vertex.Position = localTransform * glm::vec4(vector, 1.0f);
+				//vertex.Position = glm::vec4(vector, 1.0f) * localTransform;
 		}
 
 		if (hasNormals)
@@ -302,8 +326,8 @@ Mesh *Model::processMesh(aiMesh * mesh, glm::mat4 localTransform)
 			if (hasBones)
 				vertex.Normal = vector;
 			else
-				//vertex.Normal = localTransform * glm::vec4(vector, 0.0f);
-				vertex.Normal = glm::vec4(vector, 0.0f) * localTransform;
+				vertex.Normal = localTransform * glm::vec4(vector, 0.0f);
+				//vertex.Normal = glm::vec4(vector, 0.0f) * localTransform;
 		}
 
 		// texture coordinates
@@ -529,6 +553,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 		}
 		else
+		{
 			if (mRenderMode == RenderMode::RenderMode_Mesh)
 			{
 				glBindBuffer(GL_ARRAY_BUFFER, mVBO);
@@ -539,58 +564,59 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 				glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
 			}
+		}
 		break;
 	}
 
 	Shader* modelShader = ShaderManager::getInstance()->GetCurrentShader();
 
-	if (modelShader->position_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->position_Attribute);
-		glVertexAttribPointer(modelShader->position_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
-	}
-	if (modelShader->color_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->color_Attribute);
-		glVertexAttribPointer(modelShader->color_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
-	}
-	// vertex texture coords
-	if (modelShader->TexCoord_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->TexCoord_Attribute);
-		glVertexAttribPointer(modelShader->TexCoord_Attribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
-	}
-	// s_vWeights
-	if (modelShader->Weights_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->Weights_Attribute);
-		glVertexAttribPointer(modelShader->Weights_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, weight));
-	}
-	// s_vIDs;
-	if (modelShader->IDs_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->IDs_Attribute);
-		//glVertexAttribIPointer(modelShader->IDs_Attribute, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, id)); //for ivec4
-		glVertexAttribPointer(modelShader->IDs_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, id));
-	}
-	// vertex normals
-	if (modelShader->normal_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->normal_Attribute);
-		glVertexAttribPointer(modelShader->normal_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-	}
-	// vertex tangent
-	if (modelShader->Tangent_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->Tangent_Attribute);
-		glVertexAttribPointer(modelShader->Tangent_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
-	}
-	// vertex bitangent
-	if (modelShader->Bitangent_Attribute != -1)
-	{
-		glEnableVertexAttribArray(modelShader->Bitangent_Attribute);
-		glVertexAttribPointer(modelShader->Bitangent_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
-	}
+	//if (modelShader->position_Attribute != -1)
+	//{
+	//	glEnableVertexAttribArray(modelShader->position_Attribute);
+	//	glVertexAttribPointer(modelShader->position_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
+	//}
+	//if (modelShader->color_Attribute != -1)
+	//{
+	//	glEnableVertexAttribArray(modelShader->color_Attribute);
+	//	glVertexAttribPointer(modelShader->color_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
+	//}
+	//// vertex texture coords
+	//if (modelShader->TexCoord_Attribute != -1)
+	//{
+	//	glEnableVertexAttribArray(modelShader->TexCoord_Attribute);
+	//	glVertexAttribPointer(modelShader->TexCoord_Attribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+	//}
+	//// s_vWeights
+	//if (modelShader->Weights_Attribute != -1)
+	//{
+	//	glEnableVertexAttribArray(modelShader->Weights_Attribute);
+	//	glVertexAttribPointer(modelShader->Weights_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, weight));
+	//}
+	//// s_vIDs;
+	//if (modelShader->IDs_Attribute != -1)
+	//{
+	//	glEnableVertexAttribArray(modelShader->IDs_Attribute);
+	//	//glVertexAttribIPointer(modelShader->IDs_Attribute, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, id)); //for ivec4
+	//	glVertexAttribPointer(modelShader->IDs_Attribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, id));
+	//}
+	//// vertex normals
+	//if (modelShader->normal_Attribute != -1)
+	//{
+	//	glEnableVertexAttribArray(modelShader->normal_Attribute);
+	//	glVertexAttribPointer(modelShader->normal_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+	//}
+	//// vertex tangent
+	//if (modelShader->Tangent_Attribute != -1)
+	//{
+	//	glEnableVertexAttribArray(modelShader->Tangent_Attribute);
+	//	glVertexAttribPointer(modelShader->Tangent_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
+	//}
+	//// vertex bitangent
+	//if (modelShader->Bitangent_Attribute != -1)
+	//{
+	//	glEnableVertexAttribArray(modelShader->Bitangent_Attribute);
+	//	glVertexAttribPointer(modelShader->Bitangent_Attribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
+	//}
 
 	//animation
 	if (hasAnimation && mTransforms.size() > 0)
@@ -641,6 +667,16 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 					ShaderSet::setBool("uselighting", uselighting);
 					mMaterial[i].Apply(RT_Type, mIsEnableAlpha);
 					mMaterial[i].Draw(mIsDrawWireFrame);
+				}
+			}
+			else if (mRenderMode == RenderMode::RanderMode_Instancing)
+			{
+				for (QHMesh& mesh : mQHMeshes)
+				{
+					ShaderSet::setBool("uselighting", uselighting);
+					unsigned int materialID = mesh.GetMaterialIndex();
+					mMaterial[materialID].Apply(RT_Type, mIsEnableAlpha);
+					mesh.Render();
 				}
 			}
 		}

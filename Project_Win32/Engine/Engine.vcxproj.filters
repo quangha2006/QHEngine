@@ -132,6 +132,9 @@
     <ClCompile Include="ModelManager.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="QHNodeModel.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -237,6 +240,9 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="ModelManager.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="QHNodeModel.h">
       <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>

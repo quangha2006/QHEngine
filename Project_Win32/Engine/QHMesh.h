@@ -18,7 +18,7 @@ private:
 	Vertex * mVerticesData;
 	unsigned int * mIndicesData;
 	unsigned int mMaterialIndex;
-	GLuint mVBO, mEBO;
+	GLuint mVBO, mEBO, mVAO, mInstancingBuff;
 
 	bool mHasBones;
 	bool mHasPos;
@@ -27,10 +27,13 @@ private:
 	bool mHasTangentsAndBitangents;
 	bool mHasVertexColors0;
 
+	std::vector<glm::mat4> mInstanceMatrixList;
+
 	void GenBuffers();
 public:
-
+	void AddInstanceMatrix(const glm::mat4 &matrix);
+	unsigned int GetMaterialIndex() { return mMaterialIndex; }
+	void Render();
 	QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
 	~QHMesh();
 };
-

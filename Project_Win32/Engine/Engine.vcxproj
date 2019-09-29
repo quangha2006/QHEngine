@@ -129,6 +129,7 @@
     <ClCompile Include="QHMaterial.cpp" />
     <ClCompile Include="QHMath.cpp" />
     <ClCompile Include="QHMesh.cpp" />
+    <ClCompile Include="QHNodeModel.cpp" />
     <ClCompile Include="QHText.cpp" />
     <ClCompile Include="QHTexture.cpp" />
     <ClCompile Include="RenderManager.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="QHMaterial.h" />
     <ClInclude Include="QHMath.h" />
     <ClInclude Include="QHMesh.h" />
+    <ClInclude Include="QHNodeModel.h" />
     <ClInclude Include="QHText.h" />
     <ClInclude Include="QHTexture.h" />
     <ClInclude Include="QHVertex.h" />

@@ -48,14 +48,13 @@ void TextRendering::RemoveQHText(int id)
 bool TextRendering::Init(const char * font_path, int width, int height, unsigned int maxchar)
 {
 	char vtxSrc[] = {
-		"#version 100\n"
-		"attribute vec4 aPos;\n"
-		"attribute vec3 textColor;\n"
-		"attribute float alpha;\n"
+		"layout (location = 0) in vec4 aPos;\n"
+		"layout (location = 1) in vec3 textColor;\n"
+		"layout (location = 2) in float alpha;\n"
 		"\n"
-		"varying vec2 thetexCoord;\n"
-		"varying vec3 thetextColor;\n"
-		"varying float thealpha;\n"
+		"out vec2 thetexCoord;\n"
+		"out vec3 thetextColor;\n"
+		"out float thealpha;\n"
 		"\n"
 		"uniform mat4 projection;\n"
 		"void main()\n"
@@ -68,19 +67,19 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	};
 
 	char fragSrc[] = {
-		"#version 100\n"
 		"precision highp float;\n"
+		"layout (location = 0) out vec4 FragColor;\n"
 		"\n"
-		"varying vec2 thetexCoord;\n"
-		"varying vec3 thetextColor;\n"
-		"varying float thealpha;\n"
+		"in vec2 thetexCoord;\n"
+		"in vec3 thetextColor;\n"
+		"in float thealpha;\n"
 		"\n"
 		"uniform sampler2D texture;\n"
 		"\n"
 		"void main()\n"
 		"{\n"
 		"	vec4 sampled = vec4(1.0, 1.0, 1.0, texture2D(texture, thetexCoord).r);\n"
-		"	gl_FragColor = vec4(thetextColor, thealpha) * sampled;\n"
+		"	FragColor = vec4(thetextColor, thealpha) * sampled;\n"
 		"}\n"
 	};
 
@@ -189,14 +188,14 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 	glBufferData(GL_ARRAY_BUFFER, m_Maxchar * 6 * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
 
-	glEnableVertexAttribArray(mPositionAttribute);
-	glVertexAttribPointer(mPositionAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Position));
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Position));
 
-	glEnableVertexAttribArray(mColorAttribute);
-	glVertexAttribPointer(mColorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Color));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Color));
 
-	glEnableVertexAttribArray(mAlphaAttribute);
-	glVertexAttribPointer(mAlphaAttribute, 1, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Alpha));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Alpha));
 
 	
 	glBindVertexArray(0);

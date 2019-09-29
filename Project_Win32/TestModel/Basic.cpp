@@ -18,26 +18,28 @@ void Basic::Init()
 {
 	mCamera->SetPos(0.0f, 10.0f, 10.0f);
 	mCamera->SetTarget(0.0f, 5.0f, 0.0f);
-	mCamera->SetLightPos(20.2f, 20.0f, 1.0f);
+	mCamera->SetLightPos(200.2f, 500.0f, 1.0f);
 
 	mSkyBox.Init("SkyBox");
 
 	m_Streetenvironment.Init("GameDemo/PCcrasher.fbx", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, 0.5f, 0.0f));
 	//m_Streetenvironment.SetScale(glm::vec3(100.0f,50.0f,100.0f));
-	m_Streetenvironment.SetIsDrawDepthMap(true);
+	m_Streetenvironment.SetIsDrawDepthMap(false);
+	m_Streetenvironment.SetRenderMode(RenderMode::RanderMode_Instancing);
 	//m_Streetenvironment.SetDrawWireFrame(true);
 	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Mesh);
-	m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
+	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
 	//ModelTest.Init("bountyhunter/bountyhunter/export_from_max/bountyhunter_run_01.FBX", true);
-	ModelTest.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", true);
+	//ModelTest.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", true);
 	ModelTest.SetPos(glm::vec3(0.f, 10.0f, 0.0f));
 	ModelTest.SetScale(glm::vec3(0.02f));
 	ModelTest.SetDrawMesh(3);
 	ModelTest.SetDrawWireFrame(false);
+	ModelTest.SetIsDrawDepthMap(false);
 	ModelTest.CreateBoxShapePhysicsBody(1.0, glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(0.0f, -3.0f, 0.0f));
 
 	axis.Init(mCamera);

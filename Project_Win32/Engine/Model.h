@@ -8,6 +8,7 @@
 #include "ShaderManager.h"
 #include "PhysicsSimulation.h"
 #include "QHMaterial.h"
+#include "QHMesh.h"
 #include "QHVertex.h"
 
 #include <glm/glm.hpp>
@@ -31,7 +32,8 @@ using namespace std;
 enum RenderMode
 {
 	RenderMode_Material,
-	RenderMode_Mesh
+	RenderMode_Mesh,
+	RanderMode_Instancing
 };
 
 class Model
@@ -42,7 +44,7 @@ private:
 	vector<Mesh*> mMeshes;
 	vector<Texture> textures_loaded;
 	vector<QHMaterial> mMaterial;
-
+	vector<QHMesh> mQHMeshes;
 	Vertex* mVertices;
 	GLuint* mIndices;
 	GLuint mNumVertices;

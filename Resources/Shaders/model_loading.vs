@@ -1,13 +1,13 @@
 precision highp float;
-in vec3 aPos;
-in vec4 aColor;
-in vec2 aTexCoords;
-in vec4 sWeights;
-in vec4 sIDs;
-in vec3 aNormal;
-in vec3 aTangent;
-in vec3 aBitangent;
-in float atransformId;
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec4 aColor;
+layout (location = 2) in vec2 aTexCoords;
+layout (location = 3) in vec4 sWeights;
+layout (location = 4) in vec4 sIDs;
+layout (location = 5) in vec3 aNormal;
+layout (location = 6) in vec3 aTangent;
+layout (location = 7) in vec3 aBitangent;
+layout (location = 8) in mat4 aInstanceMatrix;
 
 out vec3 FragPos;
 out vec2 TexCoords;
@@ -23,7 +23,7 @@ uniform mat4 world_inverse;
 uniform mat4 WorldViewProjectionMatrix;
 uniform mat4 lightSpaceMatrix; //shadow
 uniform mat4 gBones[64];
-
+uniform mat4 localTranform;
 void main()
 {
 	highp vec4 PosL = vec4(aPos, 1.0f);
@@ -46,7 +46,8 @@ void main()
 
 	#endif
 
-    gl_Position = WorldViewProjectionMatrix * PosL;
+    gl_Position = WorldViewProjectionMatrix * aInstanceMatrix * PosL;
+	NormalL = aInstanceMatrix * NormalL;
 
 	FragPos = vec3(world * PosL);
 	Normal = (world_inverse * NormalL).xyz; 

@@ -44,6 +44,7 @@ void main()
 {   
 	vec4 color = Color;//vec4(material_color_diffuse, material_transparent);
 	//color.a = material_transparent;
+	color = vec4(material_color_diffuse, material_transparent);
 	if (material_color_diffuse.r < 0.f)
 	{
 		color = texture(material_texture_diffuse1, TexCoords);
