@@ -13,6 +13,7 @@ out vec2 TexCoords;
 uniform mat4 WorldViewLightSpaceMatrix;
 uniform mat4 gBones[64];
 
+uniform mat4 localTranform;
 
 void main()
 {

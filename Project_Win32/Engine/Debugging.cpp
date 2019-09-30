@@ -11,14 +11,14 @@ Debugging * Debugging::getInstance()
 	return instance;
 }
 
-void Debugging::addNumTriangle(unsigned int count)
+void Debugging::addNumVertices(unsigned int count)
 {
-	numTriangle += count;
+	mNumVertices += count;
 }
 
-unsigned int Debugging::getNumTriangle()
+unsigned int Debugging::getNumVertices()
 {
-	return numTriangle;
+	return mNumVertices;
 }
 
 void Debugging::addDrawCall(unsigned short count)
@@ -33,7 +33,7 @@ unsigned short Debugging::getNumDrawCall()
 
 void Debugging::resetCount()
 {
-	numTriangle = 0;
+	mNumVertices = 0;
 	numDrawCall = 0;
 }
 
@@ -57,7 +57,7 @@ void Debugging::DrawTex(GLuint TexId, const char *shadername)
 }
 
 Debugging::Debugging()
-	: numTriangle(0)
+	: mNumVertices(0)
 	, numDrawCall(0)
 {
 	quadVertices = new float[5 * 4]{
@@ -91,12 +91,18 @@ void QHEngine::DrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoi
 {
 	glDrawElements(mode, count, type, indices);
 	Debugging::getInstance()->addDrawCall(1);
-	Debugging::getInstance()->addNumTriangle(count/3);
+	Debugging::getInstance()->addNumVertices(count);
 }
 
 void QHEngine::DrawArrays(GLenum mode, GLint first, GLsizei count)
 {
 	glDrawArrays(mode, first, count);
 	Debugging::getInstance()->addDrawCall(1);
-	Debugging::getInstance()->addNumTriangle(count / 3);
+	Debugging::getInstance()->addNumVertices(count);
+}
+void QHEngine::DrawElementsInstanced(GLenum mode, GLsizei count, GLenum type, const void * indices, GLsizei instancecount)
+{
+	glDrawElementsInstanced(mode, count, type, indices, instancecount);
+	Debugging::getInstance()->addDrawCall(1);
+	Debugging::getInstance()->addNumVertices(count * instancecount);
 }

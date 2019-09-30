@@ -49,7 +49,7 @@ namespace Utils
 	}
 #endif
 
-	void PrintMat4(glm::mat4 &mat4)
+	void PrintMat4(const glm::mat4 &mat4)
 	{
 		LOGI("\n");
 		LOGI("\n%f, %f, %f, %f", mat4[0][0], mat4[0][1], mat4[0][2], mat4[0][3]);

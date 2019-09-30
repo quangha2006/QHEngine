@@ -24,7 +24,7 @@ namespace Utils
 	}
 	std::string getResourcesFolder();
 	std::string getDefineVersionShader();
-	void PrintMat4(glm::mat4 &mat4);
+	void PrintMat4(const glm::mat4 &mat4);
 	void PrintGLEXTENSIONS();
 	bool IsExtensionSupported(const char *name);
 	glm::vec3 RandomColor();

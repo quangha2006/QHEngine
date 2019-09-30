@@ -33,7 +33,7 @@ enum RenderMode
 {
 	RenderMode_Material,
 	RenderMode_Mesh,
-	RanderMode_Instancing
+	RenderMode_Instancing
 };
 
 class Model

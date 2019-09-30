@@ -130,7 +130,8 @@ void UserInterface::Render()
 		glUniformMatrix4fv(glGetUniformLocation(mShader.program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 		glBindTexture(GL_TEXTURE_2D, texid);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, 16 * sizeof(float), texData);
-		QHEngine::DrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		//QHEngine::DrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

@@ -29,8 +29,9 @@ private:
 
 	std::vector<glm::mat4> mInstanceMatrixList;
 
-	void GenBuffers();
+	bool isCreateinstancingBuffer = false;
 public:
+	void GenBuffers();
 	void AddInstanceMatrix(const glm::mat4 &matrix);
 	unsigned int GetMaterialIndex() { return mMaterialIndex; }
 	void Render();

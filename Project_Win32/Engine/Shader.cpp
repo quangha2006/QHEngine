@@ -40,11 +40,14 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 		program = -1;
 		return false;
 	}
+
+#ifdef NDEBUG
 	glDetachShader(program, mVertexShader);
 	glDetachShader(program, mFragmentShader);
 
 	glDeleteShader(mVertexShader);
 	glDeleteShader(mFragmentShader);
+#endif
 
 	LOGI("CreateProgram: %u\n", program);
 	return true;
@@ -202,4 +205,12 @@ Shader::~Shader()
 {
 	if (program != 0)
 		glDeleteProgram(program);
+
+#ifndef NDEBUG
+	glDetachShader(program, mVertexShader);
+	glDetachShader(program, mFragmentShader);
+
+	glDeleteShader(mVertexShader);
+	glDeleteShader(mFragmentShader);
+#endif
 }

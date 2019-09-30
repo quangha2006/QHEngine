@@ -669,7 +669,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 					mMaterial[i].Draw(mIsDrawWireFrame);
 				}
 			}
-			else if (mRenderMode == RenderMode::RanderMode_Instancing)
+			else if (mRenderMode == RenderMode::RenderMode_Instancing)
 			{
 				for (QHMesh& mesh : mQHMeshes)
 				{

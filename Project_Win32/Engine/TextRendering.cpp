@@ -312,7 +312,7 @@ void TextRendering::Draw()
 	}
 	glBufferSubData(GL_ARRAY_BUFFER, 0, fulltextdata.size() * sizeof(TextData), &fulltextdata[0]); // Be sure to use glBufferSubData and not glBufferData
 
-	//QHEngine::DrawArrays(GL_TRIANGLES, 0, m_TextData.size()); // for debug to add num draw call and num triangles
+	//QHEngine::DrawArrays(GL_TRIANGLES, 0, fulltextdata.size()); // for debug to add num draw call and num triangles
 	glDrawArrays(GL_TRIANGLES, 0, fulltextdata.size());
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

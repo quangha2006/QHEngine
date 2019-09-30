@@ -108,14 +108,14 @@ void AppBase::rendering()
 		RenderManager::getInstance()->Render();
 	}
 	unsigned short numDrawCall = Debugging::getInstance()->getNumDrawCall();
-	int numTriangle = Debugging::getInstance()->getNumTriangle();
+	int NumVertices = Debugging::getInstance()->getNumVertices();
 	int numdrawcall = Debugging::getInstance()->getNumDrawCall();
 	float fps = FrameRate::getInstance()->GetFPS();
 	int cpuTime = FrameRate::getInstance()->GetPrevCpuTime();
 
 	text_FPS.setText("FPS: %.1f", fps);
 	text_DrawCall.setText("DrawCall: %d", numdrawcall);
-	text_NumTriangle.setText("numTriangle: %d", numTriangle);
+	text_NumTriangle.setText("NumVertices: %d", NumVertices);
 	text_FrameTime.setText("PrevFrameTime: %d cpu: %d", frameTime, cpuTime);
 
 	FrameRate::getInstance()->Counter();

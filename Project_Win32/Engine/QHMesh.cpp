@@ -3,17 +3,19 @@
 #include "QHMath.h"
 #include "Debugging.h"
 #include "ShaderManager.h"
+#include "Utils.h"
 
 void QHMesh::GenBuffers()
 {
 	if (mNumVertices <= 0 || mNumIndices <= 0)
 		return;
 
+	glGenVertexArrays(1, &mVAO);
 	glGenBuffers(1, &mVBO);
 	glGenBuffers(1, &mEBO);
-//	glGenVertexArrays(1, &mVAO);
+	glGenBuffers(1, &mInstancingBuff);
 
-//	glBindVertexArray(mVAO);
+	glBindVertexArray(mVAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 	glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVerticesData, GL_STATIC_DRAW);
@@ -21,56 +23,6 @@ void QHMesh::GenBuffers()
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndicesData, GL_STATIC_DRAW);
-
-	//glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
-
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
-
-	//glEnableVertexAttribArray(2);
-	//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
-
-	//glEnableVertexAttribArray(3);
-	//glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, weight));
-
-	//glEnableVertexAttribArray(4);
-	//glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, id));
-
-	//glEnableVertexAttribArray(5);
-	//glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-
-	//glEnableVertexAttribArray(6);
-	//glVertexAttribPointer(6, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
-
-	//glEnableVertexAttribArray(7);
-	//glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//	glBindVertexArray(0);
-}
-
-void QHMesh::AddInstanceMatrix(const glm::mat4& matrix)
-{
-	mInstanceMatrixList.push_back(matrix);
-}
-
-void QHMesh::Render()
-{
-	static bool isCreateinstancingBuffer = false;
-	if (!isCreateinstancingBuffer)
-	{
-		glGenBuffers(1, &mInstancingBuff);
-		glBindBuffer(GL_ARRAY_BUFFER, mInstancingBuff);
-		glBufferData(GL_ARRAY_BUFFER, mInstanceMatrixList.size() * sizeof(glm::mat4), &mInstanceMatrixList[0], GL_STATIC_DRAW);
-
-		isCreateinstancingBuffer = true;
-	}
-//	glBindVertexArray(mVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
@@ -96,7 +48,10 @@ void QHMesh::Render()
 	glEnableVertexAttribArray(7);
 	glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 	glBindBuffer(GL_ARRAY_BUFFER, mInstancingBuff);
+	glBufferData(GL_ARRAY_BUFFER, mInstanceMatrixList.size() * sizeof(glm::mat4), &mInstanceMatrixList[0], GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(8);
 	glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
@@ -104,7 +59,7 @@ void QHMesh::Render()
 	glVertexAttribPointer(9, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(glm::vec4)));
 	glEnableVertexAttribArray(10);
 	glVertexAttribPointer(10, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(2 * sizeof(glm::vec4)));
-	glEnableVertexAttribArray(12);
+	glEnableVertexAttribArray(11);
 	glVertexAttribPointer(11, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(3 * sizeof(glm::vec4)));
 
 	glVertexAttribDivisor(8, 1);
@@ -112,16 +67,41 @@ void QHMesh::Render()
 	glVertexAttribDivisor(10, 1);
 	glVertexAttribDivisor(11, 1);
 
-	glm::mat4 tmp = glm::mat4();
+	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
 
-	ShaderSet::setMat4("localTranform", mInstanceMatrixList[0]);
-	//ShaderSet::setMat4("localTranform", tmp);
+	glBindVertexArray(0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	CheckGLError("QHMesh::GenBuffers");
+}
+
+void QHMesh::AddInstanceMatrix(const glm::mat4& matrix)
+{
+	mInstanceMatrixList.push_back(matrix);
+}
+
+void QHMesh::Render()
+{
+	if (!isCreateinstancingBuffer)
+	{
+		GenBuffers();
+		isCreateinstancingBuffer = true;
+	}
+
+	glBindVertexArray(mVAO);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+
+	ShaderSet::setMat4("localTranform", mInstanceMatrixList[mInstanceMatrixList.size() - 1]);
 
 	//QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, 0);
-	glDrawElementsInstanced(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, 0, mInstanceMatrixList.size());
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-//	glBindVertexArray(0);
+	QHEngine::DrawElementsInstanced(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, 0, mInstanceMatrixList.size());
+	
+	glBindVertexArray(0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	CheckGLError("QHMesh::Render");
 }
 
 QHMesh::QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &boneinfo)
@@ -132,6 +112,7 @@ QHMesh::QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapp
 	, mVBO(0)
 	, mEBO(0)
 	, mVAO(0)
+	, mInstancingBuff(0)
 {
 	mHasBones = mesh->HasBones();
 	mHasPos = mesh->HasPositions();
@@ -301,8 +282,6 @@ QHMesh::QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapp
 		std::memcpy(&mIndicesData[currentindex], face.mIndices, sizeof(unsigned int) * face.mNumIndices);
 		currentindex+= face.mNumIndices;
 	}
-
-	GenBuffers();
 
 	mMaterialIndex = mesh->mMaterialIndex;
 }

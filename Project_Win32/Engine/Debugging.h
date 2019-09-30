@@ -7,14 +7,14 @@ class Debugging
 {
 private:
 	static Debugging *instance;
-	unsigned int numTriangle;
+	unsigned int mNumVertices;
 	unsigned short numDrawCall;
 	float *quadVertices;
 	GLuint quadVAO, quadVBO;
 public:
 	static Debugging *getInstance();
-	void addNumTriangle(unsigned int count);
-	unsigned int getNumTriangle();
+	void addNumVertices(unsigned int count);
+	unsigned int getNumVertices();
 	void addDrawCall(unsigned short count);
 	unsigned short getNumDrawCall();
 	void resetCount();
@@ -26,5 +26,6 @@ namespace QHEngine
 {
 	void DrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices);
 	void DrawArrays(GLenum mode, GLint first, GLsizei count);
+	void DrawElementsInstanced(GLenum mode, GLsizei count, GLenum type, const void * indices, GLsizei instancecount);
 };
 #endif // !__DEBUGGING_H__

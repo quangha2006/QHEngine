@@ -69,7 +69,7 @@ void SkyBox::Init(const char * texturepath)
 void SkyBox::Draw(Camera *camera)
 {
 	if (!m_initialized) return;
-	GLint currentid = ShaderManager::getInstance()->GetCurrentProgram();
+	//GLint currentid = ShaderManager::getInstance()->GetCurrentProgram();
 	mShader.use();
 	//glDisable(GL_DEPTH_TEST);
 	//glDepthMask(GL_FALSE);
@@ -96,8 +96,8 @@ void SkyBox::Draw(Camera *camera)
 	//glDepthMask(GL_TRUE);
 	//glEnable(GL_DEPTH_TEST);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	if (currentid != -1)
-		ShaderManager::getInstance()->setUseProgram(currentid);
+	//if (currentid != -1)
+		//ShaderManager::getInstance()->setUseProgram(currentid);
 	glDepthFunc(GL_LESS);
 }
 
