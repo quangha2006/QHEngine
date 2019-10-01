@@ -15,7 +15,6 @@ out vec3 Normal;
 out mat3 TBN;
 out vec4 FragPosLightSpace; //shadow
 out vec4 we;
-out vec4 id;
 out vec4 Color;
 
 uniform mat4 world;
@@ -23,7 +22,7 @@ uniform mat4 world_inverse;
 uniform mat4 WorldViewProjectionMatrix;
 uniform mat4 lightSpaceMatrix; //shadow
 uniform mat4 gBones[64];
-uniform mat4 localTranform;
+
 void main()
 {
 	highp vec4 PosL = vec4(aPos, 1.0f);

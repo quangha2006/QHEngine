@@ -39,14 +39,14 @@ enum RenderMode
 class Model
 {
 private:
-	GLuint mVBO, mEBO;
+//	GLuint mVBO, mEBO;
 	GLuint mVBO_material, mEBO_material;
-	vector<Mesh*> mMeshes;
+//	vector<Mesh*> mMeshes;
 	vector<Texture> textures_loaded;
 	vector<QHMaterial> mMaterial;
 	vector<QHMesh> mQHMeshes;
-	Vertex* mVertices;
-	GLuint* mIndices;
+	//Vertex* mVertices;
+	//GLuint* mIndices;
 	GLuint mNumVertices;
 	GLuint mNumIndices;
 	
@@ -54,12 +54,12 @@ private:
 	GLuint* mIndices_marterial;
 	bool mIsDrawWireFrame;
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
-	Mesh *processMesh(aiMesh *mesh, glm::mat4 localTransform);
+//	Mesh *processMesh(aiMesh *mesh, glm::mat4 localTransform);
 
 	void Pre_processNode(aiNode *node, const aiScene *scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh);
-	void Pre_processMesh(aiMesh *mesh, GLuint &numvertices, GLuint &numindices);
 
 	void processMaterial(const aiScene* scene);
+	void processMesh(const aiScene* scene, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
 	void SetupMaterialMesh();
 
 	/*==== Animation ====*/
@@ -116,7 +116,6 @@ private:
 	void CalcInterpolatedScaling(aiVector3D& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
 	void UpdateWorldTransform();
 	void SetWorld(glm::mat4 world = glm::mat4());
-
 public:
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );

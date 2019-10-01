@@ -13,8 +13,6 @@ out vec2 TexCoords;
 uniform mat4 WorldViewLightSpaceMatrix;
 uniform mat4 gBones[64];
 
-uniform mat4 localTranform;
-
 void main()
 {
 	highp vec4 PosL = vec4(aPos, 1.0f);

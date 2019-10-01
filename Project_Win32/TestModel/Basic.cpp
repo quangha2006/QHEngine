@@ -16,7 +16,7 @@ const int Screen_height = 720;
 
 void Basic::Init()
 {
-	mCamera->SetPos(300.0f, 10.0f, 10.0f);
+	mCamera->SetPos(50.0f, 10.0f, 10.0f);
 	mCamera->SetTarget(0.0f, 10.0f, 0.0f);
 	mCamera->SetLightPos(200.2f, 500.0f, 1.0f);
 
@@ -29,7 +29,7 @@ void Basic::Init()
 	//m_Streetenvironment.SetScale(glm::vec3(100.0f,50.0f,100.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
-	//m_Streetenvironment.SetDrawWireFrame(true);
+	m_Streetenvironment.SetDrawWireFrame(true);
 	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Mesh);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);

@@ -55,7 +55,6 @@ void Model::Loading() //thread
 	}
 	// retrieve the directory path of the filepath
 	mDirectory = path_modif.substr(0, path_modif.find_last_of('/'));
-	// process ASSIMP's root node recursively
 
 	processMaterial(m_pScene);
 
@@ -63,27 +62,17 @@ void Model::Loading() //thread
 	LOGI("\nMaterial Count: %d\n", m_pScene->mNumMaterials);
 	LOGI("ProcessMaterial time : %ums\n\n", (unsigned int)(time_processMaterial - time_loadmodel));
 
-	mQHMeshes.reserve(m_pScene->mNumMeshes);
-	for (int i = 0; i < m_pScene->mNumMeshes; i++)
-	{
-		QHMesh SceneMesh(m_pScene->mMeshes[i], m_BoneMapping, m_BoneInfo);
-		mQHMeshes.push_back(SceneMesh);
-
-	}
+	processMesh(m_pScene, m_BoneMapping, m_BoneInfo);
 
 	GLuint numvertices = 0;
 	GLuint numindices = 0;
 	GLuint nummeshes = 0;
+
 	Pre_processNode(m_pScene->mRootNode, m_pScene, numvertices, numindices, nummeshes);
 
 	LOGI("Mesh Count: %u/%u\n", nummeshes, m_pScene->mNumMeshes);
 	LOGI("Vertices Count: %u totalMemory allocate: %u KB\n", numvertices, (sizeof(Vertex) * numvertices) / 1024);
 	LOGI("Indices Count: %u\n", numindices);
-
-	//mVertices = new Vertex[numvertices];
-	//mIndices = new GLuint[numindices];
-
-	mMeshes.reserve(nummeshes);
 
 	processNode(m_pScene->mRootNode, m_pScene, glm::mat4());
 
@@ -107,26 +96,11 @@ void Model::Loading() //thread
 
 	aiMemoryInfo meminfo;
 	mImporter.GetMemoryRequirements(meminfo);
-	LOGI("MemoryRequirements: %uKB\n", meminfo.total / 1024);
+	LOGI("Memory Requirements: %uKB\n", meminfo.total / 1024);
 
 	// create buffers/arrays
-	glGenBuffers(1, &mVBO);
-	glGenBuffers(1, &mEBO);
 	glGenBuffers(1, &mVBO_material);
 	glGenBuffers(1, &mEBO_material);
-
-	// load data into vertex buffers
-	if (mNumVertices > 0)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-		glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices, GL_STATIC_DRAW);
-	}
-
-	if (mNumIndices > 0)
-	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices, GL_STATIC_DRAW);
-	}
 
 	if (mNumVertices > 0)
 	{
@@ -151,27 +125,24 @@ void Model::Loading() //thread
 }
 void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh)
 {
-	//LOGI("Node\n");
 	nummesh += node->mNumMeshes;
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		//LOGI("   MeshID: %u numVer: %u\n", node->mMeshes[i], mesh->mNumVertices);
-		Pre_processMesh(mesh, numvertices, numindices);
+		numvertices += mesh->mNumVertices;
+
+		for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+		{
+			numindices += mesh->mFaces[i].mNumIndices;
+		}
+
 	}
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		Pre_processNode(node->mChildren[i], scene, numvertices, numindices, nummesh);
 	}
 }
-void Model::Pre_processMesh(aiMesh * mesh, GLuint &numvertices, GLuint &numindices)
-{
-	numvertices += mesh->mNumVertices;
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-	{
-		numindices += mesh->mFaces[i].mNumIndices;
-	}
-}
+
 void Model::processMaterial(const aiScene * scene)
 {
 	if (!scene->HasMaterials())
@@ -190,69 +161,82 @@ void Model::processMaterial(const aiScene * scene)
 		mMaterial.push_back(material);
 	}
 }
+void Model::processMesh(const aiScene * scene, std::map<std::string, unsigned int>& BoneMapping, std::vector<BoneInfo>& BoneInfo)
+{
+	if (!scene->HasMeshes())
+		return;
+
+	mQHMeshes.reserve(m_pScene->mNumMeshes);
+	for (int i = 0; i < m_pScene->mNumMeshes; i++)
+	{
+		QHMesh SceneMesh(m_pScene->mMeshes[i], m_BoneMapping, m_BoneInfo);
+		mQHMeshes.push_back(SceneMesh);
+
+	}
+}
 void Model::SetupMaterialMesh()
 {
-	uint64_t time_begin = Timer::getMillisecond();
+	//uint64_t time_begin = Timer::getMillisecond();
 
-	mVertices_marterial = new Vertex[mNumVertices];
-	mIndices_marterial = new GLuint[mNumIndices];
-	GLuint* indices_ptr = mIndices_marterial;
-	GLuint last_vertex_index = 0;
-	GLuint last_indices_index = 0;
+	//mVertices_marterial = new Vertex[mNumVertices];
+	//mIndices_marterial = new GLuint[mNumIndices];
+	//GLuint* indices_ptr = mIndices_marterial;
+	//GLuint last_vertex_index = 0;
+	//GLuint last_indices_index = 0;
 
-	for (GLuint i = 0; i < mMaterial.size(); i++)
-	{
-		mMaterial[i].mIndices_index = last_indices_index;
+	//for (GLuint i = 0; i < mMaterial.size(); i++)
+	//{
+	//	mMaterial[i].mIndices_index = last_indices_index;
 
-		for (GLuint j = 0; j < mMeshes.size(); j++)
-		{
-			if (mMeshes[j]->GetMaterialId() == i)
-			{
-				GLuint numvertex = 0;
-				GLuint numindices = 0;
-				Vertex* vertex = mMeshes[j]->GetVertex(numvertex);
-				GLuint* indices_mesh_ptr = mMeshes[j]->GetIndices(numindices);
-				if (numindices == 0 || numvertex == 0) continue;
-				std::memcpy(&mVertices_marterial[last_vertex_index], vertex, sizeof(Vertex) * numvertex);
+	//	for (GLuint j = 0; j < mMeshes.size(); j++)
+	//	{
+	//		if (mMeshes[j]->GetMaterialId() == i)
+	//		{
+	//			GLuint numvertex = 0;
+	//			GLuint numindices = 0;
+	//			Vertex* vertex = mMeshes[j]->GetVertex(numvertex);
+	//			GLuint* indices_mesh_ptr = mMeshes[j]->GetIndices(numindices);
+	//			if (numindices == 0 || numvertex == 0) continue;
+	//			std::memcpy(&mVertices_marterial[last_vertex_index], vertex, sizeof(Vertex) * numvertex);
 
-				last_indices_index += numindices;
+	//			last_indices_index += numindices;
 
-				do {
-					*indices_ptr++ = *indices_mesh_ptr++ + last_vertex_index;
-				} while (--numindices > 0);
+	//			do {
+	//				*indices_ptr++ = *indices_mesh_ptr++ + last_vertex_index;
+	//			} while (--numindices > 0);
 
-				last_vertex_index += numvertex;
+	//			last_vertex_index += numvertex;
 
-			}
-		}
-		mMaterial[i].mIndices_size = last_indices_index - mMaterial[i].mIndices_index;
-	}
-	// sort transparent
+	//		}
+	//	}
+	//	mMaterial[i].mIndices_size = last_indices_index - mMaterial[i].mIndices_index;
+	//}
+	//// sort transparent
 
-	unsigned int j = mMaterial.size() - 1;
-	unsigned int i = 0;
-	while (i < j)
-	{
-		if (mMaterial[i].isTransparent())
-		{
-			std::swap(mMaterial[i], mMaterial[j]);
-			// also swap material id in mesh
-			for (unsigned int k = 0; k < mMeshes.size(); k++)
-			{
-				if (mMeshes[k]->GetMaterialId() == i)
-					mMeshes[k]->SetMaterialId(j);
-				if (mMeshes[k]->GetMaterialId() == j)
-					mMeshes[k]->SetMaterialId(i);
-			}
-			--j;
-		}
-		else
-		{
-			++i;
-		}
-	}
-	uint64_t time_end = Timer::getMillisecond();
-	LOGI("SetupMaterialMesh time: %dms \n\n", ((int)(time_end - time_begin)));
+	//unsigned int j = mMaterial.size() - 1;
+	//unsigned int i = 0;
+	//while (i < j)
+	//{
+	//	if (mMaterial[i].isTransparent())
+	//	{
+	//		std::swap(mMaterial[i], mMaterial[j]);
+	//		// also swap material id in mesh
+	//		for (unsigned int k = 0; k < mQHMeshes.size(); k++)
+	//		{/*
+	//			if (mMeshes[k].GetMaterialId() == i)
+	//				mMeshes[k]SetMaterialId(j);
+	//			if (mMeshes[k]->GetMaterialId() == j)
+	//				mMeshes[k]->SetMaterialId(i);*/
+	//		}
+	//		--j;
+	//	}
+	//	else
+	//	{
+	//		++i;
+	//	}
+	//}
+	//uint64_t time_end = Timer::getMillisecond();
+	//LOGI("SetupMaterialMesh time: %dms \n\n", ((int)(time_end - time_begin)));
 }
 void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTransformation)
 {
@@ -264,11 +248,8 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
-		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		//Mesh *meshIndex = processMesh(mesh, Transformation);
-		//mMeshes.push_back(meshIndex);
-
 		unsigned int meshIndexNode = node->mMeshes[i];
+
 		mQHMeshes[meshIndexNode].AddInstanceMatrix(Transformation);
 	}
 
@@ -278,217 +259,11 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	}
 }
 
-Mesh *Model::processMesh(aiMesh * mesh, glm::mat4 localTransform)
-{
-	bool hasBones = mesh->HasBones();
-	bool hasPos = mesh->HasPositions();
-	bool hasNormals = mesh->HasNormals();
-	bool hasTextureCoords0 = mesh->HasTextureCoords(0);
-	bool hasTangentsAndBitangents = mesh->HasTangentsAndBitangents();
-	bool hasVertexColors0 = mesh->HasVertexColors(0);
-
-	// data to fill
-	unsigned int numvertices_prev_mesh = mNumVertices;
-
-	unsigned int indices_index = mNumIndices;
-
-	unsigned int numvertices = mesh->mNumVertices;
-
-	// Walk through each of the mesh's vertices
-	if (!hasNormals)
-		LOGW("WARNING!!!: Mesh has no normal => disable lighting for this mesh\n");
-
-	for (unsigned int i = 0; i < numvertices; i++)
-	{
-		Vertex vertex;
-		glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
-						  // positions
-		if (hasPos)
-		{
-			const aiVector3D &pPos = mesh->mVertices[i];
-
-			vector.x = pPos.x;
-			vector.y = pPos.y;
-			vector.z = pPos.z;
-			if (hasBones)
-				vertex.Position = vector;
-			else
-				vertex.Position = localTransform * glm::vec4(vector, 1.0f);
-				//vertex.Position = glm::vec4(vector, 1.0f) * localTransform;
-		}
-
-		if (hasNormals)
-		{
-			const aiVector3D &pNor = mesh->mNormals[i];
-			vector.x = pNor.x;
-			vector.y = pNor.y;
-			vector.z = pNor.z;
-			if (hasBones)
-				vertex.Normal = vector;
-			else
-				vertex.Normal = localTransform * glm::vec4(vector, 0.0f);
-				//vertex.Normal = glm::vec4(vector, 0.0f) * localTransform;
-		}
-
-		// texture coordinates
-		if (hasTextureCoords0) // does the mesh contain texture coordinates?
-		{
-			glm::vec2 vec;
-			// a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't 
-			// use models where a vertex can have multiple texture coordinates so we always take the first set (0).
-			vec.x = mesh->mTextureCoords[0][i].x;
-			vec.y = mesh->mTextureCoords[0][i].y;
-			vertex.TexCoords = vec;
-
-		}
-
-		if (hasTangentsAndBitangents)
-		{
-			// tangent
-			vector.x = mesh->mTangents[i].x;
-			vector.y = mesh->mTangents[i].y;
-			vector.z = mesh->mTangents[i].z;
-			vertex.Tangent = vector;
-			// bitangent
-			vector.x = mesh->mBitangents[i].x;
-			vector.y = mesh->mBitangents[i].y;
-			vector.z = mesh->mBitangents[i].z;
-			vertex.Bitangent = vector;
-		}
-
-		if (hasVertexColors0)
-		{
-			const aiColor4D &color = mesh->mColors[0][i];
-			vertex.Color.r = color.r;
-			vertex.Color.g = color.g;
-			vertex.Color.b = color.b;
-			vertex.Color.a = color.a;
-		}
-		else
-		{
-			// Get Color from Materials
-			const QHMaterial &material = mMaterial[mesh->mMaterialIndex];
-			vec3 color = material.mDiffuse;
-
-			vertex.Color.r = material.mDiffuse.x;
-			vertex.Color.g = material.mDiffuse.y;
-			vertex.Color.b = material.mDiffuse.z;
-			vertex.Color.a = material.mTransparent;
-		}
-
-		mVertices[mNumVertices++] = vertex;
-	}
-
-	// process Bones https://realitymultiplied.wordpress.com/2016/07/23/assimp-skeletal-animation-tutorial-2-loading-up-the-bone-data/
-
-	if (hasBones)
-	{
-		for (unsigned int i = 0; i < mesh->mNumBones; i++)
-		{
-			aiBone* aiBone = mesh->mBones[i]; //CREATING A POINTER TO THE CURRENT BONE
-			GLint BoneIndex = i;
-			std::string b_name = aiBone->mName.data;
-
-			if (m_BoneMapping.find(b_name) == m_BoneMapping.end())
-			{
-				BoneIndex = m_NumBones;
-				m_NumBones++;
-				BoneInfo bi;
-				glm::mat4 b_mat = QHMath::AiToGLMMat4(aiBone->mOffsetMatrix);
-				bi.BoneOffset = b_mat;
-				m_BoneInfo.push_back(bi);
-				m_BoneMapping[b_name] = BoneIndex;
-			}
-			else
-				BoneIndex = m_BoneMapping[b_name];
-			for (unsigned int j = 0; j < aiBone->mNumWeights; j++)
-			{
-				aiVertexWeight weight = aiBone->mWeights[j];
-				if (QHMath::compareFloat(mVertices[weight.mVertexId + numvertices_prev_mesh].weight.x, 0.0f))
-				{
-					mVertices[weight.mVertexId + numvertices_prev_mesh].id.x = (float)BoneIndex;
-					mVertices[weight.mVertexId + numvertices_prev_mesh].weight.x = weight.mWeight;
-					continue;
-				}
-				if (QHMath::compareFloat(mVertices[weight.mVertexId + numvertices_prev_mesh].weight.y, 0.0f))
-				{
-					mVertices[weight.mVertexId + numvertices_prev_mesh].id.y = (float)BoneIndex;
-					mVertices[weight.mVertexId + numvertices_prev_mesh].weight.y = weight.mWeight;
-					continue;
-				}
-				if (QHMath::compareFloat(mVertices[weight.mVertexId + numvertices_prev_mesh].weight.z, 0.0f))
-				{
-					mVertices[weight.mVertexId + numvertices_prev_mesh].id.z = (float)BoneIndex;
-					mVertices[weight.mVertexId + numvertices_prev_mesh].weight.z = weight.mWeight;
-					continue;
-				}
-				if (QHMath::compareFloat(mVertices[weight.mVertexId + numvertices_prev_mesh].weight.w, 0.0f))
-				{
-					mVertices[weight.mVertexId + numvertices_prev_mesh].id.w = (float)BoneIndex;
-					mVertices[weight.mVertexId + numvertices_prev_mesh].weight.w = weight.mWeight;
-					continue;
-				}
-				LOGW("Vertex at %u have more than 4 weight\n", weight.mVertexId + numvertices_prev_mesh);
-			}
-		}
-	}
-
-	Vertex *vertexCurrentMesh = NULL;
-	GLuint numvertex_CurrentMesh = 0;
-	try {
-		vertexCurrentMesh = new Vertex[numvertices];
-
-		//clone vertex => import to each mesh
-		std::memcpy(vertexCurrentMesh, &mVertices[numvertices_prev_mesh], sizeof(Vertex) * numvertices);
-
-		numvertex_CurrentMesh = numvertices;
-	}
-	catch (const std::bad_alloc&) {
-		LOGE("Bad allocation to store vertex: %ubyte\n", numvertices * sizeof(Vertex));
-	}
-	// process Indices
-	GLuint numIndices = 0; // for this mesh
-	GLuint *indices_CurrentMesh = NULL;
-	GLuint numindices_CurrentMesh = 0;
-	GLuint currentindex = 0;
-
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-	{
-		numIndices += mesh->mFaces[i].mNumIndices;
-	}
-
-	try {
-		indices_CurrentMesh = new GLuint[numIndices];
-		numindices_CurrentMesh = numIndices;
-	}
-	catch (const std::bad_alloc&)
-	{
-		LOGE("Bad allocation to store indices: %ubyte\n", numIndices * sizeof(GLuint));
-	}
-
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-	{
-		aiFace face = mesh->mFaces[i];
-		for (unsigned int j = 0; j < face.mNumIndices; j++)
-		{
-			mIndices[mNumIndices++] = face.mIndices[j] + numvertices_prev_mesh;
-			if (indices_CurrentMesh)
-				indices_CurrentMesh[currentindex++] = face.mIndices[j];
-		}
-	}
-
-	Mesh *mesh_current = new Mesh(indices_index, numIndices, mesh->mMaterialIndex, string(mesh->mName.C_Str()), hasNormals, hasBones);
-
-	mesh_current->SetVertex(vertexCurrentMesh, numvertex_CurrentMesh);
-	mesh_current->SetIndices(indices_CurrentMesh, numindices_CurrentMesh);
-	mesh_current->SetLocalTransformation(localTransform);
-
-	return mesh_current;
-}
-
 void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 translate, bool isRotate, float angle, glm::vec3 axis)
 {
-	if (!m_initialized || !mCamera || !mIsVisible || mVBO == 0 || mEBO == 0) return;
+	if (!m_initialized || !mCamera || !mIsVisible) 
+		return;
+
 	if (RT_Type == RenderTargetType_DEPTH && mIsDrawDepthMap == false) return;
 
 	glm::mat4 WorldViewLightSpaceMatrix;
@@ -509,9 +284,6 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 
 		WorldViewLightSpaceMatrix = mCamera->lightSpaceMatrix * tmp_model;
 		ShaderSet::setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
-
-		glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 
 		break;
 	case RenderTargetType_COLOR:
@@ -549,15 +321,15 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 
 		if (m_meshdraw > -1) // Draw custom mesh
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+			//glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 		}
 		else
 		{
 			if (mRenderMode == RenderMode::RenderMode_Mesh)
 			{
-				glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+				//glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+				//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 			}
 			else if (mRenderMode == RenderMode::RenderMode_Material)
 			{
@@ -630,10 +402,10 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 
 		if (m_meshdraw > -1)
 		{
-			if (m_meshdraw < (int)mMeshes.size())
+			/*if (m_meshdraw < (int)mMeshes.size())
 			{
 				mMeshes[m_meshdraw]->Draw(RT_Type, mIsDrawWireFrame, useCustomColor, customColor);
-			}
+			}*/
 		}
 		else
 			QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, (void*)0);
@@ -642,23 +414,23 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 	case RenderTargetType_COLOR:
 		if (m_meshdraw > -1) // Draw custom mesh
 		{
-			if (m_meshdraw < (int)mMeshes.size())
+			/*if (m_meshdraw < (int)mMeshes.size())
 			{
 				ShaderSet::setBool("uselighting", uselighting);
 				mMaterial[mMeshes[m_meshdraw]->GetMaterialId()].Apply(RT_Type, mIsEnableAlpha);
 				mMeshes[m_meshdraw]->Draw(RT_Type, mIsDrawWireFrame ,useCustomColor, customColor);
-			}
+			}*/
 		}
 		else
 		{
 			if (mRenderMode == RenderMode::RenderMode_Mesh)
 			{
-				for (unsigned int i = 0; i < mMeshes.size(); i++)
+				/*for (unsigned int i = 0; i < mMeshes.size(); i++)
 				{
 					ShaderSet::setBool("uselighting", uselighting);
 					mMaterial[mMeshes[i]->GetMaterialId()].Apply(RT_Type, mIsEnableAlpha);
 					mMeshes[i]->Draw(RT_Type, mIsDrawWireFrame,useCustomColor, customColor);
-				}
+				}*/
 			}
 			else if (mRenderMode == RenderMode::RenderMode_Material)
 			{
@@ -676,7 +448,7 @@ void Model::Render(RenderTargetType RT_Type, bool isTranslate, glm::vec3 transla
 					ShaderSet::setBool("uselighting", uselighting);
 					unsigned int materialID = mesh.GetMaterialIndex();
 					mMaterial[materialID].Apply(RT_Type, mIsEnableAlpha);
-					mesh.Render();
+					mesh.Render(mIsDrawWireFrame);
 				}
 			}
 		}
@@ -702,8 +474,8 @@ void Model::SetisUsePointLight(bool UsePointLight)
 }
 void Model::DisableLightingForMesh(int numMesh)
 {
-	if (numMesh >= 0 && numMesh < (int)mMeshes.size())
-		mMeshes[numMesh]->SetUseLighting(false);
+	//if (numMesh >= 0 && numMesh < (int)mQHMeshes.size())
+	//	mQHMeshes[numMesh].SetUseLighting(false);
 }
 void Model::SetCustomColor(glm::vec3 color)
 {
@@ -893,7 +665,7 @@ void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 	if (mNumVertices <= 0) return;
 
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, mVertices, mNumVertices, mPos, mRotate, mAngle, mScale, isOptimize);
+	//mRigidBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, mVertices, mNumVertices, mPos, mRotate, mAngle, mScale, isOptimize);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
@@ -903,7 +675,7 @@ void Model::CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize)
 	if (mNumVertices <= 0) return;
 
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->createConvexTriangleMeshShape(mass, mVertices, mNumVertices, mIndices, mNumIndices, mPos, mRotate, mAngle, mScale);
+	//mRigidBody = PhysicsSimulation::getInstance()->createConvexTriangleMeshShape(mass, mVertices, mNumVertices, mIndices, mNumIndices, mPos, mRotate, mAngle, mScale);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
@@ -913,7 +685,7 @@ void Model::CreateTriangleMeshShape(float mass)
 	if (mNumVertices <= 0) return;
 
 	isDynamic = (mass != 0.f);
-	mRigidBody = PhysicsSimulation::getInstance()->createTriangleMeshShape(mass, mVertices, mNumVertices, mIndices, mNumIndices, mPos, mRotate, mAngle, mScale);
+	//mRigidBody = PhysicsSimulation::getInstance()->createTriangleMeshShape(mass, mVertices, mNumVertices, mIndices, mNumIndices, mPos, mRotate, mAngle, mScale);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
@@ -1195,8 +967,6 @@ Model::Model()
 	, mFixedBoxShape(glm::vec3(0.))
 	, isFirstSetupUniform(false)
 	, mRigidBody(nullptr)
-	, mVertices(nullptr)
-	, mIndices(nullptr)
 	, mVertices_marterial(nullptr)
 	, mIndices_marterial(nullptr)
 	, mNumVertices(0)
@@ -1210,21 +980,11 @@ Model::~Model()
 {
 	ModelManager::getInstance()->RemoveModel(m_Id);
 
-	for (unsigned int i = 0; i < mMeshes.size(); i++)
-	{
-		delete mMeshes[i];
-	}
-
 	for (unsigned int i = 0; i < textures_loaded.size(); i++)
 		glDeleteTextures(1, &textures_loaded[i].id);
 
-	glDeleteBuffers(1, &mVBO);
-	glDeleteBuffers(1, &mEBO);
-	if (mVertices != nullptr)
-		delete[] mVertices;
-
-	if (mIndices != nullptr)
-		delete[] mIndices;
+	glDeleteBuffers(1, &mVBO_material);
+	glDeleteBuffers(1, &mEBO_material);
 
 	if (mVertices_marterial != nullptr)
 		delete[] mVertices_marterial;

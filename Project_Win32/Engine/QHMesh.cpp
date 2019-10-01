@@ -81,8 +81,11 @@ void QHMesh::AddInstanceMatrix(const glm::mat4& matrix)
 	mInstanceMatrixList.push_back(matrix);
 }
 
-void QHMesh::Render()
+void QHMesh::Render(bool isDrawWireFrame)
 {
+	if (mNumIndices == 0 || mNumIndices == 0)
+		return;
+
 	if (!isCreateinstancingBuffer)
 	{
 		GenBuffers();
@@ -93,11 +96,21 @@ void QHMesh::Render()
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 
-	ShaderSet::setMat4("localTranform", mInstanceMatrixList[mInstanceMatrixList.size() - 1]);
+	if (isDrawWireFrame)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	//QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, 0);
-	QHEngine::DrawElementsInstanced(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, 0, mInstanceMatrixList.size());
-	
+	if (mInstanceMatrixList.size() > 1)
+	{
+		QHEngine::DrawElementsInstanced(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, 0, mInstanceMatrixList.size());
+	}
+	else
+	{
+		QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, 0);
+	}
+
+	if (isDrawWireFrame)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
 	glBindVertexArray(0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

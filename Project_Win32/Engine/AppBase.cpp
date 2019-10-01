@@ -42,7 +42,8 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	mCamera = Camera::getInstance();
 	mCamera->UpdateProjection(width, height);
 	FrameRate::getInstance(); //Init
-
+	
+	//Utils::PrintGLEXTENSIONS();
 	//FrameRate::getInstance()->setLimitFPS(30);
 
 	int windowsWidth = 960, windowsHeight = 540;
