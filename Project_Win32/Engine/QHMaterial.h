@@ -24,7 +24,7 @@ public:
 	GLuint mIndices_size;
 	std::vector<Texture> mTextures;
 	void Apply(RenderTargetType RT_Type,bool isDrawWireFrame = false, bool isEnableAlpha = false);
-	void Draw(bool isDrawWireFrame);
+	void Render();
 	bool isTransparent();
 	QHMaterial(aiMaterial* aimaterial, std::string &currentDirectory);
 	~QHMaterial();

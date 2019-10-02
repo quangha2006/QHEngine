@@ -34,7 +34,9 @@ public:
 	void GenBuffers();
 	void AddInstanceMatrix(const glm::mat4 &matrix);
 	unsigned int GetMaterialIndex() { return mMaterialIndex; }
-	void Render(bool isDrawWireFrame = false);
+	Vertex * GetVerticesData(unsigned int &numVertex);
+	unsigned int * GetIndicesData(unsigned int &numIndex);
+	void Render();
 	QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
 	~QHMesh();
 };

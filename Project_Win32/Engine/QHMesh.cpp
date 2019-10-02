@@ -78,10 +78,25 @@ void QHMesh::GenBuffers()
 
 void QHMesh::AddInstanceMatrix(const glm::mat4& matrix)
 {
-	mInstanceMatrixList.push_back(matrix);
+	if (!mHasBones)
+		mInstanceMatrixList.push_back(matrix);
+	else
+		mInstanceMatrixList.push_back(glm::mat4());
 }
 
-void QHMesh::Render(bool isDrawWireFrame)
+Vertex * QHMesh::GetVerticesData(unsigned int & numVertex)
+{
+	numVertex = mNumVertices;
+	return mVerticesData;
+}
+
+unsigned int * QHMesh::GetIndicesData(unsigned int & numIndex)
+{
+	numIndex = mNumIndices;
+	return mIndicesData;
+}
+
+void QHMesh::Render()
 {
 	if (mNumIndices == 0 || mNumIndices == 0)
 		return;
@@ -96,9 +111,6 @@ void QHMesh::Render(bool isDrawWireFrame)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 
-	if (isDrawWireFrame)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 	if (mInstanceMatrixList.size() > 1)
 	{
 		QHEngine::DrawElementsInstanced(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, 0, mInstanceMatrixList.size());
@@ -107,9 +119,6 @@ void QHMesh::Render(bool isDrawWireFrame)
 	{
 		QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, 0);
 	}
-
-	if (isDrawWireFrame)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glBindVertexArray(0);
 

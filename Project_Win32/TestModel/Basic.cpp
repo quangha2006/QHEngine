@@ -16,19 +16,19 @@ const int Screen_height = 720;
 
 void Basic::Init()
 {
-	mCamera->SetPos(50.0f, 10.0f, 10.0f);
-	mCamera->SetTarget(0.0f, 10.0f, 0.0f);
+	mCamera->SetPos(0.0f, 5.0f, 20.0f);
+	mCamera->SetTarget(0.0f, 1.0f, 0.0f);
 	mCamera->SetLightPos(200.2f, 500.0f, 1.0f);
 
 	mSkyBox.Init("SkyBox");
 
 	//m_Streetenvironment.Init("bHieu/1_2_Tree.dae", true, true);
-	m_Streetenvironment.Init("GameDemo/PCcrasher.fbx", true, true);
-	//m_Streetenvironment.Init("MercedesBenzSLSAMG/sls_amg.obj", true, true);
+	//m_Streetenvironment.Init("GameDemo/PCcrasher.fbx", true, true);
+	m_Streetenvironment.Init("MercedesBenzSLSAMG/sls_amg.obj", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, 0.5f, 0.0f));
 	//m_Streetenvironment.SetScale(glm::vec3(100.0f,50.0f,100.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
+	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Material);
 	m_Streetenvironment.SetDrawWireFrame(true);
 	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Mesh);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
@@ -37,12 +37,12 @@ void Basic::Init()
 
 	//ModelTest.Init("bountyhunter/bountyhunter/export_from_max/bountyhunter_run_01.FBX", true);
 	//ModelTest.Init("bountyhunter/bountyhunter/export_from_max/test.FBX", true);
-	//ModelTest.Init("CubeModel/Box.obj", true);
-	ModelTest.SetPos(glm::vec3(0.f, 10.0f, 0.0f));
+	//ModelTest.Init("astroBoy/astroBoy_walk_Maya.dae", true);
+	ModelTest.SetPos(glm::vec3(0.f, 0.0f, 0.0f));
 	ModelTest.SetScale(glm::vec3(10.02f));
 	//ModelTest.SetDrawMesh(3);
 	ModelTest.SetRenderMode(RenderMode::RenderMode_Instancing);
-	ModelTest.SetDrawWireFrame(false);
+	ModelTest.SetDrawWireFrame(true);
 	ModelTest.SetIsDrawDepthMap(false);
 	//ModelTest.CreateBoxShapePhysicsBody(1.0, glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(0.0f, -3.0f, 0.0f));
 
@@ -151,7 +151,7 @@ void Basic::ClickbuttonBloomAmountLeft()
 		bloomamount -= 2;
 	RenderManager::getInstance()->SetAmountBloom(bloomamount);
 	mBloomAmountLabel.setText("Bloom Amount:       %d", RenderManager::getInstance()->GetAmountBloom());
-	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, 540 - mbtSwitchBloom->GetHeight() - 8);
+	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, Screen_height - mbtSwitchBloom->GetHeight() - 8);
 }
 
 void Basic::ClickbuttonBloomAmountRight()
@@ -160,7 +160,7 @@ void Basic::ClickbuttonBloomAmountRight()
 	bloomamount += 2;
 	RenderManager::getInstance()->SetAmountBloom(bloomamount);
 	mBloomAmountLabel.setText("Bloom Amount:       %d", RenderManager::getInstance()->GetAmountBloom());
-	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, 540 - mbtSwitchBloom->GetHeight() - 8);
+	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, Screen_height - mbtSwitchBloom->GetHeight() - 8);
 }
 
 void Basic::ClickbuttonShadow()

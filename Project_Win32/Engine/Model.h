@@ -32,8 +32,8 @@ using namespace std;
 enum RenderMode
 {
 	RenderMode_Material,
-	RenderMode_Mesh,
-	RenderMode_Instancing
+	RenderMode_Instancing,
+	RenderMode_Auto
 };
 
 class Model
@@ -54,13 +54,12 @@ private:
 	GLuint* mIndices_marterial;
 	bool mIsDrawWireFrame;
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
-//	Mesh *processMesh(aiMesh *mesh, glm::mat4 localTransform);
 
 	void Pre_processNode(aiNode *node, const aiScene *scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh);
 
 	void processMaterial(const aiScene* scene);
 	void processMesh(const aiScene* scene, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
-	void SetupMaterialMesh();
+	void BatchingVertexData();
 
 	/*==== Animation ====*/
 	Assimp::Importer mImporter;
@@ -118,7 +117,7 @@ private:
 	void SetWorld(glm::mat4 world = glm::mat4());
 public:
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
-	void Render(RenderTargetType RT_Type, bool isTranslate = false, glm::vec3 translate = glm::vec3(), bool isRotate = false, float angle = 0.0f,glm::vec3 axis = glm::vec3(0.0f) );
+	void Render(RenderTargetType RT_Type);
 	void SetRenderMode(RenderMode render_mode);
 	void SetUseLighting(bool UseLighting);
 	void SetisUsePointLight(bool UsePointLight);

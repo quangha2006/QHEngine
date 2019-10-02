@@ -118,16 +118,11 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isDrawWireFrame, bool isEn
 	}
 }
 
-void QHMaterial::Draw(bool isDrawWireFrame)
+void QHMaterial::Render()
 {
 	if (mIndices_size <= 0) return;
-	if (isDrawWireFrame)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	QHEngine::DrawElements(GL_TRIANGLES, mIndices_size, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mIndices_index));
-
-	if (isDrawWireFrame)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 bool QHMaterial::isTransparent()
