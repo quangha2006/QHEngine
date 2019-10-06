@@ -32,7 +32,7 @@ private:
 
 	std::vector<QHText*> mListQHText;
 
-	GLint mPositionAttribute, mColorAttribute, mAlphaAttribute, mProjectionUniform, mTextureUniform;
+	GLint mProjectionUniform, mTextureUniform;
 
 	glm::mat4 projection;
 	GLuint m_TextureID;
@@ -48,7 +48,7 @@ public:
 	void UpdateScreenSize(int w, int h);
 	int AddQHText(QHText *textneedrender);
 	void RemoveQHText(int id);
-	bool Init(const char * font_path, int width, int height, unsigned int maxchar = 100);
+	bool Init(const char * font_path, int width, int height, unsigned int maxchar = 200);
 	glm::ivec2 CreateTextData(const char * text, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &m_TextData);
 	void Draw();
 	~TextRendering();

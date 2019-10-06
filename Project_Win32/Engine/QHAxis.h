@@ -10,7 +10,7 @@
 class QHAxis
 {
 private:
-	GLuint mVBO_Id;
+	GLuint mVBO, mVAO;
 	float *vertices_axis;
 	Camera *mCamera;
 	glm::mat4 model;

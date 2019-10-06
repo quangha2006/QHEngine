@@ -8,7 +8,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
+///////////////////
+//- highp for vertex positions,
+//- mediump for texture coordinates,
+//- lowp for colors.
+//////////////////
 class Shader
 {
 private:

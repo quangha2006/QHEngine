@@ -44,10 +44,10 @@ void main()
 		NormalL = BoneTransform * vec4(aNormal, 0.0f);
 	#endif
 
-    //gl_Position = WorldViewProjectionMatrix * aInstanceMatrix * PosL;
-	//NormalL = aInstanceMatrix * NormalL;
+    gl_Position = WorldViewProjectionMatrix * aInstanceMatrix * PosL;
+	NormalL = aInstanceMatrix * NormalL;
 
-	gl_Position = WorldViewProjectionMatrix * PosL;
+	//gl_Position = WorldViewProjectionMatrix * PosL;
 
 	FragPos = vec3(world * PosL);
 	Normal = (world_inverse * NormalL).xyz; 

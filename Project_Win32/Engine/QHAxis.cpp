@@ -31,8 +31,8 @@ bool QHAxis::Init(Camera *camera)
 	{
 		mWorldView_uniform = glGetUniformLocation(mShader.program, "WorldViewProjectionMatrix");
 
-		glGenBuffers(1, &mVBO_Id);
-		glBindBuffer(GL_ARRAY_BUFFER, mVBO_Id);
+		glGenBuffers(1, &mVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 		glBufferData(GL_ARRAY_BUFFER, 15 * 6 * sizeof(float), vertices_axis, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		mCamera = camera;
@@ -53,7 +53,7 @@ void QHAxis::Draw()
 	GLint position_attribute = mShader.getPosAttribute();
 	GLint color_attribute = mShader.getColorAttribute();
 
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO_Id);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 
 	if (position_attribute != -1)
 	{
@@ -91,7 +91,8 @@ QHAxis::QHAxis()
 	: m_initialized(false)
 	, model(glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)))
 	, mWorldView_uniform(-1)
-	, mVBO_Id(0)
+	, mVBO(0)
+	, mVAO(0)
 	, mCamera(nullptr)
 {
 	vertices_axis = new float[15 * 6]{
@@ -118,5 +119,5 @@ QHAxis::QHAxis()
 QHAxis::~QHAxis()
 {
 	delete[] vertices_axis;
-	glDeleteBuffers(1, &mVBO_Id);
+	glDeleteBuffers(1, &mVBO);
 }

@@ -15,6 +15,9 @@ private:
 	GLint lines_colour = 0;
 	int m_debugMode;
 	std::vector<float> mVertexData;
+	float* mfVertexData;
+	unsigned int mCurrentSize;
+	unsigned int mSizeAllocated;
 	GLuint mCurrentSizeBuffer;
 public:
 

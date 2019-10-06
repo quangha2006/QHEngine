@@ -52,9 +52,9 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 		"layout (location = 1) in vec3 textColor;\n"
 		"layout (location = 2) in float alpha;\n"
 		"\n"
-		"out vec2 thetexCoord;\n"
-		"out vec3 thetextColor;\n"
-		"out float thealpha;\n"
+		"out mediump vec2 thetexCoord;\n"
+		"out lowp vec3 thetextColor;\n"
+		"out lowp float thealpha;\n"
 		"\n"
 		"uniform mat4 projection;\n"
 		"void main()\n"
@@ -67,12 +67,11 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	};
 
 	char fragSrc[] = {
-		"precision highp float;\n"
 		"layout (location = 0) out vec4 FragColor;\n"
 		"\n"
-		"in vec2 thetexCoord;\n"
-		"in vec3 thetextColor;\n"
-		"in float thealpha;\n"
+		"in mediump vec2 thetexCoord;\n"
+		"in lowp vec3 thetextColor;\n"
+		"in lowp float thealpha;\n"
 		"\n"
 		"uniform sampler2D texture;\n"
 		"\n"
@@ -85,12 +84,11 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 
 	if (mShader.LoadShader(vtxSrc, fragSrc, true))
 	{
-		mPositionAttribute = glGetAttribLocation(mShader.program, "aPos");
-		mColorAttribute = glGetAttribLocation(mShader.program, "textColor");
-		mAlphaAttribute = glGetAttribLocation(mShader.program, "alpha");
 		mProjectionUniform = glGetUniformLocation(mShader.program, "projection");
 		mTextureUniform = glGetUniformLocation(mShader.program, "texture");
 	}
+	else
+		return false;
 
 	UpdateScreenSize(width, height);
 
@@ -290,7 +288,7 @@ void TextRendering::Draw()
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_TextureID);
-	//glUniform1i(mTextureUniform, 0);
+	glUniform1i(mTextureUniform, 0);
 	// Update content of VBO memory
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 	
@@ -318,7 +316,7 @@ void TextRendering::Draw()
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_BLEND);
-	CheckGLError("Draw Text ");
+	CheckGLError("Render Text ");
 }
 
 TextRendering::TextRendering()
@@ -326,15 +324,17 @@ TextRendering::TextRendering()
 	, screen_height(540)
 	, m_initialized(false)
 	, currentLastId(0)
-	, mPositionAttribute(-1)
-	, mColorAttribute(-1)
-	, mAlphaAttribute(-1)
 	, mProjectionUniform(-1)
 	, mTextureUniform(-1)
+	, mVAO(0)
+	, mVBO(0)
+	, m_Maxchar(200)
+	, m_TextureID(0)
 {
 }
 
 TextRendering::~TextRendering()
 {
+	glDeleteVertexArrays(1, &mVAO);
 	glDeleteBuffers(1, &mVBO);
 }

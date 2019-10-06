@@ -89,8 +89,8 @@ void Model::Loading() //thread
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
 
-	if (mRenderMode == RenderMode_Material)
-		BatchingVertexData();
+	//if (mRenderMode == RenderMode_Material)
+	BatchingVertexData();
 
 	aiMemoryInfo meminfo;
 	mImporter.GetMemoryRequirements(meminfo);
@@ -159,10 +159,21 @@ void Model::BatchingVertexData()
 {
 	uint64_t time_begin = Timer::getMillisecond();
 
-	mVertices_marterial = new Vertex[mNumVertices];
-	mIndices_marterial = new GLuint[mNumIndices];
-
+	try
+	{
+		mVertices_marterial = new Vertex[mNumVertices];
+		mIndices_marterial = new GLuint[mNumIndices];
+	}
+	catch (const std::bad_alloc&)
+	{
+		LOGE("Bad allocation : %ubyte\n", mNumVertices * sizeof(Vertex));
+		mNumVertices = 0;
+		mNumIndices = 0;
+		return;
+	}
+	
 	GLuint* indices_ptr = mIndices_marterial;
+	Vertex* vertex_ptr = mVertices_marterial;
 	GLuint last_vertex_index = 0;
 	GLuint last_indices_index = 0;
 
@@ -174,23 +185,39 @@ void Model::BatchingVertexData()
 		{
 			if (currentMesh.GetMaterialIndex() == i)
 			{
-				unsigned int numVertex = 0;
-				unsigned int numIndex = 0;
-				Vertex *		Vertex_ptr = currentMesh.GetVerticesData(numVertex);
-				unsigned int *	Indices_ptr = currentMesh.GetIndicesData(numIndex);
+				std::vector<glm::mat4> instanceMatrix = currentMesh.GetInstanceMatrix();
 
-				if (numVertex == 0 || numIndex == 0 || !Vertex_ptr || !Indices_ptr)
-					continue;
+				for (glm::mat4& localTransform : instanceMatrix)
+				{
+					unsigned int numVertex = 0;
+					unsigned int numIndex = 0;
+					Vertex* Vertex_ptr = currentMesh.GetVerticesData(numVertex);
+					unsigned int* Indices_ptr = currentMesh.GetIndicesData(numIndex);
 
-				std::memcpy(&mVertices_marterial[last_vertex_index], Vertex_ptr, sizeof(Vertex) * numVertex);
+					if (numVertex == 0 || numIndex == 0 || !Vertex_ptr || !Indices_ptr)
+						continue;
 
-				last_indices_index += numIndex;
+					unsigned int vertexCount = numVertex;
+					do {
+						Vertex tmp = *Vertex_ptr++;
+						if (!currentMesh.HasBones())
+						{
+							glm::vec3 pos = localTransform * glm::vec4(tmp.Position, 1.0f);
+							glm::vec3 normal = localTransform * glm::vec4(tmp.Normal, 0.0f);
+							tmp.Position = pos;
+							tmp.Normal = normal;
+						}
+						*vertex_ptr++ = tmp;
+					} while (--vertexCount > 0);
 
-				do {
-					*indices_ptr++ = *Indices_ptr++ + last_vertex_index;
-				} while (--numIndex > 0);
+					last_indices_index += numIndex;
 
-				last_vertex_index += numVertex;
+					do {
+						*indices_ptr++ = *Indices_ptr++ + last_vertex_index;
+					} while (--numIndex > 0);
+
+					last_vertex_index += numVertex;
+				}
 			}
 		}
 		mMaterial[i].mIndices_size = last_indices_index - mMaterial[i].mIndices_index;
@@ -629,7 +656,7 @@ void Model::CreateTriangleMeshShape(float mass)
 	if (mNumVertices <= 0) return;
 
 	isDynamic = (mass != 0.f);
-	//mRigidBody = PhysicsSimulation::getInstance()->createTriangleMeshShape(mass, mVertices, mNumVertices, mIndices, mNumIndices, mPos, mRotate, mAngle, mScale);
+	mRigidBody = PhysicsSimulation::getInstance()->createTriangleMeshShape(mass, mVertices_marterial, mNumVertices, mIndices_marterial, mNumIndices, mPos, mRotate, mAngle, mScale);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }

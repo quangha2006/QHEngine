@@ -22,12 +22,12 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("GameDemo/PCcrasher.dae", true, true);
+	m_Streetenvironment.Init("GameDemo/terrain.dae", true, true);
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
 	m_Streetenvironment.SetScale(glm::vec3(100.0f,100.0f,100.0f));
-	m_Streetenvironment.SetIsDrawDepthMap(true);
+	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.SetDrawWireFrame(false);
-	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Mesh);
+	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
