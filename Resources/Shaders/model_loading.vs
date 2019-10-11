@@ -28,7 +28,7 @@ void main()
 	highp vec4 PosL = vec4(aPos, 1.0f);
 	vec4 NormalL = vec4(aNormal, 0.0f);
 
-	#ifdef SKINNED
+#ifdef SKINNED
 		int index = int(sIDs.x);
 
 		mat4 BoneTransform	= gBones[index] * sWeights[0];
@@ -42,13 +42,13 @@ void main()
 		PosL    = BoneTransform * vec4(aPos, 1.0f);
 
 		NormalL = BoneTransform * vec4(aNormal, 0.0f);
-	#endif
-
-    gl_Position = WorldViewProjectionMatrix * aInstanceMatrix * PosL;
-	NormalL = aInstanceMatrix * NormalL;
-
-	//gl_Position = WorldViewProjectionMatrix * PosL;
-
+#endif
+#ifdef INSTANCING
+		gl_Position = WorldViewProjectionMatrix * aInstanceMatrix * PosL;
+		NormalL = aInstanceMatrix * NormalL;
+#else
+		gl_Position = WorldViewProjectionMatrix * PosL;
+#endif
 	FragPos = vec3(world * PosL);
 	Normal = (world_inverse * NormalL).xyz; 
     TexCoords = aTexCoords; 

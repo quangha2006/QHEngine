@@ -48,7 +48,7 @@ void QHMesh::GenBuffers()
 	glEnableVertexAttribArray(7);
 	glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
 
 	glBindBuffer(GL_ARRAY_BUFFER, mInstancingBuff);
 	glBufferData(GL_ARRAY_BUFFER, mInstanceMatrixList.size() * sizeof(glm::mat4), &mInstanceMatrixList[0], GL_STATIC_DRAW);
@@ -68,7 +68,7 @@ void QHMesh::GenBuffers()
 	glVertexAttribDivisor(11, 1);
 
 	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -78,10 +78,10 @@ void QHMesh::GenBuffers()
 
 void QHMesh::AddInstanceMatrix(const glm::mat4& matrix)
 {
-	if (!mHasBones)
+	//if (!mHasBones)
 		mInstanceMatrixList.push_back(matrix);
-	else
-		mInstanceMatrixList.push_back(glm::mat4());
+	//else
+		//mInstanceMatrixList.push_back(glm::mat4());
 }
 
 Vertex * QHMesh::GetVerticesData(unsigned int & numVertex)

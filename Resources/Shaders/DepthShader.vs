@@ -30,8 +30,10 @@ void main()
 		PosL   = BoneTransform * vec4(aPos, 1.0f);
 
 	#endif
-	
+#ifdef INSTANCING	
     gl_Position =  WorldViewLightSpaceMatrix * aInstanceMatrix * PosL;
-
+#else
+	gl_Position =  WorldViewLightSpaceMatrix * PosL;
+#endif
 	TexCoords = aTexCoords;
 }

@@ -89,7 +89,6 @@ void Model::Loading() //thread
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
 
-	//if (mRenderMode == RenderMode_Material)
 	BatchingVertexData();
 
 	aiMemoryInfo meminfo;
@@ -180,13 +179,14 @@ void Model::BatchingVertexData()
 	for (unsigned int i = 0; i < mMaterial.size(); i++)
 	{
 		mMaterial[i].mIndices_index = last_indices_index;
-
+		LOGI("Mesh: %d\n",i);
 		for (QHMesh &currentMesh : mQHMeshes)
 		{
 			if (currentMesh.GetMaterialIndex() == i)
 			{
+				
 				std::vector<glm::mat4> instanceMatrix = currentMesh.GetInstanceMatrix();
-
+				LOGI("	Add mesh instanceMatrix size: %d\n", instanceMatrix.size());
 				for (glm::mat4& localTransform : instanceMatrix)
 				{
 					unsigned int numVertex = 0;
@@ -248,24 +248,21 @@ void Model::BatchingVertexData()
 	//	}
 	//}
 
-		// create buffers/arrays
-	glGenBuffers(1, &mVBO_material);
-	glGenBuffers(1, &mEBO_material);
-
-	if (mNumVertices > 0)
+	// create buffers/arrays
+	if (mNumVertices > 0 && mNumIndices > 0)
 	{
+		glGenBuffers(1, &mVBO_material);
+		glGenBuffers(1, &mEBO_material);
+
 		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
 		glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices_marterial, GL_STATIC_DRAW);
-	}
 
-	if (mNumIndices > 0)
-	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices_marterial, GL_STATIC_DRAW);
-	}
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 
 	uint64_t time_end = Timer::getMillisecond();
 	LOGI("SetupMaterialMesh time: %dms \n\n", ((int)(time_end - time_begin)));
@@ -474,7 +471,7 @@ void Model::SyncPhysics()
 {
 	if (m_initialized && isDynamic && mRigidBody != nullptr)
 	{
-		btTransform trans = mRigidBody->getWorldTransform();;
+		btTransform trans = mRigidBody->getWorldTransform();
 
 		btScalar matrix[16];
 		trans.getOpenGLMatrix(matrix);

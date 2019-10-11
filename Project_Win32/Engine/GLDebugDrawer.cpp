@@ -49,6 +49,7 @@ GLDebugDrawer::GLDebugDrawer()
 	glBindVertexArray(mVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mSizeAllocated * 6, NULL, GL_DYNAMIC_DRAW);
+	// using std::vector
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mCurrentSizeBuffer, NULL, GL_DYNAMIC_DRAW);
 	
 	glEnableVertexAttribArray(0);
@@ -64,13 +65,14 @@ GLDebugDrawer::GLDebugDrawer()
 
 void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color)
 {
-	if (m_debugMode > 0)
-	{
-		std::vector<float> tmpdata{ from.getX(),	from.getY(),	from.getZ(),	color.getX(),	color.getY(),	color.getZ(),
-				to.getX(),		to.getY(),		to.getZ() ,		color.getX(),	color.getY(),	color.getZ() };
+	// using std::vector
+	//if (m_debugMode > 0)
+	//{
+	//	std::vector<float> tmpdata{ from.getX(),	from.getY(),	from.getZ(),	color.getX(),	color.getY(),	color.getZ(),
+	//			to.getX(),		to.getY(),		to.getZ() ,		color.getX(),	color.getY(),	color.getZ() };
 
-		mVertexData.insert(mVertexData.end(), tmpdata.begin(), tmpdata.end());
-	}
+	//	mVertexData.insert(mVertexData.end(), tmpdata.begin(), tmpdata.end());
+	//}
 	// using array
 	if (m_debugMode > 0)
 	{
@@ -88,7 +90,6 @@ void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const
 				return;
 			}
 		}
-		++mCurrentSize;
 		mfVertexData[mCurrentSize * 6] = from.getX();
 		mfVertexData[mCurrentSize * 6 + 1] = from.getY();
 		mfVertexData[mCurrentSize * 6 + 2] = from.getZ();
@@ -102,18 +103,20 @@ void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const
 		mfVertexData[mCurrentSize * 6 + 3] = color.getX();
 		mfVertexData[mCurrentSize * 6 + 4] = color.getY();
 		mfVertexData[mCurrentSize * 6 + 5] = color.getZ();
+		++mCurrentSize;
 	}
 }
 
 void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & fromColor, const btVector3 & toColor)
 {
-	if (m_debugMode > 0)
-	{
-		std::vector<float> tmpdata{ from.getX(),	from.getY(),	from.getZ(),	fromColor.getX(),	fromColor.getY(),	fromColor.getZ(),
-				to.getX(),		to.getY(),		to.getZ() ,		toColor.getX(),	toColor.getY(),	toColor.getZ() };
+	// using std::vector
+	//if (m_debugMode > 0)
+	//{
+	//	std::vector<float> tmpdata{ from.getX(),	from.getY(),	from.getZ(),	fromColor.getX(),	fromColor.getY(),	fromColor.getZ(),
+	//			to.getX(),		to.getY(),		to.getZ() ,		toColor.getX(),	toColor.getY(),	toColor.getZ() };
 
-		mVertexData.insert(mVertexData.end(), tmpdata.begin(), tmpdata.end());
-	}
+	//	mVertexData.insert(mVertexData.end(), tmpdata.begin(), tmpdata.end());
+	//}
 	// using array
 	if (m_debugMode > 0)
 	{
@@ -131,7 +134,6 @@ void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const
 				return;
 			}
 		}
-		++mCurrentSize;
 		mfVertexData[mCurrentSize * 6] = from.getX();
 		mfVertexData[mCurrentSize * 6 + 1] = from.getY();
 		mfVertexData[mCurrentSize * 6 + 2] = from.getZ();
@@ -145,12 +147,13 @@ void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const
 		mfVertexData[mCurrentSize * 6 + 3] = toColor.getX();
 		mfVertexData[mCurrentSize * 6 + 4] = toColor.getY();
 		mfVertexData[mCurrentSize * 6 + 5] = toColor.getZ();
+		++mCurrentSize;
 	}
 }
 
 void GLDebugDrawer::flushLines()
 {
-	glDisable(GL_DEPTH_TEST);
+//	glDisable(GL_DEPTH_TEST);
 	if (m_debugMode > 0 && mCurrentSize > 0)
 	{
 		linesShader.use();
@@ -178,7 +181,7 @@ void GLDebugDrawer::flushLines()
 	}
 	mCurrentSize = 0;
 
-	//// using array
+	//// using std::vector
 	//if (m_debugMode > 0 && mVertexData.size() > 0)
 	//{
 	//	linesShader.use();
@@ -205,7 +208,7 @@ void GLDebugDrawer::flushLines()
 	//	glBindVertexArray(0);
 	//	CheckGLError("GLDebugDrawer::drawLine");
 	//}
-	mVertexData.clear();
+	//mVertexData.clear();
 }
 
 

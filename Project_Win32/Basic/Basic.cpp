@@ -22,9 +22,9 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("GameDemo/terrain.dae", true, true);
-	m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
-	m_Streetenvironment.SetScale(glm::vec3(100.0f,100.0f,100.0f));
+	m_Streetenvironment.Init("GameDemo/PCcrasher.fbx", true, true);
+	//m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
+	//m_Streetenvironment.SetScale(glm::vec3(100.0f,100.0f,100.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	m_Streetenvironment.SetDrawWireFrame(false);
 	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
@@ -37,6 +37,7 @@ void Basic::Init()
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
+	mMerce.SetRenderMode(RenderMode::RenderMode_Material);
 
 	//mAstroBoy.Init("bountyhunter/bountyhunter/export_from_max/test2.FBX", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
@@ -190,7 +191,7 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mBloomLabel.setVisible(true);
 	mBloomAmountLabel.setVisible(true);
 
-	m_Streetenvironment.CreateTriangleMeshShape(0.);
+	//m_Streetenvironment.CreateTriangleMeshShape(0.);
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 
 	/*uvcircle.registerShape(1.);*/
