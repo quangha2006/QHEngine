@@ -17,10 +17,10 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 {
 	mAppcontext = appcontext;
 
-	ShaderManager::getInstance()->LoadFromFile("model_skinning", "Shaders/model_loading.vs", "Shaders/model_loading.fs", "#define SKINNED");
-	ShaderManager::getInstance()->LoadFromFile("model", "Shaders/model_loading.vs", "Shaders/model_loading.fs");
-	ShaderManager::getInstance()->LoadFromFile("debugShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
-	ShaderManager::getInstance()->LoadFromFile("depthShader_skinning", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs", "#define SKINNED");
+	//ShaderManager::getInstance()->LoadFromFile("model_skinning", "Shaders/model_loading.vs", "Shaders/model_loading.fs", "#define SKINNED");
+	//ShaderManager::getInstance()->LoadFromFile("model", "Shaders/model_loading.vs", "Shaders/model_loading.fs");
+	//ShaderManager::getInstance()->LoadFromFile("debugShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
+	//ShaderManager::getInstance()->LoadFromFile("depthShader_skinning", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs", "#define SKINNED");
 	ShaderManager::getInstance()->LoadFromFile("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
 	ShaderManager::getInstance()->LoadFromFile("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
 	ShaderManager::getInstance()->LoadFromFile("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs", "#define DOWNFILTER");

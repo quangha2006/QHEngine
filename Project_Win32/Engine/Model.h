@@ -39,19 +39,17 @@ enum RenderMode
 class Model
 {
 private:
-//	GLuint mVBO, mEBO;
+	// Model data
 	GLuint mVBO_material, mEBO_material;
-//	vector<Mesh*> mMeshes;
 	vector<Texture> textures_loaded;
 	vector<QHMaterial> mMaterial;
 	vector<QHMesh> mQHMeshes;
-	//Vertex* mVertices;
-	//GLuint* mIndices;
 	GLuint mNumVertices;
 	GLuint mNumIndices;
-	
 	Vertex* mVertices_marterial;
 	GLuint* mIndices_marterial;
+	Shader mShader_dept;
+	Shader mShader;
 	bool mIsDrawWireFrame;
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
 
@@ -69,7 +67,7 @@ private:
 	vector<glm::mat4> mTransforms;
 	glm::mat4 m_GlobalInverseTransform;
 	GLuint m_NumBones;
-	bool hasAnimation;
+	bool m_hasAnimation;
 	int animToPlay;
 	int mNumAnimations;
 	float mAnimationTime_begin, mAnimationTime_end;
@@ -115,6 +113,7 @@ private:
 	void CalcInterpolatedScaling(aiVector3D& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
 	void UpdateWorldTransform();
 	void SetWorld(glm::mat4 world = glm::mat4());
+	bool CompileShader();
 public:
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type);

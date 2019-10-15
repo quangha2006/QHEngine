@@ -1,6 +1,7 @@
 #include "Shader.h"
 #include "Logs.h"
 #include "Utils.h"
+#include "stdafx.h"
 
 bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFromString , const char* definecode)
 {
@@ -49,7 +50,7 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 	glDeleteShader(mFragmentShader);
 #endif
 
-	LOGI("CreateProgram: %u\n", program);
+	//LOGI("CreateProgram: %u\n", program);
 	return true;
 }
 
@@ -62,7 +63,7 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 	{
 		std::string path_modif(Utils::getResourcesFolder() + src);
 
-		LOGI("Load shader: %s %s\n", path_modif.c_str(), (definecode != NULL ? definecode : " "));
+		//LOGI("Load shader: %s %s\n", path_modif.c_str(), (definecode != NULL ? definecode : " "));
 
 		FILE * pf = fopen(path_modif.c_str(), "rb");
 		if (pf == NULL)
@@ -94,7 +95,7 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 	{
 		final_shaderSrc =  Utils::getDefineVersionShader();
 	}
-	if (definecode != NULL)
+	if (definecode != NULL && strlen(definecode) > 0)
 	{
 		final_shaderSrc += '\n';
 		final_shaderSrc += definecode;
@@ -133,6 +134,12 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 	}
 
 	return shader;
+}
+
+GLint Shader::GetLocation(const char * name)
+{
+	GLint location = glGetUniformLocation(program, name);
+	return location;
 }
 
 bool Shader::LoadShader(const char * fileVertexShader, const char * fileFragmentShader, bool isFromString , const char* definecode)
@@ -177,14 +184,93 @@ GLint Shader::getColorAttribute()
 
 void Shader::setInt(const char* name, int value)
 {
-	glUniform1i(glGetUniformLocation(program, name), value);
+	GLint location = GetLocation(name);
+	glUniform1i(location, value);
 }
 
 void Shader::setMat4(const char* name, const glm::mat4 & mat)
 {
-	glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_FALSE, &mat[0][0]);
+	GLint location = GetLocation(name);
+	glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
 }
-
+// ------------------------------------------------------------------------
+void Shader::setInt(const char* name, int value)
+{
+	GLint location = GetLocation(name);
+	glUniform1i(location, value);
+}
+// ------------------------------------------------------------------------
+void Shader::setFloat(const char* name, float value)
+{
+	GLint location = GetLocation(name);
+	glUniform1f(location, value);
+}
+void Shader::setFloat(const char* name, float value[], int size)
+{
+	GLint location = GetLocation(name);
+	glUniform1fv(location, size, &value[0]);
+}
+// ------------------------------------------------------------------------
+void Shader::setVec2(const char* name, const glm::vec2 *value, int size)
+{
+	GLint location = GetLocation(name);
+	glUniform2fv(location, size, &value[0].x);
+}
+void Shader::setVec2(const char* name, const glm::vec2 &value)
+{
+	GLint location = GetLocation(name);
+	glUniform2fv(location, 1, &value[0]);
+}
+void Shader::setVec2(const char* name, float x, float y)
+{
+	GLint location = GetLocation(name);
+	glUniform2f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), x, y);
+}
+// ------------------------------------------------------------------------
+void Shader::setVec3(const char* name, const glm::vec3 &value)
+{
+	GLint location = GetLocation(name);
+	glUniform3fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, &value[0]);
+}
+void Shader::setVec3(const char* name, float x, float y, float z)
+{
+	GLint location = GetLocation(name);
+	glUniform3f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), x, y, z);
+}
+// ------------------------------------------------------------------------
+void Shader::setVec4(const char* name, const glm::vec4 &value)
+{
+	GLint location = GetLocation(name);
+	glUniform4fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, &value[0]);
+}
+void Shader::setVec4(const char* name, float x, float y, float z, float w)
+{
+	GLint location = GetLocation(name);
+	glUniform4f(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), x, y, z, w);
+}
+// ------------------------------------------------------------------------
+void Shader::setMat2(const char* name, const glm::mat2 &mat)
+{
+	GLint location = GetLocation(name);
+	glUniformMatrix2fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, GL_FALSE, &mat[0][0]);
+}
+// ------------------------------------------------------------------------
+void Shader::setMat3(const char* name, const glm::mat3 &mat)
+{
+	GLint location = GetLocation(name);
+	glUniformMatrix3fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, GL_FALSE, &mat[0][0]);
+}
+// ------------------------------------------------------------------------
+void Shader::setMat4(const char* name, const glm::mat4 &mat)
+{
+	GLint location = GetLocation(name);
+	glUniformMatrix4fv(glGetUniformLocation(ShaderManager::getInstance()->GetCurrentProgram(), name), 1, GL_FALSE, &mat[0][0]);
+}
+void Shader::setBoneMat4(const char* name, const vector<glm::mat4> &mat)
+{
+	GLint location = GetLocation(name);
+		glUniformMatrix4fv(m_boneLocation, mat.size(), GL_TRUE, glm::value_ptr(mat[0][0]));
+}
 Shader::Shader()
 	: position_Attribute(-1)
 	, normal_Attribute(-1)

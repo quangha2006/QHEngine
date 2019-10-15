@@ -83,7 +83,7 @@ void Model::Loading() //thread
 	if (m_pScene->HasAnimations())
 	{
 		m_NumBones = m_BoneInfo.size();
-		hasAnimation = true;
+		m_hasAnimation = true;
 		mTransforms.resize(m_NumBones);
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
@@ -100,6 +100,9 @@ void Model::Loading() //thread
 	uint64_t time_ms_end = Timer::getMillisecond();
 
 	LOGI("Total Loading time : %ums\n", (unsigned int)(time_ms_end - time_ms_begin));
+
+	if (!CompileShader())
+		return;
 
 	m_initialized = true;
 }
@@ -179,14 +182,14 @@ void Model::BatchingVertexData()
 	for (unsigned int i = 0; i < mMaterial.size(); i++)
 	{
 		mMaterial[i].mIndices_index = last_indices_index;
-		LOGI("Mesh: %d\n",i);
+		//LOGI("Mesh: %d\n",i);
 		for (QHMesh &currentMesh : mQHMeshes)
 		{
 			if (currentMesh.GetMaterialIndex() == i)
 			{
 				
 				std::vector<glm::mat4> instanceMatrix = currentMesh.GetInstanceMatrix();
-				LOGI("	Add mesh instanceMatrix size: %d\n", instanceMatrix.size());
+				//LOGI("	Add mesh instanceMatrix size: %d\n", instanceMatrix.size());
 				for (glm::mat4& localTransform : instanceMatrix)
 				{
 					unsigned int numVertex = 0;
@@ -299,14 +302,11 @@ void Model::Render(RenderTargetType RT_Type)
 	glm::mat4 WorldViewProjectionMatrix;
 	glm::mat4 model_inverse;
 	glm::mat4 tmp_model = mWorldTransform;
-
+	CheckGLError("11111111111");
 	switch (RT_Type)
 	{
 	case RenderTargetType_DEPTH:
-		if (hasAnimation)
-			ShaderManager::getInstance()->setUseProgram("depthShader_skinning");
-		else
-			ShaderManager::getInstance()->setUseProgram("depthShader");
+		mShader_dept.use();
 
 		ShaderSet::setFloat("near_plane", mCamera->GetLightNear());
 		ShaderSet::setFloat("far_plane", mCamera->GetLightFar());
@@ -316,10 +316,9 @@ void Model::Render(RenderTargetType RT_Type)
 
 		break;
 	case RenderTargetType_COLOR:
-		if (hasAnimation)
-			ShaderManager::getInstance()->setUseProgram("model_skinning");
-		else
-			ShaderManager::getInstance()->setUseProgram("model");
+		CheckGLError("2222222");
+		mShader.use();
+		CheckGLError("3333333");
 		if (!isFirstSetupUniform) {
 			ShaderSet::setFloat("pointlight_constant", 1.0f);
 			ShaderSet::setFloat("pointlight_linear", 0.0014f);
@@ -331,7 +330,7 @@ void Model::Render(RenderTargetType RT_Type)
 			ShaderSet::setBool("GammaCorrection", mGammaCorrection);
 			isFirstSetupUniform = true;
 		}
-
+		CheckGLError("44444444");
 		ShaderSet::setVec3("light_position", mCamera->GetLightPos());
 
 		ShaderSet::setVec3("viewPos", mCamera->GetPos());
@@ -347,10 +346,10 @@ void Model::Render(RenderTargetType RT_Type)
 
 		WorldViewProjectionMatrix = mCamera->GetWorldViewProjectionMatrix() * tmp_model;
 		ShaderSet::setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
-
+		CheckGLError("5555555");
 		
 	}
-
+	CheckGLError("aaaaaaaaaaa");
 	if (mRenderMode == RenderMode::RenderMode_Material || RT_Type == RenderTargetType::RenderTargetType_DEPTH)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
@@ -384,7 +383,7 @@ void Model::Render(RenderTargetType RT_Type)
 	}
 
 	//animation
-	if (hasAnimation && mTransforms.size() > 0)
+	if (m_hasAnimation && mTransforms.size() > 0)
 	{
 		ShaderSet::setBoneMat4("gBones", mTransforms);
 	}
@@ -456,7 +455,7 @@ void Model::SetTimeStampAnim(int64_t time)
 }
 void Model::UpdateAnimation()
 {
-	if (!m_initialized || !mCamera || !hasAnimation || !mIsVisible) return;
+	if (!m_initialized || !mCamera || !m_hasAnimation || !mIsVisible) return;
 
 	int64_t RunningTime = 0;
 
@@ -550,6 +549,26 @@ void Model::SetRotate(float angle, glm::vec3 rotate)
 void Model::SetWorld(glm::mat4 world)
 {
 	mWorldTransform = world;
+}
+bool Model::CompileShader()
+{
+	std::string shader_define;
+
+	if (m_hasAnimation)
+	{
+		shader_define += "#define SKINNED\n";
+	}
+	if (mRenderMode == RenderMode_Instancing)
+	{
+		shader_define += "#define INSTANCING\n";
+	}
+
+	if (!mShader_dept.LoadShader("Shaders/DepthShader.vs", "Shaders/DepthShader.fs", false, shader_define.c_str()))
+		return false;
+	if (!mShader.LoadShader("Shaders/model_loading.vs", "Shaders/model_loading.fs", false, shader_define.c_str()))
+		return false;
+
+	return true;
 }
 void Model::SetAnimPlay(int anim)
 {
@@ -911,7 +930,7 @@ Model::Model()
 	, customColor(glm::vec3(1.0f))
 	, m_NumBones(0)
 	, m_pScene(NULL)
-	, hasAnimation(false)
+	, m_hasAnimation(false)
 	, mNumAnimations(-1)
 	, mtimeStampAnim(-1)
 	, mAnimationTime_begin(0.0f)

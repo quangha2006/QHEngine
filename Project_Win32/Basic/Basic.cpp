@@ -22,7 +22,7 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("GameDemo/PCcrasher.fbx", true, true);
+	m_Streetenvironment.Init("bHieu/1_2_Tree.dae", true, true);
 	//m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
 	//m_Streetenvironment.SetScale(glm::vec3(100.0f,100.0f,100.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);

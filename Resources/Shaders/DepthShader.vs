@@ -7,7 +7,9 @@ layout (location = 4) in vec4 sIDs;
 layout (location = 5) in vec3 aNormal;
 layout (location = 6) in vec3 aTangent;
 layout (location = 7) in vec3 aBitangent;
+#ifdef INSTANCING
 layout (location = 8) in mat4 aInstanceMatrix;
+#endif
 
 out vec2 TexCoords;
 uniform mat4 WorldViewLightSpaceMatrix;

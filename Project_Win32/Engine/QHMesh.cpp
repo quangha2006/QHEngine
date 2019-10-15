@@ -9,7 +9,7 @@ void QHMesh::GenBuffers()
 {
 	if (mNumVertices <= 0 || mNumIndices <= 0)
 		return;
-
+	CheckGLError("QHMesh::GenBuffers before");
 	glGenVertexArrays(1, &mVAO);
 	glGenBuffers(1, &mVBO);
 	glGenBuffers(1, &mEBO);
