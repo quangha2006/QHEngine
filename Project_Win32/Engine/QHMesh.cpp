@@ -126,7 +126,7 @@ void QHMesh::Render()
 	CheckGLError("QHMesh::Render");
 }
 
-QHMesh::QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &boneinfo)
+QHMesh::QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &boneinfo)
 	: mNumVertices(0)
 	, mNumIndices(0)
 	, mVerticesData(NULL)
@@ -142,10 +142,12 @@ QHMesh::QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapp
 	mHasTextureCoords0 = mesh->HasTextureCoords(0);
 	mHasTangentsAndBitangents = mesh->HasTangentsAndBitangents();
 	mHasVertexColors0 = mesh->HasVertexColors(0);
+	mMaterialIndex = mesh->mMaterialIndex;
+	mMeshName = mesh->mName.C_Str();
 	// data to fill
 
 	mNumVertices = mesh->mNumVertices;
-
+	
 	try
 	{
 		mVerticesData = new Vertex[mNumVertices];
@@ -219,6 +221,20 @@ QHMesh::QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapp
 			vertex.Color.g = color.g;
 			vertex.Color.b = color.b;
 			vertex.Color.a = color.a;
+		}
+		else if (mMaterialIndex >=0 && mMaterialIndex < scene->mNumMaterials)
+		{
+			aiMaterial *material = scene->mMaterials[mMaterialIndex];
+			aiColor3D kd_color(0.0f, 0.0f, 0.0f);
+			float transparent = 1.0f;
+
+			material->Get(AI_MATKEY_COLOR_DIFFUSE, kd_color);
+			material->Get(AI_MATKEY_OPACITY, transparent);
+
+			vertex.Color.r = kd_color.r;
+			vertex.Color.g = kd_color.g;
+			vertex.Color.b = kd_color.b;
+			vertex.Color.a = transparent;
 		}
 
 		mVerticesData[i] = vertex;
@@ -305,7 +321,7 @@ QHMesh::QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapp
 		currentindex+= face.mNumIndices;
 	}
 
-	mMaterialIndex = mesh->mMaterialIndex;
+	
 }
 
 

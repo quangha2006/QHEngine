@@ -152,7 +152,7 @@ void Model::processMesh(const aiScene * scene, std::map<std::string, unsigned in
 	mQHMeshes.reserve(m_pScene->mNumMeshes);
 	for (int i = 0; i < m_pScene->mNumMeshes; i++)
 	{
-		QHMesh SceneMesh(m_pScene->mMeshes[i], m_BoneMapping, m_BoneInfo);
+		QHMesh SceneMesh(m_pScene->mMeshes[i], scene, m_BoneMapping, m_BoneInfo);
 		mQHMeshes.push_back(SceneMesh);
 
 	}
@@ -302,54 +302,68 @@ void Model::Render(RenderTargetType RT_Type)
 	glm::mat4 WorldViewProjectionMatrix;
 	glm::mat4 model_inverse;
 	glm::mat4 tmp_model = mWorldTransform;
-	CheckGLError("11111111111");
+
 	switch (RT_Type)
 	{
 	case RenderTargetType_DEPTH:
+
 		mShader_dept.use();
 
-		ShaderSet::setFloat("near_plane", mCamera->GetLightNear());
-		ShaderSet::setFloat("far_plane", mCamera->GetLightFar());
-
+		mShader_dept.setFloat("near_plane", mCamera->GetLightNear());
+		mShader_dept.setFloat("far_plane", mCamera->GetLightFar());
+		
 		WorldViewLightSpaceMatrix = mCamera->lightSpaceMatrix * tmp_model;
-		ShaderSet::setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
+		mShader_dept.setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
+
+
+		//animation
+		if (m_hasAnimation && mTransforms.size() > 0)
+		{
+			mShader_dept.setBoneMat4("gBones", mTransforms);
+		}
 
 		break;
 	case RenderTargetType_COLOR:
-		CheckGLError("2222222");
+
 		mShader.use();
-		CheckGLError("3333333");
+
 		if (!isFirstSetupUniform) {
-			ShaderSet::setFloat("pointlight_constant", 1.0f);
-			ShaderSet::setFloat("pointlight_linear", 0.0014f);
-			ShaderSet::setFloat("pointlight_quadratic", 0.000007f);
-			ShaderSet::setFloat("material_shininess", 18.0f);
-			ShaderSet::setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
-			ShaderSet::setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
-			ShaderSet::setVec3("light_specular", 1.f, 1.f, 1.f);
-			ShaderSet::setBool("GammaCorrection", mGammaCorrection);
+			mShader.setFloat("pointlight_constant", 1.0f);
+			mShader.setFloat("pointlight_linear", 0.0014f);
+			mShader.setFloat("pointlight_quadratic", 0.000007f);
+			mShader.setFloat("material_shininess", 18.0f);
+			mShader.setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
+			mShader.setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
+			mShader.setVec3("light_specular", 1.f, 1.f, 1.f);
+			mShader.setBool("GammaCorrection", mGammaCorrection);
 			isFirstSetupUniform = true;
 		}
-		CheckGLError("44444444");
-		ShaderSet::setVec3("light_position", mCamera->GetLightPos());
 
-		ShaderSet::setVec3("viewPos", mCamera->GetPos());
+		mShader.setVec3("light_position", mCamera->GetLightPos());
 
-		ShaderSet::setBool("usepointlight", this->isUsePointLight);
+		mShader.setVec3("viewPos", mCamera->GetPos());
+
+		mShader.setBool("usepointlight", this->isUsePointLight);
 
 		model_inverse = glm::inverse(tmp_model);
 		model_inverse = glm::transpose(model_inverse);
-		ShaderSet::setMat4("world_inverse", model_inverse);
+		mShader.setMat4("world_inverse", model_inverse);
 
-		ShaderSet::setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
-		ShaderSet::setMat4("world", tmp_model);
+		mShader.setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
+		mShader.setMat4("world", tmp_model);
 
 		WorldViewProjectionMatrix = mCamera->GetWorldViewProjectionMatrix() * tmp_model;
-		ShaderSet::setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
-		CheckGLError("5555555");
+		mShader.setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
+
+
+		//animation
+		if (m_hasAnimation && mTransforms.size() > 0)
+		{
+			mShader.setBoneMat4("gBones", mTransforms);
+		}
 		
 	}
-	CheckGLError("aaaaaaaaaaa");
+
 	if (mRenderMode == RenderMode::RenderMode_Material || RT_Type == RenderTargetType::RenderTargetType_DEPTH)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
@@ -382,12 +396,6 @@ void Model::Render(RenderTargetType RT_Type)
 
 	}
 
-	//animation
-	if (m_hasAnimation && mTransforms.size() > 0)
-	{
-		ShaderSet::setBoneMat4("gBones", mTransforms);
-	}
-
 	switch (RT_Type)
 	{
 	case RenderTargetType_DEPTH:
@@ -403,8 +411,8 @@ void Model::Render(RenderTargetType RT_Type)
 		{
 			for (GLuint i = 0; i < mMaterial.size(); i++)
 			{
-				ShaderSet::setBool("uselighting", uselighting);
-				mMaterial[i].Apply(RT_Type, mIsEnableAlpha);
+				mShader.setBool("uselighting", uselighting);
+				mMaterial[i].Apply(RT_Type, mShader, mIsEnableAlpha);
 				mMaterial[i].Render();
 			}
 		}
@@ -412,9 +420,9 @@ void Model::Render(RenderTargetType RT_Type)
 		{
 			for (QHMesh& mesh : mQHMeshes)
 			{
-				ShaderSet::setBool("uselighting", uselighting);
+				mShader.setBool("uselighting", uselighting);
 				unsigned int materialID = mesh.GetMaterialIndex();
-				mMaterial[materialID].Apply(RT_Type, mIsEnableAlpha);
+				mMaterial[materialID].Apply(RT_Type, mShader, mIsEnableAlpha);
 				mesh.Render();
 			}
 		}

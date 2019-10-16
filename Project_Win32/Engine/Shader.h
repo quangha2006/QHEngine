@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <vector>
 ///////////////////
 //- highp for vertex positions,
 //- mediump for texture coordinates,
@@ -17,7 +18,7 @@ class Shader
 {
 private:
 	GLuint createShader(GLenum shaderType, const char* src, bool isFromString = false, const char* definecode = NULL);
-	std::map<char*, int> uniformLocations;
+	std::map<std::string, int> m_uniformLocations;
 	GLuint mVertexShader;
 	GLuint mFragmentShader;
 	GLint GetLocation(const char* name);
@@ -45,6 +46,7 @@ public:
 	void setInt(const char* name, int value);
 	void setFloat(const char* name, float value[], int size);
 	void setFloat(const char* name, float value);
+	void setBool(const char* name, bool value);
 	void setVec2(const char* name, const glm::vec2 *value, int size);
 	void setVec2(const char* name, const glm::vec2 &value);
 	void setVec2(const char* name, float x, float y);
@@ -55,7 +57,7 @@ public:
 	void setMat2(const char* name, const glm::mat2 &mat);
 	void setMat3(const char* name, const glm::mat3 &mat);
 	void setMat4(const char* name, const glm::mat4 &mat);
-	void setBoneMat4(const char* name, const vector<glm::mat4> &mat);
+	void setBoneMat4(const char* name, const std::vector<glm::mat4> &mat);
 
 	Shader();
 	~Shader();

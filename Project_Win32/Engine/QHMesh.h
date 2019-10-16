@@ -26,7 +26,7 @@ private:
 	bool mHasTextureCoords0;
 	bool mHasTangentsAndBitangents;
 	bool mHasVertexColors0;
-
+	std::string mMeshName;
 	std::vector<glm::mat4> mInstanceMatrixList;
 
 	bool isCreateinstancingBuffer = false;
@@ -35,10 +35,11 @@ public:
 	void AddInstanceMatrix(const glm::mat4& matrix);
 	bool HasBones() { return mHasBones; }
 	std::vector<glm::mat4> GetInstanceMatrix() { return mInstanceMatrixList; }
+	std::string GetName() { return mMeshName; }
 	unsigned int GetMaterialIndex() { return mMaterialIndex; }
 	Vertex * GetVerticesData(unsigned int &numVertex);
 	unsigned int * GetIndicesData(unsigned int &numIndex);
 	void Render();
-	QHMesh(const aiMesh* mesh, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
+	QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
 	~QHMesh();
 };

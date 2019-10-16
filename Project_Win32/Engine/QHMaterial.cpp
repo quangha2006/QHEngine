@@ -33,7 +33,7 @@ vector<Texture> loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::
 	return textures;
 }
 
-void QHMaterial::Apply(RenderTargetType RT_Type, bool isDrawWireFrame, bool isEnableAlpha)
+void QHMaterial::Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDrawWireFrame, bool isEnableAlpha)
 {
 
 	GLuint diffuseNr = 1;
@@ -41,8 +41,8 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isDrawWireFrame, bool isEn
 	GLuint normalNr = 1;
 	unsigned int texture_actived = 0;
 
-	ShaderSet::setBool("useNormalMap", false);
-	ShaderSet::setBool("enableAlpha", isEnableAlpha);
+	modelShader.setBool("useNormalMap", false);
+	modelShader.setBool("enableAlpha", isEnableAlpha);
 
 	for (; texture_actived < mTextures.size(); texture_actived++)
 	{
@@ -68,15 +68,14 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isDrawWireFrame, bool isEn
 		{
 			name = "texture_normal";
 			ss << normalNr++; // transfer unsigned int to stream
-			ShaderSet::setBool("useNormalMap", true);
+			modelShader.setBool("useNormalMap", true);
 		}
 		number = ss.str();
 		// now set the sampler to the correct texture unit
 		string Material = "material_";
 		string full_name = Material + name + number;
-		//int temp = glGetUniformLocation(ShaderSet::GetCurrentProgram(), full_name.c_str());
 
-		ShaderSet::setInt(full_name.c_str(), texture_actived);
+		modelShader.setInt(full_name.c_str(), texture_actived);
 
 		// and finally bind the texture
 		glBindTexture(GL_TEXTURE_2D, mTextures[texture_actived].id);
@@ -86,26 +85,27 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isDrawWireFrame, bool isEn
 		GLuint depthmap = RenderManager::getInstance()->GetDepthMapId();
 		if (depthmap > 0)
 		{
-			ShaderSet::setBool("useShadowMap", true);
+			modelShader.setBool("useShadowMap", true);
 			glActiveTexture(GL_TEXTURE0 + texture_actived);
 			glBindTexture(GL_TEXTURE_2D, depthmap);
-			ShaderSet::setInt("shadowMap", texture_actived);
+			modelShader.setInt("shadowMap", texture_actived);
 		}
 		else
-			ShaderSet::setBool("useShadowMap", false);
+			modelShader.setBool("useShadowMap", false);
 	}
 
-	ShaderSet::setFloat("material_transparent", mTransparent);
-	ShaderSet::setFloat("material_shininess", mShininess);
-	ShaderSet::setVec3("material_color_ambient", mAmbient);
-	ShaderSet::setVec3("material_color_diffuse", mDiffuse);
-	ShaderSet::setVec3("material_color_specular", mSpecular);
-	ShaderSet::setBool("GammaCorrection", RenderManager::getInstance()->isEnablemGammaCorrection());
+	modelShader.setFloat("material_transparent", mTransparent);
+	modelShader.setFloat("material_shininess", mShininess);
+	modelShader.setVec3("material_color_ambient", mAmbient);
+	modelShader.setVec3("material_color_diffuse", mDiffuse);
+	modelShader.setVec3("material_color_specular", mSpecular);
+	modelShader.setBool("GammaCorrection", RenderManager::getInstance()->isEnablemGammaCorrection());
 	if (mShininess < 0.001f || !mHasNormals)
-		ShaderSet::setBool("uselighting", false);
+		modelShader.setBool("uselighting", false);
 
 	if (!isEnableAlpha && RT_Type == RenderTargetType_DEPTH)
-		ShaderSet::setBool("useTexture", false);
+		modelShader.setBool("useTexture", false);
+
 	if (mIsBackFace)
 		glCullFace(GL_FRONT);
 	else
@@ -113,8 +113,7 @@ void QHMaterial::Apply(RenderTargetType RT_Type, bool isDrawWireFrame, bool isEn
 
 	if (isDrawWireFrame)
 	{
-		ShaderSet::setBool("useTexture", false);
-		return;
+		modelShader.setBool("useTexture", false);
 	}
 }
 

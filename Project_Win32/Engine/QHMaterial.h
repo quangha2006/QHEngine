@@ -4,6 +4,7 @@
 #include <vector>
 #include "QHTexture.h"
 #include "Mesh.h"
+#include "Shader.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -23,7 +24,7 @@ public:
 	GLuint mIndices_index;
 	GLuint mIndices_size;
 	std::vector<Texture> mTextures;
-	void Apply(RenderTargetType RT_Type,bool isDrawWireFrame = false, bool isEnableAlpha = false);
+	void Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDrawWireFrame = false, bool isEnableAlpha = false);
 	void Render();
 	bool isTransparent();
 	QHMaterial(aiMaterial* aimaterial, std::string &currentDirectory);
