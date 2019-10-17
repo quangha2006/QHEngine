@@ -95,8 +95,6 @@ void Model::Loading() //thread
 	mImporter.GetMemoryRequirements(meminfo);
 	LOGI("Memory Requirements: %uKB\n", meminfo.total / 1024);
 
-
-
 	uint64_t time_ms_end = Timer::getMillisecond();
 
 	LOGI("Total Loading time : %ums\n", (unsigned int)(time_ms_end - time_ms_begin));
@@ -189,7 +187,10 @@ void Model::BatchingVertexData()
 			{
 				
 				std::vector<glm::mat4> instanceMatrix = currentMesh.GetInstanceMatrix();
-				//LOGI("	Add mesh instanceMatrix size: %d\n", instanceMatrix.size());
+				
+				if (mRenderMode == RenderMode_Auto && instanceMatrix.size() > 1)
+					mRenderMode = RenderMode_Instancing;
+
 				for (glm::mat4& localTransform : instanceMatrix)
 				{
 					unsigned int numVertex = 0;
@@ -266,6 +267,8 @@ void Model::BatchingVertexData()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
+	if (mRenderMode == RenderMode_Auto)
+		mRenderMode = RenderMode_Material;
 
 	uint64_t time_end = Timer::getMillisecond();
 	LOGI("SetupMaterialMesh time: %dms \n\n", ((int)(time_end - time_begin)));
@@ -393,7 +396,6 @@ void Model::Render(RenderTargetType RT_Type)
 		glEnableVertexAttribArray(7);
 		glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
 
-
 	}
 
 	switch (RT_Type)
@@ -412,7 +414,7 @@ void Model::Render(RenderTargetType RT_Type)
 			for (GLuint i = 0; i < mMaterial.size(); i++)
 			{
 				mShader.setBool("uselighting", uselighting);
-				mMaterial[i].Apply(RT_Type, mShader, mIsEnableAlpha);
+				mMaterial[i].Apply(RT_Type, mShader, mIsDrawWireFrame, mIsEnableAlpha);
 				mMaterial[i].Render();
 			}
 		}
@@ -422,7 +424,7 @@ void Model::Render(RenderTargetType RT_Type)
 			{
 				mShader.setBool("uselighting", uselighting);
 				unsigned int materialID = mesh.GetMaterialIndex();
-				mMaterial[materialID].Apply(RT_Type, mShader, mIsEnableAlpha);
+				mMaterial[materialID].Apply(RT_Type, mShader, mIsDrawWireFrame, mIsEnableAlpha);
 				mesh.Render();
 			}
 		}
@@ -660,7 +662,7 @@ void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 	if (mNumVertices <= 0) return;
 
 	isDynamic = (mass != 0.f);
-	//mRigidBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, mVertices, mNumVertices, mPos, mRotate, mAngle, mScale, isOptimize);
+	mRigidBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, mVertices_marterial, mNumVertices, mPos, mRotate, mAngle, mScale, isOptimize);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
@@ -670,7 +672,7 @@ void Model::CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize)
 	if (mNumVertices <= 0) return;
 
 	isDynamic = (mass != 0.f);
-	//mRigidBody = PhysicsSimulation::getInstance()->createConvexTriangleMeshShape(mass, mVertices, mNumVertices, mIndices, mNumIndices, mPos, mRotate, mAngle, mScale);
+	mRigidBody = PhysicsSimulation::getInstance()->createConvexTriangleMeshShape(mass, mVertices_marterial, mNumVertices, mIndices_marterial, mNumIndices, mPos, mRotate, mAngle, mScale);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
@@ -966,7 +968,7 @@ Model::Model()
 	, mIndices_marterial(nullptr)
 	, mNumVertices(0)
 	, mNumIndices(0)
-	, mRenderMode(RenderMode::RenderMode_Material)
+	, mRenderMode(RenderMode::RenderMode_Auto)
 	, mIsDrawWireFrame(false)
 {
 	ModelManager::getInstance()->AddModel(this);

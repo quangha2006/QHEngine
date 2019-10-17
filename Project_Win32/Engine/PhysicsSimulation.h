@@ -43,7 +43,7 @@ private:
 public:
 	void initPhysics();
 	void exitPhysics();
-	void updatePhysics();
+	void updatePhysics(float detatime);
 	void RenderPhysicsDebug();
 	void PhysicsStepCollision(btCollisionObject* objA, btCollisionObject* objB, MyContactResultCallback &result);
 	void SetGravity(btVector3 gravity);

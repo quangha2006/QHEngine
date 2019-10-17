@@ -113,7 +113,7 @@ void PhysicsSimulation::initPhysics()
 
 	mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfiguration);
 
-	mDynamicsWorld->setGravity(btVector3(0, -100.0, 0));
+	mDynamicsWorld->setGravity(btVector3(0, -10.0, 0));
 
 	debugDraw.setDebugMode(btIDebugDraw::DBG_DrawFeaturesText);
 	mDynamicsWorld->setDebugDrawer(&debugDraw);
@@ -158,9 +158,9 @@ void PhysicsSimulation::exitPhysics()
 	mCollisionShapes.clear();
 }
 
-void PhysicsSimulation::updatePhysics()
+void PhysicsSimulation::updatePhysics(float detatime)
 {
-	mDynamicsWorld->stepSimulation(1.f / 60.f, 10);
+	mDynamicsWorld->stepSimulation(detatime);
 }
 
 void PhysicsSimulation::RenderPhysicsDebug()

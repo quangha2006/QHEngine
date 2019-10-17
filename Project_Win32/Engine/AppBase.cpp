@@ -104,7 +104,7 @@ void AppBase::rendering()
 	if (mIsLoadingThreadFinish)
 	{
 		Update(frameTime);
-		PhysicsSimulation::getInstance()->updatePhysics();
+		PhysicsSimulation::getInstance()->updatePhysics(frameTime);
 		ModelManager::getInstance()->Update();
 		RenderManager::getInstance()->Render();
 	}

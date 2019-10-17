@@ -16,18 +16,19 @@ const int Screen_height = 720;
 
 void Basic::Init()
 {
-	mCamera->SetPos(0.0f, 50.0f, 620.0f);
+	mCamera->SetPos(0.0f, 5.0f, 20.0f);
 	mCamera->SetTarget(0.0f, 5.0f, 0.0f);
-	mCamera->SetLightPos(20.2f, 2000.0f, 1.0f);
+	mCamera->SetLightPos(20.2f, 50.0f, 1.0f);
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("bHieu/1_2_Tree.dae", true, true);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	//m_Streetenvironment.Init("/1_2_Tree.dae", true, true);
 	//m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
 	//m_Streetenvironment.SetScale(glm::vec3(100.0f,100.0f,100.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.SetDrawWireFrame(false);
-	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
+
+//	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
@@ -68,13 +69,13 @@ void Basic::Init()
 	mBoblampclean.SetDrawMesh(1);
 	mBoblampclean.SetDrawWireFrame(true);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
-	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
-	uvcircle.SetScale(glm::vec3(1.0, 0.5f, 1.0f));
-	uvcircle.SetPos(glm::vec3(0.1f, 5.f, 5.5f));
+	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	//uvcircle.SetScale(glm::vec3(1.0, 1.0f, 1.0f));
+	uvcircle.SetPos(glm::vec3(0.1f, 10.f, 5.5f));
 
 	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
-	uvcircle.GetRigidBody()->setFriction(1.);
+	uvcircle.GetRigidBody()->setFriction(0.);
 	uvcircle.GetRigidBody()->setRollingFriction(1.);
 	uvcircle.GetRigidBody()->setSpinningFriction(1.);
 	uvcircle.GetRigidBody()->setRestitution(1.);
@@ -191,8 +192,9 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mBloomLabel.setVisible(true);
 	mBloomAmountLabel.setVisible(true);
 
-	//m_Streetenvironment.CreateTriangleMeshShape(0.);
+	m_Streetenvironment.CreateTriangleMeshShape(0.);
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
+	m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
 
 	/*uvcircle.registerShape(1.);*/
 	//uvcircle.GetRigidBody()->setFriction(0.);

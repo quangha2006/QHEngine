@@ -28,8 +28,8 @@ void Basic::Init()
 	m_Streetenvironment.SetPos(glm::vec3(0.0f, 0.5f, 0.0f));
 	//m_Streetenvironment.SetScale(glm::vec3(100.0f,50.0f,100.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Material);
-	m_Streetenvironment.SetDrawWireFrame(true);
+	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Material);
+	//m_Streetenvironment.SetDrawWireFrame(true);
 	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Mesh);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);

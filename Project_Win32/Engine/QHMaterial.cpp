@@ -100,6 +100,7 @@ void QHMaterial::Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDra
 	modelShader.setVec3("material_color_diffuse", mDiffuse);
 	modelShader.setVec3("material_color_specular", mSpecular);
 	modelShader.setBool("GammaCorrection", RenderManager::getInstance()->isEnablemGammaCorrection());
+
 	if (mShininess < 0.001f || !mHasNormals)
 		modelShader.setBool("uselighting", false);
 

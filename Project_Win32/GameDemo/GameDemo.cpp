@@ -7,10 +7,9 @@ void GameDemo::Update(int delta)
 
 void GameDemo::Init()
 {
-	mCamera->Pos = glm::vec3(5.0f, 5.0f, 20.0f);
-	mCamera->Target = glm::vec3(0.0f, 1.0f, 0.0f);
-	mCamera->view = glm::lookAt(mCamera->Pos, mCamera->Target, mCamera->up);
-	mCamera->lightPos = glm::vec3(8.2f, 10.0f, 9.0f);
+	mCamera->SetPos(glm::vec3(5.0f, 5.0f, 20.0f));
+	mCamera->SetTarget(glm::vec3(0.0f, 1.0f, 0.0f));
+	mCamera->SetLightPos(8.2f, 10.0f, 9.0f);
 
 	mSkyBox.Init("SkyBox");
 
@@ -26,7 +25,6 @@ void GameDemo::Init()
 	mSpider.SetScale(glm::vec3(0.05f));
 	mSpider.SetPos(glm::vec3(-8.0f, 0.0f, 0.0f));
 	mSpider.SetAnimPlay(1);
-	mSpider.SetNeedRotate(true);
 }
 
 void GameDemo::GetRequireScreenSize(int32_t & width, int32_t & height)
