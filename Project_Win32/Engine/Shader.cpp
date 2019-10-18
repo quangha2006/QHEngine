@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include <vector>
 
-bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFromString , const char* definecode)
+bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, const char* geoSrc, bool isFromString , const char* definecode)
 {
 	GLint linked = GL_FALSE;
 	mVertexShader = createShader(GL_VERTEX_SHADER, vtxSrc, isFromString, definecode);
@@ -17,17 +17,27 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 	{
 		return false;
 	}
+	if (geoSrc != NULL)
+	{
+		mGeometryShader = createShader(GL_GEOMETRY_SHADER, geoSrc, isFromString, definecode);
+		if (!mGeometryShader)
+			return false;
+	}
 	program = glCreateProgram();
 	if (!program) {
+		LOGE("Could not Create Program!\n");
 		return false;
 	}
 	glAttachShader(program, mVertexShader);
 	glAttachShader(program, mFragmentShader);
+	if (mGeometryShader)
+		glAttachShader(program, mGeometryShader);
 
 	glLinkProgram(program);
 	glGetProgramiv(program, GL_LINK_STATUS, &linked);
+
 	if (!linked) {
-		LOGE("Could not link program\n");
+		LOGE("Could not link program!\n");
 		GLint infoLogLen = 0, CharsWritten = 0;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLen);
 		if (infoLogLen) {
@@ -46,9 +56,13 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, bool isFro
 #ifdef NDEBUG
 	glDetachShader(program, mVertexShader);
 	glDetachShader(program, mFragmentShader);
+	if (mGeometryShader)
+		glDetachShader(program, mGeometryShader);
 
 	glDeleteShader(mVertexShader);
 	glDeleteShader(mFragmentShader);
+	if (mGeometryShader)
+		glDeleteShader(mGeometryShader);
 #endif
 
 	//LOGI("CreateProgram: %u\n", program);
@@ -126,7 +140,7 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 			if (infoLog) {
 				glGetShaderInfoLog(shader, infoLogLen, NULL, infoLog);
 				LOGE("ERROR!\n");
-				LOGE("Could not compile %s shader: %s\n", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
+				LOGE("Could not compile %s shader: %s\n", shaderType == GL_VERTEX_SHADER ? "VERTEX" : shaderType == GL_FRAGMENT_SHADER ? "FRAGMENT" : "GEOMETRY", infoLog);
 				free(infoLog);
 			}
 		}
@@ -154,7 +168,7 @@ GLint Shader::GetLocation(const char * name)
 
 bool Shader::LoadShader(const char * fileVertexShader, const char * fileFragmentShader, bool isFromString , const char* definecode)
 {
-	if (!createProgram(fileVertexShader, fileFragmentShader, isFromString, definecode))
+	if (!createProgram(fileVertexShader, fileFragmentShader, NULL, isFromString, definecode))
 		return false;
 
 	position_Attribute = glGetAttribLocation(program, "aPos");
@@ -165,6 +179,14 @@ bool Shader::LoadShader(const char * fileVertexShader, const char * fileFragment
 	Bitangent_Attribute = glGetAttribLocation(program, "aBitangent");
 	Weights_Attribute = glGetAttribLocation(program, "sWeights");
 	IDs_Attribute = glGetAttribLocation(program, "sIDs");
+	m_initialized = true;
+	return true;
+}
+
+bool Shader::LoadShader(const char * fileVertexShader, const char * fileFragmentShader, const char * fileGeometryShader, bool isFromString, const char * definecode)
+{
+	if (!createProgram(fileVertexShader, fileFragmentShader, fileGeometryShader, isFromString, definecode))
+		return false;
 	m_initialized = true;
 	return true;
 }
@@ -286,6 +308,7 @@ Shader::Shader()
 	, program(0)
 	, mVertexShader(0)
 	, mFragmentShader(0)
+	, mGeometryShader(0)
 	, m_initialized(false)
 {
 }
@@ -298,8 +321,12 @@ Shader::~Shader()
 #ifndef NDEBUG
 	glDetachShader(program, mVertexShader);
 	glDetachShader(program, mFragmentShader);
+	if (mGeometryShader)
+		glDetachShader(program, mGeometryShader);
 
 	glDeleteShader(mVertexShader);
 	glDeleteShader(mFragmentShader);
+	if (mGeometryShader)
+		glDeleteShader(mGeometryShader);
 #endif
 }

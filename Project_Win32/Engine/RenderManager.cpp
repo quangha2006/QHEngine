@@ -45,7 +45,7 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	InitquadVAO();
 	InitDefaultShader();
 	//glEnable(GL_CULL_FACE);
-	//axis.Init(camera);
+	axis.Init(camera);
 }
 
 void RenderManager::Update()
@@ -91,6 +91,11 @@ void RenderManager::SetAmountBloom(int amount)
 {
 	if (amount > 0)
 		mAmountBlurBloom = amount;
+}
+
+void RenderManager::SetRenderAxis(bool isrender)
+{
+	isRenderAxis = isrender;
 }
 
 void RenderManager::SwitchBloomMode()
@@ -154,7 +159,8 @@ GLuint RenderManager::RenderSence()
 	mSkybox->Draw(mCamera);
 
 	ModelManager::getInstance()->Render(RenderTargetType_COLOR);
-	axis.Draw();
+	if(isRenderAxis)
+		axis.Render();
 	PhysicsSimulation::getInstance()->RenderPhysicsDebug();
 	return mSenceRT.EndRender();
 }
@@ -287,6 +293,7 @@ RenderManager::RenderManager()
 	, m_isEnableBloom(true)
 	, mGammaCorrection(true)
 	, mAmountBlurBloom(2)
+	, isRenderAxis(false)
 {
 }
 

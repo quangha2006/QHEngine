@@ -48,8 +48,9 @@ private:
 	GLuint mNumIndices;
 	Vertex* mVertices_marterial;
 	GLuint* mIndices_marterial;
-	Shader mShader_dept;
-	Shader mShader;
+	Shader mDept_Shader;
+	Shader mModel_Shader;
+	Shader mNormal_Shader;
 	bool mIsDrawWireFrame;
 	void processNode(aiNode *node, const aiScene *scene, glm::mat4 nodeTransformation);
 

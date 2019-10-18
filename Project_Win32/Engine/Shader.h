@@ -17,11 +17,14 @@
 class Shader
 {
 private:
-	GLuint createShader(GLenum shaderType, const char* src, bool isFromString = false, const char* definecode = NULL);
 	std::map<std::string, int> m_uniformLocations;
 	GLuint mVertexShader;
 	GLuint mFragmentShader;
+	GLuint mGeometryShader;
 	GLint GetLocation(const char* name);
+
+	bool createProgram(const char* vtxSrc, const char* fragSrc, const char* geoSrc = NULL, bool isFromString = false, const char* definecode = NULL);
+	GLuint createShader(GLenum shaderType, const char* src, bool isFromString = false, const char* definecode = NULL);
 public:
 	GLuint program;
 	GLint position_Attribute;
@@ -36,8 +39,9 @@ public:
 	std::string shaderName;
 
 	bool m_initialized;
-	bool createProgram(const char* vtxSrc, const char* fragSrc, bool isFromString = false, const char* definecode = NULL);
+
 	bool LoadShader(const char* fileVertexShader, const char* fileFragmentShader, bool isFromString = false, const char* definecode = NULL);
+	bool LoadShader(const char* fileVertexShader, const char* fileFragmentShader, const char* fileGeometryShader, bool isFromString = false, const char* definecode = NULL);
 	void use();
 	GLint getPosAttribute();
 	GLint getTexCoodAttribute();

@@ -42,12 +42,12 @@ bool QHAxis::Init(Camera *camera)
 	return false;
 }
 
-void QHAxis::Draw()
+void QHAxis::Render()
 {
 	if (!m_initialized) return;
 
-	glEnable(GL_DEPTH_TEST);
-
+	//glEnable(GL_DEPTH_TEST);
+	glDisable(GL_DEPTH_TEST);
 	mShader.use();
 
 	GLint position_attribute = mShader.getPosAttribute();
@@ -73,7 +73,7 @@ void QHAxis::Draw()
 
 		glUniformMatrix4fv(mWorldView_uniform, 1, GL_FALSE, &lookat_tmp[0][0]);
 	}
-
+	glLineWidth(2);
 	glDrawArrays(GL_LINES, 0, 2);
 	glDrawArrays(GL_TRIANGLES, 2, 3);
 
@@ -84,18 +84,19 @@ void QHAxis::Draw()
 	glDrawArrays(GL_TRIANGLES, 12, 3);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 }
 
 QHAxis::QHAxis()
 	: m_initialized(false)
-	, model(glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)))
+	, model(glm::mat4())
 	, mWorldView_uniform(-1)
 	, mVBO(0)
 	, mVAO(0)
 	, mCamera(nullptr)
 {
 	vertices_axis = new float[15 * 6]{
+		// x_axis
 		-10.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 		10.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 		10.3f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
@@ -111,8 +112,8 @@ QHAxis::QHAxis()
 		0.0f, 0.0f, -10.0f, 0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f,  10.0f, 0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f,  10.3f, 0.0f, 0.0f, 1.0f,
-		0.3f, 0.0f,  10.0f, 0.0f, 0.0f, 1.0f,
-		-0.3f, 0.0f,  10.0f, 0.0f, 0.0f, 1.0f
+		0.0f, 0.3f,  10.0f, 0.0f, 0.0f, 1.0f,
+		0.0f, -0.3f,  10.0f, 0.0f, 0.0f, 1.0f
 	};
 }
 

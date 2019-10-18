@@ -280,5 +280,14 @@
     <None Include="..\..\Resources\Shaders\BasicFS.fs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\..\Resources\Shaders\normal_visualization.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\normal_visualization.gs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\normal_visualization.vs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

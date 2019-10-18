@@ -40,11 +40,11 @@ void Basic::Init()
 	mMerce.SetScale(glm::vec3(2.5f));
 	mMerce.SetRenderMode(RenderMode::RenderMode_Material);
 
-	//mAstroBoy.Init("bountyhunter/bountyhunter/export_from_max/test2.FBX", true);
+	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	mAstroBoy.SetScale(glm::vec3(0.1f));
+	mAstroBoy.SetScale(glm::vec3(10.0f));
 	mAstroBoy.SetPos(glm::vec3(0.0f, 1.0f, 0.0f));
-	mAstroBoy.SetDrawMesh(0);
+	//mAstroBoy.SetDrawMesh(0);
 	//mAstroBoy.SetDrawWireFrame(true);
 	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
@@ -52,16 +52,16 @@ void Basic::Init()
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
 	//mSpider.Init("bHieu/1_2_Tree.dae", true);
 	//mSpider.Init("Demo/BoxAnim.dae", true);
-	//mSpider.SetScale(glm::vec3(0.004f));
-	mSpider.SetPos(glm::vec3(1.8f, 35.5f, -.5f));
+	mSpider.SetScale(glm::vec3(0.1f));
+	mSpider.SetPos(glm::vec3(1.8f, 0.0f, -.5f));
 	//mSpider.SetScale(glm::vec3(5.0f));
-	//mSpider.SetAnimPlay(1);
+	mSpider.SetAnimPlay(2);
 	//mSpider.SetRotate(50.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
 	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(9);
 	//mSpider.SetPlayAnimTime(0.0f, 0.33f);
-	mSpider.SetPlayAnimTime(0.66f, 1.f);
+	//mSpider.SetPlayAnimTime(0.66f, 1.f);
 
 	//mBoblampclean.Init("bountyhunter/bountyhunter/Test/source.dae", true);
 	mBoblampclean.SetPos(glm::vec3(5.f, 0.0f, 0.0f));
@@ -79,12 +79,13 @@ void Basic::Init()
 	uvcircle.GetRigidBody()->setRollingFriction(1.);
 	uvcircle.GetRigidBody()->setSpinningFriction(1.);
 	uvcircle.GetRigidBody()->setRestitution(1.);
+
 	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
 
-	axis.Init(mCamera);
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
+	//RenderManager::getInstance()->SetRenderAxis(true);
 	//PhysicsSimulation::getInstance()->SwitchDebugMode();
 	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
 
@@ -116,29 +117,29 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 	
 	glm::mat4 tmp;
 	if (action == 0) return true;
-	switch (c)
+	switch (key)
 	{
-	case 'B':
+	case 66:
 		RenderManager::getInstance()->SwitchBloomMode();
 		return true;
-	case 'M':
+	case 77:
 		RenderManager::getInstance()->SwitchShadowMapMode();
 		return true;
-	case 'P':
+	case 80:
 		PhysicsSimulation::getInstance()->SwitchDebugMode();
 		return true;
-	case 'S': //num s
+	case 83: //num s
 		cameraView = glm::rotate(cameraView, glm::radians(1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		mCamera->SetView(cameraView);
 		return true;
-	case 'W': //num w
+	case 87: //num w
 		cameraView = glm::rotate(cameraView, glm::radians(-1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		mCamera->SetView(cameraView);
 		return true;
-	case 'A': //num a
+	case 65: //num a
 		uvcircle.SetScale(glm::vec3(1.0, ++(curent.y), 1.0));
 		return true;
-	case 'D': //num d
+	case 68: //num d
 		uvcircle.SetScale(glm::vec3(1.0, --(curent.y), 1.0));
 		return true;
 	case 262:

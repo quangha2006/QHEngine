@@ -310,59 +310,60 @@ void Model::Render(RenderTargetType RT_Type)
 	{
 	case RenderTargetType_DEPTH:
 
-		mShader_dept.use();
+		mDept_Shader.use();
 
-		mShader_dept.setFloat("near_plane", mCamera->GetLightNear());
-		mShader_dept.setFloat("far_plane", mCamera->GetLightFar());
+		mDept_Shader.setFloat("near_plane", mCamera->GetLightNear());
+		mDept_Shader.setFloat("far_plane", mCamera->GetLightFar());
 		
 		WorldViewLightSpaceMatrix = mCamera->lightSpaceMatrix * tmp_model;
-		mShader_dept.setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
+		mDept_Shader.setMat4("WorldViewLightSpaceMatrix", WorldViewLightSpaceMatrix);
 
 
 		//animation
 		if (m_hasAnimation && mTransforms.size() > 0)
 		{
-			mShader_dept.setBoneMat4("gBones", mTransforms);
+			mDept_Shader.setBoneMat4("gBones", mTransforms);
+
 		}
 
 		break;
 	case RenderTargetType_COLOR:
 
-		mShader.use();
+		mModel_Shader.use();
 
 		if (!isFirstSetupUniform) {
-			mShader.setFloat("pointlight_constant", 1.0f);
-			mShader.setFloat("pointlight_linear", 0.0014f);
-			mShader.setFloat("pointlight_quadratic", 0.000007f);
-			mShader.setFloat("material_shininess", 18.0f);
-			mShader.setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
-			mShader.setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
-			mShader.setVec3("light_specular", 1.f, 1.f, 1.f);
-			mShader.setBool("GammaCorrection", mGammaCorrection);
+			mModel_Shader.setFloat("pointlight_constant", 1.0f);
+			mModel_Shader.setFloat("pointlight_linear", 0.0014f);
+			mModel_Shader.setFloat("pointlight_quadratic", 0.000007f);
+			mModel_Shader.setFloat("material_shininess", 18.0f);
+			mModel_Shader.setVec3("light_ambient", 0.7f, 0.7f, 0.7f);
+			mModel_Shader.setVec3("light_diffuse", 1.0f, 1.0f, 1.0f); //light color
+			mModel_Shader.setVec3("light_specular", 1.f, 1.f, 1.f);
+			mModel_Shader.setBool("GammaCorrection", mGammaCorrection);
 			isFirstSetupUniform = true;
 		}
 
-		mShader.setVec3("light_position", mCamera->GetLightPos());
+		mModel_Shader.setVec3("light_position", mCamera->GetLightPos());
 
-		mShader.setVec3("viewPos", mCamera->GetPos());
+		mModel_Shader.setVec3("viewPos", mCamera->GetPos());
 
-		mShader.setBool("usepointlight", this->isUsePointLight);
+		mModel_Shader.setBool("usepointlight", this->isUsePointLight);
 
 		model_inverse = glm::inverse(tmp_model);
 		model_inverse = glm::transpose(model_inverse);
-		mShader.setMat4("world_inverse", model_inverse);
+		mModel_Shader.setMat4("world_inverse", model_inverse);
 
-		mShader.setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
-		mShader.setMat4("world", tmp_model);
+		mModel_Shader.setMat4("lightSpaceMatrix", mCamera->lightSpaceMatrix);
+		mModel_Shader.setMat4("world", tmp_model);
 
 		WorldViewProjectionMatrix = mCamera->GetWorldViewProjectionMatrix() * tmp_model;
-		mShader.setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
+		mModel_Shader.setMat4("WorldViewProjectionMatrix", WorldViewProjectionMatrix);
 
 
 		//animation
 		if (m_hasAnimation && mTransforms.size() > 0)
 		{
-			mShader.setBoneMat4("gBones", mTransforms);
+			mModel_Shader.setBoneMat4("gBones", mTransforms);
 		}
 		
 	}
@@ -413,8 +414,16 @@ void Model::Render(RenderTargetType RT_Type)
 		{
 			for (GLuint i = 0; i < mMaterial.size(); i++)
 			{
-				mShader.setBool("uselighting", uselighting);
-				mMaterial[i].Apply(RT_Type, mShader, mIsDrawWireFrame, mIsEnableAlpha);
+				mModel_Shader.use();
+				mModel_Shader.setBool("uselighting", uselighting);
+				mMaterial[i].Apply(RT_Type, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
+				mMaterial[i].Render();
+				mNormal_Shader.use();
+				mNormal_Shader.setMat4("projection", mCamera->GetProjection());
+				mNormal_Shader.setMat4("view", mCamera->GetView());
+				mNormal_Shader.setMat4("model", tmp_model);
+				if (m_hasAnimation && mTransforms.size() > 0)
+					mNormal_Shader.setBoneMat4("gBones", mTransforms);
 				mMaterial[i].Render();
 			}
 		}
@@ -422,9 +431,9 @@ void Model::Render(RenderTargetType RT_Type)
 		{
 			for (QHMesh& mesh : mQHMeshes)
 			{
-				mShader.setBool("uselighting", uselighting);
+				mModel_Shader.setBool("uselighting", uselighting);
 				unsigned int materialID = mesh.GetMaterialIndex();
-				mMaterial[materialID].Apply(RT_Type, mShader, mIsDrawWireFrame, mIsEnableAlpha);
+				mMaterial[materialID].Apply(RT_Type, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
 				mesh.Render();
 			}
 		}
@@ -573,10 +582,13 @@ bool Model::CompileShader()
 		shader_define += "#define INSTANCING\n";
 	}
 
-	if (!mShader_dept.LoadShader("Shaders/DepthShader.vs", "Shaders/DepthShader.fs", false, shader_define.c_str()))
+	if (!mDept_Shader.LoadShader("Shaders/DepthShader.vs", "Shaders/DepthShader.fs", false, shader_define.c_str()))
 		return false;
-	if (!mShader.LoadShader("Shaders/model_loading.vs", "Shaders/model_loading.fs", false, shader_define.c_str()))
+
+	if (!mModel_Shader.LoadShader("Shaders/model_loading.vs", "Shaders/model_loading.fs", false, shader_define.c_str()))
 		return false;
+
+	mNormal_Shader.LoadShader("Shaders/normal_visualization.vs","Shaders/normal_visualization.fs","Shaders/normal_visualization.gs", false, shader_define.c_str());
 
 	return true;
 }

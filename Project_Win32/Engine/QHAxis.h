@@ -18,7 +18,7 @@ private:
 	bool m_initialized;
 	Shader mShader;
 public:
-	void Draw();
+	void Render();
 	bool Init(Camera *camera);
 	QHAxis();
 	~QHAxis();

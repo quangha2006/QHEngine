@@ -7,7 +7,6 @@
 #include <ShaderManager.h>
 #include "SkyBox.h"
 #include "Sound.h"
-#include "QHAxis.h"
 #include "UserInterface.h"
 #include "QHText.h"
 
@@ -18,7 +17,6 @@ private:
 	Model mNanosuit, m_Streetenvironment, mMerce, mSpider, mBoblampclean, uvcircle, mAstroBoy;
 	float timestamp_for_lamp;
 	Sound soundIntro;
-	QHAxis axis;
 	bool m_initialized;
 	//Sprite *mbutton;
 	Sprite *mbtSwitchShadow, *mbtSwitchBloom, *mbtBloomAmount1, *mbtBloomAmount2;

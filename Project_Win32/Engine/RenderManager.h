@@ -31,6 +31,7 @@ private:
 	void RenderFinal();
 
 	QHAxis axis;
+	bool isRenderAxis;
 public:
 	static RenderManager* getInstance();
 	void Init(AppContext * appcontext, Camera *camera);
@@ -40,6 +41,7 @@ public:
 	void SetEnableShadowMap(bool is_enable);
 	void SetEnableBloom(bool is_enable);
 	void SetAmountBloom(int amount);
+	void SetRenderAxis(bool isrender);
 	void SwitchBloomMode();
 	void SwitchShadowMapMode();
 	bool IsEnableShadow();
