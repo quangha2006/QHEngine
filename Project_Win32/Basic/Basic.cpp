@@ -33,21 +33,23 @@ void Basic::Init()
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
 
-	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
+	mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
 	mMerce.SetRotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	mMerce.SetPos(glm::vec3(7.0f, 1.2f, 1.2f));
 	mMerce.SetScale(glm::vec3(2.5f));
 	mMerce.SetRenderMode(RenderMode::RenderMode_Material);
-
+	
 	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	mAstroBoy.SetScale(glm::vec3(10.0f));
-	mAstroBoy.SetPos(glm::vec3(0.0f, 1.0f, 0.0f));
+	mAstroBoy.SetScale(glm::vec3(30.0f));
+	mAstroBoy.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	//mAstroBoy.SetDrawMesh(0);
-	//mAstroBoy.SetDrawWireFrame(true);
+	mAstroBoy.SetDrawWireFrame(true);
 	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
+	
+	mAstroBoy.SetRenderNormalVisualization(true, 100.2);
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
 	//mSpider.Init("bHieu/1_2_Tree.dae", true);
@@ -71,7 +73,7 @@ void Basic::Init()
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
 	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(1.0, 1.0f, 1.0f));
-	uvcircle.SetPos(glm::vec3(0.1f, 10.f, 5.5f));
+	uvcircle.SetPos(glm::vec3(0.1f, 2.f, 5.5f));
 
 	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
@@ -88,6 +90,7 @@ void Basic::Init()
 	//RenderManager::getInstance()->SetRenderAxis(true);
 	//PhysicsSimulation::getInstance()->SwitchDebugMode();
 	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
+	btRigidBody * test = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(0.0f, 47.0f, 0.0f), glm::vec3(), 0.0f, glm::vec3(48));
 
 	Init2D();
 }
@@ -100,7 +103,7 @@ void Basic::Update(int delta)
 	//glm::vec3 circlePos = glm::vec3(trans[3][0], trans[3][1] + 5, trans[3][2]);
 	//mCamera->SetTarget(circlePos);
 	//mCamera->SetPos(circlePos.x + 50, circlePos.y + 30, circlePos.z + 50);
-
+	mAstroBoy.SetTimeStampAnim(Timer::getMillisecond() * 0.1);
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {

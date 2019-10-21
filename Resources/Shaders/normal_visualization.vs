@@ -30,12 +30,17 @@ void main()
 
 		mat3 normalMatrix = mat3(transpose(inverse(view * model)));
 
-		vs_out.normal = vec3(projection * BoneTransform * vec4(normalMatrix * aNormal, 0.0));
+		vec3 normal = mat3(BoneTransform) * aNormal;
+
+		vs_out.normal = vec3(projection * vec4(normalMatrix * normal, 0.0));
 
 		gl_Position   = projection * view * model *  BoneTransform * vec4(aPos, 1.0);
 #else
+
     mat3 normalMatrix = mat3(transpose(inverse(view * model)));
+
     vs_out.normal = vec3(projection * vec4(normalMatrix * aNormal, 0.0));
+
     gl_Position = projection * view * model * vec4(aPos, 1.0);
 #endif
 }

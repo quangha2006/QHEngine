@@ -99,7 +99,8 @@ private:
 	int m_Id;
 	int m_meshdraw;
 	RenderMode mRenderMode;
-
+	bool mIsRenderNormalVisualization;
+	float mNormalVisualizationMagnitude;
 	btRigidBody* mRigidBody;
 	glm::vec3 mFixedBoxShape;
 	bool isDynamic;
@@ -115,6 +116,7 @@ private:
 	void UpdateWorldTransform();
 	void SetWorld(glm::mat4 world = glm::mat4());
 	bool CompileShader();
+	void RenderNormalVisalization();
 public:
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type);
@@ -124,6 +126,7 @@ public:
 	void DisableLightingForMesh(int numMesh);
 	void SetCustomColor(glm::vec3 color);
 	void SetTimeStampAnim(int64_t time);
+	void SetRenderNormalVisualization(bool is_render, float magnitude = 0.2f);
 	void UpdateAnimation();
 	void SyncPhysics();
 	void BoneTransform(int64_t TimeInSeconds, vector<glm::mat4> &Transforms);

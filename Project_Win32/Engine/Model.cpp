@@ -412,19 +412,11 @@ void Model::Render(RenderTargetType RT_Type)
 
 		if (mRenderMode == RenderMode::RenderMode_Material)
 		{
-			for (GLuint i = 0; i < mMaterial.size(); i++)
+			for (QHMaterial& material : mMaterial)
 			{
-				mModel_Shader.use();
 				mModel_Shader.setBool("uselighting", uselighting);
-				mMaterial[i].Apply(RT_Type, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
-				mMaterial[i].Render();
-				mNormal_Shader.use();
-				mNormal_Shader.setMat4("projection", mCamera->GetProjection());
-				mNormal_Shader.setMat4("view", mCamera->GetView());
-				mNormal_Shader.setMat4("model", tmp_model);
-				if (m_hasAnimation && mTransforms.size() > 0)
-					mNormal_Shader.setBoneMat4("gBones", mTransforms);
-				mMaterial[i].Render();
+				material.Apply(RT_Type, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
+				material.Render();
 			}
 		}
 		else if (mRenderMode == RenderMode::RenderMode_Instancing)
@@ -441,13 +433,52 @@ void Model::Render(RenderTargetType RT_Type)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
+	RenderNormalVisalization();
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+void Model::RenderNormalVisalization()
+{
+	if (!mIsRenderNormalVisualization)
+		return;
+
+	mNormal_Shader.use();
+	mNormal_Shader.setMat4("projection", mCamera->GetProjection());
+	mNormal_Shader.setMat4("view", mCamera->GetView());
+	mNormal_Shader.setMat4("model", mWorldTransform);
+	mNormal_Shader.setFloat("MAGNITUDE", mNormalVisualizationMagnitude);
+	//animation
+	if (m_hasAnimation && mTransforms.size() > 0)
+	{
+		mNormal_Shader.setBoneMat4("gBones", mTransforms);
+	}
+	if (mRenderMode == RenderMode::RenderMode_Material)
+	{
+		for (QHMaterial& material : mMaterial)
+		{
+			//material.Apply(RenderTargetType_COLOR, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
+			material.Render();
+		}
+	}
+	else if (mRenderMode == RenderMode::RenderMode_Instancing)
+	{
+		for (QHMesh& mesh : mQHMeshes)
+		{
+			//unsigned int materialID = mesh.GetMaterialIndex();
+			//mMaterial[materialID].Apply(RenderTargetType_COLOR, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
+			mesh.Render();
+		}
+	}
+}
+
 void Model::SetRenderMode(RenderMode render_mode)
 {
-	mRenderMode = render_mode;
+	if (!m_initialized)
+		mRenderMode = render_mode;
+	else
+		LOGE("Cannot set RenderMode: you need to set before the model initialized\n");
 }
 
 void Model::SetUseLighting(bool UseLighting)
@@ -471,6 +502,11 @@ void Model::SetCustomColor(glm::vec3 color)
 void Model::SetTimeStampAnim(int64_t time)
 {
 	mtimeStampAnim = time;
+}
+void Model::SetRenderNormalVisualization(bool is_render, float magnitude)
+{
+	mIsRenderNormalVisualization = is_render;
+	mNormalVisualizationMagnitude = magnitude;
 }
 void Model::UpdateAnimation()
 {
@@ -982,6 +1018,8 @@ Model::Model()
 	, mNumIndices(0)
 	, mRenderMode(RenderMode::RenderMode_Auto)
 	, mIsDrawWireFrame(false)
+	, mIsRenderNormalVisualization(false)
+	, mNormalVisualizationMagnitude(0.2f)
 {
 	ModelManager::getInstance()->AddModel(this);
 }
