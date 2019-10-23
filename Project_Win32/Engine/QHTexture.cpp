@@ -79,9 +79,9 @@ namespace QHTexture
 		return tempTextureData;
 	}
 	
-	Texture TextureFromFile(const char * path, const std::string & directory, aiTextureType type, GLuint textureID, bool gammaCorrection)
+	Texture TextureFromFile(const std::string& path, const std::string & directory, aiTextureType type, GLuint textureID, bool gammaCorrection)
 	{
-		std::string fullpath = directory + '/' + std::string(path);
+		std::string fullpath = directory + '/' + path;
 		uint64_t time_begin = Timer::getMillisecond();
 
 		GLint nrComponents = 0;

@@ -42,7 +42,7 @@ struct Texture {
 };
 namespace QHTexture
 {
-	Texture TextureFromFile(const char * path, const std::string & directory, aiTextureType type = aiTextureType::aiTextureType_UNKNOWN, GLuint textureID = 0, bool gammaCorrection = false);
+	Texture TextureFromFile(const std::string& path, const std::string& directory, aiTextureType type = aiTextureType::aiTextureType_UNKNOWN, GLuint textureID = 0, bool gammaCorrection = false);
 	GLuint loadCubemap(const char * texturepath, std::vector<std::string> faces, bool gammaCorrection);
 	GLuint GenTextureId();
 };

@@ -216,7 +216,7 @@ void GLDebugDrawer::drawContactPoint(const btVector3 & PointOnB, const btVector3
 {
 	drawLine(PointOnB, PointOnB + normalOnB * distance, color);
 	btVector3 ncolor(0, 0, 0);
-	drawLine(PointOnB, PointOnB + normalOnB * 0.01, ncolor);
+	drawLine(PointOnB, PointOnB + normalOnB * 0.01f, ncolor);
 }
 
 void GLDebugDrawer::reportErrorWarning(const char * warningString)

@@ -312,7 +312,7 @@ btRigidBody * PhysicsSimulation::createConvexTriangleMeshShape(float mass, const
 
 	btTriangleMesh* meshInterface = new btTriangleMesh();
 
-	for (int i = 0; i < numIndices / 3; i++)
+	for (unsigned int i = 0; i < numIndices / 3; i++)
 	{
 		glm::vec3 v0 = vertices[indices[i * 3]].Position * scale;
 		glm::vec3 v1 = vertices[indices[i * 3 + 1]].Position * scale;

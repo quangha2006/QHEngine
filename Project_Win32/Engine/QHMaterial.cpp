@@ -2,31 +2,31 @@
 #include "ShaderManager.h"
 #include "RenderManager.h"
 #include "Debugging.h"
+#include <map>
 
 vector<Texture> loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::string &currentDirectory)
 {
+	static std::map<std::string, Texture> Textures_loaded;
 	vector<Texture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
 		aiString str;
 		mat->GetTexture(type, i, &str);
-		if (str.length <= 0) continue;
+		if (str.length <= 0)
+			continue;
+		std::string texturePath = str.C_Str();
 		// check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
-		bool skip = false;
-		//for (unsigned int j = 0; j < textures_loaded.size(); j++)
-		//{
-		//	if (std::strcmp(textures_loaded[j].path.c_str(), str.C_Str()) == 0)
-		//	{
-		//		textures.push_back(textures_loaded[j]);
-		//		skip = true; // a texture with the same filepath has already been loaded, continue to next one. (optimization)
-		//		break;
-		//	}
-		//}
-		if (!skip)
-		{   // if texture hasn't been loaded already, load it
-			Texture texture = QHTexture::TextureFromFile(str.C_Str(), currentDirectory, type, 0, false);
+		if (Textures_loaded.count(texturePath) > 0)
+		{
+			Texture texture = Textures_loaded[texturePath];
 			textures.push_back(texture);
-			//textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+		}
+		else  // if texture hasn't been loaded already, load it
+		{
+			Texture texture = QHTexture::TextureFromFile(texturePath, currentDirectory, type, 0, false);
+			textures.push_back(texture);
+			// store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+			Textures_loaded[texturePath] = texture;
 		}
 	}
 
