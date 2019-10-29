@@ -3,8 +3,15 @@
 #include <cstdlib>
 #include <ctime>
 
-#define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
-#define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
+#define GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX          0x9047
+#define GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX    0x9048
+#define GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX  0x9049
+#define GPU_MEMORY_INFO_EVICTION_COUNT_NVX            0x904A
+#define GPU_MEMORY_INFO_EVICTED_MEMORY_NVX            0x904B
+
+#define VBO_FREE_MEMORY_ATI                     0x87FB
+#define TEXTURE_FREE_MEMORY_ATI                 0x87FC
+#define RENDERBUFFER_FREE_MEMORY_ATI            0x87FD
 
 #if defined(ANDROID)
 #include "package_utils.h"
@@ -71,7 +78,7 @@ namespace Utils
 		//PFNGLGETSTRINGIPROC glGetStringi = 0;
 		//glGetStringi = (PFNGLGETSTRINGIPROC)wglGetProcAddress("glGetStringi");
 
-		for (GLint i = 0; i < n; i++)
+		for (GLint i = 0; i < n; ++i)
 		{
 			const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, i);
 			LOGI("Ext %d: %s\n", i, extension);
@@ -93,16 +100,32 @@ namespace Utils
 	}
 	int getGPUMenTotalAvailable()
 	{
-		// Maybe available on NVIDIA GPU
 		GLint total_mem_kb = 0;
-		glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, &total_mem_kb);
+		if (IsExtensionSupported("NVX_gpu_memory_info")) // available on NVIDIA GPU
+		{
+			glGetIntegerv(GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &total_mem_kb);
+		}
+		else if (IsExtensionSupported("ATI_meminfo")) // Not Available for ATI
+		{
+			//glGetIntegerv(GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &total_mem_kb);
+		}
 		return total_mem_kb;
 	}
 	int getGPUMemCurrentAvailable()
 	{
-		// Maybe available on NVIDIA GPU
 		GLint cur_avail_mem_kb = 0;
-		glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, &cur_avail_mem_kb);
+		if (IsExtensionSupported("NVX_gpu_memory_info")) // available on NVIDIA GPU
+		{
+			glGetIntegerv(GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &cur_avail_mem_kb);
+		}
+		else if (IsExtensionSupported("ATI_meminfo"))
+		{
+			GLint VBO_Free_mem_kb = 0;
+			glGetIntegerv(VBO_FREE_MEMORY_ATI, &VBO_Free_mem_kb);
+			GLint Texture_Free_mem_kb = 0;
+			glGetIntegerv(TEXTURE_FREE_MEMORY_ATI, &Texture_Free_mem_kb);
+			cur_avail_mem_kb = VBO_Free_mem_kb + Texture_Free_mem_kb;
+		}
 		return cur_avail_mem_kb;
 	}
 	glm::vec3 RandomColor()

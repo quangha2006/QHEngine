@@ -45,7 +45,7 @@ void Basic::Init()
 	mAstroBoy.SetScale(glm::vec3(30.0f));
 	mAstroBoy.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	//mAstroBoy.SetDrawMesh(0);
-	mAstroBoy.SetDrawWireFrame(true);
+	//mAstroBoy.SetDrawWireFrame(true);
 	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
 	
@@ -90,7 +90,7 @@ void Basic::Init()
 	//RenderManager::getInstance()->SetRenderAxis(true);
 	//PhysicsSimulation::getInstance()->SwitchDebugMode();
 	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
-	btRigidBody * test = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(0.0f, 47.0f, 0.0f), glm::vec3(), 0.0f, glm::vec3(48));
+	//btRigidBody * test = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(0.0f, 47.0f, 0.0f), glm::vec3(), 0.0f, glm::vec3(48));
 
 	Init2D();
 }
@@ -220,7 +220,7 @@ void Basic::ClickbuttonBloomAmountLeft()
 		bloomamount -= 2;
 	RenderManager::getInstance()->SetAmountBloom(bloomamount);
 	mBloomAmountLabel.setText("Bloom Amount:       %d", RenderManager::getInstance()->GetAmountBloom());
-	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, 540 - mbtSwitchBloom->GetHeight() - 8);
+	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, Screen_height - mbtSwitchBloom->GetHeight() - 8);
 }
 
 void Basic::ClickbuttonBloomAmountRight()
@@ -229,7 +229,7 @@ void Basic::ClickbuttonBloomAmountRight()
 	bloomamount += 2;
 	RenderManager::getInstance()->SetAmountBloom(bloomamount);
 	mBloomAmountLabel.setText("Bloom Amount:       %d", RenderManager::getInstance()->GetAmountBloom());
-	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, 540 - mbtSwitchBloom->GetHeight() - 8);
+	mbtBloomAmount1->SetPos(mBloomAmountLabel.getEndPos_x() + 10, Screen_height - mbtSwitchBloom->GetHeight() - 8);
 }
 
 void Basic::ClickbuttonShadow()
