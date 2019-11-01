@@ -7,9 +7,9 @@ void GameDemo::Update(int delta)
 
 void GameDemo::Init()
 {
-	mCamera->SetPos(glm::vec3(5.0f, 5.0f, 20.0f));
-	mCamera->SetTarget(glm::vec3(0.0f, 1.0f, 0.0f));
-	mCamera->SetLightPos(8.2f, 10.0f, 9.0f);
+	mCamera->SetPos(0.0f, 5.0f, 20.0f);
+	mCamera->SetTarget(0.0f, 5.0f, 0.0f);
+	mCamera->SetLightPos(20.2f, 50.0f, 1.0f);
 
 	mSkyBox.Init("SkyBox");
 

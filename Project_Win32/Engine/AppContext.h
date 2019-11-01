@@ -34,16 +34,16 @@ class AppContext
 {
 protected:
 	static AppContext * instance;
-	ANativeWindow* window;
+	ANativeWindow* mWindow;
 	int32_t width, height;
 public:
 	virtual bool createWindow(int32_t width, int32_t height) { return false; }
 	virtual void SwapInterval(int interval) {}
 	virtual void SwapBuffers() {}
-	virtual void SetWindow(ANativeWindow* window) { this->window = window; }
+	virtual void SetWindow(ANativeWindow* window) { mWindow = window; }
 	virtual AppSharedContext *CreateShareContext() { return new AppSharedContext(); };
 	virtual void DestroyContext() {};
-	virtual ANativeWindow* GetWindow() { return window; }
+	virtual ANativeWindow* GetWindow() { return mWindow; }
 	virtual void SetWindowSize(int32_t width, int32_t height);
 	virtual int32_t GetWindowWidth() { return this->width; }
 	virtual int32_t GetWindowHeight() { return this->height; }

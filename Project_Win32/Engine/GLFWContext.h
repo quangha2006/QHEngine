@@ -4,7 +4,7 @@
 class GLFWSharedContext : public AppSharedContext
 {
 private:
-	ANativeWindow* window;
+	ANativeWindow* mWindow;
 public:
 	void SetWindows(ANativeWindow* window);
 	bool MakeContextCurrent();

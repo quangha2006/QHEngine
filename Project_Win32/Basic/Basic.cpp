@@ -48,8 +48,6 @@ void Basic::Init()
 	//mAstroBoy.SetDrawWireFrame(true);
 	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
-	
-	mAstroBoy.SetRenderNormalVisualization(true, 100.2);
 
 	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
 	//mSpider.Init("bHieu/1_2_Tree.dae", true);
