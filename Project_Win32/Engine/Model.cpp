@@ -148,7 +148,7 @@ void Model::processMesh(const aiScene * scene, std::map<std::string, unsigned in
 		return;
 
 	mQHMeshes.reserve(m_pScene->mNumMeshes);
-	for (int i = 0; i < m_pScene->mNumMeshes; i++)
+	for (unsigned int i = 0; i < m_pScene->mNumMeshes; i++)
 	{
 		QHMesh SceneMesh(m_pScene->mMeshes[i], scene, m_BoneMapping, m_BoneInfo);
 		mQHMeshes.push_back(SceneMesh);
@@ -655,11 +655,6 @@ void Model::SetDrawMesh(int mesh)
 	m_meshdraw = mesh;
 }
 
-void Model::SetId(int id)
-{
-	m_Id = id;
-}
-
 void Model::SetVisible(bool isvisible)
 {
 	mIsVisible = isvisible;
@@ -677,7 +672,8 @@ int Model::GetAnimPlay()
 
 std::string Model::GetAnimNamePlaying()
 {
-	if (!m_pScene->HasAnimations() || animToPlay < 0 || animToPlay >= m_pScene->mNumAnimations) return "";
+	if (!m_pScene->HasAnimations() || animToPlay < 0 || animToPlay >= m_pScene->mNumAnimations) 
+		return "";
 
 	aiString animName = m_pScene->mAnimations[animToPlay]->mName;
 
@@ -1018,6 +1014,8 @@ Model::Model()
 	, mIsVisible(true)
 	, mFixedBoxShape(glm::vec3(0.))
 	, isFirstSetupUniform(false)
+	, mIsEnableAlpha(true)
+	, mIsAutoRender(true)
 	, mRigidBody(nullptr)
 	, mVertices_marterial(nullptr)
 	, mIndices_marterial(nullptr)
@@ -1028,12 +1026,13 @@ Model::Model()
 	, mIsRenderNormalVisualization(false)
 	, mNormalVisualizationMagnitude(0.2f)
 {
-	ModelManager::getInstance()->AddModel(this);
+	m_Id = ModelManager::getInstance()->AddModel(this);
 }
 Model::~Model()
 {
 	ModelManager::getInstance()->RemoveModel(m_Id);
 
+	// Need implement this again
 	for (unsigned int i = 0; i < textures_loaded.size(); i++)
 		glDeleteTextures(1, &textures_loaded[i].id);
 

@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "Shader.h"
+#include "Model.h"
 
 class Debugging
 {
@@ -13,6 +14,7 @@ private:
 	float *quadVertices;
 	GLuint quadVAO, quadVBO;
 	Shader mQuadDebug_shader;
+	Model mBall_Model;
 public:
 	static Debugging *getInstance();
 	void addNumVertices(unsigned int count);

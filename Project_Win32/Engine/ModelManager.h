@@ -13,7 +13,7 @@ private:
 	int mCurrentId;
 public:
 	static ModelManager* getInstance();
-	void AddModel(Model* model);
+	int AddModel(Model* model);
 	void RemoveModel(int id);
 	void Update();
 	void Render(RenderTargetType RT_Type);

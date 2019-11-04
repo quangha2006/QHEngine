@@ -13,13 +13,14 @@ ModelManager * ModelManager::getInstance()
 	return instance;
 }
 
-void ModelManager::AddModel(Model * model)
+int ModelManager::AddModel(Model * model)
 {
 	if (model)
 	{
 		mListModel.push_back(model);
-		model->SetId(mCurrentId++);
+		return mCurrentId++;
 	}
+	return -1;
 }
 
 void ModelManager::RemoveModel(int id)

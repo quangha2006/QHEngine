@@ -103,6 +103,7 @@ private:
 	glm::vec3 mFixedBoxShape;
 	bool isDynamic;
 	bool isFirstSetupUniform;
+	bool mIsAutoRender;
 	uint FindScaling(double AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedRotation(aiQuaternion& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
 	void CalcInterpolatedPosition(aiVector3D& Out, double AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -137,7 +138,6 @@ public:
 	void SetDrawWireFrame(bool isdrawpolygon);
 	void SetCamera(Camera * camera);
 	void SetDrawMesh(int mesh);
-	void SetId(int id);
 	void SetVisible(bool isvisible);
 	bool GetIsVisible();
 	int GetAnimPlay();

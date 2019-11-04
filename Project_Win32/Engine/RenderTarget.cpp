@@ -210,9 +210,9 @@ GLuint RenderTarget::GetHeight()
 void RenderTarget::RenderDebug()
 {
 	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)
-		Debugging::getInstance()->DrawTex(screenTexture, "debugShader");
+		QHEngine::RenderDebugTexture(screenTexture);
 	else
-		Debugging::getInstance()->DrawTex(m_TexId[0], "debugShader");
+		QHEngine::RenderDebugTexture(m_TexId[0]);
 }
 
 void RenderTarget::Render(bool useDefaultShader)
