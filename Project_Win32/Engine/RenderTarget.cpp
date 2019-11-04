@@ -1,5 +1,4 @@
 #include "RenderTarget.h"
-#include "ShaderManager.h"
 #include "Debugging.h"
 
 bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texWidth, int texHeight)
@@ -150,7 +149,7 @@ bool RenderTarget::Init(AppContext * appcontext, RenderTargetType type, int texW
 	return true;
 }
 
-void RenderTarget::BeginRender(const char* shadername)
+void RenderTarget::BeginRender()
 {
 	if (!m_initialized)
 	{
@@ -173,7 +172,7 @@ GLuint RenderTarget::EndRender()
 	{
 		return 0;
 	}
-
+	
 	m_isEnable = false;
 
 	if (m_type == RenderTargetType_COLOR_MULTISAMPLED)
@@ -239,20 +238,26 @@ void RenderTarget::Render(bool useDefaultShader)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 }
-GLuint RenderTarget::MakeBloom(GLuint BriTexture, unsigned int amount) // amount default = 4
+GLuint RenderTarget::MakeBloom(GLuint BriTexture, GLuint amount, Shader &horizontal_Shader, Shader &vertical_Shader) // amount default = 4
 {
+	CheckGLError("MakeBloom: BEGIN");
+
 	bool horizontal = true, first_iteration = true;
 	glm::vec2 tex_offset = glm::vec2(1.0f / (float)m_texBufferWidth, 1.0f / (float)m_texBufferHeight);
-	//glm::vec2 tex_offset = glm::vec2(1.0f / (float)m_appcontext->GetWindowWidth(), 1.0f / (float)m_appcontext->GetWindowHeight());
 	glViewport(0, 0, m_texBufferWidth, m_texBufferHeight);
+
 	for (unsigned int i = 0; i < amount; i++)
 	{
 		if (horizontal)
-			ShaderManager::getInstance()->setUseProgram("Blur_Horizontal");
+		{
+			horizontal_Shader.use();
+			horizontal_Shader.setVec2("tex_offset", tex_offset);
+		}
 		else
-			ShaderManager::getInstance()->setUseProgram("Blur_Vertical");
-
-		ShaderSet::setVec2("tex_offset", tex_offset);
+		{
+			vertical_Shader.use();
+			vertical_Shader.setVec2("tex_offset", tex_offset);
+		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FBOId[horizontal]);
 
@@ -269,22 +274,8 @@ GLuint RenderTarget::MakeBloom(GLuint BriTexture, unsigned int amount) // amount
 	}
 	glViewport(0, 0, m_appcontext->GetWindowWidth(), m_appcontext->GetWindowHeight());
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	CheckGLError("MakeBloom: END");
 	return m_TexId[!horizontal];
-
-	//ShaderManager::getInstance()->setUseProgram("bloom_Final");
-	//glBindVertexArray(quadVAO);
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, normalTexture);
-
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, m_TexId[!horizontal]);
-	//ShaderManager::getInstance()->setInt("bloom", 1);
-	//ShaderManager::getInstance()->setInt("scene", 0);
-	//ShaderManager::getInstance()->setInt("bloomBlur", 1);
-
-	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	//glBindVertexArray(0);
 }
 
 void RenderTarget::InitDefaultShader()

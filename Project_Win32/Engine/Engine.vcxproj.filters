@@ -51,9 +51,6 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TextRendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -126,9 +123,6 @@
     <ClCompile Include="QHMesh.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
     <ClCompile Include="ModelManager.cpp">
       <Filter>Model</Filter>
     </ClCompile>
@@ -165,9 +159,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextRendering.h">
@@ -227,9 +218,6 @@
     <ClInclude Include="Model.h">
       <Filter>Model</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="QHMesh.h">
       <Filter>Model</Filter>
     </ClInclude>
@@ -259,12 +247,6 @@
     <None Include="..\..\Resources\Shaders\model_loading.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\Resources\Shaders\framebuffers_debug.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\Resources\Shaders\framebuffers_debug.vs">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\Resources\Shaders\blur.fs">
       <Filter>Resource Files</Filter>
     </None>
@@ -287,6 +269,18 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\Resources\Shaders\normal_visualization.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\Quad.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\Quad.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\Quad_debug.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\Quad_debug.vs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

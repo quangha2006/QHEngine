@@ -2,6 +2,7 @@
 #define __DEBUGGING_H__
 
 #include "stdafx.h"
+#include "Shader.h"
 
 class Debugging
 {
@@ -11,6 +12,7 @@ private:
 	unsigned short numDrawCall;
 	float *quadVertices;
 	GLuint quadVAO, quadVBO;
+	Shader mQuadDebug_shader;
 public:
 	static Debugging *getInstance();
 	void addNumVertices(unsigned int count);
@@ -18,7 +20,8 @@ public:
 	void addDrawCall(unsigned short count);
 	unsigned short getNumDrawCall();
 	void resetCount();
-	void DrawTex(GLuint TexId, const char *shadername = "debugShader");
+	void RenderTexture(GLuint TexId);
+	void RenderBall(glm::vec3 pos);
 	Debugging();
 	~Debugging();
 };
@@ -27,5 +30,6 @@ namespace QHEngine
 	void DrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices);
 	void DrawArrays(GLenum mode, GLint first, GLsizei count);
 	void DrawElementsInstanced(GLenum mode, GLsizei count, GLenum type, const void * indices, GLsizei instancecount);
+	void RenderDebugTexture(GLuint textureId);
 };
 #endif // !__DEBUGGING_H__

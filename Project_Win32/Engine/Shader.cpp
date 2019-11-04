@@ -140,7 +140,7 @@ GLuint Shader::createShader(GLenum shaderType, const char * src, bool isFromStri
 			if (infoLog) {
 				glGetShaderInfoLog(shader, infoLogLen, NULL, infoLog);
 				LOGE("ERROR!\n");
-				LOGE("Could not compile %s shader: %s\n", shaderType == GL_VERTEX_SHADER ? "VERTEX" : shaderType == GL_FRAGMENT_SHADER ? "FRAGMENT" : "GEOMETRY", infoLog);
+				LOGE("Could not compile %s shader: %s %s\n", isFromString ? "" : src, shaderType == GL_VERTEX_SHADER ? "VERTEX" : shaderType == GL_FRAGMENT_SHADER ? "FRAGMENT" : "GEOMETRY", infoLog);
 				free(infoLog);
 			}
 		}

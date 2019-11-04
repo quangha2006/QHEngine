@@ -4,7 +4,6 @@
 #include <Shader.h>
 #include <Model.h>
 #include <Camera.h>
-#include <ShaderManager.h>
 #include "SkyBox.h"
 #include "Sound.h"
 #include "UserInterface.h"

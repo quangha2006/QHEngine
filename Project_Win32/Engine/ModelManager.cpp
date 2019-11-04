@@ -1,5 +1,6 @@
 #include "ModelManager.h"
 #include "Timer.h"
+#include "RenderTarget.h"
 
 ModelManager * ModelManager::instance = NULL;
 

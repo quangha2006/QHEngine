@@ -1,11 +1,9 @@
 #ifndef __MODEL_H__
 #define __MODEL_H__
 
-#include "Mesh.h"
 #include "Shader.h"
 #include "Camera.h"
 #include "TGA.h"
-#include "ShaderManager.h"
 #include "PhysicsSimulation.h"
 #include "QHMaterial.h"
 #include "QHMesh.h"
@@ -117,6 +115,7 @@ private:
 	void SetWorld(glm::mat4 world = glm::mat4());
 	bool CompileShader();
 	void RenderNormalVisalization();
+	void RenderBone();
 public:
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type);

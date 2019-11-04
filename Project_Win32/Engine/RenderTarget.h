@@ -2,8 +2,8 @@
 #define __RENDERTARGET_H__
 
 #include "stdafx.h"
-#include <AppContext.h>
-#include <Shader.h>
+#include "AppContext.h"
+#include "Shader.h"
 
 enum RenderTargetType
 {
@@ -31,14 +31,14 @@ private:
 	GLuint quadVAO, quadVBO;
 public:
 	bool Init(AppContext * appcontext, RenderTargetType type, int texBufferWidth = 1024, int texBufferHeight = 1024);
-	void BeginRender(const char* shadername = NULL);
+	void BeginRender();
 	GLuint EndRender();
 	GLuint GetTextureId(int index);
 	GLuint GetWidth();
 	GLuint GetHeight();
 	void RenderDebug();
 	void Render(bool useDefaultShader = false);
-	GLuint MakeBloom(GLuint BriTexture, unsigned int amount = 4);
+	GLuint MakeBloom(GLuint BriTexture, GLuint amount, Shader &horizontal_Shader, Shader &vertical_Shader);
 	RenderTarget();
 	~RenderTarget();
 };

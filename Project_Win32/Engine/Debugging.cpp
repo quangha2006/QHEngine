@@ -1,6 +1,5 @@
 #include "Debugging.h"
 #include <iostream>
-#include "ShaderManager.h"
 
 Debugging *Debugging::instance = NULL;
 
@@ -37,23 +36,26 @@ void Debugging::resetCount()
 	numDrawCall = 0;
 }
 
-void Debugging::DrawTex(GLuint TexId, const char *shadername)
+void Debugging::RenderTexture(GLuint TexId)
 {
-
 	//Debug
 	glEnable(GL_DEPTH_TEST);
-	ShaderManager::getInstance()->setUseProgram(shadername);
+	mQuadDebug_shader.use();
 	glBindVertexArray(quadVAO);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TexId);	// use the color attachment texture as the texture of the quad plane
 
-	ShaderSet::setInt("depthMap", 0);
+	mQuadDebug_shader.setInt("textureid", 0);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 	glDisable(GL_DEPTH_TEST);
 	//End debug
+}
+
+void Debugging::RenderBall(glm::vec3 pos)
+{
 }
 
 Debugging::Debugging()
@@ -78,6 +80,8 @@ Debugging::Debugging()
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glBindVertexArray(0);
+
+	mQuadDebug_shader.LoadShader("Shaders/Quad_debug.vs", "Shaders/Quad_debug.fs");
 }
 
 
@@ -105,4 +109,9 @@ void QHEngine::DrawElementsInstanced(GLenum mode, GLsizei count, GLenum type, co
 	glDrawElementsInstanced(mode, count, type, indices, instancecount);
 	Debugging::getInstance()->addDrawCall(1);
 	Debugging::getInstance()->addNumVertices(count * instancecount);
+}
+
+void QHEngine::RenderDebugTexture(GLuint textureId)
+{
+	Debugging::getInstance()->RenderTexture(textureId);
 }

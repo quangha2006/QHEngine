@@ -1,5 +1,4 @@
 #include "QHMaterial.h"
-#include "ShaderManager.h"
 #include "RenderManager.h"
 #include "Debugging.h"
 #include <map>
@@ -35,7 +34,6 @@ vector<Texture> loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::
 
 void QHMaterial::Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDrawWireFrame, bool isEnableAlpha)
 {
-
 	GLuint diffuseNr = 1;
 	GLuint specularNr = 1;
 	GLuint normalNr = 1;
@@ -99,7 +97,7 @@ void QHMaterial::Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDra
 	modelShader.setVec3("material_color_ambient", mAmbient);
 	modelShader.setVec3("material_color_diffuse", mDiffuse);
 	modelShader.setVec3("material_color_specular", mSpecular);
-	modelShader.setBool("GammaCorrection", RenderManager::getInstance()->isEnablemGammaCorrection());
+	modelShader.setBool("GammaCorrection", RenderManager::getInstance()->isEnableGammaCorrection());
 
 	if (mShininess < 0.001f || !mHasNormals)
 		modelShader.setBool("uselighting", false);

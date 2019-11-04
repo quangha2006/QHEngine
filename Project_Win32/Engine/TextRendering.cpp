@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "TextRendering.h"
-#include "ShaderManager.h"
 #include <SOIL.h>
 #include <iostream>
 #include <string>
@@ -297,7 +296,7 @@ void TextRendering::Draw()
 	{
 		if (ListQHText->getIsVisible() == false) continue;
 
-		vector<TextData> tmp = ListQHText->getTextData();
+		std::vector<TextData> tmp = ListQHText->getTextData();
 		if (tmp.size() > 0)
 			fulltextdata.insert(fulltextdata.end(), tmp.begin(), tmp.end());
 	}

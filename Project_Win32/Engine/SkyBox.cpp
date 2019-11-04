@@ -1,7 +1,5 @@
 #include "SkyBox.h"
-//#include <SOIL.h>
 #include "Utils.h"
-#include <ShaderManager.h>
 #include <stb_image.h>
 #include "QHTexture.h"
 #include "RenderManager.h"
@@ -9,9 +7,8 @@
 void SkyBox::Init(const char * texturepath)
 {
 	const char * verShader = {
-	"#version 100\n"
-	"attribute vec3 aPos;\n"
-	"varying vec3 TexCoords;\n"
+	"layout (location = 0) in vec3 aPos;\n"
+	"out vec3 TexCoords;\n"
 	"\n"
 	"uniform mat4 WorldViewProjectionMatrix;\n"
 	"\n"
@@ -24,22 +21,22 @@ void SkyBox::Init(const char * texturepath)
 	"}\n"
 	};
 	const char *fragShader = {
-	"#version 100\n"
 	"precision highp float;\n"
 	"\n"
-	"varying vec3 TexCoords;\n"
+	"in vec3 TexCoords;\n"
 	"\n"
 	"uniform samplerCube skybox;\n"
 	"uniform bool GammaCorrection;\n"
+	"layout(location = 0) out vec4 FragColor;\n"
 	"\n"
 	"void main()\n"
 	"{\n"
-	"	vec4 color = textureCube(skybox, TexCoords);\n"
+	"	vec4 color = texture(skybox, TexCoords);\n"
 	"if (GammaCorrection == true)\n"
 	"{\n"
 	"	color.rgb = pow(color.rgb, vec3(2.2));\n"
 	"}\n"
-	"	gl_FragColor = color;\n"
+	"	FragColor = color;\n"
 	"}\n"
 	};
 
@@ -56,31 +53,31 @@ void SkyBox::Init(const char * texturepath)
 	};
 
 	textureID = QHTexture::loadCubemap(texturepath, faces, false);
+	glGenVertexArrays(1, &mVAO);
+	glGenBuffers(1, &mVBO);
 
-	glGenBuffers(1, &VBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindVertexArray(mVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 	glBufferData(GL_ARRAY_BUFFER, 108 * sizeof(GLfloat), skyboxVertices, GL_STATIC_DRAW);
 
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 	m_initialized = true;
 }
 
 void SkyBox::Draw(Camera *camera)
 {
-	if (!m_initialized) return;
-	//GLint currentid = ShaderManager::getInstance()->GetCurrentProgram();
-	mShader.use();
-	//glDisable(GL_DEPTH_TEST);
-	//glDepthMask(GL_FALSE);
-	glDepthFunc(GL_LEQUAL);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	if (!m_initialized) 
+		return;
 
-	if (mShader.getPosAttribute() >= 0)
-	{
-		glEnableVertexAttribArray(mShader.getPosAttribute());
-		glVertexAttribPointer(mShader.getPosAttribute(), 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-	}
+	mShader.use();
+
+	glDepthFunc(GL_LEQUAL);
+
+	glBindVertexArray(mVAO);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
@@ -90,14 +87,11 @@ void SkyBox::Draw(Camera *camera)
 	glm::mat4 view = glm::mat4(glm::mat3(camera->GetView())); // remove translation from the view matrix
 
 	mShader.setMat4("WorldViewProjectionMatrix", projection * view);
-	mShader.setInt("GammaCorrection",RenderManager::getInstance()->isEnablemGammaCorrection());
+	mShader.setInt("GammaCorrection",RenderManager::getInstance()->isEnableGammaCorrection());
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	//glDepthMask(GL_TRUE);
-	//glEnable(GL_DEPTH_TEST);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//if (currentid != -1)
-		//ShaderManager::getInstance()->setUseProgram(currentid);
+	glBindVertexArray(0);
+
 	glDepthFunc(GL_LESS);
 }
 
@@ -196,7 +190,7 @@ SkyBox::SkyBox()
 
 SkyBox::~SkyBox()
 {
-	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &mVBO);
 	glDeleteTextures(1, &textureID);
 	delete[] skyboxVertices;
 }

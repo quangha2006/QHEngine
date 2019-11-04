@@ -8,12 +8,15 @@
 #include "AppContext.h"
 #include "SkyBox.h"
 #include "QHAxis.h"
+#include "Shader.h"
 
 class RenderManager
 {
 private:
 	static RenderManager* instance;
 	RenderTarget mShadowRT, mSenceRT, mBrightnessRT, mBluringRT;
+	Shader mBrightness_Shader, mBluringHorizontal_Shader, mBluringVertical_Shader;
+	Shader mQuad_Shader, mQuad_Bloom_Shader;
 	GLuint mDepthMapTexId, mSenceTexId, mBloomId;
 	SkyBox *mSkybox;
 	AppContext * mAppcontext;
@@ -46,7 +49,7 @@ public:
 	void SwitchShadowMapMode();
 	bool IsEnableShadow();
 	bool IsEnableBloom();
-	bool isEnablemGammaCorrection();
+	bool isEnableGammaCorrection();
 	GLuint GetDepthMapId();
 	void GetGLViewport(int &width, int &height);
 	int GetAmountBloom();

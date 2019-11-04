@@ -2,6 +2,7 @@
 #define __MODELMANAGER_H__
 
 #include "Model.h"
+#include "RenderTarget.h"
 #include <vector>
 
 class ModelManager

@@ -21,13 +21,21 @@ void RenderManager::Init(AppContext * appcontext, Camera *camera)
 	//ShaderManager::getInstance()->LoadFromFile("model", "Shaders/model_loading.vs", "Shaders/model_loading.fs");
 	//ShaderManager::getInstance()->LoadFromFile("debugShader", "Shaders/framebuffers_debug.vs", "Shaders/framebuffers_debug.fs"); // For debug
 	//ShaderManager::getInstance()->LoadFromFile("depthShader_skinning", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs", "#define SKINNED");
-	ShaderManager::getInstance()->LoadFromFile("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
-	ShaderManager::getInstance()->LoadFromFile("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
-	ShaderManager::getInstance()->LoadFromFile("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs", "#define DOWNFILTER");
-	ShaderManager::getInstance()->LoadFromFile("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define HORIZONTAL");
-	ShaderManager::getInstance()->LoadFromFile("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define VERTICAL");
-	ShaderManager::getInstance()->LoadFromFile("bloom_Final", "Shaders/BasicVS.vs", "Shaders/bloom_final.fs");
-	ShaderManager::getInstance()->LoadFromFile("debugPhysics", "Shaders/DebugPhysics.vs", "Shaders/DebugPhysics.fs");
+	
+	//ShaderManager::getInstance()->LoadFromFile("depthShader", "Shaders/DepthShader.vs", "Shaders/DepthShader.fs");
+	//ShaderManager::getInstance()->LoadFromFile("basic", "Shaders/BasicVS.vs", "Shaders/BasicFS.fs");
+	//ShaderManager::getInstance()->LoadFromFile("Brightness", "Shaders/BasicVS.vs", "Shaders/brightness.fs", "#define DOWNFILTER");
+
+	mBrightness_Shader.LoadShader("Shaders/Quad.vs", "Shaders/brightness.fs", false, "#define DOWNFILTER");
+
+	//ShaderManager::getInstance()->LoadFromFile("Blur_Horizontal", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define HORIZONTAL");
+	//ShaderManager::getInstance()->LoadFromFile("Blur_Vertical", "Shaders/BasicVS.vs", "Shaders/blur.fs", "#define VERTICAL");
+
+	mBluringHorizontal_Shader.LoadShader("Shaders/Quad.vs", "Shaders/blur.fs", false, "#define HORIZONTAL");
+	mBluringVertical_Shader.LoadShader("Shaders/Quad.vs", "Shaders/blur.fs", false ,"#define VERTICAL");
+
+	mQuad_Shader.LoadShader("Shaders/Quad.vs", "Shaders/Quad.fs", false);
+	mQuad_Bloom_Shader.LoadShader("Shaders/Quad.vs", "Shaders/Quad.fs", false, "#define ENABLEBLOOM");
 
 	mShadowRT.Init(mAppcontext, RenderTargetType_DEPTH, 2048, 2048);
 
@@ -64,10 +72,8 @@ void RenderManager::Render()
 	RenderFinal();
 
 	//debug
-	//Debugging::getInstance()->DrawTex(mDepthMapTexId, "debugShader");
-	//Debugging::getInstance()->DrawTex(mBloomId, "debugShader");
-	//Debugging::getInstance()->DrawTex(mSenceTexId, "debugShader");
-	//Debugging::getInstance()->DrawTex(mBrightnessRT.GetTextureId(0), "debugShader");
+	//QHEngine::RenderDebugTexture(mDepthMapTexId);
+	//QHEngine::RenderDebugTexture(mSenceTexId);
 
 	UserInterface::getInstance()->Render();
 }
@@ -118,7 +124,7 @@ bool RenderManager::IsEnableBloom()
 	return m_isEnableBloom;
 }
 
-bool RenderManager::isEnablemGammaCorrection()
+bool RenderManager::isEnableGammaCorrection()
 {
 	return mGammaCorrection;
 }
@@ -127,6 +133,7 @@ GLuint RenderManager::RenderDepthMap()
 {
 	if (!m_isEnableShadowMap)
 		return 0;
+	CheckGLError("RenderDepthMap: BEGIN");
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
@@ -138,11 +145,13 @@ GLuint RenderManager::RenderDepthMap()
 	ModelManager::getInstance()->Render(RenderTargetType_DEPTH);
 	//glDisable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
+	CheckGLError("RenderDepthMap: END");
 	return mShadowRT.EndRender();
 }
 
 GLuint RenderManager::RenderSence()
 {
+	CheckGLError("RenderSence: BEGIN");
 	glDisable(GL_CULL_FACE);
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
@@ -159,9 +168,14 @@ GLuint RenderManager::RenderSence()
 	mSkybox->Draw(mCamera);
 
 	ModelManager::getInstance()->Render(RenderTargetType_COLOR);
+
 	if(isRenderAxis)
 		axis.Render();
+
 	PhysicsSimulation::getInstance()->RenderPhysicsDebug();
+
+	CheckGLError("RenderSence: END");
+
 	return mSenceRT.EndRender();
 }
 
@@ -170,50 +184,65 @@ GLuint RenderManager::PostProcessBloom(GLuint textsrc)
 	if (!m_isEnableBloom)
 		return 0;
 
+	CheckGLError("PostProcessBloom: BEGIN");
+
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
 	mBrightnessRT.BeginRender();
-	ShaderManager::getInstance()->setUseProgram("Brightness");
+
+	mBrightness_Shader.use();
+
 	glm::vec2 tex_offset = glm::vec2(1.0f/ (float)mSenceRT.GetWidth(), 1.0f / (float)mSenceRT.GetHeight());
-	ShaderSet::setVec2("u_TexelOffsets", tex_offset);
+	mBrightness_Shader.setVec2("u_TexelOffsets", tex_offset);
+
 	mSenceRT.Render();
+
 	GLuint brightnessRT = mBrightnessRT.EndRender();
 
-	GLuint blurbloomRT = mBluringRT.MakeBloom(brightnessRT, mAmountBlurBloom);
+	GLuint blurbloomRT = mBluringRT.MakeBloom(brightnessRT, mAmountBlurBloom, mBluringHorizontal_Shader, mBluringVertical_Shader);
 
+	CheckGLError("PostProcessBloom: END");
 	return blurbloomRT;
 }
 
 void RenderManager::RenderFinal()
 {
-
+	CheckGLError("RenderFinal: BEGIN");
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	ShaderManager::getInstance()->setUseProgram("bloom_Final");
-	//m_default_shader.use();
+	if (m_isEnableBloom)
+	{
+		mQuad_Bloom_Shader.use();
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, mSenceTexId);
+		mQuad_Bloom_Shader.setInt("txScene", 0);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, mBloomId);
+		mQuad_Bloom_Shader.setInt("txBloomBlur", 1);
+
+		mQuad_Bloom_Shader.setFloat("exposure", 1.0f);
+		mQuad_Bloom_Shader.setInt("GammaCorrection", mGammaCorrection);
+	}
+	else
+	{
+		mQuad_Shader.use();
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, mSenceTexId);
+		mQuad_Shader.setInt("txScene", 0);
+
+		mQuad_Shader.setFloat("exposure", 1.0f);
+		mQuad_Shader.setInt("GammaCorrection", mGammaCorrection);
+	}
 
 	glBindVertexArray(quadVAO);
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, mSenceTexId);
-
-	if (m_isEnableBloom)
-	{
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, mBloomId);
-	}
-
-	ShaderSet::setInt("txScene", 0);
-	ShaderSet::setInt("txBloomBlur", 1);
-	ShaderSet::setInt("isEnablebloom", m_isEnableBloom);
-	ShaderSet::setFloat("exposure", 1.0f);
-	ShaderSet::setInt("GammaCorrection", mGammaCorrection);
-
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
-	CheckGLError("RenderFinal");
+	CheckGLError("RenderFinal: END");
 }
 
 GLuint RenderManager::GetDepthMapId()

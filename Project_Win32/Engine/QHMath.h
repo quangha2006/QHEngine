@@ -8,6 +8,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <math.h>
 
 namespace QHMath
 {
@@ -29,7 +30,7 @@ namespace QHMath
 
 	template<typename T> inline T clamp(T x, T _min, T _max)
 	{
-		return math::min(math::max(x, _min), _max);
+		return std::min(std::max(x, _min), _max);
 	}
 }
 

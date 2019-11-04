@@ -435,6 +435,8 @@ void Model::Render(RenderTargetType RT_Type)
 
 	RenderNormalVisalization();
 
+	RenderBone();
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -458,7 +460,6 @@ void Model::RenderNormalVisalization()
 	{
 		for (QHMaterial& material : mMaterial)
 		{
-			//material.Apply(RenderTargetType_COLOR, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
 			material.Render();
 		}
 	}
@@ -466,10 +467,16 @@ void Model::RenderNormalVisalization()
 	{
 		for (QHMesh& mesh : mQHMeshes)
 		{
-			//unsigned int materialID = mesh.GetMaterialIndex();
-			//mMaterial[materialID].Apply(RenderTargetType_COLOR, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
 			mesh.Render();
 		}
+	}
+}
+
+void Model::RenderBone()
+{
+	if (mTransforms.size() > 0)
+	{
+
 	}
 }
 

@@ -2,7 +2,6 @@
 #include "Logs.h"
 #include "QHMath.h"
 #include "Debugging.h"
-#include "ShaderManager.h"
 #include "Utils.h"
 
 void QHMesh::GenBuffers()
@@ -47,8 +46,6 @@ void QHMesh::GenBuffers()
 
 	glEnableVertexAttribArray(7);
 	glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
-
-	
 
 	glBindBuffer(GL_ARRAY_BUFFER, mInstancingBuff);
 	glBufferData(GL_ARRAY_BUFFER, mInstanceMatrixList.size() * sizeof(glm::mat4), &mInstanceMatrixList[0], GL_STATIC_DRAW);
