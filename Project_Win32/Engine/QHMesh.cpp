@@ -95,7 +95,7 @@ unsigned int * QHMesh::GetIndicesData(unsigned int & numIndex)
 
 void QHMesh::Render()
 {
-	if (mNumIndices == 0 || mNumIndices == 0)
+	if (mNumIndices == 0U || mNumIndices == 0U)
 		return;
 
 	if (!isCreateinstancingBuffer)

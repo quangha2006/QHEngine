@@ -366,7 +366,13 @@ void Model::Render(RenderTargetType RT_Type)
 	{
 	case RenderTargetType_DEPTH:
 
+		glBindVertexArray(mVAO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+
 		QHEngine::DrawElements(GL_TRIANGLES, mNumIndices, GL_UNSIGNED_INT, (void*)0);
+
+		glBindVertexArray(0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		break;
 	case RenderTargetType_COLOR:
@@ -375,12 +381,18 @@ void Model::Render(RenderTargetType RT_Type)
 
 		if (mRenderMode == RenderMode::RenderMode_Material)
 		{
+			glBindVertexArray(mVAO);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+
 			for (QHMaterial& material : mMaterial)
 			{
 				mModel_Shader.setBool("uselighting", uselighting);
 				material.Apply(RT_Type, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
 				material.Render();
 			}
+
+			glBindVertexArray(0);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		}
 		else if (mRenderMode == RenderMode::RenderMode_Instancing)
 		{
@@ -399,10 +411,6 @@ void Model::Render(RenderTargetType RT_Type)
 
 		RenderBone();
 	}
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void Model::RenderNormalVisalization()
@@ -422,10 +430,16 @@ void Model::RenderNormalVisalization()
 	}
 	if (mRenderMode == RenderMode::RenderMode_Material)
 	{
+		glBindVertexArray(mVAO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+
 		for (QHMaterial& material : mMaterial)
 		{
 			material.Render();
 		}
+
+		glBindVertexArray(0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	else if (mRenderMode == RenderMode::RenderMode_Instancing)
 	{
@@ -440,7 +454,7 @@ void Model::RenderBone()
 {
 	if (mTransforms.size() > 0)
 	{
-		Debugging::getInstance()->RenderBall(glm::vec3(0.0, 1.0, 0.0));
+		Debugging::getInstance()->RenderBall(glm::vec3(1.0, 2.0, 0.0));
 	}
 }
 

@@ -8,11 +8,12 @@ void Debugging::InitBallData()
 {
 	//Ball
 	string path_modif = Utils::getResourcesFolder() + "3DBreakOutGame/UVCircle2.dae";
-	const aiScene* m_pScene = mImporter.ReadFile(path_modif, aiProcess_Triangulate);
+	const aiScene* m_pScene = mImporter.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_JoinIdenticalVertices);
 	const aiMesh* mesh = m_pScene->mMeshes[0];
+	LOGI("Num Mesh: %d\n", m_pScene->mNumMeshes);
 	mNumVertices_ball = mesh->mNumVertices;
-	mVertices_ball = new float(mNumVertices_ball * 3);
-
+	mVertices_ball = new float[mNumVertices_ball * 3];
+	LOGI("mVertices_ball: %u\n", mNumVertices_ball);
 	//memcpy(mVertices_ball, mesh->mVertices, sizeof(float) * mNumVertices_ball * 3);
 	unsigned int currentindex_vertex = 0;
 	for (unsigned int i = 0; i < mNumVertices_ball; i++)
@@ -22,6 +23,7 @@ void Debugging::InitBallData()
 		mVertices_ball[currentindex_vertex++] = pPos.y;
 		mVertices_ball[currentindex_vertex++] = pPos.z;
 	}
+	LOGI("currentindex_vertex: %u\n", currentindex_vertex);
 
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
@@ -53,6 +55,7 @@ void Debugging::InitBallData()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	mBall_shader.LoadShader("Shaders/cubeVS.vs", "Shaders/cubeFS.fs", false);
+
 }
 
 Debugging * Debugging::getInstance()
@@ -117,6 +120,7 @@ void Debugging::RenderBall(glm::vec3 pos)
 	Camera *camera = Camera::getInstance();
 	glm::mat4 view = camera->GetWorldViewProjectionMatrix();
 	glm::mat4 model = glm::translate(glm::mat4(), pos);
+	model = glm::scale(model, glm::vec3(0.2f));
 	mBall_shader.use();
 	mBall_shader.setMat4("model", model);
 	mBall_shader.setMat4("view_projection", view);
@@ -125,9 +129,12 @@ void Debugging::RenderBall(glm::vec3 pos)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_ball);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
 
 	QHEngine::DrawElements(GL_TRIANGLES, mNumIndices_ball, GL_UNSIGNED_INT, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 Debugging::Debugging()
