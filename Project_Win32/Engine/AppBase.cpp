@@ -78,7 +78,6 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 
 	AppSharedContext *shared_context = mContext->CreateShareContext();
 	new thread(&AppBase::LoadingThread, this, shared_context);
-
 	return true;
 }
 

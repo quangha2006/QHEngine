@@ -283,5 +283,11 @@
     <None Include="..\..\Resources\Shaders\Quad_debug.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\..\Resources\Shaders\cubeFS.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\cubeVS.vs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

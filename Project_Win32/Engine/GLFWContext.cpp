@@ -54,7 +54,7 @@ AppSharedContext *GLFWContext::CreateShareContext()
 {
 	AppSharedContext *shared_context = new GLFWSharedContext();
 	glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-	shared_context->SetWindows(glfwCreateWindow(width, height, "", NULL, mWindow));
+	shared_context->SetWindows(glfwCreateWindow(width, height, "Context object sharing", NULL, mWindow));
 	return shared_context;
 }
 
@@ -89,4 +89,5 @@ bool GLFWSharedContext::MakeContextCurrent()
 void GLFWSharedContext::DestroyContext()
 {
 	glfwMakeContextCurrent(NULL);
+	glfwDestroyWindow(mWindow);
 }

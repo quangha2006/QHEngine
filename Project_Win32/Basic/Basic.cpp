@@ -63,13 +63,15 @@ void Basic::Init()
 	//mSpider.SetPlayAnimTime(0.0f, 0.33f);
 	//mSpider.SetPlayAnimTime(0.66f, 1.f);
 
-	//mBoblampclean.Init("bountyhunter/bountyhunter/Test/source.dae", true);
-	mBoblampclean.SetPos(glm::vec3(5.f, 0.0f, 0.0f));
-	mBoblampclean.SetScale(glm::vec3(0.05f));
-	mBoblampclean.SetDrawMesh(1);
-	mBoblampclean.SetDrawWireFrame(true);
+	//mBoblampclean.Init("bountyhunter/bountyhunter/anm/source.dae", true);
+	//mBoblampclean.Init("bountyhunter/bountyhunter/bountyhunter_rig_01.dae", false);
+	mBoblampclean.SetPos(glm::vec3(0.f, 0.0f, 0.0f));
+	//mBoblampclean.SetScale(glm::vec3(0.05f));
+	mBoblampclean.SetDrawMesh(0);
+	//mBoblampclean.SetDrawWireFrame(true);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
-	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+
+	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(1.0, 1.0f, 1.0f));
 	uvcircle.SetPos(glm::vec3(0.1f, 2.f, 5.5f));
 
@@ -84,7 +86,7 @@ void Basic::Init()
 
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
-	RenderManager::getInstance()->SetEnableBloom(false);
+	RenderManager::getInstance()->SetEnableBloom(true);
 	//RenderManager::getInstance()->SetRenderAxis(true);
 	//PhysicsSimulation::getInstance()->SwitchDebugMode();
 	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
@@ -190,13 +192,9 @@ bool Basic::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 
 void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 {
-	mShadowLabel.setVisible(true);
-	mBloomLabel.setVisible(true);
-	mBloomAmountLabel.setVisible(true);
-
 	m_Streetenvironment.CreateTriangleMeshShape(0.);
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
-	m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
+	//m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
 
 	/*uvcircle.registerShape(1.);*/
 	//uvcircle.GetRigidBody()->setFriction(0.);
@@ -209,6 +207,10 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	mSpider.GetRigidBody()->setRollingFriction(0.1f);
 	mSpider.GetRigidBody()->setSpinningFriction(0.1f);
 	mSpider.GetRigidBody()->setRestitution(0.0);*/
+
+	mShadowLabel.setVisible(true);
+	mBloomLabel.setVisible(true);
+	mBloomAmountLabel.setVisible(true);
 }
 
 void Basic::ClickbuttonBloomAmountLeft()

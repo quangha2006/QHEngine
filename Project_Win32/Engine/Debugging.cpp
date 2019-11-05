@@ -1,7 +1,59 @@
 #include "Debugging.h"
 #include <iostream>
+#include "Utils.h"
 
 Debugging *Debugging::instance = NULL;
+
+void Debugging::InitBallData()
+{
+	//Ball
+	string path_modif = Utils::getResourcesFolder() + "3DBreakOutGame/UVCircle2.dae";
+	const aiScene* m_pScene = mImporter.ReadFile(path_modif, aiProcess_Triangulate);
+	const aiMesh* mesh = m_pScene->mMeshes[0];
+	mNumVertices_ball = mesh->mNumVertices;
+	mVertices_ball = new float(mNumVertices_ball * 3);
+
+	//memcpy(mVertices_ball, mesh->mVertices, sizeof(float) * mNumVertices_ball * 3);
+	unsigned int currentindex_vertex = 0;
+	for (unsigned int i = 0; i < mNumVertices_ball; i++)
+	{
+		const aiVector3D &pPos = mesh->mVertices[i];
+		mVertices_ball[currentindex_vertex++] = pPos.x;
+		mVertices_ball[currentindex_vertex++] = pPos.y;
+		mVertices_ball[currentindex_vertex++] = pPos.z;
+	}
+
+	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	{
+		mNumIndices_ball += mesh->mFaces[i].mNumIndices;
+	}
+	mIndices_ball = new unsigned int[mNumIndices_ball];
+	unsigned int currentindex = 0;
+	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	{
+		aiFace face = mesh->mFaces[i];
+		std::memcpy(&mIndices_ball[currentindex], face.mIndices, sizeof(unsigned int) * face.mNumIndices);
+		currentindex += face.mNumIndices;
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glGenBuffers(1, &mVBO_ball);
+	glGenBuffers(1, &mEBO_ball);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO_ball);
+	glBufferData(GL_ARRAY_BUFFER, mNumVertices_ball * 3 * sizeof(float), mVertices_ball, GL_STATIC_DRAW);
+
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_ball);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices_ball * sizeof(GLuint), mIndices_ball, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	mBall_shader.LoadShader("Shaders/cubeVS.vs", "Shaders/cubeFS.fs", false);
+}
 
 Debugging * Debugging::getInstance()
 {
@@ -56,11 +108,32 @@ void Debugging::RenderTexture(GLuint TexId)
 
 void Debugging::RenderBall(glm::vec3 pos)
 {
+	if (!mIsInitBall)
+	{
+		InitBallData();
+		mIsInitBall = true;
+	}
+		
+	Camera *camera = Camera::getInstance();
+	glm::mat4 view = camera->GetWorldViewProjectionMatrix();
+	glm::mat4 model = glm::translate(glm::mat4(), pos);
+	mBall_shader.use();
+	mBall_shader.setMat4("model", model);
+	mBall_shader.setMat4("view_projection", view);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO_ball);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_ball);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
+
+	QHEngine::DrawElements(GL_TRIANGLES, mNumIndices_ball, GL_UNSIGNED_INT, 0);
 }
 
 Debugging::Debugging()
 	: mNumVertices(0)
 	, numDrawCall(0)
+	, mIsInitBall(false)
 {
 	quadVertices = new float[5 * 4]{
 		// positions   // texCoords
@@ -83,7 +156,6 @@ Debugging::Debugging()
 
 	mQuadDebug_shader.LoadShader("Shaders/Quad_debug.vs", "Shaders/Quad_debug.fs");
 }
-
 
 Debugging::~Debugging()
 {

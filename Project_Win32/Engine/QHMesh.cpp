@@ -3,12 +3,14 @@
 #include "QHMath.h"
 #include "Debugging.h"
 #include "Utils.h"
+#include "Timer.h"
 
 void QHMesh::GenBuffers()
 {
 	if (mNumVertices <= 0 || mNumIndices <= 0)
 		return;
 	CheckGLError("QHMesh::GenBuffers before");
+	int64_t time_begin = Timer::getMillisecond();
 	glGenVertexArrays(1, &mVAO);
 	glGenBuffers(1, &mVBO);
 	glGenBuffers(1, &mEBO);
@@ -69,16 +71,14 @@ void QHMesh::GenBuffers()
 	glBindVertexArray(0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+	int64_t time_end = Timer::getMillisecond();
+	LOGI("GenBuffer: %u", time_end - time_begin);
 	CheckGLError("QHMesh::GenBuffers");
 }
 
 void QHMesh::AddInstanceMatrix(const glm::mat4& matrix)
 {
-	//if (!mHasBones)
-		mInstanceMatrixList.push_back(matrix);
-	//else
-		//mInstanceMatrixList.push_back(glm::mat4());
+	mInstanceMatrixList.push_back(matrix);
 }
 
 Vertex * QHMesh::GetVerticesData(unsigned int & numVertex)

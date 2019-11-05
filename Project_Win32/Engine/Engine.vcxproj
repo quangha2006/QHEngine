@@ -194,6 +194,8 @@
     <None Include="..\..\Resources\Shaders\bloom_final.fs" />
     <None Include="..\..\Resources\Shaders\blur.fs" />
     <None Include="..\..\Resources\Shaders\brightness.fs" />
+    <None Include="..\..\Resources\Shaders\cubeFS.fs" />
+    <None Include="..\..\Resources\Shaders\cubeVS.vs" />
     <None Include="..\..\Resources\Shaders\DepthShader.fs" />
     <None Include="..\..\Resources\Shaders\DepthShader.vs" />
     <None Include="..\..\Resources\Shaders\Quad_debug.fs" />

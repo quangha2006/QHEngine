@@ -4,6 +4,10 @@
 #include "stdafx.h"
 #include "Shader.h"
 #include "Model.h"
+#include <assimp/Importer.hpp>
+#include <assimp/Exporter.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 class Debugging
 {
@@ -14,7 +18,16 @@ private:
 	float *quadVertices;
 	GLuint quadVAO, quadVBO;
 	Shader mQuadDebug_shader;
-	Model mBall_Model;
+	// Ball Debug
+	GLuint mNumVertices_ball;
+	GLuint mNumIndices_ball;
+	float* mVertices_ball;
+	GLuint* mIndices_ball;
+	GLuint mVBO_ball, mEBO_ball;
+	Shader mBall_shader;
+	Assimp::Importer mImporter;
+	bool mIsInitBall;
+	void InitBallData();
 public:
 	static Debugging *getInstance();
 	void addNumVertices(unsigned int count);

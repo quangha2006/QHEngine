@@ -8,7 +8,6 @@
 #include "QHMath.h"
 #include "RenderTarget.h"
 #include "QHMaterial.h"
-#include <SOIL.h>
 #include <thread>
 #include <Logs.h>
 #ifdef _WINDOWS
@@ -97,11 +96,12 @@ void Model::Loading() //thread
 
 	uint64_t time_ms_end = Timer::getMillisecond();
 
-	LOGI("Total Loading time : %ums\n", (unsigned int)(time_ms_end - time_ms_begin));
+	
 
 	if (!CompileShader())
 		return;
 
+	LOGI("Total Loading time : %ums\n", (unsigned int)(time_ms_end - time_ms_begin));
 	m_initialized = true;
 }
 void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh)
@@ -251,22 +251,6 @@ void Model::BatchingVertexData()
 	//		++i;
 	//	}
 	//}
-
-	// create buffers/arrays
-	if (mNumVertices > 0 && mNumIndices > 0)
-	{
-		glGenBuffers(1, &mVBO_material);
-		glGenBuffers(1, &mEBO_material);
-
-		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
-		glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices_marterial, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices_marterial, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
 	if (mRenderMode == RenderMode_Auto)
 		mRenderMode = RenderMode_Material;
 
@@ -298,6 +282,10 @@ void Model::Render(RenderTargetType RT_Type)
 {
 	if (!m_initialized || !mCamera || !mIsVisible) 
 		return;
+
+	// GenBuffer first
+	if (mVBO_material == 0 && mEBO_material == 0 && mVAO == 0)
+		GenBuffer();
 
 	if (RT_Type == RenderTargetType_DEPTH && mIsDrawDepthMap == false) return;
 
@@ -370,33 +358,8 @@ void Model::Render(RenderTargetType RT_Type)
 
 	if (mRenderMode == RenderMode::RenderMode_Material || RT_Type == RenderTargetType::RenderTargetType_DEPTH)
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
+		glBindVertexArray(mVAO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
-	
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
-
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
-
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
-
-		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, weight));
-
-		glEnableVertexAttribArray(4);
-		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, id));
-
-		glEnableVertexAttribArray(5);
-		glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-
-		glEnableVertexAttribArray(6);
-		glVertexAttribPointer(6, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
-
-		glEnableVertexAttribArray(7);
-		glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
-
 	}
 
 	switch (RT_Type)
@@ -431,12 +394,13 @@ void Model::Render(RenderTargetType RT_Type)
 		}
 		if (mIsDrawWireFrame)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		RenderNormalVisalization();
+
+		RenderBone();
 	}
 
-	RenderNormalVisalization();
-
-	RenderBone();
-
+	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -476,7 +440,54 @@ void Model::RenderBone()
 {
 	if (mTransforms.size() > 0)
 	{
+		Debugging::getInstance()->RenderBall(glm::vec3(0.0, 1.0, 0.0));
+	}
+}
 
+void Model::GenBuffer()
+{
+	// create buffers/arrays
+	if (mNumVertices > 0 && mNumIndices > 0)
+	{
+		glGenVertexArrays(1, &mVAO);
+		glGenBuffers(1, &mVBO_material);
+		glGenBuffers(1, &mEBO_material);
+
+		glBindVertexArray(mVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, mVBO_material);
+		glBufferData(GL_ARRAY_BUFFER, mNumVertices * sizeof(Vertex), mVertices_marterial, GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO_material);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mNumIndices * sizeof(GLuint), mIndices_marterial, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
+
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
+
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+
+		glEnableVertexAttribArray(3);
+		glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, weight));
+
+		glEnableVertexAttribArray(4);
+		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, id));
+
+		glEnableVertexAttribArray(5);
+		glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+
+		glEnableVertexAttribArray(6);
+		glVertexAttribPointer(6, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
+
+		glEnableVertexAttribArray(7);
+		glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 }
 
@@ -710,7 +721,8 @@ void Model::CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fix
 
 void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 {
-	if (mNumVertices <= 0) return;
+	if (mNumVertices <= 0)
+		return;
 
 	isDynamic = (mass != 0.f);
 	mRigidBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, mVertices_marterial, mNumVertices, mPos, mRotate, mAngle, mScale, isOptimize);
@@ -720,7 +732,8 @@ void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 
 void Model::CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize)
 {
-	if (mNumVertices <= 0) return;
+	if (mNumVertices <= 0)
+		return;
 
 	isDynamic = (mass != 0.f);
 	mRigidBody = PhysicsSimulation::getInstance()->createConvexTriangleMeshShape(mass, mVertices_marterial, mNumVertices, mIndices_marterial, mNumIndices, mPos, mRotate, mAngle, mScale);
@@ -730,7 +743,8 @@ void Model::CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize)
 
 void Model::CreateTriangleMeshShape(float mass)
 {
-	if (mNumVertices <= 0) return;
+	if (mNumVertices <= 0)
+		return;
 
 	isDynamic = (mass != 0.f);
 	mRigidBody = PhysicsSimulation::getInstance()->createTriangleMeshShape(mass, mVertices_marterial, mNumVertices, mIndices_marterial, mNumIndices, mPos, mRotate, mAngle, mScale);
@@ -1025,6 +1039,9 @@ Model::Model()
 	, mIsDrawWireFrame(false)
 	, mIsRenderNormalVisualization(false)
 	, mNormalVisualizationMagnitude(0.2f)
+	, mVBO_material(0)
+	, mEBO_material(0)
+	, mVAO(0)
 {
 	m_Id = ModelManager::getInstance()->AddModel(this);
 }

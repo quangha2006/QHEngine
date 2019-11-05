@@ -17,7 +17,6 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -38,7 +37,7 @@ class Model
 {
 private:
 	// Model data
-	GLuint mVBO_material, mEBO_material;
+	GLuint mVBO_material, mEBO_material, mVAO;
 	vector<Texture> textures_loaded;
 	vector<QHMaterial> mMaterial;
 	vector<QHMesh> mQHMeshes;
@@ -117,6 +116,7 @@ private:
 	bool CompileShader();
 	void RenderNormalVisalization();
 	void RenderBone();
+	void GenBuffer();
 public:
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type);
