@@ -45,7 +45,7 @@ void Basic::Init()
 	mAstroBoy.SetScale(glm::vec3(30.0f));
 	mAstroBoy.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
 	//mAstroBoy.SetDrawMesh(0);
-	//mAstroBoy.SetDrawWireFrame(true);
+	mAstroBoy.SetDrawWireFrame(true);
 	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
 

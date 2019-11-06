@@ -293,11 +293,7 @@ QHMesh::QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, 
 	}
 
 	// process Indices
-
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-	{
-		mNumIndices += mesh->mFaces[i].mNumIndices;
-	}
+	mNumIndices = mesh->mNumFaces * 3;
 
 	try {
 		mIndicesData = new unsigned int[mNumIndices];
@@ -309,15 +305,13 @@ QHMesh::QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, 
 		return;
 	}
 
-	unsigned int currentindex = 0;
+	unsigned int *pIndices_tmp = mIndicesData;
 
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
-		aiFace face = mesh->mFaces[i];
-		std::memcpy(&mIndicesData[currentindex], face.mIndices, sizeof(unsigned int) * face.mNumIndices);
-		currentindex+= face.mNumIndices;
+		std::memcpy(pIndices_tmp, mesh->mFaces[i].mIndices, sizeof(unsigned int) * 3);
+		pIndices_tmp += 3;
 	}
-
 	
 }
 

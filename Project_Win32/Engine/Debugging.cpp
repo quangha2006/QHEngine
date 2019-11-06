@@ -1,41 +1,39 @@
 #include "Debugging.h"
 #include <iostream>
 #include "Utils.h"
+#include "Timer.h"
 
 Debugging *Debugging::instance = NULL;
 
 void Debugging::InitBallData()
 {
-	//Ball
-	string path_modif = Utils::getResourcesFolder() + "3DBreakOutGame/UVCircle2.dae";
+	string path_modif = Utils::getResourcesFolder() + "Debug/Ball_debug.dae";
+	Assimp::Importer mImporter;
 	const aiScene* m_pScene = mImporter.ReadFile(path_modif, aiProcess_Triangulate | aiProcess_JoinIdenticalVertices);
+
+	if (!m_pScene)
+	{
+		LOGE("ERROR::ASSIMP:: %s\n", mImporter.GetErrorString());
+		return;
+	}
+
 	const aiMesh* mesh = m_pScene->mMeshes[0];
-	LOGI("Num Mesh: %d\n", m_pScene->mNumMeshes);
+
 	mNumVertices_ball = mesh->mNumVertices;
 	mVertices_ball = new float[mNumVertices_ball * 3];
-	LOGI("mVertices_ball: %u\n", mNumVertices_ball);
-	//memcpy(mVertices_ball, mesh->mVertices, sizeof(float) * mNumVertices_ball * 3);
-	unsigned int currentindex_vertex = 0;
-	for (unsigned int i = 0; i < mNumVertices_ball; i++)
-	{
-		const aiVector3D &pPos = mesh->mVertices[i];
-		mVertices_ball[currentindex_vertex++] = pPos.x;
-		mVertices_ball[currentindex_vertex++] = pPos.y;
-		mVertices_ball[currentindex_vertex++] = pPos.z;
-	}
-	LOGI("currentindex_vertex: %u\n", currentindex_vertex);
+
+	std::memcpy(mVertices_ball, mesh->mVertices, sizeof(float) * mNumVertices_ball * 3);
+
+	mNumIndices_ball = mesh->mNumFaces * 3;
+
+	mIndices_ball = new unsigned int[mNumIndices_ball];
+
+	unsigned int *pIndices_tmp = mIndices_ball;
 
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
-		mNumIndices_ball += mesh->mFaces[i].mNumIndices;
-	}
-	mIndices_ball = new unsigned int[mNumIndices_ball];
-	unsigned int currentindex = 0;
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-	{
-		aiFace face = mesh->mFaces[i];
-		std::memcpy(&mIndices_ball[currentindex], face.mIndices, sizeof(unsigned int) * face.mNumIndices);
-		currentindex += face.mNumIndices;
+		std::memcpy(pIndices_tmp, mesh->mFaces[i].mIndices, sizeof(unsigned int) * 3);
+		pIndices_tmp += 3;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -54,8 +52,27 @@ void Debugging::InitBallData()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	mBall_shader.LoadShader("Shaders/cubeVS.vs", "Shaders/cubeFS.fs", false);
+	char vtxSrc[] = {
+		"layout(location = 0) in vec3 aPos;\n"
+		"\n"
+		"uniform mat4 view_projection;\n"
+		"uniform mat4 model;\n"
+		"\n"
+		"void main()\n"
+		"{\n"
+			"gl_Position = view_projection * model * vec4(aPos, 1.0);\n"
+		"}\n"
+	};
 
+	char fragSrc[] = {
+		"precision highp float;\n"
+		"layout(location = 0) out vec4 FragColor;\n"
+		"void main()\n"
+		"{\n"
+			"FragColor = vec4(1.0, 0.0, 0.0 ,1.0);\n"
+		"}\n"
+	};
+	mBall_shader.LoadShader(vtxSrc, fragSrc, true);
 }
 
 Debugging * Debugging::getInstance()
@@ -116,11 +133,14 @@ void Debugging::RenderBall(glm::vec3 pos)
 		InitBallData();
 		mIsInitBall = true;
 	}
-		
+
+	if (mNumVertices_ball == 0U) // Check ball model is loaded
+		return;
+
 	Camera *camera = Camera::getInstance();
 	glm::mat4 view = camera->GetWorldViewProjectionMatrix();
 	glm::mat4 model = glm::translate(glm::mat4(), pos);
-	model = glm::scale(model, glm::vec3(0.2f));
+	//model = glm::scale(model, glm::vec3(0.2f));
 	mBall_shader.use();
 	mBall_shader.setMat4("model", model);
 	mBall_shader.setMat4("view_projection", view);
@@ -130,17 +150,23 @@ void Debugging::RenderBall(glm::vec3 pos)
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
-
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	QHEngine::DrawElements(GL_TRIANGLES, mNumIndices_ball, GL_UNSIGNED_INT, 0);
-
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 Debugging::Debugging()
-	: mNumVertices(0)
+	: mNumVertices(0U)
 	, numDrawCall(0)
 	, mIsInitBall(false)
+	, mNumVertices_ball(0U)
+	, mNumIndices_ball(0U)
+	, mVertices_ball(NULL)
+	, mIndices_ball(NULL)
+	, mVBO_ball(0U)
+	, mEBO_ball(0U)
 {
 	quadVertices = new float[5 * 4]{
 		// positions   // texCoords
@@ -168,6 +194,15 @@ Debugging::~Debugging()
 {
 	delete[] quadVertices;
 	glDeleteBuffers(1, &quadVBO);
+
+	// Destroy ball data
+	if (mVertices_ball)
+		delete[] mVertices_ball;
+	if (mIndices_ball)
+		delete[] mIndices_ball;
+
+	glDeleteBuffers(1, &mVBO_ball);
+	glDeleteBuffers(1, &mEBO_ball);
 }
 
 void QHEngine::DrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices)

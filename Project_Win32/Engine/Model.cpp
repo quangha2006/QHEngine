@@ -112,11 +112,7 @@ void Model::Pre_processNode(aiNode * node, const aiScene * scene, GLuint &numver
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		numvertices += mesh->mNumVertices;
 
-		for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-		{
-			numindices += mesh->mFaces[i].mNumIndices;
-		}
-
+		numindices += mesh->mNumFaces * 3;
 	}
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
@@ -454,7 +450,17 @@ void Model::RenderBone()
 {
 	if (mTransforms.size() > 0)
 	{
-		Debugging::getInstance()->RenderBall(glm::vec3(1.0, 2.0, 0.0));
+		for (unsigned int i = 0; i < mTransforms.size(); ++i)
+		{
+			//glm::mat4 tmp = mWorldTransform * mTransforms[i];
+			glm::vec3 pos = glm::vec4(mPos, 1.0f) * mTransforms[i];
+			pos = pos * mScale;
+			//pos.x = tmp[3][0];
+			//pos.y = tmp[3][1];
+			//pos.z = tmp[3][2];
+			Debugging::getInstance()->RenderBall(pos);
+		}
+			
 	}
 }
 

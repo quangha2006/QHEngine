@@ -13,7 +13,7 @@ class Debugging
 {
 private:
 	static Debugging *instance;
-	unsigned int mNumVertices;
+	GLuint mNumVertices;
 	unsigned short numDrawCall;
 	float *quadVertices;
 	GLuint quadVAO, quadVBO;
@@ -25,7 +25,7 @@ private:
 	GLuint* mIndices_ball;
 	GLuint mVBO_ball, mEBO_ball;
 	Shader mBall_shader;
-	Assimp::Importer mImporter;
+
 	bool mIsInitBall;
 	void InitBallData();
 public:
