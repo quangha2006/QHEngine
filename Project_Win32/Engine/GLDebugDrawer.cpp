@@ -19,7 +19,7 @@ GLDebugDrawer::GLDebugDrawer()
 		"layout(location = 0) in vec3 aPos;\n"
 		"layout(location = 1) in vec3 aColor;\n"
 		"uniform mat4 ProjectionMatrix;\n"
-		"out vec3 colourV;\n"
+		"out lowp vec3 colourV;\n"
 		"void main (void)\n"
 		"{\n"
 		"    colourV = aColor;\n"
@@ -27,8 +27,8 @@ GLDebugDrawer::GLDebugDrawer()
 		"		\n"
 		"}\n";
 	const char* linesFragmentShader =
-		"in vec3 colourV;\n"
-		"out vec4 fragColour;\n"
+		"in lowp vec3 colourV;\n"
+		"out lowp vec4 fragColour;\n"
 		"void main(void)\n"
 		"{\n"
 		"    fragColour = vec4(colourV, 1.0f);\n"

@@ -11,6 +11,7 @@
 	"$Engine_Sources_Path$/FrameRate.cpp"
     "$Engine_Sources_Path$/MainAndroid.cpp"
 	"$Engine_Sources_Path$/QHMesh.cpp"
+	"$Engine_Sources_Path$/QHMaterial.cpp"
 	"$Engine_Sources_Path$/Model.cpp"
 	"$Engine_Sources_Path$/Shader.cpp"
 	"$Engine_Sources_Path$/TextRendering.cpp"
@@ -28,9 +29,9 @@
 	"$Engine_Sources_Path$/ModelManager.cpp"
 	"$Engine_Sources_Path$/RenderTarget.cpp"
 	"$Engine_Sources_Path$/PhysicsSimulation.cpp"
+	"$Engine_Sources_Path$/GLDebugDrawer.cpp"
 	"$Engine_Sources_Path$/Sprite.cpp"
 	"$Engine_Sources_Path$/UserInterface.cpp"
-	"$Engine_Sources_Path$/QHMaterial.cpp"
 	}
 
 	.ExcludedUnitySources =

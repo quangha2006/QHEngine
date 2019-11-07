@@ -198,10 +198,11 @@
     <None Include="..\..\Resources\Shaders\cubeVS.vs" />
     <None Include="..\..\Resources\Shaders\DepthShader.fs" />
     <None Include="..\..\Resources\Shaders\DepthShader.vs" />
+    <None Include="..\..\Resources\Shaders\model.gs" />
     <None Include="..\..\Resources\Shaders\Quad_debug.fs" />
     <None Include="..\..\Resources\Shaders\Quad_debug.vs" />
-    <None Include="..\..\Resources\Shaders\model_loading.fs" />
-    <None Include="..\..\Resources\Shaders\model_loading.vs" />
+    <None Include="..\..\Resources\Shaders\model.fs" />
+    <None Include="..\..\Resources\Shaders\model.vs" />
     <None Include="..\..\Resources\Shaders\normal_visualization.fs" />
     <None Include="..\..\Resources\Shaders\normal_visualization.gs" />
     <None Include="..\..\Resources\Shaders\normal_visualization.vs" />

@@ -241,12 +241,6 @@
     <None Include="..\..\Resources\Shaders\DepthShader.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\Resources\Shaders\model_loading.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\..\Resources\Shaders\model_loading.vs">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\Resources\Shaders\blur.fs">
       <Filter>Resource Files</Filter>
     </None>
@@ -287,6 +281,15 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\Resources\Shaders\cubeVS.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\model.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\model.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\Shaders\model.gs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

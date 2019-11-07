@@ -66,17 +66,17 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	};
 
 	char fragSrc[] = {
-		"layout (location = 0) out vec4 FragColor;\n"
+		"out lowp vec4 FragColor;\n"
 		"\n"
 		"in mediump vec2 thetexCoord;\n"
 		"in lowp vec3 thetextColor;\n"
 		"in lowp float thealpha;\n"
 		"\n"
-		"uniform sampler2D texture;\n"
+		"uniform sampler2D textureid;\n"
 		"\n"
 		"void main()\n"
 		"{\n"
-		"	vec4 sampled = vec4(1.0, 1.0, 1.0, texture2D(texture, thetexCoord).r);\n"
+		"	mediump vec4 sampled = vec4(1.0, 1.0, 1.0, texture(textureid, thetexCoord).r);\n"
 		"	FragColor = vec4(thetextColor, thealpha) * sampled;\n"
 		"}\n"
 	};

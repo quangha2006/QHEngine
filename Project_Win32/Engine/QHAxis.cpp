@@ -4,11 +4,10 @@
 bool QHAxis::Init(Camera *camera)
 {
 	char vtxSrc[] = {
-		"#version 100\n"
-		"attribute vec3 aPos;\n"
-		"attribute vec3 aColor;\n"
+		"layout (location = 0) in vec3 aPos;\n"
+		"layout (location = 1) in vec3 aColor;\n"
 		"\n"
-		"varying vec3 thecolor;\n"
+		"out vec3 thecolor;\n"
 		"uniform mat4 WorldViewProjectionMatrix;\n"
 		"void main()\n"
 		"{\n"
@@ -18,12 +17,13 @@ bool QHAxis::Init(Camera *camera)
 	};
 	char fragSrc[] = {
 		"precision highp float;\n"
+		"layout(location = 0) out vec4 FragColor;\n"
 		"\n"
-		"varying vec3 thecolor;\n"
+		"in vec3 thecolor;\n"
 		"\n"
 		"void main()\n"
 		"{\n"
-		"	gl_FragColor = vec4(thecolor, 1.0);\n"
+		"	FragColor = vec4(thecolor, 1.0);\n"
 		"}\n"
 	};
 	
@@ -55,17 +55,12 @@ void QHAxis::Render()
 
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 
-	if (position_attribute != -1)
-	{
-		glEnableVertexAttribArray(position_attribute);
-		glVertexAttribPointer(position_attribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
-	}
 
-	if (color_attribute != -1)
-	{
-		glEnableVertexAttribArray(color_attribute);
-		glVertexAttribPointer(color_attribute, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	}
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	if (mWorldView_uniform != -1)
 	{
