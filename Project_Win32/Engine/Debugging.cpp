@@ -229,3 +229,17 @@ void QHEngine::RenderDebugTexture(GLuint textureId)
 {
 	Debugging::getInstance()->RenderTexture(textureId);
 }
+
+void QHEngine::EnablePolygonModeGLLine()
+{
+#ifdef _WINDOWS
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+#endif
+}
+
+void QHEngine::DisablePolygonModeGLLine()
+{
+#ifdef _WINDOWS
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+#endif
+}

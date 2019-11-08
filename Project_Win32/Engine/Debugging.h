@@ -46,5 +46,7 @@ namespace QHEngine
 	void DrawArrays(GLenum mode, GLint first, GLsizei count);
 	void DrawElementsInstanced(GLenum mode, GLsizei count, GLenum type, const void * indices, GLsizei instancecount);
 	void RenderDebugTexture(GLuint textureId);
+	void EnablePolygonModeGLLine();
+	void DisablePolygonModeGLLine();
 };
 #endif // !__DEBUGGING_H__

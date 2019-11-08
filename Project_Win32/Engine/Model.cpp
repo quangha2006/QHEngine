@@ -370,8 +370,8 @@ void Model::Render(RenderTargetType RT_Type)
 
 		break;
 	case RenderTargetType_COLOR:
-		//if (mIsDrawWireFrame)
-			//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		if (mIsDrawWireFrame)
+			QHEngine::EnablePolygonModeGLLine();
 
 		if (mRenderMode == RenderMode::RenderMode_Material)
 		{
@@ -398,8 +398,8 @@ void Model::Render(RenderTargetType RT_Type)
 				mesh.Render();
 			}
 		}
-		//if (mIsDrawWireFrame)
-			//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		if (mIsDrawWireFrame)
+			QHEngine::DisablePolygonModeGLLine();
 
 		RenderNormalVisalization();
 
@@ -657,13 +657,11 @@ bool Model::CompileShader()
 	if (!mDept_Shader.LoadShader("Shaders/DepthShader.vs", "Shaders/DepthShader.fs", false, shader_define.c_str()))
 		return false;
 
-	//if (!mModel_Shader.LoadShader("Shaders/model.vs", "Shaders/model.fs", "Shaders/model.gs", false, shader_define.c_str()))
 	if (!mModel_Shader.LoadShader("Shaders/model.vs", "Shaders/model.fs", false, shader_define.c_str()))
 		return false;
 
-	mNormal_Shader.LoadShader("Shaders/normal_visualization.vs","Shaders/normal_visualization.fs","Shaders/normal_visualization.gs", false, shader_define.c_str());
-
-	mModel_WireFrame_Shader.LoadShader("Shaders/model.vs", "Shaders/model.fs", "Shaders/model.gs", false, shader_define.c_str());
+	if (mIsRenderNormalVisualization)
+		mNormal_Shader.LoadShader("Shaders/normal_visualization.vs", "Shaders/normal_visualization.fs", "Shaders/normal_visualization.gs", false, shader_define.c_str());
 
 	return true;
 }

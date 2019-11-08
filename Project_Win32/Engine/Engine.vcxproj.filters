@@ -289,8 +289,5 @@
     <None Include="..\..\Resources\Shaders\model.vs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\..\Resources\Shaders\model.gs">
-      <Filter>Resource Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

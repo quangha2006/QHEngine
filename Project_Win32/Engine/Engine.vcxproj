@@ -198,7 +198,6 @@
     <None Include="..\..\Resources\Shaders\cubeVS.vs" />
     <None Include="..\..\Resources\Shaders\DepthShader.fs" />
     <None Include="..\..\Resources\Shaders\DepthShader.vs" />
-    <None Include="..\..\Resources\Shaders\model.gs" />
     <None Include="..\..\Resources\Shaders\Quad_debug.fs" />
     <None Include="..\..\Resources\Shaders\Quad_debug.vs" />
     <None Include="..\..\Resources\Shaders\model.fs" />

@@ -116,7 +116,7 @@ namespace QHTexture
 				}
 				else
 					break;
-			} while (mipmap <= 10);
+			} while (mipmap <= 7); // Num Mipmap
 
 			if (mipmap > 0)
 			{
