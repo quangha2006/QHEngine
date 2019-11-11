@@ -62,7 +62,7 @@ void Basic::Init()
 	//mSpider.SetPlayAnimTime(0.0f, 0.33f);
 	//mSpider.SetPlayAnimTime(0.66f, 1.f);
 
-	//mBoblampclean.Init("bountyhunter/bountyhunter/anm/source.dae", true);
+	mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
 	//mBoblampclean.Init("bountyhunter/bountyhunter/bountyhunter_rig_01.dae", false);
 	mBoblampclean.SetPos(glm::vec3(0.f, 0.0f, 0.0f));
 	//mBoblampclean.SetScale(glm::vec3(0.05f));
@@ -192,6 +192,8 @@ bool Basic::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 {
 	m_Streetenvironment.CreateTriangleMeshShape(0.);
+
+	mBoblampclean.CreateConvexHullShapeMesh(0.);
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
 

@@ -749,6 +749,17 @@ void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
+void Model::CreateConvexHullShapeMesh(float mass, bool isOptimize)
+{
+	for (QHMesh& mesh : mQHMeshes)
+	{
+		unsigned int NumVertices = 0;
+		Vertex* verData = mesh.GetVerticesData(NumVertices);
+		PhysicsSimulation::getInstance()->createConvexHullShape(mass, verData, NumVertices, mPos, mRotate, mAngle, mScale, isOptimize);
+		break;
+	}
+}
+
 void Model::CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize)
 {
 	if (mNumVertices <= 0)

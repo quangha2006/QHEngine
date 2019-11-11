@@ -159,6 +159,7 @@ public:
 	void CreateSphereShapePhysicsBody(float mass, float radius, glm::vec3 fixedboxshape = glm::vec3(0.));
 	void ClearForcesPhysics();
 	void CreateConvexHullShapePhysicsBody(float mass, bool isOptimize = true);
+	void CreateConvexHullShapeMesh(float mass, bool isOptimize = true);
 	void CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize = true);
 	void CreateTriangleMeshShape(float mass);
 	void CreateCapsuleShape(float mass, float radius, float height);

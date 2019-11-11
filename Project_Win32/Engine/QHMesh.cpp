@@ -315,7 +315,6 @@ QHMesh::QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, 
 	
 }
 
-
 QHMesh::~QHMesh()
 {
 }
