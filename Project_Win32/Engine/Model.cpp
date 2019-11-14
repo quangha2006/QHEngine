@@ -749,14 +749,23 @@ void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
-void Model::CreateConvexHullShapeMesh(float mass, bool isOptimize)
+void Model::CreateConvexHullShapeBone(float mass, bool isOptimize)
 {
-	for (QHMesh& mesh : mQHMeshes)
+	for (unsigned int boneIndex = 0; boneIndex < m_NumBones; ++boneIndex)
 	{
-		unsigned int NumVertices = 0;
-		Vertex* verData = mesh.GetVerticesData(NumVertices);
-		PhysicsSimulation::getInstance()->createConvexHullShape(mass, verData, NumVertices, mPos, mRotate, mAngle, mScale, isOptimize);
-		break;
+		std::vector<Vertex> vertices;
+		for (unsigned int verIndex = 0; verIndex < mNumVertices; ++verIndex)
+		{
+			if ((unsigned int)mVertices_marterial[verIndex].id.x == boneIndex && mVertices_marterial[verIndex].weight.x != 0.0f)
+			{
+				vertices.push_back(mVertices_marterial[verIndex]);
+			}
+		}
+		btTransform transMatrix;
+		btScalar matrix[16];
+		transMatrix.setFromOpenGLMatrix(matrix);
+		PhysicsSimulation::getInstance()->createConvexHullShape(mass, vertices.data(), vertices.size(), mPos, mRotate, mAngle, mScale, false);
+		//break;
 	}
 }
 
