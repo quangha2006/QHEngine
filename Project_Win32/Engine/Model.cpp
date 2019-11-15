@@ -556,6 +556,19 @@ void Model::UpdateAnimation()
 		RunningTime = mtimeStampAnim;
 
 	BoneTransform(RunningTime, mTransforms);
+
+	//sync for rigibody
+	for (BoneInfo& bone : m_BoneInfo)
+	{
+		glm::mat4 bonematrix = bone.FinalTransformation;
+		bonematrix = glm::transpose(bonematrix);
+		btTransform boneTransform;
+		btScalar * bttrans = (btScalar*)&bonematrix;
+
+		boneTransform.setFromOpenGLMatrix(bttrans);
+		if (bone.rigiBody != nullptr)
+			bone.rigiBody->setWorldTransform(boneTransform);
+	}
 }
 void Model::SyncPhysics()
 {
@@ -764,8 +777,7 @@ void Model::CreateConvexHullShapeBone(float mass, bool isOptimize)
 		btTransform transMatrix;
 		btScalar matrix[16];
 		transMatrix.setFromOpenGLMatrix(matrix);
-		PhysicsSimulation::getInstance()->createConvexHullShape(mass, vertices.data(), vertices.size(), mPos, mRotate, mAngle, mScale, false);
-		//break;
+		m_BoneInfo[boneIndex].rigiBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, vertices.data(), vertices.size(), mPos, mRotate, mAngle, mScale, false);
 	}
 }
 

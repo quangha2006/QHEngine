@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "btBulletDynamicsCommon.h"
 
 struct Vertex {
 	glm::vec3 Position;
@@ -35,10 +36,11 @@ struct BoneInfo
 {
 	glm::mat4 BoneOffset;
 	glm::mat4 FinalTransformation;
-
+	btRigidBody *rigiBody;
 	BoneInfo()
 	{
 		BoneOffset = glm::mat4(0);
 		FinalTransformation = glm::mat4(0);
+		rigiBody = nullptr;
 	}
 };
