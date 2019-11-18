@@ -22,7 +22,7 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
 	//m_Streetenvironment.Init("/1_2_Tree.dae", true, true);
 	//m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
 	//m_Streetenvironment.SetScale(glm::vec3(100.0f,100.0f,100.0f));
@@ -40,7 +40,7 @@ void Basic::Init()
 	mMerce.SetScale(glm::vec3(2.5f));
 	mMerce.SetRenderMode(RenderMode::RenderMode_Material);
 	
-	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
+	//mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	//mAstroBoy.SetScale(glm::vec3(30.0f));
 	mAstroBoy.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -193,9 +193,9 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 {
 	m_Streetenvironment.CreateTriangleMeshShape(0.);
 
-	mBoblampclean.CreateConvexHullShapeBone(0.);
-	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
-	m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
+	mBoblampclean.CreateConvexHullShapeBone(0., false);
+	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
+	//m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
 
 	/*uvcircle.registerShape(1.);*/
 	//uvcircle.GetRigidBody()->setFriction(0.);

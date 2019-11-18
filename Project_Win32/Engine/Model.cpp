@@ -556,7 +556,7 @@ void Model::UpdateAnimation()
 		RunningTime = mtimeStampAnim;
 
 	BoneTransform(RunningTime, mTransforms);
-
+	
 	//sync for rigibody
 	for (BoneInfo& bone : m_BoneInfo)
 	{
@@ -769,7 +769,8 @@ void Model::CreateConvexHullShapeBone(float mass, bool isOptimize)
 		std::vector<Vertex> vertices;
 		for (unsigned int verIndex = 0; verIndex < mNumVertices; ++verIndex)
 		{
-			if ((unsigned int)mVertices_marterial[verIndex].id.x == boneIndex && mVertices_marterial[verIndex].weight.x != 0.0f)
+			if (((unsigned int)mVertices_marterial[verIndex].id.x == boneIndex && mVertices_marterial[verIndex].weight.x > 0.1f)
+				|| ((unsigned int)mVertices_marterial[verIndex].id.y == boneIndex && mVertices_marterial[verIndex].weight.y > 0.1f))
 			{
 				vertices.push_back(mVertices_marterial[verIndex]);
 			}
