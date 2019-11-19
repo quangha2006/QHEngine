@@ -12,19 +12,6 @@ namespace QHMath
 
 		return tmp;
 	}
-	glm::mat4 CombineMat4(const glm::mat4 &a, const glm::mat4 &b)
-	{
-		glm::mat4 result = glm::mat4();
-		for (unsigned int i = 0; i < 4; i++) {
-			for (unsigned int j = 0; j < 4; j++) {
-				result[i][j] = a[i][0] * b[0][j] +
-					a[i][1] * b[1][j] +
-					a[i][2] * b[2][j] +
-					a[i][3] * b[3][j];
-			}
-		}
-		return result;
-	}
 
 	bool compareFloat(float A, float B, float epsilon)
 	{

@@ -256,8 +256,7 @@ void Model::processNode(aiNode * node, const aiScene * scene, glm::mat4 nodeTran
 	aiMatrix4x4 tmp = node->mTransformation;
 	glm::mat4 currentNodeTransformation = QHMath::AiToGLMMat4(tmp);
 	currentNodeTransformation = glm::transpose(currentNodeTransformation);
-	glm::mat4 Transformation = QHMath::CombineMat4(currentNodeTransformation, nodeTransformation);
-	//glm::mat4 Transformation = QHMath::CombineMat4(nodeTransformation, currentNodeTransformation);
+	glm::mat4 Transformation = nodeTransformation * currentNodeTransformation;
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -403,7 +402,7 @@ void Model::Render(RenderTargetType RT_Type)
 
 		RenderNormalVisalization();
 
-		//RenderBone();
+		RenderBone();
 	}
 }
 
@@ -446,19 +445,16 @@ void Model::RenderNormalVisalization()
 
 void Model::RenderBone()
 {
-	if (mTransforms.size() > 0)
+	if (m_BoneInfo.size() > 0)
 	{
-		for (unsigned int i = 0; i < mTransforms.size(); ++i)
+		int count = 0;
+	
+		for (BoneInfo &bi : m_BoneInfo)
 		{
-			//glm::mat4 tmp = mWorldTransform * mTransforms[i];
-			glm::vec3 pos = glm::vec4(mPos, 1.0f) * mTransforms[i];
-			pos = pos * mScale;
-			//pos.x = tmp[3][0];
-			//pos.y = tmp[3][1];
-			//pos.z = tmp[3][2];
+			glm::vec3 pos = glm::vec4(mPos, 1.0f) * bi.FinalTransformation;
+			
 			Debugging::getInstance()->RenderBall(pos);
 		}
-			
 	}
 }
 
@@ -855,7 +851,7 @@ void Model::BoneTransform(int64_t TimeInSeconds, vector<glm::mat4>& Transforms)
 	ReadNodeHeirarchy(AnimationTime, m_pScene->mRootNode, Identity);
 
 	for (uint i = 0; i < m_NumBones; i++) {
-		Transforms[i] = m_BoneInfo[i].FinalTransformation;
+		Transforms[i] = m_BoneInfo[i].BoneOffset * m_BoneInfo[i].FinalTransformation ;
 	}
 }
 
@@ -898,21 +894,18 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 		TranslationM[2][3] = Translation.z;
 
 		// Combine the above transformations
-		// TranslationM * RotationM * ScalingM
-		glm::mat4 tmp1 = QHMath::CombineMat4(TranslationM, RotationM);
-		NodeTransformation = QHMath::CombineMat4(tmp1, ScalingM);
+		NodeTransformation = ScalingM * RotationM * TranslationM;
 	}
 
-	glm::mat4 GlobalTransformation = QHMath::CombineMat4(ParentTransform, NodeTransformation);
+	glm::mat4 FinalTransformation = NodeTransformation * ParentTransform;
 
 	if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
 		uint BoneIndex = m_BoneMapping[NodeName];
-		glm::mat4 tmp4 = QHMath::CombineMat4(GlobalTransformation, m_BoneInfo[BoneIndex].BoneOffset);
-		m_BoneInfo[BoneIndex].FinalTransformation = tmp4;
+		m_BoneInfo[BoneIndex].FinalTransformation = FinalTransformation;
 	}
 
 	for (uint i = 0; i < pNode->mNumChildren; i++) {
-		ReadNodeHeirarchy(AnimationTime, pNode->mChildren[i], GlobalTransformation);
+		ReadNodeHeirarchy(AnimationTime, pNode->mChildren[i], FinalTransformation);
 	}
 }
 const aiNodeAnim * Model::FindNodeAnim(const aiAnimation * pAnimation, const string &NodeName)

@@ -22,7 +22,7 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
 	//m_Streetenvironment.Init("/1_2_Tree.dae", true, true);
 	//m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
 	//m_Streetenvironment.SetScale(glm::vec3(100.0f,100.0f,100.0f));
@@ -68,6 +68,7 @@ void Basic::Init()
 	//mBoblampclean.SetScale(glm::vec3(0.05f));
 	mBoblampclean.SetDrawMesh(0);
 	//mBoblampclean.SetDrawWireFrame(true);
+	//mBoblampclean.SetTimeStampAnim(0);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
 
 	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
@@ -193,7 +194,7 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 {
 	m_Streetenvironment.CreateTriangleMeshShape(0.);
 
-	mBoblampclean.CreateConvexHullShapeBone(0., false);
+	//mBoblampclean.CreateConvexHullShapeBone(0., false);
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
 

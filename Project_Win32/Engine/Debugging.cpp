@@ -140,7 +140,7 @@ void Debugging::RenderBall(glm::vec3 pos)
 	Camera *camera = Camera::getInstance();
 	glm::mat4 view = camera->GetWorldViewProjectionMatrix();
 	glm::mat4 model = glm::translate(glm::mat4(), pos);
-	//model = glm::scale(model, glm::vec3(0.2f));
+	//model = glm::scale(model, glm::vec3(0.1f));
 	mBall_shader.use();
 	mBall_shader.setMat4("model", model);
 	mBall_shader.setMat4("view_projection", view);
