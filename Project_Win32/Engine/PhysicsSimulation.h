@@ -47,6 +47,7 @@ public:
 	void RenderPhysicsDebug();
 	void PhysicsStepCollision(btCollisionObject* objA, btCollisionObject* objB, MyContactResultCallback &result);
 	void SetGravity(btVector3 gravity);
+	btDiscreteDynamicsWorld* GetDynamicsWorld() { return mDynamicsWorld; }
 	/**
 		DBG_NoDebug = 0,
 		DBG_DrawWireframe = 1,

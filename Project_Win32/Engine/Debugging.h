@@ -36,7 +36,7 @@ public:
 	unsigned short getNumDrawCall();
 	void resetCount();
 	void RenderTexture(GLuint TexId);
-	void RenderBall(glm::vec3 pos);
+	void RenderBall(glm::vec3 pos, float scale = 1.0f);
 	Debugging();
 	~Debugging();
 };

@@ -126,7 +126,7 @@ void Debugging::RenderTexture(GLuint TexId)
 	//End debug
 }
 
-void Debugging::RenderBall(glm::vec3 pos)
+void Debugging::RenderBall(glm::vec3 pos, float scale)
 {
 	if (!mIsInitBall)
 	{
@@ -140,7 +140,7 @@ void Debugging::RenderBall(glm::vec3 pos)
 	Camera *camera = Camera::getInstance();
 	glm::mat4 view = camera->GetWorldViewProjectionMatrix();
 	glm::mat4 model = glm::translate(glm::mat4(), pos);
-	//model = glm::scale(model, glm::vec3(0.1f));
+	model = glm::scale(model, glm::vec3(scale));
 	mBall_shader.use();
 	mBall_shader.setMat4("model", model);
 	mBall_shader.setMat4("view_projection", view);

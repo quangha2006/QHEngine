@@ -83,7 +83,7 @@ void Model::Loading() //thread
 	{
 		m_NumBones = m_BoneInfo.size();
 		m_hasAnimation = true;
-		mTransforms.resize(m_NumBones);
+		m_BoneTransforms.resize(m_NumBones);
 		mNumAnimations = m_pScene->mNumAnimations;
 		LOGI("NumAnimation: %d\n", mNumAnimations);
 	}
@@ -301,9 +301,9 @@ void Model::Render(RenderTargetType RT_Type)
 
 
 		//animation
-		if (m_hasAnimation && mTransforms.size() > 0)
+		if (m_hasAnimation && m_BoneTransforms.size() > 0)
 		{
-			mDept_Shader.setBoneMat4("gBones", mTransforms);
+			mDept_Shader.setBoneMat4("gBones", m_BoneTransforms);
 
 		}
 
@@ -342,9 +342,9 @@ void Model::Render(RenderTargetType RT_Type)
 
 
 		//animation
-		if (m_hasAnimation && mTransforms.size() > 0)
+		if (m_hasAnimation && m_BoneTransforms.size() > 0)
 		{
-			mModel_Shader.setBoneMat4("gBones", mTransforms);
+			mModel_Shader.setBoneMat4("gBones", m_BoneTransforms);
 		}
 		
 	}
@@ -400,16 +400,16 @@ void Model::Render(RenderTargetType RT_Type)
 		if (mIsDrawWireFrame)
 			QHEngine::DisablePolygonModeGLLine();
 
-		RenderNormalVisalization();
+		if (mIsRenderNormalVisualization)
+			RenderNormalVisalization();
 
-		RenderBone();
+		if (mIsDrawWireFrame)
+			RenderBone();
 	}
 }
 
 void Model::RenderNormalVisalization()
 {
-	if (!mIsRenderNormalVisualization)
-		return;
 
 	mNormal_Shader.use();
 	mNormal_Shader.setMat4("projection", mCamera->GetProjection());
@@ -417,9 +417,9 @@ void Model::RenderNormalVisalization()
 	mNormal_Shader.setMat4("model", mWorldTransform);
 	mNormal_Shader.setFloat("MAGNITUDE", mNormalVisualizationMagnitude);
 	//animation
-	if (m_hasAnimation && mTransforms.size() > 0)
+	if (m_hasAnimation && m_BoneTransforms.size() > 0)
 	{
-		mNormal_Shader.setBoneMat4("gBones", mTransforms);
+		mNormal_Shader.setBoneMat4("gBones", m_BoneTransforms);
 	}
 	if (mRenderMode == RenderMode::RenderMode_Material)
 	{
@@ -447,13 +447,13 @@ void Model::RenderBone()
 {
 	if (m_BoneInfo.size() > 0)
 	{
-		int count = 0;
-	
 		for (BoneInfo &bi : m_BoneInfo)
 		{
-			glm::vec3 pos = glm::vec4(mPos, 1.0f) * bi.FinalTransformation;
+			glm::vec3 pos = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f) * bi.FinalTransformation;
 			
-			Debugging::getInstance()->RenderBall(pos);
+			pos = glm::vec4(pos, 1.0f) * glm::transpose(mWorldTransform);
+
+			Debugging::getInstance()->RenderBall(pos, mScale.x);
 		}
 	}
 }
@@ -551,35 +551,74 @@ void Model::UpdateAnimation()
 	else
 		RunningTime = mtimeStampAnim;
 
-	BoneTransform(RunningTime, mTransforms);
+	BoneTransform(RunningTime, m_BoneTransforms);
 	
 	//sync for rigibody
-	for (BoneInfo& bone : m_BoneInfo)
+	if (!isDynamic)
 	{
-		glm::mat4 bonematrix = bone.FinalTransformation;
-		bonematrix = glm::transpose(bonematrix);
-		btTransform boneTransform;
-		btScalar * bttrans = (btScalar*)&bonematrix;
+		for (uint i = 0; i < m_NumBones; i++) {
 
-		boneTransform.setFromOpenGLMatrix(bttrans);
-		if (bone.rigiBody != nullptr)
-			bone.rigiBody->setWorldTransform(boneTransform);
+			glm::mat4 bonematrix = m_BoneTransforms[i];
+			bonematrix = glm::transpose(bonematrix);
+
+			btScalar * bttrans = (btScalar*)&bonematrix;
+
+			btTransform boneTransform;
+			boneTransform.setFromOpenGLMatrix(bttrans);
+			if (m_BoneInfo[i].rigiBody != nullptr)
+				m_BoneInfo[i].rigiBody->setWorldTransform(boneTransform);
+		}
 	}
+	else
+		for (uint i = 0; i < m_NumBones; i++) {
+			if (m_BoneInfo[i].rigiBody != nullptr)
+			{
+				m_BoneInfo[i].rigiBody->setMassProps(1.0f, btVector3(0, 0, 0));
+				m_BoneInfo[i].rigiBody->activate(true);
+				m_BoneInfo[i].rigiBody->setActivationState(DISABLE_DEACTIVATION);
+				btDiscreteDynamicsWorld * dmw = PhysicsSimulation::getInstance()->GetDynamicsWorld();
+				dmw->removeRigidBody(m_BoneInfo[i].rigiBody);
+				dmw->addRigidBody(m_BoneInfo[i].rigiBody);
+			}
+				
+		}
 }
 void Model::SyncPhysics()
 {
-	if (m_initialized && isDynamic && mRigidBody != nullptr)
+	if (m_initialized && isDynamic)
 	{
-		btTransform trans = mRigidBody->getWorldTransform();
+		if (mRigidBody != nullptr)
+		{
+			btTransform trans = mRigidBody->getWorldTransform();
 
-		btScalar matrix[16];
-		trans.getOpenGLMatrix(matrix);
+			btScalar matrix[16];
+			trans.getOpenGLMatrix(matrix);
 
-		glm::mat4 glm_mat4 = glm::make_mat4(matrix);
+			glm::mat4 glm_mat4 = glm::make_mat4(matrix);
 
-		glm_mat4 = glm::translate(glm_mat4, mFixedBoxShape);
+			glm_mat4 = glm::translate(glm_mat4, mFixedBoxShape);
 
-		mWorldTransform = glm_mat4 * glm::scale(glm::mat4(), mScale);
+			mWorldTransform = glm_mat4 * glm::scale(glm::mat4(), mScale);
+		}
+		else
+		{
+			if (m_BoneInfo.size() > 0)
+			{
+				for (uint i = 0; i < m_NumBones; i++)
+				{
+					btTransform trans = m_BoneInfo[i].rigiBody->getWorldTransform();
+					btScalar matrix[16];
+					trans.getOpenGLMatrix(matrix);
+
+					glm::mat4 glm_mat4 = glm::make_mat4(matrix);
+
+					glm_mat4 = glm::translate(glm_mat4, mFixedBoxShape);
+
+					m_BoneTransforms[i] = glm::transpose(glm_mat4);
+					//////////////////////////////////////////////////////////
+				}
+			}
+		}
 
 	}
 	else if (m_initialized)
@@ -871,23 +910,17 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 		// Interpolate scaling and generate scaling transformation matrix
 		aiVector3D Scaling(1.0f);
 		CalcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
-		glm::mat4 ScalingM = glm::mat4();
-		ScalingM = glm::scale(ScalingM, glm::vec3(Scaling.x, Scaling.y, Scaling.z));
+		glm::mat4 ScalingM = glm::scale(glm::mat4(), glm::vec3(Scaling.x, Scaling.y, Scaling.z));
 
 		// Interpolate rotation and generate rotation transformation matrix
 		aiQuaternion RotationQ;
 		CalcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);
 		aiMatrix3x3 tmpmat3 = RotationQ.GetMatrix();
 		glm::mat4 RotationM = glm::mat4(glm::make_mat3(&tmpmat3.a1));
-		RotationM[0][3] = 0.0f;
-		RotationM[1][3] = 0.0f;
-		RotationM[2][3] = 0.0f;
-		RotationM[3][0] = 0.0f; RotationM[3][1] = 0.0f; RotationM[3][2] = 0.0f; RotationM[3][3] = 1.0f;
 
 		// Interpolate translation and generate translation transformation matrix
 		aiVector3D Translation(0.0f);
 		CalcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
-		//InitTranslationTransform
 		glm::mat4 TranslationM = glm::mat4();
 		TranslationM[0][3] = Translation.x;
 		TranslationM[1][3] = Translation.y;

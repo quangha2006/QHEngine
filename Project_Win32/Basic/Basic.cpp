@@ -48,25 +48,22 @@ void Basic::Init()
 	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
 
-	//mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
-	//mSpider.Init("bHieu/1_2_Tree.dae", true);
-	//mSpider.Init("Demo/BoxAnim.dae", true);
-	mSpider.SetScale(glm::vec3(0.1f));
-	mSpider.SetPos(glm::vec3(1.8f, 0.0f, -.5f));
+	mSpider.Init("Low-Poly Spider/Spider_3.fbx", true);
+	//mSpider.SetScale(glm::vec3(0.05f));
+	//mSpider.SetPos(glm::vec3(3.0f, 0.0f, -.5f));
 	//mSpider.SetScale(glm::vec3(5.0f));
 	mSpider.SetAnimPlay(2);
+	//mSpider.SetDrawWireFrame(true);
 	//mSpider.SetRotate(50.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 	//mSpider.SetTimeStampAnim(0);
 	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(9);
-	//mSpider.SetPlayAnimTime(0.0f, 0.33f);
-	//mSpider.SetPlayAnimTime(0.66f, 1.f);
 
-	mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
+	//mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
 	//mBoblampclean.Init("bountyhunter/bountyhunter/bountyhunter_rig_01.dae", false);
-	mBoblampclean.SetPos(glm::vec3(0.f, 0.0f, 0.0f));
+	//mBoblampclean.SetPos(glm::vec3(0.f, 1.0f, 0.0f));
 	//mBoblampclean.SetScale(glm::vec3(0.05f));
-	mBoblampclean.SetDrawMesh(0);
+	//mBoblampclean.SetDrawMesh(0);
 	//mBoblampclean.SetDrawWireFrame(true);
 	//mBoblampclean.SetTimeStampAnim(0);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
@@ -116,7 +113,7 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 	//LOGI("Key: %d = %c\n",key, c);
 	glm::vec3 curent = uvcircle.GetScale();
 	glm::mat4 cameraView = mCamera->GetView();
-	
+	glm::vec3 cru;
 	
 	glm::mat4 tmp;
 	if (action == 0) return true;
@@ -173,10 +170,13 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		mSpider.SetAnimPlay(7);
 		return true;
 	case 328:
-		mSpider.SetAnimPlay(8);
+		//mSpider.SetAnimPlay(8);
+		mBoblampclean.isDynamic = false;
 		return true;
 	case 329: // num 9
-		mSpider.SetAnimPlay(9);
+		//mSpider.SetAnimPlay(9);
+		mBoblampclean.isDynamic = true;
+		mSpider.isDynamic = true;
 		return true;
 
 	default:
@@ -197,7 +197,7 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 	//mBoblampclean.CreateConvexHullShapeBone(0., false);
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
-
+	mSpider.CreateConvexHullShapeBone(0., false);
 	/*uvcircle.registerShape(1.);*/
 	//uvcircle.GetRigidBody()->setFriction(0.);
 	//uvcircle.GetRigidBody()->setRollingFriction(1.0f);

@@ -63,7 +63,7 @@ private:
 	const aiScene* m_pScene;
 	map<string, unsigned int> m_BoneMapping;
 	vector<BoneInfo> m_BoneInfo;
-	vector<glm::mat4> mTransforms;
+	vector<glm::mat4> m_BoneTransforms;
 	glm::mat4 m_GlobalInverseTransform;
 	GLuint m_NumBones;
 	bool m_hasAnimation;
@@ -101,7 +101,7 @@ private:
 	float mNormalVisualizationMagnitude;
 	btRigidBody* mRigidBody;
 	glm::vec3 mFixedBoxShape;
-	bool isDynamic;
+	//bool isDynamic;
 	bool isFirstSetupUniform;
 	bool mIsAutoRender;
 	uint FindScaling(double AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -119,6 +119,7 @@ private:
 	void RenderBone();
 	void GenBuffer();
 public:
+	bool isDynamic;
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type);
 	void SetRenderMode(RenderMode render_mode);
