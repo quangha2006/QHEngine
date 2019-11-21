@@ -32,7 +32,12 @@ enum RenderMode
 	RenderMode_Instancing,
 	RenderMode_Auto
 };
-
+enum PhycicsMode
+{
+	PhycicsMode_Kinematic,
+	PhycicsMode_Static,
+	PhycicsMode_Dynamic
+};
 class Model
 {
 private:
@@ -101,6 +106,8 @@ private:
 	float mNormalVisualizationMagnitude;
 	btRigidBody* mRigidBody;
 	glm::vec3 mFixedBoxShape;
+	int mPhycicsMode;
+	bool isDynamic;
 	//bool isDynamic;
 	bool isFirstSetupUniform;
 	bool mIsAutoRender;
@@ -119,7 +126,6 @@ private:
 	void RenderBone();
 	void GenBuffer();
 public:
-	bool isDynamic;
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type);
 	void SetRenderMode(RenderMode render_mode);
@@ -141,6 +147,8 @@ public:
 	void SetCamera(Camera * camera);
 	void SetDrawMesh(int mesh);
 	void SetVisible(bool isvisible);
+	void SetPhycicsMode(int physicsmode);
+	int GetPhycicsMode() { return mPhycicsMode; }
 	bool GetIsVisible();
 	int GetAnimPlay();
 	/**

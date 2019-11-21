@@ -554,34 +554,25 @@ void Model::UpdateAnimation()
 	BoneTransform(RunningTime, m_BoneTransforms);
 	
 	//sync for rigibody
-	if (!isDynamic)
+	if (mPhycicsMode == PhycicsMode_Kinematic)
 	{
 		for (uint i = 0; i < m_NumBones; i++) {
 
 			glm::mat4 bonematrix = m_BoneTransforms[i];
 			bonematrix = glm::transpose(bonematrix);
-
+			//glm::vec3 result = QHMath::GetScale(bonematrix);
+			//LOGI("1: %f %f %f\n", result.x, result.y, result.z);
 			btScalar * bttrans = (btScalar*)&bonematrix;
 
 			btTransform boneTransform;
 			boneTransform.setFromOpenGLMatrix(bttrans);
 			if (m_BoneInfo[i].rigiBody != nullptr)
-				m_BoneInfo[i].rigiBody->setWorldTransform(boneTransform);
-		}
-	}
-	else
-		for (uint i = 0; i < m_NumBones; i++) {
-			if (m_BoneInfo[i].rigiBody != nullptr)
 			{
-				m_BoneInfo[i].rigiBody->setMassProps(1.0f, btVector3(0, 0, 0));
-				m_BoneInfo[i].rigiBody->activate(true);
-				m_BoneInfo[i].rigiBody->setActivationState(DISABLE_DEACTIVATION);
-				btDiscreteDynamicsWorld * dmw = PhysicsSimulation::getInstance()->GetDynamicsWorld();
-				dmw->removeRigidBody(m_BoneInfo[i].rigiBody);
-				dmw->addRigidBody(m_BoneInfo[i].rigiBody);
+				m_BoneInfo[i].rigiBody->setWorldTransform(boneTransform);
 			}
 				
 		}
+	}
 }
 void Model::SyncPhysics()
 {
@@ -600,22 +591,23 @@ void Model::SyncPhysics()
 
 			mWorldTransform = glm_mat4 * glm::scale(glm::mat4(), mScale);
 		}
-		else
+		else//if (mPhycicsMode != PhycicsMode_Kinematic)
 		{
 			if (m_BoneInfo.size() > 0)
 			{
 				for (uint i = 0; i < m_NumBones; i++)
 				{
 					btTransform trans = m_BoneInfo[i].rigiBody->getWorldTransform();
+					
 					btScalar matrix[16];
 					trans.getOpenGLMatrix(matrix);
 
 					glm::mat4 glm_mat4 = glm::make_mat4(matrix);
 
 					glm_mat4 = glm::translate(glm_mat4, mFixedBoxShape);
-
+					//glm::vec3 result = QHMath::GetScale(glm_mat4);
+					//LOGI("2: %f %f %f\n", result.x, result.y, result.z);
 					m_BoneTransforms[i] = glm::transpose(glm_mat4);
-					//////////////////////////////////////////////////////////
 				}
 			}
 		}
@@ -738,6 +730,45 @@ void Model::SetVisible(bool isvisible)
 	mIsVisible = isvisible;
 }
 
+void Model::SetPhycicsMode(int physicsmode)
+{
+	mPhycicsMode = physicsmode;
+	btDiscreteDynamicsWorld * phyWorld = PhysicsSimulation::getInstance()->GetDynamicsWorld();
+
+	if (mPhycicsMode == PhycicsMode_Dynamic)
+	{
+		for (uint i = 0; i < m_NumBones; i++) {
+
+			btRigidBody *rigiBody = m_BoneInfo[i].rigiBody;
+
+			if (rigiBody != nullptr)
+			{
+				phyWorld->removeRigidBody(rigiBody);
+				int rigiFlag = rigiBody->getCollisionFlags() & ~btCollisionObject::CF_KINEMATIC_OBJECT;
+				rigiBody->setCollisionFlags(rigiFlag);
+				phyWorld->addRigidBody(rigiBody);
+			}
+
+		}
+	}
+	if (mPhycicsMode == PhycicsMode_Kinematic)
+	{
+		for (uint i = 0; i < m_NumBones; i++) {
+
+			btRigidBody *rigiBody = m_BoneInfo[i].rigiBody;
+
+			if (rigiBody != nullptr)
+			{
+				phyWorld->removeRigidBody(rigiBody);
+				int rigiFlag = rigiBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT;
+				rigiBody->setCollisionFlags(rigiFlag);
+				phyWorld->addRigidBody(rigiBody);
+			}
+
+		}
+	}
+}
+
 bool Model::GetIsVisible()
 {
 	return mIsVisible;
@@ -799,8 +830,11 @@ void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 
 void Model::CreateConvexHullShapeBone(float mass, bool isOptimize)
 {
+	mPhycicsMode = PhycicsMode_Kinematic;
+	isDynamic = (mass != 0.f);
 	for (unsigned int boneIndex = 0; boneIndex < m_NumBones; ++boneIndex)
 	{
+		// Store vertex
 		std::vector<Vertex> vertices;
 		for (unsigned int verIndex = 0; verIndex < mNumVertices; ++verIndex)
 		{
@@ -813,7 +847,11 @@ void Model::CreateConvexHullShapeBone(float mass, bool isOptimize)
 		btTransform transMatrix;
 		btScalar matrix[16];
 		transMatrix.setFromOpenGLMatrix(matrix);
-		m_BoneInfo[boneIndex].rigiBody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, vertices.data(), vertices.size(), mPos, mRotate, mAngle, mScale, false);
+		btRigidBody * rigibody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, vertices.data(), vertices.size(), mPos, mRotate, mAngle, mScale, false);
+
+		rigibody->setCollisionFlags(rigibody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+		rigibody->setActivationState(DISABLE_DEACTIVATION);
+		m_BoneInfo[boneIndex].rigiBody = rigibody;
 	}
 }
 
@@ -903,6 +941,8 @@ void Model::ReadNodeHeirarchy(double AnimationTime, const aiNode * pNode, glm::m
 	aiMatrix4x4 localTransForm = pNode->mTransformation;
 
 	glm::mat4 NodeTransformation = QHMath::AiToGLMMat4(localTransForm);
+
+	//NodeTransformation = glm::scale(NodeTransformation, glm::vec3(0.05f)); //cheat remove scale
 
 	const aiNodeAnim* pNodeAnim = FindNodeAnim(pAnimation, NodeName);
 
@@ -1120,6 +1160,7 @@ Model::Model()
 	, mVBO_material(0)
 	, mEBO_material(0)
 	, mVAO(0)
+	, mPhycicsMode(PhycicsMode_Static)
 {
 	m_Id = ModelManager::getInstance()->AddModel(this);
 }

@@ -14,7 +14,7 @@ namespace QHMath
 {
 	glm::mat4 AiToGLMMat4(const aiMatrix4x4 &in_mat);
 	bool compareFloat(float A, float B, float epsilon = 0.0001f);
-
+	glm::vec3 GetScale(const glm::mat4 &data);
 	template <class T> void Clamp(T& a, const T& lb, const T& ub)
 	{
 		if (a < lb)

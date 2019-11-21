@@ -2,7 +2,7 @@
 .NATIVE_API_LEVEL = "21"
 .NDK_ToolchainVersion = "4.9"
 .NDK_PlatformVersion = "android-$NATIVE_API_LEVEL$"
-.NDK_Root = "Y:\android-ndk-r19c"
+.NDK_Root = "Y:\android-ndk-r20b"
 .GameRoot = "$CompilePath$\..\..\..\..\..\Project_Win32"
 .ExternalLibs_Path = "$GameRoot$\External"
 .generated_Path = "$CompilePath$\..\..\..\..\generated"

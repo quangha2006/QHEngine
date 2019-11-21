@@ -45,7 +45,7 @@ void PhysicsSimulation::initPhysics()
 
 	mDynamicsWorld->setGravity(btVector3(0, -10.0, 0));
 
-	debugDraw.setDebugMode(btIDebugDraw::DBG_DrawFeaturesText);
+	debugDraw.setDebugMode(btIDebugDraw::DBG_NoDebug);
 	mDynamicsWorld->setDebugDrawer(&debugDraw);
 }
 

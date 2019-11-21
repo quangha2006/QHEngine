@@ -17,4 +17,19 @@ namespace QHMath
 	{
 		return (fabs(A - B) < epsilon);
 	}
+	glm::vec3 GetScale(const glm::mat4 & data)
+	{
+		glm::vec3 result;
+		float xs = data[0][0] * data[0][1] * data[0][2] * data[0][3] < 0 ? -1 : 1;
+		float ys = data[1][0] * data[1][1] * data[1][2] * data[1][3] < 0 ? -1 : 1;
+		float zs = data[2][0] * data[2][1] * data[2][2] * data[2][3] < 0 ? -1 : 1;
+
+		result.x = xs * sqrtf(data[0][0] * data[0][0] + data[0][1] * data[0][1] + data[0][2] * data[0][2]);
+		result.y = ys * sqrtf(data[1][0] * data[1][0] + data[1][1] * data[1][1] + data[1][2] * data[1][2]);
+		result.z = zs * sqrtf(data[2][0] * data[2][0] + data[2][1] * data[2][1] + data[2][2] * data[2][2]);
+
+		assert((result.x == 0.0 || result.y == 0.0 || result.z == 0.0) == false);
+
+		return result;
+	}
 }
