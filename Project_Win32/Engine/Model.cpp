@@ -558,10 +558,8 @@ void Model::UpdateAnimation()
 	{
 		for (uint i = 0; i < m_NumBones; i++) {
 
-			glm::mat4 bonematrix = m_BoneTransforms[i];
+			glm::mat4 bonematrix = m_BoneInfo[i].FinalTransformation;//m_BoneTransforms[i];
 			bonematrix = glm::transpose(bonematrix);
-			//glm::vec3 result = QHMath::GetScale(bonematrix);
-			//LOGI("1: %f %f %f\n", result.x, result.y, result.z);
 			btScalar * bttrans = (btScalar*)&bonematrix;
 
 			btTransform boneTransform;
@@ -597,7 +595,10 @@ void Model::SyncPhysics()
 			{
 				for (uint i = 0; i < m_NumBones; i++)
 				{
-					btTransform trans = m_BoneInfo[i].rigiBody->getWorldTransform();
+					btRigidBody * rigibody = m_BoneInfo[i].rigiBody;
+					if (rigibody == nullptr) 
+						continue;
+					btTransform trans = rigibody->getWorldTransform();
 					
 					btScalar matrix[16];
 					trans.getOpenGLMatrix(matrix);
@@ -605,9 +606,8 @@ void Model::SyncPhysics()
 					glm::mat4 glm_mat4 = glm::make_mat4(matrix);
 
 					glm_mat4 = glm::translate(glm_mat4, mFixedBoxShape);
-					//glm::vec3 result = QHMath::GetScale(glm_mat4);
-					//LOGI("2: %f %f %f\n", result.x, result.y, result.z);
-					m_BoneTransforms[i] = glm::transpose(glm_mat4);
+
+					m_BoneTransforms[i] = m_BoneInfo[i].BoneOffset * glm::transpose(glm_mat4);
 				}
 			}
 		}
@@ -830,7 +830,6 @@ void Model::CreateConvexHullShapePhysicsBody(float mass, bool isOptimize)
 
 void Model::CreateConvexHullShapeBone(float mass, bool isOptimize)
 {
-	mPhycicsMode = PhycicsMode_Kinematic;
 	isDynamic = (mass != 0.f);
 	for (unsigned int boneIndex = 0; boneIndex < m_NumBones; ++boneIndex)
 	{
@@ -838,21 +837,37 @@ void Model::CreateConvexHullShapeBone(float mass, bool isOptimize)
 		std::vector<Vertex> vertices;
 		for (unsigned int verIndex = 0; verIndex < mNumVertices; ++verIndex)
 		{
-			if (((unsigned int)mVertices_marterial[verIndex].id.x == boneIndex && mVertices_marterial[verIndex].weight.x > 0.1f)
+			if (((unsigned int)mVertices_marterial[verIndex].id.x == boneIndex && mVertices_marterial[verIndex].weight.x > 0.0f)
 				|| ((unsigned int)mVertices_marterial[verIndex].id.y == boneIndex && mVertices_marterial[verIndex].weight.y > 0.1f))
 			{
 				vertices.push_back(mVertices_marterial[verIndex]);
 			}
 		}
-		btTransform transMatrix;
-		btScalar matrix[16];
-		transMatrix.setFromOpenGLMatrix(matrix);
+		if (vertices.size() <= 0) continue;
+		//btTransform transMatrix;
+		//btScalar matrix[16];
+		//transMatrix.setFromOpenGLMatrix(matrix);
 		btRigidBody * rigibody = PhysicsSimulation::getInstance()->createConvexHullShape(mass, vertices.data(), vertices.size(), mPos, mRotate, mAngle, mScale, false);
-
 		rigibody->setCollisionFlags(rigibody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
 		rigibody->setActivationState(DISABLE_DEACTIVATION);
 		m_BoneInfo[boneIndex].rigiBody = rigibody;
 	}
+	//
+	// Create and add constraint to world
+	btRigidBody *RootRigi = m_BoneInfo[0].rigiBody;
+	btDiscreteDynamicsWorld * phyWorld = PhysicsSimulation::getInstance()->GetDynamicsWorld();
+	for (unsigned int i = 1; i < m_NumBones; ++i)
+	{
+		btRigidBody *childRigi = m_BoneInfo[i].rigiBody;
+		btVector3 axisA(0.f, 1.f, 0.f);
+		btVector3 axisB(0.f, 1.f, 0.f);
+		btVector3 pivotA(-5.f, 0.f, 0.f);
+		btVector3 pivotB(5.f, 0.f, 0.f);
+		btHingeConstraint* spHingeDynAB = new btHingeConstraint(*RootRigi, *childRigi, pivotA, pivotB, axisA, axisB);
+		spHingeDynAB->setLimit(3.5f, 3.5f);
+		phyWorld->addConstraint(spHingeDynAB, true);
+	}
+	mPhycicsMode = PhycicsMode_Kinematic;
 }
 
 void Model::CreateConvexTriangleShapePhysicsBody(float mass, bool isOptimize)
@@ -885,6 +900,62 @@ void Model::CreateCapsuleShape(float mass, float radius, float height)
 	mRigidBody = PhysicsSimulation::getInstance()->createCapsuleShape(mass, radius, height, mScale, mPos);
 	if (isDynamic)
 		mRigidBody->setActivationState(DISABLE_DEACTIVATION);
+}
+
+void Model::MakeContraints(aiNode *parentNode)
+{
+	btDiscreteDynamicsWorld * phyWorld = PhysicsSimulation::getInstance()->GetDynamicsWorld();
+
+	string NodeName(parentNode->mName.data);
+
+	uint BoneIndex = m_BoneMapping[NodeName];
+
+	btRigidBody * rigiA = m_BoneInfo[BoneIndex].rigiBody;
+
+	if (rigiA == nullptr)
+		return;
+
+	unsigned int numChildrenNode = parentNode->mNumChildren;
+	for (unsigned int childrenNodeIndex = 0; childrenNodeIndex < numChildrenNode; ++childrenNodeIndex)
+	{
+		aiNode *chilNode = parentNode->mChildren[childrenNodeIndex];
+		string nodeName(chilNode->mName.data);
+		uint boneIndex = m_BoneMapping[nodeName];
+
+		btRigidBody *rigiB = m_BoneInfo[boneIndex].rigiBody;
+
+		if (rigiB == nullptr)
+			continue;
+
+		btVector3 axisA(0.f, 1.f, 0.f);
+		btVector3 axisB(0.f, 1.f, 0.f);
+		btVector3 pivotA(-5.f, 0.f, 0.f);
+		btVector3 pivotB(5.f, 0.f, 0.f);
+		btHingeConstraint* spHingeDynAB = new btHingeConstraint(*rigiA, *rigiB, pivotA, pivotB, axisA, axisB);
+		spHingeDynAB->setLimit(3.5f, 3.6f);
+		phyWorld->addConstraint(spHingeDynAB, true);
+	}
+	for (unsigned int childrenNodeIndex = 0; childrenNodeIndex < numChildrenNode; ++childrenNodeIndex)
+	{
+		aiNode *chilNode = parentNode->mChildren[childrenNodeIndex];
+		MakeContraints(chilNode);
+	}
+}
+
+void Model::CreateCharacterController()
+{
+	isDynamic = true;
+	for (unsigned int boneIndex = 0; boneIndex < m_NumBones; ++boneIndex)
+	{
+		btRigidBody *rigibody = PhysicsSimulation::getInstance()->CreateCylinderShape(1.0f, 1.0f, 1.0f, 1.0f);
+		rigibody->setCollisionFlags(rigibody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+		rigibody->setActivationState(DISABLE_DEACTIVATION);
+		m_BoneInfo[boneIndex].rigiBody = rigibody;
+	}
+	// Make contraints
+	MakeContraints(m_pScene->mRootNode);
+
+	mPhycicsMode = PhycicsMode_Kinematic;
 }
 
 void Model::ClearForcesPhysics()

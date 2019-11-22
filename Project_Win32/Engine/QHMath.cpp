@@ -13,6 +13,18 @@ namespace QHMath
 		return tmp;
 	}
 
+	btTransform GLMMAT4ToBLTransform(const glm::mat4 & data)
+	{
+		glm::mat4 in_mat = glm::transpose(data);
+
+		btScalar * bttrans = (btScalar*)&in_mat;
+
+		btTransform boneTransform;
+		boneTransform.setFromOpenGLMatrix(bttrans);
+
+		return boneTransform;
+	}
+
 	bool compareFloat(float A, float B, float epsilon)
 	{
 		return (fabs(A - B) < epsilon);

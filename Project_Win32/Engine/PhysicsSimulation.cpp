@@ -356,6 +356,31 @@ btRigidBody * PhysicsSimulation::createCapsuleShape(float mass, float radius, fl
 
 	return createRigidBody(mass, transform, colShape);
 }
+btRigidBody * PhysicsSimulation::CreateCylinderShape(float mass, float x, float y, float z)
+{
+	btCollisionShape* colShape = new btCylinderShape(btVector3(x, y, z));
+	
+	mCollisionShapes.push_back(colShape);
+
+	/// Create Dynamic Objects
+	btTransform startTransform;
+	startTransform.setIdentity();
+
+	//rigidbody is dynamic if and only if mass is non zero, otherwise static
+
+	bool isDynamic = (mass != 0.f);
+
+	btVector3 localInertia(0, 0, 0);
+
+	if (isDynamic)
+	{
+		colShape->calculateLocalInertia(mass, localInertia);
+	}
+
+	startTransform.setOrigin(localInertia);
+
+	return createRigidBody(mass, startTransform, colShape);
+}
 void PhysicsSimulation::SetDebugMode(int debugMode)
 {
 	mDebugDrawModes = debugMode;

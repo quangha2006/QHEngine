@@ -16,8 +16,8 @@ const int Screen_height = 720;
 
 void Basic::Init()
 {
-	mCamera->SetPos(0.0f, 5.0f, 20.0f);
-	mCamera->SetTarget(0.0f, 5.0f, 0.0f);
+	mCamera->SetPos(0.0f, 30.0f, 100.0f);
+	mCamera->SetTarget(0.0f, 25.0f, 0.0f);
 	mCamera->SetLightPos(20.2f, 50.0f, 1.0f);
 
 	mSkyBox.Init("SkyBox");
@@ -59,8 +59,8 @@ void Basic::Init()
 	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(9);
 
-	//mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
-	mBoblampclean.Init("Low-Poly Spider/Spider_3.fbx", true);
+	mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
+	//mBoblampclean.Init("Low-Poly Spider/Spider_3.fbx", true);
 	//mBoblampclean.Init("bountyhunter/bountyhunter/bountyhunter_rig_01.dae", false);
 	//mBoblampclean.SetPos(glm::vec3(0.f, 1.0f, 0.0f));
 	//mBoblampclean.SetScale(glm::vec3(0.05f));
@@ -69,16 +69,16 @@ void Basic::Init()
 	mBoblampclean.SetTimeStampAnim(0);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
 
-	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(1.0, 1.0f, 1.0f));
 	uvcircle.SetPos(glm::vec3(0.1f, 2.f, 5.5f));
 
-	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
+	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
 	//uvcircle.GetRigidBody()->setFriction(0.);
 	//uvcircle.GetRigidBody()->setRollingFriction(1.);
 	//uvcircle.GetRigidBody()->setSpinningFriction(1.);
-	uvcircle.GetRigidBody()->setRestitution(1.);
+	//uvcircle.GetRigidBody()->setRestitution(1.);
 
 	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
 
@@ -86,7 +86,7 @@ void Basic::Init()
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
 	//RenderManager::getInstance()->SetRenderAxis(true);
-	//PhysicsSimulation::getInstance()->SwitchDebugMode();
+	PhysicsSimulation::getInstance()->SwitchDebugMode();
 	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
 	//btRigidBody * test = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(0.0f, 47.0f, 0.0f), glm::vec3(), 0.0f, glm::vec3(48));
 
@@ -194,10 +194,11 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 {
 	m_Streetenvironment.CreateTriangleMeshShape(0.);
 
-	mBoblampclean.CreateConvexHullShapeBone(1., false);
+	//mBoblampclean.CreateConvexHullShapeBone(1., false);
+	mBoblampclean.CreateCharacterController();
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
-	mSpider.CreateConvexHullShapeBone(1., false);
+	//mSpider.CreateConvexHullShapeBone(1., false);
 	/*uvcircle.registerShape(1.);*/
 	//uvcircle.GetRigidBody()->setFriction(0.);
 	//uvcircle.GetRigidBody()->setRollingFriction(1.0f);

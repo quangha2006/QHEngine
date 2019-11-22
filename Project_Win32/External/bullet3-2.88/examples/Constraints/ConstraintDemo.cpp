@@ -240,7 +240,7 @@ void AllConstraintDemo::initPhysics()
 	}
 #endif
 
-#if ENABLE_ALL_DEMOS
+#if ENABLE_ALL_DEMOS //QuangHa
 	{
 		btTransform trans;
 		trans.setIdentity();
@@ -573,7 +573,7 @@ void AllConstraintDemo::initPhysics()
 		pHinge2->setDbgDrawSize(btScalar(5.f));
 	}
 #endif
-#if ENABLE_ALL_DEMOS
+#if ENABLE_ALL_DEMOS //QuangHa
 	{
 		// create a Hinge joint between two dynamic bodies
 		// create two rigid bodies
@@ -594,7 +594,7 @@ void AllConstraintDemo::initPhysics()
 		btVector3 pivotA(-5.f, 0.f, 0.f);
 		btVector3 pivotB(5.f, 0.f, 0.f);
 		spHingeDynAB = new btHingeConstraint(*pBodyA, *pBodyB, pivotA, pivotB, axisA, axisB);
-		spHingeDynAB->setLimit(-SIMD_HALF_PI * 0.5f, SIMD_HALF_PI * 0.5f);
+		spHingeDynAB->setLimit(SIMD_HALF_PI * 0.5f, SIMD_HALF_PI * 0.5f);
 		// add constraint to world
 		m_dynamicsWorld->addConstraint(spHingeDynAB, true);
 		// draw constraint frames and limits for debugging

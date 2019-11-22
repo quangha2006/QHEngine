@@ -76,6 +76,7 @@ public:
 	btRigidBody* createConvexTriangleMeshShape(float mass, const Vertex* vertices, unsigned  int numvertice, GLuint* indices, GLuint numIndices, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale);
 	btRigidBody* createTriangleMeshShape(float mass, const Vertex* vertices, unsigned  int numvertice, GLuint* indices, GLuint numIndices, glm::vec3 pos, glm::vec3 rotate, float angle, glm::vec3 scale);
 	btRigidBody* createCapsuleShape(float mass, float radius, float height, glm::vec3 localScaling, glm::vec3 position, glm::vec3 positionOffset = glm::vec3(1.0f));
+	btRigidBody* CreateCylinderShape(float mass, float x, float y, float z);
 	static PhysicsSimulation* getInstance();
 	PhysicsSimulation();
 	~PhysicsSimulation();
