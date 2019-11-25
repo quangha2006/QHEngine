@@ -250,7 +250,6 @@ QHMesh::QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, 
 			if (BoneMapping.find(b_name) == BoneMapping.end())
 			{
 				BoneIndex = BoneMapping.size();
-				//m_NumBones++;
 				BoneInfo bi;
 				glm::mat4 b_mat = QHMath::AiToGLMMat4(aiBone->mOffsetMatrix);
 				bi.BoneOffset = b_mat;

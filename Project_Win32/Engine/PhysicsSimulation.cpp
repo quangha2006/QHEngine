@@ -398,6 +398,8 @@ int PhysicsSimulation::SwitchDebugMode()
 	case btIDebugDraw::DBG_DrawWireframe:
 		mDebugDrawModes = btIDebugDraw::DBG_DrawWireframe;
 		mDebugDrawModes |= btIDebugDraw::DBG_DrawAabb;
+		mDebugDrawModes |= btIDebugDraw::DBG_DrawConstraints;
+		mDebugDrawModes |= btIDebugDraw::DBG_DrawConstraintLimits;
 		break;
 	default:
 		mDebugDrawModes = btIDebugDraw::DBG_NoDebug;

@@ -65,7 +65,7 @@ void Basic::Init()
 	//mBoblampclean.SetPos(glm::vec3(0.f, 1.0f, 0.0f));
 	//mBoblampclean.SetScale(glm::vec3(0.05f));
 	//mBoblampclean.SetDrawMesh(0);
-	//mBoblampclean.SetDrawWireFrame(true);
+	mBoblampclean.SetDrawWireFrame(true);
 	mBoblampclean.SetTimeStampAnim(0);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
 

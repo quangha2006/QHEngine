@@ -43,7 +43,15 @@ void Model::Loading() //thread
 		assimpFlag |= aiProcess_FlipUVs;;
 
 	m_pScene = mImporter.ReadFile(path_modif, assimpFlag);
-
+	//Assimp::Exporter exporter;
+	//int numformat = exporter.GetExportFormatCount();
+	//for (int i = 0; i < numformat; ++i)
+	//{
+	//	const aiExportFormatDesc* desc = exporter.GetExportFormatDescription(i);
+	//	LOGI("%s %s - %s\n", desc->fileExtension, desc->description, desc->id);
+	//}
+	////exporter.Export(m_pScene, "collada", Utils::getResourcesFolder() + "test.dae", aiProcess_FlipUVs);
+	//LOGE("%s\n", exporter.GetErrorString());
 	uint64_t time_loadmodel = Timer::getMillisecond();
 	LOGI("Load Model time : %ums\n\n", (unsigned int)(time_loadmodel - time_ms_begin));
 	// check for errors
@@ -906,34 +914,55 @@ void Model::MakeContraints(aiNode *parentNode)
 {
 	btDiscreteDynamicsWorld * phyWorld = PhysicsSimulation::getInstance()->GetDynamicsWorld();
 
-	string NodeName(parentNode->mName.data);
-
-	uint BoneIndex = m_BoneMapping[NodeName];
-
-	btRigidBody * rigiA = m_BoneInfo[BoneIndex].rigiBody;
-
-	if (rigiA == nullptr)
-		return;
-
 	unsigned int numChildrenNode = parentNode->mNumChildren;
-	for (unsigned int childrenNodeIndex = 0; childrenNodeIndex < numChildrenNode; ++childrenNodeIndex)
-	{
-		aiNode *chilNode = parentNode->mChildren[childrenNodeIndex];
-		string nodeName(chilNode->mName.data);
-		uint boneIndex = m_BoneMapping[nodeName];
 
-		btRigidBody *rigiB = m_BoneInfo[boneIndex].rigiBody;
+	string parentNodeName(parentNode->mName.data);
 
-		if (rigiB == nullptr)
-			continue;
+	if (m_BoneMapping.find(parentNodeName) != m_BoneMapping.end()) {
 
-		btVector3 axisA(0.f, 1.f, 0.f);
-		btVector3 axisB(0.f, 1.f, 0.f);
-		btVector3 pivotA(-5.f, 0.f, 0.f);
-		btVector3 pivotB(5.f, 0.f, 0.f);
-		btHingeConstraint* spHingeDynAB = new btHingeConstraint(*rigiA, *rigiB, pivotA, pivotB, axisA, axisB);
-		spHingeDynAB->setLimit(3.5f, 3.6f);
-		phyWorld->addConstraint(spHingeDynAB, true);
+		uint BoneIndex = m_BoneMapping[parentNodeName];
+
+		btRigidBody * rigiA = m_BoneInfo[BoneIndex].rigiBody;
+
+		assert(rigiA != nullptr);
+
+		for (unsigned int childrenNodeIndex = 0; childrenNodeIndex < numChildrenNode; ++childrenNodeIndex)
+		{
+			aiNode *chilNode = parentNode->mChildren[childrenNodeIndex];
+			string chilNodeName(chilNode->mName.data);
+
+			if (m_BoneMapping.find(chilNodeName) != m_BoneMapping.end()) {
+				uint chilboneIndex = m_BoneMapping[chilNodeName];
+
+				btRigidBody *rigiB = m_BoneInfo[chilboneIndex].rigiBody;
+				
+				assert(rigiB != nullptr);
+
+				glm::vec4 pointA = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f) * m_BoneInfo[BoneIndex].FinalTransformation;
+				//glm::vec4 pointA = m_BoneInfo[BoneIndex].FinalTransformation * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+				glm::vec4 pointB = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f) * m_BoneInfo[chilboneIndex].FinalTransformation;
+				//glm::vec4 pointB = m_BoneInfo[chilboneIndex].FinalTransformation * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+				float distanceAB = glm::distance(glm::vec3(pointA), glm::vec3(pointB));
+
+				btVector3 axisA(1, 0, 1);
+				btVector3 axisB(1, 0, 1);
+				btVector3 pivotA(0, 0, 0);
+				btVector3 pivotB(0, distanceAB, 0);
+				btHingeConstraint* spHingeDynAB = new btHingeConstraint(*rigiA, *rigiB, pivotA, pivotB, axisA, axisB);
+
+				//spHingeDynAB->setLimit(distanceAB, distanceAB);
+				phyWorld->addConstraint(spHingeDynAB, false);
+
+				//btTransform frameInA, frameInB;
+				//frameInA = btTransform::getIdentity();
+				//frameInB = btTransform::getIdentity();
+
+				//btSliderConstraint* spSlider1 = new btSliderConstraint(*rigiA, *rigiB, frameInA, frameInB, true);
+				//spSlider1->setLowerLinLimit(distanceAB);
+				//spSlider1->setUpperLinLimit(distanceAB);
+				//phyWorld->addConstraint(spSlider1, true);
+			}
+		}
 	}
 	for (unsigned int childrenNodeIndex = 0; childrenNodeIndex < numChildrenNode; ++childrenNodeIndex)
 	{
@@ -953,6 +982,7 @@ void Model::CreateCharacterController()
 		m_BoneInfo[boneIndex].rigiBody = rigibody;
 	}
 	// Make contraints
+	BoneTransform(0, m_BoneTransforms);
 	MakeContraints(m_pScene->mRootNode);
 
 	mPhycicsMode = PhycicsMode_Kinematic;
