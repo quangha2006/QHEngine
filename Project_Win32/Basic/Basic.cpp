@@ -22,13 +22,13 @@ void Basic::Init()
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	m_Streetenvironment.Init("Demo/Proj1_Terrain.fbx", true, true);
 	//m_Streetenvironment.Init("/1_2_Tree.dae", true, true);
 	//m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
 	m_Streetenvironment.SetScale(glm::vec3(5.0f,5.0f,5.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 
-//	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
+	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
@@ -59,7 +59,7 @@ void Basic::Init()
 	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(9);
 
-	mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
+	//mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
 	//mBoblampclean.Init("Low-Poly Spider/Spider_3.fbx", true);
 	//mBoblampclean.Init("bountyhunter/bountyhunter/bountyhunter_rig_01.dae", false);
 	//mBoblampclean.SetPos(glm::vec3(0.f, 1.0f, 0.0f));
@@ -192,10 +192,10 @@ bool Basic::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 
 void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 {
-	m_Streetenvironment.CreateTriangleMeshShape(0.);
+	//m_Streetenvironment.CreateTriangleMeshShape(0.);
 
 	//mBoblampclean.CreateConvexHullShapeBone(1., false);
-	mBoblampclean.CreateCharacterController();
+	//mBoblampclean.CreateCharacterController();
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
 	//mSpider.CreateConvexHullShapeBone(1., false);

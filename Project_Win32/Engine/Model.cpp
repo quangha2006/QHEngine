@@ -566,16 +566,19 @@ void Model::UpdateAnimation()
 	{
 		for (uint i = 0; i < m_NumBones; i++) {
 
+			if (m_BoneInfo[i].rigiBody == nullptr)
+				continue;
+
 			glm::mat4 bonematrix = m_BoneInfo[i].FinalTransformation;//m_BoneTransforms[i];
+			if (m_BoneInfo[i].rigiBody->getCollisionShape()->isConvex())
+				bonematrix = m_BoneInfo[i].BoneOffset *  bonematrix;
 			bonematrix = glm::transpose(bonematrix);
 			btScalar * bttrans = (btScalar*)&bonematrix;
 
 			btTransform boneTransform;
 			boneTransform.setFromOpenGLMatrix(bttrans);
-			if (m_BoneInfo[i].rigiBody != nullptr)
-			{
-				m_BoneInfo[i].rigiBody->setWorldTransform(boneTransform);
-			}
+
+			m_BoneInfo[i].rigiBody->setWorldTransform(boneTransform);
 				
 		}
 	}
@@ -615,7 +618,10 @@ void Model::SyncPhysics()
 
 					glm_mat4 = glm::translate(glm_mat4, mFixedBoxShape);
 
-					m_BoneTransforms[i] = m_BoneInfo[i].BoneOffset * glm::transpose(glm_mat4);
+					if (m_BoneInfo[i].rigiBody->getCollisionShape()->isConvex())
+						m_BoneTransforms[i] = glm::transpose(glm_mat4);
+					else
+						m_BoneTransforms[i] = m_BoneInfo[i].BoneOffset * glm::transpose(glm_mat4);
 				}
 			}
 		}

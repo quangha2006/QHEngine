@@ -131,7 +131,7 @@ namespace QHTexture
 		{
 			data = stbi_load(fullpath.c_str(), &width, &height, &nrComponents, 0);
 			if (!data)
-				LOGE("Failed to open: %s", path);
+				LOGE("Failed to open: %s\n", path);
 			else
 			{
 				switch (nrComponents)
