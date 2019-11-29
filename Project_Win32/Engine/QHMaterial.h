@@ -16,6 +16,7 @@ class QHMaterial
 private:
 
 public:
+	std::string mMaterialName;
 	glm::vec3 mAmbient;
 	glm::vec3 mDiffuse;
 	glm::vec3 mSpecular;

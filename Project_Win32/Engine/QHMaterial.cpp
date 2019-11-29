@@ -135,21 +135,27 @@ QHMaterial::QHMaterial(aiMaterial* aimaterial, std::string &currentDirectory)
 	, mIndices_index(0)
 	, mIndices_size(0)
 {
-	aiColor3D ka_color(0.0f, 0.0f, 0.0f);
+	aiString name;
+	aiColor3D ka_color(0.2f, 0.2f, 0.2f);
 	aiColor3D kd_color(0.0f, 0.0f, 0.0f);
-	aiColor3D ks_color(0.5f, 0.5f, 0.5f);
+	aiColor3D ks_color(1.5f, 1.5f, 1.5f);
 	float transparent = 1.0f;
-	float shininess = 1.0f;
-	float shininess_strength = 1.0f;
+	float shininess = 32.0f;
+	float shininess_strength = 32.0f;
+	float reflectivity = 1.0f;
 	bool isbackface = false;
+
+	aimaterial->Get(AI_MATKEY_NAME, name);
 
 	aimaterial->Get(AI_MATKEY_COLOR_AMBIENT, ka_color);
 	aimaterial->Get(AI_MATKEY_COLOR_DIFFUSE, kd_color);
 	aimaterial->Get(AI_MATKEY_COLOR_SPECULAR, ks_color);
+
 	aimaterial->Get(AI_MATKEY_OPACITY, transparent);
 	aimaterial->Get(AI_MATKEY_SHININESS, shininess);
 	aimaterial->Get(AI_MATKEY_TWOSIDED, isbackface);
 	aimaterial->Get(AI_MATKEY_SHININESS_STRENGTH, shininess_strength);
+	aimaterial->Get(AI_MATKEY_REFLECTIVITY, reflectivity);
 
 	// 1. diffuse maps
 	std::vector<Texture> diffuseMaps = loadMaterialTextures(aimaterial, aiTextureType_DIFFUSE, currentDirectory);
@@ -190,9 +196,18 @@ QHMaterial::QHMaterial(aiMaterial* aimaterial, std::string &currentDirectory)
 	mAmbient = glm::vec3(ka_color.r, ka_color.g, ka_color.b);
 	mDiffuse = glm::vec3(kd_color.r, kd_color.g, kd_color.b);
 	mSpecular = glm::vec3(ks_color.r, ks_color.g, ks_color.b);
-	mShininess = shininess;
+	mShininess = 300;
 	mTransparent = transparent;
 	mIsBackFace = isbackface;
+	mMaterialName = name.C_Str();
+
+	LOGI("AI_MATKEY_NAME: %s\n", mMaterialName.c_str());
+
+	LOGI("%f %f %f\n", mShininess, reflectivity, transparent);
+	LOGI("%f %f %f\n", mAmbient.r, mAmbient.g, mAmbient.b);
+	LOGI("%f %f %f\n", mDiffuse.r, mDiffuse.g, mDiffuse.b);
+	LOGI("%f %f %f\n", mSpecular.r, mSpecular.g, mSpecular.b);
+
 }
 
 

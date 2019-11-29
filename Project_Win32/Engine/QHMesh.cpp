@@ -72,7 +72,6 @@ void QHMesh::GenBuffers()
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	int64_t time_end = Timer::getMillisecond();
-	LOGI("GenBuffer: %u", time_end - time_begin);
 	CheckGLError("QHMesh::GenBuffers");
 }
 

@@ -16,18 +16,20 @@ const int Screen_height = 720;
 
 void Basic::Init()
 {
-	mCamera->SetPos(0.0f, 30.0f, 100.0f);
+	mCamera->SetPos(0.0f, 100.0f, -100.0f);
 	mCamera->SetTarget(0.0f, 25.0f, 0.0f);
-	mCamera->SetLightPos(20.2f, 50.0f, 1.0f);
+	mCamera->SetLightPos(0.2f, 50.0f, -550.0f);
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Demo/Proj1_Terrain.fbx", true, true);
+	m_Streetenvironment.Init("Terrain/Proj1_Terrain_test.fbx", true, true);
+	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
 	//m_Streetenvironment.Init("/1_2_Tree.dae", true, true);
 	//m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
-	m_Streetenvironment.SetScale(glm::vec3(5.0f,5.0f,5.0f));
+	//m_Streetenvironment.SetScale(glm::vec3(5.0f,5.0f,5.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
-
+	//m_Streetenvironment.SetRenderNormalVisualization(true);
+	//m_Streetenvironment.SetDrawWireFrame(true);
 	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
@@ -41,9 +43,10 @@ void Basic::Init()
 	mMerce.SetRenderMode(RenderMode::RenderMode_Material);
 	
 	//mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
+	mAstroBoy.Init("bHieu/1_2_Tree.dae", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	//mAstroBoy.SetScale(glm::vec3(30.0f));
-	mAstroBoy.SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+	mAstroBoy.SetPos(glm::vec3(20.0f, 0.0f, 0.0f));
 	//mAstroBoy.SetDrawMesh(0);
 	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
@@ -69,9 +72,9 @@ void Basic::Init()
 	mBoblampclean.SetTimeStampAnim(0);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
 
-	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(1.0, 1.0f, 1.0f));
-	uvcircle.SetPos(glm::vec3(0.1f, 2.f, 5.5f));
+	uvcircle.SetPos(glm::vec3(3.2f, 20.0f, 1.0f));
 
 	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
@@ -85,6 +88,7 @@ void Basic::Init()
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
+	RenderManager::getInstance()->SetRenderAxis(true);
 	//RenderManager::getInstance()->SetRenderAxis(true);
 	PhysicsSimulation::getInstance()->SwitchDebugMode();
 	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
@@ -101,6 +105,8 @@ void Basic::Update(int delta)
 	//glm::vec3 circlePos = glm::vec3(trans[3][0], trans[3][1] + 5, trans[3][2]);
 	//mCamera->SetTarget(circlePos);
 	//mCamera->SetPos(circlePos.x + 50, circlePos.y + 30, circlePos.z + 50);
+	glm::vec3 lightpos = mCamera->GetLightPos();
+	uvcircle.SetPos(lightpos);
 	mAstroBoy.SetTimeStampAnim(Timer::getMillisecond() * 0.1);
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
