@@ -49,8 +49,6 @@ GLDebugDrawer::GLDebugDrawer()
 	glBindVertexArray(mVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mSizeAllocated * 6, NULL, GL_DYNAMIC_DRAW);
-	// using std::vector
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mCurrentSizeBuffer, NULL, GL_DYNAMIC_DRAW);
 	
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)0);
@@ -65,15 +63,6 @@ GLDebugDrawer::GLDebugDrawer()
 
 void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color)
 {
-	// using std::vector
-	//if (m_debugMode > 0)
-	//{
-	//	std::vector<float> tmpdata{ from.getX(),	from.getY(),	from.getZ(),	color.getX(),	color.getY(),	color.getZ(),
-	//			to.getX(),		to.getY(),		to.getZ() ,		color.getX(),	color.getY(),	color.getZ() };
-
-	//	mVertexData.insert(mVertexData.end(), tmpdata.begin(), tmpdata.end());
-	//}
-	// using array
 	if (m_debugMode > 0)
 	{
 		if ((mCurrentSize + 2) >= mSizeAllocated)
@@ -109,15 +98,6 @@ void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const
 
 void GLDebugDrawer::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & fromColor, const btVector3 & toColor)
 {
-	// using std::vector
-	//if (m_debugMode > 0)
-	//{
-	//	std::vector<float> tmpdata{ from.getX(),	from.getY(),	from.getZ(),	fromColor.getX(),	fromColor.getY(),	fromColor.getZ(),
-	//			to.getX(),		to.getY(),		to.getZ() ,		toColor.getX(),	toColor.getY(),	toColor.getZ() };
-
-	//	mVertexData.insert(mVertexData.end(), tmpdata.begin(), tmpdata.end());
-	//}
-	// using array
 	if (m_debugMode > 0)
 	{
 		if ((mCurrentSize + 2) >= mSizeAllocated)
@@ -180,35 +160,6 @@ void GLDebugDrawer::flushLines()
 		CheckGLError("GLDebugDrawer::drawLine");
 	}
 	mCurrentSize = 0;
-
-	//// using std::vector
-	//if (m_debugMode > 0 && mVertexData.size() > 0)
-	//{
-	//	linesShader.use();
-
-	//	glBindVertexArray(mVAO);
-	//	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	//	glm::mat4 projectionMatrix = Camera::getInstance()->GetWorldViewProjectionMatrix();
-	//	glm::mat4 modelViewMatrix = glm::mat4();
-	//	glUniformMatrix4fv(lines_ProjectionMatrix, 1, false, &projectionMatrix[0][0]);
-
-	//	glLineWidth(1);
-
-	//	if (mVertexData.size() > mCurrentSizeBuffer)
-	//	{
-	//		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mVertexData.size(), NULL, GL_DYNAMIC_DRAW);
-	//		mCurrentSizeBuffer = mVertexData.size();
-	//	}
-	//	//bind data
-	//	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * mVertexData.size(), &mVertexData[0]);
-
-	//	QHEngine::DrawArrays(GL_LINES, 0, mVertexData.size() / 6);
-
-	//	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//	glBindVertexArray(0);
-	//	CheckGLError("GLDebugDrawer::drawLine");
-	//}
-	//mVertexData.clear();
 }
 
 

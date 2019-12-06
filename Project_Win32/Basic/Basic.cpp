@@ -16,21 +16,21 @@ const int Screen_height = 720;
 
 void Basic::Init()
 {
-	mCamera->SetPos(0.0f, 100.0f, -100.0f);
-	mCamera->SetTarget(0.0f, 25.0f, 0.0f);
-	mCamera->SetLightPos(0.2f, 50.0f, -550.0f);
+	mCamera->SetPos(0.0f, 9.0f, 10.0f);
+	mCamera->SetTarget(0.0f, 8.0f, 0.0f);
+	mCamera->SetLightPos(10.2f, 30.0f, 0.0f);
 
 	mSkyBox.Init("SkyBox");
 
-	m_Streetenvironment.Init("Terrain/Proj1_Terrain_test.fbx", true, true);
-	//m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
+	//m_Streetenvironment.Init("Terrain/Proj1_Terrain.fbx", true, true);
+	m_Streetenvironment.Init("Streetenvironment/Street environment_V01.obj", true, true);
 	//m_Streetenvironment.Init("/1_2_Tree.dae", true, true);
 	//m_Streetenvironment.SetPos(glm::vec3(0.0f, -100.5f, 0.0f));
 	//m_Streetenvironment.SetScale(glm::vec3(5.0f,5.0f,5.0f));
 	m_Streetenvironment.SetIsDrawDepthMap(false);
 	//m_Streetenvironment.SetRenderNormalVisualization(true);
 	//m_Streetenvironment.SetDrawWireFrame(true);
-	m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
+	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
@@ -76,7 +76,7 @@ void Basic::Init()
 	//uvcircle.SetScale(glm::vec3(1.0, 1.0f, 1.0f));
 	uvcircle.SetPos(glm::vec3(3.2f, 20.0f, 1.0f));
 
-	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
+	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
 	//uvcircle.GetRigidBody()->setFriction(0.);
 	//uvcircle.GetRigidBody()->setRollingFriction(1.);
@@ -88,9 +88,9 @@ void Basic::Init()
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
 	RenderManager::getInstance()->SetEnableBloom(true);
-	RenderManager::getInstance()->SetRenderAxis(true);
 	//RenderManager::getInstance()->SetRenderAxis(true);
-	PhysicsSimulation::getInstance()->SwitchDebugMode();
+	//RenderManager::getInstance()->SetRenderAxis(true);
+	//PhysicsSimulation::getInstance()->SwitchDebugMode();
 	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
 	//btRigidBody * test = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(0.0f, 47.0f, 0.0f), glm::vec3(), 0.0f, glm::vec3(48));
 
@@ -198,7 +198,7 @@ bool Basic::OnGameTouchEvent(int eventId, int x, int y, int pointerId)
 
 void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 {
-	//m_Streetenvironment.CreateTriangleMeshShape(0.);
+	m_Streetenvironment.CreateTriangleMeshShape(0.);
 
 	//mBoblampclean.CreateConvexHullShapeBone(1., false);
 	//mBoblampclean.CreateCharacterController();

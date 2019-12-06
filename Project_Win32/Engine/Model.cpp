@@ -43,19 +43,11 @@ void Model::Loading() //thread
 		assimpFlag |= aiProcess_FlipUVs;;
 
 	m_pScene = mImporter.ReadFile(path_modif, assimpFlag);
-	//Assimp::Exporter exporter;
-	//int numformat = exporter.GetExportFormatCount();
-	//for (int i = 0; i < numformat; ++i)
-	//{
-	//	const aiExportFormatDesc* desc = exporter.GetExportFormatDescription(i);
-	//	LOGI("%s %s - %s\n", desc->fileExtension, desc->description, desc->id);
-	//}
-	////exporter.Export(m_pScene, "collada", Utils::getResourcesFolder() + "test.dae", aiProcess_FlipUVs);
-	//LOGE("%s\n", exporter.GetErrorString());
+
 	uint64_t time_loadmodel = Timer::getMillisecond();
 	LOGI("Load Model time : %ums\n\n", (unsigned int)(time_loadmodel - time_ms_begin));
 	// check for errors
-	if (!m_pScene || /*m_pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||*/ !m_pScene->mRootNode) // if is Not Zero
+	if (!m_pScene || !m_pScene->mRootNode) // if is Not Zero
 	{
 		LOGE("ERROR::ASSIMP:: %s\n", mImporter.GetErrorString());
 		return;
