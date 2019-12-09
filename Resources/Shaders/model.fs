@@ -156,11 +156,11 @@ void main()
 	//	diffuse  *= attenuation;
 	//	specular *= attenuation;
 	//}
-
+	shadow = clamp(shadow, 0.0f, 0.7f);
 	if (uselighting == true)
 	{
 		// Total lighting + shadow
-		lighting = ambient + (diffuse + specular) * (1.0f - shadow);
+		lighting = ambient + diffuse * (1.0f - shadow) + specular * (shadow > 0.2f ? 0.0f : 1.0f);
 	}
 	else
 	{

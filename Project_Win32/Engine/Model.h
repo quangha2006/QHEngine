@@ -126,6 +126,7 @@ private:
 	void RenderBone();
 	void GenBuffer();
 	void MakeContraints(aiNode *parentNode);
+	void MakeCapsuleBone(aiNode *parentNode);
 public:
 	void Init(const string &path, bool FlipUVs = true, bool enableAlpha = true, float fixedModel = 1.0f);
 	void Render(RenderTargetType RT_Type);
@@ -174,7 +175,7 @@ public:
 	void CreateTriangleMeshShape(float mass);
 	void CreateCapsuleShape(float mass, float radius, float height);
 	void CreateCharacterController();
-
+	void CreateCapsuleBone();
 	btRigidBody* GetRigidBody();
 	Model();
 	~Model();

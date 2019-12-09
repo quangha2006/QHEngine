@@ -43,10 +43,10 @@ void Basic::Init()
 	mMerce.SetRenderMode(RenderMode::RenderMode_Material);
 	
 	//mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
-	mAstroBoy.Init("bHieu/1_2_Tree.dae", true);
+	//mAstroBoy.Init("bHieu/1_2_Tree.dae", true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
 	//mAstroBoy.SetScale(glm::vec3(30.0f));
-	mAstroBoy.SetPos(glm::vec3(20.0f, 0.0f, 0.0f));
+	mAstroBoy.SetPos(glm::vec3(12.0f, 0.0f, 0.0f));
 	//mAstroBoy.SetDrawMesh(0);
 	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
@@ -62,7 +62,7 @@ void Basic::Init()
 	//mSpider.SetNeedRotate(true);
 	//mSpider.SetDrawMesh(9);
 
-	//mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
+	mBoblampclean.Init("boblampclean/boblampclean.md5mesh", true);
 	//mBoblampclean.Init("Low-Poly Spider/Spider_3.fbx", true);
 	//mBoblampclean.Init("bountyhunter/bountyhunter/bountyhunter_rig_01.dae", false);
 	//mBoblampclean.SetPos(glm::vec3(0.f, 1.0f, 0.0f));
@@ -72,11 +72,11 @@ void Basic::Init()
 	mBoblampclean.SetTimeStampAnim(0);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
 
-	uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
+	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
 	//uvcircle.SetScale(glm::vec3(1.0, 1.0f, 1.0f));
 	uvcircle.SetPos(glm::vec3(3.2f, 20.0f, 1.0f));
 
-	uvcircle.CreateSphereShapePhysicsBody(1., 1.);
+	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
 
 	//uvcircle.GetRigidBody()->setFriction(0.);
 	//uvcircle.GetRigidBody()->setRollingFriction(1.);
@@ -202,6 +202,7 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 
 	//mBoblampclean.CreateConvexHullShapeBone(1., false);
 	//mBoblampclean.CreateCharacterController();
+	mBoblampclean.CreateCapsuleBone();
 	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
 	//m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
 	//mSpider.CreateConvexHullShapeBone(1., false);

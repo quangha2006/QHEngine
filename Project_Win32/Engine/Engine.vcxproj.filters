@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -25,16 +17,29 @@
     <Filter Include="Model">
       <UniqueIdentifier>{8d944eb8-1648-480c-a17c-5d68c737508c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{3785b495-15ba-46bb-86c9-c60d98d7fcd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2D">
+      <UniqueIdentifier>{f8392923-964d-41fb-925c-7aff4eca9327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D">
+      <UniqueIdentifier>{946c0a96-d486-4241-ba6a-c1cb459c1632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysicsSimulation">
+      <UniqueIdentifier>{a932b379-bc66-4c4d-b3f4-71b5a4ce3da0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{28abdb51-1dd3-4689-a64e-9a2f58dcdd75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AppBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GLFWContext.cpp">
       <Filter>GLFW</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EGLAppContext.cpp">
       <Filter>EGL</Filter>
@@ -42,77 +47,17 @@
     <ClCompile Include="MainAndroid.cpp">
       <Filter>Android</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TGA.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextRendering.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameRate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Debugging.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QHText.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\jni_code.cpp">
       <Filter>Android</Filter>
     </ClCompile>
     <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\Native_android_surface.cpp">
       <Filter>Android</Filter>
     </ClCompile>
-    <ClCompile Include="SkyBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\AndroidPort\AndroidSource\app\jni\package_utils.cpp">
       <Filter>Android</Filter>
     </ClCompile>
-    <ClCompile Include="QHTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QHAxis.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MainWin32.cpp">
       <Filter>GLFW</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderTarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsSimulation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QHMath.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UserInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AppContext.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GLDebugDrawer.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Model</Filter>
@@ -129,91 +74,97 @@
     <ClCompile Include="QHNodeModel.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="Debugging.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GLDebugDrawer.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="QHAxis.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameRate.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRendering.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="QHText.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="QHTexture.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderManager.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTarget.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="TGA.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsSimulation.cpp">
+      <Filter>PhysicsSimulation</Filter>
+    </ClCompile>
+    <ClCompile Include="QHMath.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="AppBase.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="AppContext.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
-      <Filter>Header Files</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="AppContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Logs.h">
-      <Filter>Header Files</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="GLFWContext.h">
       <Filter>GLFW</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EGLAppContext.h">
       <Filter>EGL</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TGA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextRendering.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameRate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Debugging.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QHText.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SkyBox.h">
-      <Filter>Header Files</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\AndroidPort\AndroidSource\app\jni\package_utils.h">
       <Filter>Android</Filter>
     </ClInclude>
-    <ClInclude Include="QHTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QHAxis.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderTarget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsSimulation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QHMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UserInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\AndroidPort\AndroidSource\app\jni\ScopeGetEnv.h">
       <Filter>Android</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GLDebugDrawer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Model</Filter>
@@ -232,6 +183,66 @@
     </ClInclude>
     <ClInclude Include="QHNodeModel.h">
       <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="GLDebugDrawer.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Debugging.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="QHAxis.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameRate.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="QHText.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRendering.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="QHTexture.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="TGA.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderManager.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Logs.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTarget.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsSimulation.h">
+      <Filter>PhysicsSimulation</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="QHMath.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

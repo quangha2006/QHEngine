@@ -986,6 +986,51 @@ void Model::CreateCharacterController()
 	mPhycicsMode = PhycicsMode_Kinematic;
 }
 
+void Model::MakeCapsuleBone(aiNode * parentNode)
+{
+	unsigned int NumChilNode = parentNode->mNumChildren;
+	std::string parentNodeName = parentNode->mName.C_Str();
+	glm::mat4 parent_transform;
+	if (m_BoneMapping.count(parentNodeName) > 0)
+	{
+		int boneIndex = m_BoneMapping[parentNodeName];
+		parent_transform = m_BoneInfo[boneIndex].FinalTransformation;
+		glm::vec3 parentPoint = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f) * parent_transform;
+		for (unsigned int index = 0; index < NumChilNode; ++index)
+		{
+			const aiNode * chilNode = parentNode->mChildren[index];
+			if (chilNode == nullptr)
+				continue;
+			std::string chilNodeName = chilNode->mName.C_Str();
+			int ChilboneIndex = m_BoneMapping[chilNodeName];
+			glm::mat4 chil_transform = m_BoneInfo[ChilboneIndex].FinalTransformation;
+
+			glm::vec3 chilPoint = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f) * chil_transform;
+
+			float distance = glm::distance(chilPoint, parentPoint);
+			btRigidBody * rigibody = PhysicsSimulation::getInstance()->createCapsuleShape(0.0f, 0.3f, distance, glm::vec3(1.0f) ,glm::vec3(0.0f));
+			rigibody->setActivationState(DISABLE_DEACTIVATION);
+
+			parent_transform = glm::translate(parent_transform, glm::vec3(0.0f, distance, 0.0f));
+
+			btTransform trans = QHMath::GLMMAT4ToBLTransform(parent_transform);
+			
+			rigibody->setWorldTransform(trans);
+			m_BoneInfo[boneIndex].rigiBody = rigibody;
+		}
+	}
+	for (unsigned int index = 0; index < NumChilNode; ++index)
+	{
+		MakeCapsuleBone(parentNode->mChildren[index]);
+	}
+}
+
+void Model::CreateCapsuleBone()
+{
+	BoneTransform(0, m_BoneTransforms);
+	MakeCapsuleBone(m_pScene->mRootNode);
+}
+
 void Model::ClearForcesPhysics()
 {
 	if (mRigidBody != nullptr)
