@@ -200,14 +200,6 @@ QHMaterial::QHMaterial(aiMaterial* aimaterial, std::string &currentDirectory)
 	mTransparent = transparent;
 	mIsBackFace = isbackface;
 	mMaterialName = name.C_Str();
-
-	LOGI("AI_MATKEY_NAME: %s\n", mMaterialName.c_str());
-
-	LOGI("%f %f %f\n", mShininess, reflectivity, transparent);
-	LOGI("%f %f %f\n", mAmbient.r, mAmbient.g, mAmbient.b);
-	LOGI("%f %f %f\n", mDiffuse.r, mDiffuse.g, mDiffuse.b);
-	LOGI("%f %f %f\n", mSpecular.r, mSpecular.g, mSpecular.b);
-
 }
 
 

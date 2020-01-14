@@ -44,7 +44,7 @@ bool Shader::createProgram(const char * vtxSrc, const char * fragSrc, const char
 			GLchar* infoLog = (GLchar*)malloc(infoLogLen);
 			if (infoLog) {
 				glGetProgramInfoLog(program, infoLogLen, &CharsWritten, infoLog);
-				LOGE("Could not link program:\n%s\n", infoLog);
+				LOGE("info Logs: %s, %s\n%s\n", !isFromString ? vtxSrc :"", !isFromString ? fragSrc : "", infoLog);
 				free(infoLog);
 			}
 		}

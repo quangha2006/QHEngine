@@ -705,9 +705,10 @@ bool Model::CompileShader()
 
 	if (!mModel_Shader.LoadShader("Shaders/model.vs", "Shaders/model.fs", false, shader_define.c_str()))
 		return false;
-
+#ifdef _WINDOWS
 	if (mIsRenderNormalVisualization)
 		mNormal_Shader.LoadShader("Shaders/normal_visualization.vs", "Shaders/normal_visualization.fs", "Shaders/normal_visualization.gs", false, shader_define.c_str());
+#endif // WINDOWS
 
 	return true;
 }
