@@ -45,6 +45,7 @@ namespace QHTexture
 	Texture TextureFromFile(const std::string& path, const std::string& directory, aiTextureType type = aiTextureType::aiTextureType_UNKNOWN, GLuint textureID = 0, bool gammaCorrection = false);
 	GLuint loadCubemap(const char * texturepath, std::vector<std::string> faces, bool gammaCorrection);
 	GLuint GenTextureId();
+	void DeleteTexture(Texture &tex);
 };
 
 #endif //!__QHTEXTURE_H__

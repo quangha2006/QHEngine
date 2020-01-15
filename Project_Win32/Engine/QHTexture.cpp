@@ -17,6 +17,11 @@ namespace QHTexture
 		CheckGLError("GenTextureId");
 		return textureID;
 	}
+	void DeleteTexture(Texture & tex)
+	{
+		glDeleteTextures(1, &tex.id);
+	}
+
 	std::string ReplacePathETC(std::string currentPath, int mipmap)
 	{
 		std::string expand = Utils::toString("_mip_%d.pkm", mipmap);
