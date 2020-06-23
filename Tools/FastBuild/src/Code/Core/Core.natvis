@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
-	<Type Name="Array&lt;*&gt;">
-		<DisplayString>{{ len: {m_End - m_Begin}, cap: {m_End - m_Begin}, resizeable: {m_Resizeable} }}</DisplayString>
-		<Expand>
-			<ArrayItems>
-				<Size>m_End - m_Begin</Size>
-				<ValuePointer>m_Begin</ValuePointer>
-			</ArrayItems>
-		</Expand>
-	</Type>
+  <Type Name="Array&lt;*&gt;">
+    <DisplayString>{{ size: {m_Size}, cap: {m_CapacityAndFlags % 0x80000000}, resizeable: {m_Resizeable} }}</DisplayString>
+    <Expand>
+      <Item Name="[m_Size]" ExcludeView="simple">m_Size</Item>
+      <Item Name="[m_Capacity]" ExcludeView="simple">(m_CapacityAndFlags % 0x80000000)</Item>
+      <Item Name="[DoNotFreeMemory]" ExcludeView="simple">(bool)(m_CapacityAndFlags > 0x7FFFFFFF)</Item>
+      <Item Name="[Resizeable]" ExcludeView="simple">m_Resizeable</Item>
+      <ArrayItems>
+        <Size>m_Size</Size>
+        <ValuePointer>m_Begin</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
   <Type Name="AString">
-    <DisplayString>{{ len: {m_Length} , cap: {m_ReservedAndFlags - (m_ReservedAndFlags % 2)}, str={m_Contents} }}</DisplayString>
+    <DisplayString>{{ len: {m_Length} , cap: {m_ReservedAndFlags - (m_ReservedAndFlags % 2)}, str={m_Contents,s} }}</DisplayString>
     <Expand>
       <Item Name="[m_Contents]" ExcludeView="simple">m_Contents</Item>
       <Item Name="[m_Length]" ExcludeView="simple">m_Length</Item>

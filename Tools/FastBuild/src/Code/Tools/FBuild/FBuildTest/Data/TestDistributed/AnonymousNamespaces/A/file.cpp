@@ -1,16 +1,17 @@
 namespace
 {
-	int AnonFunction()
-	{
-		return 7;
-	}
+    int AnonFunction()
+    {
+        return 7;
+    }
 }
 
 class A
 {
-	static int Function()
-	{
-		return AnonFunction();
-	}
+public:
+    static int Function()
+    {
+        return AnonFunction();
+    }
 };
 

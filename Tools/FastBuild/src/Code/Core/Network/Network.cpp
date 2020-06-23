@@ -3,8 +3,6 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Core/PrecompiledHeader.h"
-
 #include "Network.h"
 
 // Core
@@ -15,8 +13,7 @@
 
 // system
 #if defined( __WINDOWS__ )
-    #include <Winsock2.h>
-	#include <ws2tcpip.h>
+    #include "Core/Env/WindowsHeader.h"
 #endif
 #if defined( __LINUX__ ) || defined( __APPLE__ )
     #include <arpa/inet.h>
@@ -29,7 +26,7 @@
 //------------------------------------------------------------------------------
 /*static*/ void Network::GetHostName( AString & hostName )
 {
-	PROFILE_FUNCTION
+    PROFILE_FUNCTION
 
     NetworkStartupHelper nsh; // ensure network is up if not already
 
@@ -40,8 +37,8 @@
     }
     else
     {
-        ASSERT( false && "This should never fail" );
         hostName = "Unknown";
+        ASSERT( false && "This should never fail" );
     }
 }
 
@@ -49,10 +46,19 @@
 //------------------------------------------------------------------------------
 /*static*/ uint32_t Network::GetHostIPFromName( const AString & hostName, uint32_t timeoutMS )
 {
-	PROFILE_FUNCTION
+    PROFILE_FUNCTION
+
+    // Fast path for "localhost". Although we have a fast path for detecting ip4
+    // format adresses, it can still take several ms to call
+    if ( hostName == "127.0.0.1" )
+    {
+        return 0x0100007f;
+    }
 
     // see if string it already in ip4 format
-    uint32_t ip = inet_addr( hostName.Get() );
+    PRAGMA_DISABLE_PUSH_MSVC( 4996 ) // Deprecated...
+    uint32_t ip = inet_addr( hostName.Get() ); // TODO:C Consider using inet_pton()
+    PRAGMA_DISABLE_POP_MSVC // 4996
     if ( ip != INADDR_NONE )
     {
         return ip;
@@ -73,34 +79,38 @@
 
     // wait for name resolution with timeout
     bool timedOut( false );
-	int returnCode( 0 );
-	uint32_t remainingTimeMS( timeoutMS );
-	const uint32_t sleepInterval( 100 ); // Check exit condition periodically - TODO:C would be better to use an event
-	for (;;)
-	{
-	    returnCode = Thread::WaitForThread( handle, sleepInterval, timedOut );
+    int returnCode( 0 );
+    uint32_t remainingTimeMS( timeoutMS );
+    const uint32_t sleepInterval( 100 ); // Check exit condition periodically - TODO:C would be better to use an event
+    for (;;)
+    {
+        returnCode = Thread::WaitForThread( handle, sleepInterval, timedOut );
 
-		// Are we shutting down?
-		if ( NetworkStartupHelper::IsStarted() == false )
-		{
-			returnCode = 0; // ignore whatever we may have gotten back
-			break;
-		}
+        // Are we shutting down?
+        if ( NetworkStartupHelper::IsShuttingDown() )
+        {
+            returnCode = 0; // ignore whatever we may have gotten back
+            break;
+        }
 
-		// Manage timeout
-		if ( timedOut )
-		{
-			if ( remainingTimeMS < sleepInterval ) 
-			{
-				break; // timeout hit
-			}
+        // Manage timeout
+        if ( timedOut )
+        {
+            if ( remainingTimeMS < sleepInterval )
+            {
+                break; // timeout hit
+            }
 
-			remainingTimeMS -= sleepInterval;
-			continue; // keep waiting
-		}
+            remainingTimeMS -= sleepInterval;
+            continue; // keep waiting
+        }
 
-		break; // success!
-	}
+        break; // success!
+    }
+    if ( timedOut )
+    {
+        Thread::DetachThread( handle );
+    }
     Thread::CloseHandle( handle );
 
     // handle race where timeout occurred before thread marked data as
@@ -116,18 +126,22 @@
     }
 
     // return result of resolution (could also have failed)
-    return returnCode;
+    return (uint32_t)returnCode;
 }
 
 // NameResolutionThreadFunc
 //------------------------------------------------------------------------------
 /*static*/ uint32_t Network::NameResolutionThreadFunc( void * userData )
 {
-	PROFILE_SET_THREAD_NAME( "DNSResolution" )
+    PROFILE_SET_THREAD_NAME( "DNSResolution" )
+
+	NetworkStartupHelper nsh; // ensure network is up if not already
 
     uint32_t ip( 0 );
     {
         PROFILE_FUNCTION
+
+        NetworkStartupHelper helper;
 
         AStackString<> hostName;
 
@@ -141,29 +155,27 @@
             data->safeToFree = true;
         }
 
-		ASSERT( NetworkStartupHelper::IsStarted() ); // ensure network is up
-
         // perform lookup
-		{
-			PROFILE_SECTION( "::getaddrinfo" )
+        {
+            PROFILE_SECTION( "::getaddrinfo" )
 
-			// We want IPv4
-			struct addrinfo hints;
-			memset( &hints, 0, sizeof(hints) );
-			hints.ai_family = AF_INET;
+            // We want IPv4
+            struct addrinfo hints;
+            memset( &hints, 0, sizeof(hints) );
+            hints.ai_family = AF_INET;
 
-			// Try to resolve
-			struct addrinfo * result( nullptr );
-			if ( ::getaddrinfo( hostName.Get(), nullptr, &hints, &result ) == 0 )
-			{
-				if ( result )
-				{
-					const sockaddr_in * sockaddr_ipv4 = (sockaddr_in *)result->ai_addr;
-					ip = sockaddr_ipv4->sin_addr.s_addr;
-				}
-			}
-			::freeaddrinfo( result );
-		}
+            // Try to resolve
+            struct addrinfo * result( nullptr );
+            if ( ::getaddrinfo( hostName.Get(), nullptr, &hints, &result ) == 0 )
+            {
+                if ( result )
+                {
+                    const sockaddr_in * sockaddr_ipv4 = (sockaddr_in *)result->ai_addr;
+                    ip = sockaddr_ipv4->sin_addr.s_addr;
+                }
+            }
+            ::freeaddrinfo( result );
+        }
     }
     return ip;
 }

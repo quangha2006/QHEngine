@@ -3,7 +3,6 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Core/PrecompiledHeader.h"
 #include "Meta_Range.h"
 
 // Reflection
@@ -29,8 +28,6 @@ Meta_Range::Meta_Range( int32_t minValue, int32_t maxValue )
 
 // DESTRUCTOR
 //------------------------------------------------------------------------------
-Meta_Range::~Meta_Range()
-{
-}
+Meta_Range::~Meta_Range() = default;
 
 //------------------------------------------------------------------------------

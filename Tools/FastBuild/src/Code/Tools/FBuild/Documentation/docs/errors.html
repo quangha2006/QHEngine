@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <link href="style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="common.js"></script>
 
 <html>
 <head>
@@ -8,16 +7,35 @@
 <title>FASTBuild - Error Reference</title>
 </head>
 <body>
-  <script>generateHeader()</script>
+	<div class='outer'>
+        <div>
+            <div class='logobanner'>
+                <a href='home.html'><img src='img/logo.png' style='position:relative;'/></a>
+	            <div class='contact'><a href='contact.html' class='othernav'>Contact</a> &nbsp; | &nbsp; <a href='license.html' class='othernav'>License</a></div>
+	        </div>
+	    </div>
+	    <div id='main'>
+	        <div class='navbar'>
+	            <a href='home.html' class='lnavbutton'>Home</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='features.html' class='navbutton'>Features</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='status.html' class='navbutton'>Status</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='documentation.html' class='navbutton'>Documentation</a><div class='navbuttongap'></div>
+	            <a href='download.html' class='rnavbutton'><b>Download</b></a>
+	        </div>
+	        <div class='inner'>
 
 <h1>Error Reference</h1>
 <h2>Categories</h2>
-<ul>
-  <li><a href='#1000'>1000 - 1099</a> General Parsing Errors</li>
-  <li><a href='#1100'>1100 - 1199</a> Function Parameter Errors</li>
-  <li><a href='#1200'>1200 - 1299</a> ForEach Specific Errors</li>
-  <li><a href='#1300'>1300 - 1399</a> Library Specific Errors</li>
-</ul>
+<table>
+  <tr><th width=100>Range</th>                  <th width=200>Description</th></tr>
+  <tr><td><a href='#1000'>1000 - 1099</a></td>  <td>General Parsing Errors</td></tr>
+  <tr><td><a href='#1100'>1100 - 1199</a></td>  <td>Function Parameter Errors</td></tr>
+  <tr><td><a href='#1200'>1200 - 1299</a></td>  <td>ForEach Specific Errors</td></tr>
+  <tr><td><a href='#1300'>1300 - 1399</a></td>  <td>Library Specific Errors</td></tr>
+  <tr><td><a href='#1400'>1400 - 1499</a></td>  <td>Copy Specific Errors</td></tr>
+  <tr><td><a href='#1500'>1500 - 1599</a></td>  <td>Compiler Specific Errors</td></tr>
+  <tr><td><a href='#1999'>1999</a></td>         <td>User Defined Error</td></tr>
+</table>
 <h2 id='1000'>1001 - 1099 : General Parsing Errors</h2>
 <!--------------- 1001 --------------->
     <div class='newsitemheader'>1001 - Missing string start token " or '.</div>
@@ -168,13 +186,13 @@ Using( .String )
 </div>
 
   <!--------------- 1009 --------------->
-    <div class='newsitemheader'>1009 - Unknown variable.</div>
+    <div class='newsitemheader'>1009 - Unknown variable '%s'.</div>
     <div class='newsitembody'>
 A variable which has not been defined was referenced inside another variable assignment or concatenation.
 <h4>Example Config:</h4>
 <div class='code'>.Var = "$OtherVar$"</div>
 <h4>Example Output:</h4>
-<div class='output'>c:\Test\fbuild.bff(1):(10) FASTBuild Error #1009 - Unknown variable.
+<div class='output'>c:\Test\fbuild.bff(1):(10) FASTBuild Error #1009 - Unknown variable 'OtherVar'.
 .Var = "$OtherVar$"
          ^
          \--here
@@ -475,7 +493,7 @@ A variable substitution was begun, but not properly terminated.
 
 
 <!--------------- 1029 --------------->
-    <div class='newsitemheader'>1029 - Variable for substitution '%s' is not a string (Type: <%s>).</div>
+    <div class='newsitemheader'>1029 - Variable for substitution '%s' is not a string (Type: &lt;%s&gt;).</div>
     <div class='newsitembody'>
 A string substitution was attempted with a non-string variable.
 <h4>Example Config:</h4>
@@ -536,13 +554,13 @@ The specified include file could not be opened.
 </div>
 
 <!--------------- 1033 --------------->
-    <div class='newsitemheader'>1033 - Error reading include '%s' (Error: %u).</div>
+    <div class='newsitemheader'>1033 - Error reading include. Error: %u (0x%x) File: '%s'".</div>
     <div class='newsitembody'>
 A read error occurred when reading the included file.
 <h4>Example Config:</h4>
 <div class='code'>#include "errorfile.bff"</div>
 <h4>Example Output:</h4>
-<div class='output'>c:\test\fbuild.bff(1):(11) FASTBuild Error #1033 - Error reading include 'errorfile.bff' (Error: 4).
+<div class='output'>c:\test\fbuild.bff(1):(11) FASTBuild Error #1033 - Error reading include. Error: 4 (0x04) File: 'errorfile.bff'
 #include "errorfile.bff"
           ^
           \--here
@@ -649,8 +667,40 @@ A #else token can only be used after an #if token.
  \--here</div>
 </div>
 
+<!--------------- 1042 --------------->
+    <div class='newsitemheader'>1042 - Unknown operator '%s'.</div>
+    <div class='newsitembody'>
+An unknown operator was found while parsing an #if directive.
+<h4>Example Config:</h4>
+<div class='code'>#if bad(X)</div>
+<h4>Example Output:</h4>
+<div class='output'>C:\Test\fbuild.bff(1,5): FASTBuild Error #1042 - Unknown operator 'bad'.
+#if bad(X)
+    ^
+    \--here</div>
+</div>
+
+<!--------------- 1043 --------------->
+    <div class='newsitemheader'>1043 - Cyclic dependency detected for node '%s'.</div>
+    <div class='newsitembody'>
+A target must not depend on itself. For example, an input must not be the same as an output.
+<h4>Example Config:</h4>
+<div class='code'>Exec( 'bad' )
+{
+    .ExecExecutable = 'dostuff.exe'
+    .ExecInput      = 'file.txt'
+    .ExecOutput     = 'file.txt'
+}</div>
+<h4>Example Output:</h4>
+<div class='output'>c:\Test\fbuild.bff(5,1): FASTBuild Error #1043 - Cyclic dependency detected for node 'C:\Test\file.txt'.
+Exec('all')
+^
+\--here</div>
+</div>
+
+
 <!--------------- 1050 --------------->
-    <div class='newsitemheader'>1050 - Property '%s' must be of type <%s> (found <%s>).</div>
+    <div class='newsitemheader'>1050 - Property '%s' must be of type &lt;%s&gt; (found &lt;%s&gt;).</div>
     <div class='newsitembody'>
 The property of a Function was of a type other than that which is expected by the Function.
 <h4>Example Config:</h4>
@@ -1041,6 +1091,107 @@ Library( "test" )
 </div>
 </div>
 
-  <script>generateFooter()</script>
+
+<h2 id='1400'>1400 - 1499 : Copy  Specific Errors</h2>
+<!--------------- 1400 --------------->
+    <div class='newsitemheader'>1400 - 'Dest' with multiple 'Source' files should be a path. Missing trailing '/'?</div>
+    <div class='newsitembody'>
+A Copy() target was declared with multiple .Source files, but .Dest was not a path. If the .Dest is a file, then only one
+.Source can be specified. If .Dest is intended to be a path, it requires a trailing slash to disambiguate.
+<h4>Example Config:</h4>
+<div class='code'>Copy( 'MissingTrailingSlash' )
+{
+  .Source             = {
+                          'Files/a.txt'
+                          'Files/b.txt'
+                        }
+  .Dest               = 'Folder/Folder' // NOTE: Missing trailing slash
+}
+</div>
+<h4>Example Output:</h4>
+<div class='output'>c:\test\fbuild.bff.bff(1,1): FASTBuild Error #1400 - Copy() - 'Dest' with multiple 'Source' files should be a path. Missing trailing '/'?
+Copy( 'MissingTrailingSlash' )
+^
+\--here
+</div>
+</div>
+
+
+<h2 id='1500'>1500 - 1599 : Compiler Specific Errors</h2>
+<!--------------- 1500 --------------->
+    <div class='newsitemheader'>1500 - Compiler detection failed. Unrecognized executable '%s'.</div>
+    <div class='newsitembody'>
+FASTBuild will try to determine the type of compiler by default, using the filename of the specified executable.
+If the compiler type cannot be determined this way, Error #1500 will be emitted. If necessary, you can manually
+specify the compiler type using the .CompilerFamily option.
+<h4>Example Config:</h4>
+<div class='code'>Compiler( 'gcc' )
+{
+	.Executable = 'gccc'
+}
+</div>
+<h4>Example Output:</h4>
+<div class='output'>c:\test\fbuild.bff(1,1): FASTBuild Error #1500 - Compiler() - Compiler detection failed. Unrecognized executable 'C:\Test\gccc'.
+Compiler( 'gcc' )
+^
+\--here
+</div>
+</div>
+<!--------------- 1501 --------------->
+    <div class='newsitemheader'>1501 - CompilerFamily '%s' is unrecognized.</div>
+    <div class='newsitembody'>
+When the .CompilerFamily property is set to an unsupported value, Error #1501 will be emitted. For valid values, consult the <a href='functions/compiler.html'>Compiler()</a> documentation.
+<h4>Example Config:</h4>
+<div class='code'>Compiler( 'compiler' )
+{
+	.Executable 	= 'compiler.exe'
+	.CompilerFamily	= 'xyz'
+}
+</div>
+<h4>Example Output:</h4>
+<div class='output'>c:\test\fbuild.bff(1,1): FASTBuild Error #1501 - Compiler() - .CompilerFamily 'xyz' is unrecognized.
+Compiler( 'compiler' )
+^
+\--here
+</div>
+</div>
+<!--------------- 1502 --------------->
+    <div class='newsitemheader'>1502 - LightCache only compatible with MSVC Compiler.</div>
+    <div class='newsitembody'>
+The LightCache is currently only supported when using the MSVC Compiler. This error will be generated if using any other compiler.
+<h4>Example Config:</h4>
+<div class='code'>Compiler( 'compiler' )
+{
+  .Executable 	= 'gcc'
+  .UseLightCache_Experimental = true
+}
+</div>
+<h4>Example Output:</h4>
+<div class='output'>c:\test\fbuild.bff(1,1): FASTBuild Error #1502 - Compiler() - LightCache only compatible with MSVC Compiler.
+Compiler( 'compiler' )
+^
+\--here
+</div>
+</div>
+
+
+<h2 id='1999'>1999 : User Defined Error</h2>
+<!--------------- 1999 --------------->
+    <div class='newsitemheader'>1999 - User Error: '%s'</div>
+    <div class='newsitembody'>
+Use of the Error() function will result in a User Defined Error.
+<h4>Example Config:</h4>
+<div class='code'>Error( 'custom message' )
+</div>
+<h4>Example Output:</h4>
+<div class='output'>c:\test\fbuild.bff(1,1): FASTBuild Error #1999 - Error() - User Error: custom message
+Error( 'custom message' )
+^
+\--here
+</div>
+</div>
+
+
+    </div><div class='footer'>&copy; 2012-2019 Franta Fulin</div></div></div>
 </body>
 </html>

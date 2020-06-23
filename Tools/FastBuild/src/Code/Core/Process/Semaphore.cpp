@@ -3,15 +3,13 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Core/PrecompiledHeader.h"
-
 #include "Semaphore.h"
 
 // Core
 #include "Core/Env/Assert.h"
 
 #if defined( __WINDOWS__ )
-    #include <windows.h>
+    #include "Core/Env/WindowsHeader.h"
 #endif
 #if defined( __LINUX__ )
     #include <errno.h>
@@ -24,7 +22,7 @@
 // CONSTRUCTOR
 //------------------------------------------------------------------------------
 Semaphore::Semaphore()
-{ 
+{
     #if defined( __WINDOWS__ )
         m_Semaphore = CreateSemaphore( nullptr, 0, 0x7FFFFFFF, nullptr );
         ASSERT( m_Semaphore );
@@ -39,7 +37,7 @@ Semaphore::Semaphore()
 // DESTRUCTOR
 //------------------------------------------------------------------------------
 Semaphore::~Semaphore()
-{ 
+{
     #if defined( __WINDOWS__ )
         VERIFY( CloseHandle( m_Semaphore ) );
     #elif defined( __APPLE__ )
@@ -52,7 +50,7 @@ Semaphore::~Semaphore()
 // Signal
 //------------------------------------------------------------------------------
 void Semaphore::Signal()
-{ 
+{
     #if defined( __WINDOWS__ )
         VERIFY( ReleaseSemaphore( m_Semaphore, 1, nullptr ) );
     #elif defined( __APPLE__ )
@@ -65,15 +63,15 @@ void Semaphore::Signal()
 // Signal
 //------------------------------------------------------------------------------
 void Semaphore::Signal( uint32_t num )
-{ 
-	ASSERT( num ); // not valid to call with 0
+{
+    ASSERT( num ); // not valid to call with 0
     #if defined( __WINDOWS__ )
-        VERIFY( ReleaseSemaphore( m_Semaphore, (DWORD)num, nullptr ) );
+        VERIFY( ReleaseSemaphore( m_Semaphore, (LONG)num, nullptr ) );
     #else
-		for ( size_t i=0; i<num; ++i )
-		{
-			Signal();
-		}
+        for ( size_t i=0; i<num; ++i )
+        {
+            Signal();
+        }
     #endif
 }
 
@@ -85,7 +83,7 @@ void Semaphore::Wait( uint32_t timeoutMS )
     {
         // Wait forever
         #if defined( __WINDOWS__ )
-            VERIFY( WaitForSingleObject( m_Semaphore, INFINITE ) == WAIT_OBJECT_0 );        
+            VERIFY( WaitForSingleObject( m_Semaphore, INFINITE ) == WAIT_OBJECT_0 );
         #elif defined( __APPLE__ )
             dispatch_semaphore_wait( m_Semaphore, DISPATCH_TIME_FOREVER );
         #elif defined( __LINUX__ )
@@ -111,7 +109,7 @@ void Semaphore::Wait( uint32_t timeoutMS )
             ts.tv_nsec = totalNS % 1000000000;
             if ( sem_timedwait( &m_Semaphore, &ts ) != 0 )
             {
-                ASSERT( errno == ETIMEDOUT ); // anything else is a usage error?
+                ASSERT( ( errno == ETIMEDOUT ) || ( errno == EINTR ) ); // anything else is a usage error?
             }
         #endif
     }

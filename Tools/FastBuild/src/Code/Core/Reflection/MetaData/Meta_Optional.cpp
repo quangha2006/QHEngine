@@ -3,7 +3,6 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Core/PrecompiledHeader.h"
 #include "Meta_Optional.h"
 
 // Reflection
@@ -19,8 +18,6 @@ Meta_Optional::Meta_Optional()
 
 // DESTRUCTOR
 //------------------------------------------------------------------------------
-Meta_Optional::~Meta_Optional()
-{
-}
+Meta_Optional::~Meta_Optional() = default;
 
 //------------------------------------------------------------------------------

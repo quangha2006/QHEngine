@@ -1,8 +1,6 @@
 // WorkerWindow
 //------------------------------------------------------------------------------
 #pragma once
-#ifndef FBUILD_FBUILDWORKER_WORKERWINDOW_H
-#define FBUILD_FBUILDWORKER_WORKERWINDOW_H
 
 // Includes
 //------------------------------------------------------------------------------
@@ -15,18 +13,14 @@
 #include "Core/Process/Thread.h"
 #include "Core/Strings/AString.h"
 
-// system
-#if defined( __WINDOWS__ )
-    #include <windows.h>
-    #include <shellapi.h>
-#endif
-
 // Forward Declaration
 //------------------------------------------------------------------------------
 class OSDropDown;
 class OSFont;
 class OSLabel;
 class OSListView;
+class OSMenu;
+class OSSplitter;
 class OSTrayIcon;
 class OSWindow;
 
@@ -35,69 +29,48 @@ class OSWindow;
 class WorkerWindow : public OSWindow, public Singleton< WorkerWindow >
 {
 public:
-	explicit WorkerWindow( void * hInstance );
-	~WorkerWindow();
+    WorkerWindow();
+    virtual ~WorkerWindow() override;
 
-	void SetStatus( const char * statusText );
-	void SetWorkerState( size_t index, const AString & hostName, const AString & status );
+    // Show/Update UI (blocks)
+    void Work();
 
-	#if defined( __WINDOWS__ )
-		HMENU GetMenu() const { return m_Menu; }
-	#endif
+    void SetStatus( const char * statusText );
+    void SetWorkerState( size_t index, const AString & hostName, const AString & status );
 
-	bool WantToQuit() const { return ( m_UIState == WANT_TO_QUIT ); }
-	void SetWantToQuit() { m_UIState = WANT_TO_QUIT; }
-	void SetAllowQuit() { m_UIState = ALLOWED_TO_QUIT; }
+    const OSMenu * GetMenu() const { return m_Menu; }
 
-	void ShowBalloonTip( const char * msg );
+    bool WantToQuit() const { return m_WantToQuit; }
+    void SetWantToQuit() { m_WantToQuit = true; }
 
 private:
-	static uint32_t UIUpdateThreadWrapper( void * );
-	void UIUpdateThread();
-	
-	// OSWindow events
-	virtual bool OnClose() override;
-	virtual bool OnMinimize() override;
-	virtual bool OnTrayIconLeftClick() override;
-	virtual bool OnTrayIconRightClick() override;
-	virtual void OnDropDownSelectionChanged( OSDropDown * dropDown ) override;
+    // OSWindow events
+    virtual bool OnClose() override;
+    virtual bool OnMinimize() override;
+    virtual bool OnQuit() override;
+    virtual bool OnTrayIconLeftClick() override;
+    virtual bool OnTrayIconRightClick() override;
+    virtual void OnDropDownSelectionChanged( OSDropDown * dropDown ) override;
+    virtual void OnTrayIconMenuItemSelected( uint32_t index ) override;
 
-	// Internal Helpers
-	void ToggleMinimized();
+    // Internal Helpers
+    void ToggleMinimized();
 
-	// UI created/updated in another thread to ensure responsiveness at all times
-	enum UIThreadState
-	{
-		NOT_READY,		// UI is not yet created
-		UPDATING,		// UI is created and is being updated
-		WANT_TO_QUIT,	// UI wants to close down
-		ALLOWED_TO_QUIT	// main thread has authorized UI shut down
-	};
-	volatile UIThreadState	m_UIState;
-	Thread::ThreadHandle	m_UIThreadHandle;
+    // Set when UI wants to quit
+    volatile bool       m_WantToQuit;
 
-	// Window Elements
-	OSTrayIcon *		m_TrayIcon;
-	OSFont *			m_Font;
-	OSLabel *			m_ModeLabel;
-	OSLabel *			m_ResourcesLabel;
-	OSListView *		m_ThreadList;
-	OSDropDown *		m_ModeDropDown;
-	OSDropDown *		m_ResourcesDropDown;
+    // Window Elements
+    OSTrayIcon *        m_TrayIcon;
+    OSFont *            m_Font;
+    OSLabel *           m_ModeLabel;
+    OSLabel *           m_ResourcesLabel;
+    OSListView *        m_ThreadList;
+    OSDropDown *        m_ModeDropDown;
+    OSDropDown *        m_ResourcesDropDown;
+    OSSplitter *        m_Splitter;
+    OSMenu *            m_Menu;
 
-	// properties of the window
-	#if defined( __WINDOWS__ )
-		HMENU			m_Menu;				// right-click context menu
-		HINSTANCE		m_HInstance;		// main application instance to tie window to
-	#endif
-
-	// sub items of the window
-	#if defined( __WINDOWS__ )
-		HWND			m_Splitter;
-	#endif
-
-	AString			m_HostName;
+    AString         m_HostName;
 };
 
 //------------------------------------------------------------------------------
-#endif // FBUILD_FBUILDWORKER_WORKERWINDOW_H

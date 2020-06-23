@@ -3,7 +3,6 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Tools/FBuild/FBuildCore/PrecompiledHeader.h"
 #include "Meta_Name.h"
 
 // Reflection
@@ -20,14 +19,12 @@ Meta_Name::Meta_Name()
 // CONSTRUCTOR
 //------------------------------------------------------------------------------
 Meta_Name::Meta_Name( const char * name )
-	: m_Name( name )
+    : m_Name( name )
 {
 }
 
 // DESTRUCTOR
 //------------------------------------------------------------------------------
-Meta_Name::~Meta_Name()
-{
-}
+Meta_Name::~Meta_Name() = default;
 
 //------------------------------------------------------------------------------

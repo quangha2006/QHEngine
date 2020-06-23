@@ -3,14 +3,12 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Core/PrecompiledHeader.h"
-
 #include "Timer.h"
 #include "Core/Env/Assert.h"
 
 // system
 #if defined( __WINDOWS__ )
-    #include <Windows.h>
+    #include "Core/Env/WindowsHeader.h"
 #endif
 #if defined( __APPLE__ )
     #include <mach/mach.h>
@@ -40,7 +38,7 @@ public:
         #endif
         #if defined( __APPLE__ )
             mach_timebase_info_data_t info;
-            mach_timebase_info( &info );                
+            mach_timebase_info( &info );
             Timer::s_Frequency = (int64_t)( info.numer / info.denom ) * 1000000000;
         #endif
         #if defined( __LINUX__ )

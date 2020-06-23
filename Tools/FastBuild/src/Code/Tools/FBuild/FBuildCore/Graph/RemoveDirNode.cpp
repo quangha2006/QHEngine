@@ -3,34 +3,72 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Tools/FBuild/FBuildCore/PrecompiledHeader.h"
-
 #include "RemoveDirNode.h"
 
+#include "Tools/FBuild/FBuildCore/BFF/Functions/Function.h"
 #include "Tools/FBuild/FBuildCore/FBuild.h"
 #include "Tools/FBuild/FBuildCore/FLog.h"
 #include "Tools/FBuild/FBuildCore/Graph/DirectoryListNode.h"
 #include "Tools/FBuild/FBuildCore/Graph/NodeGraph.h"
 
-#include "Core/Env/Env.h"
+#include "Core/Env/ErrorFormat.h"
 #include "Core/Strings/AStackString.h"
+
+// Reflection
+//------------------------------------------------------------------------------
+REFLECT_NODE_BEGIN( RemoveDirNode, Node, MetaNone() )
+    REFLECT_ARRAY( m_RemovePaths,               "RemovePaths",          MetaPath() )
+    REFLECT_ARRAY( m_RemovePatterns,            "RemovePatterns",       MetaOptional() )
+    REFLECT(       m_RemovePathsRecurse,        "RemovePathsRecurse",   MetaOptional() )
+    REFLECT_ARRAY( m_RemoveExcludePaths,        "RemoveExcludePaths",   MetaOptional() + MetaPath() )
+    REFLECT_ARRAY( m_PreBuildDependencyNames,   "PreBuildDependencies", MetaOptional() + MetaFile() + MetaAllowNonFile() )
+REFLECT_END( RemoveDirNode )
 
 // CONSTRUCTOR
 //------------------------------------------------------------------------------
-RemoveDirNode::RemoveDirNode( const AString & name,
-                              const Dependencies & staticDeps,
-                              const Dependencies & preBuildDeps )
-: Node( name, Node::REMOVE_DIR_NODE, Node::FLAG_NONE )
+RemoveDirNode::RemoveDirNode()
+    : Node( AString::GetEmpty(), Node::REMOVE_DIR_NODE, Node::FLAG_NONE )
+    , m_RemovePathsRecurse( true )
 {
-    m_StaticDependencies.Append( staticDeps );
-    m_PreBuildDependencies = preBuildDeps;
+    m_RemovePatterns.Append( AStackString<>( "*" ) );
+}
+
+// Initialize
+//------------------------------------------------------------------------------
+/*virtual*/ bool RemoveDirNode::Initialize( NodeGraph & nodeGraph, const BFFIterator & iter, const Function * function )
+{
+    // .PreBuildDependencies
+    if ( !InitializePreBuildDependencies( nodeGraph, iter, function, m_PreBuildDependencyNames ) )
+    {
+        return false; // InitializePreBuildDependencies will have emitted an error
+    }
+
+    // Convert RemovePaths paths to DirectoryListNodes
+    Dependencies fileListDeps( m_RemovePaths.GetSize() );
+    if ( !Function::GetDirectoryListNodeList( nodeGraph,
+                                              iter,
+                                              function,
+                                              m_RemovePaths,
+                                              m_RemoveExcludePaths,
+                                              Array< AString >(), // unused FilesToExclude
+                                              Array< AString >(), // unused ExcludePatterns
+                                              m_RemovePathsRecurse,
+                                              &m_RemovePatterns,
+                                              "RemovePaths",
+                                              fileListDeps ) )
+    {
+        return false; // GetDirectoryListNodeList will have emitted an error
+    }
+
+    // Store dependencies
+    m_StaticDependencies.Append( fileListDeps );
+
+    return true;
 }
 
 // DESTRUCTOR
 //------------------------------------------------------------------------------
-RemoveDirNode::~RemoveDirNode()
-{
-}
+RemoveDirNode::~RemoveDirNode() = default;
 
 // IsAFile
 //------------------------------------------------------------------------------
@@ -39,35 +77,34 @@ RemoveDirNode::~RemoveDirNode()
     return false;
 }
 
+// DetermineNeedToBuild
+//------------------------------------------------------------------------------
+/*virtual*/ bool RemoveDirNode::DetermineNeedToBuild( bool /*forceClean*/ ) const
+{
+    return true; // Always runs RemoveDirNode
+}
+
 // DoBuild
 //------------------------------------------------------------------------------
 /*virtual*/ Node::BuildResult RemoveDirNode::DoBuild( Job * UNUSED( job ) )
 {
     ASSERT( !m_StaticDependencies.IsEmpty() );
 
-    m_Stamp = 0; // Trigger DoBuild() every time
-
     // Iterate all the DirectoryListNodes
-    const Dependency * const depEnd = m_StaticDependencies.End();
-    for ( const Dependency * dep = m_StaticDependencies.Begin();
-          dep != depEnd;
-          ++dep )
+    for ( const Dependency & dep : m_StaticDependencies )
     {
         // Grab the files
-        DirectoryListNode * dln = dep->GetNode()->CastTo< DirectoryListNode >();
+        DirectoryListNode * dln = dep.GetNode()->CastTo< DirectoryListNode >();
         const Array< FileIO::FileInfo > & files = dln->GetFiles();
-        const FileIO::FileInfo * const fEnd = files.End();
-        for ( const FileIO::FileInfo * fIt = files.Begin();
-              fIt != fEnd;
-              ++fIt )
+        for ( const FileIO::FileInfo & fileInfo : files )
         {
             // source file (full path)
-            const AString & srcFile = fIt->m_Name;
+            const AString & srcFile = fileInfo.m_Name;
 
             // remove the file
             if ( FileIO::FileDelete( srcFile.Get() ) == false )
             {
-                FLOG_ERROR( "Remove failed (error %i) '%s'", Env::GetLastErr(), srcFile.Get() );
+                FLOG_ERROR( "Remove failed. Error: %s Target: '%s'", LAST_ERROR_STR, srcFile.Get() );
                 return NODE_RESULT_FAILED; // remove failed
             }
 
@@ -82,28 +119,6 @@ RemoveDirNode::~RemoveDirNode()
     }
 
     return NODE_RESULT_OK;
-}
-
-// Load
-//------------------------------------------------------------------------------
-/*static*/ Node * RemoveDirNode::Load( NodeGraph & nodeGraph, IOStream & stream )
-{
-    NODE_LOAD( AStackString<>,  name);
-    NODE_LOAD_DEPS( 4,          staticDeps );
-    NODE_LOAD_DEPS( 0,          preBuildDeps );
-
-    RemoveDirNode * n = nodeGraph.CreateRemoveDirNode( name, staticDeps, preBuildDeps );
-    ASSERT( n );
-    return n;
-}
-
-// Save
-//------------------------------------------------------------------------------
-/*virtual*/ void RemoveDirNode::Save( IOStream & stream ) const
-{
-    NODE_SAVE( m_Name );
-    NODE_SAVE_DEPS( m_StaticDependencies );
-    NODE_SAVE_DEPS( m_PreBuildDependencies );
 }
 
 //------------------------------------------------------------------------------

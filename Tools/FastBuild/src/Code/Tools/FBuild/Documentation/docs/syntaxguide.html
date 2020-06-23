@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <link href="style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="common.js"></script>
 
 <html>
 <head>
@@ -8,8 +7,22 @@
 <title>FASTBuild - Syntax Guide</title>
 </head>
 <body>
-  <script>generateHeader()</script>
-
+	<div class='outer'>
+        <div>
+            <div class='logobanner'>
+                <a href='home.html'><img src='img/logo.png' style='position:relative;'/></a>
+	            <div class='contact'><a href='contact.html' class='othernav'>Contact</a> &nbsp; | &nbsp; <a href='license.html' class='othernav'>License</a></div>
+	        </div>
+	    </div>
+	    <div id='main'>
+	        <div class='navbar'>
+	            <a href='home.html' class='lnavbutton'>Home</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='features.html' class='navbutton'>Features</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='status.html' class='navbutton'>Status</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='documentation.html' class='navbutton'>Documentation</a><div class='navbuttongap'></div>
+	            <a href='download.html' class='rnavbutton'><b>Download</b></a>
+	        </div>
+	        <div class='inner'>
 
 <h1>Syntax Guide</h1>
 
@@ -30,7 +43,7 @@ Details of the FASTBuild configuration file syntax can be grouped into 4 categor
 <b>Directives</b>
 <ul>
   <li><a href='#define'>#define / #undef</a></li>
-  <li><a href='#if'>#if / #endif</a></li>
+  <li><a href='#if'>#if / #else / #endif</a></li>
   <li><a href='#import'>#import</a></li>
   <li><a href='#include'>#include</a></li>
   <li><a href='#once'>#once</a></li>
@@ -42,6 +55,7 @@ Details of the FASTBuild configuration file syntax can be grouped into 4 categor
   <li><a href='#scoping'>Scoping</a></li>
   <li><a href='#structs'>Structs</a></li>
   <li><a href='#dynamic_construction'>Dynamic Construction</a></li>
+  <li><a href='#builtin'>Built In Variables</a></li>
 </ul>
 <b>Functions</b>
 <ul>
@@ -119,29 +133,40 @@ Examples:
  </div>
 
     <div class='newsitemheader' id='if'>
-      #if / #endif
+      #if / #else / #endif
     </div>
     <div class='newsitembody'>
 <p>
-The #if / #endif directive pair allows parts of a bff configuration file to be applied conditionally,
-depending on previous #define declarations. The #if directive can be negated using the ! operator.
-<br>
+#if / #else / #endif directives allow parts of a bff configuration file to be applied conditionally,
+depending on previous #define declarations.
 </p>
 Examples:
-<div class='code'>#if __WINDOWS__
-	.CompilerOptions = '/c "%1" /Fo"%2"' 
-#endif
-#if !__WINDOWS__
-	.CompilerOptions = '-c "%1" -o "%2"' 
+<div class='code'>#if USE_MSVC
+    .CompilerOptions = '/c "%1" /Fo"%2"' 
+#else
+    .CompilerOptions = '-c "%1" -o "%2"' 
 #endif
 </div>
-The following pre-defined (and reserved) symbols are available for use:
+<p>
+An if can be inverted with the ! operator:</p>
+Examples:
+<div class='code'>#if !__WINDOWS__
+    #define USE_CLANG
+#endif
+</div>
+<p>The following pre-defined (and reserved) symbols are available for use:</p>
 <table>
 <tr><th>Symbol</th><th>Value</th></tr>
 <tr><td>__LINUX__</td><td>Defined if running on Linux</td></tr>
 <tr><td>__OSX__</td><td>Defined if running on OS X</td></tr>
 <tr><td>__WINDOWS__</td><td>Defined if running on Windows</td></tr>
 </table>
+<p>Additionally, the "exists" operator can be used to branch on the existence of an environment variable.</p>
+Example:
+<div class='code'>#if exists(MY_ENV_VAR)
+    #import MY_ENV_VAR
+#endif
+</div>
 
  </div>
  
@@ -157,6 +182,7 @@ Examples:
 <div class='code'>#import VS120COMNTOOLS
 .VisualStudio2012Compiler = '$VS120COMNTOOLS$\..\..\VC\bin\cl.exe'
 </div>
+#import can be combined with <a href="#if">#if exists</a> to support importation of optional environment variables.
  </div>
 
  
@@ -211,7 +237,7 @@ Examples:
     </div>
     <div class='newsitembody'>
 <p>
-Variable declarations begin with a period followed by a contiguous block of alphanumeric characters.  Variable names are case insensitive. Four variable types are supported (String, Integer, Boolean and Array). Variable types are implied by their declaration.
+Variable declarations begin with a period followed by a contiguous block of alphanumeric characters.  Variable names are case sensitive. Four variable types are supported (String, Integer, Boolean and Array). Variable types are implied by their declaration.
 </p>
 Examples:
 <div class='code'>.MyString = "hello"
@@ -303,6 +329,21 @@ A struct contains a number of properties, isolating them from the current namesp
   .StringB = 'b'    // "extend" - An additional property
 ]
 </div>
+<p>Structs can be concatenated using the plus operator. The plus operator will be applied recursively to each member within the struct.<p>
+<div class='code'>.StructA =
+[
+  .ArrayOfStrings     = { 'String1', 'String2' }
+  .String             = 'String'
+]
+.StructB =
+[
+  .ArrayOfStrings     = { 'String3' }
+  .String             = '!'
+]
+.StructC = .StructA
+         + .StructB
+// StructC now contains .ArrayOfStrings = { 'String1', 'String2', 'String3' } and .String = 'String!'
+</div>
 <p>Looping through arrays of structures is a useful technique for minimizing configuration complexity.<p>
 <div class='code'>.ConfigX86 =
 [ 
@@ -340,6 +381,20 @@ Variable names can be dynamically constructed at parse time as follows:
 .Options  = ."CompilerOptions_$Config$_$Platform$" // expands to .CompilerOptions_Debug_X64
 </div>
 </div>
+
+<div class='newsitemheader' id='builtin'>Built In Variables</div>
+    <div class='newsitembody'>
+<p>Built In variables always exist. Their names begin and end with an underscore.
+</p>
+<table>
+  <tr><th>Variable</th><th>Notes</th></tr>
+  <tr><td width=150>_CURRENT_BFF_DIR_</td><td>The directory containing the current bff file being parsed</td></tr>
+  <tr><td width=150>_FASTBUILD_VERSION_STRING_</td><td>The current FASTBuild version as a string: e.g. v0.97</td></tr>
+  <tr><td width=150>_FASTBUILD_VERSION_</td><td>The current FASTBuild version as an integer: e.g. 97</td></tr>
+  <tr><td width=150>_WORKING_DIR_</td><td>The working directory when fbuild was launched</td></tr>
+</table>
+</div>
+
 
 <h2>Functions</h2>
 <p>NOTE: See the <a href='functions.html'>Function Reference</a> for a detailed list of all available functions and their Arguments and Properties.</p>
@@ -432,6 +487,6 @@ properties they can be used on).  For details, see the <a href='functions.html'>
 </div>
 
 
-  <script>generateFooter()</script>
+    </div><div class='footer'>&copy; 2012-2019 Franta Fulin</div></div></div>
 </body>
 </html>

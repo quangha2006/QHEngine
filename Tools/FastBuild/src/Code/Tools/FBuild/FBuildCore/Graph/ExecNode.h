@@ -1,8 +1,6 @@
 // ExecNode
 //------------------------------------------------------------------------------
 #pragma once
-#ifndef FBUILD_GRAPH_EXECNODE_H
-#define FBUILD_GRAPH_EXECNODE_H
 
 // Includes
 //------------------------------------------------------------------------------
@@ -16,36 +14,43 @@
 //------------------------------------------------------------------------------
 class ExecNode : public FileNode
 {
+    REFLECT_NODE_DECLARE( ExecNode )
 public:
-	explicit ExecNode( const AString & dstFileName,
-						const Dependencies & inputFiles,
-						FileNode * executable,
-						const AString & arguments,
-						const AString & workingDir,
-						int32_t expectedReturnCode,
-						const Dependencies & preBuildDependencies,
-						bool useStdOutAsOutput );
-	virtual ~ExecNode();
+    explicit ExecNode();
+    virtual bool Initialize( NodeGraph & nodeGraph, const BFFIterator & iter, const Function * function ) override;
+    virtual ~ExecNode() override;
 
-	static inline Node::Type GetTypeS() { return Node::EXEC_NODE; }
+    static inline Node::Type GetTypeS() { return Node::EXEC_NODE; }
 
-	static Node * Load( NodeGraph & nodeGraph, IOStream & stream );
-	virtual void Save( IOStream & stream ) const override;
 private:
-	virtual BuildResult DoBuild( Job * job ) override;
+    virtual bool DoDynamicDependencies( NodeGraph & nodeGraph, bool forceClean ) override;
+    virtual bool DetermineNeedToBuild( bool forceClean ) const override;
+    virtual BuildResult DoBuild( Job * job ) override;
 
-	void GetFullArgs(AString & fullArgs) const;
-	void GetInputFiles(AString & fullArgs, const AString & pre, const AString & post) const;
+    const FileNode * GetExecutable() const { return m_StaticDependencies[0].GetNode()->CastTo< FileNode >(); }
+    void GetFullArgs(AString & fullArgs) const;
+    void GetInputFiles(AString & fullArgs, const AString & pre, const AString & post) const;
 
-	void EmitCompilationMessage( const AString & args ) const;
+    void EmitCompilationMessage( const AString & args ) const;
 
-	Dependencies m_InputFiles;
-	FileNode * m_Executable;
-	AString		m_Arguments;
-	AString		m_WorkingDir;
-	int32_t		m_ExpectedReturnCode;
-	bool		m_UseStdOutAsOutput;
+    // Exposed Properties
+    AString             m_ExecExecutable;
+    Array< AString >    m_ExecInput;
+    Array< AString >    m_ExecInputPath;
+    Array< AString >    m_ExecInputPattern;
+    Array< AString >    m_ExecInputExcludePath;
+    Array< AString >    m_ExecInputExcludedFiles;
+    Array< AString >    m_ExecInputExcludePattern;
+    AString             m_ExecArguments;
+    AString             m_ExecWorkingDir;
+    int32_t             m_ExecReturnCode;
+    bool                m_ExecUseStdOutAsOutput;
+    bool                m_ExecAlways;
+    bool                m_ExecInputPathRecurse;
+    Array< AString >    m_PreBuildDependencyNames;
+
+    // Internal State
+    uint32_t            m_NumExecInputFiles;
 };
 
 //------------------------------------------------------------------------------
-#endif // FBUILD_GRAPH_EXECNODE_H

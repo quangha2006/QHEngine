@@ -3,19 +3,18 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Core/PrecompiledHeader.h"
-
 #include "SystemMutex.h"
 #include "Core/Strings/AStackString.h"
 
 // system
 #if defined( __WINDOWS__ )
-    #include <windows.h>
+    #include "Core/Env/WindowsHeader.h"
     #include "Core/Env/Assert.h"
 #endif
 #if defined( __LINUX__ ) || defined( __APPLE__ )
     #include <errno.h>
     #include <sys/file.h>
+    #include <fcntl.h>
     #include <unistd.h>
 #endif
 
@@ -27,7 +26,7 @@ SystemMutex::SystemMutex( const char * name ) :
     #elif defined( __LINUX__ ) || defined( __APPLE__ )
         m_Handle( -1 ),
     #endif
-	m_Name( name )
+    m_Name( name )
 {
 }
 
@@ -46,23 +45,23 @@ SystemMutex::~SystemMutex()
 bool SystemMutex::TryLock()
 {
     ASSERT( !IsLocked() ); // Invalid to lock more than once
-    
+
     #if defined( __WINDOWS__ )
-		void * handle = (void *)CreateMutex( nullptr, TRUE, m_Name.Get() );
-		if ( GetLastError() == ERROR_ALREADY_EXISTS )
-		{
-			if ( ( handle != INVALID_HANDLE_VALUE ) && ( handle != 0 ) )
-			{
-				CloseHandle( handle );
-			}
-			return false;
-		}
-		m_Handle = handle;
-		return true;
+        void * handle = (void *)CreateMutex( nullptr, TRUE, m_Name.Get() );
+        if ( GetLastError() == ERROR_ALREADY_EXISTS )
+        {
+            if ( ( handle != INVALID_HANDLE_VALUE ) && ( handle != 0 ) )
+            {
+                CloseHandle( handle );
+            }
+            return false;
+        }
+        m_Handle = handle;
+        return true;
     #elif defined( __LINUX__ ) || defined( __APPLE__ )
         AStackString<> tempFileName;
         tempFileName.Format( "/tmp/%s.lock", m_Name.Get());
-        int handle = open( tempFileName.Get(), O_CREAT | O_RDWR, 0666 );
+        int handle = open( tempFileName.Get(), O_CREAT | O_RDWR | O_CLOEXEC, 0666 );
         if ( handle < 0 )
         {
             ASSERT( false ); // unexpected problem
@@ -104,9 +103,9 @@ bool SystemMutex::IsLocked() const
 void SystemMutex::Unlock()
 {
     #if defined( __WINDOWS__ )
-		ASSERT( m_Handle != INVALID_HANDLE_VALUE );
-		CloseHandle( m_Handle );
-		m_Handle = INVALID_HANDLE_VALUE;
+        ASSERT( m_Handle != INVALID_HANDLE_VALUE );
+        CloseHandle( m_Handle );
+        m_Handle = INVALID_HANDLE_VALUE;
     #elif defined( __LINUX__ ) || defined( __APPLE__ )
         ASSERT( m_Handle != -1 );
         VERIFY( flock( m_Handle, LOCK_UN ) == 0 );

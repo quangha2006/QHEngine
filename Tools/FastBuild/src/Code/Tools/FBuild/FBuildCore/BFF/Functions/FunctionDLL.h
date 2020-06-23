@@ -1,8 +1,6 @@
 // FunctionDLL
 //------------------------------------------------------------------------------
 #pragma once
-#ifndef FBUILD_FUNCTIONS_FUNCTIONDLL_H
-#define FBUILD_FUNCTIONS_FUNCTIONDLL_H
 
 // Includes
 //------------------------------------------------------------------------------
@@ -13,9 +11,9 @@
 class FunctionDLL : public FunctionExecutable
 {
 public:
-	explicit		FunctionDLL();
-	inline virtual ~FunctionDLL() {}
+    explicit        FunctionDLL();
+    inline virtual ~FunctionDLL() override = default;
+    virtual Node *  CreateNode() const override;
 };
 
 //------------------------------------------------------------------------------
-#endif // FBUILD_FUNCTIONS_FUNCTIONDLL_H

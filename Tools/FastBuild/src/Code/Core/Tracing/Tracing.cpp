@@ -3,8 +3,6 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Core/PrecompiledHeader.h"
-
 #include "Tracing.h"
 #include "Core/Env/Assert.h"
 
@@ -15,7 +13,7 @@
 #include <stdarg.h>
 #if defined( __WINDOWS__ )
     #ifdef DEBUG
-        #include <windows.h> // for OutputDebugStringA
+        #include "Core/Env/WindowsHeader.h" // for OutputDebugStringA
     #endif
 #endif
 
@@ -24,99 +22,91 @@
 
 // Static Data
 //------------------------------------------------------------------------------
-/*static*/ Array< Tracing::Callback * > Tracing::s_CallbacksDebugSpam( 2, true );
-/*static*/ Array< Tracing::Callback * > Tracing::s_CallbacksOutput( 2, true );
+/*static*/ Tracing::Callbacks Tracing::s_Callbacks;
+/*static*/ bool Tracing::Callbacks::s_Valid( false );
 
 #ifdef DEBUG
-	// DebugSpam
-	//------------------------------------------------------------------------------
-	/*static*/ void Tracing::DebugSpam( const char * message )
-	{
+    // DebugSpam
+    //------------------------------------------------------------------------------
+    /*static*/ void Tracing::DebugSpam( const char * message )
+    {
         PROFILE_FUNCTION
 
-		// pass through callback if there is one
-		for ( auto cb : s_CallbacksDebugSpam )
-		{
-			if ( (*cb)( message ) == false )
-			{
-				return; // callback wants msg supressed
-			}
-		}
+        const bool messageConsumed = s_Callbacks.DispatchCallbacksDebugSpam( message );
+        if( messageConsumed )
+        {
+            return; // Callback swallowed output
+        }
 
-		// normal output that goes to the TTY
-    	fputs( message, stdout );
+        // normal output that goes to the TTY
+        fputs( message, stdout );
 
-		// emit to the debugger as well if possible
+        // emit to the debugger as well if possible
         #if defined( __WINDOWS__ )
             OutputDebugStringA( message );
         #endif
-	}
+    }
 
-	// DebugSpamFormat
-	//------------------------------------------------------------------------------
-	/*static*/ void Tracing::DebugSpamFormat( const char * fmtString, ... )
-	{
-		AStackString< 8192 > buffer;
+    // DebugSpamFormat
+    //------------------------------------------------------------------------------
+    /*static*/ void Tracing::DebugSpamFormat( MSVC_SAL_PRINTF const char * fmtString, ... )
+    {
+        AStackString< 8192 > buffer;
 
-		va_list args;
-		va_start(args, fmtString);
-		buffer.VFormat( fmtString, args );
-		va_end( args );
+        va_list args;
+        va_start(args, fmtString);
+        buffer.VFormat( fmtString, args );
+        va_end( args );
 
-		DebugSpam( buffer.Get() );
-	}
+        DebugSpam( buffer.Get() );
+    }
 
-	// Warning
-	//------------------------------------------------------------------------------
-	/*static*/ void Tracing::Warning( const char * file, uint32_t line, const char * message )
-	{
-		// format a double clickable line
-		AStackString< 8192 > buffer;
-		buffer.Format( "%s(%u): %s\n", file, line, message );
+    // Warning
+    //------------------------------------------------------------------------------
+    /*static*/ void Tracing::Warning( const char * file, uint32_t line, const char * message )
+    {
+        // format a double clickable line
+        AStackString< 8192 > buffer;
+        buffer.Format( "%s(%u): %s\n", file, line, message );
 
-		// normal output that goes to the TTY
-		puts( buffer.Get() );
+        // normal output that goes to the TTY
+        puts( buffer.Get() );
 
-		// emit to the debugger as well if possible
+        // emit to the debugger as well if possible
         #if defined( __WINDOWS__ )
             OutputDebugStringA( buffer.Get() );
         #endif
-	}
+    }
 
-	// WarningFormat
-	//------------------------------------------------------------------------------
-	/*static*/ void Tracing::WarningFormat( const char * file, uint32_t line, const char * fmtString, ... )
-	{
-		AStackString<> buffer;
+    // WarningFormat
+    //------------------------------------------------------------------------------
+    /*static*/ void Tracing::WarningFormat( MSVC_SAL_PRINTF const char * file, uint32_t line, const char * fmtString, ... )
+    {
+        AStackString<> buffer;
 
-		va_list args;
-		va_start(args, fmtString);
-		buffer.VFormat( fmtString, args );
-		va_end( args );
+        va_list args;
+        va_start(args, fmtString);
+        buffer.VFormat( fmtString, args );
+        va_end( args );
 
-		Warning( file, line, buffer.Get() );
-	}
+        Warning( file, line, buffer.Get() );
+    }
 #endif
 
 // Output
 //------------------------------------------------------------------------------
 /*static*/ void Tracing::Output( const char * message )
 {
-    PROFILE_FUNCTION
+    const bool messageConsumed = s_Callbacks.DispatchCallbacksOutput( message );
+    if( messageConsumed )
+    {
+        return; // Callback swallowed output
+    }
 
-	// pass through callback if there is one
-	for ( auto cb : s_CallbacksOutput )
-	{
-		if ( (*cb)( message ) == false )
-		{
-			return; // callback wants msg supressed
-		}
-	}
+    // normal output that goes to the TTY
+    fputs( message, stdout );
 
-	// normal output that goes to the TTY
-	fputs( message, stdout );
-
-	// emit to the debugger as well if possible
+    // emit to the debugger as well if possible
     #if defined( __WINDOWS__ )
         #ifdef DEBUG
             OutputDebugStringA( message );
@@ -126,82 +116,172 @@
 
 // OutputFormat
 //------------------------------------------------------------------------------
-/*static*/ void Tracing::OutputFormat( const char * fmtString, ... )
+/*static*/ void Tracing::OutputFormat( MSVC_SAL_PRINTF const char * fmtString, ... )
 {
-	AStackString< 8192 > buffer;
+    AStackString< 8192 > buffer;
 
-	va_list args;
-	va_start(args, fmtString);
-	buffer.VFormat( fmtString, args );
-	va_end( args );
+    va_list args;
+    va_start(args, fmtString);
+    buffer.VFormat( fmtString, args );
+    va_end( args );
 
-	Output( buffer.Get() );
+    Output( buffer.Get() );
 }
 
 // Error
 //------------------------------------------------------------------------------
 /*static*/ void Tracing::FatalError( const char * message )
 {
-	// tty output
-	puts( message );
+    // tty output
+    puts( message );
 
     // to the debugger if available
     #if defined( __WINDOWS__ )
         #ifdef DEBUG
             OutputDebugStringA( message );
         #endif
-	#endif
+    #endif
 
-	// for now, we'll just break
+    // for now, we'll just break
     BREAK_IN_DEBUGGER;
 }
 
 // ErrorFormat
 //------------------------------------------------------------------------------
-/*static*/ void Tracing::FatalErrorFormat( const char * fmtString, ... )
+/*static*/ void Tracing::FatalErrorFormat( MSVC_SAL_PRINTF const char * fmtString, ... )
 {
-	AStackString< 8192 > buffer;
+    AStackString< 8192 > buffer;
 
-	va_list args;
-	va_start(args, fmtString);
-	buffer.VFormat( fmtString, args );
-	va_end( args );
+    va_list args;
+    va_start(args, fmtString);
+    buffer.VFormat( fmtString, args );
+    va_end( args );
 
-	FatalError( buffer.Get() );
+    FatalError( buffer.Get() );
 }
 
-// AddCallbackDebugSpam
+// Tracing::Callback (CONSTRUCTOR)
 //------------------------------------------------------------------------------
-/*static*/ void Tracing::AddCallbackDebugSpam( Callback * callback )
+Tracing::Callbacks::Callbacks()
+    : m_CallbacksMutex()
+    , m_InCallbackDispatch( false )
+    , m_CallbacksDebugSpam( 2, true )
+    , m_CallbacksOutput( 2, true )
 {
-	ASSERT( s_CallbacksDebugSpam.Find( callback ) == nullptr );
-	s_CallbacksDebugSpam.Append( callback );
+    // Callbacks can now be modified or dispatched
+    s_Valid = true;
 }
 
-// SetCallbackOutput
+// Tracing::Callback (DESTRUCTOR)
 //------------------------------------------------------------------------------
-/*static*/ void Tracing::AddCallbackOutput( Callback * callback )
+Tracing::Callbacks::~Callbacks()
 {
-	ASSERT( s_CallbacksOutput.Find( callback ) == nullptr );
-	s_CallbacksOutput.Append( callback );
+    // Callbacks can no longer be modified or dispatched
+    s_Valid = false;
 }
 
-// RemoveCallbackDebugSpam
 //------------------------------------------------------------------------------
-/*static*/ void Tracing::RemoveCallbackDebugSpam( Callback * callback )
+void Tracing::Callbacks::AddCallbackDebugSpam( Callback* callback )
 {
-	auto iter = s_CallbacksDebugSpam.Find( callback );
-	ASSERT( iter );
-	s_CallbacksDebugSpam.Erase( iter );
+    // It is not valid to modify callbacks during static init/destruction
+    ASSERT( s_Valid );
+
+    MutexHolder lock( m_CallbacksMutex );
+    ASSERT( m_CallbacksDebugSpam.Find( callback ) == nullptr );
+    m_CallbacksDebugSpam.Append( callback );
 }
 
-// RemoveCallbackOutput
 //------------------------------------------------------------------------------
-/*static*/ void Tracing::RemoveCallbackOutput( Callback * callback )
+void Tracing::Callbacks::AddCallbackOutput( Callback* callback )
 {
-	auto iter = s_CallbacksOutput.Find( callback );
-	ASSERT( iter );
-	s_CallbacksOutput.Erase( iter );
+    // It is not valid to modify callbacks during static init/destruction
+    ASSERT( s_Valid );
+
+    MutexHolder lock( m_CallbacksMutex );
+    ASSERT( m_CallbacksOutput.Find( callback ) == nullptr );
+    m_CallbacksOutput.Append( callback );
+}
+
+//------------------------------------------------------------------------------
+void Tracing::Callbacks::RemoveCallbackDebugSpam( Callback* callback )
+{
+    // It is not valid to modify callbacks during static init/destruction
+    ASSERT( s_Valid );
+
+    MutexHolder lock( m_CallbacksMutex );
+    VERIFY( m_CallbacksDebugSpam.FindAndErase( callback ) );
+}
+
+//------------------------------------------------------------------------------
+void Tracing::Callbacks::RemoveCallbackOutput( Callback* callback )
+{
+    // It is not valid to modify callbacks during static init/destruction
+    ASSERT( s_Valid );
+
+    MutexHolder lock( m_CallbacksMutex );
+    VERIFY( m_CallbacksOutput.FindAndErase( callback ) );
+}
+
+// Callbacks::DispatchCallbacksDebugSpam
+//------------------------------------------------------------------------------
+bool Tracing::Callbacks::DispatchCallbacksDebugSpam( const char * message )
+{
+    // Callbacks are unavailable?
+    if ( s_Valid == false )
+    {
+        return false;
+    }
+
+    MutexHolder lock( m_CallbacksMutex );
+
+    // Prevent re-entrancy (if as ASSERT fires during a callback for example)
+    if ( m_InCallbackDispatch )
+    {
+        return false;
+    }
+    m_InCallbackDispatch = true;
+
+    for ( auto cb : m_CallbacksDebugSpam )
+    {
+        if ( (*cb)( message ) == false )
+        {
+            return true; // callback wants msg supressed
+        }
+    }
+
+    return false;
+}
+
+// Callbacks::DispatchCallbacksOutput
+//------------------------------------------------------------------------------
+bool Tracing::Callbacks::DispatchCallbacksOutput( const char* message )
+{
+    // Callbacks are unavailable?
+    if ( s_Valid == false )
+    {
+        return false;
+    }
+
+    MutexHolder lock( m_CallbacksMutex );
+
+    // Prevent re-entrancy (if as ASSERT fires during a callback for example)
+    if ( m_InCallbackDispatch )
+    {
+        return false;
+    }
+    m_InCallbackDispatch = true;
+
+    for ( auto cb : m_CallbacksOutput )
+    {
+        if ( (*cb)(message) == false )
+        {
+            m_InCallbackDispatch = false;
+            return true; // callback wants msg supressed
+        }
+    }
+
+    m_InCallbackDispatch = false;
+    return false;
 }
 
 //------------------------------------------------------------------------------

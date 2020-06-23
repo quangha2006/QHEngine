@@ -1,8 +1,6 @@
 // NodeProxy.h - a remote proxy for remote builds
 //------------------------------------------------------------------------------
 #pragma once
-#ifndef FBUILD_GRAPH_NODEPROXY_H
-#define FBUILD_GRAPH_NODEPROXY_H
 
 // Includes
 //------------------------------------------------------------------------------
@@ -13,15 +11,14 @@
 class NodeProxy : public Node
 {
 public:
-	explicit NodeProxy( const AString & name );
-	virtual ~NodeProxy();
+    explicit NodeProxy( const AString & name );
+    virtual bool Initialize( NodeGraph & nodeGraph, const BFFIterator & funcStartIter, const Function * function ) override;
+    virtual ~NodeProxy() override;
 
-	virtual bool IsAFile() const;
+    virtual bool IsAFile() const override;
 
 protected:
-	virtual void Save( IOStream & stream ) const;
-	virtual bool DetermineNeedToBuild( bool forceClean ) const;
+    virtual bool DetermineNeedToBuild( bool forceClean ) const override;
 };
 
 //------------------------------------------------------------------------------
-#endif // FBUILD_GRAPH_NODEPROXY_H

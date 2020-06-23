@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <link href="../style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="../common.js"></script>
 
 <html>
 <head>
@@ -8,7 +7,22 @@
 <title>FASTBuild - Function Reference - Compiler</title>
 </head>
 <body>
-  <script>generateHeaderParent()</script>
+	<div class='outer'>
+        <div>
+            <div class='logobanner'>
+                <a href='../home.html'><img src='../img/logo.png' style='position:relative;'/></a>
+	            <div class='contact'><a href='../contact.html' class='othernav'>Contact</a> &nbsp; | &nbsp; <a href='../license.html' class='othernav'>License</a></div>
+	        </div>
+	    </div>
+	    <div id='main'>
+	        <div class='navbar'>
+	            <a href='../home.html' class='lnavbutton'>Home</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='../features.html' class='navbutton'>Features</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='../status.html' class='navbutton'>Status</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='../documentation.html' class='navbutton'>Documentation</a><div class='navbuttongap'></div>
+	            <a href='../download.html' class='rnavbutton'><b>Download</b></a>
+	        </div>
+	        <div class='inner'>
 
 <h1>Compiler</h1>
     <div id='compiler' class='newsitemheader'>
@@ -16,15 +30,24 @@
     </div>
     <div class='newsitembody'>
       <p>
-Specifies compiler and related files for network distribution.
+Describes a compiler and specifies how to interact with the compiler process for dependency tracking,
+distribution, caching and more.
       </p>
-<div class='code'>Compiler( 'name' )          // (optional) Alias
+<div class='code'>Compiler( 'name' )              // Alias
 {
-  .Executable               // Primary compiler executable
-  .ExtraFiles               // (optional) Additional files (usually dlls) required by the compiler.
-  
+  .Executable                   // Primary compiler executable
+  .ExtraFiles                   // (optional) Additional files (usually dlls) required by the compiler.
+ 
   // Additional Options
-  .VS2012EnumBugFix         // (optional) Enable work-around for bug in VS2012 compiler (default: false)
+  .CompilerFamily               // (optional) Explicitly specify compiler type (default: auto)
+  .AllowDistribution            // (optional) Allow distributed compilation (if available) (default: true)
+  .ExecutableRootPath           // (optional) Override default path for executable distribution
+  .SimpleDistributionMode       // (optional) Allow distribution of otherwise unsuported "compilers" (default: false)
+  .CustomEnvironmentVariables   // (optional) Environment variables to set on remote host
+  .ClangRewriteIncludes         // (optional) Use Clang's -frewrite-includes option when preprocessing (default: true)
+  .VS2012EnumBugFix             // (optional) Enable work-around for bug in VS2012 compiler (default: false)
+  .Environment                  // (optional) Environment variables to use for local build
+  .UseLightCache_Experimental   // (optional) Enabled experimental "light" caching mode (default: false)
 }
 </div>
     </div>
@@ -80,13 +103,85 @@ Compiler( 'Test' )
                   'C:\cruntime\mvscrt.dll'         // dest: msvcrt.dll
 }</div>
 	</p>
+
 </div>
 
 <!-- 
 	Additional Options
 -->	
 <div id='alias' class='newsitemheader'>Additional Options</div>
+
 <div class='newsitembody'>
+
+	<p><b>.CompilerFamily</b> - String - (Optional)</p>
+	<p>By default, FASTBuild will detect the compiler type based on the executable name. The .CompilerFamily property
+    allows you to explicitly control the compiler type instead. This can be useful for:
+    <ul>
+        <li>custom variants of compilers with unique naming</li>
+        <li>custom exeutables used as compilers</li>
+    </ul>
+    </p>
+    <p>The following values are supported:
+    <table>
+        <tr><th width=150>Value</th><th>Notes</th></tr>
+        <tr><td>auto</td><td><b>(default)</b> Auto detect compiler based on executable path</td></tr>
+        <tr><td>&nbsp;</td><td></td></tr>
+        <tr><th>Value</th><th>Notes</th></tr>
+        <tr><td>msvc</td><td>Microsoft and compatible compilers</td></tr>
+        <tr><td>clang</td><td>Clang and compatible compilers</td></tr>
+        <tr><td>gcc</td><td>GCC and compatible compilers</td></tr>
+        <tr><td>snc</td><td>SNC and compatible compilers</td></tr>
+        <tr><td>codewarrior-wii</td><td>CodeWarrior compiler for the Wii</td></tr>
+        <tr><td>greenhills-wiiu</td><td>GreenHills compiler for the Wii U</td></tr>
+        <tr><td>cuda-nvcc</td><td>NVIDIA's CUDA compiler</td></tr>
+        <tr><td>qt-rcc</td><td>Qt's resource compiler</td></tr>
+        <tr><td>vbcc</td><td>vbcc compiler</td></tr>
+        <tr><td>orbis-wave-psslc</td><td>orbis wave psslc shader compiler</td></tr>
+        <tr><td>&nbsp;</td><td></td></tr>
+        <tr><th>Value</th><th>Notes</th></tr>
+        <tr><td>custom</td><td>Any custom compiler. <font color=red>NOTE:</font> Only primary input and output dependencies will be tracked. No additional
+        dependencies will be tracked as FASTBuild has no way to extract dependency information from arbitrary executables.</b></td></tr>
+    </table></p>
+ 
+  	<p><hr></p>
+
+	<p><b>.AllowDistribution</b> - Boolean - (Optional)</p>
+	<p>For compilers where distributed compilation is supported, said feature can be disabled.<p>
+ 
+  	<p><hr></p>
+    
+	<p><b>.ExecutableRootPath</b> - String - (Optional)</p>
+	<p>When a compiler is distributed the .Compiler and .ExtraFiles hierarchy is replicated on the remote machine as documented above (see .ExtraFiles).
+    The base path for this replication can be overriden by setting the .ExectuableRootPath property, allowing more flexibility in how the file
+    hierarchy is replicated on the remote host.<p>
+ 
+  	<p><hr></p>
+    
+	<p><b>.SimpleDistributionMode</b> - Boolean - (Optional)</p>
+	<p>FASTbuild supports distributed compilation for certain compilers that it explicitly understands how to interact with in order to obtain
+    dependency information (in addition to the simple primary input file). By setting .SimpleDistributionMode, FASTBuild can be told that the
+    single file input of a "compiler" is the only dependency and thus can be safely used with distributed compilation. This allows distribution
+    of custom tools or other useful work like texture conversion.<p>
+
+  	<p><hr></p>
+    
+	<p><b>.CustomEnvironmentVariables</b> - String or ArrayOfStrings - (Optional)</p>
+	<p>When compiling on a remote host, a clean environment is used. If needed, environment variables can be set.<p>
+
+  	<p><hr></p>
+
+	<p><b>.ClangRewriteIncludes</b> - Bool - (Optional)</p>
+	<p>FASTBuild uses the -E preprocessor option when compiling with Clang to preprocess the source code. In order to
+    improve consistency between this preprocessed source and the original source, FASTBuild also uses the -frewrite-includes
+    option by default. An exmaple of this improved consistency is that compiler errors originating from macros will
+    have the caret point to the correct column location of the source code instead of the column location where the error
+    would be in the expanded macro.</p>
+    <p>If for some reason the use of -frewrite-includes is not desireable, it can be disabled by setting
+    .ClangRewriteIncludes to false as follows:</p>
+	<div class='code'>.ClangRewriteIncludes = false</div>
+    
+    <p><hr></p>
+    
 	<p><b>.VS2012EnumBugFix</b> - Bool - (Optional)</p>
 	<p><font color=red>NOTE:</font> This option incurs a minor build time cost that impacts compile times.</p>
 	<p>A bug exists in the Visual Studio 2012 compiler whereby enums in preprocessed code are sometimes incorrectly 
@@ -114,28 +209,94 @@ This results in very unintuitive compile errors.</p>
 	This work-around may be impractical if a large number of enums are affected, or if the enum(s) originate in system headers or
 	external code. In those cases the .VS2012EnumBugFix option can be enabled to insert the
 	additional whitespace at build-time.</p>
+
+  	<p><hr></p>
+
+	<p><b>.Environment</b> - String or ArrayOfStrings - (Optional)</p>
+	<p>When set, overrides the environment for local compiles</p>
+   <p>This allows you to have a different environment per compiler</p>
+
+  	<p><hr></p>
+
+	<p><b>.UseLightCache_Experimental</b> - Boolean - (Optional)</p>
+    <p>When set, activates "Light Caching" mode. Light Caching mode avoids using the compiler's
+    preprocessor for cache lookups, instead allowing FASTBuild to parse the files itself to gather the
+    required information. This parsing is significantly faster than for each file and additionally allows
+    FASTBuild to eliminate redundant file parsing between object files, further accelerating cache lookups.
+    <p><font color=red>NOTE:</font>This feature should be used with caution. While there are no known issues (it self disables
+    when know to not work - see other notes) it should be considered experimental.</p>
+    <p><font color=red>NOTE:</font>For now, Light Caching can only be used with the MSVC compiler. Support will be extended
+    to other compilers in future versions.</p>
+    <p><font color=red>NOTE:</font> Light Caching does not support macros using for include paths (i.e. "#include MY_INCLUDE_HEADER")
+    Support for this will be added in future versions.</p>
+
 </div>
 
 
 <div id='compiler' class='newsitemheader'>Examples</div>
     <div class='newsitembody'>
 
-<b>Clang</b>
-<div class='code'>// Clang for Windows
-Compiler( 'Compiler-x86Clang' )
+<b>MSVC - 2019 (v16.2)</b>
+<div class='code'>// VisualStudio 2019 x64 Compiler
+.VS2017_BasePath         = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\2017\Community'
+.VS2017_Version          = '14.16.27023'
+Compiler( 'Compiler-VS2017-x64' )
 {
-  .Executable = '$ClangForWindowsBasePath$\clang++.exe'
+    .Root       = '$VS2019_BasePath$/VC/Tools/MSVC/$VS2019_Version$/bin/Hostx64/x64'
+    .Executable = '$Root$/cl.exe'
+    .ExtraFiles = { '$Root$/c1.dll'
+                    '$Root$/c1xx.dll',
+                    '$Root$/c2.dll',
+                    '$Root$/atlprov.dll', // Only needed if using ATL
+                    '$Root$/msobj140.dll'
+                    '$Root$/mspdb140.dll'
+                    '$Root$/mspdbcore.dll'
+                    '$Root$/mspdbsrv.exe'
+                    '$Root$/mspft140.dll'
+                    '$Root$/msvcp140.dll'
+                    '$Root$/tbbmalloc.dll' // Required as of 16.2 (14.22.27905)
+                    '$Root$/vcruntime140.dll'
+                    '$Root$/1033/clui.dll'
+                    '$Root$/1033/mspft140ui.dll' // Localized messages for static analysis
+                  }
 }</div>
+
+<b>MSVC - 2017</b>
+<div class='code'>// VisualStudio 2017 x64 Compiler
+.VS2017_BasePath         = 'C:\Program Files (x86)\Microsoft Visual Studio\2017\2017\Community'
+.VS2017_Version          = '14.16.27023'
+Compiler( 'Compiler-VS2017-x64' )
+{
+    .Root       = '$VS2017_BasePath$\VC\Tools\MSVC\$VS2017_Version$\bin\Hostx64\x64'
+    .Executable = '$Root$\cl.exe'
+    .ExtraFiles = {
+                    '$Root$\c1.dll'
+                    '$Root$\c1xx.dll',
+                    '$Root$\c2.dll',
+                    '$Root$\atlprov.dll', // Only needed if using ATL
+                    '$Root$\msobj140.dll'
+                    '$Root$\mspdb140.dll'
+                    '$Root$\mspdbcore.dll'
+                    '$Root$\mspdbsrv.exe'
+                    '$Root$\mspft140.dll'
+                    '$Root$\msvcp140.dll'
+                    '$Root$\vcruntime140.dll'
+                    '$Root$\1033/clui.dll'
+                  }
+}</div>
+
 <b>MSVC - 2013</b>
 <div class='code'>// VisualStudio 2013 x86 Compiler
 Compiler( 'Compiler-x86' )
 {
   .Executable = '$VSBasePath$\VC\bin\cl.exe'
-  .ExtraFiles = { '$VSBasePath$\VC\bin\c1.dll'
+  .ExtraFiles = {
+                  '$VSBasePath$\VC\bin\c1.dll'
                   '$VSBasePath$\VC\bin\c1ast.dll',
                   '$VSBasePath$\VC\bin\c1xx.dll',
                   '$VSBasePath$\VC\bin\c1xxast.dll',
                   '$VSBasePath$\VC\bin\c2.dll',
+                  '$VSBasePath$\VC\bin\atlprov.dll', // Only needed if using ATL
                   '$VSBasePath$\VC\bin\msobj120.dll'
                   '$VSBasePath$\VC\bin\mspdb120.dll'
                   '$VSBasePath$\VC\bin\mspdbcore.dll'
@@ -146,22 +307,11 @@ Compiler( 'Compiler-x86' )
                   '$VSBasePath$\VC\redist\x86\Microsoft.VC120.CRT\vccorlib120.dll'
                 }
 }</div>
-<b>MSVC - 2010</b>
-<div class='code'>// VisualStudio 2010 x86 Compiler
-Compiler( "Compiler-x86" )
+<b>Clang</b>
+<div class='code'>// Clang for Windows
+Compiler( 'Compiler-x86Clang' )
 {
-  .Executable = '$VSBasePath$\VC\bin\cl.exe'
-  .ExtraFiles = { '$VSBasePath$\VC\bin\c1.dll'
-                  '$VSBasePath$\VC\bin\c1xx.dll'
-                  '$VSBasePath$\VC\bin\c2.dll'
-                  '$VSBasePath$\Common7\IDE\mspdb100.dll'
-                  '$VSBasePath$\Common7\IDE\msobj100.dll'
-                  '$VSBasePath$\Common7\IDE\mspdbsrv.exe'
-                  '$VSBasePath$\Common7\IDE\mspdbcore.dll'
-                  '$VSBasePath$\VC\bin\1033\clui.dll'
-                  '$VSBasePath$\VC\redist\x86\Microsoft.VC100.CRT\msvcp100.dll'
-                  '$VSBasePath$\VC\redist\x86\Microsoft.VC100.CRT\msvcr100.dll'
-    }
+  .Executable = '$ClangForWindowsBasePath$\clang++.exe'
 }</div>
 <b>Intel</b>
 <div class='code'>// Intel 2015 Update 4 x64 Compiler
@@ -199,6 +349,6 @@ Compiler( 'Compiler-x64Intel' )
 }</div>
 </div>
 
-  <script>generateFooter()</script>
+    </div><div class='footer'>&copy; 2012-2019 Franta Fulin</div></div></div>
 </body>
 </html>

@@ -3,759 +3,638 @@
 
 // Includes
 //------------------------------------------------------------------------------
-#include "Tools/FBuild/FBuildCore/PrecompiledHeader.h"
-
 #include "VSProjectGenerator.h"
 
 // FBuildCore
-#include "Tools/FBuild/FBuildCore/Graph/AliasNode.h"
-#include "Tools/FBuild/FBuildCore/Graph/LibraryNode.h"
-#include "Tools/FBuild/FBuildCore/Graph/Node.h"
 #include "Tools/FBuild/FBuildCore/Graph/NodeGraph.h"
 #include "Tools/FBuild/FBuildCore/Graph/ObjectListNode.h"
-#include "Tools/FBuild/FBuildCore/Graph/TestNode.h"
+#include "Tools/FBuild/FBuildCore/Graph/VCXProjectNode.h"
+#include "Tools/FBuild/FBuildCore/Helpers/ProjectGeneratorBase.h" // TODO:C Remove when VSProjectGenerator derives from ProjectGeneratorBase
 
 // Core
 #include "Core/FileIO/IOStream.h"
 #include "Core/FileIO/PathUtils.h"
 #include "Core/Math/CRC32.h"
+#include "Core/Math/xxHash.h"
 #include "Core/Strings/AStackString.h"
 
 // system
 #include <stdarg.h> // for va_args
 
-// CONSTRUCTOR (VSProjectConfig)
+// FileAscendingCompareIDeref
 //------------------------------------------------------------------------------
-VSProjectConfig::VSProjectConfig()
-	: m_Target( nullptr )
+class FileAscendingCompareIDeref
 {
-}
-
-// DESTRUCTOR (VSProjectConfig)
-//------------------------------------------------------------------------------
-VSProjectConfig::~VSProjectConfig()
-{
-}
+public:
+    inline bool operator () ( const VSProjectFilePair * a, const VSProjectFilePair * b ) const
+    {
+        return ( a->m_ProjectRelativePath.CompareI( b->m_ProjectRelativePath ) < 0 );
+    }
+};
 
 // CONSTRUCTOR
 //------------------------------------------------------------------------------
 VSProjectGenerator::VSProjectGenerator()
-	: m_BasePaths( 0, true )
-	, m_References( 0, true )
-	, m_ProjectReferences( 0, true )
-	, m_Files( 1024, true )
+    : m_BasePaths( 0, true )
+    , m_ProjectSccEntrySAK( false )
+    , m_References( 0, true )
+    , m_ProjectReferences( 0, true )
+    , m_FilePathsCanonicalized( false )
+    , m_Files( 1024, true )
 {
+    // preallocate to avoid re-allocations
+    m_Tmp.SetReserved( MEGABYTE );
 }
 
 // DESTRUCTOR
 //------------------------------------------------------------------------------
-VSProjectGenerator::~VSProjectGenerator()
-{
-}
+VSProjectGenerator::~VSProjectGenerator() = default;
 
 // SetBasePaths
 //------------------------------------------------------------------------------
 void VSProjectGenerator::SetBasePaths( const Array< AString > & paths )
 {
-	m_BasePaths = paths;
+    ASSERT( m_FilePathsCanonicalized == false );
+    m_BasePaths = paths;
 }
 
 // AddFile
 //------------------------------------------------------------------------------
 void VSProjectGenerator::AddFile( const AString & file )
 {
-	// ensure slash consistency which we rely on later
-	AStackString<> fileCopy( file );
-	fileCopy.Replace( FORWARD_SLASH, BACK_SLASH );
-
-	ASSERT( !m_Files.Find( fileCopy ) );
-	m_Files.Append( fileCopy );
+    // ensure slash consistency which we rely on later
+    AStackString<> fileCopy( file );
+    fileCopy.Replace( FORWARD_SLASH, BACK_SLASH );
+    m_Files.Append( VSProjectFilePair() );
+    m_Files.Top().m_AbsolutePath = fileCopy;
 }
 
 // AddFiles
 //------------------------------------------------------------------------------
 void VSProjectGenerator::AddFiles( const Array< AString > & files )
 {
-	const AString * const fEnd = files.End();
-	for ( const AString * fIt = files.Begin(); fIt!=fEnd; ++fIt )
-	{
-		AddFile( *fIt );
-	}
+    const AString * const fEnd = files.End();
+    for ( const AString * fIt = files.Begin(); fIt!=fEnd; ++fIt )
+    {
+        AddFile( *fIt );
+    }
 }
 
 // GetDeterministicProjectGUID
 //------------------------------------------------------------------------------
 /*static*/ void VSProjectGenerator::FormatDeterministicProjectGUID( AString & guid, const AString & projectName )
 {
-	// Replace native slash with Windows-style slash for GUID generation to keep GUIDs consistent across platforms
-	AStackString<> projectNameNormalized( projectName );
-	projectNameNormalized.Replace( NATIVE_SLASH, BACK_SLASH );
-	guid.Format( "{%08x-6c94-4f93-bc2a-7f5284b7d434}", CRC32::Calc( projectNameNormalized ) );
+    // Replace native slash with Windows-style slash for GUID generation to keep GUIDs consistent across platforms
+    AStackString<> projectNameNormalized( projectName );
+    projectNameNormalized.Replace( NATIVE_SLASH, BACK_SLASH );
+    guid.Format( "{%08x-6c94-4f93-bc2a-7f5284b7d434}", CRC32::Calc( projectNameNormalized ) );
 }
 
 // GenerateVCXProj
 //------------------------------------------------------------------------------
 const AString & VSProjectGenerator::GenerateVCXProj( const AString & projectFile,
-													 const Array< VSProjectConfig > & configs,
-													 const Array< VSProjectFileType > & fileTypes )
+                                                     const Array< VSProjectConfig > & configs,
+                                                     const Array< VSProjectFileType > & fileTypes,
+                                                     const Array< VSProjectImport > & projectImports )
 {
-	ASSERT( !m_ProjectName.IsEmpty() ); // needed for valid guid generation
+    ASSERT( !m_ProjectGuid.IsEmpty() );
 
-	// preallocate to avoid re-allocations
-	m_Tmp.SetReserved( MEGABYTE );
-	m_Tmp.SetLength( 0 );
+    m_Tmp.SetLength( 0 );
 
-	// determine folder for project
-	const char * lastSlash = projectFile.FindLast( NATIVE_SLASH );
-	AStackString<> projectBasePath( projectFile.Get(), lastSlash ? lastSlash + 1 : projectFile.Get() );
+    // determine folder for project
+    const char * lastSlash = projectFile.FindLast( NATIVE_SLASH );
+    AStackString<> projectBasePath( projectFile.Get(), lastSlash ? lastSlash + 1 : projectFile.Get() );
 
-	// header
-	Write( "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" );
-	Write( "<Project DefaultTargets=\"Build\" ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\n" );
+    // Canonicalize and de-duplicate files
+    CanonicalizeFilePaths( projectBasePath );
 
-	// Project Configurations
-	{
-		Write( "  <ItemGroup Label=\"ProjectConfigurations\">\n" );
-		const VSProjectConfig * const cEnd = configs.End();
-		for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
-		{
-			Write( "    <ProjectConfiguration Include=\"%s|%s\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
-			Write( "      <Configuration>%s</Configuration>\n", cIt->m_Config.Get() );
-			Write( "      <Platform>%s</Platform>\n", cIt->m_Platform.Get() );
-			Write( "    </ProjectConfiguration>\n" );
-		}
-		Write( "  </ItemGroup>\n" );
-	}
+    // header
+    Write( "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" );
+    Write( "<Project DefaultTargets=\"Build\" ToolsVersion=\"15.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\n" );
 
-	// files
-	{
-		Write("  <ItemGroup>\n" );
-		const AString * const fEnd = m_Files.End();
-		for ( const AString * fIt = m_Files.Begin(); fIt!=fEnd; ++fIt )
-		{
-			const char * fileName = fIt->BeginsWithI( projectBasePath ) ? fIt->Get() + projectBasePath.GetLength() : fIt->Get();
-			const char * fileType = nullptr;
-			const VSProjectFileType * const end = fileTypes.End();
-			for ( const VSProjectFileType * it=fileTypes.Begin(); it!=end; ++it )
-			{
-				if ( AString::MatchI( it->m_Pattern.Get(), fileName ) )
-				{
-					fileType = it->m_FileType.Get();
-					break;
-				}
-			}
-			if ( fileType )
-			{
-			    Write( "    <CustomBuild Include=\"%s\">\n", fileName );
-			    Write( "        <FileType>%s</FileType>\n", fileType );
-			    Write( "    </CustomBuild>\n" );
-			}
-			else
-			{
-			    Write( "    <CustomBuild Include=\"%s\" />\n", fileName );
-			}
-		}
-		Write("  </ItemGroup>\n" );
-	}
+    // Project Configurations
+    {
+        Write( "  <ItemGroup Label=\"ProjectConfigurations\">\n" );
+        const VSProjectConfig * const cEnd = configs.End();
+        for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
+        {
+            WriteF("    <ProjectConfiguration Include=\"%s|%s\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
+            WriteF("      <Configuration>%s</Configuration>\n", cIt->m_Config.Get() );
+            WriteF("      <Platform>%s</Platform>\n", cIt->m_Platform.Get() );
+            Write( "    </ProjectConfiguration>\n" );
+        }
+        Write( "  </ItemGroup>\n" );
+    }
 
-	// References
-	{
-		Write("  <ItemGroup>\n" );
-		{
-			// Project References
-			const AString * const end = m_ProjectReferences.End();
-			for ( const AString *  it = m_ProjectReferences.Begin(); it != end; ++it )
-			{
-				AStackString<> proj( *it );
-				const char * pipe = proj.Find( '|' );
-				if ( pipe )
-				{
-					proj.SetLength( (uint32_t)( pipe - proj.Get() ) );
-					AStackString<> guid( pipe + 1 );
-					Write( "    <ProjectReference Include=\"%s\">\n", proj.Get() );
-					Write( "      <Project>%s</Project>\n", guid.Get() );
-					Write( "    </ProjectReference>\n" );
-				}
-				else
-				{
-					Write( "    <ProjectReference Include=\"%s\" />\n", proj.Get() );
-				}
-			}
-		}
-		{
-			// References
-			const AString * const end = m_References.End();
-			for ( const AString * it = m_References.Begin(); it != end; ++it )
-			{
-			    Write( "    <Reference Include=\"%s\" />\n", it->Get() );
-			}
-		}
-		Write("  </ItemGroup>\n" );
-	}
+    // files
+    {
+        Write("  <ItemGroup>\n" );
+        for ( const VSProjectFilePair & filePathPair : m_Files )
+        {
+            const AString & fileName = filePathPair.m_ProjectRelativePath;
 
-	// GUID : use user provided one if available, otherwise generate one deterministically
-	AStackString<> guid;
-	if ( m_ProjectGuid.IsEmpty() )
-	{
-		FormatDeterministicProjectGUID( guid, m_ProjectName );
-	}
-	else
-	{
-		guid = m_ProjectGuid;
-	}
+            const char * fileType = nullptr;
+            const VSProjectFileType * const end = fileTypes.End();
+            for ( const VSProjectFileType * it=fileTypes.Begin(); it!=end; ++it )
+            {
+                if ( AString::MatchI( it->m_Pattern.Get(), fileName.Get() ) )
+                {
+                    fileType = it->m_FileType.Get();
+                    break;
+                }
+            }
+            if ( fileType )
+            {
+                WriteF( "    <CustomBuild Include=\"%s\">\n", fileName.Get() );
+                WriteF( "        <FileType>%s</FileType>\n", fileType );
+                Write( "    </CustomBuild>\n" );
+            }
+            else
+            {
+                WriteF( "    <CustomBuild Include=\"%s\" />\n", fileName.Get() );
+            }
+        }
+        Write("  </ItemGroup>\n" );
+    }
 
-	// Globals
-	Write( "  <PropertyGroup Label=\"Globals\">\n" );
-	WritePGItem( "RootNamespace", m_RootNamespace );
-	WritePGItem( "ProjectGuid", guid );
-	WritePGItem( "DefaultLanguage", m_DefaultLanguage );
+    // References
+    {
+        Write("  <ItemGroup>\n" );
+        {
+            // Project References
+            const AString * const end = m_ProjectReferences.End();
+            for ( const AString *  it = m_ProjectReferences.Begin(); it != end; ++it )
+            {
+                AStackString<> proj( *it );
+                const char * pipe = proj.Find( '|' );
+                if ( pipe )
+                {
+                    proj.SetLength( (uint32_t)( pipe - proj.Get() ) );
+                    AStackString<> guid( pipe + 1 );
+                    WriteF("    <ProjectReference Include=\"%s\">\n", proj.Get() );
+                    WriteF("      <Project>%s</Project>\n", guid.Get() );
+                    Write( "    </ProjectReference>\n" );
+                }
+                else
+                {
+                    WriteF( "    <ProjectReference Include=\"%s\" />\n", proj.Get() );
+                }
+            }
+        }
+        {
+            // References
+            const AString * const end = m_References.End();
+            for ( const AString * it = m_References.Begin(); it != end; ++it )
+            {
+                WriteF( "    <Reference Include=\"%s\" />\n", it->Get() );
+            }
+        }
+        Write("  </ItemGroup>\n" );
+    }
+
+    // Globals
+    Write( "  <PropertyGroup Label=\"Globals\">\n" );
+    WritePGItem( "RootNamespace", m_RootNamespace );
+    WritePGItem( "ProjectGuid", m_ProjectGuid );
+    WritePGItem( "DefaultLanguage", m_DefaultLanguage );
     WritePGItem( "Keyword", AStackString<>( "MakeFileProj" ) );
-	WritePGItem( "ApplicationEnvironment", m_ApplicationEnvironment );
-	Write( "  </PropertyGroup>\n" );
+    if ( m_ProjectSccEntrySAK )
+    {
+        const AStackString<> sakString( "SAK" );
+        WritePGItem( "SccProjectName", sakString );
+        WritePGItem( "SccAuxPath", sakString );
+        WritePGItem( "SccLocalPath", sakString );
+        WritePGItem( "SccProvider", sakString );
+    }
+    WritePGItem( "ApplicationEnvironment", m_ApplicationEnvironment );
+    Write( "  </PropertyGroup>\n" );
 
-	// Default props
-	Write( "  <Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.Default.props\" />\n" );
+    // Per-config Globals
+    for ( const VSProjectConfig & config : configs )
+    {
+        const bool needSection = ( config.m_Keyword.IsEmpty() == false ) ||
+                                 ( config.m_ApplicationType.IsEmpty() == false ) ||
+                                 ( config.m_ApplicationTypeRevision.IsEmpty() == false );
+        if ( needSection )
+        {
+            WriteF( "  <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='%s|%s'\" Label=\"Globals\">\n", config.m_Config.Get(), config.m_Platform.Get() );
+            WritePGItem( "Keyword", config.m_Keyword );
+            WritePGItem( "ApplicationType", config.m_ApplicationType );
+            WritePGItem( "ApplicationTypeRevision", config.m_ApplicationTypeRevision );
+            Write( "  </PropertyGroup>\n" );
+        }
+    }
 
-	// Configurations
-	{
-		const VSProjectConfig * const cEnd = configs.End();
-		for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
-		{
-			Write( "  <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='%s|%s'\" Label=\"Configuration\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
-			Write( "    <ConfigurationType>Makefile</ConfigurationType>\n" );
-			Write( "    <UseDebugLibraries>false</UseDebugLibraries>\n" );
+    // Default props
+    Write( "  <Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.Default.props\" />\n" );
 
-			WritePGItem( "PlatformToolset",					cIt->m_PlatformToolset );
-			WritePGItem( "LocalDebuggerCommandArguments",	cIt->m_LocalDebuggerCommandArguments );
-			WritePGItem( "LocalDebuggerCommand",			cIt->m_LocalDebuggerCommand );
-			WritePGItem( "LocalDebuggerEnvironment",		cIt->m_LocalDebuggerEnvironment );
+    // Configurations
+    {
+        const VSProjectConfig * const cEnd = configs.End();
+        for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
+        {
+            WriteF( "  <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='%s|%s'\" Label=\"Configuration\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
+            Write( "    <ConfigurationType>Makefile</ConfigurationType>\n" );
+            Write( "    <UseDebugLibraries>false</UseDebugLibraries>\n" );
 
-			Write( "  </PropertyGroup>\n" );
-		}
-	}
+            // If a specific executable is specified, use that, otherwise try to auto-derive
+            // the executable from the .Target
+            AStackString<> localDebuggerCommand( cIt->m_LocalDebuggerCommand );
+            if ( localDebuggerCommand.IsEmpty() )
+            {
+                // Get the executable path and make it project-relative
+                const Node * debugTarget = ProjectGeneratorBase::FindExecutableDebugTarget( cIt->m_TargetNode );
+                if ( debugTarget )
+                {
+                    ProjectGeneratorBase::GetRelativePath( projectBasePath, debugTarget->GetName(), localDebuggerCommand );
+                }
+            }
 
-	// Imports
-	{
-		Write( "  <Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.props\" />\n" );
-		Write( "  <ImportGroup Label=\"ExtensionSettings\">\n" );
-		Write( "  </ImportGroup>\n" );
-	}
+            WritePGItem( "PlatformToolset",                 cIt->m_PlatformToolset );
+            WritePGItem( "LocalDebuggerCommandArguments",   cIt->m_LocalDebuggerCommandArguments );
+            WritePGItem( "LocalDebuggerCommand",            localDebuggerCommand );
+            WritePGItem( "LocalDebuggerEnvironment",        cIt->m_LocalDebuggerEnvironment );
 
-	// Property Sheets
-	{
-		const VSProjectConfig * const cEnd = configs.End();
-		for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
-		{
-			Write( "  <ImportGroup Label=\"PropertySheets\" Condition=\"'$(Configuration)|$(Platform)'=='%s|%s'\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
-			Write( "    <Import Project=\"$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props\" Condition=\"exists('$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props')\" Label=\"LocalAppDataPlatform\" />\n" );
-			Write( "  </ImportGroup>\n" );
-		}
-	}
+            Write( "  </PropertyGroup>\n" );
+        }
+    }
 
-	// User macros
-	Write( "  <PropertyGroup Label=\"UserMacros\" />\n" );
+    // Imports
+    {
+        Write( "  <Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.props\" />\n" );
+        Write( "  <ImportGroup Label=\"ExtensionSettings\">\n" );
+        Write( "  </ImportGroup>\n" );
+    }
 
-	// Property Group
-	{
-		const VSProjectConfig * const cEnd = configs.End();
-		for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
-		{
-			Write( "  <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='%s|%s'\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
+    // Property Sheets
+    {
+        const VSProjectConfig * const cEnd = configs.End();
+        for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
+        {
+            WriteF("  <ImportGroup Label=\"PropertySheets\" Condition=\"'$(Configuration)|$(Platform)'=='%s|%s'\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
+            Write( "    <Import Project=\"$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props\" Condition=\"exists('$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props')\" Label=\"LocalAppDataPlatform\" />\n" );
+            Write( "  </ImportGroup>\n" );
+        }
+    }
 
-			WritePGItem( "NMakeBuildCommandLine",			cIt->m_BuildCommand );
-			WritePGItem( "NMakeReBuildCommandLine",			cIt->m_RebuildCommand );
-			WritePGItem( "NMakeCleanCommandLine",			cIt->m_CleanCommand );
-			WritePGItem( "NMakeOutput",						cIt->m_Output );
-			if ( cIt->m_PreprocessorDefinitions.IsEmpty() == false )
-			{
-				WritePGItem( "NMakePreprocessorDefinitions",	cIt->m_PreprocessorDefinitions );
-			}
-			else
-			{
-				const ObjectListNode * oln = FindTargetForIntellisenseInfo( cIt->m_Target );
-				if ( oln )
-				{
-					Array< AString > defines;
-					ExtractIntellisenseOptions( oln->GetCompilerArgs(), "/D", "-D", defines );
-					AStackString<> definesStr;
-					ConcatIntellisenseOptions( defines, definesStr );
-					WritePGItem( "NMakePreprocessorDefinitions", definesStr );					
-				}
-			}
-			if ( cIt->m_IncludeSearchPath.IsEmpty() == false )
-			{
-				WritePGItem( "NMakeIncludeSearchPath",			cIt->m_IncludeSearchPath );
-			}
-			else
-			{
-				const ObjectListNode * oln = FindTargetForIntellisenseInfo( cIt->m_Target );
-				if ( oln )
-				{
-					Array< AString > includePaths;
-					ExtractIntellisenseOptions( oln->GetCompilerArgs(), "/I", "-I", includePaths );
-					for ( AString & include : includePaths )
-					{
-						AStackString<> fullIncludePath;
-						NodeGraph::CleanPath( include, fullIncludePath ); // Expand to full path - TODO:C would be better to be project relative
-						include = fullIncludePath;
-					}
-					AStackString<> includePathsStr;
-					ConcatIntellisenseOptions( includePaths, includePathsStr );
-					WritePGItem( "NMakeIncludeSearchPath", includePathsStr );					
-				}
-			}
-			WritePGItem( "NMakeForcedIncludes",				cIt->m_ForcedIncludes );
-			WritePGItem( "NMakeAssemblySearchPath",			cIt->m_AssemblySearchPath );
-			WritePGItem( "NMakeForcedUsingAssemblies",		cIt->m_ForcedUsingAssemblies );
-			WritePGItem( "AdditionalOptions",				cIt->m_AdditionalOptions );
-			WritePGItem( "Xbox360DebuggerCommand",			cIt->m_Xbox360DebuggerCommand );
-			WritePGItem( "DebuggerFlavor",					cIt->m_DebuggerFlavor );
-			WritePGItem( "AumidOverride",					cIt->m_AumidOverride );
-			WritePGItem( "LocalDebuggerWorkingDirectory",	cIt->m_LocalDebuggerWorkingDirectory );
-			WritePGItem( "IntDir",							cIt->m_IntermediateDirectory );
-			WritePGItem( "OutDir",							cIt->m_OutputDirectory );
-			WritePGItem( "LayoutDir",						cIt->m_LayoutDir );
-			WritePGItem( "LayoutExtensionFilter",			cIt->m_LayoutExtensionFilter );
-			Write( "  </PropertyGroup>\n" );
-		}
-	}
+    // User macros
+    Write( "  <PropertyGroup Label=\"UserMacros\" />\n" );
 
-	// ItemDefinition Groups
-	{
-		const VSProjectConfig * const cEnd = configs.End();
-		for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
-		{
-			Write( "  <ItemDefinitionGroup Condition=\"'$(Configuration)|$(Platform)'=='%s|%s'\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
-			Write( "    <BuildLog>\n" );
-			Write( "      <Path />\n" );
-			Write( "    </BuildLog>\n" );
-			if ( ( !cIt->m_DeploymentType.IsEmpty() ) || ( !cIt->m_DeploymentFiles.IsEmpty() ) )
-			{
-				Write( "    <Deploy>\n" );
-				WritePGItem( "DeploymentType",			cIt->m_DeploymentType );
-				WritePGItem( "DeploymentFiles",			cIt->m_DeploymentFiles );
-				Write( "    </Deploy>\n" );
-			}
-			Write( "  </ItemDefinitionGroup>\n" );
-		}
-	}
+    // Property Group
+    {
+        const VSProjectConfig * const cEnd = configs.End();
+        for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
+        {
+            WriteF( "  <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='%s|%s'\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
 
-	// footer
-	Write("  <Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.targets\" />\n" );
-	Write("  <ImportGroup Label=\"ExtensionTargets\">\n" );
-	Write("  </ImportGroup>\n" );
-	Write("  <Import Condition=\"'$(ConfigurationType)' == 'Makefile' and Exists('$(VCTargetsPath)\\Platforms\\$(Platform)\\SCE.Makefile.$(Platform).targets')\" Project=\"$(VCTargetsPath)\\Platforms\\$(Platform)\\SCE.Makefile.$(Platform).targets\" />\n");
-	Write( "</Project>" ); // carriage return at end
+            WritePGItem( "NMakeBuildCommandLine",           cIt->m_ProjectBuildCommand );
+            WritePGItem( "NMakeReBuildCommandLine",         cIt->m_ProjectRebuildCommand );
+            WritePGItem( "NMakeCleanCommandLine",           cIt->m_ProjectCleanCommand );
+            WritePGItem( "NMakeOutput",                     cIt->m_Output );
 
-	m_OutputVCXProj = m_Tmp;
-	return m_OutputVCXProj;
+            const ObjectListNode * oln = nullptr;
+            if ( cIt->m_PreprocessorDefinitions.IsEmpty() || cIt->m_IncludeSearchPath.IsEmpty() )
+            {
+                oln = ProjectGeneratorBase::FindTargetForIntellisenseInfo( cIt->m_TargetNode );
+            }
+
+            if ( cIt->m_PreprocessorDefinitions.IsEmpty() == false )
+            {
+                WritePGItem( "NMakePreprocessorDefinitions",    cIt->m_PreprocessorDefinitions );
+            }
+            else
+            {
+                if ( oln )
+                {
+                    Array< AString > defines;
+                    ProjectGeneratorBase::ExtractDefines( oln->GetCompilerOptions(), defines, false );
+                    AStackString<> definesStr;
+                    ProjectGeneratorBase::ConcatIntellisenseOptions( defines, definesStr, nullptr, ";" );
+                    WritePGItem( "NMakePreprocessorDefinitions", definesStr );
+                }
+            }
+            if ( cIt->m_IncludeSearchPath.IsEmpty() == false )
+            {
+                WritePGItem( "NMakeIncludeSearchPath",          cIt->m_IncludeSearchPath );
+            }
+            else
+            {
+                if ( oln )
+                {
+                    Array< AString > includePaths;
+                    ProjectGeneratorBase::ExtractIncludePaths( oln->GetCompilerOptions(), includePaths, false );
+                    for ( AString & include : includePaths )
+                    {
+                        ProjectGeneratorBase::GetRelativePath( projectBasePath, include, include );
+                        #if !defined( __WINDOWS__ )
+                            include.Replace( '/', '\\' ); // Convert to Windows-style slashes
+                        #endif
+                    }
+                    AStackString<> includePathsStr;
+                    ProjectGeneratorBase::ConcatIntellisenseOptions( includePaths, includePathsStr, nullptr, ";" );
+                    WritePGItem( "NMakeIncludeSearchPath", includePathsStr );
+                }
+            }
+            WritePGItem( "NMakeForcedIncludes",             cIt->m_ForcedIncludes );
+            WritePGItem( "NMakeAssemblySearchPath",         cIt->m_AssemblySearchPath );
+            WritePGItem( "NMakeForcedUsingAssemblies",      cIt->m_ForcedUsingAssemblies );
+            if ( cIt->m_AdditionalOptions.IsEmpty() == false )
+            {
+                WritePGItem( "AdditionalOptions",               cIt->m_AdditionalOptions );
+            }
+            else
+            {
+                if ( oln )
+                {
+                    Array< AString > additionalOptions;
+                    ProjectGeneratorBase::ExtractAdditionalOptions( oln->GetCompilerOptions(), additionalOptions );
+                    AStackString<> additionalOptionsStr;
+                    ProjectGeneratorBase::ConcatIntellisenseOptions( additionalOptions, additionalOptionsStr, nullptr, " " );
+                    WritePGItem( "AdditionalOptions", additionalOptionsStr );
+                }
+            }
+            WritePGItem( "Xbox360DebuggerCommand",          cIt->m_Xbox360DebuggerCommand );
+            WritePGItem( "DebuggerFlavor",                  cIt->m_DebuggerFlavor );
+            WritePGItem( "AumidOverride",                   cIt->m_AumidOverride );
+            WritePGItem( "LocalDebuggerWorkingDirectory",   cIt->m_LocalDebuggerWorkingDirectory );
+            WritePGItem( "IntDir",                          cIt->m_IntermediateDirectory );
+            WritePGItem( "OutDir",                          cIt->m_OutputDirectory );
+            WritePGItem( "PackagePath",                     cIt->m_PackagePath );
+            WritePGItem( "AdditionalSymbolSearchPaths",     cIt->m_AdditionalSymbolSearchPaths );
+            WritePGItem( "LayoutDir",                       cIt->m_LayoutDir );
+            WritePGItem( "LayoutExtensionFilter",           cIt->m_LayoutExtensionFilter );
+            Write( "  </PropertyGroup>\n" );
+        }
+    }
+
+    // ItemDefinition Groups
+    {
+        const VSProjectConfig * const cEnd = configs.End();
+        for ( const VSProjectConfig * cIt = configs.Begin(); cIt!=cEnd; ++cIt )
+        {
+            WriteF("  <ItemDefinitionGroup Condition=\"'$(Configuration)|$(Platform)'=='%s|%s'\">\n", cIt->m_Config.Get(), cIt->m_Platform.Get() );
+            Write( "    <BuildLog>\n" );
+            if ( !cIt->m_BuildLogFile.IsEmpty() )
+            {
+                WritePGItem( "Path",          cIt->m_BuildLogFile );
+            }
+            else
+            {
+                Write( "      <Path />\n" );
+            }
+            Write( "    </BuildLog>\n" );
+            if ( ( !cIt->m_DeploymentType.IsEmpty() ) || ( !cIt->m_DeploymentFiles.IsEmpty() ) )
+            {
+                Write( "    <Deploy>\n" );
+                WritePGItem( "DeploymentType",          cIt->m_DeploymentType );
+                WritePGItem( "DeploymentFiles",         cIt->m_DeploymentFiles );
+                Write( "    </Deploy>\n" );
+            }
+            Write( "  </ItemDefinitionGroup>\n" );
+        }
+    }
+
+    // footer
+    Write("  <Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.targets\" />\n" );
+    Write("  <ImportGroup Label=\"ExtensionTargets\">\n" );
+    Write("  </ImportGroup>\n" );
+    for ( const VSProjectImport & import : projectImports )
+    {
+        WriteF( "  <Import Condition=\"%s\" Project=\"%s\" />\n", import.m_Condition.Get(), import.m_Project.Get() );
+    }
+    Write( "</Project>" ); // carriage return at end
+
+    m_OutputVCXProj = m_Tmp;
+    return m_OutputVCXProj;
 }
 
 // GenerateVCXProjFilters
 //------------------------------------------------------------------------------
 const AString & VSProjectGenerator::GenerateVCXProjFilters( const AString & projectFile )
 {
-	// preallocate to avoid re-allocations
-	m_Tmp.SetReserved( MEGABYTE );
-	m_Tmp.SetLength( 0 );
+    m_Tmp.SetLength( 0 );
 
-	// determine folder for project
-	const char * lastProjSlash = projectFile.FindLast( NATIVE_SLASH );
-	AStackString<> projectBasePath( projectFile.Get(), lastProjSlash ? lastProjSlash + 1 : projectFile.Get() );
+    // determine folder for project
+    const char * lastProjSlash = projectFile.FindLast( NATIVE_SLASH );
+    AStackString<> projectBasePath( projectFile.Get(), lastProjSlash ? lastProjSlash + 1 : projectFile.Get() );
 
-	// header
-	Write( "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" );
-	Write( "<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\n" );
+    // Must already be canonicalized/de-duplicated
+    ASSERT( m_FilePathsCanonicalized == true );
 
-	// list of all folders
-	Array< AString > folders( 1024, true );
+    // header
+    Write( "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" );
+    Write( "<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\n" );
 
-	// files
-	{
-		Write( "  <ItemGroup>\n" );
-		const AString * const fEnd = m_Files.End();
-		for ( const AString * fIt = m_Files.Begin(); fIt!=fEnd; ++fIt )
-		{
-			// get folder part, relative to base dir
-			AStackString<> folder;
-			GetFolderPath( *fIt, folder );
-			const char * fileName = fIt->BeginsWithI( projectBasePath ) ? fIt->Get() + projectBasePath.GetLength() : fIt->Get();
-			Write( "    <CustomBuild Include=\"%s\">\n", fileName );
-			if ( !folder.IsEmpty() )
-			{
-				Write( "      <Filter>%s</Filter>\n", folder.Get() );
-			}
-			Write( "    </CustomBuild>\n" );
+    // list of all folders
+    Array< AString > folders( 1024, true );
+    Array< uint32_t > folderHashes( 1024, true );
 
-			// add new folders
-			if ( !folder.IsEmpty() )
-			{
-				for (;;)
-				{
-					// add this folder if unique
-					bool found = false;
-					for ( const AString * it=folders.Begin(); it!=folders.End(); ++it )
-					{
-						if ( it->CompareI( folder ) == 0 )
-						{
-							found = true;
-							break;
-						}
-					}
-					if ( !found )
-					{
-						folders.Append( folder );
-					}
+    // files
+    {
+        AStackString<> lastFolder;
+        Write( "  <ItemGroup>\n" );
+        for ( const VSProjectFilePair & filePathPair : m_Files )
+        {
+            // File reference (which VS uses to load from disk) is project-relative
+            WriteF( "    <CustomBuild Include=\"%s\">\n", filePathPair.m_ProjectRelativePath.Get() );
 
-					// handle intermediate folders
-					const char * lastSlash = folder.FindLast( BACK_SLASH );
-					if ( lastSlash == nullptr )
-					{
-						break;
-					}
-					folder.SetLength( (uint32_t)( lastSlash - folder.Get() ) );
-				}
-			}
-		}
-		Write( "  </ItemGroup>\n" );
-	}
+            // get folder part, relative to base dir(s)
+            const AString & fileName = filePathPair.m_AbsolutePath;
+            AStackString<> folder;
+            GetFolderPath( fileName, folder );
 
-	// folders
-	{
-		const AString * const fEnd = folders.End();
-		for ( const AString * fIt = folders.Begin(); fIt!=fEnd; ++fIt )
-		{
-			Write( "  <ItemGroup>\n" );
-			Write( "    <Filter Include=\"%s\">\n", fIt->Get() );
-			Write( "      <UniqueIdentifier>{%08x-6c94-4f93-bc2a-7f5284b7d434}</UniqueIdentifier>\n", CRC32::Calc( *fIt ) );
-			Write( "    </Filter>\n" );
-			Write( "  </ItemGroup>\n" );
-		}
-	}
+            if ( !folder.IsEmpty() )
+            {
+                WriteF( "      <Filter>%s</Filter>\n", folder.Get() );
+            }
+            Write( "    </CustomBuild>\n" );
 
-	// footer
-	Write( "</Project>" ); // no carriage return
+            // add new folders
+            if ( ( folder.IsEmpty() == false ) && ( folder != lastFolder ) )
+            {
+                lastFolder = folder;
 
-	m_OutputVCXProjFilters = m_Tmp;
-	return m_OutputVCXProjFilters;
+                // Each unique path must be added, so FolderA/FolderB/FolderC
+                // will result in 3 entries, FolderA, FolderA/FolderB and FolderA/FolderB/FolderC
+                for (;;)
+                {
+                    // add this folder if not already added
+                    const uint32_t folderHash = xxHash::Calc32( folder );
+                    if ( folderHashes.Find( folderHash ) )
+                    {
+                        break; // If we've seen this folder, we've also seen the parent dirs
+                    }
+
+                    ASSERT( folder.IsEmpty() == false );
+                    folders.Append( folder );
+                    folderHashes.Append( folderHash );
+
+                    // check parent folder
+                    const char * lastSlash = folder.FindLast( BACK_SLASH );
+                    if ( lastSlash == nullptr )
+                    {
+                        break; // no more parents
+                    }
+                    folder.SetLength( (uint32_t)( lastSlash - folder.Get() ) );
+                }
+            }
+        }
+        Write( "  </ItemGroup>\n" );
+    }
+
+    // folders
+    {
+        const size_t numFolders = folders.GetSize();
+        for ( size_t i=0; i<numFolders; ++i )
+        {
+            const AString & folder = folders[ i ];
+            const uint32_t folderHash = folderHashes[ i ];
+
+            Write( "  <ItemGroup>\n" );
+            WriteF( "    <Filter Include=\"%s\">\n", folder.Get() );
+            WriteF( "      <UniqueIdentifier>{%08x-6c94-4f93-bc2a-7f5284b7d434}</UniqueIdentifier>\n", folderHash );
+            Write( "    </Filter>\n" );
+            Write( "  </ItemGroup>\n" );
+        }
+    }
+
+    // footer
+    Write( "</Project>" ); // no carriage return
+
+    m_OutputVCXProjFilters = m_Tmp;
+    return m_OutputVCXProjFilters;
 }
 
 // Write
 //------------------------------------------------------------------------------
-void VSProjectGenerator::Write( const char * fmtString, ... )
+void VSProjectGenerator::Write( const char * string )
 {
-	AStackString< 1024 > tmp;
+    const size_t len = AString::StrLen( string );
 
-	va_list args;
-	va_start(args, fmtString);
-	tmp.VFormat( fmtString, args );
-	va_end( args );
+    // resize output buffer in large chunks to prevent re-sizing
+    if ( m_Tmp.GetLength() + len > m_Tmp.GetReserved() )
+    {
+        m_Tmp.SetReserved( m_Tmp.GetReserved() + MEGABYTE );
+    }
 
-	// resize output buffer in large chunks to prevent re-sizing
-	if ( m_Tmp.GetLength() + tmp.GetLength() > m_Tmp.GetReserved() )
-	{
-		m_Tmp.SetReserved( m_Tmp.GetReserved() + MEGABYTE );
-	}	
+    m_Tmp.Append( string, len );
+}
 
-	m_Tmp += tmp;
+// Write
+//------------------------------------------------------------------------------
+void VSProjectGenerator::WriteF( const char * fmtString, ... )
+{
+    AStackString< 1024 > tmp;
+
+    va_list args;
+    va_start(args, fmtString);
+    tmp.VFormat( fmtString, args );
+    va_end( args );
+
+    // resize output buffer in large chunks to prevent re-sizing
+    if ( m_Tmp.GetLength() + tmp.GetLength() > m_Tmp.GetReserved() )
+    {
+        m_Tmp.SetReserved( m_Tmp.GetReserved() + MEGABYTE );
+    }
+
+    m_Tmp += tmp;
 }
 
 // WritePGItem
 //------------------------------------------------------------------------------
 void VSProjectGenerator::WritePGItem( const char * xmlTag, const AString & value )
 {
-	if ( value.IsEmpty() )
-	{
-		return;
-	}
-	Write( "    <%s>%s</%s>\n", xmlTag, value.Get(), xmlTag );
+    if ( value.IsEmpty() )
+    {
+        return;
+    }
+    WriteF( "    <%s>%s</%s>\n", xmlTag, value.Get(), xmlTag );
 }
 
 // GetFolderPath
 //------------------------------------------------------------------------------
 void VSProjectGenerator::GetFolderPath( const AString & fileName, AString & folder ) const
 {
-	const AString * const bEnd = m_BasePaths.End();
-	for ( const AString * bIt = m_BasePaths.Begin(); bIt != bEnd; ++bIt )
-	{
-		const AString & basePath = *bIt;
-		const char * begin = fileName.Get();
-		const char * end = fileName.GetEnd();
+    ASSERT( m_FilePathsCanonicalized );
+    const AString * const bEnd = m_BasePaths.End();
+    for ( const AString * bIt = m_BasePaths.Begin(); bIt != bEnd; ++bIt )
+    {
+        const AString & basePath = *bIt;
+        if ( fileName.BeginsWithI( basePath ) )
+        {
+            const char * begin = fileName.Get() + basePath.GetLength();
+            const char * end = fileName.FindLast( BACK_SLASH );
+            end = ( end ) ? end : fileName.GetEnd();
+            if ( begin < end )
+            {
+                folder.Assign( begin, end );
+                return;
+            }
+        }
+    }
 
-		if ( fileName.BeginsWithI( basePath ) )
-		{
-			begin = fileName.Get() + basePath.GetLength();
-			const char * lastSlash = fileName.FindLast( BACK_SLASH );
-			end = ( lastSlash ) ? lastSlash : end;
-			if ( begin < end )
-			{
-				folder.Assign( begin, end );
-				return;
-			}
-		}
-	}
-
-	// no matching base path (use root)
-	folder.Clear();
+    // no matching base path (use root)
+    folder.Clear();
 }
 
-// VSProjectConfig::Save
+// CanonicalizeFilePaths
 //------------------------------------------------------------------------------
-/*static*/ void VSProjectConfig::Save( IOStream & stream, const Array< VSProjectConfig > & configs )
+void VSProjectGenerator::CanonicalizeFilePaths( const AString & projectBasePath )
 {
-	uint32_t numConfigs = (uint32_t)configs.GetSize();
-	stream.Write( numConfigs );
-	for ( uint32_t i=0; i<numConfigs; ++i )
-	{
-		const VSProjectConfig & cfg = configs[ i ];
+    if ( m_FilePathsCanonicalized )
+    {
+        return;
+    }
 
-		stream.Write( cfg.m_SolutionPlatform );
-		stream.Write( cfg.m_SolutionConfig );
+    // Base Paths are retained as absolute paths
+    #if !defined( __WINDOWS__ )
+        for ( AString & basePath : m_BasePaths )
+        {
+            basePath.Replace( FORWARD_SLASH, BACK_SLASH ); // Always Windows-style inside project
+        }
+    #endif
 
-		stream.Write( cfg.m_Platform );
-		stream.Write( cfg.m_Config );
+    // Files
+    if ( m_Files.IsEmpty() == false )
+    {
+        // Canonicalize and make all paths relative to project
+        Array< const VSProjectFilePair * > filePointers( m_Files.GetSize(), false );
+        for ( VSProjectFilePair & filePathPair : m_Files )
+        {
+            ProjectGeneratorBase::GetRelativePath( projectBasePath, filePathPair.m_AbsolutePath, filePathPair.m_ProjectRelativePath );
+            #if !defined( __WINDOWS__ )
+                filePathPair.m_ProjectRelativePath.Replace( FORWARD_SLASH, BACK_SLASH ); // Always Windows-style inside project
+            #endif
+            filePointers.Append( &filePathPair );
+        }
 
-		Node::SaveNode( stream, cfg.m_Target );
+        // Sort filenames to allow finding de-duplication
+        FileAscendingCompareIDeref sorter;
+        filePointers.Sort( sorter );
 
-		stream.Write( cfg.m_BuildCommand );
-		stream.Write( cfg.m_RebuildCommand );
-		stream.Write( cfg.m_CleanCommand );
+        // Find unique files
+        Array< VSProjectFilePair > uniqueFiles( m_Files.GetSize(), false );
+        const VSProjectFilePair * prev = filePointers[ 0 ];
+        uniqueFiles.Append( *filePointers[ 0 ] );
+        size_t numFiles = m_Files.GetSize();
+        for ( size_t i=1; i<numFiles; ++i )
+        {
+            const VSProjectFilePair * current = filePointers[ i ];
+            if ( current->m_ProjectRelativePath.EqualsI( prev->m_ProjectRelativePath ) )
+            {
+                continue;
+            }
+            uniqueFiles.Append( *current );
 
-		stream.Write( cfg.m_Output );
-		stream.Write( cfg.m_PreprocessorDefinitions );
-		stream.Write( cfg.m_IncludeSearchPath );
-		stream.Write( cfg.m_ForcedIncludes );
-		stream.Write( cfg.m_AssemblySearchPath );
-		stream.Write( cfg.m_ForcedUsingAssemblies );
-		stream.Write( cfg.m_AdditionalOptions );
-		stream.Write( cfg.m_OutputDirectory );
-		stream.Write( cfg.m_IntermediateDirectory );
-		stream.Write( cfg.m_LayoutDir );
-		stream.Write( cfg.m_LayoutExtensionFilter );
-		stream.Write( cfg.m_Xbox360DebuggerCommand );
-		stream.Write( cfg.m_DebuggerFlavor );
-		stream.Write( cfg.m_AumidOverride );
-		stream.Write( cfg.m_PlatformToolset );
-		stream.Write( cfg.m_DeploymentType );
-		stream.Write( cfg.m_DeploymentFiles );
+            prev = current;
+        }
 
-		stream.Write( cfg.m_LocalDebuggerCommandArguments );
-		stream.Write( cfg.m_LocalDebuggerWorkingDirectory );
-		stream.Write( cfg.m_LocalDebuggerCommand );
-		stream.Write( cfg.m_LocalDebuggerEnvironment );
-	}
-}
+        // Keep uniquified list. Even if there were no duplicates
+        // we keep the sorted list in order to have more consistent behaviour
+        uniqueFiles.Swap( m_Files );
+    }
 
-// VSProjectConfig::Load
-//------------------------------------------------------------------------------
-/*static*/ bool VSProjectConfig::Load( NodeGraph & nodeGraph, IOStream & stream, Array< VSProjectConfig > & configs )
-{
-	ASSERT( configs.IsEmpty() );
-
-	uint32_t numConfigs( 0 );
-	if ( !stream.Read( numConfigs ) )
-	{
-		return false;
-	}
-	configs.SetSize( numConfigs );
-	for ( uint32_t i=0; i<numConfigs; ++i )
-	{
-		VSProjectConfig & cfg = configs[ i ];
-
-		if ( stream.Read( cfg.m_SolutionPlatform ) == false ) { return false; }
-		if ( stream.Read( cfg.m_SolutionConfig ) == false ) { return false;  }
-		
-		if ( stream.Read( cfg.m_Platform ) == false ) { return false; }
-		if ( stream.Read( cfg.m_Config ) == false ) { return false; }
-
-		if ( !Node::LoadNode( nodeGraph, stream, cfg.m_Target ) ) { return false; }
-
-		if ( stream.Read( cfg.m_BuildCommand ) == false ) { return false; }
-		if ( stream.Read( cfg.m_RebuildCommand ) == false ) { return false; }
-		if ( stream.Read( cfg.m_CleanCommand ) == false ) { return false; }
-
-		if ( stream.Read( cfg.m_Output ) == false ) { return false; }
-		if ( stream.Read( cfg.m_PreprocessorDefinitions ) == false ) { return false; }
-		if ( stream.Read( cfg.m_IncludeSearchPath ) == false ) { return false; }
-		if ( stream.Read( cfg.m_ForcedIncludes ) == false ) { return false; }
-		if ( stream.Read( cfg.m_AssemblySearchPath ) == false ) { return false; }
-		if ( stream.Read( cfg.m_ForcedUsingAssemblies ) == false ) { return false; }
-		if ( stream.Read( cfg.m_AdditionalOptions ) == false ) { return false; }
-		if ( stream.Read( cfg.m_OutputDirectory ) == false ) { return false; }
-		if ( stream.Read( cfg.m_IntermediateDirectory ) == false ) { return false; }
-		if ( stream.Read( cfg.m_LayoutDir ) == false ) { return false; }
-		if ( stream.Read( cfg.m_LayoutExtensionFilter ) == false ) { return false; }
-		if ( stream.Read( cfg.m_Xbox360DebuggerCommand ) == false ) { return false; }
-		if ( stream.Read( cfg.m_DebuggerFlavor ) == false ) { return false; }
-		if ( stream.Read( cfg.m_AumidOverride ) == false ) { return false; }
-		if ( stream.Read( cfg.m_PlatformToolset ) == false ) { return false; }
-		if ( stream.Read( cfg.m_DeploymentType ) == false ) { return false; }
-		if ( stream.Read( cfg.m_DeploymentFiles ) == false ) { return false; }
-
-		if ( stream.Read( cfg.m_LocalDebuggerCommandArguments ) == false ) { return false; }
-		if ( stream.Read( cfg.m_LocalDebuggerWorkingDirectory ) == false ) { return false; }
-		if ( stream.Read( cfg.m_LocalDebuggerCommand ) == false ) { return false; }
-		if ( stream.Read( cfg.m_LocalDebuggerEnvironment ) == false ) { return false; }
-	}
-	return true;
-}
-
-// VSProjectFileType::Save
-//------------------------------------------------------------------------------
-/*static*/ void VSProjectFileType::Save( IOStream & stream, const Array< VSProjectFileType > & fileTypes )
-{
-	uint32_t numFileTypes = (uint32_t)fileTypes.GetSize();
-	stream.Write( numFileTypes );
-	for ( uint32_t i=0; i<numFileTypes; ++i )
-	{
-		const VSProjectFileType & ft = fileTypes[ i ];
-
-		stream.Write( ft.m_FileType );
-		stream.Write( ft.m_Pattern );
-	}
-}
-
-// VSProjectFileType::Load
-//------------------------------------------------------------------------------
-/*static*/ bool VSProjectFileType::Load( IOStream & stream, Array< VSProjectFileType > & fileTypes )
-{
-	ASSERT( fileTypes.IsEmpty() );
-
-	uint32_t numFileTypes( 0 );
-	if ( !stream.Read( numFileTypes ) )
-	{
-		return false;
-	}
-	fileTypes.SetSize( numFileTypes );
-	for ( uint32_t i=0; i<numFileTypes; ++i )
-	{
-		VSProjectFileType & ft = fileTypes[ i ];
-
-		if ( stream.Read( ft.m_FileType ) == false ) { return false; }
-		if ( stream.Read( ft.m_Pattern ) == false ) { return false; }
-	}
-	return true;
-}
-
-// FindTargetForIntellisenseInfo
-//------------------------------------------------------------------------------
-/*static*/ const ObjectListNode * VSProjectGenerator::FindTargetForIntellisenseInfo( const Node * node )
-{
-	if ( node )
-	{
-		switch ( node->GetType() )
-		{
-			case Node::OBJECT_LIST_NODE: return node->CastTo< ObjectListNode >();
-			case Node::LIBRARY_NODE: return node->CastTo< LibraryNode >();
-			case Node::EXE_NODE:
-			{
-				// For Exe use first library
-				const Dependencies & deps = node->GetStaticDependencies();
-				if ( deps.IsEmpty() == false )
-				{
-					return FindTargetForIntellisenseInfo( deps[0].GetNode() );
-				}
-				break; // Nothing found
-			}
-			case Node::DLL_NODE:
-			{
-				// For DLL use first library
-				const Dependencies & deps = node->GetStaticDependencies();
-				if ( deps.IsEmpty() == false )
-				{
-					return FindTargetForIntellisenseInfo( deps[0].GetNode() );
-				}
-				break; // Nothing found
-			}
-			case Node::TEST_NODE:
-			{
-				// For test search in executable
-				const Node * testExe = node->CastTo< TestNode >()->GetTestExecutable();
-				if ( testExe )
-				{
-					return FindTargetForIntellisenseInfo( testExe );
-				}
-				break; // Nothing found
-			}
-			case Node::ALIAS_NODE:
-			{
-				const Dependencies & deps = node->CastTo< AliasNode >()->GetAliasedNodes();
-				if ( deps.IsEmpty() == false )
-				{
-					return FindTargetForIntellisenseInfo( deps[0].GetNode() );
-				}
-				break; // Nothing aliased - ignore
-			}				
-			default: break; // Unsupported type - ignore
-		}
-	}
-	return nullptr;
-}
-
-// ExtractIntellisenseOptions
-//------------------------------------------------------------------------------
-/*static*/ void VSProjectGenerator::ExtractIntellisenseOptions( const AString & compilerArgs, 
-																const char * option, 
-																const char * alternateOption, 
-																Array< AString > & outOptions )
-{
-	ASSERT( option );
-	Array< AString > tokens;
-	compilerArgs.Tokenize( tokens );
-
-    const size_t optionLen = AString::StrLen( option );
-    const size_t alternateOptionLen = alternateOption ? AString::StrLen( alternateOption ) : 0;
-
-	for ( AString & token : tokens )
-	{
-		// strip quotes around token, e.g:    "-IFolder/Folder"
-		if ( token.BeginsWith( '"' ) && token.EndsWith( '"' ) )
-		{
-			token = AStackString<>( token.Get() + 1, token.GetEnd() - 1 );
-		}
-
-		// check for either option at start of token
-		if ( token.BeginsWith( option ) )
-		{
-			// quoted?
-			AStackString<> tmp;
-			if ( ( token[optionLen] == '"' ) && token.EndsWith( '"' ) )
-			{
-				// use everything after token minus the quotes
-				tmp.Assign( token.Get() + ( optionLen + 1 ), token.GetEnd() - 1 );
-			}
-			else
-			{
-				// use everything after token
-				tmp.Assign( token.Get() + optionLen );
-			}
-			outOptions.Append( tmp );
-		}
-		else if ( alternateOption && token.BeginsWith( alternateOption ) )
-		{
-			AStackString<> tmp;
-			if ( ( token[alternateOptionLen] == '"' ) && token.EndsWith( '"' ) )
-			{
-				tmp.Assign( token.Get() + ( alternateOptionLen + 1 ), token.GetEnd() - 1 );
-			}
-			else
-			{
-				tmp.Assign( token.Get() + alternateOptionLen );
-			}
-			outOptions.Append( tmp );
-		}
-	}
-}
-
-// ConcatIntellisenseOptions
-//------------------------------------------------------------------------------
-/*static*/ void VSProjectGenerator::ConcatIntellisenseOptions( const Array< AString > & tokens, AString & outTokenString )
-{
-	for ( const AString & token : tokens )
-	{
-		outTokenString += token;
-		outTokenString += ';';
-	}
+    m_FilePathsCanonicalized = true;
 }
 
 //------------------------------------------------------------------------------

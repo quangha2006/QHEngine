@@ -1,27 +1,19 @@
 // FBuildVersion.h
 //------------------------------------------------------------------------------
 #pragma once
-#ifndef FBUILD_FBUILDVERSION_H
-#define FBUILD_FBUILDVERSION_H
 
 // Defines
 //------------------------------------------------------------------------------
-#define FBUILD_VERSION_STRING "v0.91"
+#define FBUILD_VERSION_STRING "v0.99"
+#define FBUILD_VERSION (uint32_t)99
 #if defined( __WINDOWS__ )
-	#ifdef WIN64
-		#define FBUILD_VERSION_PLATFORM "x64"
-	#else
-		#define FBUILD_VERSION_PLATFORM "x86"
-	#endif
-#elif defined( __APPLE__ ) || defined( __LINUX__ )
-	#ifdef __x86_64__
-		#define FBUILD_VERSION_PLATFORM "x64"
-	#else
-		#define FBUILD_VERSION_PLATFORM "x86"
-	#endif
+    #define FBUILD_VERSION_PLATFORM "Windows"
+#elif defined( __APPLE__ )
+    #define FBUILD_VERSION_PLATFORM "OSX"
+#elif defined( __LINUX__ )
+    #define FBUILD_VERSION_PLATFORM "Linux"
 #else
-	#error Unknown platform
+    #error Unknown platform
 #endif
 
 //------------------------------------------------------------------------------
-#endif // FBUILD_FBUILDVERSION_H

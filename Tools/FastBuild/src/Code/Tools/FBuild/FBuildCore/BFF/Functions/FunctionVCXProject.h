@@ -1,8 +1,6 @@
 // FunctionVCXProject
 //------------------------------------------------------------------------------
 #pragma once
-#ifndef FBUILD_FUNCTIONS_FUNCTIONVCXPROJECT_H
-#define FBUILD_FUNCTIONS_FUNCTIONVCXPROJECT_H
 
 // Includes
 //------------------------------------------------------------------------------
@@ -17,16 +15,12 @@ class BFFIterator;
 class FunctionVCXProject : public Function
 {
 public:
-	explicit		FunctionVCXProject();
-	inline virtual ~FunctionVCXProject() {}
+    explicit        FunctionVCXProject();
+    inline virtual ~FunctionVCXProject() override = default;
 
 protected:
-	virtual bool AcceptsHeader() const override;
-
-	virtual bool Commit( NodeGraph & nodeGraph, const BFFIterator & funcStartIter ) const override;
-
-	bool GetStringFromStruct( const BFFVariable * s, const char * name, AString & result ) const;
+    virtual bool AcceptsHeader() const override;
+    virtual Node * CreateNode() const override;
 };
 
 //------------------------------------------------------------------------------
-#endif // FBUILD_FUNCTIONS_FUNCTIONVCXPROJECT_H

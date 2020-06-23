@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <link href="style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="common.js"></script>
 
 <html>
 <head>
@@ -8,12 +7,629 @@
 <title>FASTBuild - Change Log</title>
 </head>
 <body>
-  <script>generateHeader()</script>
-
+	<div class='outer'>
+        <div>
+            <div class='logobanner'>
+                <a href='home.html'><img src='img/logo.png' style='position:relative;'/></a>
+	            <div class='contact'><a href='contact.html' class='othernav'>Contact</a> &nbsp; | &nbsp; <a href='license.html' class='othernav'>License</a></div>
+	        </div>
+	    </div>
+	    <div id='main'>
+	        <div class='navbar'>
+	            <a href='home.html' class='lnavbutton'>Home</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='features.html' class='navbutton'>Features</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='status.html' class='navbutton'>Status</a><div class='navbuttonbreak'><div class='navbuttonbreakinner'></div></div>
+	            <a href='documentation.html' class='navbutton'>Documentation</a><div class='navbuttongap'></div>
+	            <a href='download.html' class='rnavbutton'><b>Download</b></a>
+	        </div>
+	        <div class='inner'>
 
 <h1>Changelog</h1>
 
 
+<div class='newsitemheader'>
+    v0.99&nbsp;<font color='#bbbbbb'>(3-Nov-2019)</font>
+</div>
+<div class='newsitembody'>
+    <b>Notes</b>
+	<ul>
+        <li>DB Version Changed : clean build will occur</li>
+        <li>Distributed compilation protocol version changed : please update workers</li>
+		<li>Cache version has changed</li>
+    </ul>
+    <b>New</b>
+    <ul>
+		<li>When bff changes, only affected targets are rebuilt</li>
+        <li>[OSX] FBuildWorker UI implemented for OSX</li>
+    </ul>
+    <b>Fixes</b>
+    <ul>
+		<li>Distributed Compilation:</li>
+		<ul>
+			<li>[Linux][OSX] Fix occasional compilation failure when a remote host wins a distributed race (Thanks to dummyunit)</li>		
+			<li>ObjectiveC/C++ distribution is automatically disabled (can't be robustly distributed)</li>
+			<li>Distributed compilation automatically disabled for incompatible /analyze options with MSVC compiler</li>
+				- preprocessor inconsistencies prevent distributed compilation
+			<li>[OSX][Linux] FBuildWorker restarts when it detects it has been modified</li>
+			<li>[OSX][Linux] Avoid unnecessary thread creation on Linux and OSX for failed network connections (Thanks to dummyunit)</li>
+			<li>Warnings no longer swallowed when generated remotely if /WX not set (Thanks to Leonid Mashinskiy)</li>
+		</ul>
+		<li>Project Generation:</li>
+		<ul>
+			<li>Fix slow Visual Studio project generation for projects with over 1024 files</li>
+			<li>Files in folders in the XCode tree view are sorted alphabetically</li>
+			<li>XCode "-doc" projects are hidden by default</li>
+			<li>Intellisense/CodeSense information is correctly populated if project references a Copy()</li>
+		</ul>
+		<li>Caching:</li>
+		<ul>
+			<li>Expermental LightCache feature detects unsupported #import directives (Thanks to dummyunit)</li>		
+			<li>Cache write only + dist no longer uses an incorrect key for storing</li>
+				- With this combination of options, the returned compilation result was used instead of the source for hashing
+			<li>Caching with /analyze no longer uses preprocessed output so SAL-reliant errors work correctly</li>
+		</ul>
+		<li>BFF Parsing:</li>
+		<ul>
+			<li>Fix %s 'is not an ObjectNode (type: File)' error when migrating DB after bff edit</li>
+			<li>Error 1034 no longer malformed for certain operators (was printing ??? in some cases)  (Thanks to dummyunit)</li>
+			<li>Concatenating empty arrays of a different type could produce incorrect results (Thanks to dummyunit)</li>
+		</ul>
+		<li>Emit error when database (.fdb) cannot be loaded correctly due to corruption (was silently failing)</li>
+		<li>[Linux] Correct fbuild.linux.fdb is used for database file as intended (Thanks to dummyunit)</li>
+		<li>Add missing line feeds to some error messages (Thansk to dummyunit)</li>
+		<li>Emit error instead of hanging when fbuild.exe fails to spawn in wrapper mode (Thanks to dummyunit)</li>
+		<li>Clang and GCC warnings are shown when -Werror is not set, just like MSVC without /WX</li>
+		<li>GCC preprocessed extension fixed so language is correct regardless of compiler exe name or -x options (Thanks to dummyunit)</li>
+		<li>Missing properties added to integration files (usertype.dat and notepad++markup.xml)</li> 
+		<li>Relative path generation was not case sensitive on Windows and OSX (Thanks to ohoughton)</li>
+    </ul>
+	<b>Improvements</b>
+	<ul>
+		<li>Distributed Compilation:</li>
+		<ul>
+			<li>Add proportional FBuildWorker mode - scale to consume available idle CPU (Thanks to Tomáš Nezval)</li>		
+			<li>FBuildWorker stops accepting work more quickly when machine leaves idle state (Thanks to Tomáš Nezval)</li>
+			<li>C1060 (out of heap mem) only considered a system failure when C1076 & C3859 not present (Thanks to Lambert Clara)</li>
+			<li>Defer loading of Compiler() files until needed, saving some time for distributed builds</li>
+			<li>Compiler() avoids re-hashing files after DB migration</li>
+			<li>Reduce process shutdown time for distributed builds when closing connections</li>
+			<li>[OSX] FBuildWorker for OSX supports simple Idle Detection</li>
+		</ul>
+		<li>Project Generation:</li>
+		<ul>
+			<li>Optimize Visual Studio project generation 10%</li>
+			<li>VCXProject automatically populates the LocalDebuggerCommand if a .Target is specified for a config</li>
+			<li>Intellisense/Codesense includes -isystem -isystem-after and -iquote include paths</li>
+			<li>VCXProj exposes .Keyword, .ApplicationType, .ApplicationTypeRevision, .PackagePath and .AdditionalSymbolPath per-config</li>
+			<li>VCXProject exposes .ProjectProjectImports to allow importing of custom .targets files</li>
+			<li>VCXProject imports Android .targets if available to better support debugging on Android</li>
+			<li>XCode projects are generated to more closely match manually created projects</li>
+			<li>XCode projects can set .XCodeBaseSDK (macosx, iphoneos etc) in .ProjectConfigs</li>
+			<li>XCode projects can set .CommandLineArguments and .CommandLineArgumentsDisabled</li>
+			<li>XCode projects have "Document Versioning" disabled by default (can enable with .XCodeDocumentVersioning)</li>
+			<li>XCode projects can set .XCodeDebugWorkingDir in .ProjectConfigs</li>
+			<li>XCode projects set various options to avoid warnings in later XCode versions</li>		
+		</ul>
+		<li>Caching:</li>
+		<ul>
+			<li>-cacheverbose provides details about compression timing (Thanks to Lambert Clara)</li>		
+			<li>-cacheverbose shows more detailed info for cache stores, to match cache hits</li>
+			<li>LightCache can handle includes from macros</li>
+			<li>Significant improvement to LightCache performance (Thanks to Ben Craig)</li>
+		</ul>
+		<li>BFF Parsing:</li>
+		<ul>
+			<li>Optimize BFFParser parsing when creating structs (speedups for 20% or more are not uncommon)</li>
+			<li>BFFParsing speed improved ~2.5%</li>
+			<li>Use StackArray to improve BFF parsing performance ~2.5%</li>
+		</ul>
+		<li>Library, ObjectList, Alias and Unity nodes can be hidden from -showtargets (Thanks to Philipp Mirzayants)</li>
+		<li>-report includes cache timing information (Thanks to Lambert Clara)</li>
+		<li>Directory lists in the -summary shown in a more human readable format (Thanks to Lambert Clara)</li>
+		<li>Failed builds terminate up to 0.5s faster</li>
+		<li>UnityInputIsolatedFiles allows files to be automatically exluded from Unity, but still compiled (Thanks to Martin Donlon)</li>
+		<li>Output for failed tasks no longer deleted - failed output can be useful for triage</li>
+		<li>[OSX] nsec filetimes supported on OS X 10.13 and higher with APFS</li>
+		<li>[Linux] Reduce process overhead (particularly for short-lived ones)</li>
+		<li>[Linux] Reduce per-process buffer size usage to scale better on multi-core systems</li>
+	</ul>
+</div>
+
+<div class='newsitemheader'>
+    v0.98&nbsp;<font color='#bbbbbb'>(29-Apr-2019)</font>
+</div>
+<div class='newsitembody'>
+    Notes
+	<ul>
+        <li>DB Version Changed : clean build will occur</li>
+        <li>Distributed compilation protocol version changed : please update workers</li>
+    </ul>
+    New
+    <ul>
+        <li>.UseLightCache_Experimental mode on Compiler() can be used for massively accelerated caching</li>
+        <li>-compdb option can create a JSON Compilation Database (Thanks to dummyunit)</li>
+    </ul>
+    Fixes
+    <ul>
+        <li>Distributed Compilation:</li>
+        <ul>
+            <li>Fix race condition resulting in crash when a local race is won (Thanks to dummyunit, Sam Hocevar & Lambert Clara)</li>
+            <li>Prevent rare crash during startup when using distributed compilation</li>
+        </ul>
+        <li>BFF Parsing:</li>
+        <ul>
+            <li>Variable self-assignment is handled correctly during bff parsing (Thanks to dummyunit)</li>
+            <li>Fix inconsistent parsing of bff function headers without args (Thanks to dummyunit)</li>
+        </ul>
+        <li>[OSX][Linux] FASTBUILD_CACHE_PATH env var is respected on OSX and Linux (Thanks to Damian Szuberski)</li>
+        <li>GCC is corrently detected for when version specific exe is referenced (Thanks to Damian Szuberski)</li>
+        <li>Strip -isysroot when compiling preprocessed output; should only be used during preprocessing (Thanks to Nick Edwards)</li>
+        <li>Paths terminated with .. are correctly canonicalized (Thanks to Yaroslav Kovtun)</li>
+        <li>DLL() detects dll when a library is configured via -Wl,--oformat=prx (Thanks to jfr2)</li>
+        <li>Precompiled headers are migrated when using AllowDBMigration_Experimental (Thanks to Yaroslav Kovtun)</li>
+        <li>MSVC precompiled header users are retrievable from cache after DB migration using AllowDBMigration_Experimental</li>
+        <li>[Windows] UNC paths are respected in some places they were not (Thanks to Brian Burgin)</li>
+        <li>MSVC .pchast is correctly cached when folder name contains a period (Thanks to Brian Burgin)</li>
+        <li>MSVC .pchast is correctly cached when filename contains a period</li>
+    </ul>
+	Improvements
+	<ul>
+        <li>Distributed Compilation:</li>
+        <ul>
+            <li>FBuildWorker responds to quite notifications (Thanks to Brian Burgin)</li>
+            <li>Compiler files sent for distributed compilation are compressed (Thanks to Brian Burgin)</li>
+            <li>-forceremote no longer modifies caching options</li>
+            <li>Remote MSVC out of heap space is automatically retried</li>
+            <li>Remote MSVC failing to write compiler tmp file is automatically retried</li>
+            <li>Remove worker timeout mechanism which could cause unnecessary disconnections under heavy network load</li>
+            <li>Workers will reject connections from mismatched platforms</li>
+        </ul>
+        <li>BFF Parsing:</li>
+        <ul>
+            <li>Non-bff parsing error formats standardized (Thanks to Brian Burgin)</li>
+        </ul>
+        <li>Project Generation:</li>
+        <ul>
+            <li>XCode schemes appear alphabetically</li>
+            <li>XCode project folders appear alphabetically</li>
+            <li>XCode "doc" schemes are hidden by default</li>
+        </ul>
+        <li>[Linux][OSX] Significantly improve compile times by fixing process output capture (Thanks to Yaroslav Kovtun)</li>
+        <li>Improve resilience against corrupt files in the network cache</li>
+        <li>Exec() can be made to run every time with new .ExecAlways property</li>
+        <li>Test will print test output if a test times out to assist triage (Thanks to dummyunit)</li>
+        <li>.i extension is used for preprocessed files when using gcc (Thanks to Damian Szuberski)</li>
+        <li>Colored output from Clang and GCC is supported (Thanks to dummyunit)</li>
+        <li>.Environment can be set per Compiler, Library, Executable and DLL (Thanks to Brian Burgin)</li>
+        <li>.CompilerOutputKeepBaseExtension can be set on ObjectList if extension is needed to uniquify (Thanks to Yaroslav Kovtun)</li>
+        <li>The .fdb  is uniquified per-platform to allow filesystem shared between operating systems/VMs</li>
+        <li>Improve compression speed slightly (Upgrade to LZ4)</li>
+	</ul>
+</div>
+
+
+<div class='newsitemheader'>
+    v0.97&nbsp;<font color='#bbbbbb'>(9-Jan-2019)</font>
+</div>
+<div class='newsitembody'>
+    Notes
+	<ul>
+        <li>DB Version Changed : clean build will occur</li>
+    </ul>
+    New
+    <ul>
+        <li>[Experimental] .AllowDBMigration_Experimental (Settings) allows retention of build state across BFF changes</li>
+        <li>[OSX][Linux] Settings() .CachePathMountPoint option allows enforcing of cache mount validity</li>
+        <li>_CURRENT_BFF_DIR_ is defined containing path to the bff being parsed</li>
+        <li>Error() function allows user errors to be emitted during BFF parsing (Error 1999)</li>
+    </ul>
+    Fixes
+    <ul>
+        <li>Distributed Compilation:</li>
+        <ul>
+            <li>Fix occasional build failure with error 0x1 when a distributed race is won</li>
+            <li>[OSX][Linux] Sockets are not inheritable by child processes</li>
+            <li>[OSX] Sockets don't trigger spurious SIG_PIPE errors</li>
+            <li>[OSX] Port reuse updated for OS X behavior change (SO_REUSEADDR vs SO_REUSEPORT)</li>
+            <li>Nagle's algorithm is disabled for return connection from server->client</li>
+            <li>Fix -distverbose stack overflow when remote worker is blacklisted (and possibly in other situations)</li>
+            <li>Fix file handle leak on IO error transferring compiler files (Thanks to dummyunit)</li>
+            <li>Remote system failure info is shown when -distverbose is used</li>
+        </ul>
+        <li>BFF Parsing:</li>
+        <ul>
+            <li>If() error correctly reports type when lhs is unsupported for operator "in"</li>
+            <li>If() reports an error if extraneous text is found after a valid expression</li>
+        </ul>
+        <li>Project Generation:</li>
+        <ul>
+            <li>VCXProject files correctly pathed for project in sub-directory of BasePath</li>
+            <li>VCXProject generation correctly handles files and folders with common sub-strings (Thanks to Jeremy Moore)</li>
+            <li>Solution() errors in .Projects or .Dependencies print the correct property name in the error</li>
+            <li>Solution() paths to .vcxproject are relative even when .vcxproject is not in a sub-directory (Thanks to Chris Helvig)</li>
+        </ul>        
+        <li>Prevent duplicate symbols in libraries when using ar.exe in some situations</li>
+        <li>Emit error when failing to delete .exe/.dll/.pdb/.ilk</li>
+        <li>Folders are created for .asm and .pdb files when paths contain inconsistent slashes</li>
+        <li>Add missing -monitor option to cmd line usage info</li>
+        <li>Add missing -monitor and -progress option documentation</li>
+        <li>[OSX][Linux] .lock files are no longer inherited by child processes, preventing "FASTBuild is already running" messages</li>
+        <li>Fix incremental link when NOREF, NOICF or NOLBR options are used on cmd line (Thanks to Lambert Clara)</li>
+        <li>[Windows] Prevent deadlock if Ctrl+C is used to terminate certain tools like Clang (Thanks to Brian Burgin)</li>
+        <li>Settings() .CachePath takes precedence over environment variable as intended</li>
+        <li>[OSX][Linux] Child processes no longer inherit file handles, avoiding issues like .lock files being held incorrectly</li>
+        <li>Linker removes bad trailing slashes from LIBPATH that would escape quotes</li>
+        <li>-monitor works if build is started before monitor application has ever been run (Thanks to Lambert Clara)</li>
+        <li>[Linux][OSX] -cacheinfo age is correctly calculated (Thanks to Yaroslav Kovtun)</li>
+        <li>Fixed typo in options documentation for -report (Thanks to Brian Burgin)</li>
+    </ul>
+	Improvements
+	<ul>
+        <li>Distributed Compilation:</li>
+        <ul>
+            <li>Remote failure details are shown when -distverbose is used</li>
+            <li>Brokerage path shown as part of "Workers Found" message (Thanks to Lambert Clara)</li>
+        </ul>
+        <li>BFF Parsing:</li>
+        <ul>
+            <li>If() supports operator >, <, >= and <=</li>
+            <li>If() supports integers in comparisson syntax</li>
+            <li>Add _FASTBUILD_VERSION_ and _FASTBUILD_VERSION_STRING_ built-in variables</li>
+            <li>If() Documentation lists all currently supported syntax and operators</li>
+            <li>Small speedup to bff parsing when parsing Linker (Executable/DLL) nodes (Thanks to dummyunit)</li>
+            <li>Small optimization to BFF parsing, avoiding memory allocations appending strings to arrays (Thanks to dummyunit)</li>
+        </ul>
+        <li>Project Generation:</li>
+        <ul>
+            <li>Solution() generates solutions with paths to projects using Windows style slashes on Linux and OSX</li>
+            <li>Solution() "deploy" project scan be set via SolutionDeployProjects</li>
+            <li>Solution() "build" and "deploy" projects can be set per SolutionConfiguration</li>
+            <li>Intellisense AdditionalOptions are auto-populated for /std: option</li>
+        </ul>
+        <li>Improve IO performance on local disk and SMB shares</li>
+        <li>Work around Windows file system permission problems when creating response files</li>
+        <li>FASTBuild detects MSVC linker error LNK1136 (pdb corruption) and retries linking</li>
+	</ul>
+</div>
+
+
+<div class='newsitemheader'>
+    v0.96&nbsp;<font color='#bbbbbb'>(5-Jul-2018)</font>
+</div>
+<div class='newsitembody'>
+    Notes
+	<ul>
+        <li>DB Version Changed : clean build will occur</li>
+        <li>FBuildWorker version has changed - ensure all workers are updated</li>
+        <li>Visual Studio Project generation uses new GUID scheme</li>
+        <li>FBuildWorker no longer shows balloon tip when being minimized</li>
+    </ul>
+    New
+    <ul>
+        <li> Add _WORKING_DIR_ built-in variable</li>
+        <li> If() function allows basic branching logic in bff config (Thanks to clevijoki)</li>
+        <li>[Experimental] Add "-nounity" option: build individually all files that would normally be in Unity</li>
+    </ul>
+    Fixes
+    <ul>
+        <li>Distributed Compilation:</li>
+        <ul>
+            <li>Local fbuild.exe was deleting the worker token on build completion (Thanks to Lambert Clara)</li>
+            <li>Fix crash in distributed compilation caused by race condition (Thanks to dummyunit)</li>
+            <li>Processes terminated on a remote worker don't cause the build to fail with error 0x1</li>
+            <li>Errors from remote workers are emitted to the -monitor log (Thanks to hillin)</li>
+            <li>[Windows] Avoid file creation error 32 when a remote worker wins a race (Thanks to Alexandre Ganea)</li>
+            <li>FBuildWorker retries restarting for 10s when updated, so occasional locks don't preventing re-spawning</li>
+            <li>FBuildWorker tooltip restored (Thanks to Lambert Clara)</li>
+        </ul>
+        <li>BFF Parsing:</li>
+        <ul>
+            <li>Fix inifinte loop when an unterminated string is not handled correctly (Thanks to dummyunit)</li>
+            <li>Attempting to modify frozen variables in nested ForEach loops reports an error (Thanks to dummyunit)</li>
+            <li>Cyclic dependencies result in new error 1043 during parsing instead of crashing during shutdown</li>
+            <li>Fix crash when struct is replaced by its member in Using() (Thanks to dummyunit)</li>
+            <li>Fix closing brace in string incorrectly terminating scope in some rare cases (Thanks to dummyunit)</li>
+        </ul>
+        <li>Project Generation:</li>
+        <ul>
+            <li>Visual Studio Project GUID generation allows multiple projects with the same name (Thanks to James Leitch)</li>
+            <li>VSSolution errors relating to missing projects report correct property in errors</li>
+            <li>Avoid generating invalid Visual Studio projects when duplicate files are specified</li>
+            <li>Fix incorrect ToolsVersion (4.0 -> 15.0) in .vcxproj file (Thanks to Layla Mah)</li>
+            <li>VCXProject and XCodeProjects missing targets for some configs if one target was empty</li>
+        </ul>        
+        <li>Fix MS linker error when command line length is exactly 32767 (Thanks to Lambert Clara)</li>
+        <li>Fix typo in Executable error when ExecExecutable is missing (Thanks to dummyunit)</li>
+        <li>/analyze- is no longer incorrectly detected as enabling static analysis (Thanks to dummyunit)</li>
+        <li>CopyDir SourceExcludePaths paths are correctly applied (Thanks to James Leitch)</li>
+        <li>[OSX] Ctrl+C supported on OSX (build progress not lost when using Ctrl+C)</li>
+        <li>LIB variable from Settings() is used when finding libs (Thanks to Francisco Facioni)</li>
+        <li>[OSX][Linux] Fix thread handle leaks (Thanks to dummyunit)</li>
+        <li>Add missing keywords to VisualStudio and Notepad++ syntax highlighting (Thanks to Lucian Muresan)</li>
+        <li>Exec() correctly depends on dynamically discovered files (Thanks to James Leitch)</li>
+        <li>[Windows] Avoid temp file creation failures (anti-virus or async termination) (Thanks to Alexandre Ganea)</li>
+        <li>CopyDir reports error when target already exists (regression in v0.95) (Thanks to dummyunit)</li>
+        <li>RemoveDir reports error when target already exists (regression in v0.95) (Thanks to dummyunit)</li>
+        <li>Executable/DLL respect gcc/clang style cmd line dependencies (Thanks to Francisco Facioni)</li>
+        <li>Correctly handle nested aliases in .Compiler for ObjectList/Library</li>
+        <li>Fix "buidl" typo in -help text</li>
+    </ul>
+	Improvements
+	<ul>
+        <li>Distributed Compilation:</li>
+        <ul>
+            <li>FBuildWorker no longer steals focus briefly on startup (Thanks to v1ne)</li>
+            <li>FBuildWorker no longer adds Windows 10 notification on startup (Thanks to v1ne)</li>
+            <li>FBuildWorker no longer steals focus when launched (or restarted) unminimized</li>
+            <li>-distverbose provides information about attempted and failed connections</li>
+        </ul>
+        <li>Project Generation:</li>
+        <ul>
+            <li>.SolutionBuildProject doesn't need to be specified redundantly in .SolutionProjects</li>
+            <li>VSSolution() .SolutionBuildProject supports multiple projects for increased flexibility</li>
+        </ul>
+        <li>Upgrade LZ4 compression to v1.8.2 for improved cache and distribution performance</li>
+        <li>Compiler() can reference executables compiled by FASTBuild (Thanks to gkoreman)</li>
+        <li>Orbis-wave-psslc is auto-detected as a supported compiler (Thanks to gkoreman)</li>
+        <li>BFF parsing speed improved ~5%</li>
+        <li>Allow UnityInputExcludedFiles to handle partial paths (Thanks to Lambert Clara)</li>
+        <li>Exec() supports InputPath, InputPattern etc to dynamically discover files</li>
+        <li>[Linux] Reduce glibc dependencies to version 2.6 (Thanks to dummyunit)</li>
+        <li>Test() supports TestInput* options for additional dependency specification (Thanks to James Leitch)</li>
+        <li>Compiler detection works for Android when using .cmd wrappers (Thanks to Pavel Bibergal)</li>
+        <li>Progress output is automatically disabled when redirecting output (Thanks to dummyunit)</li>
+        <li>Better handling of symlinks in file operations; specifically when copying files (Thanks to James Leitch)</li>
+        <li>Add .CompilerInputAllowNoFiles to ObjectList/Library (Don't fail if no files are found)</li>
+        <li>Remove redundant "x64" from various places (help, ui) now that only x64 is supported</li>
+        <li>Report (-report) specifies host OS (Windows, OSX, Linux) rather than x64</li>
+	</ul>
+</div>
+
+
+<div class='newsitemheader'>
+    v0.95&nbsp;<font color='#bbbbbb'>(4-Feb-2018)</font>
+</div>
+<div class='newsitembody'>
+    Notes
+	<ul>
+        <li>DB Version Changed : clean build will occur</li>
+        <li>Cache version changed : previous cache entries will be ignored</li>
+        <li>Behaviour Changed: Sub struct concatenation order has been fixed (see fixes)</li>
+        <li>Pre-built executables for 32-bit Windows version will no longer be released</li>
+    </ul>
+    New
+    <ul>
+        <li>The VBCC compiler is now supported</li>
+        <li>-cacheinfo option dumps information about the cache</li>
+        <li>-cachetrim option trims the cache to the desired size</li>
+        <li>Support WindRiver compiler (dcc.exe) (treat as gcc) (Thanks to Mohamed El-Shahawi)</li>
+        <li>Add -cacheverbose command line option</li>
+    </ul>
+    Fixes
+    <ul>
+        <li>Distributed Compilation:</li>
+        <ul>
+            <li>Prevent rare shutdown crash or deadlock when using distributed compilation</li>
+            <li>[Windows] Fix handle leak in FBuildWorker</li>
+            <li>FBuildWorker no longer exits if exe is deleted prior to replacement</li>        
+        </ul>
+        <li>BFF Parsing:</li>
+        <ul>
+            <li>Concatenation of members in first level of sub-structs was reversed</li>
+            <li>Internal string copies avoid some potentially unsafe operations (Thanks to dummyunit)</li>        
+            <li>Fix crash when accessing variable from parent scope that doesn't exist (Thanks to dummyunit)</li>
+            <li>Fix crash when mismatched types are provided in an Array declaration (Thanks to dummyunit)</li>
+            <li>Empty strings in Arrays report 'Empty string not allowed' instead of being silently accepted</li>
+            <li>Empty strings sepcified for files report 'Empty string not allowed' insead of 'Path not allowed'</li>
+            <li>Empty arrays being set for required properties are no longer silently accepted</li>
+            <li>Strings with embedded nuls not being copied properly during a grow operation (Thanks to dummyunit)</li>
+            <li>Mismatched types in Struct concatenation reports error #1034 instead of crashing</li>
+        </ul>
+        <li>Project Generation:</li>
+        <ul>
+            <li>Generated Visual Studio projects are compatible with Visual Studio Selector (Thanks to slonopotamus)</li>
+            <li>[OSX][Linux] .vcxproj Intellisense includes are generated with Windows-style slashes</li>
+            <li>Intellisense and CodeSense options are discovered when using spaces (e.g. "-D WIN32")</li>
+            <li>[Windows] .xcodeproj CodeSense include paths are generated with OSX-style slashes</li>
+        </ul>        
+        <li>Cache:</li>
+        <ul>
+            <li>[OSX][Linux] Error message when failing to load cache plugin dll is correctly output (Thanks to dummyunit)</li>
+            <li>Cache entries not being unique when only filename changes</li>
+            <li>Cache stores additional files required by /analyze flag with msvc compiler</li>
+        </ul>
+        <li>Prevent source files being deleted due to a rare race condition using experimental -fastcancel (Thanks to Lambert Clara)</li>
+        <li>[Linux] Fix FileCopy when dest file is read-only</li>
+        <li>Prevent precompiled headers using deoptimzation settings (Thanks to Jean-Sebastien Pelletier)</li>
+        <li>[Linux] Fix unsafe readlink retrieving executable path for fbuild (Thanks to dummyunit)</li>
+        <li>[Linux] Performance of hashing &amp; compression was 5-10x slower due to incorrect optimizations (Thanks to dummyunit)</li>
+        <li>[OSX] [Linux] Handle DT_UNKNOWN correctly when walking directories on some file systems (Thanks to fuzzac)</li>
+        <li>[Windows] Clang/GCC remote failures no longer incorrectly report as System Failures (Thanks to Arturmazurek)</li>
+        <li>DLL() and Exectuable() have a proper dependency on the linker executable</li>
+        <li>[Linux] Tests which crash are correctly reported as failed (Thanks to dummyunit)</li>
+        <li>Failure to create temp files when compiling objects reports correct error (Thanks to dummyunit)</li>
+        <li>Work around VS2013/15 bug resulting in missing dependencies when an old .pch is on disk (Thanks to Lambert Clara)</li>
+        <li>Fix include detection when Clang is used as cl.exe (Thanks to Poppolopoppo)</li>
+        <li>Prevent crash breaking via Ctrl+C when -wrapper mode is used (-vs, -ide etc)</li>
+        <li>-config paths with spaces are correctly handled when using -vs or -ide (Thanks to liamkf)</li>
+    </ul>
+	Improvements
+	<ul>
+        <li>Distributed Compilation:</li>
+        <ul>
+            <li>Remote compilation can win a race, improving compile times</li>
+            <li>Greatly reduce memory usage of FBuildWorker</li>
+            <li>FBuildWorker idle CPU usage reduced (check every 500ms instead of 100ms)</li>
+            <li>Expose local .DistributableJobMemoryLimitMiB in Settings</li>
+            <li>Increase distributable job memory limit to 2GiB for 64bit builds</li>
+            <li>Increase FBuildWorker idle detection threshold to 20%</li>
+            <li>Increase connection timeout which was too aggressive (0.5s -> 2.0s)</li>
+            <li>[Linux] FBuildWorker idle detection implemented</li>
+        </ul>
+        <li>Project Generation:</li>
+        <ul>
+            <li>VCXProj Intellisense info can be derived automatically in more situations</li>
+            <li>.ProjectAllowedFileExtensions includes *.asm and *.s by default</li>
+        </ul>
+        <li>Copy with multiple .Source and non-dir .Dest generates an explicit error (#1400)</li>
+        <li>Avoid Copy() error setting timestamps for copy if dst file is locked by another application</li>
+        <li>Remove CopyNode serializing SourceBasePath property to DB unnecessarily</li>
+        <li>Error 1009  'Unknown variable.' includes variable name in case it's not obvious from the context</li>
+        <li>.CompilerFamily can be explicitly set on Compiler() to override auto-detection (Thanks to Layla Mah)</li>
+        <li>Unity pragmas are commented out for files isolated from unity</li>
+        <li>DLL() and Executable() support .PreBuildDependencies</li>
+        <li>Test() supports .PreBuildDependencies</li>
+        <li>Bash completion script updates for latest options (Thanks to dummyunit)</li>
+	</ul>
+</div>
+
+
+<div class='newsitemheader'>
+    v0.94&nbsp;<font color='#bbbbbb'>(28-Sep-2017)</font>
+</div>
+<div class='newsitembody'>
+    Notes
+	<ul>
+        <li>DB Version Changed : clean build will occur</li>
+    </ul>
+    New
+    <ul>
+        <li>-quiet option can be used to supress build output (Thanks to Nik Reiman)</li>
+        <li>-showdeps displays dependencies, useful for debugging build configs (Thanks to Layla Mah)</li>
+        <li>FBuildWorker -console cmd line arg enables UI-less "console" mode</li>
+        <li>-nosummaryonerror option supresses -summary if the build fails (Thanks to Lambert Clara)</li>
+        <li>Added -forceremote option for troubleshooting (Thanks to Lambert Clara)</li>
+    </ul>
+    Fixes
+    <ul>
+        <li>CSAssembly pattern defaults to *.cs again (regression introduced in v0.93)</li>
+        <li>Fix compatibility with Recode (include paths removed sometimes) (regression introduced in v0.93)</li>
+        <li>Return code in wrapper mode is now non-zero when child process crashes (Thanks to Sam Hocevar)</li>
+        <li>Restore custom Preprocessor functionality (regression in v0.93)</li>
+        <li>[Linux] Ctrl+C no longer causes build progress to be lost on Linux (Thanks to comicfans)</li>
+        <li>Keep-alive timeout was too low, causing dropped connections during distributed compilation</li>
+        <li>Prevent unsafe caching of precompiled headers that differ only in unused defines (Thanks to Lambert Clara)</li>
+        <li>Fix rare crash when using distributed compilation</li>
+        <li>Distributed job local memory limit is now correctly respected</li>
+        <li>Prevent rare crash when using distributed compilation (Thanks to Jean-Sebastien Pelletier)</li>
+        <li>[OSX] Fix init failure on some configurations when using -dist due to TCP send/recv buffer size (Thanks to myevan)</li>
+        <li>Fix socket leak when send/recv buffer size could not be set</li>
+        <li>Prevent network disconnections due to too small Send timeouts</li>
+        <li>DirCopy no longer fails if a source file is deleted (Thanks to kwayle)</li>
+        <li>Remote workers failing to read files no longer fail without error (Thanks to Lambert Clara)</li>
+        <li>Fix -wrapper mode on Windows if fbuild.exe is renamed (Thanks to James Leitch)</li>
+        <li>Exe name is printed correctly in usage info if exe is renamed (Thanks to James Leitch)</li>
+        <li>Exe name is printed correctly in usage info on OSX and Linux (Thanks to James Leitch)</li>
+        <li>MSVC linker and lib warnings shown when not using /WX (Thanks to Lambert Clara)</li>
+        <li>[Linux] CopyFile and CopyDir transfer file permissions on copy (Thanks to Javier Blazquez)</li>
+    </ul>
+	Improvements
+	<ul>
+        <li>[Experimental] New -fastcancel option allows immediate termination on build failure (Thanks to Jean-Sebastien Pelletier)</li>
+        <li>Remote internal compiler errors will be retried to avoid breaks due to faulty hardware (Thanks to Sam Hocevar)</li>
+        <li>Paths inside VisualStudio projects are relative where possible, including Intellisense (Thanks to Eric Arnold)</li>
+        <li>[Windows] FASTBuild supports >64 cores on x64 and >32 cores on x86 (Thanks to missmah)</li>
+        <li>Visual Studio projects can be generated with generic source bindings via ProjectSccEntrySAK (Thanks to Lucian Muresan)</li>
+        <li>Increase distributed job local memory limit to 1GiB (was 512MiB)</li>
+        <li>Add work around for bugs in MS Linker causing PDB corruption (LNK1318), seen in VS2017</li>
+        <li>Add basic documentation for operator + when used on Structs</li>
+        <li>Lib uses source objects for other libs where possible (Thanks to Javier Blazquez)</li>
+        <li>Add link to Syntax highlighting link by Manuzor (Thanks to Manuzor)</li>
+        <li>Distributed compilation worked limit can be set via .WorkerConnectionLimit</li>
+        <li>Add -distverbose command line to help with troubleshooting distributed compilation issues</li>
+        <li>Improve summary output for CopyFile, CopyDir and RemoveDir</li>
+        <li>.BuildLogFile path can be set for generated Visual Studio projects (thanks to lucianm)</li>
+        <li>Libraries are flattened for non-MSVC librarian when nesting libs (Thanks to Javier Blazquez)</li>
+        <li>New FASTBUILD_TEMP_PATH env var can set TEMP dir for FASTBuild to use (Thanks to comicfans)</li>
+        <li>Objects and Libs are only deleted before building if using -clean, reducing overhead</li>
+        <li>Small memory usage and performance optimization during builds and bff parsing</li>
+        <li>Avoid opening files unnecessarily when #once directive is used</li>
+	</ul>
+</div>
+
+
+<div class='newsitemheader'>
+    v0.93&nbsp;<font color='#bbbbbb'>(13-Mar-2017)</font>
+</div>
+<div class='newsitembody'>
+    Notes
+	<ul>
+        <li>DB Version Changed : clean build will occur</li>
+        <li>Distributed protocol version has changed</li>
+    </ul>
+    New
+    <ul>
+        <li>New .SimpleDistributionMode allows distributed compilation of arbitrary single file objects (Thanks to gkoreman)</li>
+    </ul>
+    Fixes
+    <ul>
+        <li>Prevent error D8049 when compiling remotely with really long command line args</li>
+        <li>Fix missing depencies when using Clang with empty files and mixed line endings (Thanks to Wickerwaka)</li>
+        <li>Fix unescaped ampersands in VCXProject documentation</li>
+        <li>[Linux][OSX] Fix cache paths using wrong slash type (Thanks to dummyunit)</li>
+        <li>Slashes are escaped in response files for ar.exe in Windows (useful when building for Android)</li>
+        <li>Assignment of .String to .ArrayOfStrings silently failing in some cases</li>
+        <li>Cache plugin DLL is correctly handled on X86 Windows</li>
+        <li>Copy, CSAssembly and Unity can have PreBuildDependencies which are ObjectLists</li>
+        <li>Alias .Targets can be ObjectLists</li>
+        <li>Libraries are rebuilt when Librarian changes</li>
+        <li>Correct documentation for -ide option (add note about -ideo enabling -fixuperrorpaths on Windows only)</li>
+    </ul>
+	Improvements
+	<ul>
+        <li>XCode Projects now support CodeSense</li>
+        <li>Support for optional environment variables via "#if exists(VAR_NAME)" (Thanks to Javier Blazquez)</li>
+        <li>[Linux][OSX] New LZ4 (v1.7.4.2) improves compression speed  for OSX and Linux ~10-30%, improving cache performance</li>
+        <li>BFF parsing speed significantly increased (upto 2x)</li>
+        <li>Exec() can have a PreBuildDependency on a CopyDir node</li>
+        <li>.CustomEnvironmentVariables can be set for distributed compilation (Thanks to gkoreman)</li>
+        <li>.ExecutableRootPath can control root of distributed toolchains (Thanks to gkoreman)</li>
+        <li>Allow string properties to be set to empty strings if they are optional</li>
+        <li>Compiler exposes .ClangRewriteIncludes to allow use of -frewrite-includes to be disabled if needed</li>
+        <li>Add Sublime Text markup (Thanks to Andreas Haferburg)</li>
+	</ul>
+</div>
+
+<div class='newsitemheader'>
+    v0.92&nbsp;<font color='#bbbbbb'>(27-Nov-2016)</font>
+</div>
+<div class='newsitembody'>
+    Notes
+	<ul>
+        <li>DB Version Changed : clean build will occur</li>
+        <li>Cache version has changed : Existing cache entries will be ignored</li>
+    </ul>
+    New
+    <ul>
+        <li>[Experimental] -monitor option writes a machine-readable log for external visualizers (Thanks to Yass007 and LiamKF)</li>
+        <li>bash completion script for fbuild executable now available (Thanks to dummyunit)</li>
+    </ul>
+    Fixes
+    <ul>
+        <li>Prevent MSVC Error C1382 due to an .obj and .pch mismatch due to multiple machines partially populating the cache</li>
+        <li>FASTBuild is no longer incompatilble with Clang's static analyzer (-analyze) (Thanks to Pavel Bibergal)</li>
+        <li>Fix various MSVC compiler args not being detected when using -X instead of /X syntax</li>
+        <li>Fix various MSVC linker args not being detected when using -X instead of /X syntax</li>
+        <li>Fix various MSVC linker args being assumed to be case-sensitive (linker args are case insensitive)</li>
+        <li>Linking against Orbis .prxs built by FASTBuild uses _stub_weak.a (Thanks to jairbubbles)</li>
+        <li>Fix CopyDir destination path not being normalized causing failures</li>
+        <li>Fix typo in Report when there are no includes (Thanks to Leandros)</li>
+        <li>-showtargets now includes targets defined by ObjectList and Unity</li>
+        <li>.Target property in XCodeProject() .Configs is optional</li>
+        <li>Removing empty strings in bff with operator - is ignored instead of being incredibly slow (Thanks to dummyunit)</li>
+    </ul>
+	Improvements
+	<ul>
+        <li>Solution() allows the same folder to be specified multiple times for added flexibility (Thanks to Poppolopoppo)</li>
+        <li>Documentation for Test() (Thanks to Manuzor)</li>
+        <li>ObjectList(), Library() and CSAssembly() support .CompilerInputPatternExclude (Thanks to Fitzymj)</li>
+        <li>Added .TestAlwaysShowOutput option to Test() which prints the test output even if it passes</li>
+        <li>Optimize network sends, reducing kernel call overhead</li>
+        <li>Improved diagnostic messages for distributed compilation (Thanks to Sam Hocevar)</li>
+        <li>Copy() .Source can now be empty as this allows for greater configuration flexibility</li>
+        <li>An invalid .Target in an XCode configuration will now fail during bff parsing</li>
+	</ul>
+</div>
 
 <div class='newsitemheader'>
     v0.91&nbsp;<font color='#bbbbbb'>(25-Aug-2016)</font>
@@ -1214,6 +1830,6 @@ Fixes
     </div>
 
 
-  <script>generateFooter()</script>
+    </div><div class='footer'>&copy; 2012-2019 Franta Fulin</div></div></div>
 </body>
 </html>

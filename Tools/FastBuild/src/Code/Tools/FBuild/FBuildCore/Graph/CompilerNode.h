@@ -1,8 +1,6 @@
-// CompilerNode.h - a node that manages a compiler executable 
+// CompilerNode.h - a node that manages a compiler executable
 //------------------------------------------------------------------------------
 #pragma once
-#ifndef FBUILD_GRAPH_COMPILERNODE_H
-#define FBUILD_GRAPH_COMPILERNODE_H
 
 // Includes
 //------------------------------------------------------------------------------
@@ -16,36 +14,76 @@ class Function;
 
 // CompilerNode
 //------------------------------------------------------------------------------
-class CompilerNode : public FileNode
+class CompilerNode : public Node
 {
-	REFLECT_DECLARE( CompilerNode )
+    REFLECT_NODE_DECLARE( CompilerNode )
 public:
-	explicit CompilerNode();
-	bool Initialize( NodeGraph & nodeGraph, const BFFIterator & iter, const Function * function );
-	virtual ~CompilerNode();
+    explicit CompilerNode();
+    virtual bool Initialize( NodeGraph & nodeGraph, const BFFIterator & iter, const Function * function ) override;
+    virtual ~CompilerNode() override;
 
-	static inline Node::Type GetTypeS() { return Node::COMPILER_NODE; }
+    virtual bool IsAFile() const override;
 
-	static Node * Load( NodeGraph & nodeGraph, IOStream & stream );
-	virtual void Save( IOStream & stream ) const override;
+    static inline Node::Type GetTypeS() { return Node::COMPILER_NODE; }
 
-	inline const ToolManifest & GetManifest() const { return m_Manifest; }
+    inline const ToolManifest & GetManifest() const { return m_Manifest; }
 
-	inline bool CanBeDistributed() const { return m_AllowDistribution; }
-	#if defined( __WINDOWS__ )
-		inline bool IsVS2012EnumBugFixEnabled() const { return m_VS2012EnumBugFix; }
-	#endif
+    inline bool SimpleDistributionMode() const { return m_SimpleDistributionMode; }
+    inline bool GetUseLightCache() const { return m_UseLightCache; }
+		//W: Use Simple Cache mode for Special compilations
+	inline bool SimpleCacheMode() const { return m_SimpleCacheMode; }
+    inline bool CanBeDistributed() const { return m_AllowDistribution; }
+    #if defined( __WINDOWS__ )
+        inline bool IsVS2012EnumBugFixEnabled() const { return m_VS2012EnumBugFix; }
+    #endif
+    inline bool IsClangRewriteIncludesEnabled() const { return m_ClangRewriteIncludes; }
+
+    enum CompilerFamily : uint8_t
+    {
+        CUSTOM          = 0,
+        MSVC            = 1,
+        CLANG           = 2,
+        GCC             = 3,
+        SNC             = 4,
+        CODEWARRIOR_WII = 5,
+        GREENHILLS_WIIU = 6,
+        CUDA_NVCC       = 7,
+        QT_RCC          = 8,
+        VBCC            = 9,
+        ORBIS_WAVE_PSSLC= 10,
+		//W: Handle Python as External Compiler
+        PYTHON          = 11,
+    };
+    CompilerFamily GetCompilerFamily() const { return static_cast<CompilerFamily>( m_CompilerFamilyEnum ); }
+
+    const AString & GetExecutable() const { return m_StaticDependencies[ 0 ].GetNode()->GetName(); }
+    const char * GetEnvironmentString() const;
+
 private:
-	virtual bool DetermineNeedToBuild( bool forceClean ) const override;
-	virtual BuildResult DoBuild( Job * job ) override;
+    bool InitializeCompilerFamily( const BFFIterator & iter, const Function * function );
 
-	// Exposed params
-	Array< AString >	m_ExtraFiles;
+    virtual BuildResult DoBuild( Job * job ) override;
+    virtual void Migrate( const Node & oldNode ) override;
 
-	bool			m_AllowDistribution;
-	bool			m_VS2012EnumBugFix;
-	ToolManifest	m_Manifest;
+    // Exposed params
+    AString                 m_Executable;
+    Array< AString >        m_ExtraFiles;
+    Array< AString >        m_CustomEnvironmentVariables;
+    bool                    m_AllowDistribution;
+    bool                    m_VS2012EnumBugFix;
+    bool                    m_ClangRewriteIncludes;
+    AString                 m_ExecutableRootPath;
+    AString                 m_CompilerFamilyString;
+    uint8_t                 m_CompilerFamilyEnum;
+    bool                    m_SimpleDistributionMode;
+	//W: Use Simple Cache mode for Special compilations
+	bool			m_SimpleCacheMode;
+    bool                    m_UseLightCache;
+    ToolManifest            m_Manifest;
+    Array< AString >        m_Environment;
+
+    // Internal state
+    mutable const char *    m_EnvironmentString;
 };
 
 //------------------------------------------------------------------------------
-#endif // FBUILD_GRAPH_COMPILERNODE_H

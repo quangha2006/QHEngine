@@ -1,8 +1,6 @@
 // Mem.h
 //------------------------------------------------------------------------------
 #pragma once
-#ifndef CORE_MEM_MEM_H
-#define CORE_MEM_MEM_H
 
 // Includes
 //------------------------------------------------------------------------------
@@ -20,47 +18,51 @@ inline void operator delete[]( void *, void * ) {}
 // new/delete
 //------------------------------------------------------------------------------
 #if defined( MEMTRACKER_ENABLED )
-	#define FNEW( code )		new ( __FILE__, __LINE__ ) code
-	#define FNEW_ARRAY( code )	new ( __FILE__, __LINE__ ) code
-	#define FDELETE				delete
-	#define FDELETE_ARRAY		delete[]
+    #define FNEW( code )        new ( __FILE__, __LINE__ ) code
+    #define FNEW_ARRAY( code )  new ( __FILE__, __LINE__ ) code
+    #define FDELETE             delete
+    #define FDELETE_ARRAY       delete[]
 
-	#define ALLOC( ... )		::AllocFileLine( __VA_ARGS__, __FILE__, __LINE__ )
-	#define FREE( ptr )			::Free( ptr )
+    #define ALLOC( ... )        ::AllocFileLine( __VA_ARGS__, __FILE__, __LINE__ )
+    #define FREE( ptr )         ::Free( ptr )
 #else
-	#define FNEW( code )		new code
-	#define FNEW_ARRAY( code )	new code
-	#define FDELETE				delete
-	#define FDELETE_ARRAY		delete[]
+    #define FNEW( code )        new code
+    #define FNEW_ARRAY( code )  new code
+    #define FDELETE             delete
+    #define FDELETE_ARRAY       delete[]
 
-	#define ALLOC( ... )		::Alloc( __VA_ARGS__ )
-	#define FREE( ptr )			::Free( ptr )
+    #define ALLOC( ... )        ::Alloc( __VA_ARGS__ )
+    #define FREE( ptr )         ::Free( ptr )
 #endif
 
 // Alloc/Free
 //------------------------------------------------------------------------------
-void * Alloc( size_t size );
-void * Alloc( size_t size, size_t alignment );
-void * AllocFileLine( size_t size, const char * file, int line );
-void * AllocFileLine( size_t size, size_t alignment, const char * file, int line );
+#if !defined( MEMTRACKER_ENABLED )
+    // Functions are private when MemTracker is enabled
+    void * Alloc( size_t size );
+    void * Alloc( size_t size, size_t alignment );
+#else
+    void * AllocFileLine( size_t size, const char * file, int line );
+    void * AllocFileLine( size_t size, size_t alignment, const char * file, int line );
+#endif
 void Free( void * ptr );
 
 // global new/delete
 //------------------------------------------------------------------------------
-#if defined( __OSX__ )
-	// TODO: resolve issue with Clang and inline new/delete
-#else
-	#if defined( MEMTRACKER_ENABLED )
-		void * operator new( size_t size, const char * file, int line );
-		void * operator new[]( size_t size, const char * file, int line );
-		void operator delete( void * ptr, const char *, int );
-		void operator delete[]( void * ptr, const char *, int );
-	#endif
-	void * operator new( size_t size );
-	void * operator new[]( size_t size );
-	void operator delete( void * ptr );
-	void operator delete[]( void * ptr );
+#if defined( MEMTRACKER_ENABLED )
+    void * operator new( size_t size, const char * file, int line );
+    void * operator new[]( size_t size, const char * file, int line );
+    void operator delete( void * ptr, const char *, int );
+    void operator delete[]( void * ptr, const char *, int );
+#endif
+#if !defined( __has_feature )
+    #define __has_feature( ... ) 0
+#endif
+#if !__has_feature( address_sanitizer ) && !__has_feature( memory_sanitizer ) && !__has_feature( thread_sanitizer ) && !defined( __SANITIZE_ADDRESS__ )
+void * operator new( size_t size );
+void * operator new[]( size_t size );
+void operator delete( void * ptr ) NOEXCEPT;
+void operator delete[]( void * ptr ) NOEXCEPT;
 #endif
 
 //------------------------------------------------------------------------------
-#endif // CORE_MEM_MEM_H
