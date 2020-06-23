@@ -96,7 +96,44 @@
 	.Output_StaticLibs = "$OutputPath$/$PlatformName$/$ConfigName$/StaticLibs"
 	.Output_SharedLibs = "$OutputPath$/$PlatformName$/$ConfigName$/SharedLibs"
 ]
+// *************************************************************************************** //
+// ARM
+// Release
+.ARM64_Release_Config =
+[
+	Using(.ARM_Config)
+	.ConfigName				= "Release"
+	.Defines				+ " -DANDROID_RELEASE"
+							+ " -DNDEBUG"
+							+ " -DNDK_DEBUG=0"
 
+	.CompileFlags			+ " -Ofast -ffast-math"
+							
+	.Precompiled_SearchPaths+ " -L$precompiled_search_Paths$/$ConfigName$/armeabi-v7a"
+	
+	.Output_Objects			= "$OutputPath$\$PlatformName$\$ConfigName$\Objects"
+	.Output_StaticLibs		= "$OutputPath$\$PlatformName$\$ConfigName$\StaticLibs"
+	.Output_SharedLibs		= "$OutputPath$\$PlatformName$\$ConfigName$\SharedLibs"
+]
+
+// *************************************************************************************** //
+// ARM
+// Debug
+.ARM64_Debug_Config =
+[
+	Using(.ARM_Config)
+	.ConfigName				= "Debug"
+	.Defines				+ " -D_DEBUG"
+							+ " -DDEBUG"
+
+	.CompileFlags			+ " -O0"
+
+	.Precompiled_SearchPaths+ " -L$precompiled_search_Paths$/$ConfigName$/armeabi-v7a"
+
+	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"
+	.Output_StaticLibs = "$OutputPath$/$PlatformName$/$ConfigName$/StaticLibs"
+	.Output_SharedLibs = "$OutputPath$/$PlatformName$/$ConfigName$/SharedLibs"
+]
 // *************************************************************************************** //
 // x86
 // Release; Debug
