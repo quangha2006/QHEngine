@@ -16,8 +16,8 @@ const int Screen_height = 720;
 
 void Basic::Init()
 {
-	mCamera->SetPos(0.0f, 9.0f, 10.0f);
-	mCamera->SetTarget(0.0f, 8.0f, 0.0f);
+	mCamera->SetPos(0.0f, 3.0f, 10.0f);
+	mCamera->SetTarget(0.0f, 2.0f, 0.0f);
 	mCamera->SetLightPos(10.2f, 30.0f, 0.0f);
 
 	mSkyBox.Init("SkyBox");
@@ -66,10 +66,10 @@ void Basic::Init()
 	//mBoblampclean.Init("Low-Poly Spider/Spider_3.fbx", true);
 	//mBoblampclean.Init("bountyhunter/bountyhunter/bountyhunter_rig_01.dae", false);
 	//mBoblampclean.SetPos(glm::vec3(0.f, 1.0f, 0.0f));
-	//mBoblampclean.SetScale(glm::vec3(0.05f));
+	mBoblampclean.SetScale(glm::vec3(0.05f));
 	//mBoblampclean.SetDrawMesh(0);
 	mBoblampclean.SetDrawWireFrame(false);
-	mBoblampclean.SetTimeStampAnim(0);
+//	mBoblampclean.SetTimeStampAnim(0);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
 
 	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");

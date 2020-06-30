@@ -115,7 +115,9 @@
     </ClCompile>
     <ClCompile Include="FrameRate.cpp" />
     <ClCompile Include="GLDebugDrawer.cpp" />
+    <ClCompile Include="GLES30Device.cpp" />
     <ClCompile Include="GLFWContext.cpp" />
+    <ClCompile Include="IDevice.cpp" />
     <ClCompile Include="MainAndroid.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -142,6 +144,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="VulkanDevice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\AndroidPort\AndroidSource\app\jni\package_utils.h">
@@ -162,7 +165,9 @@
     </ClInclude>
     <ClInclude Include="FrameRate.h" />
     <ClInclude Include="GLDebugDrawer.h" />
+    <ClInclude Include="GLES30Device.h" />
     <ClInclude Include="GLFWContext.h" />
+    <ClInclude Include="IDevice.h" />
     <ClInclude Include="Logs.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelManager.h" />
@@ -187,6 +192,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="VulkanDevice.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Resources\Shaders\BasicFS.fs" />
