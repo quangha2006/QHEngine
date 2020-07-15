@@ -1,10 +1,10 @@
 {
-	.PROJECT_Name = "native_app_glue"
-	#include "../__Common/__STD_C.bff"
+	.PROJECT_Name = "native_android_surface"
+	#include "../__Common/__STD_CPP.bff"
 
 	.PROJECT_SourceFiles =
 	{
-    "$NDK_Root$/sources/android/native_app_glue/android_native_app_glue.c"
+	"$jni_Path$/Native_android_surface.cpp"
 	}
 
 	.ExcludedUnitySources =
@@ -24,7 +24,7 @@
 		#endif
 
 		.PROJECT_Defines = ""
-							+ " -DANDROID"
+										+ " -DANDROID"
 		.PROJECT_IncludePaths = " -I$NDK_Root$/sources/android/native_app_glue"
 
 		.PROJECT_CompilerFlags = ""

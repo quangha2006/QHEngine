@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.KeyEvent;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
-import android.view.WindowManager;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;

@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidPort-AndroidSource.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidPort-AndroidSource.iml" group="AndroidSource" />
       <module fileurl="file://$PROJECT_DIR$/AndroidSource.iml" filepath="$PROJECT_DIR$/AndroidSource.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="AndroidSource/app" />
     </modules>
   </component>
 </project>

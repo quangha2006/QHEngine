@@ -1,12 +1,14 @@
 {
 	.EntryPointSymbolsLibs =
 	{
-		"libBasic_CPP.a"
+		"libnative_android_surface.a"
 	}
 
 	.GameStaticLibs = ""
 					+ " -Wl,--start-group"
+					+ " -lBasic_CPP"
 					+ " -ljni"
+					+ " -lnative_app_glue"
               		+ " -lEngineLib"
 					+ " -lAssimp"
 					+ " -lzlibstatic"

@@ -9,7 +9,8 @@
 	"Basic_CPP"
 	"EngineLib"
 	"jni"
-	//"native_app_glue"
+	"native_app_glue"
+	"native_android_surface"
 	// lib
 
 	//"Assimp"
