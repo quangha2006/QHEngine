@@ -9,11 +9,14 @@
 #include "QHAxis.h"
 #include "SkyBox.h"
 #include "Timer.h"
+#include "IDevice.h"
+#include "GLES30Device.h"
 
 class AppBase
 {
 protected:
 	AppContext* mContext;
+	gpu::IDevice *i_gpuDevice;
 	Camera *mCamera;
 	QHText text_FPS, text_DrawCall, text_NumTriangle, text_FrameTime;
 	QHAxis axis;

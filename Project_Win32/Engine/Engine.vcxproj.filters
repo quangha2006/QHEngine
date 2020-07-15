@@ -36,6 +36,15 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="GPU">
+      <UniqueIdentifier>{cc89e44e-b63b-4dd0-a803-a9f94e010e1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GPU\GLES30">
+      <UniqueIdentifier>{7a5f8aac-a9f6-4e89-a56c-8a3b1b085bd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GPU\Vulkan">
+      <UniqueIdentifier>{32c2a038-39bc-42ef-8bfb-8ed9be01e84d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLFWContext.cpp">
@@ -140,6 +149,15 @@
     <ClCompile Include="Sound.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="IDevice.cpp">
+      <Filter>GPU</Filter>
+    </ClCompile>
+    <ClCompile Include="GLES30Device.cpp">
+      <Filter>GPU\GLES30</Filter>
+    </ClCompile>
+    <ClCompile Include="VulkanDevice.cpp">
+      <Filter>GPU\Vulkan</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -243,6 +261,15 @@
     </ClInclude>
     <ClInclude Include="QHMath.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="IDevice.h">
+      <Filter>GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="GLES30Device.h">
+      <Filter>GPU\GLES30</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanDevice.h">
+      <Filter>GPU\Vulkan</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

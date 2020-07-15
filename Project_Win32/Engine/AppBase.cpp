@@ -28,9 +28,13 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	mContext = new EGLAppContext();
 #endif
 	
+	i_gpuDevice = new gpu::GLES30Device();
+
 	mContext->createWindow(width, height);
+	i_gpuDevice->InitWindows(width, height);
 
 	mContext->SwapInterval(1);
+	i_gpuDevice->SwapInterval(1);
 
 	LOGI("\n=====================================================\n");
 	LOGI("GL Renderer  : %s\n", glGetString(GL_RENDERER));
@@ -64,11 +68,11 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	text_FPS.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 	text_FPS.setText("FPS: 60.0");
 
-	text_DrawCall.setPos(100, 0);
+	text_DrawCall.setPos(110, 0);
 	text_DrawCall.setScale(0.5f);
 	text_DrawCall.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
-	text_NumTriangle.setPos(250, 0);
+	text_NumTriangle.setPos(260, 0);
 	text_NumTriangle.setScale(0.5f);
 	text_NumTriangle.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
