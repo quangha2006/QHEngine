@@ -50,8 +50,9 @@ namespace Utils
 #elif defined(ANDROID) // defined(_WINDOWS)
 	std::string getResourcesFolder()
 	{
-		static std::string str_path = acp_utils::PackageUtils::getExternalStoragePublicDirectory() + '/';
-		return str_path;
+		//static std::string str_path = acp_utils::PackageUtils::getExternalStoragePublicDirectory() + '/';
+		//return str_path;
+		return "/sdcard/Android/data/com.android.QHEngine/files/";
 	}
 	std::string getDefineVersionShader()
 	{

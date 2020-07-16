@@ -27,7 +27,7 @@ AppSharedContext *EGLAppContext::CreateShareContext()
 	EGLConfig config;
 	EGLint numConfigs;
 	EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE };
-	EGLint *attribList = new EGLint[21]
+	EGLint attribList[] =
 	{
 		EGL_LEVEL, 0,
 		EGL_RENDERABLE_TYPE, 4,

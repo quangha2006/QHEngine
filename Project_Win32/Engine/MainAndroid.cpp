@@ -35,6 +35,7 @@ void Resize(int w, int h)
 
 void Update(long deltaTime) 
 {
+	//LOGE("FAILED initialize");
 	app->rendering();
 }
 

@@ -26,6 +26,7 @@ public:
 	bool initialize(int32_t width, int32_t height, ANativeWindow *window = NULL);
 	void rendering();
 	void LoadingThread(AppSharedContext *shared_context);
+	void Loading();
 	void GameTouchEvent(int eventId, int x, int y, int pointerId);
 	void GameKeyPressed(int key, int scancode, int action, int mods);
 	void GameZoomCamera(double xoffset, double yoffset);

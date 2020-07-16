@@ -81,7 +81,6 @@ static int engine_init_display(struct engine* engine) {
      */
     const EGLint attribs[] = {
             EGL_LEVEL, 0,
-            EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
             EGL_RENDERABLE_TYPE, 4,
             EGL_COLOR_BUFFER_TYPE, EGL_RGB_BUFFER,
             EGL_BLUE_SIZE, 8,
@@ -94,53 +93,66 @@ static int engine_init_display(struct engine* engine) {
             EGL_NONE
     };
     EGLint w, h, format;
-    EGLint numConfigs;
+    EGLint numConfigs = 0;
     EGLConfig config = nullptr;
     EGLSurface surface;
     EGLContext context;
+    EGLint major;
+    EGLint minor;
 
     EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 
-    eglInitialize(display, nullptr, nullptr);
+    if (eglInitialize(display, &major, &minor) == EGL_FALSE)
+    {
+        LOGI("Initialize an EGL display connection FAILED");
+    }
 
     /* Here, the application chooses the configuration it desires.
      * find the best match if possible, otherwise use the very first one
      */
+    // Get NumConfig
     eglChooseConfig(display, attribs, nullptr, 0, &numConfigs);
     std::unique_ptr<EGLConfig[]> supportedConfigs(new EGLConfig[numConfigs]);
     assert(supportedConfigs);
     eglChooseConfig(display, attribs, supportedConfigs.get(), numConfigs, &numConfigs);
     assert(numConfigs);
-    auto i = 0;
-    for (; i < numConfigs; i++) {
-        auto& cfg = supportedConfigs[i];
-        EGLint r, g, b, d;
-        if (eglGetConfigAttrib(display, cfg, EGL_RED_SIZE, &r) &&
-            eglGetConfigAttrib(display, cfg, EGL_GREEN_SIZE, &g) &&
-            eglGetConfigAttrib(display, cfg, EGL_BLUE_SIZE, &b) &&
-            eglGetConfigAttrib(display, cfg, EGL_DEPTH_SIZE, &d) &&
-            r == 8 && g == 8 && b == 8 && d == 0) {
+    //EGLint i = 0;
+    //for (; i < numConfigs; i++) {
+    //    auto& cfg = supportedConfigs[i];
+    //    EGLint r, g, b, d, v;
+    //    if (eglGetConfigAttrib(display, cfg, EGL_RED_SIZE, &r) &&
+    //        eglGetConfigAttrib(display, cfg, EGL_GREEN_SIZE, &g) &&
+    //        eglGetConfigAttrib(display, cfg, EGL_BLUE_SIZE, &b) &&
+    //        eglGetConfigAttrib(display, cfg, EGL_DEPTH_SIZE, &d) &&
+    //        r == 8 && g == 8 && b == 8 && d == 24) {
 
-            config = supportedConfigs[i];
-            break;
-        }
-    }
-    if (i == numConfigs) {
-        config = supportedConfigs[0];
-    }
+    //        config = supportedConfigs[i];
 
-    if (config == nullptr) {
+    //        //break;
+    //    }
+    //    eglGetConfigAttrib(display, cfg, EGL_CONTEXT_CLIENT_VERSION, &v);
+    //    LOGI("EGL_CONTEXT_CLIENT_VERSION = %d\n", v);
+    //}
+    //if (i == numConfigs) {
+    //    config = supportedConfigs[0];
+    //}
+
+    if (numConfigs == 0) {
         LOGW("Unable to initialize EGLConfig");
         return -1;
     }
-
+    config = supportedConfigs[0];
     /* EGL_NATIVE_VISUAL_ID is an attribute of the EGLConfig that is
      * guaranteed to be accepted by ANativeWindow_setBuffersGeometry().
      * As soon as we picked a EGLConfig, we can safely reconfigure the
      * ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID. */
     eglGetConfigAttrib(display, config, EGL_NATIVE_VISUAL_ID, &format);
+
     surface = eglCreateWindowSurface(display, config, engine->app->window, nullptr);
-    context = eglCreateContext(display, config, nullptr, nullptr);
+
+    EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE };
+
+    context = eglCreateContext(display, config, nullptr, contextAttribs);
 
     if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
         LOGW("Unable to eglMakeCurrent");
@@ -158,16 +170,16 @@ static int engine_init_display(struct engine* engine) {
     engine->state.angle = 0;
 
     // Check openGL on the system
-    auto opengl_info = { GL_VENDOR, GL_RENDERER, GL_VERSION, GL_EXTENSIONS };
-    for (auto name : opengl_info) {
-        auto info = glGetString(name);
-        LOGI("OpenGL Info: %s", info);
-    }
+    //auto opengl_info = { GL_VENDOR, GL_RENDERER, GL_VERSION, GL_EXTENSIONS };
+    //for (auto name : opengl_info) {
+    //    auto info = glGetString(name);
+    //    LOGI("OpenGL Info: %s", info);
+    //}
     // Initialize GL state.
     //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
     //glShadeModel(GL_SMOOTH);
-    glDisable(GL_DEPTH_TEST);
+    //glDisable(GL_DEPTH_TEST);
 
     return 0;
 }
@@ -241,6 +253,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
             engine_init_display(engine);
             Init_MainAndroid(engine->app->window);
             engine_draw_frame(engine);
+            engine->animating = 1;
         }
         break;
     case APP_CMD_TERM_WINDOW:
@@ -267,7 +280,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
                 engine->accelerometerSensor);
         }
         // Also stop animating.
-        engine->animating = 0;
+        //engine->animating = 0;
         engine_draw_frame(engine);
         break;
     default:
@@ -371,7 +384,7 @@ void android_main(struct android_app* state) {
             }
 
             // If a sensor has data, process it now.
-            if (ident == LOOPER_ID_USER) {
+           /* if (ident == LOOPER_ID_USER) {
                 if (engine.accelerometerSensor != nullptr) {
                     ASensorEvent event;
                     while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
@@ -381,8 +394,8 @@ void android_main(struct android_app* state) {
                             event.acceleration.z);
                     }
                 }
-            }
-
+            }*/
+            engine_draw_frame(&engine);
             // Check if we are exiting.
             if (state->destroyRequested != 0) {
                 engine_term_display(&engine);
@@ -390,17 +403,17 @@ void android_main(struct android_app* state) {
             }
         }
 
-        if (engine.animating) {
+        //if (engine.animating) {
             // Done with events; draw next animation frame.
-            engine.state.angle += .01f;
-            if (engine.state.angle > 1) {
-                engine.state.angle = 0;
-            }
+        //    engine.state.angle += .01f;
+        //    if (engine.state.angle > 1) {
+        //        engine.state.angle = 0;
+        //    }
 
             // Drawing is throttled to the screen update rate, so there
             // is no need to do timing here.
             engine_draw_frame(&engine);
-        }
+        //}
     }
 }
 //END_INCLUDE(all)

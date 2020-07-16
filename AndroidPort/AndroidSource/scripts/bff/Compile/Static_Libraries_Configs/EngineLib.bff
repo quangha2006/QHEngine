@@ -32,6 +32,9 @@
 	"$Engine_Sources_Path$/GLDebugDrawer.cpp"
 	"$Engine_Sources_Path$/Sprite.cpp"
 	"$Engine_Sources_Path$/UserInterface.cpp"
+	"$Engine_Sources_Path$/IDevice.cpp"
+	"$Engine_Sources_Path$/GLES30Device.cpp"
+	"$Engine_Sources_Path$/VulkanDevice.cpp"
 	}
 
 	.ExcludedUnitySources =

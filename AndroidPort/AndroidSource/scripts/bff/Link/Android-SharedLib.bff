@@ -22,7 +22,7 @@
 					+ " -lGLESv3"
 					+ " -llog"
 					+ " -landroid"
-					+ " -lOpenSLES"
+					;+ " -lOpenSLES"
 					+ " -lEGL"
 
 	.ARM_LinkValues =
