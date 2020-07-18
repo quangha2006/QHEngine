@@ -1,5 +1,5 @@
 {
-	.PROJECT_Name = "EngineLib"
+	.PROJECT_Name = "GameEngine"
 	#include "../__Common/__STD_CPP.bff"
 
 	.PROJECT_SourceFiles =

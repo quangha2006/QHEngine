@@ -1,15 +1,17 @@
 {
 	.EntryPointSymbolsLibs =
 	{
-		"libnative_android_surface.a"
+		;"libnative_android_surface.a" // Native Surface
+		"libGameEngine.a"
+		;"libBasic_CPP.a"
 	}
 
 	.GameStaticLibs = ""
 					+ " -Wl,--start-group"
 					+ " -lBasic_CPP"
 					+ " -ljni"
-					+ " -lnative_app_glue"
-              		+ " -lEngineLib"
+					;+ " -lnative_app_glue" // Native Surface
+              		;+ " -lGameEngine"
 					+ " -lAssimp"
 					+ " -lzlibstatic"
 					+ " -lirrXML"
@@ -22,7 +24,6 @@
 					+ " -lGLESv3"
 					+ " -llog"
 					+ " -landroid"
-					;+ " -lOpenSLES"
 					+ " -lEGL"
 
 	.ARM_LinkValues =

@@ -7,10 +7,12 @@
 	//"Sanctuary_CPP"
 	//"3DBreakOut"
 	"Basic_CPP"
-	"EngineLib"
+	"GameEngine"
 	"jni"
-	"native_app_glue"
-	"native_android_surface"
+	// NativeSurface
+	//"native_app_glue"
+	//"native_android_surface"
+	// NativeSurface end
 	// lib
 
 	//"Assimp"

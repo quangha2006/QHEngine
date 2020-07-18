@@ -5,67 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5f6cff2-b363-4b97-945e-12bc502e3501" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/scripts/bff/Compile/Static_Libraries_Configs/native_android_surface.bff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_common_1_0_0_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_common_1_0_0_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_0_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_animated_vector_drawable_26_1_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_appcompat_v7_26_1_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_annotations_26_1_0_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_compat_26_1_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_ui_26_1_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_utils_26_1_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_fragment_26_1_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_media_compat_26_1_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_v4_26_1_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_vector_drawable_26_1_0_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_core_2_2_2_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_espresso_espresso_idling_resource_2_2_2_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_exposed_instrumentation_api_publish_0_5_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_rules_0_5_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_test_runner_0_5_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_javawriter_2_1_1_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_javawriter_2_1_1_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_annotation_javax_annotation_api_1_2_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_inject_javax_inject_1_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__javax_inject_javax_inject_1_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_12_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_12_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_integration_1_3_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_integration_1_3_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_library_1_3_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/jni/Native_android_surface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/jni/Native_android_surface.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/com/android/QHEngine/GLES3View.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/com/android/QHEngine/GLES3View.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/com/android/QHEngine/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/com/android/QHEngine/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bff/Compile/Static_Libraries_Configs/native_app_glue.bff" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bff/Compile/Static_Libraries_Configs/native_app_glue.bff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/bff/Compile/Static_Libraries_Configs/EngineLib.bff" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bff/Compile/Static_Libraries_Configs/GameEngine.bff" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/bff/Compile/fbuild.bff" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bff/Compile/fbuild.bff" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/bff/Link/Android-SharedLib.bff" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bff/Link/Android-SharedLib.bff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bff/Main_Paths.bff" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bff/Main_Paths.bff" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/external_native_fastbuild.bat" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/external_native_fastbuild.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/3DBreakOut/3DBreakOut.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/3DBreakOut/3DBreakOut.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/Basic/Basic.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/Basic/Basic.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/Engine/Engine.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/Engine/Engine.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/External/assimp-4.1.0/code/assimp.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/External/assimp-4.1.0/code/assimp.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/External/assimp-4.1.0/contrib/zlib/zlibstatic.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/External/assimp-4.1.0/contrib/zlib/zlibstatic.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/External/freetype-2.9.1/builds/windows/vc2015/freetype-2.9.1.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/External/freetype-2.9.1/builds/windows/vc2015/freetype-2.9.1.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/External/glm/glm_dummy.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/External/glm/glm_dummy.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/External/openal/OpenAL.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/External/openal/OpenAL.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/GameDemo/GameDemo.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/GameDemo/GameDemo.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/MaliSDK_Bloom/MaliSDK_Bloom.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/MaliSDK_Bloom/MaliSDK_Bloom.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/TestModel/TestModel.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/TestModel/TestModel.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Project_Win32/TestSDK_Basic/TestSDK_Basic.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../Project_Win32/TestSDK_Basic/TestSDK_Basic.vcxproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="1ca4aa4203037ece" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3a_XL_API_29" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
