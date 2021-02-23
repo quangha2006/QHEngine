@@ -104,7 +104,7 @@ goto END
   goto END
 ) else if %DO_JOB%==10 (
 	pushd %CUR_MPATH%\..
-	adb push Resources /sdcard/Android/data/com.android.QHEngine/files/
+	adb push Resources /sdcard/Android/data/com.android.quanghaengine/files/
   popd
   goto END
 )

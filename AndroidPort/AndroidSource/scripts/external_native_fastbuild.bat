@@ -30,7 +30,7 @@ set DO_CLEAN_LINK=FALSE
 REM !FAST_BUILD_TOOL! -cachewrite -cacheread -dist -summary All-Compile-!architecture!-!build_type! -clean // Note: Add -dist to enable distributed
 	echo 1^) --- COMPILE ---
 	pushd !FAST_BUILD_COMPILE!
-	"!FAST_BUILD_TOOL!" -cachewrite -cacheread -dist -summary All-Compile-!architecture!-!build_type! -clean
+	"!FAST_BUILD_TOOL!" -cachewrite -cacheread -summary All-Compile-!architecture!-!build_type! -clean
 	popd
 
 	rem Check if COMPILE step is OK

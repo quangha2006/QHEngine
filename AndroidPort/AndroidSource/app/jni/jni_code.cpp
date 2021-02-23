@@ -14,21 +14,21 @@ extern void CleanUp();
 extern void OnGameTouchEvent(int eventId, int x, int y, int pointerId);
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_com_android_QHEngine_GLES3JNILib_InitMainAndroid(JNIEnv* env, jobject obj, jint width, jint height);
-	JNIEXPORT void JNICALL Java_com_android_QHEngine_GLES3JNILib_InitWithNativeWindow(JNIEnv* env, jobject obj, jobject surface);
-    JNIEXPORT void JNICALL Java_com_android_QHEngine_GLES3JNILib_Update(JNIEnv* env, jobject obj, jlong deltaltime);
-    JNIEXPORT void JNICALL Java_com_android_QHEngine_GLES3JNILib_Resize(JNIEnv* env, jobject obj, jint width, jint height);
-    JNIEXPORT void JNICALL Java_com_android_QHEngine_GLES3JNILib_CleanUp(JNIEnv* env, jobject obj);
-	JNIEXPORT void JNICALL Java_com_android_QHEngine_GLES3JNILib_OnGameTouchEvent(JNIEnv* env, jobject obj, jint eventId, jfloat x, jfloat y, jint pointerId);
+    JNIEXPORT void JNICALL Java_com_android_quanghaengine_GLES3JNILib_InitMainAndroid(JNIEnv* env, jobject obj, jint width, jint height);
+	JNIEXPORT void JNICALL Java_com_android_quanghaengine_GLES3JNILib_InitWithNativeWindow(JNIEnv* env, jobject obj, jobject surface);
+    JNIEXPORT void JNICALL Java_com_android_quanghaengine_GLES3JNILib_Update(JNIEnv* env, jobject obj, jlong deltaltime);
+    JNIEXPORT void JNICALL Java_com_android_quanghaengine_GLES3JNILib_Resize(JNIEnv* env, jobject obj, jint width, jint height);
+    JNIEXPORT void JNICALL Java_com_android_quanghaengine_GLES3JNILib_CleanUp(JNIEnv* env, jobject obj);
+	JNIEXPORT void JNICALL Java_com_android_quanghaengine_GLES3JNILib_OnGameTouchEvent(JNIEnv* env, jobject obj, jint eventId, jfloat x, jfloat y, jint pointerId);
 };
 
 JNIEXPORT void JNICALL
-Java_com_android_QHEngine_GLES3JNILib_InitMainAndroid(JNIEnv* env, jobject obj, jint width, jint height)
+Java_com_android_quanghaengine_GLES3JNILib_InitMainAndroid(JNIEnv* env, jobject obj, jint width, jint height)
 {
       //Init_MainAndroid(width, height);
 }
 JNIEXPORT void JNICALL
-Java_com_android_QHEngine_GLES3JNILib_InitWithNativeWindow(JNIEnv* env, jobject obj, jobject surface)
+Java_com_android_quanghaengine_GLES3JNILib_InitWithNativeWindow(JNIEnv* env, jobject obj, jobject surface)
  {
 	ANativeWindow *window = ANativeWindow_fromSurface(env, surface);
 
@@ -36,23 +36,23 @@ Java_com_android_QHEngine_GLES3JNILib_InitWithNativeWindow(JNIEnv* env, jobject 
 	 Init_MainAndroid(static_cast<ANativeWindow*>(window));
  }
 JNIEXPORT void JNICALL
-Java_com_android_QHEngine_GLES3JNILib_Update(JNIEnv* env, jobject obj, jlong deltaltime)
+Java_com_android_quanghaengine_GLES3JNILib_Update(JNIEnv* env, jobject obj, jlong deltaltime)
 {
     Update(deltaltime);
 }
 JNIEXPORT void JNICALL
-Java_com_android_QHEngine_GLES3JNILib_Resize(JNIEnv* env, jobject obj, jint width, jint height)
+Java_com_android_quanghaengine_GLES3JNILib_Resize(JNIEnv* env, jobject obj, jint width, jint height)
 {
 	Resize(width, height);
 }
 
 JNIEXPORT void JNICALL
-Java_com_android_QHEngine_GLES3JNILib_CleanUp(JNIEnv* env, jobject obj)
+Java_com_android_quanghaengine_GLES3JNILib_CleanUp(JNIEnv* env, jobject obj)
 {
 		CleanUp();
 }
 JNIEXPORT void JNICALL
-Java_com_android_QHEngine_GLES3JNILib_OnGameTouchEvent(JNIEnv* env, jobject obj, jint eventId, jfloat x, jfloat y, jint pointerId)
+Java_com_android_quanghaengine_GLES3JNILib_OnGameTouchEvent(JNIEnv* env, jobject obj, jint eventId, jfloat x, jfloat y, jint pointerId)
 {
 		OnGameTouchEvent(eventId, x, y, pointerId);
 }

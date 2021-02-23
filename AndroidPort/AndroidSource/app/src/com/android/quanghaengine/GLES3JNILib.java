@@ -1,4 +1,4 @@
-package com.android.QHEngine;
+package com.android.quanghaengine;
 
 import android.view.Surface;
 import android.opengl.GLSurfaceView;

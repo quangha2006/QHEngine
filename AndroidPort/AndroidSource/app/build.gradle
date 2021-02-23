@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     ndkVersion '21.3.6528147'
     defaultConfig {
-        applicationId "com.android.QHEngine"
+        applicationId "com.android.quanghaengine"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
