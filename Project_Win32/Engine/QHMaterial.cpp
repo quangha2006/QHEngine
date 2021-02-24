@@ -32,7 +32,7 @@ vector<Texture> loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::
 	return textures;
 }
 
-void QHMaterial::Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDrawWireFrame, bool isEnableAlpha)
+void QHMaterial::Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDrawWireFrame, bool isEnableAlpha, bool iscustomcolor , glm::vec3 customcolor)
 {
 	GLuint diffuseNr = 1;
 	GLuint specularNr = 1;
@@ -95,6 +95,12 @@ void QHMaterial::Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDra
 	modelShader.setFloat("material_transparent", mTransparent);
 	modelShader.setFloat("material_shininess", mShininess);
 	modelShader.setVec3("material_color_ambient", mAmbient);
+	modelShader.setBool("useCustomColor", iscustomcolor);
+	if (iscustomcolor)
+	{
+		modelShader.setVec3("custom_color_diffuse", customcolor);
+	}
+	
 	modelShader.setVec3("material_color_diffuse", mDiffuse);
 	modelShader.setVec3("material_color_specular", mSpecular);
 	modelShader.setBool("GammaCorrection", RenderManager::getInstance()->isEnableGammaCorrection());

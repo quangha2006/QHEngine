@@ -27,7 +27,7 @@ public:
 	GLuint mIndices_index;
 	GLuint mIndices_size;
 	std::vector<Texture> mTextures;
-	void Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDrawWireFrame = false, bool isEnableAlpha = false);
+	void Apply(RenderTargetType RT_Type, Shader &modelShader, bool isDrawWireFrame = false, bool isEnableAlpha = false, bool iscustomcolor = false, glm::vec3 customcolor = glm::vec3(0.,0.,0.));
 	void Render();
 	bool isTransparent();
 	QHMaterial(aiMaterial* aimaterial, std::string &currentDirectory);

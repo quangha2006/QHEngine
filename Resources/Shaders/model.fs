@@ -9,6 +9,7 @@ uniform float material_shininess;
 uniform vec3 material_color_ambient;
 uniform vec3 material_color_diffuse;
 uniform vec3 material_color_specular;
+uniform vec3 custom_color_diffuse;
 uniform float material_transparent;
 
 // light
@@ -38,12 +39,17 @@ uniform bool uselighting;
 uniform bool usepointlight;
 uniform bool useShadowMap;
 uniform bool GammaCorrection;
+uniform bool useCustomColor;
 
 layout (location = 0) out vec4 FragColor;
 
 void main()
 {  
 	vec4 color = fs_Color;//vec4(material_color_diffuse, material_transparent);
+	if (useCustomColor == true)
+	{
+		color.rgb = custom_color_diffuse;
+	}
 	//color.a = material_transparent;
 	//color = vec4(material_color_diffuse, material_transparent);
 	if (material_color_diffuse.r < 0.f)

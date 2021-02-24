@@ -380,7 +380,7 @@ void Model::Render(RenderTargetType RT_Type)
 			for (QHMaterial& material : mMaterial)
 			{
 				mModel_Shader.setBool("uselighting", uselighting);
-				material.Apply(RT_Type, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
+				material.Apply(RT_Type, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha, useCustomColor, customColor);
 				material.Render();
 			}
 
@@ -393,7 +393,7 @@ void Model::Render(RenderTargetType RT_Type)
 			{
 				mModel_Shader.setBool("uselighting", uselighting);
 				unsigned int materialID = mesh.GetMaterialIndex();
-				mMaterial[materialID].Apply(RT_Type, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha);
+				mMaterial[materialID].Apply(RT_Type, mModel_Shader, mIsDrawWireFrame, mIsEnableAlpha, useCustomColor, customColor);
 				mesh.Render();
 			}
 		}

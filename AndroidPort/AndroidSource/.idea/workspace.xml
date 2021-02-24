@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5f6cff2-b363-4b97-945e-12bc502e3501" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bff/Compile/Static_Libraries_Configs/EngineLib.bff" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bff/Compile/Static_Libraries_Configs/GameEngine.bff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bff/Compile/fbuild.bff" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bff/Compile/fbuild.bff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bff/Link/Android-SharedLib.bff" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bff/Link/Android-SharedLib.bff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/external_native_fastbuild.bat" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/external_native_fastbuild.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +24,12 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -52,7 +54,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.spelling" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
     <property name="show.do.not.ask.upgrade.gradle.plugin" value="3.3.0" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -131,29 +133,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="477" y="257" key="#PSD" timestamp="1594834346021">
+    <state x="461" y="167" key="SettingsEditor" timestamp="1614075229840">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="477" y="257" key="#PSD/0.0.1920.1050@0.0.1920.1050" timestamp="1594834346021" />
-    <state width="1027" height="266" key="GridCell.Tab.0.bottom" timestamp="1594840974396">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1027" height="266" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1594840974396" />
-    <state width="1027" height="266" key="GridCell.Tab.0.center" timestamp="1594840974396">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1027" height="266" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1594840974396" />
-    <state width="1027" height="266" key="GridCell.Tab.0.left" timestamp="1594840974396">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1027" height="266" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1594840974396" />
-    <state width="1027" height="266" key="GridCell.Tab.0.right" timestamp="1594840974396">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1027" height="266" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1594840974396" />
-    <state x="92" y="92" width="1736" height="866" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1594832838640">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="92" y="92" width="1736" height="866" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1594832838640" />
+    <state x="461" y="167" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1614075229840" />
   </component>
 </project>

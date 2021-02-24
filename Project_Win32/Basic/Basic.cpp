@@ -13,7 +13,7 @@
 
 const int Screen_width = 1280;
 const int Screen_height = 720;
-
+int numModelcircle = 10;
 void Basic::Init()
 {
 	mCamera->SetPos(0.0f, 3.0f, 10.0f);
@@ -32,8 +32,7 @@ void Basic::Init()
 	//m_Streetenvironment.SetDrawWireFrame(true);
 	//m_Streetenvironment.SetRenderMode(RenderMode::RenderMode_Instancing);
 	//m_Streetenvironment.CreateBoxShapePhysicsBody(0.0f, glm::vec3(48.0, 1., 48.0), glm::vec3(0., -0.48, 0.));
-	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
-	//m_Streetenvironment.GetRigidBody()->setRestitution(1.);
+
 
 	//mMerce.Init("MercedesBenzSLSAMG/sls_amg.obj", true);
 	//mMerce.Init("MercedesBenzSLSAMG/MercedesBenzSLSAMG.dae", true);
@@ -42,11 +41,11 @@ void Basic::Init()
 	mMerce.SetScale(glm::vec3(2.5f));
 	mMerce.SetRenderMode(RenderMode::RenderMode_Material);
 	
-	//mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
-	//mAstroBoy.Init("bHieu/1_2_Tree.dae", true);
+	mAstroBoy.Init("astroBoy/astroBoy_walk_Max.dae", true);
+	//mAstroBoy.Init("bHieu/1_2_Tree.dae", true, true);
 	//mAstroBoy.SetRotate(180.0, glm::vec3(.0f, 1.0f, .0f));
-	//mAstroBoy.SetScale(glm::vec3(30.0f));
-	mAstroBoy.SetPos(glm::vec3(12.0f, 0.0f, 0.0f));
+	mAstroBoy.SetScale(glm::vec3(30.0f));
+	mAstroBoy.SetPos(glm::vec3(8.0f, 0.0f, 0.0f));
 	//mAstroBoy.SetDrawMesh(0);
 	//mAstroBoy.CreateBoxShapePhysicsBody(1.0, glm::vec3(48.0, 1., 48.0));
 	//mAstroBoy.SetPlayAnimTime(0.f, .33f);
@@ -72,18 +71,35 @@ void Basic::Init()
 //	mBoblampclean.SetTimeStampAnim(0);
 	//mBoblampclean.CreateBoxShapePhysicsBody(1.0, glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, -5.0f, 0.0f));
 
-	//uvcircle.Init("3DBreakOutGame/UVCircle2.dae");
-	//uvcircle.SetScale(glm::vec3(1.0, 1.0f, 1.0f));
-	uvcircle.SetPos(glm::vec3(3.2f, 20.0f, 1.0f));
+	uvcircle_main.Init("3DBreakOutGame/UVCircle2.dae");
+	uvcircle_main.SetScale(glm::vec3(0.5, 0.5f, 0.5f));
+	uvcircle_main.SetPos(glm::vec3(3.2f, 10.0f, 1.0f));
 
-	//uvcircle.CreateSphereShapePhysicsBody(1., 1.);
+	uvcircle_main.CreateSphereShapePhysicsBody(1., 0.5);
 
-	//uvcircle.GetRigidBody()->setFriction(0.);
-	//uvcircle.GetRigidBody()->setRollingFriction(1.);
-	//uvcircle.GetRigidBody()->setSpinningFriction(1.);
-	//uvcircle.GetRigidBody()->setRestitution(1.);
+	uvcircle_main.GetRigidBody()->setFriction(0.);
+	uvcircle_main.GetRigidBody()->setRollingFriction(1.);
+	uvcircle_main.GetRigidBody()->setSpinningFriction(1.);
+	uvcircle_main.GetRigidBody()->setRestitution(0.999);
 
-	//uvcircle.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
+	//uvcircle_main.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
+
+	uvcircles = new Model[numModelcircle];
+
+	for (int i = 0; i < numModelcircle; i++)
+	{
+		uvcircles[i].Init("3DBreakOutGame/UVCircle2.dae");
+		uvcircles[i].SetScale(glm::vec3(0.2, 0.2f, 0.2f));
+		uvcircles[i].SetPos(glm::vec3(-3.2f, 5.0f, 1.0f));
+		uvcircles[i].CreateSphereShapePhysicsBody(1., 0.2);
+		uvcircles[i].GetRigidBody()->setFriction(0.);
+		uvcircles[i].GetRigidBody()->setRollingFriction(1.);
+		uvcircles[i].GetRigidBody()->setSpinningFriction(1.);
+		uvcircles[i].GetRigidBody()->setRestitution(0.99);
+		glm::vec3 randomcolor = Utils::RandomColor();
+		uvcircles[i].SetCustomColor(randomcolor);
+		uvcircles[i].GetRigidBody()->applyForce(btVector3(randomcolor.r * 2, randomcolor.g * 2, randomcolor.b*2), btVector3(0.0, 0.0, 0.0));
+	}
 
 	m_initialized = true;
 	//RenderManager::getInstance()->SetEnableShadowMap(false);
@@ -91,6 +107,7 @@ void Basic::Init()
 	//RenderManager::getInstance()->SetRenderAxis(true);
 	//RenderManager::getInstance()->SetRenderAxis(true);
 	//PhysicsSimulation::getInstance()->SwitchDebugMode();
+	//PhysicsSimulation::getInstance()->SetGravity(btVector3(0, -8.0, 0));
 	//PhysicsSimulation::getInstance()->createTriangleMeshShape(0.0f, NULL, 0, NULL, 0, glm::vec3(), glm::vec3(), 1.0f, glm::vec3());
 	//btRigidBody * test = PhysicsSimulation::getInstance()->createBoxShape(0.0f, glm::vec3(0.0f, 47.0f, 0.0f), glm::vec3(), 0.0f, glm::vec3(48));
 
@@ -106,8 +123,26 @@ void Basic::Update(int delta)
 	//mCamera->SetTarget(circlePos);
 	//mCamera->SetPos(circlePos.x + 50, circlePos.y + 30, circlePos.z + 50);
 	glm::vec3 lightpos = mCamera->GetLightPos();
-	uvcircle.SetPos(lightpos);
-	mAstroBoy.SetTimeStampAnim(Timer::getMillisecond() * 0.1);
+	uvcircle_main.SetPos(lightpos);
+	//mAstroBoy.SetTimeStampAnim(Timer::getMillisecond() * 0.1);
+	for (int i = 0; i < numModelcircle; i++)
+	{
+		glm::mat4 currPos = uvcircles[i].GetWorld();
+		//if (i == 1)
+		//Utils::PrintMat4(currPos);
+		//LOGI("uvcircles[%d] = %f", i, currPos.y);
+		if (currPos[3][1] < 0.f)
+		{
+			uvcircles[i].Translate(glm::vec3(0, 0, 0));
+			glm::vec3 randomcolor = Utils::RandomColor();
+			uvcircles[i].GetRigidBody()->clearForces();
+			btVector3 zeroVector(0, 0, 0);
+			uvcircles[i].GetRigidBody()->setLinearVelocity(zeroVector);
+			uvcircles[i].GetRigidBody()->setAngularVelocity(zeroVector);
+			uvcircles[i].GetRigidBody()->applyForce(btVector3(randomcolor.r * 2, randomcolor.g * 2, randomcolor.b * 2), btVector3(0.0, 0.0, 0.0));
+		}
+
+	}
 }
 void Basic::GetRequireScreenSize(int32_t &width, int32_t &height)
 {
@@ -118,7 +153,7 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 {
 	char c = (char)key;
 	//LOGI("Key: %d = %c\n",key, c);
-	glm::vec3 curent = uvcircle.GetScale();
+	glm::vec3 curent = uvcircle_main.GetScale();
 	glm::mat4 cameraView = mCamera->GetView();
 	glm::vec3 cru;
 	
@@ -144,10 +179,10 @@ bool Basic::OnGameKeyPressed(int key, int scancode, int action, int mods)
 		mCamera->SetView(cameraView);
 		return true;
 	case 65: //num a
-		uvcircle.SetScale(glm::vec3(1.0, ++(curent.y), 1.0));
+		uvcircle_main.SetScale(glm::vec3(1.0, ++(curent.y), 1.0));
 		return true;
 	case 68: //num d
-		uvcircle.SetScale(glm::vec3(1.0, --(curent.y), 1.0));
+		uvcircle_main.SetScale(glm::vec3(1.0, --(curent.y), 1.0));
 		return true;
 	case 262:
 		timestamp_for_lamp += 1.f;
@@ -202,15 +237,15 @@ void Basic::OnGameLoadingThreadFinished(int loadingtimeinms)
 
 	//mBoblampclean.CreateConvexHullShapeBone(1., false);
 	//mBoblampclean.CreateCharacterController();
-	mBoblampclean.CreateCapsuleBone();
-	//m_Streetenvironment.GetRigidBody()->setFriction(0.0);
-	//m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
+	//mBoblampclean.CreateCapsuleBone();
+	m_Streetenvironment.GetRigidBody()->setFriction(0.0);
+	m_Streetenvironment.GetRigidBody()->setRestitution(1.0);
 	//mSpider.CreateConvexHullShapeBone(1., false);
-	/*uvcircle.registerShape(1.);*/
-	//uvcircle.GetRigidBody()->setFriction(0.);
-	//uvcircle.GetRigidBody()->setRollingFriction(1.0f);
-	//uvcircle.GetRigidBody()->setSpinningFriction(1.0f);
-	//uvcircle.GetRigidBody()->setRestitution(0.0);
+
+	//uvcircle_main.GetRigidBody()->setFriction(0.);
+	//uvcircle_main.GetRigidBody()->setRollingFriction(1.0f);
+	//uvcircle_main.GetRigidBody()->setSpinningFriction(1.0f);
+	//uvcircle_main.GetRigidBody()->setRestitution(0.0);
 
 	/*mSpider.CreateConvexHullShapePhysicsBody(1., false);
 	mSpider.GetRigidBody()->setFriction(0.);

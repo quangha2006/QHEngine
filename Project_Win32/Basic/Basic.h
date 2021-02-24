@@ -13,7 +13,7 @@
 class Basic : public AppBase
 {
 private:
-	Model mNanosuit, m_Streetenvironment, mMerce, mSpider, mBoblampclean, uvcircle, mAstroBoy;
+	Model mNanosuit, m_Streetenvironment, mMerce, mSpider, mBoblampclean, uvcircle_main, mAstroBoy, *uvcircles;
 	float timestamp_for_lamp;
 	Sound soundIntro;
 	bool m_initialized;
