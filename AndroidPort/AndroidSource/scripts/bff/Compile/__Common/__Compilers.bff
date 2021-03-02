@@ -15,13 +15,13 @@
 	{
 		Compiler( "Compiler_CLANG_CPP" )
 		{
-			.Executable		= "$NDK_CLANG_ToolchainBin$/clang++.exe"
-			.ExtraFiles  = "$NDK_CLANG_ToolchainBin$/libwinpthread-1.dll"
+			.Executable	= "$NDK_CLANG_ToolchainBin$/clang.exe"
+			.ExtraFiles = "$NDK_CLANG_ToolchainBin$/libwinpthread-1.dll"
 		}
 
 		Compiler( "Compiler_CLANG_C" )
 		{
-			.Executable		= "$NDK_CLANG_ToolchainBin$/clang.exe"
-			.ExtraFiles  = "$NDK_CLANG_ToolchainBin$/libwinpthread-1.dll"
+			.Executable	= "$NDK_CLANG_ToolchainBin$/clang.exe"
+			.ExtraFiles = "$NDK_CLANG_ToolchainBin$/libwinpthread-1.dll"
 		}
 	}

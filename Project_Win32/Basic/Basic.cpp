@@ -13,7 +13,7 @@
 
 const int Screen_width = 1280;
 const int Screen_height = 720;
-int numModelcircle = 10;
+int numModelcircle = 100;
 void Basic::Init()
 {
 	mCamera->SetPos(0.0f, 3.0f, 10.0f);
@@ -90,7 +90,7 @@ void Basic::Init()
 	{
 		uvcircles[i].Init("3DBreakOutGame/UVCircle2.dae");
 		uvcircles[i].SetScale(glm::vec3(0.2, 0.2f, 0.2f));
-		uvcircles[i].SetPos(glm::vec3(-3.2f, 5.0f, 1.0f));
+		uvcircles[i].SetPos(glm::vec3(-3.2f + numModelcircle * 0.1f, 5.0f, 1.0f));
 		uvcircles[i].CreateSphereShapePhysicsBody(1., 0.2);
 		uvcircles[i].GetRigidBody()->setFriction(0.);
 		uvcircles[i].GetRigidBody()->setRollingFriction(1.);

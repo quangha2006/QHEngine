@@ -42,7 +42,7 @@
     "$ExternalLibs_Path$/openal/Alc/backends/sndio.c"
     "$ExternalLibs_Path$/openal/Alc/backends/solaris.c"
     "$ExternalLibs_Path$/openal/Alc/backends/wave.c"
-    "$ExternalLibs_Path$/openal/Alc/backends/winmm.c"
+    ;"$ExternalLibs_Path$/openal/Alc/backends/winmm.c"
 	}
 
 	.ExcludedUnitySources =

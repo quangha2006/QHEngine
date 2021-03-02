@@ -11,7 +11,7 @@
 					+ " -lBasic_CPP"
 					+ " -ljni"
 					;+ " -lnative_app_glue" // Native Surface
-              		;+ " -lGameEngine"
+              		+ " -lGameEngine"
 					+ " -lAssimp"
 					+ " -lzlibstatic"
 					+ " -lirrXML"
@@ -22,46 +22,86 @@
 					+ " -Wl,--end-group"
 	.SystemLibs = ""
 					+ " -lGLESv3"
-					+ " -llog"
-					+ " -landroid"
 					+ " -lEGL"
-
 	.ARM_LinkValues =
 	[
 		Using(.ARM_Config)
 		.SystemLibs + ""
 
 		.LinkerFlags		= " -Qunused-arguments -Wl,--gc-sections -fno-addrsig -stdlib=libc++ -static-libstdc++"
-							+ " -Wl,--build-id"
-							+ " -Wl,--no-undefined -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a"
-							+ " -Wl,--build-id --warn-shared-textrel -Wl,--fatal-warnings -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now"
-							+ " --target=armv7a-none-linux-androideabi$NATIVE_API_LEVEL$"
-							+ " -mtune=krait -mfpu=neon-fp16 -Wl,--exclude-libs,libunwind.a"
-							+ " -Wl,-rpath-link=$Linker_RPath_ARM$"
-							+ " --sysroot=$LLVMSysroot$"
-							+ " -L$LLVMSysroot$\usr\lib\arm-linux-androideabi\$NATIVE_API_LEVEL$"
-							+ " -L$LLVMSysroot$\usr\lib\arm-linux-androideabi"
-							+ " -fuse-ld=lld -Wl,--no-threads"
+							+ ' -lc++_static'
+							+ ' -Wl,--gc-sections'
+							+ ' -Wl,--build-id=sha1'
+							+ ' -Wl,--no-undefined'
+							+ ' -Wl,-z,noexecstack'
+							+ ' -no-canonical-prefixes'
+							+ ' -Wl,-z,relro'
+							+ ' -Wl,-z,now'
+							+ ' -landroid'
+							+ ' -llog'
+							;+ ' -Wl,-u,ANativeActivity_onCreate'
+							+ ' -march=armv7-a'
+							+ ' -l:libc++.a'
+							+ ' -lunwind'
+							+ ' -lgcc'
+							+ ' -landroid_support'
+							+ ' -lc'
+							+ ' -target armv7a-none-linux-androideabi$NATIVE_API_LEVEL$'
+							+ ' -Wl,-rpath-link=$Linker_RPath_ARM$'
 
 		.NDK_SearchPaths = ""
 
 	]
+	.ARM64_LinkValues =
+	[
+		Using(.ARM64_Config)
+		.SystemLibs + ""
 
+		.LinkerFlags		= " -Qunused-arguments -Wl,--gc-sections -fno-addrsig -stdlib=libc++ -static-libstdc++"
+							+ ' -lc++_static'
+							+ ' -Wl,--gc-sections'
+							+ ' -Wl,--build-id=sha1'
+							+ ' -Wl,--no-undefined'
+							+ ' -Wl,-z,noexecstack'
+							+ ' -no-canonical-prefixes'
+							+ ' -Wl,-z,relro'
+							+ ' -Wl,-z,now'
+							+ ' -landroid'
+							+ ' -llog'
+							+ ' -target aarch64-none-linux-android$NATIVE_API_LEVEL$'
+							+ ' -march=armv8-a'
+							+ ' -l:libc++.a'
+							+ ' -lgcc'
+							+ ' -lc'
+							+ ' -Wl,-rpath-link=$Linker_RPath_ARM64$'
+
+		.NDK_SearchPaths = ""
+
+	]
 	.x86_LinkValues =
 	[
 		Using(.x86_Config)
 		.SystemLibs + ""
 							+ " -lgcc"
 		.LinkerFlags = ""
-							+ " -Wl,--build-id"
-							+ " -gcc-toolchain $NDK_Root$/toolchains/x86-$NDK_ToolchainVersion$/prebuilt/windows-x86_64"
-							+ " -march=i686"
-							+ " -target i686-none-linux-android"
-							+ " -Wl,--no-undefined"
-							+ " -Wl,-z,noexecstack"
-							+ " -Wl,-rpath-link=$Linker_RPath_x86$"
-							+ " --sysroot=$NDK_Root$/platforms/$NDK_PlatformVersion$/arch-x86"
-							+ " -no-canonical-prefixes"
+							+ ' -nostdlib++'
+							+ ' -lc++_static'
+							+ ' -Wl,--gc-sections'
+							+ ' -Wl,--build-id=sha1'
+							+ ' -Wl,--no-undefined'
+							+ ' -Wl,-z,noexecstack'
+							+ ' -no-canonical-prefixes'
+							+ ' -Wl,-z,relro'
+							+ ' -Wl,-z,now'
+							+ ' -landroid'
+							+ ' -llog'
+							+ ' -march=i686'
+							+ ' -l:libc++.a'
+							+ ' -mtune=atom'
+							+ ' -target i686-none-linux-android$NATIVE_API_LEVEL$'
+							+ ' -lgcc'
+							+ ' -landroid_support'
+							+ ' -lc'
 
 		.NDK_SearchPaths = ""
 							;+ " -L$Linker_RPath_x86$"

@@ -19,6 +19,27 @@
 		.ARM_Release_SourceFiles 	= {}
 	]
 
+	.ARM64_CommonValues				=
+	[
+		.ARM64_Defines 				= ""
+		.ARM64_CompilerFlags 		= ""
+		.ARM64_SourceFiles 			= {}
+	]
+		
+	.ARM64_DebugValues				=
+	[
+		.ARM64_Debug_Defines 			= ""
+		.ARM64_Debug_CompilerFlags 	= ""
+		.ARM64_Debug_SourceFiles 		= {}
+	]
+		
+	.ARM64_ReleaseValues				=
+	[
+		.ARM64_Release_Defines 		= ""
+		.ARM64_Release_CompilerFlags 	= ""
+		.ARM64_Release_SourceFiles 	= {}
+	]
+
 	.x86_CommonValues				=
 	[
 		.x86_Defines 				= ""

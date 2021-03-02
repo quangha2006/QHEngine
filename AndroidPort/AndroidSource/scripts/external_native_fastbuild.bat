@@ -14,8 +14,8 @@ set SO_LIB_FILE=native-activity
 rem uncomment the line below to see the entire command used on this .bat script
 REM echo COMMAND: %0 %1 %2 %3
 set build_type=release
-set architectures=armeabi-v7a
-set architecture=ARM
+set architectures=arm64-v8a
+set architecture=ARM64
 set jniLibs_path=!FAST_BUILD_CONFIG!\..\..\app\libs
 
 set FASTBUILD_BROKERAGE_PATH=\\gameloft.org\sai\FastBuild_Detection
@@ -30,7 +30,7 @@ set DO_CLEAN_LINK=FALSE
 REM !FAST_BUILD_TOOL! -cachewrite -cacheread -dist -summary All-Compile-!architecture!-!build_type! -clean // Note: Add -dist to enable distributed
 	echo 1^) --- COMPILE ---
 	pushd !FAST_BUILD_COMPILE!
-	"!FAST_BUILD_TOOL!" -cachewrite -cacheread -summary All-Compile-!architecture!-!build_type! -clean
+	"!FAST_BUILD_TOOL!" -cachewrite -cacheread -dist -summary All-Compile-!architecture!-!build_type! -clean
 	popd
 
 	rem Check if COMPILE step is OK

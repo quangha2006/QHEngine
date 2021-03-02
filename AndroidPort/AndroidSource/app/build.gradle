@@ -5,7 +5,7 @@ android {
     ndkVersion '21.3.6528147'
     defaultConfig {
         applicationId "com.android.quanghaengine"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -35,14 +35,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "arm64-v8a"
             }
         }
         debug {
             debuggable true
             signingConfig signingConfigs.release
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "arm64-v8a"
             }
         }
     }

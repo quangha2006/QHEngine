@@ -15,14 +15,14 @@
 	// NativeSurface end
 	// lib
 
-	//"Assimp"
-	//"zlibstatic"
-	//"irrXML"
+	"Assimp"
+	"zlibstatic"
+	"irrXML"
 	//"openal"
-	//"freetypelib"
-	//"BulletCollision"
-	//"BulletDynamics"
-	//"LinearMath"
+	"freetypelib"
+	"BulletCollision"
+	"BulletDynamics"
+	"LinearMath"
 }
 
 #include "__Common/__TargetConfigurations.bff"

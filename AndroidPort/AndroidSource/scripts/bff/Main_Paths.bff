@@ -2,7 +2,7 @@
 .NATIVE_API_LEVEL = "21"
 .NDK_ToolchainVersion = "4.9"
 .NDK_PlatformVersion = "android-$NATIVE_API_LEVEL$"
-.NDK_Root = "D:\DevTools\android-ndk-r21"
+.NDK_Root = "E:\DevTools\android-ndk-r21"
 .GameRoot = "$CompilePath$\..\..\..\..\..\Project_Win32"
 .ExternalLibs_Path = "$GameRoot$\External"
 .generated_Path = "$CompilePath$\..\..\..\..\generated"
@@ -15,4 +15,5 @@
 .LLVMToolChainRoot = '$NDKToolchains$\llvm\prebuilt\windows-x86_64'
 .LLVMSysroot = '$LLVMToolChainRoot$\sysroot'
 .Linker_RPath_ARM = "$LLVMSysroot$\usr\lib\arm-linux-androideabi\$NATIVE_API_LEVEL$\"
+.Linker_RPath_ARM64 = "$LLVMSysroot$\usr\lib\aarch64-linux-android\$NATIVE_API_LEVEL$\"
 .Linker_RPath_x86 = "$NDK_Root$\platforms\$NDK_PlatformVersion$\arch-x86\usr\lib"

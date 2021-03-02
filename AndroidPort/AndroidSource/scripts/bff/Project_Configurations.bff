@@ -20,16 +20,13 @@
 							+ " -D_ANDROID"
 							+ " -DANDROID_NDK"
 							+ " -DGAME_ANDROID"
+							+ " -DANDROID_STL=c++_shared"
 
 	.IncludePaths 			= " -I$LLVMSysroot$\usr\include"
 
-	.CompileFlags 			= " -Wno-everything -fvisibility=hidden -fPIC"
-							+ " -ffunction-sections -fdata-sections -funwind-tables -fasynchronous-unwind-tables -fstack-protector -no-canonical-prefixes -Wno-write-strings"
-							+ " -fstrict-aliasing -fsigned-char -finline-functions -finline-hint-functions -fvectorize -ftree-vectorize"
-							+ " -funroll-loops -freroll-loops -fno-exceptions -pipe -g -Wa,--noexecstack -fno-addrsig"
-							+ " -fcolor-diagnostics -fdiagnostics-fixit-info"
+	.CompileFlags 			= ""
 							
-	.CompileFlags_CPP 		= " -Werror=implicit-function-declaration -std=c++11 -stdlib=libc++" ;cheat to build zlib
+	.CompileFlags_CPP 		= " -Werror=implicit-function-declaration -c -std=c++11 -fPIC"; -stdlib=libc++" ;cheat to build zlib
 	.CompileFlags_C 		= " -std=c11"
 	.Precompiled_SearchPaths= ""
 	.LinkerExecutable 		= "$NDKToolchainClangRoot$\clang++.exe"
@@ -47,11 +44,31 @@
 							+ " -D__clang__"
 							+ " -D__ANDROID_API__=21"
 
-	.IncludePaths			+ " -I$LLVMSysroot$\usr\include\arm-linux-androideabi"
+	.IncludePaths			+ " -I$LLVMSysroot$\usr\include\c++\v1"
 
-	.CompileFlags			+ " --target=armv7-none-linux-androideabi$NATIVE_API_LEVEL$"
-							+ " -mtune=krait -mfpu=neon-fp16 -mfloat-abi=softfp"
-							+ " -fomit-frame-pointer"
+	.CompileFlags			+ '  -ftree-vectorize'
+							+ '  -ffunction-sections'
+							+ '  -fdata-sections'
+							+ '  -funwind-tables'
+							+ '  -fstack-protector'
+							+ '  -no-canonical-prefixes'
+							+ '  -fstrict-aliasing'
+							+ '  -fsigned-char'
+							+ '  -fvisibility=hidden'
+							+ '  -fcolor-diagnostics'
+							+ '  -Wno-extern-c-compat'
+							+ '  -target armv7-none-linux-androideabi$NATIVE_API_LEVEL$'
+							+ '  -marm'
+							+ '  -march=armv7-a'
+							+ '  -mtune=krait'
+							+ '  -mfloat-abi=softfp'
+							+ '  -mfpu=neon-vfpv4'
+							+ '  -pipe'
+							+ '  -g'
+							+ '  -Wno-write-strings'
+							+ '  -fassociative-math'
+							+ '  -freciprocal-math'
+							+ '  -funroll-loops'
 
 	.Librarian				= "$NDKToolchainClangRoot$\arm-linux-androideabi-ar.exe"
 	.ObjectCopyExecutable 	= "$NDKToolchainClangRoot$\arm-linux-androideabi-objcopy.exe"
@@ -97,11 +114,41 @@
 	.Output_SharedLibs = "$OutputPath$/$PlatformName$/$ConfigName$/SharedLibs"
 ]
 // *************************************************************************************** //
-// ARM
+// ARM64
+// Release; Debug
+.ARM64_Config =
+[
+	Using(.Base_Config)
+	.PlatformName			= "ARM64"
+	.Defines				+ " -D__ARMV8__"
+							+ " -D__clang__"
+							+ " -D__ANDROID_API__=21"
+
+	.IncludePaths			+ " -I$LLVMSysroot$\usr\include\c++\v1"
+
+	.CompileFlags			+ '  -ftree-vectorize'
+							+ '  -ffunction-sections'
+							+ '  -fdata-sections'
+							+ '  -funwind-tables'
+							+ '  -fstack-protector'
+							+ '  -no-canonical-prefixes'
+							+ '  -fstrict-aliasing'
+							+ '  -fsigned-char'
+							+ '  -fvisibility=hidden'
+							+ '  -fcolor-diagnostics'
+							+ '  -Wno-extern-c-compat'
+							+ '  -target aarch64-none-linux-android$NATIVE_API_LEVEL$'
+
+	.Librarian				= "$NDKToolchainClangRoot$\aarch64-linux-android-ar.exe"
+	.ObjectCopyExecutable 	= "$NDKToolchainClangRoot$\llvm-objcopy.exe"
+	.StripExecutable		= "$NDKToolchainClangRoot$\llvm-strip.exe"
+]
+// *************************************************************************************** //
+// ARM64
 // Release
 .ARM64_Release_Config =
 [
-	Using(.ARM_Config)
+	Using(.ARM64_Config)
 	.ConfigName				= "Release"
 	.Defines				+ " -DANDROID_RELEASE"
 							+ " -DNDEBUG"
@@ -109,7 +156,7 @@
 
 	.CompileFlags			+ " -Ofast -ffast-math"
 							
-	.Precompiled_SearchPaths+ " -L$precompiled_search_Paths$/$ConfigName$/armeabi-v7a"
+	.Precompiled_SearchPaths+ " -L$precompiled_search_Paths$/$ConfigName$/arm64-v8a"
 	
 	.Output_Objects			= "$OutputPath$\$PlatformName$\$ConfigName$\Objects"
 	.Output_StaticLibs		= "$OutputPath$\$PlatformName$\$ConfigName$\StaticLibs"
@@ -117,18 +164,18 @@
 ]
 
 // *************************************************************************************** //
-// ARM
+// ARM64
 // Debug
 .ARM64_Debug_Config =
 [
-	Using(.ARM_Config)
+	Using(.ARM64_Config)
 	.ConfigName				= "Debug"
 	.Defines				+ " -D_DEBUG"
 							+ " -DDEBUG"
 
 	.CompileFlags			+ " -O0"
 
-	.Precompiled_SearchPaths+ " -L$precompiled_search_Paths$/$ConfigName$/armeabi-v7a"
+	.Precompiled_SearchPaths+ " -L$precompiled_search_Paths$/$ConfigName$/arm64-v8a"
 
 	.Output_Objects = "$OutputPath$/$PlatformName$/$ConfigName$/Objects"
 	.Output_StaticLibs = "$OutputPath$/$PlatformName$/$ConfigName$/StaticLibs"
@@ -212,6 +259,7 @@
 .Release_Configs =
 {
 	.ARM_Release_Config,
+	.ARM64_Release_Config,
 	.x86_Release_Config
 }
 
@@ -219,6 +267,7 @@
 .Debug_Configs =
 {
 	.ARM_Debug_Config,
+	.ARM64_Debug_Config,
 	.x86_Debug_Config
 }
 
@@ -227,6 +276,8 @@
 {
 	.ARM_Release_Config,
 	.ARM_Debug_Config,
+	.ARM64_Release_Config,
+	.ARM64_Debug_Config,
 	.x86_Release_Config,
 	.x86_Debug_Config
 }
