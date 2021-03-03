@@ -127,11 +127,11 @@ void Basic::Update(int delta)
 	//mAstroBoy.SetTimeStampAnim(Timer::getMillisecond() * 0.1);
 	for (int i = 0; i < numModelcircle; i++)
 	{
-		glm::mat4 currPos = uvcircles[i].GetWorld();
+		glm::vec3 currPos = uvcircles[i].GetPosTranslate();
 		//if (i == 1)
 		//Utils::PrintMat4(currPos);
 		//LOGI("uvcircles[%d] = %f", i, currPos.y);
-		if (currPos[3][1] < 0.f)
+		if (currPos.y < 0.f)
 		{
 			uvcircles[i].Translate(glm::vec3(0, 0, 0));
 			glm::vec3 randomcolor = Utils::RandomColor();

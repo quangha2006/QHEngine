@@ -163,7 +163,8 @@ public:
 	int GetId();
 	glm::mat4 GetWorld();
 	glm::vec3 GetScale();
-	glm::vec3 GetPos();
+	glm::vec3 GetPosOriginal();
+	glm::vec3 GetPosTranslate();
 	glm::vec3 GetRotate();
 	void SetIsDrawDepthMap(bool isDraw);
 	void CreateBoxShapePhysicsBody(float mass, glm::vec3 boxshape, glm::vec3 fixedboxshape = glm::vec3(0.));

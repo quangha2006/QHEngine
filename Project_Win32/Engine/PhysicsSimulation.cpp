@@ -90,7 +90,7 @@ void PhysicsSimulation::exitPhysics()
 
 void PhysicsSimulation::updatePhysics(float detatime)
 {
-	mDynamicsWorld->stepSimulation(detatime);
+	mDynamicsWorld->stepSimulation(detatime,10);
 }
 
 void PhysicsSimulation::RenderPhysicsDebug()

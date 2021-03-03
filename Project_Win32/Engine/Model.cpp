@@ -1252,13 +1252,17 @@ glm::vec3 Model::GetScale()
 {
 	return mScale;
 }
-glm::vec3 Model::GetPos()
+glm::vec3 Model::GetPosOriginal()
 {
 	return mPos;
 }
 glm::vec3 Model::GetRotate()
 {
 	return mRotate;
+}
+glm::vec3 Model::GetPosTranslate()
+{
+	return glm::vec3(mWorldTransform[3][0], mWorldTransform[3][1], mWorldTransform[3][2]);
 }
 Model::Model()
 	: gammaCorrection(false)
