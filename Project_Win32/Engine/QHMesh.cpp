@@ -122,7 +122,7 @@ void QHMesh::Render()
 	CheckGLError("QHMesh::Render");
 }
 
-QHMesh::QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &boneinfo)
+QHMesh::QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, size_t> &BoneMapping, std::vector<BoneInfo> &boneinfo)
 	: mNumVertices(0)
 	, mNumIndices(0)
 	, mVerticesData(NULL)
@@ -243,7 +243,7 @@ QHMesh::QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, 
 		for (unsigned int i = 0; i < mesh->mNumBones; i++)
 		{
 			aiBone* aiBone = mesh->mBones[i]; //CREATING A POINTER TO THE CURRENT BONE
-			unsigned int BoneIndex = i;
+			size_t BoneIndex = i;
 			std::string b_name = aiBone->mName.data;
 
 			if (BoneMapping.find(b_name) == BoneMapping.end())

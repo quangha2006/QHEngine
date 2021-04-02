@@ -40,6 +40,6 @@ public:
 	Vertex * GetVerticesData(unsigned int &numVertex);
 	unsigned int * GetIndicesData(unsigned int &numIndex);
 	void Render();
-	QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
+	QHMesh(const aiMesh* mesh, const aiScene * scene, std::map<std::string, size_t> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
 	~QHMesh();
 };

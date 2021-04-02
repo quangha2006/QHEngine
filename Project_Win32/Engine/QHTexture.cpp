@@ -25,7 +25,7 @@ namespace QHTexture
 	std::string ReplacePathETC(std::string currentPath, int mipmap)
 	{
 		std::string expand = Utils::toString("_mip_%d.pkm", mipmap);
-		int index = currentPath.find_last_of('/');
+		size_t index = currentPath.find_last_of('/');
 		currentPath.insert(index + 1, "ETC2/");
 		index = currentPath.find_last_of('.');
 		if (index > -1)

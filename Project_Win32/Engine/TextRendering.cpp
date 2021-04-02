@@ -183,7 +183,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 	
 	glBindVertexArray(mVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBufferData(GL_ARRAY_BUFFER, m_Maxchar * 6 * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
+	glBufferData(GL_ARRAY_BUFFER, (m_Maxchar * 6) * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(TextData), (void*)offsetof(TextData, Position));
@@ -212,7 +212,7 @@ bool TextRendering::Init(const char * font_path, int width, int height, unsigned
 
 glm::ivec2 TextRendering::CreateTextData(const char * text, int x, int y, float scale, glm::vec3 color, float alpha, std::vector<TextData> &textdata)
 {
-	unsigned int text_len = strlen(text);
+	size_t text_len = strlen(text);
 
 	if (text_len <= 0) return glm::ivec2(x, y);
 
@@ -223,7 +223,7 @@ glm::ivec2 TextRendering::CreateTextData(const char * text, int x, int y, float 
 	CharInfo Upper_ch = mCharInfo['A'];
 	std::string::const_iterator c;
 
-	for (unsigned int i = 0; i < text_len ; i++)
+	for (size_t i = 0; i < text_len ; i++)
 	{
 		CharInfo ch = mCharInfo[text[i]];
 
@@ -301,7 +301,7 @@ void TextRendering::Draw()
 			fulltextdata.insert(fulltextdata.end(), tmp.begin(), tmp.end());
 	}
 	if (fulltextdata.size() <= 0) return;
-	if (fulltextdata.size() > m_Maxchar * 6)
+	if (fulltextdata.size() > size_t(m_Maxchar * 6))
 	{
 		glBufferData(GL_ARRAY_BUFFER, fulltextdata.size() * sizeof(TextData), NULL, GL_DYNAMIC_DRAW); // max 200 characters
 		m_Maxchar = fulltextdata.size() / 6;

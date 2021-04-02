@@ -20,7 +20,7 @@ class QHText
 private:
 	std::vector<TextData> m_textdata;
 	char *m_text;
-	unsigned int m_textLen;
+	size_t m_textLen;
 	glm::vec3 m_color;
 	glm::ivec2 m_pos;
 	glm::ivec2 m_endPos;
@@ -64,7 +64,7 @@ inline void QHText::setText(const char * format, Args ...args)
 	{
 		return;
 	}
-	unsigned int newTextLen = newText.length();
+	size_t newTextLen = newText.length();
 	if (m_textLen != newTextLen)
 	{
 		m_textLen = newTextLen;

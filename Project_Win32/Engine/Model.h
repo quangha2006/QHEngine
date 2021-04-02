@@ -60,13 +60,13 @@ private:
 	void Pre_processNode(aiNode *node, const aiScene *scene, GLuint &numvertices, GLuint &numindices, GLuint &nummesh);
 
 	void processMaterial(const aiScene* scene);
-	void processMesh(const aiScene* scene, std::map<std::string, unsigned int> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
+	void processMesh(const aiScene* scene, std::map<std::string, size_t> &BoneMapping, std::vector<BoneInfo> &BoneInfo);
 	void BatchingVertexData();
 
 	/*==== Animation ====*/
 	Assimp::Importer mImporter;
 	const aiScene* m_pScene;
-	map<string, unsigned int> m_BoneMapping;
+	map<string, size_t> m_BoneMapping;
 	vector<BoneInfo> m_BoneInfo;
 	vector<glm::mat4> m_BoneTransforms;
 	glm::mat4 m_GlobalInverseTransform;

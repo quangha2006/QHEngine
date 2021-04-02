@@ -136,7 +136,7 @@ void Model::processMaterial(const aiScene * scene)
 		mMaterial.push_back(material);
 	}
 }
-void Model::processMesh(const aiScene * scene, std::map<std::string, unsigned int>& BoneMapping, std::vector<BoneInfo>& BoneInfo)
+void Model::processMesh(const aiScene * scene, std::map<std::string, size_t>& BoneMapping, std::vector<BoneInfo>& BoneInfo)
 {
 	if (!scene->HasMeshes())
 		return;
