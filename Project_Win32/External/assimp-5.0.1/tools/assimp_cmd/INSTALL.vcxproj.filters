@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\CMakeFiles\0aeb75cb7a9427d5325c9d25d6a66328\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{82CDCEBA-4DB9-39B4-B9B7-5AFB8BCA1ABA}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

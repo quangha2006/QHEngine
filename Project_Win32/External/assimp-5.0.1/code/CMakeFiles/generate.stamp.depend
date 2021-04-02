@@ -1,0 +1,5 @@
+# CMake generation dependency list for this directory.
+E:/DevTools/CMake/share/cmake-3.14/Modules/FindPackageHandleStandardArgs.cmake
+E:/DevTools/CMake/share/cmake-3.14/Modules/FindPackageMessage.cmake
+E:/Git/QHEngine/Project_Win32/External/assimp-5.0.1/cmake-modules/FindRT.cmake
+E:/Git/QHEngine/Project_Win32/External/assimp-5.0.1/code/CMakeLists.txt

@@ -1,0 +1,4 @@
+# CMake generation dependency list for this directory.
+E:/Git/QHEngine/Project_Win32/External/assimp-5.0.1/cmake-modules/FindDirectX.cmake
+E:/Git/QHEngine/Project_Win32/External/assimp-5.0.1/cmake-modules/FindPkgMacros.cmake
+E:/Git/QHEngine/Project_Win32/External/assimp-5.0.1/tools/assimp_view/CMakeLists.txt
