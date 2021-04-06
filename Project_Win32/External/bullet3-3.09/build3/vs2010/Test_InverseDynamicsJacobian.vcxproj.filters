@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="test">
+      <UniqueIdentifier>{DF81365A-10D6-3846-9983-D83E09392FA1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\InverseDynamics">
+      <UniqueIdentifier>{58FD5965-3CDD-7B4B-BCF6-9356DB7330C9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\test\InverseDynamics\test_invdyn_jacobian.cpp">
+      <Filter>test\InverseDynamics</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

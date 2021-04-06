@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="examples">
+      <UniqueIdentifier>{D421D4BD-9F65-4249-8703-BB1BF72AAE08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\ThirdPartyLibs">
+      <UniqueIdentifier>{93F14704-A0B8-824B-B539-B532721FE21A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\ThirdPartyLibs\midi">
+      <UniqueIdentifier>{FF194ABA-DFC7-5142-A948-9210F073B0C6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\examples\ThirdPartyLibs\midi\RtError.h">
+      <Filter>examples\ThirdPartyLibs\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ThirdPartyLibs\midi\RtMidi.h">
+      <Filter>examples\ThirdPartyLibs\midi</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\examples\ThirdPartyLibs\midi\cmidiin.cpp">
+      <Filter>examples\ThirdPartyLibs\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ThirdPartyLibs\midi\RtMidi.cpp">
+      <Filter>examples\ThirdPartyLibs\midi</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

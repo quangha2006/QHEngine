@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="examples">
+      <UniqueIdentifier>{E66795C6-65FF-184D-A4FE-B0B781543674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\ThirdPartyLibs">
+      <UniqueIdentifier>{49327A0E-A178-E44E-BC26-2887264B7C03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\ThirdPartyLibs\clsocket">
+      <UniqueIdentifier>{BA2BF3C3-FA8C-054E-8FAE-8BE2EEFAE082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\ThirdPartyLibs\clsocket\src">
+      <UniqueIdentifier>{5D06B63B-72C8-B244-92A5-A5D37100F7A3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\examples\ThirdPartyLibs\clsocket\src\ActiveSocket.h">
+      <Filter>examples\ThirdPartyLibs\clsocket\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ThirdPartyLibs\clsocket\src\Host.h">
+      <Filter>examples\ThirdPartyLibs\clsocket\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ThirdPartyLibs\clsocket\src\PassiveSocket.h">
+      <Filter>examples\ThirdPartyLibs\clsocket\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ThirdPartyLibs\clsocket\src\SimpleSocket.h">
+      <Filter>examples\ThirdPartyLibs\clsocket\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ThirdPartyLibs\clsocket\src\StatTimer.h">
+      <Filter>examples\ThirdPartyLibs\clsocket\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\examples\ThirdPartyLibs\clsocket\src\SimpleSocket.cpp">
+      <Filter>examples\ThirdPartyLibs\clsocket\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ThirdPartyLibs\clsocket\src\ActiveSocket.cpp">
+      <Filter>examples\ThirdPartyLibs\clsocket\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ThirdPartyLibs\clsocket\src\PassiveSocket.cpp">
+      <Filter>examples\ThirdPartyLibs\clsocket\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

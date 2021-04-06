@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{55AD9D07-1D7E-A140-A95D-EAC247DF7761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\clew">
+      <UniqueIdentifier>{C75530B9-1731-3945-9ED0-CDD70EDF18B5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples">
+      <UniqueIdentifier>{B8B54A62-AFAF-9649-802A-BBF4536B4CF3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\ThirdPartyLibs">
+      <UniqueIdentifier>{E161DA4C-8B3B-1B41-8926-46F1E5E19C33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\ThirdPartyLibs\glad">
+      <UniqueIdentifier>{92384DD6-214F-9644-8CE3-90E4BD0941A1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\ExampleBrowser">
+      <UniqueIdentifier>{135D839B-6085-104A-8A34-A0195093D6DD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\Utils">
+      <UniqueIdentifier>{1B367BB0-9E73-1C4E-951C-5AEC391657BE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples\ExampleBrowser\GwenGUISupport">
+      <UniqueIdentifier>{F6ED1E79-2ED5-CD46-94DC-A88B63451E81}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\clew\clew.h">
+      <Filter>src\clew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\Utils\b3Clock.h">
+      <Filter>examples\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\Utils\ChromeTraceUtil.h">
+      <Filter>examples\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\CollisionShape2TriangleMesh.h">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\EmptyBrowser.h">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\EmptyExample.h">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\ExampleBrowserInterface.h">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\ExampleEntries.h">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\GL_ShapeDrawer.h">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\InProcessExampleBrowser.h">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\OpenGLExampleBrowser.h">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\OpenGLGuiHelper.h">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\GwenGUISupport\GraphingTexture.h">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\GwenGUISupport\gwenInternalData.h">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\GwenGUISupport\GwenParameterInterface.h">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\GwenGUISupport\GwenProfileWindow.h">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\GwenGUISupport\GwenTextureWindow.h">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\ExampleBrowser\GwenGUISupport\gwenUserInterface.h">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\examples\Utils\b3ResourcePath.h">
+      <Filter>examples\Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\clew\clew.c">
+      <Filter>src\clew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ThirdPartyLibs\glad\gl.c">
+      <Filter>examples\ThirdPartyLibs\glad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\OpenGLExampleBrowser.cpp">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\OpenGLGuiHelper.cpp">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\Utils\b3Clock.cpp">
+      <Filter>examples\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\Utils\ChromeTraceUtil.cpp">
+      <Filter>examples\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\GwenGUISupport\GraphingTexture.cpp">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\GwenGUISupport\GwenParameterInterface.cpp">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\GwenGUISupport\GwenProfileWindow.cpp">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\GwenGUISupport\GwenTextureWindow.cpp">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\GwenGUISupport\gwenUserInterface.cpp">
+      <Filter>examples\ExampleBrowser\GwenGUISupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\CollisionShape2TriangleMesh.cpp">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\Utils\b3ResourcePath.cpp">
+      <Filter>examples\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\GL_ShapeDrawer.cpp">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\examples\ExampleBrowser\InProcessExampleBrowser.cpp">
+      <Filter>examples\ExampleBrowser</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
