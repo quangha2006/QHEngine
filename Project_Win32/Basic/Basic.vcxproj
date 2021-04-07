@@ -111,15 +111,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src;$(SolutionDir)External\glfw-3.3.3\include;$(SolutionDir)External\glew-2.1.0\include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Lib\x64;$(SolutionDir)BIN;$(SolutionDir)External\bullet3-3.09\bin\;$(SolutionDir)External\glfw-3.3.3\lib\glfw-3.3.3.bin.WIN64\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engined.lib;glfw3.lib;opengl32.lib;assimpd.lib;zlibstaticd.lib;freetyped.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;BulletDynamics_Debug.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\x64;$(SolutionDir)BIN;$(SolutionDir)External\bullet3-3.09\bin\;$(SolutionDir)External\glfw-3.3.3\lib\glfw-3.3.3.bin.WIN64\lib-vc2019;$(SolutionDir)External\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Engined.lib;glfw3.lib;glew32s.lib;opengl32.lib;assimpd.lib;IrrXMLd.lib;zlibstaticd.lib;freetyped.lib;BulletCollision_Debug.lib;LinearMath_Debug.lib;BulletDynamics_Debug.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,7 +154,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src;$(SolutionDir)External\glfw-3.3.3\include;$(SolutionDir)External\glew-2.1.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -162,8 +162,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Lib\x64;$(SolutionDir)BIN;$(SolutionDir)External\bullet3-3.09\bin\;$(SolutionDir)External\glfw-3.3.3\lib\glfw-3.3.3.bin.WIN64\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engine.lib;glfw3.lib;opengl32.lib;assimp-5.0.1.lib;zlibstatic.lib;freetype.lib;BulletCollision_vs2010_x64_release.lib;LinearMath_vs2010_x64_release.lib;BulletDynamics_vs2010_x64_release.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\x64;$(SolutionDir)BIN;$(SolutionDir)External\bullet3-3.09\bin\;$(SolutionDir)External\glfw-3.3.3\lib\glfw-3.3.3.bin.WIN64\lib-vc2019;$(SolutionDir)External\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Engine.lib;glfw3.lib;glew32s.lib;opengl32.lib;assimp-5.0.1.lib;IrrXML.lib;zlibstatic.lib;freetype.lib;BulletCollision_vs2010_x64_release.lib;LinearMath_vs2010_x64_release.lib;BulletDynamics_vs2010_x64_release.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>

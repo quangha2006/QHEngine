@@ -86,7 +86,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\include;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\.;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\contrib\zlib;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\contrib\rapidjson\include;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\contrib;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\contrib\unzip;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\contrib\irrXML;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\contrib\openddlparser\include;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\include;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\.;$(ProjectDir)..\include;$(ProjectDir)..\contrib\zlib;$(ProjectDir)..\contrib\rapidjson\include;$(ProjectDir)..\contrib;$(ProjectDir)..\contrib\unzip;$(ProjectDir)..\contrib\irrXML;$(ProjectDir)..\contrib\openddlparser\include;$(ProjectDir)..\code\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\include;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\.;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\contrib\zlib;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\contrib\rapidjson\include;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\contrib;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\contrib\unzip;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\contrib\irrXML;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\contrib\openddlparser\include;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..\include;E:\Git\QHEngine\Project_Win32\External\assimp-5.0.1\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\.;$(ProjectDir)..\include;$(ProjectDir)..\contrib\zlib;$(ProjectDir)..\contrib\rapidjson\include;$(ProjectDir)..\contrib;$(ProjectDir)..\contrib\unzip;$(ProjectDir)..\contrib\irrXML;$(ProjectDir)..\contrib\openddlparser\include;$(ProjectDir)..\code\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
