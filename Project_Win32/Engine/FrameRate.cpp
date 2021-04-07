@@ -68,7 +68,10 @@ FrameRate * FrameRate::getInstance()
 
 void FrameRate::setLimitFPS(unsigned int fps)
 {
-	SKIP_TICKS = 1000 / fps;
+	if (fps > 0)
+	{
+		SKIP_TICKS = 1000 / fps;
+	}
 }
 
 void FrameRate::limitFPS()

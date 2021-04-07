@@ -77,10 +77,10 @@ void Basic::Init()
 
 	uvcircle_main.CreateSphereShapePhysicsBody(1., 0.5);
 
-	uvcircle_main.GetRigidBody()->setFriction(0.);
-	uvcircle_main.GetRigidBody()->setRollingFriction(1.);
-	uvcircle_main.GetRigidBody()->setSpinningFriction(1.);
-	uvcircle_main.GetRigidBody()->setRestitution(0.999);
+	uvcircle_main.GetRigidBody()->setFriction(0.f);
+	uvcircle_main.GetRigidBody()->setRollingFriction(1.f);
+	uvcircle_main.GetRigidBody()->setSpinningFriction(1.f);
+	uvcircle_main.GetRigidBody()->setRestitution(0.999f);
 
 	//uvcircle_main.GetRigidBody()->applyForce(btVector3(100.0, 0., 0.), btVector3(0.0, 0.0, 0.0));
 
@@ -91,14 +91,14 @@ void Basic::Init()
 		uvcircles[i].Init("3DBreakOutGame/UVCircle2.dae");
 		uvcircles[i].SetScale(glm::vec3(0.2, 0.2f, 0.2f));
 		uvcircles[i].SetPos(glm::vec3(-3.2f + i * 0.1f, 5.0f, 1.0f));
-		uvcircles[i].CreateSphereShapePhysicsBody(1., 0.2);
-		uvcircles[i].GetRigidBody()->setFriction(0.);
-		uvcircles[i].GetRigidBody()->setRollingFriction(1.);
-		uvcircles[i].GetRigidBody()->setSpinningFriction(1.);
-		uvcircles[i].GetRigidBody()->setRestitution(0.99);
+		uvcircles[i].CreateSphereShapePhysicsBody(1.f, 0.2f);
+		uvcircles[i].GetRigidBody()->setFriction(0.f);
+		uvcircles[i].GetRigidBody()->setRollingFriction(1.f);
+		uvcircles[i].GetRigidBody()->setSpinningFriction(1.f);
+		uvcircles[i].GetRigidBody()->setRestitution(0.99f);
 		glm::vec3 randomcolor = Utils::RandomColor();
 		uvcircles[i].SetCustomColor(randomcolor);
-		uvcircles[i].GetRigidBody()->applyForce(btVector3(randomcolor.r * 2, randomcolor.g * 2, randomcolor.b*2), btVector3(0.0, 0.0, 0.0));
+		uvcircles[i].GetRigidBody()->applyForce(btVector3(randomcolor.r * 2, randomcolor.g * 2, randomcolor.b*2), btVector3(0.0f, 0.0f, 0.0f));
 	}
 
 	m_initialized = true;

@@ -46,7 +46,7 @@ bool GLFWContext::createWindow(int32_t width, int32_t height)
 	
 	return true; 
 }
-void GLFWContext::SwapInterval(int interval)
+void GLFWContext::SetVSync(int interval)
 {
 	glfwSwapInterval(interval);
 }

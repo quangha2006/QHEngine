@@ -33,7 +33,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	mContext->createWindow(width, height);
 	i_gpuDevice->InitWindows(width, height);
 
-	mContext->SwapInterval(1);
+	mContext->SetVSync(0);
 	i_gpuDevice->SwapInterval(1);
 
 	LOGI("\n=====================================================\n");
@@ -48,7 +48,7 @@ bool AppBase::initialize(int32_t width, int32_t height, ANativeWindow *window)
 	FrameRate::getInstance(); //Init
 	
 	//Utils::PrintGLEXTENSIONS();
-	//FrameRate::getInstance()->setLimitFPS(30);
+	FrameRate::getInstance()->setLimitFPS(0);
 
 	int windowsWidth = 960, windowsHeight = 540;
 	GetRequireScreenSize(windowsWidth, windowsHeight);
@@ -114,17 +114,17 @@ void AppBase::rendering()
 	FrameRate::getInstance()->BeginCpuTime();
 	mCamera->UpdateWorldViewProjection();
 	int frameTime = FrameRate::getInstance()->GetPrevFrameTime();
+	float fps = FrameRate::getInstance()->GetFPS();
 	if (mIsLoadingThreadFinish)
 	{
 		Update(frameTime);
-		PhysicsSimulation::getInstance()->updatePhysics(frameTime);
+		PhysicsSimulation::getInstance()->updatePhysics(frameTime, fps);
 		ModelManager::getInstance()->Update();
 		RenderManager::getInstance()->Render();
 	}
 	unsigned short numDrawCall = Debugging::getInstance()->getNumDrawCall();
 	int NumVertices = Debugging::getInstance()->getNumVertices();
 	int numdrawcall = Debugging::getInstance()->getNumDrawCall();
-	float fps = FrameRate::getInstance()->GetFPS();
 	int cpuTime = FrameRate::getInstance()->GetPrevCpuTime();
 
 	text_FPS.setText("FPS: %.1f", fps);

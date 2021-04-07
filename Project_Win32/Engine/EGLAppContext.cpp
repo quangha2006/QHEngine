@@ -13,7 +13,7 @@ bool EGLAppContext::createWindow(int32_t width, int32_t height)
 	return true;
 }
 
-void EGLAppContext::SwapInterval(int interval)
+void EGLAppContext::SetVSync(int interval)
 {
 	eglSwapInterval(eglGetCurrentDisplay(), interval);
 }

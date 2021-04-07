@@ -38,7 +38,7 @@ protected:
 	int32_t width, height;
 public:
 	virtual bool createWindow(int32_t width, int32_t height) { return false; }
-	virtual void SwapInterval(int interval) {}
+	virtual void SetVSync(int interval) {}
 	virtual void SwapBuffers() {}
 	virtual void SetWindow(ANativeWindow* window) { mWindow = window; }
 	virtual AppSharedContext *CreateShareContext() { return new AppSharedContext(); };

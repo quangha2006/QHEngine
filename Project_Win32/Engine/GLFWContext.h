@@ -18,7 +18,7 @@ public:
 	AppSharedContext *CreateShareContext();
 	void DestroyContext();
 	void SwapBuffers();
-	void SwapInterval(int interval);
+	void SetVSync(int interval);
 	GLFWContext();
 	~GLFWContext();
 };

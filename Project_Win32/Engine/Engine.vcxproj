@@ -73,24 +73,24 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)BIN\</OutDir>
+    <OutDir>$(SolutionDir)BIN\x86</OutDir>
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)d</TargetName>
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)BIN\</OutDir>
+    <OutDir>$(SolutionDir)Lib\x64</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)BIN\</OutDir>
+    <OutDir>$(SolutionDir)BIN\x86</OutDir>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>$(ProjectName)</TargetName>
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)BIN\</OutDir>
+    <OutDir>$(SolutionDir)Lib\x64</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -119,7 +119,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src;$(SolutionDir)External\glfw-3.3.3\include;$(SolutionDir)External\glew-2.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src;$(SolutionDir)External\glfw-3.3.3\lib\glfw-3.3.3.bin.WIN64\include;$(SolutionDir)External\glew-2.1.0\include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -161,8 +161,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src;$(SolutionDir)External\glfw-3.3.3\include;$(SolutionDir)External\glew-2.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src;$(SolutionDir)External\glfw-3.3.3\lib\glfw-3.3.3.bin.WIN64\include;$(SolutionDir)External\glew-2.1.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

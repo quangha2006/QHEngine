@@ -71,19 +71,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)BIN\</OutDir>
+    <OutDir>$(SolutionDir)BIN\x86</OutDir>
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)d</TargetName>
     <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)BIN\x64</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)BIN\</OutDir>
+    <OutDir>$(SolutionDir)BIN\x86</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)BIN\x64</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -154,8 +158,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src;$(SolutionDir)External\glfw-3.3.3\include;$(SolutionDir)External\glew-2.1.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine;$(SolutionDir)Include;$(SolutionDir)External\SOIL\src;$(SolutionDir)External\openal\include;$(SolutionDir)External;$(SolutionDir)External\freetype-2.10.4\include;$(SolutionDir)External\assimp-5.0.1\include;$(SolutionDir)External\bullet3-3.09\src;$(SolutionDir)External\glfw-3.3.3\lib\glfw-3.3.3.bin.WIN64\include;$(SolutionDir)External\glew-2.1.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -163,7 +168,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib\x64;$(SolutionDir)BIN;$(SolutionDir)External\bullet3-3.09\bin\;$(SolutionDir)External\glfw-3.3.3\lib\glfw-3.3.3.bin.WIN64\lib-vc2019;$(SolutionDir)External\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engine.lib;glfw3.lib;glew32s.lib;opengl32.lib;assimp-5.0.1.lib;IrrXML.lib;zlibstatic.lib;freetype.lib;BulletCollision_vs2010_x64_release.lib;LinearMath_vs2010_x64_release.lib;BulletDynamics_vs2010_x64_release.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.lib;glfw3_mt.lib;glew32s.lib;opengl32.lib;assimp-5.0.1.lib;IrrXML.lib;zlibstatic.lib;freetype.lib;BulletCollision_vs2010_x64_release.lib;LinearMath_vs2010_x64_release.lib;BulletDynamics_vs2010_x64_release.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>

@@ -88,9 +88,10 @@ void PhysicsSimulation::exitPhysics()
 	mCollisionShapes.clear();
 }
 
-void PhysicsSimulation::updatePhysics(float detatime)
+void PhysicsSimulation::updatePhysics(float detatime, float currentfps)
 {
-	mDynamicsWorld->stepSimulation(detatime);
+	mDynamicsWorld->stepSimulation(detatime, 1, btScalar(1.) / btScalar(currentfps));
+	//mDynamicsWorld->stepSimulation(btScalar(1.) / btScalar(60.), btScalar(1.) / btScalar(60.));
 }
 
 void PhysicsSimulation::RenderPhysicsDebug()
